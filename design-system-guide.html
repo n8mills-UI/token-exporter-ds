@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter - Design System Guide</title>
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/n8mills-UI/token-exporter-ds/design-system.css">
+    
+    <style>
+        /* ==========================================================================
+           GUIDE-SPECIFIC STYLES
+           ========================================================================== */
+        
+        :root {
+            /* Asset URLs - Tokenized for maintainability */
+            --asset-url-avatar: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
+        }
+
+        /* Prevent layout shift when scrollbar appears */
+        html {
+            scroll-behavior: smooth;
+            overflow-y: scroll; 
+        }
+
+        body {
+            background: var(--color-background-primary);
+        }
+
+        /* FIX: Override blue gradient for Empty State component within the guide */
+        .guide-content {
+            --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
+        }
+
+        /* FIX: Ensure all text in components is visible */
+        .guide-content .token-type-stat .count,
+        .guide-content .token-type-stat .label,
+        .guide-content .collection-name,
+        .guide-content .collection-count,
+        .guide-content .collection-info,
+        .guide-content .collection-pill span,
+        .guide-content .section-title-component,
+        .guide-content .subtitle {
+            color: var(--color-text-default);
+        }
+
+        /* Fix for section titles in components */
+        .section-title {
+            color: var(--color-text-default) !important;
+        }
+
+        .section-title i {
+            color: var(--brand-primary-lime);
+            margin-right: var(--size-2);
+        }
+
+        /* Guide Layout */
+        .guide-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .guide-sidebar {
+            width: 280px;
+            background: var(--color-background-secondary);
+            border-right: 1px solid var(--color-border-default);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: transform 0.3s var(--ease-3);
+        }
+        
+        .guide-content {
+            margin-left: 280px;
+            flex: 1;
+            max-width: calc(100vw - 280px);
+            width: 100%;
+            padding: var(--size-6);
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        
+        /* Sidebar Header */
+        .guide-header {
+            padding: var(--size-5);
+            border-bottom: 1px solid var(--color-border-default);
+            display: flex;
+            align-items: center;
+            gap: var(--size-3);
+            flex-shrink: 0;
+        }
+
+        .guide-logo {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+        
+        .guide-title {
+            color: var(--color-text-default);
+            margin: 0;
+            font-weight: var(--font-weight-6);
+        }
+        
+        /* Sidebar Navigation */
+        .nav-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: var(--size-2) 0;
+        }
+
+        .nav-section {
+            padding: var(--size-2) var(--size-4);
+        }
+        
+        .nav-section-title {
+            color: var(--color-text-default);
+            font-size: var(--font-size-1);
+            font-weight: var(--font-weight-6);
+            margin-bottom: var(--size-3);
+            text-transform: uppercase;
+            letter-spacing: var(--font-letterspacing-2);
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-links li {
+            margin-bottom: var(--size-1);
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: var(--size-2);
+            padding: var(--size-2) var(--size-3);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-2);
+            transition: all var(--animation-duration-2) var(--ease-3);
+            font-size: var(--font-size-1);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            background: var(--color-background-tertiary);
+            color: var(--brand-primary-lime);
+        }
+
+        .nav-links a.active {
+            color: var(--brand-primary-lime);
+            font-weight: var(--font-weight-6);
+        }
+
+        .nav-links a.active::before {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 3px;
+            background: var(--brand-primary-lime);
+            border-radius: 0 var(--radius-1) var(--radius-1) 0;
+        }
+        
+        .nav-links i {
+            width: 16px;
+            text-align: center;
+            font-size: var(--font-size-0);
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: var(--size-2) var(--size-4);
+            border-top: 1px solid var(--color-border-default);
+            flex-shrink: 0;
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: var(--size-4);
+            left: var(--size-4);
+            z-index: 101;
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-3);
+            color: var(--color-text-default);
+            font-size: var(--font-size-3);
+            cursor: pointer;
+            transition: all var(--animation-duration-2) var(--ease-3);
+        }
+
+        .mobile-menu-toggle:hover {
+            background: var(--color-background-tertiary);
+            color: var(--brand-primary-lime);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: var(--size-10);
+            scroll-margin-top: var(--size-6);
+        }
+        
+        .section-header {
+            margin-bottom: var(--size-6);
+            padding-bottom: var(--size-4);
+            border-bottom: 2px solid var(--color-border-default);
+        }
+        
+        .guide-main-title {
+            font-size: calc(var(--font-size-8) * 1.2);
+            font-weight: var(--font-weight-7);
+            line-height: var(--font-lineheight-1);
+            letter-spacing: -0.02em;
+            color: var(--brand-primary-lime);
+            margin-bottom: 0;
+        }
+
+        .guide-subtitle {
+            color: var(--color-text-default);
+            text-transform: uppercase;
+            font-weight: var(--font-weight-6);
+            margin-top: var(--size-2);
+            margin-bottom: var(--size-4);
+        }
+        
+        .main-section-title {
+            color: var(--color-text-default);
+            margin-bottom: var(--size-3);
+            display: flex;
+            align-items: center;
+            gap: var(--size-3);
+        }
+        
+        .main-section-title i {
+            color: var(--brand-primary-lime);
+            font-size: 1em;
+        }
+        
+        .section-description {
+            color: var(--color-text-secondary);
+            max-width: 80ch;
+            margin: 0;
+            line-height: var(--font-lineheight-4);
+        }
+        
+        /* Foundation Token & Component Styles */
+        .token-category, .component-section {
+            margin-bottom: var(--size-8);
+            background: var(--color-background-secondary);
+            border-radius: var(--radius-3);
+            border: 1px solid var(--color-border-default);
+            overflow: hidden;
+        }
+        
+        .category-header, .component-header {
+            padding: var(--size-6);
+            background: var(--color-background-tertiary);
+            border-bottom: 1px solid var(--color-border-default);
+        }
+        
+        .category-title, .component-title {
+            color: var(--color-text-default);
+            margin-bottom: var(--size-2);
+            display: flex;
+            align-items: center;
+            gap: var(--size-3);
+        }
+
+        .category-title i, .component-title i {
+            color: var(--brand-primary-lime);
+            font-size: 1em;
+            padding-right: var(--size-1);
+        }
+        
+        .category-description, .component-description {
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+        
+        .tokens-grid {
+            padding: var(--size-6);
+            display: grid;
+            gap: var(--size-4);
+        }
+        
+        .color-grid, .shadow-grid, .radius-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .gray-scale-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        
+        .text-grid, .animation-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .spacing-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        
+        .font-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .token-item {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-4);
+            transition: all var(--animation-duration-2) var(--ease-3);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .token-item:hover {
+            border-color: var(--brand-primary-lime);
+            box-shadow: var(--shadow-3);
+        }
+
+        .token-info {
+            flex-grow: 1;
+        }
+        
+        .token-name {
+            font-family: var(--font-mono);
+            color: var(--brand-primary-lime);
+            margin-bottom: var(--size-2);
+            font-size: var(--font-size-1);
+            font-weight: var(--font-weight-6);
+        }
+        
+        .token-value {
+            font-family: var(--font-mono);
+            color: var(--color-text-muted);
+            margin-bottom: var(--size-3);
+            font-size: var(--font-size-0);
+            word-break: break-all;
+        }
+        
+        .token-preview {
+            margin-bottom: var(--size-3);
+            min-height: 60px;
+        }
+        
+        .color-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: var(--radius-2);
+            border: 1px solid var(--color-border-default);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .color-preview::after {
+            content: attr(data-hex);
+            position: absolute;
+            bottom: var(--size-1);
+            right: var(--size-1);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: var(--size-1) var(--size-2);
+            border-radius: var(--radius-1);
+            font-size: var(--font-size-00);
+            font-family: var(--font-mono);
+        }
+        
+        .text-preview {
+            padding: var(--size-3);
+            background: var(--color-background-tertiary);
+            border-radius: var(--radius-2);
+            border: 1px solid var(--color-border-default);
+            color: var(--color-text-default);
+        }
+        
+        .spacing-preview {
+            background: var(--color-background-tertiary);
+            border-radius: var(--radius-2);
+            padding: var(--size-2);
+            border: 1px solid var(--color-border-default);
+            position: relative;
+        }
+        
+        .spacing-bar {
+            background: var(--brand-primary-lime);
+            border-radius: var(--radius-1);
+            opacity: 0.7;
+        }
+        
+        .gradient-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: var(--radius-2);
+            border: 1px solid var(--color-border-default);
+        }
+
+        .shadow-preview, .radius-preview {
+            width: 100%;
+            height: 80px;
+            background: var(--color-background-tertiary);
+            border: 1px solid var(--color-border-default);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .token-copy {
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-1);
+            padding: var(--size-1) var(--size-2);
+            font-size: var(--font-size-00);
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: all var(--animation-duration-2) var(--ease-3);
+            align-self: flex-end;
+        }
+        
+        .token-copy:hover {
+            color: var(--brand-primary-lime);
+            border-color: var(--brand-primary-lime);
+        }
+        
+        /* Component Library Styles */
+        .component-body {
+            padding: var(--size-6);
+        }
+
+        /* Progress overlay styles for guide examples */
+        .progress-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .progress-container {
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-3);
+            padding: var(--size-6);
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+        }
+
+        .success-icon {
+            font-size: var(--font-size-8);
+            color: var(--brand-primary-lime);
+            margin-bottom: var(--size-4);
+            display: block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--size-3);
+            flex-direction: column;
+        }
+
+        /* Advanced toggle styles */
+        .advanced-toggle {
+            text-align: center;
+            padding: var(--size-3);
+        }
+
+        .advanced-link {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: all var(--animation-duration-2) var(--ease-3);
+        }
+
+        .advanced-link:hover {
+            color: var(--brand-primary-lime);
+        }
+
+        .advanced-link i {
+            transition: transform var(--animation-duration-2) var(--ease-3);
+        }
+
+        .advanced-link:hover i {
+            transform: translateX(2px);
+        }
+
+        /* Footer section styles */
+        .footer-section {
+            text-align: center;
+            padding: var(--size-3);
+            border-top: 1px solid var(--color-border-default);
+        }
+
+        .footer-section a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: all var(--animation-duration-2) var(--ease-3);
+        }
+
+        .footer-section a:hover {
+            color: var(--brand-primary-lime);
+        }
+
+        .footer-section .heart {
+            display: inline-block;
+            transition: transform var(--animation-duration-3) var(--ease-spring-4);
+        }
+
+        .footer-section a:hover .heart {
+            transform: scale(1.2);
+        }
+        
+        .example-container {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-4);
+            margin-bottom: var(--size-4);
+            position: relative;
+        }
+        
+        .example-label {
+            position: absolute;
+            top: calc(-1 * var(--size-2));
+            left: var(--size-3);
+            background: var(--color-background-secondary);
+            padding: var(--size-1) var(--size-2);
+            border-radius: var(--radius-1);
+            font-size: var(--font-size-00);
+            font-weight: var(--font-weight-6);
+            color: var(--brand-primary-lime);
+            text-transform: uppercase;
+            letter-spacing: var(--font-letterspacing-2);
+        }
+        
+        .code-block {
+            background: var(--gray-9);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-4);
+            margin-bottom: var(--size-4);
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .code-block code {
+            font-family: var(--font-mono);
+            font-size: var(--font-size-0);
+            color: var(--color-text-default);
+            line-height: var(--font-lineheight-2);
+            white-space: pre;
+        }
+        
+        .code-copy-btn {
+            position: absolute;
+            top: var(--size-2);
+            right: var(--size-2);
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-1);
+            padding: var(--size-1) var(--size-2);
+            font-size: var(--font-size-00);
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: all var(--animation-duration-2) var(--ease-3);
+        }
+        
+        .code-copy-btn:hover {
+            color: var(--brand-primary-lime);
+            border-color: var(--brand-primary-lime);
+        }
+
+        /* Token usage display */
+        .token-usage {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-3);
+            margin-top: var(--size-3);
+        }
+
+        .token-usage-title {
+            color: var(--brand-primary-lime);
+            font-size: var(--font-size-1);
+            font-weight: var(--font-weight-6);
+            margin-bottom: var(--size-2);
+        }
+
+        .token-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--size-2);
+        }
+
+        .token-badge {
+            background: var(--color-background-tertiary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-1);
+            padding: var(--size-1) var(--size-2);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-00);
+            color: var(--color-text-secondary);
+        }
+        
+        .variants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--size-4);
+            margin-bottom: var(--size-4);
+        }
+        
+        /* Pattern Section Styles */
+        .pattern-section {
+            background: var(--color-background-secondary);
+            border-radius: var(--radius-3);
+            border: 1px solid var(--color-border-default);
+            padding: var(--size-6);
+            margin-bottom: var(--size-6);
+        }
+        
+        .pattern-title {
+            color: var(--brand-primary-lime);
+            margin-bottom: var(--size-3);
+            display: flex;
+            align-items: center;
+            gap: var(--size-2);
+        }
+        
+        .pattern-content {
+            color: var(--color-text-secondary);
+            line-height: var(--font-lineheight-3);
+        }
+        
+        .pattern-content h4 {
+            color: var(--color-text-default);
+            margin-top: var(--size-4);
+            margin-bottom: var(--size-2);
+        }
+        
+        .pattern-content pre {
+            background: var(--gray-9);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-3);
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: var(--font-size-0);
+            color: var(--color-text-default);
+        }
+        
+        .pattern-content code {
+            background: var(--color-background-tertiary);
+            padding: var(--size-1);
+            border-radius: var(--radius-1);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-0);
+        }
+        
+        /* About Section */
+        .about-section {
+            background: var(--color-background-secondary);
+            margin-left: calc(-1 * var(--size-6));
+            margin-right: calc(-1 * var(--size-6));
+            padding: var(--size-8) var(--size-6);
+            margin-top: var(--size-10);
+            border-top: 2px solid var(--color-border-default);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-content-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: var(--size-8);
+            align-items: center;
+        }
+
+        .about-avatar {
+            width: calc(var(--size-16) * 1.5);
+            height: calc(var(--size-16) * 1.5);
+            border-radius: var(--radius-round);
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--brand-primary-lime);
+            background-color: var(--gray-7);
+            background-image: var(--asset-url-avatar);
+        }
+
+        .about-info-column h3 {
+            margin-bottom: var(--size-2);
+        }
+
+        .about-title {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--size-3);
+        }
+
+        .about-description {
+            color: var(--color-text-secondary);
+            max-width: 60ch;
+            line-height: var(--font-lineheight-3);
+            margin-bottom: var(--size-4);
+        }
+
+        .about-links {
+            display: flex;
+            gap: var(--size-4);
+        }
+
+        .about-link {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-3);
+            transition: all var(--animation-duration-2) var(--ease-3);
+        }
+
+        .about-link:hover {
+            color: var(--brand-primary-lime);
+            transform: translateY(-2px);
+        }
+
+        .heart {
+            color: var(--category-color-pink);
+            display: inline-block;
+            transition: transform var(--animation-duration-3) var(--ease-spring-4);
+        }
+
+        .about-description:hover .heart {
+            transform: scale(1.2);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .guide-sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .guide-sidebar.open {
+                transform: translateX(0);
+                box-shadow: var(--shadow-5);
+            }
+            
+            .guide-content {
+                margin-left: 0;
+                max-width: 100vw;
+                width: 100%;
+                padding: var(--size-4);
+                padding-top: calc(var(--size-4) + 48px + var(--size-3));
+                box-sizing: border-box;
+            }
+            
+            .about-section {
+                margin-left: calc(-1 * var(--size-4));
+                margin-right: calc(-1 * var(--size-4));
+                padding: var(--size-6) var(--size-4);
+            }
+            
+            .about-content-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .about-links {
+                justify-content: center;
+            }
+            
+            .color-grid,
+            .shadow-grid,
+            .radius-grid,
+            .tokens-grid,
+            .variants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gray-scale-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .spacing-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .token-breakdown {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: var(--size-3) !important;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .token-breakdown {
+                grid-template-columns: 1fr !important;
+                gap: var(--size-2) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile menu toggle -->
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="guide-container">
+        <!-- Sidebar Navigation -->
+        <nav class="guide-sidebar" id="sidebar">
+            <div class="guide-header">
+                <div class="guide-logo">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_9098_160422_guide)">
+                        <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_9098_160422_guide)"/>
+                        <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                        <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        </g>
+                        <defs>
+                        <linearGradient id="paint0_linear_9098_160422_guide" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#D2FF37"/>
+                        <stop offset="1" stop-color="#EEFF00"/>
+                        </linearGradient>
+                        <clipPath id="clip0_9098_160422_guide">
+                        <rect width="355" height="355" rx="58" fill="white"/>
+                        </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="text-heading-md guide-title">Token Exporter</h1>
+            </div>
+            <div class="nav-wrapper">
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Foundation</h3>
+                    <ul class="nav-links">
+                        <li><a href="#overview" class="nav-link"><i class="fas fa-home"></i> Overview</a></li>
+                        <li><a href="#colors" class="nav-link"><i class="fas fa-palette"></i> Colors</a></li>
+                        <li><a href="#typography" class="nav-link"><i class="fas fa-font"></i> Typography</a></li>
+                        <li><a href="#spacing" class="nav-link"><i class="fas fa-arrows-alt-h"></i> Spacing</a></li>
+                        <li><a href="#shadows" class="nav-link"><i class="fas fa-layer-group"></i> Shadows</a></li>
+                        <li><a href="#border-radius" class="nav-link"><i class="fas fa-square"></i> Border Radius</a></li>
+                        <li><a href="#animations" class="nav-link"><i class="fas fa-play"></i> Animations</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Components</h3>
+                    <ul class="nav-links">
+                        <li><a href="#token-summary" class="nav-link"><i class="fas fa-chart-pie"></i> Token Summary</a></li>
+                        <li><a href="#buttons" class="nav-link"><i class="fas fa-mouse-pointer"></i> Buttons</a></li>
+                        <li><a href="#forms" class="nav-link"><i class="fas fa-list-alt"></i> Forms</a></li>
+                        <li><a href="#collection-items" class="nav-link"><i class="fas fa-list"></i> Collections</a></li>
+                        <li><a href="#loading-states" class="nav-link"><i class="fas fa-spinner"></i> Loading States</a></li>
+                        <li><a href="#modals" class="nav-link"><i class="fas fa-window-restore"></i> Modals</a></li>
+                        <li><a href="#empty-states" class="nav-link"><i class="fas fa-folder-open"></i> Empty States</a></li>
+                        <li><a href="#progress-states" class="nav-link"><i class="fas fa-tasks"></i> Progress States</a></li>
+                        <li><a href="#liquid-progress" class="nav-link"><i class="fas fa-water"></i> Liquid Progress</a></li>
+                        <li><a href="#modular-cards" class="nav-link"><i class="fas fa-layer-group"></i> Modular Cards</a></li>
+                        <li><a href="#advanced-toggle" class="nav-link"><i class="fas fa-sliders-h"></i> Mode Toggle</a></li>
+                        <li><a href="#footer" class="nav-link"><i class="fas fa-heart"></i> Footer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Patterns</h3>
+                    <ul class="nav-links">
+                        <li><a href="#user-flows" class="nav-link"><i class="fas fa-route"></i> User Flows</a></li>
+                        <li><a href="#state-management" class="nav-link"><i class="fas fa-cogs"></i> State Management</a></li>
+                        <li><a href="#performance" class="nav-link"><i class="fas fa-tachometer-alt"></i> Performance</a></li>
+                        <li><a href="#error-handling" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Error Handling</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                 <ul class="nav-links">
+                    <li><a href="#about" class="nav-link"><i class="fas fa-user-circle"></i> About & Links</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="guide-content">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section">
+                <div class="section-header">
+                    <h1 class="guide-main-title">
+                        Design System Guide
+                    </h1>
+                    <p class="text-body-lg guide-subtitle">
+                        VERSION 2.7.0
+                    </p>
+                    <p class="section-description">
+                        A comprehensive design system built on Open Props foundation with custom brand identity. 
+                        This guide shows how foundation tokens power the components, creating consistent and scalable interfaces for the Token Exporter plugin.
+                    </p>
+                </div>
+                
+                <div class="pattern-section">
+                    <h3 class="text-heading-md pattern-title">
+                        <i class="fas fa-info-circle"></i>
+                        How to Use This Guide
+                    </h3>
+                    <div class="pattern-content">
+                        <p>This guide documents every design token and component used in the Token Exporter plugin. 
+                        It serves as both a reference and a playground for understanding how the design system works.</p>
+                        
+                        <p><strong>Important Note:</strong> The guide itself uses enhanced typography and spacing 
+                        for optimal documentation readability. Component examples, however, are rendered exactly 
+                        as they appear in the plugin, using only the `design-system.css` styles.</p>
+                    </div>
+                </div>
+
+                <div class="pattern-section">
+                    <h3 class="text-heading-md pattern-title">
+                        <i class="fas fa-layer-group"></i>
+                        System Architecture
+                    </h3>
+                    <div class="pattern-content">
+                        <p><strong style="color: var(--brand-primary-lime);">Foundation Layer:</strong> 
+                        Open Props provides 435+ battle-tested design tokens for spacing, typography, colors, animations, and more. We override only what's needed for brand identity.</p>
+                        
+                        <p><strong style="color: var(--brand-primary-lime);">Brand Layer:</strong> 
+                        Custom lime/yellow brand colors, category colors for token types, and semantic color mappings for dark interfaces.</p>
+                        
+                        <p><strong style="color: var(--brand-primary-lime);">Component Layer:</strong> 
+                        Reusable UI components that consume foundation tokens, ensuring consistency and maintainability.</p>
+                        
+                        <p><strong style="color: var(--brand-primary-lime);">Pattern Layer:</strong> 
+                        Interaction flows, state management, and behavioral guidelines that define how components work together.</p>
+                    </div>
+                </div>
+                <!-- Liquid Progress Animation -->
+                <div id="liquid-progress" class="component-section">
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-water"></i> Liquid Progress Animation</h2>
+                        <p class="component-description">4-stage liquid progress animation for token export process. The animation plays inside the token summary card for an integrated experience.</p>
+                    </div>
+                    <div class="component-body">
+                        <div class="example-container">
+                            <div class="example-label">Liquid Progress States</div>
+                            <div class="card token-summary" style="position: relative; overflow: hidden;">
+                                <div class="liquid-progress-overlay" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;">
+                                    <div class="liquid-container" style="width: 200px; height: 200px; position: relative; margin-bottom: var(--size-4);">
+                                        <div style="position: absolute; inset: 0; background: var(--gray-8); border-radius: 50%; overflow: hidden;">
+                                            <div class="liquid-fill" style="position: absolute; bottom: 0; left: 0; right: 0; height: 25%; background: linear-gradient(180deg, var(--brand-primary-lime) 0%, var(--brand-secondary-yellow) 100%); transition: height 1s ease-out;">
+                                                <div style="position: absolute; top: -10px; left: -50%; width: 200%; height: 40px; background: inherit; border-radius: 40%; animation: wave 3s linear infinite;"></div>
+                                                <div style="position: absolute; top: -10px; left: -50%; width: 200%; height: 40px; background: inherit; border-radius: 40%; animation: wave 3s linear infinite; animation-delay: 0.5s; opacity: 0.5;"></div>
+                                            </div>
+                                        </div>
+                                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                                            <span class="text-heading-lg" style="color: var(--color-text-default); font-weight: var(--font-weight-7);">25%</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2);">ANALYZING TOKENS</div>
+                                    <div class="text-body-md" style="color: var(--color-text-secondary);">Stage 1 of 4</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-container" style="margin-top: var(--size-4);">
+                            <div class="example-label">Progress Stages</div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-3);">
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">25%</div>
+                                    <div class="text-label">ANALYZING</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">50%</div>
+                                    <div class="text-label">PACKAGING</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">75%</div>
+                                    <div class="text-label">FINALIZING</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">100%</div>
+                                    <div class="text-label">COMPLETE</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <style>
+                            @keyframes wave {
+                                0% { transform: translateX(0) rotate(0deg); }
+                                100% { transform: translateX(50%) rotate(360deg); }
+                            }
+                        </style>
+                        
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="liquid-progress-overlay"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <!-- Modular Card States -->
+                <div id="modular-cards" class="component-section">
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-layer-group"></i> Modular Card States</h2>
+                        <p class="component-description">The token summary card transforms to show different states without modals or page changes. Everything happens in-place for a seamless experience.</p>
+                    </div>
+                    <div class="component-body">
+                        <div class="example-container">
+                            <div class="example-label">Empty State (In Card)</div>
+                            <div class="card token-summary">
+                                <div class="empty-state" style="padding: 0;">
+                                    <div class="empty-state-icon"><i class="fas fa-folder-open"></i></div>
+                                    <div>
+                                        <div class="text-body-lg empty-state-title">No Variable Collections Found</div>
+                                        <div class="text-body-md empty-state-subtitle">Create collections in Figma's "Local Variables" panel to get started.</div>
+                                    </div>
+                                    <a href="#" class="empty-state-action"><i class="fas fa-external-link-alt"></i> Learn How</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-container" style="margin-top: var(--size-4);">
+                            <div class="example-label">Loading State (Skeleton)</div>
+                            <div class="card token-summary">
+                                <div class="skeleton-container" style="padding: 0;">
+                                    <div class="skeleton-item" style="height: 80px; margin-bottom: var(--size-3);"></div>
+                                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-2);">
+                                        <div class="skeleton-item small"></div>
+                                        <div class="skeleton-item small"></div>
+                                        <div class="skeleton-item small"></div>
+                                        <div class="skeleton-item small"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-container" style="margin-top: var(--size-4);">
+                            <div class="example-label">Success State (Download Ready)</div>
+                            <div class="card token-summary" style="text-align: center;">
+                                <i class="fas fa-check-circle" style="font-size: var(--font-size-8); color: var(--brand-primary-lime); margin-bottom: var(--size-3);"></i>
+                                <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Tokens Ready!</div>
+                                <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-4);">247 tokens packaged successfully</div>
+                                <button class="btn primary"><i class="fas fa-download"></i> Download design-tokens.zip</button>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>// State transitions happen in the same card
+// No modals, no page changes, just smooth transitions</code></div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Color System Section -->
+            <section id="colors" class="content-section">
+                <div class="section-header">
+                    <h2 class="text-heading-xl main-section-title">
+                        <i class="fas fa-palette"></i>
+                        Color System
+                    </h2>
+                    <p class="section-description">
+                        The complete color palette, organized by role from primitives to semantic tokens.
+                    </p>
+                </div>
+
+                <div id="brand-colors" class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-star"></i> Brand Colors</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
+                    <div class="tokens-grid color-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime</div><div class="token-value">#D2FF37</div><div class="token-preview"><div class="color-preview" style="background: var(--brand-primary-lime);" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--brand-secondary-yellow</div><div class="token-value">#EEFF00</div><div class="token-preview"><div class="color-preview" style="background: var(--brand-secondary-yellow);" data-hex="#EEFF00"></div></div></div><button class="token-copy" onclick="copyToken('--brand-secondary-yellow')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--brand-text-dark</div><div class="token-value">#1E1E1E</div><div class="token-preview"><div class="color-preview" style="background: var(--brand-text-dark);" data-hex="#1E1E1E"></div></div></div><button class="token-copy" onclick="copyToken('--brand-text-dark')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--brand-gradient-lime</div><div class="token-value">linear-gradient(180deg, #D2FF37 0%, #EEFF00 100%)</div><div class="token-preview"><div class="gradient-preview" style="background: var(--brand-gradient-lime);"></div></div></div><button class="token-copy" onclick="copyToken('--brand-gradient-lime')">Copy</button></div>
+                    </div>
+                </div>
+
+                <div id="gray-scale" class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-adjust"></i> Gray Scale (Primitives)</h2><p class="category-description">The full grayscale palette that underpins the UI's surfaces and text colors.</p></div>
+                    <div class="tokens-grid gray-scale-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-0</div><div class="token-value">#ffffff</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-0);" data-hex="#ffffff"></div></div></div><button class="token-copy" onclick="copyToken('--gray-0')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-1</div><div class="token-value">#f0f0f0</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-1);" data-hex="#f0f0f0"></div></div></div><button class="token-copy" onclick="copyToken('--gray-1')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-2</div><div class="token-value">#cccccc</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-2);" data-hex="#cccccc"></div></div></div><button class="token-copy" onclick="copyToken('--gray-2')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-3</div><div class="token-value">#a0a0a0</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-3);" data-hex="#a0a0a0"></div></div></div><button class="token-copy" onclick="copyToken('--gray-3')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-4</div><div class="token-value">#999999</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-4);" data-hex="#999999"></div></div></div><button class="token-copy" onclick="copyToken('--gray-4')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-5</div><div class="token-value">#666666</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-5);" data-hex="#666666"></div></div></div><button class="token-copy" onclick="copyToken('--gray-5')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-6</div><div class="token-value">#444444</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-6);" data-hex="#444444"></div></div></div><button class="token-copy" onclick="copyToken('--gray-6')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-7</div><div class="token-value">#3a3a3a</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-7);" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--gray-7')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-8</div><div class="token-value">#2a2a2a</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-8);" data-hex="#2a2a2a"></div></div></div><button class="token-copy" onclick="copyToken('--gray-8')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--gray-9</div><div class="token-value">#1e1e1e</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-9);" data-hex="#1e1e1e"></div></div></div><button class="token-copy" onclick="copyToken('--gray-9')">Copy</button></div>
+                    </div>
+                </div>
+
+                <div id="semantic-colors" class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-brush"></i> Semantic Colors</h2><p class="category-description">Purpose-driven color tokens that map to specific UI contexts for consistency across components.</p></div>
+                    <div class="tokens-grid color-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-text-default</div><div class="token-value">var(--gray-0)</div><div class="token-preview"><div class="text-preview"><div style="color: var(--color-text-default);">Default text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-default')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-text-secondary</div><div class="token-value">var(--gray-2)</div><div class="token-preview"><div class="text-preview"><div style="color: var(--color-text-secondary);">Secondary text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-secondary')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-text-muted</div><div class="token-value">var(--gray-3)</div><div class="token-preview"><div class="text-preview"><div style="color: var(--color-text-muted);">Muted text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-muted')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-text-on-brand</div><div class="token-value">var(--brand-text-dark)</div><div class="token-preview"><div class="text-preview" style="background: var(--brand-primary-lime);"><div style="color: var(--color-text-on-brand);">Text on brand color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-on-brand')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-text-error</div><div class="token-value">var(--red-6)</div><div class="token-preview"><div class="text-preview"><div style="color: var(--color-text-error);">Error text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-error')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-background-primary</div><div class="token-value">var(--gray-9)</div><div class="token-preview"><div class="color-preview" style="background: var(--color-background-primary);" data-hex="#1e1e1e"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-primary')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-background-secondary</div><div class="token-value">var(--gray-8)</div><div class="token-preview"><div class="color-preview" style="background: var(--color-background-secondary);" data-hex="#2a2a2a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-secondary')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-background-tertiary</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview" style="background: var(--color-background-tertiary);" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-tertiary')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-background-disabled</div><div class="token-value">#333333</div><div class="token-preview"><div class="color-preview" style="background: var(--color-background-disabled);" data-hex="#333333"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-disabled')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-border-default</div><div class="token-value">var(--gray-6)</div><div class="token-preview"><div class="color-preview" style="background: var(--color-border-default);" data-hex="#444444"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-default')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--color-border-interactive-focus</div><div class="token-value">var(--brand-primary-lime)</div><div class="token-preview"><div class="color-preview" style="background: var(--color-border-interactive-focus);" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-interactive-focus')">Copy</button></div>
+                    </div>
+                </div>
+
+                <div id="category-colors" class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-tags"></i> Token Category Colors</h2><p class="category-description">Distinctive colors assigned to each token type for visual categorization.</p></div>
+                    <div class="tokens-grid color-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--category-color-cyan</div><div class="token-value">#00D1FF</div><div class="token-preview"><div class="color-preview" style="background: var(--category-color-cyan);" data-hex="#00D1FF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-cyan')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--category-color-purple</div><div class="token-value">#B48CFF</div><div class="token-preview"><div class="color-preview" style="background: var(--category-color-purple);" data-hex="#B48CFF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-purple')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--category-color-orange</div><div class="token-value">#FFB86C</div><div class="token-preview"><div class="color-preview" style="background: var(--category-color-orange);" data-hex="#FFB86C"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-orange')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--category-color-pink</div><div class="token-value">#FF74BC</div><div class="token-preview"><div class="color-preview" style="background: var(--category-color-pink);" data-hex="#FF74BC"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-pink')">Copy</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Typography Section -->
+            <section id="typography" class="content-section">
+                <div class="section-header">
+                    <h2 class="text-heading-xl main-section-title"><i class="fas fa-font"></i> Typography System</h2>
+                    <p class="section-description">Text styles and font families that create readable, hierarchical content.</p>
+                </div>
+                <div class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-text-height"></i> Typography Scale</h2><p class="category-description">Text styles using Open Props font sizing with custom semantic class names.</p></div>
+                    <div class="tokens-grid text-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">.text-heading-xl</div><div class="token-value">font-size: var(--font-size-8)</div><div class="text-preview"><div class="text-heading-xl">Heading XL</div></div></div><button class="token-copy" onclick="copyToken('.text-heading-xl')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">.text-heading-lg</div><div class="token-value">font-size: var(--font-size-6)</div><div class="text-preview"><div class="text-heading-lg">Heading LG</div></div></div><button class="token-copy" onclick="copyToken('.text-heading-lg')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">.text-body-lg</div><div class="token-value">font-size: var(--font-size-2)</div><div class="text-preview"><div class="text-body-lg">Body Large</div></div></div><button class="token-copy" onclick="copyToken('.text-body-lg')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">.text-label</div><div class="token-value">font-size: var(--font-size-0)</div><div class="text-preview"><div class="text-label">Label</div></div></div><button class="token-copy" onclick="copyToken('.text-label')">Copy</button></div>
+                    </div>
+                    <div class="tokens-grid font-grid" style="margin-top: var(--size-6);">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview" style="font-family: var(--font-sans);">The quick brown fox jumps over the lazy dog.</div></div><button class="token-copy" onclick="copyToken('--font-sans')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--font-mono</div><div class="token-value">'Monaco', 'Menlo', monospace</div><div class="text-preview" style="font-family: var(--font-mono);">const greeting = "Hello, World!";</div></div><button class="token-copy" onclick="copyToken('--font-mono')">Copy</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Spacing Section -->
+            <section id="spacing" class="content-section">
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-arrows-alt-h"></i> Spacing System</h2><p class="section-description">Consistent spacing scale for layouts and component padding.</p></div>
+                <div class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-ruler"></i> Spacing Scale</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
+                    <div class="tokens-grid spacing-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 4px; height: 4px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 8px; height: 8px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--size-3</div><div class="token-value">0.75rem • 12px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 12px; height: 12px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-3')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--size-4</div><div class="token-value">1rem • 16px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 16px; height: 16px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-4')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--size-6</div><div class="token-value">1.5rem • 24px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 24px; height: 16px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-6')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--size-8</div><div class="token-value">2rem • 32px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 32px; height: 16px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-8')">Copy</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shadows Section -->
+            <section id="shadows" class="content-section">
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-layer-group"></i> Shadow System</h2><p class="section-description">Elevation and depth through carefully crafted shadows.</p></div>
+                <div class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-cube"></i> Shadow Tokens</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
+                    <div class="tokens-grid shadow-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview" style="box-shadow: var(--shadow-2)"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview" style="box-shadow: var(--shadow-3)"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--shadow-4</div><div class="token-value">High elevation</div><div class="token-preview"><div class="shadow-preview" style="box-shadow: var(--shadow-4)"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-4')">Copy</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Border Radius Section -->
+            <section id="border-radius" class="content-section">
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-square"></i> Border Radius</h2><p class="section-description">Consistent corner rounding for a cohesive visual language.</p></div>
+                <div class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-shapes"></i> Radius Tokens</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
+                    <div class="tokens-grid radius-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview" style="border-radius: var(--radius-1)"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview" style="border-radius: var(--radius-2)"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--radius-3</div><div class="token-value">Large radius</div><div class="token-preview"><div class="radius-preview" style="border-radius: var(--radius-3)"></div></div></div><button class="token-copy" onclick="copyToken('--radius-3')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--radius-round</div><div class="token-value">Full round</div><div class="token-preview"><div class="radius-preview" style="border-radius: var(--radius-round)"></div></div></div><button class="token-copy" onclick="copyToken('--radius-round')">Copy</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Animations Section -->
+            <section id="animations" class="content-section">
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-play"></i> Animation System</h2><p class="section-description">Motion design tokens for smooth, consistent animations.</p></div>
+                <div class="token-category">
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-magic"></i> Animation Tokens</h2><p class="category-description">Open Props animation and easing tokens for smooth motion design.</p></div>
+                    <div class="tokens-grid animation-grid">
+                        <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div><button class="token-copy" onclick="copyToken('--ease-3')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div><button class="token-copy" onclick="copyToken('--ease-spring-3')">Copy</button></div>
+                        <div class="token-item"><div class="token-info"><div class="token-name">--animation-duration-2</div><div class="token-value">150ms</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard duration</div></div></div><button class="token-copy" onclick="copyToken('--animation-duration-2')">Copy</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPONENT LIBRARY SECTION -->
+            <section id="components" class="content-section">
+                <div class="section-header">
+                    <h2 class="text-heading-xl main-section-title"><i class="fas fa-cubes"></i> Component Library</h2>
+                    <p class="section-description">Reusable UI components that consume foundation tokens. Each component shows which tokens it uses and how they create consistent, scalable interfaces.</p>
+                </div>
+
+                <div id="token-summary" class="component-section">
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-chart-pie"></i> Token Summary Card</h2>
+                        <p class="component-description">The central dashboard component that displays the total count of design tokens and breaks them down by type. In advanced mode, token types become clickable for filtering.</p>
+                        <div class="token-usage">
+                            <div class="token-usage-title">Tokens Used:</div>
+                            <div class="token-list">
+                                <span class="token-badge">--size-8</span>
+                                <span class="token-badge">--size-6</span>
+                                <span class="token-badge">--size-4</span>
+                                <span class="token-badge">--radius-3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-body">
+                        <div class="example-container"><div class="example-label">Simple Mode (All Active)</div><div class="card token-summary"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="fas fa-palette icon"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="fas fa-font icon"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="fas fa-hashtag icon"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="fas fa-toggle-on icon"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
+                        <div class="example-container"><div class="example-label">Advanced Mode (Selective)</div><div class="card token-summary advanced-mode"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="fas fa-palette icon"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="fas fa-font icon"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="fas fa-hashtag icon"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="fas fa-toggle-on icon"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="card token-summary"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <div id="buttons" class="component-section">
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-mouse-pointer"></i> Buttons</h2><p class="component-description">Primary and secondary button styles with hover effects, disabled states, and shine animations.</p></div>
+                    <div class="component-body">
+                        <div class="variants-grid">
+                            <div class="example-container"><div class="example-label">Primary</div><button class="btn primary"><i class="fas fa-magic-wand-sparkles"></i> Package Tokens</button></div>
+                            <div class="example-container"><div class="example-label">Secondary</div><button class="btn secondary"><i class="fas fa-arrow-left"></i> Back</button></div>
+                            <div class="example-container"><div class="example-label">Disabled</div><button class="btn primary" disabled><i class="fas fa-magic-wand-sparkles"></i> Package 0 Tokens</button></div>
+                        </div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;button class="btn primary"&gt;...&lt;/button&gt;</code></div>
+                    </div>
+                </div>
+
+                <div id="forms" class="component-section">
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-list-alt"></i> Forms</h2><p class="component-description">Form elements including the format selector dropdown with custom styling.</p></div>
+                    <div class="component-body">
+                        <div class="example-container"><div class="example-label">Live Example</div><div class="card export-section"><h3 class="text-label section-title"><i class="fas fa-rocket"></i> Quick Export</h3><p class="text-body-md subtitle">Export all your tokens in your preferred format</p><div class="format-select-wrapper"><select class="format-select"><option value="all">All Formats</option><option value="css" selected>CSS Variables</option><option value="swift">Swift (iOS)</option></select></div><button class="btn primary"><i class="fas fa-magic-wand-sparkles"></i> Package 247 Tokens</button></div></div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="card export-section"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <div id="collection-items" class="component-section">
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-list"></i> Collection Items</h2><p class="component-description">Individual collection list items with custom checkboxes, info, and token type pills.</p></div>
+                    <div class="component-body">
+                        <div class="example-container"><div class="example-label">Live Example</div><div class="collection-list" style="max-height: none;"><div class="collection-item selected"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Brand Colors</div><div class="collection-pills"><div class="collection-pill color"><i class="fas fa-palette"></i> <span>24</span></div><div class="collection-pill text"><i class="fas fa-font"></i> <span>8</span></div></div></div><div class="text-caption collection-count">32 tokens</div></div><div class="collection-item"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Typography Scale</div><div class="collection-pills"><div class="collection-pill text"><i class="fas fa-font"></i> <span>16</span></div><div class="collection-pill number"><i class="fas fa-hashtag"></i> <span>12</span></div></div></div><div class="text-caption collection-count">28 tokens</div></div></div></div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="collection-item selected"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <div id="loading-states" class="component-section">
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-spinner"></i> Loading States</h2><p class="component-description">Skeleton loading components provide placeholder feedback during async operations.</p></div>
+                    <div class="component-body">
+                        <div class="example-container"><div class="example-label">Live Example</div><div class="skeleton-container"><div class="skeleton-item"></div><div class="skeleton-item small"></div><div class="skeleton-item small"></div></div></div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="skeleton-container"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+                
+                <div id="modals" class="component-section">
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-window-restore"></i> Modals</h2><p class="component-description">The modal component used for the "About" section in the plugin, featuring a blurred backdrop.</p></div>
+                    <div class="component-body">
+                        <div class="example-container" style="height: 450px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            <div class="example-label">Live Example</div>
+                             <div class="about-modal show" style="position: absolute; z-index: 1;">
+                                <div class="about-content">
+                                    <button class="about-close"> <i class="fas fa-times"></i> </button>
+                                    <div class="about-avatar" style="background-image: var(--asset-url-avatar);"></div>
+                                    <h2 class="text-heading-md">NATE MILLS</h2>
+                                    <p class="text-body-md">Building accessible design systems that scale.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="about-modal show"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <div id="empty-states" class="component-section">
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-folder-open"></i> Empty States</h2><p class="component-description">Used when no variable collections are found, guiding the user on how to proceed.</p></div>
+                    <div class="component-body">
+                        <div class="example-container"><div class="example-label">Live Example</div><div class="empty-state"><div class="empty-state-icon"><i class="fas fa-folder-open"></i></div><div><div class="text-body-lg empty-state-title">No Variable Collections Found</div><div class="text-body-md empty-state-subtitle">Create collections in Figma's "Local Variables" panel.</div></div><a href="#" class="empty-state-action"><i class="fas fa-external-link-alt"></i> Learn How</a></div></div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="empty-state"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <!-- Progress States -->
+                <div id="progress-states" class="component-section">
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-tasks"></i> Progress & Completion States</h2>
+                        <p class="component-description">Multi-stage progress overlay system showing export progress, success, and error states with animations.</p>
+                    </div>
+                    <div class="component-body">
+                        <div class="example-container" style="min-height: 300px;">
+                            <div class="example-label">Progress State</div>
+                            <div class="progress-overlay" style="position: relative; display: flex;">
+                                <div class="progress-container">
+                                    <div class="text-heading-md success-title">Generating...</div>
+                                    <p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example-container" style="min-height: 300px; margin-top: var(--size-4);">
+                            <div class="example-label">Success State</div>
+                            <div class="progress-overlay" style="position: relative; display: flex;">
+                                <div class="progress-container">
+                                    <i class="fas fa-check-circle success-icon"></i>
+                                    <h2 class="text-heading-md success-title">Export Complete!</h2>
+                                    <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
+                                    <div class="action-buttons">
+                                        <button class="btn primary"><i class="fas fa-download"></i> Download Tokens</button>
+                                        <button class="btn secondary"><i class="fas fa-times"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="progress-overlay"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <!-- Advanced Toggle -->
+                <div id="advanced-toggle" class="component-section">
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-sliders-h"></i> Mode Toggle</h2>
+                        <p class="component-description">Toggle between simple and advanced export modes for different user needs.</p>
+                    </div>
+                    <div class="component-body">
+                        <div class="example-container">
+                            <div class="example-label">Simple Mode Toggle</div>
+                            <div class="advanced-toggle">
+                                <a href="#" class="advanced-link text-body-md">Need specific tokens? <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="example-container" style="margin-top: var(--size-4);">
+                            <div class="example-label">Advanced Mode Toggle</div>
+                            <div class="advanced-toggle">
+                                <button class="btn secondary"><i class="fas fa-arrow-left"></i> Back to Simple Export</button>
+                            </div>
+                        </div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="advanced-toggle"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div id="footer" class="component-section">
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-heart"></i> Footer</h2>
+                        <p class="component-description">Plugin footer with attribution and animated heart.</p>
+                    </div>
+                    <div class="component-body">
+                        <div class="example-container">
+                            <div class="example-label">Live Example</div>
+                            <div class="footer-section">
+                                <a href="#" class="text-caption">created with <span class="heart">❤️</span> by nate mills</a>
+                            </div>
+                        </div>
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="footer-section"&gt;...&lt;/div&gt;</code></div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- PATTERNS SECTION -->
+            <section id="patterns" class="content-section">
+                <div class="section-header">
+                    <h2 class="text-heading-xl main-section-title"><i class="fas fa-sitemap"></i> Design Patterns</h2>
+                    <p class="section-description">Interaction flows, state management patterns, and behavioral guidelines that define how components work together to create intuitive user experiences.</p>
+                </div>
+
+                <div id="user-flows" class="pattern-section">
+                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-route"></i> User Flow Patterns</h2>
+                    <div class="pattern-content">
+                        <h4>Simple Mode Flow (Default)</h4>
+                        <p><strong>Goal:</strong> Export all tokens with minimal user input</p>
+                        <pre>Load Plugin → Show Loading → Fetch Collections → Show Summary → Select Format → Export</pre>
+                        <h4>Advanced Mode Flow</h4>
+                        <p><strong>Goal:</strong> Granular control over token selection</p>
+                        <pre>Simple Mode → Toggle Advanced → Manual Selection → Configure Types → Export</pre>
+                    </div>
+                </div>
+                <div id="state-management" class="pattern-section">
+                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-cogs"></i> State Management</h2>
+                    <div class="pattern-content">
+                        <h4>Centralized State Object</h4>
+                        <pre>const appState = {
+    mode: 'simple', 'advanced' 
+    collections: [],
+    selectedCollections: new Set(),
+    selectedFormat: 'css',
+    selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
+    isLoading: true,
+};</pre>
+                        <h4>Key Principles</h4>
+                        <ul>
+                            <li><strong>Single Source of Truth:</strong> All state lives in one object</li>
+                            <li><strong>Set-based Selection:</strong> Efficient selection/deselection</li>
+                            <li><strong>Immediate UI Sync:</strong> State changes trigger instant visual updates</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="performance" class="pattern-section">
+                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-tachometer-alt"></i> Performance Patterns</h2>
+                    <div class="pattern-content">
+                        <h4>Batch Processing</h4>
+                        <pre>// Process large datasets in chunks to avoid blocking
+const BATCH_SIZE = 100;
+for (let j = 0; j < items.length; j += BATCH_SIZE) {
+    // ... process batch ...
+    await new Promise(resolve => setTimeout(resolve, 0));
+}</pre>
+                        <h4>Early Filtering</h4>
+                        <pre>// Filter variables by type early to avoid unnecessary processing
+const variablesToProcess = allVariables.filter(v => {
+    if (!collectionIds.includes(v.variableCollectionId)) return false;
+    if (v.resolvedType === 'COLOR' && !activeTokenTypes.includes('color')) return false;
+    return true;
+});</pre>
+                    </div>
+                </div>
+                <div id="error-handling" class="pattern-section">
+                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-exclamation-triangle"></i> Error Handling</h2>
+                    <div class="pattern-content">
+                        <h4>Graceful Degradation</h4>
+                        <pre>try {
+    // Risky operation
+} catch (error) {
+    console.error('Error:', error);
+    figma.notify('An error occurred.', { error: true });
+    // Show a safe fallback state in the UI
+}</pre>
+                        <h4>User-Friendly Messages</h4>
+                        <pre>// Convert technical errors to actionable messages
+if (collectionIds.length === 0) {
+    figma.notify('Please select at least one collection.', { error: true });
+}</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABOUT SECTION -->
+            <section id="about" class="content-section about-section">
+                <div class="section-header">
+                    <h2 class="text-heading-xl main-section-title">
+                        <i class="fas fa-user-circle"></i>
+                        About the Creator
+                    </h2>
+                </div>
+                
+                <div class="about-container">
+                    <div class="about-content-grid">
+                        <div class="about-avatar-column">
+                            <div class="about-avatar"></div>
+                        </div>
+                        <div class="about-info-column">
+                            <h3 class="text-heading-lg">Nate Mills</h3>
+                            <p class="text-body-lg about-title">Senior UI Designer</p>
+                            <p class="text-body-md about-description">
+                                Building accessible design systems that scale, with 20 years of industry experience. 
+                                This plugin was made with <span class="heart">❤️</span> for the design community.
+                            </p>
+                            <div class="about-links">
+                                <a href="https://natemills.me" target="_blank" class="about-link" title="Portfolio">
+                                    <i class="fas fa-briefcase"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="about-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://www.figma.com/@mills" target="_blank" class="about-link" title="Figma">
+                                    <i class="fab fa-figma"></i>
+                                </a>
+                                <a href="https://www.buymeacoffee.com/natemills" target="_blank" class="about-link" title="Buy me a coffee">
+                                    <i class="fas fa-coffee"></i>
+                                </a>
+                                <a href="mailto:nate@natemills.me" class="about-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer style="text-align: center; padding-top: var(--size-8); border-top: 1px solid var(--color-border-default); margin-top: var(--size-8);">
+                <p class="text-body-md" style="color: var(--color-text-muted);">
+                    <strong>Token Exporter Design System Guide v2.7.0</strong>
+                </p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // --- SMOOTH NAVIGATION & ACTIVE HIGHLIGHTING ---
+        function initializeNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Use a more inclusive selector to observe all relevant sections
+            const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
+            const observer = new IntersectionObserver(entries => {
+                let visibleSections = [];
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        visibleSections.push(entry.target);
+                    }
+                });
+
+                if (visibleSections.length > 0) {
+                    // Find the topmost visible section to set as active
+                    visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+                    const activeId = visibleSections[0].getAttribute('id');
+                    
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        // Special handling for consolidated "Colors" link
+                        if (linkHref === '#colors') {
+                            const isColorSectionVisible = activeId === 'colors' || activeId === 'brand-colors' || activeId === 'gray-scale' || activeId === 'semantic-colors' || activeId === 'category-colors';
+                            link.classList.toggle('active', isColorSectionVisible);
+                        } else {
+                            link.classList.toggle('active', linkHref === `#${activeId}`);
+                        }
+                    });
+                }
+            }, { rootMargin: "-40% 0px -60% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // --- MOBILE MENU FUNCTIONALITY ---
+        function initializeMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    const isOpen = sidebar.classList.contains('open');
+                    mobileMenuToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+                });
+                
+                // Close sidebar when clicking outside on mobile
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768 && 
+                        !sidebar.contains(e.target) && 
+                        !mobileMenuToggle.contains(e.target) && 
+                        sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+                
+                // Close sidebar when clicking a nav link on mobile
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove('open');
+                            mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                    });
+                });
+            }
+        }
+        
+        // --- COPY FUNCTIONALITY ---
+        function copyToken(tokenName) {
+            navigator.clipboard.writeText(tokenName).then(() => {
+                const buttons = document.querySelectorAll('.token-copy');
+                buttons.forEach(button => {
+                    if (button.onclick && button.onclick.toString().includes(`'${tokenName}'`)) {
+                        const originalText = button.textContent;
+                        button.textContent = 'Copied!';
+                        button.style.color = 'var(--brand-primary-lime)';
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.style.color = '';
+                        }, 2000);
+                    }
+                });
+            });
+        }
+        
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.textContent.trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.color = 'var(--brand-primary-lime)';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+        
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeNavigation();
+            initializeMobileMenu();
+        });
+    </script>
+</body>
+</html>
