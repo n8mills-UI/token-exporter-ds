@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Token Exporter - Design System Guide</title>
+    <title>Token Exporter - Design System Guide v2.7.1</title>
     
     <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -464,6 +463,13 @@
             color: var(--brand-primary-lime);
             margin-bottom: var(--size-4);
             display: block;
+            animation: checkmarkAnimation 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        
+        @keyframes checkmarkAnimation {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         .action-buttons {
@@ -743,6 +749,160 @@
             transform: scale(1.2);
         }
         
+        /* State groups with better hierarchy */
+        .state-group {
+            margin-bottom: var(--size-8); /* Large gap between groups */
+        }
+        
+        .state-group-header {
+            background: rgba(210, 255, 55, 0.03);
+            border: 1px solid rgba(210, 255, 55, 0.1);
+            border-radius: var(--radius-3);
+            padding: var(--size-4);
+            margin-bottom: var(--size-4);
+        }
+        
+        .state-group-title {
+            color: var(--brand-primary-lime);
+            margin-bottom: var(--size-2);
+        }
+        
+        .state-documentation {
+            margin-top: var(--size-1); /* Small gap - attached to parent */
+            background: var(--gray-8);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-3);
+        }
+        
+        .state-documentation-title {
+            color: var(--brand-primary-lime);
+            font-size: var(--font-size-1);
+            font-weight: var(--font-weight-6);
+            margin-bottom: var(--size-2);
+        }
+        
+        /* NEW SKELETON STYLES - To be added to CSS */
+        /* Pulse Skeleton (Default) */
+        .skeleton-pulse {
+            background: var(--gray-7);
+            animation: skeleton-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes skeleton-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        /* Subtle Wave Skeleton */
+        .skeleton-subtle {
+            background: linear-gradient(
+                90deg,
+                var(--gray-7) 25%,
+                var(--gray-6) 50%,
+                var(--gray-7) 75%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-wave 3s ease-in-out infinite;
+        }
+        
+        @keyframes skeleton-wave {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Breathing Skeleton */
+        .skeleton-breathe {
+            background: var(--gray-7);
+            animation: skeleton-breathe 2.5s ease-in-out infinite;
+        }
+        
+        @keyframes skeleton-breathe {
+            0%, 100% { 
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.02);
+            }
+        }
+        
+        /* Branded Skeleton */
+        .skeleton-brand {
+            background: linear-gradient(
+                90deg,
+                rgba(210, 255, 55, 0.05) 25%,
+                rgba(210, 255, 55, 0.1) 50%,
+                rgba(210, 255, 55, 0.05) 75%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-wave 2s ease-in-out infinite;
+            border: 1px solid rgba(210, 255, 55, 0.1);
+        }
+        
+        /* Shimmer Skeleton (Already in CSS) */
+        .skeleton-shimmer {
+            background: var(--gray-8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skeleton-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%
+            );
+            animation: shimmerOverlay 1.5s infinite;
+        }
+        
+        /* NEW BUTTON STYLES - To be added to CSS */
+        .btn-icon-only {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: 50%;
+            border: 1px solid var(--color-border-default);
+            background: transparent;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-icon-only:hover {
+            color: var(--brand-primary-lime);
+            border-color: var(--brand-primary-lime);
+            background: rgba(210, 255, 55, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes pulse-glow {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3));
+            }
+            50% { 
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5));
+            }
+        }
+        
+        @keyframes wave-animation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
@@ -866,10 +1026,7 @@
                         <li><a href="#collection-items" class="nav-link"><i class="fas fa-list"></i> Collections</a></li>
                         <li><a href="#loading-states" class="nav-link"><i class="fas fa-spinner"></i> Loading States</a></li>
                         <li><a href="#modals" class="nav-link"><i class="fas fa-window-restore"></i> Modals</a></li>
-                        <li><a href="#empty-states" class="nav-link"><i class="fas fa-folder-open"></i> Empty States</a></li>
-                        <li><a href="#progress-states" class="nav-link"><i class="fas fa-tasks"></i> Progress States</a></li>
-                        <li><a href="#liquid-progress" class="nav-link"><i class="fas fa-water"></i> Liquid Progress</a></li>
-                        <li><a href="#modular-cards" class="nav-link"><i class="fas fa-layer-group"></i> Modular Cards</a></li>
+                        <li><a href="#modular-cards" class="nav-link"><i class="fas fa-layer-group"></i> Modular Card States</a></li>
                         <li><a href="#advanced-toggle" class="nav-link"><i class="fas fa-sliders-h"></i> Mode Toggle</a></li>
                         <li><a href="#footer" class="nav-link"><i class="fas fa-heart"></i> Footer</a></li>
                     </ul>
@@ -901,7 +1058,7 @@
                         Design System Guide
                     </h1>
                     <p class="text-body-lg guide-subtitle">
-                        VERSION 2.7.0
+                        VERSION 2.7.1
                     </p>
                     <p class="section-description">
                         A comprehensive design system built on Open Props foundation with custom brand identity. 
@@ -1057,12 +1214,48 @@
                     <p class="section-description">Text styles and font families that create readable, hierarchical content.</p>
                 </div>
                 <div class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-text-height"></i> Typography Scale</h2><p class="category-description">Text styles using Open Props font sizing with custom semantic class names.</p></div>
+                    <div class="category-header">
+                        <h2 class="text-heading-lg category-title">
+                            <i class="fas fa-text-height"></i> Typography Scale
+                        </h2>
+                        <p class="category-description">
+                            Complete typography scale using Open Props font sizing. All sizes are defined in our CSS.
+                        </p>
+                    </div>
                     <div class="tokens-grid text-grid">
-                        <div class="token-item"><div class="token-info"><div class="token-name">.text-heading-xl</div><div class="token-value">font-size: var(--font-size-8)</div><div class="text-preview"><div class="text-heading-xl">Heading XL</div></div></div><button class="token-copy" onclick="copyToken('.text-heading-xl')">Copy</button></div>
-                        <div class="token-item"><div class="token-info"><div class="token-name">.text-heading-lg</div><div class="token-value">font-size: var(--font-size-6)</div><div class="text-preview"><div class="text-heading-lg">Heading LG</div></div></div><button class="token-copy" onclick="copyToken('.text-heading-lg')">Copy</button></div>
-                        <div class="token-item"><div class="token-info"><div class="token-name">.text-body-lg</div><div class="token-value">font-size: var(--font-size-2)</div><div class="text-preview"><div class="text-body-lg">Body Large</div></div></div><button class="token-copy" onclick="copyToken('.text-body-lg')">Copy</button></div>
-                        <div class="token-item"><div class="token-info"><div class="token-name">.text-label</div><div class="token-value">font-size: var(--font-size-0)</div><div class="text-preview"><div class="text-label">Label</div></div></div><button class="token-copy" onclick="copyToken('.text-label')">Copy</button></div>
+                        <div class="example-container">
+                            <div class="example-label">All Text Styles</div>
+                            <div style="display: flex; flex-direction: column; gap: var(--size-3);">
+                                <div>
+                                    <div class="text-heading-xl">Heading XL</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-heading-xl • var(--font-size-8)</code>
+                                </div>
+                                <div>
+                                    <div class="text-heading-lg">Heading LG</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-heading-lg • var(--font-size-6)</code>
+                                </div>
+                                <div>
+                                    <div class="text-heading-md">Heading MD</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-heading-md • var(--font-size-4)</code>
+                                </div>
+                                <div>
+                                    <div class="text-body-lg">Body Large</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-body-lg • var(--font-size-2)</code>
+                                </div>
+                                <div>
+                                    <div class="text-body-md">Body Medium</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-body-md • var(--font-size-1)</code>
+                                </div>
+                                <div>
+                                    <div class="text-label">LABEL TEXT</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-label • var(--font-size-0)</code>
+                                </div>
+                                <div>
+                                    <div class="text-caption">Caption Text</div>
+                                    <code style="color: var(--color-text-muted); font-size: var(--font-size-0);">.text-caption • var(--font-size-00)</code>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tokens-grid font-grid" style="margin-top: var(--size-6);">
                         <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview" style="font-family: var(--font-sans);">The quick brown fox jumps over the lazy dog.</div></div><button class="token-copy" onclick="copyToken('--font-sans')">Copy</button></div>
@@ -1156,14 +1349,58 @@
                 </div>
 
                 <div id="buttons" class="component-section">
-                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-mouse-pointer"></i> Buttons</h2><p class="component-description">Primary and secondary button styles with hover effects, disabled states, and shine animations.</p></div>
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title"><i class="fas fa-mouse-pointer"></i> Buttons</h2>
+                        <p class="component-description">Primary and secondary button styles with hover effects, disabled states, shine animations, and icon-only variants for various UI needs.</p>
+                    </div>
                     <div class="component-body">
+                        <h3 style="color: var(--brand-primary-lime); margin-bottom: var(--size-4);">Standard Buttons</h3>
                         <div class="variants-grid">
                             <div class="example-container"><div class="example-label">Primary</div><button class="btn primary"><i class="fas fa-magic-wand-sparkles"></i> Package Tokens</button></div>
                             <div class="example-container"><div class="example-label">Secondary</div><button class="btn secondary"><i class="fas fa-arrow-left"></i> Back</button></div>
                             <div class="example-container"><div class="example-label">Disabled</div><button class="btn primary" disabled><i class="fas fa-magic-wand-sparkles"></i> Package 0 Tokens</button></div>
                         </div>
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;button class="btn primary"&gt;...&lt;/button&gt;</code></div>
+                        
+                        <h3 style="color: var(--brand-primary-lime); margin-top: var(--size-6); margin-bottom: var(--size-4);">Icon-Only Buttons</h3>
+                        <div style="display: flex; gap: var(--size-4); align-items: center; flex-wrap: wrap;">
+                            <div class="example-container" style="flex: none;">
+                                <div class="example-label">Close Button</div>
+                                <button class="btn-icon-only">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="example-container" style="flex: none;">
+                                <div class="example-label">Social Icons</div>
+                                <div style="display: flex; gap: var(--size-2);">
+                                    <button class="btn-icon-only">
+                                        <i class="fab fa-twitter"></i>
+                                    </button>
+                                    <button class="btn-icon-only">
+                                        <i class="fab fa-github"></i>
+                                    </button>
+                                    <button class="btn-icon-only">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="example-container" style="flex: none;">
+                                <div class="example-label">Action Icons</div>
+                                <div style="display: flex; gap: var(--size-2);">
+                                    <button class="btn-icon-only">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn-icon-only">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                    <button class="btn-icon-only">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;button class="btn primary"&gt;...&lt;/button&gt;
+&lt;button class="btn-icon-only"&gt;&lt;i class="fas fa-times"&gt;&lt;/i&gt;&lt;/button&gt;</code></div>
                     </div>
                 </div>
 
@@ -1183,87 +1420,75 @@
                     </div>
                 </div>
 
+                <!-- Loading States Section -->
                 <div id="loading-states" class="component-section">
-                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-spinner"></i> Loading States</h2><p class="component-description">Skeleton loading components provide placeholder feedback during async operations. Includes both basic and animated gradient variations.</p></div>
+                    <div class="component-header">
+                        <h2 class="text-heading-lg component-title">
+                            <i class="fas fa-spinner"></i> Loading States
+                        </h2>
+                        <p class="component-description">
+                            Skeleton loading components provide visual feedback during data fetching. 
+                            We offer 5 different skeleton styles to match your design needs.
+                        </p>
+                    </div>
                     <div class="component-body">
+                        <h3 style="color: var(--brand-primary-lime); margin-bottom: var(--size-4);">
+                            5 Skeleton Variations
+                        </h3>
+                        
+                        <!-- All 5 skeleton options clearly displayed -->
                         <div class="example-container">
-                            <div class="example-label">Basic Skeleton (Current)</div>
-                            <div class="skeleton-container"><div class="skeleton-item"></div><div class="skeleton-item small"></div><div class="skeleton-item small"></div></div>
-                        </div>
-                        
-                        <div class="example-container" style="margin-top: var(--size-4);">
-                            <div class="example-label">Gradient Wave Skeleton (Shoelace-inspired)</div>
-                            <div class="skeleton-container">
-                                <div class="skeleton-item skeleton-wave"></div>
-                                <div class="skeleton-item skeleton-wave small" style="animation-delay: 0.1s;"></div>
-                                <div class="skeleton-item skeleton-wave small" style="animation-delay: 0.2s;"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="example-container" style="margin-top: var(--size-4);">
-                            <div class="example-label">Pulse Skeleton (Shoelace-inspired)</div>
+                            <div class="example-label">1. Pulse Skeleton (Default)</div>
                             <div class="skeleton-container">
                                 <div class="skeleton-item skeleton-pulse"></div>
                                 <div style="display: flex; gap: var(--size-2); margin-top: var(--size-2);">
-                                    <div class="skeleton-item skeleton-pulse" style="height: 60px; flex: 1;"></div>
-                                    <div class="skeleton-item skeleton-pulse" style="height: 60px; flex: 1;"></div>
+                                    <div class="skeleton-item skeleton-pulse" style="height: 40px; flex: 1;"></div>
+                                    <div class="skeleton-item skeleton-pulse" style="height: 40px; flex: 1;"></div>
                                 </div>
                             </div>
                         </div>
                         
-                        <style>
-                            /* Gradient Wave Skeleton (Shoelace-inspired) */
-                            .skeleton-wave {
-                                background: linear-gradient(
-                                    90deg,
-                                    var(--gray-7) 25%,
-                                    var(--gray-6) 50%,
-                                    var(--gray-7) 75%
-                                );
-                                background-size: 200% 100%;
-                                animation: skeleton-wave 2s ease-in-out infinite;
-                            }
-                            
-                            @keyframes skeleton-wave {
-                                0% { background-position: 200% 0; }
-                                100% { background-position: -200% 0; }
-                            }
-                            
-                            /* Pulse Skeleton (Shoelace-inspired) */
-                            .skeleton-pulse {
-                                background: var(--gray-7);
-                                animation: skeleton-pulse 2s ease-in-out infinite;
-                            }
-                            
-                            @keyframes skeleton-pulse {
-                                0%, 100% { opacity: 1; }
-                                50% { opacity: 0.4; }
-                            }
-                            
-                            /* Brand-colored Skeleton Option */
-                            .skeleton-brand {
-                                background: linear-gradient(
-                                    90deg,
-                                    rgba(210, 255, 55, 0.05) 25%,
-                                    rgba(210, 255, 55, 0.1) 50%,
-                                    rgba(210, 255, 55, 0.05) 75%
-                                );
-                                background-size: 200% 100%;
-                                animation: skeleton-wave 2s ease-in-out infinite;
-                                border: 1px solid rgba(210, 255, 55, 0.1);
-                            }
-                        </style>
+                        <div class="example-container">
+                            <div class="example-label">2. Subtle Wave Skeleton</div>
+                            <div class="skeleton-container">
+                                <div class="skeleton-item skeleton-subtle"></div>
+                                <div class="skeleton-item skeleton-subtle small" style="animation-delay: 0.1s;"></div>
+                            </div>
+                        </div>
                         
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>/* Adapted from Shoelace.style skeleton loader */
-/* Uses your design tokens instead of their variables */
-.skeleton-wave {
-    background: linear-gradient(90deg, 
-        var(--gray-7) 25%,
-        var(--gray-6) 50%,
-        var(--gray-7) 75%
-    );
-    animation: skeleton-wave 2s ease-in-out infinite;
-}</code></div>
+                        <div class="example-container">
+                            <div class="example-label">3. Breathing Skeleton</div>
+                            <div class="skeleton-container">
+                                <div class="skeleton-item skeleton-breathe"></div>
+                                <div class="skeleton-item skeleton-breathe small" style="animation-delay: 0.3s;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-container">
+                            <div class="example-label">4. Branded Skeleton</div>
+                            <div class="skeleton-container">
+                                <div class="skeleton-item skeleton-brand"></div>
+                                <div class="skeleton-item skeleton-brand small"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="example-container">
+                            <div class="example-label">5. Shimmer Skeleton (Original)</div>
+                            <div class="skeleton-container">
+                                <div class="skeleton-item skeleton-shimmer"></div>
+                                <div class="skeleton-item skeleton-shimmer small"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                            <code>/* Add class to skeleton-item for different effects */
+.skeleton-item.skeleton-pulse    /* Soft opacity animation */
+.skeleton-item.skeleton-subtle   /* Gentle gradient wave */
+.skeleton-item.skeleton-breathe  /* Scale + opacity breathing */
+.skeleton-item.skeleton-brand    /* Branded tint animation */
+.skeleton-item.skeleton-shimmer  /* Classic shimmer (default) */</code>
+                        </div>
                     </div>
                 </div>
                 
@@ -1285,246 +1510,198 @@
                     </div>
                 </div>
 
-                <div id="empty-states" class="component-section">
-                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-folder-open"></i> Empty States</h2><p class="component-description">Used when no variable collections are found, guiding the user on how to proceed.</p></div>
-                    <div class="component-body">
-                        <div class="example-container"><div class="example-label">Live Example</div><div class="empty-state"><div class="empty-state-icon"><i class="fas fa-folder-open"></i></div><div><div class="text-body-lg empty-state-title">No Variable Collections Found</div><div class="text-body-md empty-state-subtitle">Create collections in Figma's "Local Variables" panel.</div></div><a href="#" class="empty-state-action"><i class="fas fa-external-link-alt"></i> Learn How</a></div></div>
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="empty-state"&gt;...&lt;/div&gt;</code></div>
-                    </div>
-                </div>
-
-                <!-- Progress States -->
-                <div id="progress-states" class="component-section">
-                    <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-tasks"></i> Progress & Completion States</h2>
-                        <p class="component-description">Multi-stage progress overlay system showing export progress, success, and error states with animations.</p>
-                    </div>
-                    <div class="component-body">
-                        <div class="example-container" style="min-height: 300px;">
-                            <div class="example-label">Progress State</div>
-                            <div class="progress-overlay" style="position: relative; display: flex;">
-                                <div class="progress-container">
-                                    <div class="text-heading-md success-title">Generating...</div>
-                                    <p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="example-container" style="min-height: 300px; margin-top: var(--size-4);">
-                            <div class="example-label">Success State</div>
-                            <div class="progress-overlay" style="position: relative; display: flex;">
-                                <div class="progress-container">
-                                    <i class="fas fa-check-circle success-icon"></i>
-                                    <h2 class="text-heading-md success-title">Export Complete!</h2>
-                                    <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
-                                    <div class="action-buttons">
-                                        <button class="btn primary"><i class="fas fa-download"></i> Download Tokens</button>
-                                        <button class="btn secondary"><i class="fas fa-times"></i> Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="progress-overlay"&gt;...&lt;/div&gt;</code></div>
-                    </div>
-                </div>
-
-                <!-- Liquid Progress Animation -->
-                <div id="liquid-progress" class="component-section">
-                    <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-water"></i> Liquid Progress Animation</h2>
-                        <p class="component-description">A 4-stage liquid fill animation that provides visual feedback during the token export process. The animation seamlessly transitions through analyzing, packaging, sanitizing, and finalizing stages.</p>
-                        <div class="token-usage">
-                            <div class="token-usage-title">Tokens Used:</div>
-                            <div class="token-list">
-                                <span class="token-badge">--brand-gradient-lime</span>
-                                <span class="token-badge">--brand-primary-lime</span>
-                                <span class="token-badge">--brand-secondary-yellow</span>
-                                <span class="token-badge">--gray-8</span>
-                                <span class="token-badge">--size-4</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="component-body">
-                        <!-- Live Demo -->
-                        <div class="example-container">
-                            <div class="example-label">Live Demo</div>
-                            <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
-                                <div class="liquid-progress-overlay" id="liquid-demo" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;">
-                                    
-                                    <div class="liquid-progress" style="--progress-size: 140px; position: relative; width: var(--progress-size); height: var(--progress-size); border-radius: 50%; background: #2a2a2a; border: 3px solid #333; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15); overflow: hidden; margin: 0 auto 32px;">
-                                        <div class="liquid-progress-inner" style="position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border-radius: 50%; background: #1a1a1a; overflow: hidden;">
-                                            <div class="liquid-wave" id="liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 4s linear infinite; opacity: 0.9; transition: top 0.5s ease;"></div>
-                                        </div>
-                                        <div class="liquid-progress-label" id="progress-label" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 28px; font-weight: 700; color: var(--color-text-default); text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);">25%</div>
-                                    </div>
-                                    
-                                    <div class="text-label" id="stage-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2); text-transform: uppercase; letter-spacing: 0.1em;">ANALYZING TOKENS</div>
-                                    <div class="text-body-md" id="stage-info" style="color: var(--color-text-secondary);">Stage 1 of 4</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Control Button -->
-                            <div style="text-align: center; margin-top: var(--size-4);">
-                                <button class="btn secondary" id="liquid-play-btn" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="toggleLiquidAnimation()">
-                                    <i class="fas fa-play"></i> Play Animation
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <style>
-                            @keyframes wave-animation {
-                                0% { transform: rotate(0deg); }
-                                100% { transform: rotate(360deg); }
-                            }
-                        </style>
-                        
-                        <!-- Documentation -->
-                        <div class="example-container" style="margin-top: var(--size-4);">
-                            <div class="example-label">How It Works</div>
-                            <div style="padding: var(--size-4);">
-                                <h4 style="color: var(--color-text-default); margin-bottom: var(--size-2);">Animation Stages</h4>
-                                <p style="color: var(--color-text-secondary); margin-bottom: var(--size-3);">
-                                    The liquid progress animation provides clear visual feedback through 4 distinct stages:
-                                </p>
-                                <ol style="color: var(--color-text-secondary); padding-left: var(--size-4); margin-bottom: var(--size-3);">
-                                    <li><strong style="color: var(--brand-primary-lime);">Analyzing (25%)</strong> - Scanning and cataloging all design tokens</li>
-                                    <li><strong style="color: var(--brand-primary-lime);">Packaging (50%)</strong> - Creating format-specific file structures</li>
-                                    <li><strong style="color: var(--brand-primary-lime);">Sanitizing (75%)</strong> - Validating tokens and ensuring compatibility</li>
-                                    <li><strong style="color: var(--brand-primary-lime);">Finalizing (100%)</strong> - Optimizing and preparing for download</li>
-                                </ol>
-                                
-                                <h4 style="color: var(--color-text-default); margin-bottom: var(--size-2);">Design Decisions</h4>
-                                <ul style="color: var(--color-text-secondary); padding-left: var(--size-4);">
-                                    <li>The liquid fill effect creates a smooth, organic feel that reduces perceived wait time</li>
-                                    <li>Circular container references the plugin's logo while maximizing visual impact</li>
-                                    <li>Brand gradient colors maintain consistency with the overall design system</li>
-                                    <li>Stage labels provide context without overwhelming the visual</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>// Liquid animation implementation
-const stages = [
-    { percent: 25, label: 'ANALYZING TOKENS', stage: 1 },
-    { percent: 50, label: 'PACKAGING FILES', stage: 2 },
-    { percent: 75, label: 'SANITIZING OUTPUT', stage: 3 },
-    { percent: 100, label: 'FINALIZING', stage: 4 }
-];
-
-// Smooth transitions between stages
-// Wave rotation creates dynamic movement
-// Progress updates trigger state changes</code></div>
-                    </div>
-                </div>
-                
-                <script>
-                    // Liquid Animation Controller
-                    let liquidAnimationInterval = null;
-                    let currentStage = 0;
-                    const stages = [
-                        { percent: 25, label: 'ANALYZING TOKENS', stage: 1, top: 75 },
-                        { percent: 50, label: 'PACKAGING FILES', stage: 2, top: 50 },
-                        { percent: 75, label: 'SANITIZING OUTPUT', stage: 3, top: 25 },
-                        { percent: 100, label: 'FINALIZING', stage: 4, top: 0 }
-                    ];
-                    
-                    function toggleLiquidAnimation() {
-                        const btn = document.getElementById('liquid-play-btn');
-                        const wave = document.getElementById('liquid-wave');
-                        const label = document.getElementById('progress-label');
-                        const stageLabel = document.getElementById('stage-label');
-                        const stageInfo = document.getElementById('stage-info');
-                        
-                        if (liquidAnimationInterval) {
-                            // Stop animation
-                            clearInterval(liquidAnimationInterval);
-                            liquidAnimationInterval = null;
-                            btn.innerHTML = '<i class="fas fa-play"></i> Play Animation';
-                            
-                            // Reset to first stage
-                            currentStage = 0;
-                            updateLiquidStage();
-                        } else {
-                            // Start animation
-                            btn.innerHTML = '<i class="fas fa-pause"></i> Pause Animation';
-                            
-                            liquidAnimationInterval = setInterval(() => {
-                                currentStage = (currentStage + 1) % stages.length;
-                                updateLiquidStage();
-                                
-                                // Auto-stop at 100%
-                                if (currentStage === 0) {
-                                    setTimeout(() => {
-                                        clearInterval(liquidAnimationInterval);
-                                        liquidAnimationInterval = null;
-                                        btn.innerHTML = '<i class="fas fa-play"></i> Play Animation';
-                                    }, 1000);
-                                }
-                            }, 2000);
-                        }
-                    }
-                    
-                    function updateLiquidStage() {
-                        const stage = stages[currentStage];
-                        const wave = document.getElementById('liquid-wave');
-                        const label = document.getElementById('progress-label');
-                        const stageLabel = document.getElementById('stage-label');
-                        const stageInfo = document.getElementById('stage-info');
-                        
-                        wave.style.top = stage.top + '%';
-                        label.textContent = stage.percent + '%';
-                        stageLabel.textContent = stage.label;
-                        stageInfo.textContent = `Stage ${stage.stage} of 4`;
-                    }
-                </script>
-
                 <!-- Modular Card States -->
                 <div id="modular-cards" class="component-section">
                     <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-layer-group"></i> Modular Card States</h2>
-                        <p class="component-description">The token summary card transforms to show different states without modals or page changes. Everything happens in-place for a seamless experience.</p>
+                        <h2 class="text-heading-lg component-title">
+                            <i class="fas fa-layer-group"></i> Modular Card States
+                        </h2>
+                        <p class="component-description">
+                            The plugin interface transforms through different states based on user data and actions. 
+                            All transitions happen in-place for a seamless experience.
+                        </p>
                     </div>
                     <div class="component-body">
-                        <div class="example-container">
-                            <div class="example-label">Empty State (In Card)</div>
-                            <div class="card token-summary">
-                                <div class="empty-state" style="padding: 0;">
-                                    <div class="empty-state-icon"><i class="fas fa-folder-open"></i></div>
-                                    <div>
-                                        <div class="text-body-lg empty-state-title">No Variable Collections Found</div>
-                                        <div class="text-body-md empty-state-subtitle">Create collections in Figma's "Local Variables" panel to get started.</div>
+                        
+                        <!-- Empty State -->
+                        <div class="state-group">
+                            <div class="example-container">
+                                <div class="example-label">Empty State</div>
+                                <div style="background: var(--bg-color); padding: var(--size-6); border-radius: var(--radius-3); min-height: 400px; display: flex; align-items: center; justify-content: center;">
+                                    <div class="empty-state" style="max-width: 360px; width: 100%;">
+                                        <div style="font-size: 64px; margin-bottom: var(--size-4); animation: pulse-glow 2s ease-in-out infinite;">
+                                            <i class="fas fa-cube" style="color: var(--brand-primary-lime);"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-heading-lg empty-state-title">Let's build something!</div>
+                                            <div class="text-body-md empty-state-subtitle" style="margin-bottom: var(--size-4);">
+                                                Turn your colors, text styles, and spacing into code-ready tokens.
+                                            </div>
+                                            <div style="display: flex; gap: var(--size-3); justify-content: center; margin-bottom: var(--size-4);">
+                                                <div style="text-align: center;">
+                                                    <i class="fas fa-palette" style="color: #00D1FF; font-size: 24px; margin-bottom: var(--size-1);"></i>
+                                                    <div class="text-caption">Colors</div>
+                                                </div>
+                                                <div style="text-align: center;">
+                                                    <i class="fas fa-font" style="color: #B48CFF; font-size: 24px; margin-bottom: var(--size-1);"></i>
+                                                    <div class="text-caption">Typography</div>
+                                                </div>
+                                                <div style="text-align: center;">
+                                                    <i class="fas fa-arrows-alt-h" style="color: #FFB86C; font-size: 24px; margin-bottom: var(--size-1);"></i>
+                                                    <div class="text-caption">Spacing</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn primary" style="width: auto;">
+                                            Create variables <i class="fas fa-arrow-right" style="margin-left: var(--size-2);"></i>
+                                        </button>
                                     </div>
-                                    <a href="#" class="empty-state-action"><i class="fas fa-external-link-alt"></i> Learn How</a>
+                                </div>
+                            </div>
+                            <div class="state-documentation">
+                                <div class="state-documentation-title">Key Info:</div>
+                                <div class="token-list">
+                                    <span class="token-badge">Full interface takeover</span>
+                                    <span class="token-badge">Friendly messaging</span>
+                                    <span class="token-badge">Clear CTA</span>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="example-container" style="margin-top: var(--size-4);">
-                            <div class="example-label">Loading State (Skeleton)</div>
-                            <div class="card token-summary">
-                                <div class="skeleton-container" style="padding: 0;">
-                                    <div class="skeleton-item" style="height: 80px; margin-bottom: var(--size-3);"></div>
-                                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-2);">
-                                        <div class="skeleton-item small"></div>
-                                        <div class="skeleton-item small"></div>
-                                        <div class="skeleton-item small"></div>
-                                        <div class="skeleton-item small"></div>
+                        <!-- Loading State -->
+                        <div class="state-group">
+                            <div class="example-container">
+                                <div class="example-label">Loading State</div>
+                                <div class="card token-summary">
+                                    <div class="skeleton-container" style="padding: 0;">
+                                        <!-- Main count skeleton -->
+                                        <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--size-4);">
+                                            <div class="skeleton-item skeleton-pulse" style="width: 120px; height: 48px; margin-bottom: var(--size-2);"></div>
+                                            <div class="skeleton-item skeleton-pulse" style="width: 180px; height: 16px;"></div>
+                                        </div>
+                                        <!-- Token type skeletons -->
+                                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-2); padding-top: var(--size-4); border-top: 1px solid var(--color-border-default);">
+                                            <div style="text-align: center;">
+                                                <i class="fas fa-palette" style="font-size: 18px; color: #00D1FF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
+                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">colors</div>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <i class="fas fa-font" style="font-size: 18px; color: #B48CFF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
+                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">text</div>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <i class="fas fa-toggle-on" style="font-size: 18px; color: #FF74BC; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
+                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">states</div>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <i class="fas fa-hashtag" style="font-size: 18px; color: #FFB86C; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
+                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">numbers</div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="state-documentation">
+                                <div class="state-documentation-title">Key Info:</div>
+                                <div class="token-list">
+                                    <span class="token-badge">Uses skeleton-pulse</span>
+                                    <span class="token-badge">Icons at 30% opacity</span>
+                                    <span class="token-badge">Only numbers load</span>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="example-container" style="margin-top: var(--size-4);">
-                            <div class="example-label">Success State (Download Ready)</div>
-                            <div class="card token-summary" style="text-align: center;">
-                                <i class="fas fa-check-circle" style="font-size: var(--font-size-8); color: var(--brand-primary-lime); margin-bottom: var(--size-3);"></i>
-                                <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Tokens Ready!</div>
-                                <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-4);">247 tokens packaged successfully</div>
-                                <button class="btn primary"><i class="fas fa-download"></i> Download design-tokens.zip</button>
+                        <!-- Export Flow States Group -->
+                        <div class="state-group">
+                            <div class="state-group-header">
+                                <h3 class="state-group-title">Export Flow States</h3>
+                                <p style="color: var(--color-text-secondary); margin: 0;">
+                                    The export process follows a 4-stage animation sequence
+                                </p>
+                            </div>
+                            
+                            <!-- Processing State -->
+                            <div class="example-container">
+                                <div class="example-label">Processing State (Export Progress)</div>
+                                <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
+                                    <div class="liquid-progress-overlay" id="modular-liquid-demo" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--size-6); z-index: 10;">
+                                        <!-- Centered animation -->
+                                        <div class="liquid-progress" style="--progress-size: 120px; position: relative; width: var(--progress-size); height: var(--progress-size); border-radius: 50%; background: #2a2a2a; border: 3px solid #333; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15); overflow: hidden; margin-bottom: var(--size-4);">
+                                            <div class="liquid-progress-inner" style="position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border-radius: 50%; background: #1a1a1a; overflow: hidden;">
+                                                <div class="liquid-wave" id="modular-liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 4s linear infinite; opacity: 0.9; transition: top 0.5s ease;"></div>
+                                                <!-- Second wave for depth -->
+                                                <div class="liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 6s linear infinite reverse; opacity: 0.5; transition: top 0.5s ease;"></div>
+                                            </div>
+                                            <!-- Black text that moves with water -->
+                                            <div id="modular-percentage-container" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; align-items: baseline; transition: bottom 0.5s ease;">
+                                                <span id="modular-progress-number" style="font-size: 24px; font-weight: 600; color: var(--brand-text-dark); text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);">25</span>
+                                                <span style="font-size: 14px; font-weight: 400; color: var(--brand-text-dark); margin-left: 2px; text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);">%</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Centered text below -->
+                                        <div style="text-align: center;">
+                                            <div class="text-label" id="modular-stage-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2); text-transform: uppercase; letter-spacing: 0.1em;">ANALYZING TOKENS</div>
+                                            <div class="text-body-md" id="modular-stage-detail" style="color: var(--color-text-secondary);">Scanning your variable collections...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Control Button -->
+                                <div style="text-align: center; margin-top: var(--size-4);">
+                                    <button class="btn secondary" id="modular-liquid-play-btn" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="toggleModularLiquidAnimation()">
+                                        <i class="fas fa-play"></i> Play Animation
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- 4 Stage Documentation -->
+                            <div class="state-documentation" style="margin-bottom: var(--size-4);">
+                                <div class="state-documentation-title">4 Stage Process:</div>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--size-2); margin-top: var(--size-2);">
+                                    <div style="background: var(--gray-8); padding: var(--size-2); border-radius: var(--radius-1);">
+                                        <strong style="color: var(--brand-primary-lime);">Stage 1 (25%):</strong> Analyzing - Scanning collections
+                                    </div>
+                                    <div style="background: var(--gray-8); padding: var(--size-2); border-radius: var(--radius-1);">
+                                        <strong style="color: var(--brand-primary-lime);">Stage 2 (50%):</strong> Packaging - Creating files
+                                    </div>
+                                    <div style="background: var(--gray-8); padding: var(--size-2); border-radius: var(--radius-1);">
+                                        <strong style="color: var(--brand-primary-lime);">Stage 3 (75%):</strong> Sanitizing - Validating output
+                                    </div>
+                                    <div style="background: var(--gray-8); padding: var(--size-2); border-radius: var(--radius-1);">
+                                        <strong style="color: var(--brand-primary-lime);">Stage 4 (100%):</strong> Finalizing - Ready to download
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Success State -->
+                            <div class="example-container">
+                                <div class="example-label">Success State (Download Ready)</div>
+                                <div class="card token-summary" style="text-align: center; position: relative; padding: var(--size-8) var(--size-6);">
+                                    <!-- Close button (circular, outline, secondary) -->
+                                    <button class="btn-icon-only" style="position: absolute; top: var(--size-3); right: var(--size-3);">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    
+                                    <i class="fas fa-check-circle" style="font-size: 64px; color: var(--brand-primary-lime); margin-bottom: var(--size-4); animation: checkmarkAnimation 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;"></i>
+                                    <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Export Complete!</div>
+                                    <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-6);">247 tokens packaged successfully</div>
+                                    <button class="btn primary"><i class="fas fa-download"></i> Download design-tokens.zip</button>
+                                </div>
+                            </div>
+                            <div class="state-documentation">
+                                <div class="state-documentation-title">Key Info:</div>
+                                <div class="token-list">
+                                    <span class="token-badge">Follows processing state</span>
+                                    <span class="token-badge">Icon-only close button</span>
+                                    <span class="token-badge">Clear download CTA</span>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>// State transitions happen in the same card
-// No modals, no page changes, just smooth transitions</code></div>
                     </div>
                 </div>
 
@@ -1693,7 +1870,7 @@ if (collectionIds.length === 0) {
             <!-- Footer -->
             <footer style="text-align: center; padding-top: var(--size-8); border-top: 1px solid var(--color-border-default); margin-top: var(--size-8);">
                 <p class="text-body-md" style="color: var(--color-text-muted);">
-                    <strong>Token Exporter Design System Guide v2.7.0</strong>
+                    <strong>Token Exporter Design System Guide v2.7.1</strong>
                 </p>
             </footer>
         </main>
@@ -1817,7 +1994,70 @@ if (collectionIds.length === 0) {
             });
         }
         
-
+        // Modular Card Liquid Animation with BLACK text that moves
+        let modularLiquidAnimationInterval = null;
+        let modularCurrentStage = 0;
+        const modularStages = [
+            { percent: 25, label: 'ANALYZING TOKENS', detail: 'Scanning your variable collections...' },
+            { percent: 50, label: 'PACKAGING FILES', detail: 'Creating format-specific structures...' },
+            { percent: 75, label: 'SANITIZING OUTPUT', detail: 'Validating and optimizing tokens...' },
+            { percent: 100, label: 'FINALIZING', detail: 'Preparing download package...' }
+        ];
+        
+        function toggleModularLiquidAnimation() {
+            const btn = document.getElementById('modular-liquid-play-btn');
+            
+            if (modularLiquidAnimationInterval) {
+                clearInterval(modularLiquidAnimationInterval);
+                modularLiquidAnimationInterval = null;
+                btn.innerHTML = '<i class="fas fa-play"></i> Play Animation';
+                modularCurrentStage = 0;
+                updateModularLiquidStage();
+            } else {
+                btn.innerHTML = '<i class="fas fa-pause"></i> Pause Animation';
+                
+                modularLiquidAnimationInterval = setInterval(() => {
+                    modularCurrentStage = (modularCurrentStage + 1) % modularStages.length;
+                    updateModularLiquidStage();
+                    
+                    if (modularCurrentStage === 0) {
+                        setTimeout(() => {
+                            clearInterval(modularLiquidAnimationInterval);
+                            modularLiquidAnimationInterval = null;
+                            btn.innerHTML = '<i class="fas fa-play"></i> Play Animation';
+                        }, 1000);
+                    }
+                }, 2000);
+            }
+        }
+        
+        function updateModularLiquidStage() {
+            const stage = modularStages[modularCurrentStage];
+            const waves = document.querySelectorAll('#modular-liquid-demo .liquid-wave');
+            const container = document.getElementById('modular-percentage-container');
+            
+            // Update water level
+            waves.forEach(wave => {
+                wave.style.top = (75 - (stage.percent * 0.75)) + '%';
+            });
+            
+            // Update percentage text
+            document.getElementById('modular-progress-number').textContent = stage.percent;
+            
+            // Move text with water, but stop at center
+            if (stage.percent <= 50) {
+                // Move from bottom (15px) to center (50px)
+                const newBottom = 15 + ((50 - 15) * (stage.percent / 50));
+                container.style.bottom = newBottom + 'px';
+            } else {
+                // Keep at center
+                container.style.bottom = '50px';
+            }
+            
+            // Update labels
+            document.getElementById('modular-stage-label').textContent = stage.label;
+            document.getElementById('modular-stage-detail').textContent = stage.detail;
+        }
         
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
