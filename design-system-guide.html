@@ -949,57 +949,134 @@
                         <p class="component-description">4-stage liquid progress animation for token export process. The animation plays inside the token summary card for an integrated experience.</p>
                     </div>
                     <div class="component-body">
+                        <!-- Option 1: Wave Style (Based on first CodePen) -->
                         <div class="example-container">
-                            <div class="example-label">Liquid Progress States</div>
-                            <div class="card token-summary" style="position: relative; overflow: hidden;">
+                            <div class="example-label">Option 1: Wave Style</div>
+                            <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
                                 <div class="liquid-progress-overlay" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;">
-                                    <div class="liquid-container" style="width: 200px; height: 200px; position: relative; margin-bottom: var(--size-4);">
-                                        <div style="position: absolute; inset: 0; background: var(--gray-8); border-radius: 50%; overflow: hidden;">
-                                            <div class="liquid-fill" style="position: absolute; bottom: 0; left: 0; right: 0; height: 25%; background: linear-gradient(180deg, var(--brand-primary-lime) 0%, var(--brand-secondary-yellow) 100%); transition: height 1s ease-out;">
-                                                <div style="position: absolute; top: -10px; left: -50%; width: 200%; height: 40px; background: inherit; border-radius: 40%; animation: wave 3s linear infinite;"></div>
-                                                <div style="position: absolute; top: -10px; left: -50%; width: 200%; height: 40px; background: inherit; border-radius: 40%; animation: wave 3s linear infinite; animation-delay: 0.5s; opacity: 0.5;"></div>
-                                            </div>
+                                    
+                                    <!-- SVG Wave Definition -->
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                        <symbol id="wave">
+                                            <path d="M420,20c21.5-0.4,38.8-2.5,51.1-4.5c13.4-2.2,26.5-5.2,27.3-5.4C514,6.5,518,4.7,528.5,2.7c7.1-1.3,17.9-2.8,31.5-2.7c0,0,0,0,0,0v20H420z"></path>
+                                            <path d="M420,20c-21.5-0.4-38.8-2.5-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C326,6.5,322,4.7,311.5,2.7C304.3,1.4,293.6-0.1,280,0c0,0,0,0,0,0v20H420z"></path>
+                                            <path d="M140,20c21.5-0.4,38.8-2.5,51.1-4.5c13.4-2.2,26.5-5.2,27.3-5.4C234,6.5,238,4.7,248.5,2.7c7.1-1.3,17.9-2.8,31.5-2.7c0,0,0,0,0,0v20H140z"></path>
+                                            <path d="M140,20c-21.5-0.4-38.8-2.5-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C46,6.5,42,4.7,31.5,2.7C24.3,1.4,13.6-0.1,0,0c0,0,0,0,0,0l0,20H140z"></path>
+                                        </symbol>
+                                    </svg>
+                                    
+                                    <div class="wave-progress-box" style="width: 180px; height: 180px; position: relative; background: var(--gray-8); border-radius: 12%; overflow: hidden; margin-bottom: var(--size-4);">
+                                        <div class="percent" style="position: absolute; left: 0; top: 0; z-index: 3; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: var(--font-size-8); color: var(--color-text-default); font-weight: var(--font-weight-7);">25%</span>
                                         </div>
-                                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-                                            <span class="text-heading-lg" style="color: var(--color-text-default); font-weight: var(--font-weight-7);">25%</span>
+                                        <div class="water" style="position: absolute; left: 0; top: 0; z-index: 2; width: 100%; height: 100%; transform: translateY(75%); background: var(--brand-primary-lime); transition: all 0.3s;">
+                                            <svg viewBox="0 0 560 20" class="water_wave water_wave_back" style="width: 200%; position: absolute; bottom: 100%; right: 0; fill: var(--brand-secondary-yellow); animation: wave-back 1.4s infinite linear;">
+                                                <use xlink:href="#wave"></use>
+                                            </svg>
+                                            <svg viewBox="0 0 560 20" class="water_wave water_wave_front" style="width: 200%; position: absolute; bottom: 100%; left: 0; fill: var(--brand-primary-lime); margin-bottom: -1px; animation: wave-front 0.7s infinite linear;">
+                                                <use xlink:href="#wave"></use>
+                                            </svg>
                                         </div>
                                     </div>
+                                    
                                     <div class="text-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2);">ANALYZING TOKENS</div>
                                     <div class="text-body-md" style="color: var(--color-text-secondary);">Stage 1 of 4</div>
                                 </div>
                             </div>
                         </div>
                         
+                        <!-- Option 2: Rotating Liquid Style (Based on second CodePen) -->
                         <div class="example-container" style="margin-top: var(--size-4);">
-                            <div class="example-label">Progress Stages</div>
-                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-3);">
-                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
-                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">25%</div>
-                                    <div class="text-label">ANALYZING</div>
-                                </div>
-                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
-                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">50%</div>
-                                    <div class="text-label">PACKAGING</div>
-                                </div>
-                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
-                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">75%</div>
-                                    <div class="text-label">FINALIZING</div>
-                                </div>
-                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
-                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">100%</div>
-                                    <div class="text-label">COMPLETE</div>
+                            <div class="example-label">Option 2: Rotating Liquid Style</div>
+                            <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
+                                <div class="liquid-progress-overlay" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;">
+                                    
+                                    <div class="rotating-progress" style="--progress-value: 50; width: 180px; height: 180px; border: 5px solid rgba(210, 255, 55, 0.3); border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; background: var(--gray-7); margin-bottom: var(--size-4);">
+                                        <div class="rotating-progress-inner" style="width: 90%; height: 90%; border-radius: 50%; background: var(--gray-8); overflow: hidden; position: relative;">
+                                            <div class="progress-indicator" style="background: var(--brand-gradient-lime); transform-origin: center center; opacity: 0.8; animation: progress-wave-animation 8s linear infinite both; position: absolute; top: 50%; left: -50%; right: 50%; width: 350px; height: 350px; border-radius: 140px;"></div>
+                                            <div class="progress-indicator" style="background: linear-gradient(180deg, var(--brand-secondary-yellow) 0%, var(--brand-primary-lime) 100%); transform: rotate(90deg); border-radius: 90px; opacity: 0.6; animation: progress-wave-animation 8s linear infinite both; position: absolute; top: 50%; left: -50%; right: 50%; width: 350px; height: 350px;"></div>
+                                        </div>
+                                        <span class="progress-label" style="position: absolute; color: var(--color-text-default); font-size: var(--font-size-8); font-weight: var(--font-weight-7);">50%</span>
+                                    </div>
+                                    
+                                    <div class="text-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2);">PACKAGING FILES</div>
+                                    <div class="text-body-md" style="color: var(--color-text-secondary);">Stage 2 of 4</div>
                                 </div>
                             </div>
                         </div>
                         
                         <style>
-                            @keyframes wave {
-                                0% { transform: translateX(0) rotate(0deg); }
-                                100% { transform: translateX(50%) rotate(360deg); }
+                            @keyframes wave-front {
+                                100% { transform: translate(-50%, 0); }
+                            }
+                            
+                            @keyframes wave-back {
+                                100% { transform: translate(50%, 0); }
+                            }
+                            
+                            @keyframes progress-wave-animation {
+                                to { transform: rotate(360deg); }
                             }
                         </style>
                         
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="liquid-progress-overlay"&gt;...&lt;/div&gt;</code></div>
+                        <!-- Interactive Demo Controls -->
+                        <div class="example-container" style="margin-top: var(--size-4);">
+                            <div class="example-label">Interactive Demo (Click to test)</div>
+                            <div style="display: flex; gap: var(--size-3); justify-content: center; padding: var(--size-4); background: var(--color-background-primary); border-radius: var(--radius-2);">
+                                <button class="btn secondary" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="playLiquidAnimation('wave')">
+                                    <i class="fas fa-play"></i> Play Wave Style
+                                </button>
+                                <button class="btn secondary" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="playLiquidAnimation('rotate')">
+                                    <i class="fas fa-play"></i> Play Rotating Style
+                                </button>
+                                <button class="btn secondary" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="resetLiquidAnimation()">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Stages Reference -->
+                        <div class="example-container" style="margin-top: var(--size-4);">
+                            <div class="example-label">4-Stage Process</div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-3);">
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">25%</div>
+                                    <div class="text-label">ANALYZING</div>
+                                    <div class="text-caption" style="color: var(--color-text-muted); margin-top: var(--size-1);">Scanning tokens</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">50%</div>
+                                    <div class="text-label">PACKAGING</div>
+                                    <div class="text-caption" style="color: var(--color-text-muted); margin-top: var(--size-1);">Creating files</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">75%</div>
+                                    <div class="text-label">FINALIZING</div>
+                                    <div class="text-caption" style="color: var(--color-text-muted); margin-top: var(--size-1);">Optimizing output</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--size-3); background: var(--color-background-primary); border-radius: var(--radius-2); border: 1px solid var(--color-border-default);">
+                                    <div class="text-heading-md" style="color: var(--brand-primary-lime);">100%</div>
+                                    <div class="text-label">COMPLETE</div>
+                                    <div class="text-caption" style="color: var(--color-text-muted); margin-top: var(--size-1);">Ready to download</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+                            function playLiquidAnimation(style) {
+                                // Placeholder for demo - in real implementation this would animate
+                                console.log('Playing', style, 'animation');
+                            }
+                            
+                            function resetLiquidAnimation() {
+                                // Placeholder for demo
+                                console.log('Reset animation');
+                            }
+                        </script>
+                        
+                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>// Two liquid animation styles available
+// Wave style: Smoother, more organic
+// Rotating style: More dynamic, energetic</code></div>
                     </div>
                 </div>
 
