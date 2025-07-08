@@ -1,62 +1,71 @@
-# Token Exporter - Integrated Project Roadmap
+# Token Exporter - Final Integrated Project Roadmap
 
 ## Project Overview
 
-**Primary Goal:** Portfolio showcase with enhanced visual impact and storytelling for career advancement  
-**Current Version:** v2.7.1  
-**Foundation:** Open Props with custom brand identity  
-**Approach:** 5-phase implementation with AI assistance  
+**Primary Goal:** Portfolio showcase with enhanced visual impact and storytelling for career advancement
+**Current Version:** v2.7.1
+**Foundation:** Open Props with custom brand identity
+**Approach:** 5-phase implementation with AI assistance
 
 ### Two Distinct Products
-1. **design-system-guide.html** - Portfolio website (no size constraints, interactive features)
-2. **ui.html** - Figma plugin (380x650px constraint, functional tool)
+
+1.  **design-system-guide.html** - Portfolio website (no size constraints, interactive features)
+2.  **ui.html** - Figma plugin (380x650px constraint, functional tool)
 
 ### Technical Constraints
-- HTML guide: ~50k characters (update command only, never full rewrite)
-- CSS: Single file, no build process
-- Plugin: 380x650px, no localStorage, iframe environment
-- Network access: cdn.jsdelivr.net for external resources
+
+-   HTML guide: ~50k characters (update command only, never full rewrite)
+-   CSS: Single file, no build process
+-   Plugin: 380x650px, no localStorage, iframe environment
+-   Network access: cdn.jsdelivr.net for external resources
+-   Event listeners must be reattached after DOM updates in the plugin
+-   All external resources must be in `manifest.json` `allowedDomains`
+-   Token type mapping is fixed: `COLOR`, `STRING`, `FLOAT`, `BOOLEAN`
 
 ---
 
 ## Recently Completed ✅
-- Basic token summary card with count display
-- Collection selection interface with custom checkboxes
-- 5 skeleton loading variations (pulse, subtle, breathe, brand, shimmer)
-- Liquid progress animation with 4-stage export flow
-- Icon-only button patterns (.btn-icon-only)
-- Empty state with friendly messaging
-- Success state with download CTA
-- Open Props foundation integration
-- Brand color system and semantic mappings
+
+-   Basic token summary card with count display
+-   Collection selection interface with custom checkboxes
+-   5 skeleton loading variations (pulse, subtle, breathe, brand, shimmer)
+-   Liquid progress animation with 4-stage export flow
+-   Icon-only button patterns (.btn-icon-only)
+-   Empty state with friendly messaging
+-   Success state with download CTA
+-   Open Props foundation integration
+-   Brand color system and semantic mappings
 
 ---
 
 ## Phase 1: Foundation & Critical Fixes
-**Status:** In Progress  
+
+**Status:** In Progress
 **Focus:** Resolve current issues and establish solid foundation
 
 ### Critical Fixes (Immediate Priority)
-- [ ] **About Modal Issues**
-  - Fix profile image loading
-  - Fix broken divider
-  - Reduce header sizes (1-2 levels)
-  - Standardize social button styles
-  - Decide: reusable modal or one-off component
 
-- [ ] **Button Variants Completion**
-  - Add tertiary button (text-only, padded)
-  - Fix disabled styles (remove glow/gradient effects)
-  - Verify accessibility compliance
-  - Implement focus states
-
-- [ ] **Scale Optimization**
-  - Create wireframe for 380px plugin width constraint
-  - Implement cohesive typography scale (32px → 18px → 13px → 10px)
-  - Replace hardcoded pixel values with design tokens
-  - Optimize component sizing for plugin constraints
+-   [ ] **About Modal Issues**
+    -   Fix profile image loading
+    -   Fix broken divider
+    -   Reduce header sizes (1-2 levels)
+    -   Standardize social button styles
+    -   Decide: reusable modal or one-off component
+-   [ ] **Button Variants Completion**
+    -   Add tertiary button (text-only, padded)
+    -   Fix disabled styles (remove glow/gradient effects)
+    -   Verify accessibility compliance
+    -   Implement focus states
+-   [ ] **Scale Optimization**
+    -   Create wireframe for 380px plugin width constraint
+    -   Implement cohesive typography scale (32px → 18px → 13px → 10px)
+    -   Replace hardcoded pixel values with design tokens
+    -   Optimize component sizing for plugin constraints
+-   [ ] **Forms & Filters Enhancement (Initial)**
+    -   Add tertiary button for "Advanced Filters"
 
 ### Technical Implementation
+
 ```css
 /* Tertiary button for Advanced Filters */
 .btn-tertiary {
@@ -81,18 +90,21 @@
 ```
 
 ### Success Criteria
-- [ ] All current known issues resolved
-- [ ] Plugin optimized for 380px width
-- [ ] All components use design tokens (no hardcoded values)
-- [ ] Button variants complete and accessible
+
+-   [ ] All current known issues resolved
+-   [ ] Plugin optimized for 380px width
+-   [ ] All components use design tokens (no hardcoded values)
+-   [ ] Button variants complete and accessible
 
 ---
 
 ## Phase 2: Shoelace Integration & Component Enhancement
-**Status:** Upcoming  
+
+**Status:** Upcoming
 **Focus:** Replace custom components with Shoelace + brand theming
 
 ### Shoelace Integration Strategy
+
 **Opportunity:** Leverage proven components while maintaining brand identity
 
 ```css
@@ -115,45 +127,49 @@ sl-dropdown::part(panel) {
 ```
 
 ### Component Replacements
-- [ ] Replace format dropdown with Shoelace sl-dropdown
-- [ ] Enhanced button variants with sl-button
-- [ ] Form components with sl-input, sl-select
-- [ ] Modal components with sl-dialog
-- [ ] Loading states with sl-spinner
+
+-   [ ] Replace format dropdown with Shoelace `sl-dropdown`
+-   [ ] Enhanced button variants with `sl-button`
+-   [ ] Form components with `sl-input`, `sl-select`
+-   [ ] Modal components with `sl-dialog`
+-   [ ] Loading states with `sl-spinner`
 
 ### Success Criteria
-- [ ] All major form components replaced with Shoelace
-- [ ] Brand theming applied consistently
-- [ ] Accessibility improved through Shoelace standards
-- [ ] Development velocity increased
+
+-   [ ] All major form components replaced with Shoelace
+-   [ ] Brand theming applied consistently
+-   [ ] Accessibility improved through Shoelace standards
+-   [ ] Development velocity increased
 
 ---
 
 ## Phase 3: Portfolio Enhancement & Storytelling
-**Status:** Upcoming  
+
+**Status:** Upcoming
 **Focus:** Transform documentation into compelling case study
 
 ### Content Structure Updates (design-system-guide.html)
 
 #### Case Study Introduction
+
 ```html
 <section class="portfolio-intro">
   <div class="case-study-header">
     <h1>Token Exporter Design System</h1>
     <p class="case-study-subtitle">Streamlining design-to-development workflows through systematic token management</p>
   </div>
-  
+
   <div class="project-overview">
     <div class="challenge">
       <h3>The Challenge</h3>
       <p>Design teams struggle with inconsistent token export from Figma, leading to design-development misalignment.</p>
     </div>
-    
+
     <div class="solution">
       <h3>The Solution</h3>
       <p>A comprehensive design system built on Open Props foundation with custom brand identity and developer-friendly export tools.</p>
     </div>
-    
+
     <div class="impact">
       <h3>The Impact</h3>
       <ul class="impact-metrics">
@@ -167,78 +183,99 @@ sl-dropdown::part(panel) {
 ```
 
 #### Design Rationale Sections
-- [ ] Add design decision explanations throughout guide
-- [ ] Document Open Props choice rationale
-- [ ] Explain brand color system decisions
-- [ ] Showcase component design thinking
+
+-   [ ] Add design decision explanations throughout guide
+-   [ ] Document Open Props choice rationale
+-   [ ] Explain brand color system decisions
+-   [ ] Showcase component design thinking
 
 #### Process Documentation
-- [ ] Research & analysis phase
-- [ ] Design system architecture decisions
-- [ ] Component development approach
-- [ ] Testing and validation methods
+
+-   [ ] Research & analysis phase
+-   [ ] Design system architecture decisions
+-   [ ] Component development approach
+-   [ ] Testing and validation methods
 
 ### Success Criteria
-- [ ] Case study narrative integrated
-- [ ] Design rationale documented throughout
-- [ ] Process documentation added
-- [ ] Portfolio positioning clear and compelling
+
+-   [ ] Case study narrative integrated
+-   [ ] Design rationale documented throughout
+-   [ ] Process documentation added
+-   [ ] Portfolio positioning clear and compelling
 
 ---
 
-## Phase 4: Advanced Interactive Features
-**Status:** Upcoming  
-**Focus:** Interactive elements and technical showcase
+## Phase 4: Advanced Features (Guide & Plugin)
 
-### Interactive Component Playground (design-system-guide.html)
-```html
-<div class="component-playground">
-  <div class="playground-controls">
-    <label>
-      Primary Color:
-      <input type="color" data-property="brand-primary-lime" value="#D2FF37">
-    </label>
-    <label>
-      Border Radius:
-      <input type="range" data-property="radius-2" min="0" max="20" value="8">
-    </label>
-  </div>
-  
-  <div class="playground-preview">
-    <button class="btn primary">Live Preview</button>
-  </div>
-  
-  <div class="playground-code">
-    <pre><code class="generated-css">/* Generated CSS */</code></pre>
-  </div>
-</div>
-```
+**Status:** Upcoming
+**Focus:** Interactive elements, technical showcase, and core plugin functionality
 
-### 3D Integration (Spline)
-- [ ] System architecture visualization
-- [ ] Interactive token relationships
-- [ ] Animated component demonstrations
-- [ ] Fallback support for unsupported browsers
+### Interactive Features (design-system-guide.html)
 
-### Enhanced Visual Features
-- [ ] Animated icons for key sections
-- [ ] Hover animations for navigation
-- [ ] Enhanced loading states with brand animations
-- [ ] Micro-interactions throughout guide
+-   [ ] **Interactive Component Playground**
+    ```html
+    <div class="component-playground">
+      <div class="playground-controls">
+        <label>
+          Primary Color:
+          <input type="color" data-property="brand-primary-lime" value="#D2FF37">
+        </label>
+        <label>
+          Border Radius:
+          <input type="range" data-property="radius-2" min="0" max="20" value="8">
+        </label>
+      </div>
+
+      <div class="playground-preview">
+        <button class="btn primary">Live Preview</button>
+      </div>
+
+      <div class="playground-code">
+        <pre><code class="generated-css">/* Generated CSS */</code></pre>
+      </div>
+    </div>
+    ```
+-   [ ] **3D Integration (Spline)**
+    -   System architecture visualization
+    -   Fallback support for unsupported browsers
+-   [ ] **Enhanced Visual Features**
+    -   Animated icons for key sections
+    -   Hover animations for navigation
+    -   Micro-interactions throughout guide
+
+### Plugin Feature Enhancements (ui.html)
+
+-   [ ] **Advanced Filtering**
+    -   Implement expandable filter options
+    -   Add UX limit for 100+ collections
+    -   Design filter categories (colors, text, etc.)
+-   [ ] **Collection Management**
+    -   Bulk selection tools
+    -   Search/filter for large lists
+    -   Collection grouping options
+    -   Recently used collections
+-   [ ] **Export Enhancements**
+    -   Preview generated code
+    -   Custom token naming
+    -   Format-specific options
+    -   Export history
 
 ### Success Criteria
-- [ ] Interactive playground functional
-- [ ] 3D elements integrated effectively
-- [ ] Advanced features demonstrate technical skill
-- [ ] Performance remains optimal
+
+-   [ ] Interactive playground functional
+-   [ ] 3D elements integrated effectively
+-   [ ] Core plugin features for advanced management are implemented
+-   [ ] Advanced features demonstrate technical skill
 
 ---
 
-## Phase 5: Community Features & Technical Excellence
-**Status:** Future  
-**Focus:** Launch preparation and community engagement
+## Phase 5: Launch Prep & Technical Excellence
 
-### Community Integration
+**Status:** Future
+**Focus:** Final polish, community engagement, and performance
+
+### Community Integration (design-system-guide.html)
+
 ```html
 <section class="community-engagement">
   <h3>Community & Contributions</h3>
@@ -260,140 +297,92 @@ sl-dropdown::part(panel) {
 ```
 
 ### Performance Optimization
-- [ ] Critical CSS optimization
-- [ ] Lazy loading for non-essential components
-- [ ] Image optimization and responsive loading
-- [ ] Performance metrics tracking
 
-### Technical Excellence Features
-- [ ] Code quality demonstrations
-- [ ] Accessibility compliance showcase
-- [ ] Performance case study
-- [ ] Open source contribution preparation
+-   [ ] Critical CSS optimization
+-   [ ] Lazy loading for non-essential components
+-   [ ] Image optimization and responsive loading
+-   [ ] Performance metrics tracking
+
+### Code Craft & Personality (Final Polish)
+
+-   [ ] **Branded ASCII Art Header in CSS**
+    -   **Task:** Create and place a custom ASCII art logo at the very top of the `design-system.css` file.
+    -   **Implementation Example:**
+        ```css
+        /*
+        ████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗    ███████╗██╗  ██╗
+        ╚══██╔══╝██╔═══██╗██║  ██║██╔════╝████╗  ██║    ██╔════╝╚██╗██╔╝
+           ██║   ██║   ██║███████║█████╗  ██╔██╗ ██║    █████╗   ╚███╔╝
+           ██║   ██║   ██║██╔══██║██╔══╝  ██║╚██╗██║    ██╔══╝   ██╔██╗
+           ██║   ╚██████╔╝██║  ██║███████╗██║ ╚████║    ███████╗██╔╝ ██╗
+           ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝
+        ------------------------------------------------------------------
+         Token Exporter Design System v2.8 | Crafted by Nate Mills
+         Foundation: Open Props | Components: Shoelace
+        ------------------------------------------------------------------
+        */
+        ```
+-   [ ] **AI-Generated "Haiku" Comments**
+    -   **Task:** For major sections in the CSS, add a creative haiku generated by an AI.
+-   [ ] **"Component Philosophy" Comments**
+    -   **Task:** Add short, insightful comments above key component styles explaining the "why" behind the design.
 
 ### Success Criteria
-- [ ] Community features implemented
-- [ ] Technical excellence demonstrated
-- [ ] Portfolio integration complete
-- [ ] Ready for career advancement use
 
-
-
-### **Phase 5.5: Code Craft & Personality (Final Polish)**
-**Focus:** Adding unique, memorable "Easter eggs" into the source code to showcase personality and a deep love for the craft. This has zero impact on performance as all items are within code comments.
-
-- [ ] **Branded ASCII Art Header in CSS**
-  - **Task:** Create and place a custom ASCII art logo at the very top of the `design-system.css` file. This acts as a digital signature and a memorable welcome for anyone viewing the source.
-  - **Implementation Example:**
-    ```css
-    /*
-    ████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗    ███████╗██╗  ██╗
-    ╚══██╔══╝██╔═══██╗██║  ██║██╔════╝████╗  ██║    ██╔════╝╚██╗██╔╝
-       ██║   ██║   ██║███████║█████╗  ██╔██╗ ██║    █████╗   ╚███╔╝
-       ██║   ██║   ██║██╔══██║██╔══╝  ██║╚██╗██║    ██╔══╝   ██╔██╗
-       ██║   ╚██████╔╝██║  ██║███████╗██║ ╚████║    ███████╗██╔╝ ██╗
-       ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝
-    ------------------------------------------------------------------
-     Token Exporter Design System v2.8 | Crafted by Nate Mills
-     Foundation: Open Props | Components: Shoelace
-    ------------------------------------------------------------------
-    */
-    ```
-
-- [ ] **AI-Generated "Haiku" Comments**
-  - **Task:** For 3-4 major sections in the CSS (e.g., Buttons, Forms, Modals), add a creative haiku or witty comment generated by an AI. This showcases a creative partnership with your AI tools.
-  - **Implementation Example (for Buttons):**
-    ```css
-    /*
-     * Buttons
-     * --------------------------------------
-     * A click, a story,
-     * In lines of code, told with style,
-     * Bold, bright, and alive.
-     * --------------------------------------
-     */
-    .btn {
-      /* ... */
-    }
-    ```
-
-- [ ] **"Component Philosophy" Comments**
-  - **Task:** Add short, insightful comments above key component styles in the CSS. Briefly explain the "why" behind the design, adding another layer to your "Design Rationale" for anyone who reads the source code.
-  - **Implementation Example (for Spacing System):**
-    ```css
-    /*
-     * Spacing System
-     * --------------------------------------
-     * Philosophy: A consistent, predictable 4px-based scale.
-     * This ensures rhythmic, harmonious layouts without guesswork.
-     * Every margin, every padding, a deliberate choice.
-     * --------------------------------------
-     */
-    :root {
-      --size-1: 0.25rem; /* 4px */
-      /* ... */
-    }
-    ```
-
+-   [ ] Community features implemented
+-   [ ] Technical excellence demonstrated
+-   [ ] Portfolio integration complete
+-   [ ] Ready for career advancement use
 
 ---
 
-## Design Decisions Made 💡
-- Portfolio-first approach for career advancement
-- Open Props foundation for proven token system
-- Shoelace integration for component acceleration
-- Two-product strategy (guide vs plugin)
-- 5-phase implementation for manageable complexity
-- Dark mode focus for developer tools aesthetic
-- Interactive features for "wow factor"
-- Bold, minimal aesthetic matching natemills.me
+## Reference: Project Knowledge Base
 
-## Known Issues 🐛
-- About modal has multiple issues
-- Some hardcoded pixel values instead of tokens
-- Missing hover states on some elements
-- Plugin scaling needs optimization
-- Profile image loading broken
+### Design Decisions Made 💡
 
-## Plugin Architecture Insights 🔍
-- **Plugin dimensions:** 380x650px (ui.html only)
-- **Dynamic rendering:** UI rebuilds on state changes via `updateDynamicContent()`
-- **Performance ready:** Code handles large datasets with batching
-- **Network access:** Can load from cdn.jsdelivr.net
-- **No localStorage:** Must use in-memory state only
+-   Portfolio-first approach for career advancement
+-   Open Props foundation for proven token system
+-   Shoelace integration for component acceleration
+-   Two-product strategy (guide vs plugin)
+-   5-phase implementation for manageable complexity
+-   Dark mode focus for developer tools aesthetic
+-   Interactive features for "wow factor"
+-   Bold, minimal aesthetic matching natemills.me
 
-## Component-to-Code Mapping 🔗
-- `.empty-state` → `renderEmptyState()` function
-- `.skeleton-container` → `renderLoadingState()` function  
-- `.progress-overlay` → `showProgress()` and `showSuccessState()` functions
-- `.token-summary` → `renderTokenSummary()` function
-- Event handling uses delegation pattern on `#main-content`
+### Known Issues 🐛
 
-## AI Implementation Strategy
+-   About modal has multiple issues
+-   Some hardcoded pixel values instead of tokens
+-   Missing hover states on some elements
+-   Plugin scaling needs optimization
+-   Profile image loading broken
+-   No loading state for initial plugin load
 
-### For Each Phase:
-1. **Review current code state**
-2. **Identify specific files to modify**
-3. **Use update commands for targeted changes (<20 lines)**
-4. **Create new artifacts for major changes**
-5. **Test functionality within appropriate constraints**
-6. **Validate against design system tokens**
-7. **Document changes for future reference**
+### Plugin Architecture & Code Mapping 🔗
 
-### File Management:
-- **design-system.css**: All style modifications
-- **design-system-guide.html**: Content and structure updates (careful with 50k limit)
-- **ui.html**: Plugin interface updates
-- **Incremental approach**: Small, testable changes
-- **Token consistency**: Always use design system variables
+-   **Plugin dimensions:** 380x650px (`ui.html` only)
+-   **Dynamic rendering:** UI rebuilds on state changes via `updateDynamicContent()`
+-   **Performance:** Code handles large datasets with batching
+-   **Integration Points:**
+    -   `.empty-state` → `renderEmptyState()` function
+    -   `.skeleton-container` → `renderLoadingState()` function
+    -   `.progress-overlay` → `showProgress()` and `showSuccessState()` functions
+    -   `.token-summary` → `renderTokenSummary()` function
+-   **Event Handling:** Uses delegation pattern on `#main-content`
 
----
+### AI Implementation Strategy
 
-## Project Structure
-- **design-system.css** - Style source of truth (GitHub hosted)
-- **design-system-guide.html** - Portfolio showcase documentation
-- **ui.html** - Figma plugin interface
-- **code.js** - Plugin logic and token processing
-- **manifest.json** - Plugin configuration and permissions
+-   **For Each Phase:** Review current code state, identify files, use update commands for small changes, test within constraints, validate against tokens, and document changes.
+-   **File Management:**
+    -   `design-system.css`: All style modifications
+    -   `design-system-guide.html`: Content and structure updates (careful with 50k limit)
+    -   `ui.html`: Plugin interface updates
+-   **Approach:** Use small, testable, incremental changes. Always use design system tokens.
 
-This integrated roadmap combines the current development status with the portfolio enhancement strategy, providing a clear path from current state to career-advancing showcase.
+### Project Structure
+
+-   `design-system.css` - Style source of truth (GitHub hosted)
+-   `design-system-guide.html` - Portfolio showcase documentation
+-   `ui.html` - Figma plugin interface
+-   `code.js` - Plugin logic and token processing
+-   `manifest.json` - Plugin configuration and permissions
