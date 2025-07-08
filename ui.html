@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/n8mills-UI/token-exporter-ds/design-system.css">
+    
+</head>
+<body>
+    <main>
+        <!-- The main container for dynamic UI content -->
+        <div class="content-wrapper" id="content-wrapper">
+            <!-- Content will be rendered here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- The About Modal is static and only needs listeners attached once -->
+    <div class="about-modal" id="about-modal">
+        <div class="about-content">
+            <button class="about-close"> <i class="fas fa-times"></i> </button>
+            <div class="about-avatar"></div>
+            <div class="about-header">
+                <h2 class="text-heading-md">NATE MILLS</h2>
+                <div class="text-body-lg about-title">Senior UI Designer</div>
+            </div>
+            <p class="text-body-md about-description"> Building accessible design systems that scale, with 20 years of industry experience. </p>
+            <div class="about-links">
+                <a href="#" class="about-link" data-url="https://natemills.me" title="Portfolio"><i class="fa-solid fa-briefcase"></i></a>
+                <a href="#" class="about-link" data-url="https://www.linkedin.com/in/millsdesign/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="about-link" data-url="https://www.figma.com/@mills" title="Figma"><i class="fab fa-figma"></i></a>
+                <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <div class="text-label about-tagline"> MADE WITH <span class="heart">❤️</span> FOR THE DESIGN COMMUNITY </div>
+        </div>
+    </div>
+    
+    <!-- Progress overlay -->
+    <div class="progress-overlay" id="progress-overlay" style="display: none;"></div>
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        const appState = {
+            mode: 'simple', collections: [], selectedCollections: new Set(),
+            selectedFormat: 'css', selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
+            globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 }, isLoading: true,
+        };
+
+        // --- DOM Elements ---
+        const DOMElements = {
+            contentWrapper: document.getElementById('content-wrapper'),
+            progressOverlay: document.getElementById('progress-overlay'),
+            aboutModal: document.getElementById('about-modal'),
+        };
+
+        // --- UTILITY ---
+        const openUrl = (url) => parent.postMessage({ pluginMessage: { type: 'open-url', url } }, '*');
+
+        // --- UI RENDERING ---
+        
+        function initialRender() {
+            DOMElements.contentWrapper.innerHTML = `
+                <div id="main-content">
+                    <!-- Loading state will be shown initially -->
+                </div>
+                <div class="footer-section">
+                    <a href="#" id="about-link" class="text-caption">created with <span class="heart">❤️</span> by nate mills</a>
+                </div>
+            `;
+            updateDynamicContent();
+            attachStaticEventListeners(); // Attach listeners to static elements ONCE.
+        }
+
+        function updateDynamicContent() {
+            const container = document.getElementById('main-content');
+            if (!container) return;
+
+            container.className = appState.mode === 'advanced' ? 'advanced-mode' : '';
+
+            if (appState.isLoading) {
+                container.innerHTML = renderLoadingState();
+                return;
+            }
+            
+            if (appState.collections.length === 0) {
+                container.innerHTML = renderEmptyState();
+                attachDynamicEventListeners();
+                return;
+            }
+
+            // Render the main content
+            container.innerHTML = `
+                <div class="card token-summary" id="token-summary">
+                    ${renderTokenSummary()}
+                </div>
+                <div class="card export-section">
+                    <h3 class="text-label section-title"><i class="fas fa-rocket"></i> ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}</h3>
+                    <p class="text-body-md subtitle">Export all your tokens in your preferred format</p>
+                    ${renderExportSection()}
+                </div>
+                <div class="card collections-section" id="collections-section">
+                    <h3 class="text-label section-title"><i class="fas fa-layer-group"></i> Select Collections</h3>
+                    <div class="collection-list" id="collection-list">${renderCollectionsList()}</div>
+                </div>
+                <div class="advanced-toggle">
+                    ${renderAdvancedToggle()}
+                </div>
+            `;
+            attachDynamicEventListeners();
+        }
+
+        // --- COMPONENT RENDERERS (These functions generate HTML strings) ---
+        
+        const renderTokenSummary = () => {
+            const total = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
+            const tokenTypes = [
+                { type: 'color', icon: 'fa-palette', label: 'colors' }, { type: 'text', icon: 'fa-font', label: 'text' },
+                { type: 'number', icon: 'fa-hashtag', label: 'numbers' }, { type: 'states', icon: 'fa-toggle-on', label: 'states' }
+            ];
+            const breakdown = tokenTypes.map(({ type, icon, label }) => {
+                const count = appState.globalTokenCounts[type] || 0;
+                const isActive = appState.selectedTokenTypes.has(type);
+                const isDisabled = count === 0;
+                return `<div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}" data-type="${type}">
+                            <i class="fas ${icon} icon"></i>
+                            <div class="count">${count}</div>
+                            <div class="text-label label">${label}</div>
+                        </div>`;
+            }).join('');
+
+            return `<div class="text-label">Design Tokens</div>
+                    <div class="text-heading-xl token-count-total">${total}</div>
+                    <div class="text-label token-label">Design Tokens Ready to Export</div>
+                    <div class="token-breakdown">${breakdown}</div>`;
+        };
+
+        const renderExportSection = () => {
+            const formats = [
+                { value: 'css', label: 'CSS Variables' }, { value: 'swift', label: 'Swift (iOS)' },
+                { value: 'android', label: 'Android XML' }, { value: 'flutter', label: 'Flutter' },
+                { value: 'w3c', label: 'JSON (W3C)' }, { value: 'tailwind', label: 'Tailwind Config' }
+            ];
+            return `<div class="format-select-wrapper">
+                        <select class="format-select" id="format-select">
+                            <option value="all">All Formats</option>
+                            ${formats.map(f => `<option value="${f.value}" ${appState.selectedFormat === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <button class="btn primary" id="export-btn"></button>`;
+        };
+
+        const renderCollectionsList = () => appState.collections.map(collection => {
+            const pills = Object.entries(collection.counts)
+                .filter(([, count]) => count > 0)
+                .map(([type]) => {
+                    const iconMap = { color: 'fa-palette', text: 'fa-font', states: 'fa-toggle-on', number: 'fa-hashtag' };
+                    return `<div class="collection-pill ${type} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}">
+                                <i class="fas ${iconMap[type]}"></i> <span>${collection.counts[type]}</span>
+                            </div>`;
+                }).join('');
+            return `<div class="collection-item ${appState.selectedCollections.has(collection.id) ? 'selected' : ''}" data-collection-id="${collection.id}">
+                        <div class="collection-checkbox"></div>
+                        <div class="collection-info">
+                            <div class="text-body-lg collection-name">${collection.name}</div>
+                            <div class="collection-pills">${pills}</div>
+                        </div>
+                        <div class="text-caption collection-count">${collection.totalVariables} tokens</div>
+                    </div>`;
+        }).join('');
+
+        const renderAdvancedToggle = () => appState.mode === 'simple'
+            ? `<a href="#" class="advanced-link text-body-md" id="toggle-advanced">Need specific tokens? <i class="fas fa-arrow-right"></i></a>`
+            : `<button class="btn secondary" id="toggle-simple"><i class="fas fa-arrow-left"></i> Back to Simple Export</button>`;
+
+        const renderEmptyState = () => `<div class="empty-state">
+                        <div class="empty-state-icon"><i class="fas fa-folder-open"></i></div>
+                        <div>
+                            <div class="text-body-lg empty-state-title">No Variable Collections Found</div>
+                            <div class="text-body-md empty-state-subtitle">Create collections in Figma's "Local Variables" panel to get started.</div>
+                        </div>
+                        <a href="#" class="empty-state-action text-label" data-url="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma">
+                            <i class="fas fa-external-link-alt"></i> Learn How
+                        </a>
+                    </div>`;
+
+        const renderLoadingState = () => `<div class="skeleton-container">
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item small"></div>
+                        <div class="skeleton-item small"></div>
+                    </div>`;
+        
+        // --- EVENT HANDLERS ---
+        
+        function attachStaticEventListeners() {
+            document.getElementById('about-link')?.addEventListener('click', e => {
+                e.preventDefault();
+                DOMElements.aboutModal.classList.add('show');
+            });
+
+            DOMElements.aboutModal.addEventListener('click', e => { 
+                if (e.target.closest('.about-close') || e.target === DOMElements.aboutModal) {
+                    DOMElements.aboutModal.classList.remove('show');
+                }
+            });
+
+            DOMElements.aboutModal.querySelectorAll('.about-link').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    openUrl(link.dataset.url);
+                });
+            });
+        }
+        
+        function attachDynamicEventListeners() {
+            const mainContent = document.getElementById('main-content');
+            if (!mainContent) return;
+
+            const newMainContent = mainContent.cloneNode(true);
+            mainContent.parentNode.replaceChild(newMainContent, mainContent);
+
+            newMainContent.addEventListener('click', (e) => {
+                const collectionItem = e.target.closest('.collection-item');
+                const tokenStat = e.target.closest('.token-type-stat:not(.disabled)');
+                const advancedToggle = e.target.closest('#toggle-advanced');
+                const simpleToggle = e.target.closest('#toggle-simple');
+                const exportBtn = e.target.closest('#export-btn');
+                const emptyStateLink = e.target.closest('.empty-state-action');
+
+                if (collectionItem) {
+                    const id = collectionItem.dataset.collectionId;
+                    appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+                    collectionItem.classList.toggle('selected');
+                    updateExportButton();
+                }
+                else if (tokenStat && appState.mode === 'advanced') {
+                    const type = tokenStat.dataset.type;
+                    appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
+                    updateDynamicContent();
+                }
+                else if (advancedToggle) {
+                    e.preventDefault();
+                    appState.mode = 'advanced';
+                    appState.selectedCollections = new Set(appState.collections.map(c => c.id));
+                    updateDynamicContent();
+                }
+                else if (simpleToggle) {
+                    appState.mode = 'simple';
+                    updateDynamicContent();
+                }
+                else if (exportBtn) {
+                    handleExport();
+                }
+                else if (emptyStateLink) {
+                    e.preventDefault();
+                    openUrl(emptyStateLink.dataset.url);
+                }
+            });
+            
+            const formatSelect = newMainContent.querySelector('#format-select');
+            if(formatSelect) {
+                formatSelect.addEventListener('change', e => { appState.selectedFormat = e.target.value; });
+            }
+
+            updateExportButton();
+        }
+
+        function updateExportButton() {
+            const btn = document.getElementById('export-btn');
+            if (!btn) return;
+            const selectedCount = appState.mode === 'simple' 
+                ? Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0)
+                : appState.collections.reduce((count, col) => {
+                    if (!appState.selectedCollections.has(col.id)) return count;
+                    return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
+                }, 0);
+            
+            btn.disabled = selectedCount === 0;
+            btn.innerHTML = `<i class="fas fa-magic-wand-sparkles"></i> Package ${selectedCount} Token${selectedCount !== 1 ? 's' : ''}`;
+        }
+
+        // --- EXPORT & PROGRESS ---
+        function handleExport() {
+            const collectionIds = appState.mode === 'simple' ? appState.collections.map(c => c.id) : Array.from(appState.selectedCollections);
+            const tokenTypes = Array.from(appState.selectedTokenTypes);
+            if (collectionIds.length === 0 || tokenTypes.length === 0) return;
+            const formats = appState.selectedFormat === 'all' ? ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'] : [appState.selectedFormat];
+            showProgress('Generating...');
+            parent.postMessage({ pluginMessage: { type: 'export-tokens', collectionIds, formats, activeTokenTypes: tokenTypes } }, '*');
+        }
+
+        function showProgress(message) {
+            DOMElements.progressOverlay.style.display = 'flex';
+            DOMElements.progressOverlay.innerHTML = `<div class="progress-container"><div class="text-heading-md success-title">${message}</div><p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p></div>`;
+        }
+
+        function showSuccessState(data) {
+            if (!data || data.length === 0) {
+                showErrorState('No tokens matched your selected criteria.');
+                return;
+            }
+            DOMElements.progressOverlay.innerHTML = `<div class="progress-container">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2 class="text-heading-md success-title">Export Complete!</h2>
+                <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
+                <div class="action-buttons">
+                    <button class="btn primary" id="save-btn"><i class="fas fa-download"></i> Download Tokens</button>
+                    <button class="btn secondary" id="close-progress-btn"><i class="fas fa-times"></i> Close</button>
+                </div>
+            </div>`;
+            DOMElements.progressOverlay.querySelector('#save-btn').onclick = () => triggerSave(data);
+            DOMElements.progressOverlay.querySelector('#close-progress-btn').onclick = hideProgress;
+        }
+
+        function showErrorState(message) {
+            DOMElements.progressOverlay.style.display = 'flex';
+            DOMElements.progressOverlay.innerHTML = `<div class="progress-container">
+                <i class="fas fa-exclamation-triangle success-icon" style="color:var(--color-text-error);"></i>
+                <h2 class="text-heading-md success-title">Export Failed</h2>
+                <p class="text-body-md success-subtitle">${message}</p>
+                <div class="action-buttons">
+                    <button class="btn primary" id="close-progress-btn">Try Again</button>
+                </div>
+            </div>`;
+            DOMElements.progressOverlay.querySelector('#close-progress-btn').onclick = hideProgress;
+        }
+
+        function triggerSave(data) {
+            const link = document.createElement('a');
+            if (data.length === 1) {
+                const file = data[0];
+                const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
+                link.href = URL.createObjectURL(blob);
+                link.download = file.filename;
+            } else {
+                const zip = new JSZip();
+                data.forEach(file => zip.file(file.filename, file.content));
+                zip.generateAsync({ type: 'blob' }).then(blob => {
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'design-tokens.zip';
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                });
+                return;
+            }
+            link.click();
+            URL.revokeObjectURL(link.href);
+            hideProgress();
+        }
+
+        function hideProgress() {
+            DOMElements.progressOverlay.style.display = 'none';
+        }
+
+        // --- INITIALIZATION & MESSAGE HANDLING ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initialRender();
+            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+        });
+
+        window.onmessage = (event) => {
+            const msg = event.data.pluginMessage;
+            if (!msg) return;
+            switch (msg.type) {
+                case 'all-collections':
+                    appState.isLoading = false;
+                    appState.collections = msg.collections || [];
+                    appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
+                    appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
+                    appState.selectedCollections = new Set(appState.collections.map(c => c.id));
+                    updateDynamicContent();
+                    break;
+                case 'export-result':
+                    showSuccessState(msg.data);
+                    break;
+                case 'notify':
+                    if (msg.error) showErrorState(msg.message);
+                    break;
+            }
+        };
+    </script>
+</body>
+</html>
