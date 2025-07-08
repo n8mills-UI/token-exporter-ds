@@ -1,35 +1,64 @@
+/*
+████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗    ███████╗██╗  ██╗██████╗  ██████╗ ██████╗ ████████╗███████╗██████╗ 
+╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║    ██╔════╝╚██╗██╔╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗
+   ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║    █████╗   ╚███╔╝ ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██████╔╝
+   ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║    ██╔══╝   ██╔██╗ ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██╔══██╗
+   ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
+   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Token Exporter Design System v3.0.2 | Crafted with ❤️ by Nate Mills
+Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+*/
+
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v2.7.2 - Open Props Based
+   TOKEN EXPORTER DESIGN SYSTEM v3.0.2 - Complete Implementation
    ==========================================================================
-   A complete rebuild using Open Props as the foundation.
-   This gives us a battle-tested, comprehensive token system.
    
-   We only override what's needed for brand identity.
-   Everything else comes from Open Props.
+   PHASES INCLUDED:
+   ✓ Phase 1: Foundation & Critical Fixes (from v2.7.2)
+   ✓ Phase 2: Shoelace Integration & Component Enhancement
+   ✓ Phase 3: Portfolio Enhancement & Storytelling
+   ✓ Phase 4: Advanced Features & Interactions
+   ✓ Phase 5: Launch Prep & Technical Excellence
    
-   CHANGELOG v2.7.2:
-   - Global scale reduction (20-30% smaller)
-   - Replaced all hardcoded values with tokens
-   - Fixed disabled button states
-   - Added tertiary button variant
-   - Fixed about modal issues
-   - Added filter UI preparations
+   FIXES IN v3.0.1:
+   ✓ Added Shoelace CSS import
+   ✓ Added color-mix() fallbacks for browser compatibility
+   ✓ Removed duplicate code (typography, animations)
+   ✓ Added webkit prefixes for backdrop-filter
+   ✓ Added more haiku comments
+   ✓ Removed unused selectors
+   ✓ Fixed magic numbers with comments
+   
+   FIXES IN v3.0.2:
+   ✓ Fixed import order (Shoelace before Open Props)
+   ✓ Restored missing animation keyframes
+   ✓ Restored performance optimization classes
+   ✓ Fixed broken animation references
+   
    ========================================================================== */
 
-/* 1. Import Open Props - Our new foundation */
+/* 1. Import Shoelace FIRST - Component library base styles */
+@import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css";
+
+/* 2. Import Open Props SECOND - Our foundation overrides */
 @import "https://unpkg.com/open-props/style";
 @import "https://unpkg.com/open-props/normalize";
 @import "https://unpkg.com/open-props/buttons";
 
-/* 2. Brand Overrides - Only what makes us unique */
+/* ==========================================================================
+   PHASE 1: FOUNDATION (from v2.7.2)
+   ========================================================================== */
+
 :root {
-    /* --- Brand Colors (keeping your exact values) --- */
+    /* --- Brand Colors --- */
     --brand-primary-lime: #D2FF37;
     --brand-secondary-yellow: #EEFF00;
     --brand-text-dark: #1E1E1E;
     --brand-gradient-lime: linear-gradient(180deg, var(--brand-primary-lime) 0%, var(--brand-secondary-yellow) 100%);
     
-    /* Token Category Colors (your specific palette) */
+    /* Token Category Colors */
     --category-color-cyan: #00D1FF;
     --category-color-purple: #B48CFF;
     --category-color-orange: #FFB86C;
@@ -39,7 +68,7 @@
     --color-primary: var(--brand-primary-lime);
     --color-secondary: var(--brand-secondary-yellow);
     
-    /* Override Open Props grays with your exact values */
+    /* Override Open Props grays */
     --gray-9: #1e1e1e;
     --gray-8: #2a2a2a;
     --gray-7: #3a3a3a;
@@ -51,7 +80,7 @@
     --gray-1: #f0f0f0;
     --gray-0: #ffffff;
     
-    /* Semantic color mappings using your grays */
+    /* Semantic color mappings */
     --color-text-default: var(--gray-0);
     --color-text-secondary: var(--gray-2);
     --color-text-muted: var(--gray-3);
@@ -77,60 +106,1126 @@
     --font-mono: 'Monaco', 'Menlo', monospace;
 }
 
-/* 3. Dark theme adjustments (Open Props handles most of this) */
+/* ==========================================================================
+   PHASE 2: SHOELACE INTEGRATION
+   ========================================================================== */
+
+/*
+ * Shoelace Theming
+ * Mapping our tokens to Shoelace design system
+ * 
+ * "Design tokens flow like water,
+ *  From brand to component parts,
+ *  Consistency blooms."
+ */
+
+:root {
+    /* Shoelace Primary Color Mapping with fallbacks for older browsers */
+    --sl-color-primary-50: #f7ffd4; /* fallback */
+    --sl-color-primary-50: color-mix(in srgb, var(--brand-primary-lime) 10%, white);
+    --sl-color-primary-100: #f0ffaa; /* fallback */
+    --sl-color-primary-100: color-mix(in srgb, var(--brand-primary-lime) 20%, white);
+    --sl-color-primary-200: #e8ff81; /* fallback */
+    --sl-color-primary-200: color-mix(in srgb, var(--brand-primary-lime) 30%, white);
+    --sl-color-primary-300: #e1ff57; /* fallback */
+    --sl-color-primary-300: color-mix(in srgb, var(--brand-primary-lime) 40%, white);
+    --sl-color-primary-400: #daff2e; /* fallback */
+    --sl-color-primary-400: color-mix(in srgb, var(--brand-primary-lime) 50%, white);
+    --sl-color-primary-500: var(--brand-secondary-yellow);
+    --sl-color-primary-600: var(--brand-primary-lime);
+    --sl-color-primary-700: #a3cc00; /* fallback */
+    --sl-color-primary-700: color-mix(in srgb, var(--brand-primary-lime) 90%, black);
+    --sl-color-primary-800: #7a9900; /* fallback */
+    --sl-color-primary-800: color-mix(in srgb, var(--brand-primary-lime) 80%, black);
+    --sl-color-primary-900: #526600; /* fallback */
+    --sl-color-primary-900: color-mix(in srgb, var(--brand-primary-lime) 70%, black);
+    --sl-color-primary-950: #293300; /* fallback */
+    --sl-color-primary-950: color-mix(in srgb, var(--brand-primary-lime) 60%, black);
+    
+    /* Shoelace Neutral Mapping */
+    --sl-color-neutral-0: var(--gray-0);
+    --sl-color-neutral-50: var(--gray-1);
+    --sl-color-neutral-100: var(--gray-2);
+    --sl-color-neutral-200: var(--gray-3);
+    --sl-color-neutral-300: var(--gray-4);
+    --sl-color-neutral-400: var(--gray-5);
+    --sl-color-neutral-500: var(--gray-6);
+    --sl-color-neutral-600: var(--gray-7);
+    --sl-color-neutral-700: var(--gray-8);
+    --sl-color-neutral-800: var(--gray-9);
+    --sl-color-neutral-900: #0a0a0a;
+    --sl-color-neutral-950: #000000;
+    
+    /* Shoelace Typography */
+    --sl-font-sans: var(--font-sans);
+    --sl-font-mono: var(--font-mono);
+    --sl-font-weight-normal: var(--font-weight-4);
+    --sl-font-weight-semibold: var(--font-weight-6);
+    --sl-font-weight-bold: var(--font-weight-7);
+    
+    /* Shoelace Spacing */
+    --sl-spacing-small: var(--size-2);
+    --sl-spacing-medium: var(--size-4);
+    --sl-spacing-large: var(--size-6);
+    
+    /* Shoelace Borders */
+    --sl-border-radius-small: var(--radius-1);
+    --sl-border-radius-medium: var(--radius-2);
+    --sl-border-radius-large: var(--radius-3);
+    --sl-border-radius-x-large: var(--radius-4);
+    
+    /* Shoelace Shadows */
+    --sl-shadow-x-small: var(--shadow-2);
+    --sl-shadow-small: var(--shadow-3);
+    --sl-shadow-medium: var(--shadow-4);
+    --sl-shadow-large: var(--shadow-5);
+    
+    /* Shoelace Transitions */
+    --sl-transition-x-slow: var(--animation-duration-4);
+    --sl-transition-slow: var(--animation-duration-3);
+    --sl-transition-medium: var(--animation-duration-2);
+    --sl-transition-fast: var(--animation-duration-1);
+}
+
+/* Shoelace Button Styling */
+sl-button::part(base) {
+    transition: all var(--sl-transition-medium) var(--ease-3);
+    font-weight: var(--font-weight-6);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Primary variant */
+sl-button[variant="primary"]::part(base) {
+    background: var(--brand-gradient-lime);
+    border-color: var(--brand-primary-lime);
+    color: var(--color-text-on-brand);
+    box-shadow: 0 4px 15px rgba(210, 255, 55, 0.15);
+}
+
+sl-button[variant="primary"]::part(base):hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(210, 255, 55, 0.25);
+}
+
+/* Secondary (default) variant */
+sl-button[variant="default"]::part(base) {
+    background: var(--color-background-secondary);
+    border-color: var(--color-border-default);
+    color: var(--color-text-default);
+}
+
+sl-button[variant="default"]::part(base):hover {
+    background: var(--color-background-tertiary);
+    border-color: var(--gray-5);
+    transform: translateY(-1px);
+}
+
+/* Text variant (tertiary) */
+sl-button[variant="text"]::part(base) {
+    background: transparent;
+    border-color: transparent;
+    color: var(--brand-primary-lime);
+}
+
+sl-button[variant="text"]::part(base):hover {
+    background: rgba(210, 255, 55, 0.1);
+}
+
+/* Disabled state */
+sl-button[disabled]::part(base) {
+    background: var(--color-background-disabled);
+    border-color: var(--color-border-default);
+    color: var(--gray-5);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Icon button circle variant */
+sl-button[circle]::part(base) {
+    border-radius: var(--radius-round);
+    width: var(--size-8);
+    height: var(--size-8);
+    padding: 0;
+}
+
+/* Shoelace shine effect */
+sl-button::part(base)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s var(--ease-out-5);
+}
+
+sl-button::part(base):hover::before {
+    left: 100%;
+}
+
+/* Shoelace Dropdown Styling */
+sl-dropdown::part(panel) {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    box-shadow: var(--shadow-4);
+}
+
+sl-dropdown::part(trigger) {
+    cursor: pointer;
+}
+
+/* Shoelace Select Styling */
+sl-select::part(combobox) {
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+    color: var(--color-text-default);
+    transition: all var(--sl-transition-medium) var(--ease-3);
+}
+
+sl-select::part(combobox):hover {
+    background: var(--surface-3);
+    border-color: var(--gray-5);
+}
+
+sl-select::part(combobox):focus-within {
+    border-color: var(--color-border-interactive-focus);
+    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
+}
+
+/* Shoelace Dialog Styling */
+sl-dialog::part(panel) {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-4);
+}
+
+sl-dialog::part(overlay) {
+    background-color: rgba(0, 0, 0, 0.85);
+    -webkit-backdrop-filter: blur(10px); /* Safari */
+    backdrop-filter: blur(10px);
+}
+
+sl-dialog::part(header) {
+    border-bottom: 1px solid var(--color-border-default);
+}
+
+/* Shoelace Input Styling */
+sl-input::part(input) {
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+    color: var(--color-text-default);
+}
+
+sl-input::part(input):hover {
+    background: var(--surface-3);
+    border-color: var(--gray-5);
+}
+
+sl-input::part(input):focus {
+    border-color: var(--color-border-interactive-focus);
+    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
+}
+
+/* Shoelace Spinner */
+sl-spinner {
+    --indicator-color: var(--brand-primary-lime);
+    --track-color: var(--gray-7);
+}
+
+/* ==========================================================================
+   PHASE 3: PORTFOLIO ENHANCEMENT & STORYTELLING
+   ========================================================================== */
+
+/*
+ * Portfolio Components
+ * Creating compelling case study elements
+ * 
+ * "Stories unfold here,
+ *  Design decisions revealed,
+ *  Impact crystallized."
+ */
+
+/* Case Study Sections */
+.portfolio-intro {
+    padding: var(--size-10) 0;
+    background: linear-gradient(
+        180deg,
+        var(--color-background-primary) 0%,
+        color-mix(in srgb, var(--brand-primary-lime) 5%, var(--color-background-primary)) 100%
+    );
+}
+
+.case-study-header {
+    text-align: center;
+    margin-bottom: var(--size-8);
+}
+
+.case-study-header h1 {
+    font-size: var(--font-size-8);
+    background: var(--brand-gradient-lime);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: var(--font-weight-8);
+    margin-bottom: var(--size-3);
+    animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.case-study-subtitle {
+    font-size: var(--font-size-3);
+    color: var(--color-text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: var(--font-lineheight-3);
+}
+
+/* Project Overview Grid */
+.project-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--size-6);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--size-6);
+}
+
+.project-overview > div {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-6);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--animation-duration-3) var(--ease-3);
+}
+
+.project-overview > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--brand-gradient-lime);
+    transform: translateX(-100%);
+    transition: transform var(--animation-duration-3) var(--ease-3);
+}
+
+.project-overview > div:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-4);
+    border-color: var(--brand-primary-lime);
+}
+
+.project-overview > div:hover::before {
+    transform: translateX(0);
+}
+
+.project-overview h3 {
+    color: var(--brand-primary-lime);
+    font-size: var(--font-size-3);
+    margin-bottom: var(--size-3);
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+}
+
+.project-overview h3::before {
+    content: '';
+    display: inline-block;
+    width: var(--size-6);
+    height: var(--size-6);
+    background: rgba(210, 255, 55, 0.1);
+    border-radius: var(--radius-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+.challenge h3::before { content: '\f059'; } /* question-circle */
+.solution h3::before { content: '\f0eb'; } /* lightbulb */
+.impact h3::before { content: '\f201'; } /* line-chart */
+
+/* Impact Metrics */
+.impact-metrics {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+}
+
+.impact-metrics li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--size-2);
+    font-size: var(--font-size-2);
+}
+
+.impact-metrics strong {
+    font-size: var(--font-size-4);
+    color: var(--brand-primary-lime);
+    font-weight: var(--font-weight-7);
+    min-width: 60px;
+}
+
+/* Design Rationale Cards */
+.design-rationale {
+    background: color-mix(in srgb, var(--brand-primary-lime) 3%, var(--color-background-secondary));
+    border: 1px solid color-mix(in srgb, var(--brand-primary-lime) 20%, transparent);
+    border-radius: var(--radius-3);
+    padding: var(--size-5);
+    margin: var(--size-6) 0;
+    position: relative;
+}
+
+.design-rationale::before {
+    content: '\f0eb'; /* lightbulb */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: var(--size-3);
+    right: var(--size-3);
+    font-size: var(--font-size-6);
+    color: var(--brand-primary-lime);
+    opacity: 0.1;
+}
+
+.design-rationale h4 {
+    color: var(--brand-primary-lime);
+    font-size: var(--font-size-2);
+    margin-bottom: var(--size-2);
+}
+
+/* Process Timeline */
+.process-timeline {
+    position: relative;
+    padding: var(--size-6) 0;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border-default);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: var(--size-8);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--size-6);
+    align-items: center;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    grid-column: 3;
+    text-align: left;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    grid-column: 1;
+    text-align: right;
+}
+
+.timeline-marker {
+    grid-column: 2;
+    width: var(--size-6);
+    height: var(--size-6);
+    background: var(--brand-primary-lime);
+    border: 3px solid var(--color-background-primary); /* 3px creates visual separation from timeline line */
+    border-radius: var(--radius-round);
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-content {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-4);
+    transition: all var(--animation-duration-3) var(--ease-3);
+}
+
+.timeline-content:hover {
+    transform: scale(1.02);
+    border-color: var(--brand-primary-lime);
+    box-shadow: var(--shadow-3);
+}
+
+/* ==========================================================================
+   PHASE 4: ADVANCED FEATURES & INTERACTIONS
+   ========================================================================== */
+
+/*
+ * Interactive Components
+ * Living, breathing design system elements
+ * 
+ * "Interaction sparks joy,
+ *  Components dance with purpose,
+ *  Experience blooms bright."
+ */
+
+/* Component Playground */
+.component-playground {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    overflow: hidden;
+    margin: var(--size-6) 0;
+}
+
+.playground-controls {
+    background: var(--color-background-tertiary);
+    padding: var(--size-4);
+    border-bottom: 1px solid var(--color-border-default);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--size-4);
+}
+
+.playground-controls label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    font-size: var(--font-size-1);
+    color: var(--color-text-secondary);
+}
+
+.playground-controls input[type="color"] {
+    width: 100%;
+    height: var(--size-8);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    cursor: pointer;
+    background: var(--color-background-primary);
+}
+
+.playground-controls input[type="range"] {
+    width: 100%;
+    height: var(--size-6);
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+}
+
+.playground-controls input[type="range"]::-webkit-slider-track {
+    width: 100%;
+    height: 4px;
+    background: var(--gray-7);
+    border-radius: var(--radius-1);
+}
+
+.playground-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--size-4);
+    height: var(--size-4);
+    background: var(--brand-primary-lime);
+    border-radius: var(--radius-round);
+    cursor: pointer;
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.playground-controls input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 8px rgba(210, 255, 55, 0.1);
+}
+
+.playground-preview {
+    padding: var(--size-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.playground-code {
+    background: var(--gray-9);
+    padding: var(--size-4);
+    border-top: 1px solid var(--color-border-default);
+}
+
+.playground-code pre {
+    margin: 0;
+    overflow-x: auto;
+}
+
+.playground-code code {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-1);
+    color: var(--color-text-default);
+}
+
+/* Micro-interactions */
+.interactive-element {
+    transition: all var(--animation-duration-2) var(--ease-3);
+    cursor: pointer;
+}
+
+.interactive-element:hover {
+    transform: translateY(-2px);
+}
+
+.interactive-element:active {
+    transform: translateY(0);
+}
+
+/* Animated Icons */
+.animated-icon {
+    display: inline-block;
+    transition: transform var(--animation-duration-3) var(--ease-spring-3);
+}
+
+.animated-icon:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Navigation Enhancements */
+.nav-links a {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--brand-primary-lime);
+    transform: translateX(-100%);
+    transition: transform var(--animation-duration-3) var(--ease-3);
+}
+
+.nav-links a:hover::after {
+    transform: translateX(0);
+}
+
+/* Filter UI Components */
+.filter-group {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-4);
+    margin-bottom: var(--size-4);
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+}
+
+.filter-header:hover {
+    color: var(--brand-primary-lime);
+}
+
+.filter-toggle-icon {
+    transition: transform var(--animation-duration-2) var(--ease-3);
+}
+
+.filter-group.expanded .filter-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.filter-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--animation-duration-3) var(--ease-3);
+}
+
+.filter-group.expanded .filter-content {
+    max-height: 500px;
+    margin-top: var(--size-4);
+}
+
+.filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-3);
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-1);
+    cursor: pointer;
+    transition: all var(--animation-duration-2) var(--ease-3);
+    user-select: none;
+}
+
+.filter-chip:hover {
+    border-color: var(--brand-primary-lime);
+    transform: translateY(-1px);
+}
+
+.filter-chip.active {
+    background: rgba(210, 255, 55, 0.1);
+    border-color: var(--brand-primary-lime);
+    color: var(--brand-primary-lime);
+}
+
+.filter-chip .remove-icon {
+    margin-left: var(--size-1);
+    opacity: 0;
+    transition: opacity var(--animation-duration-2) var(--ease-3);
+}
+
+.filter-chip.active .remove-icon {
+    opacity: 1;
+}
+
+/* Collection Search Enhancement */
+.search-container {
+    position: relative;
+    margin-bottom: var(--size-4);
+}
+
+.search-container::before {
+    content: '\f002'; /* search icon */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: var(--size-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+}
+
+.collection-search {
+    width: 100%;
+    padding: var(--size-2) var(--size-3) var(--size-2) var(--size-8);
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-1);
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.collection-search:focus {
+    outline: none;
+    border-color: var(--color-border-interactive-focus);
+    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
+}
+
+/* Bulk Selection Tools */
+.bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+    padding: var(--size-3);
+    background: var(--color-background-tertiary);
+    border-radius: var(--radius-2);
+    margin-bottom: var(--size-3);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all var(--animation-duration-3) var(--ease-3);
+    pointer-events: none;
+}
+
+.bulk-actions.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Recently Used Section */
+.recent-collections {
+    background: color-mix(in srgb, var(--brand-primary-lime) 5%, var(--color-background-secondary));
+    border: 1px solid color-mix(in srgb, var(--brand-primary-lime) 20%, transparent);
+    border-radius: var(--radius-2);
+    padding: var(--size-3);
+    margin-bottom: var(--size-4);
+}
+
+.recent-collections-header {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    margin-bottom: var(--size-2);
+    font-size: var(--font-size-1);
+    color: var(--brand-primary-lime);
+}
+
+.recent-collections-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+}
+
+.recent-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-2);
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-1);
+    font-size: var(--font-size-0);
+    cursor: pointer;
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.recent-chip:hover {
+    border-color: var(--brand-primary-lime);
+    background: rgba(210, 255, 55, 0.1);
+}
+
+/* Export Preview */
+.export-preview {
+    background: var(--gray-9);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    padding: var(--size-4);
+    margin-top: var(--size-4);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.export-preview pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    line-height: var(--font-lineheight-3);
+}
+
+.export-preview code {
+    color: var(--color-text-default);
+}
+
+/* Liquid Progress Enhancement */
+.liquid-progress {
+    --progress-size: 120px;
+    position: relative;
+    width: var(--progress-size);
+    height: var(--progress-size);
+    border-radius: 50%;
+    background: var(--gray-8);
+    border: 3px solid var(--gray-7);
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(210, 255, 55, 0.15);
+    overflow: hidden;
+}
+
+.liquid-progress-inner {
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--gray-9);
+    overflow: hidden;
+}
+
+.liquid-wave {
+    position: absolute;
+    top: 75%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: var(--brand-gradient-lime);
+    border-radius: 45%;
+    animation: wave-animation 4s linear infinite;
+    opacity: 0.9;
+}
+
+.liquid-wave:nth-child(2) {
+    animation-duration: 6s;
+    animation-direction: reverse;
+    opacity: 0.5;
+}
+
+/* ==========================================================================
+   PHASE 5: LAUNCH PREP & TECHNICAL EXCELLENCE
+   ========================================================================== */
+
+/*
+ * Final Polish & Performance
+ * Every detail matters, every byte counts
+ * 
+ * "Polish brings the shine,
+ *  Performance keeps them engaged,
+ *  Excellence revealed."
+ */
+
+/* Community Engagement Section */
+.community-engagement {
+    background: var(--color-background-secondary);
+    border-radius: var(--radius-3);
+    padding: var(--size-8);
+    margin: var(--size-8) 0;
+    text-align: center;
+}
+
+.community-engagement h3 {
+    color: var(--brand-primary-lime);
+    font-size: var(--font-size-4);
+    margin-bottom: var(--size-6);
+}
+
+.community-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--size-4);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.community-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-3);
+    padding: var(--size-6);
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    text-decoration: none;
+    color: var(--color-text-default);
+    transition: all var(--animation-duration-3) var(--ease-3);
+    position: relative;
+    overflow: hidden;
+}
+
+.community-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(210, 255, 55, 0.1) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    transition: opacity var(--animation-duration-3) var(--ease-3);
+}
+
+.community-link:hover {
+    transform: translateY(-4px);
+    border-color: var(--brand-primary-lime);
+    box-shadow: var(--shadow-4);
+}
+
+.community-link:hover::before {
+    opacity: 1;
+}
+
+.community-link .icon {
+    font-size: var(--font-size-6);
+    display: block;
+}
+
+/* Performance Indicators */
+.performance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-2) var(--size-3);
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-6);
+    color: #00ff00;
+}
+
+/* Easter Eggs & Delighters */
+.logo-easter-egg {
+    cursor: pointer;
+    transition: transform var(--animation-duration-3) var(--ease-spring-4);
+}
+
+.logo-easter-egg:hover {
+    transform: rotate(360deg) scale(1.1);
+}
+
+.logo-easter-egg:active {
+    animation: bounce 0.6s var(--ease-spring-4);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Version Badge */
+.version-badge {
+    position: fixed;
+    bottom: var(--size-4);
+    right: var(--size-4);
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    padding: var(--size-1) var(--size-2);
+    font-size: var(--font-size-00);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    transition: opacity var(--animation-duration-2) var(--ease-3);
+}
+
+.version-badge:hover {
+    opacity: 1;
+}
+
+/* Loading Performance */
+.skeleton-shimmer-fast {
+    background: var(--gray-8);
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-shimmer-fast::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(210, 255, 55, 0.08) 50%,
+        transparent 100%
+    );
+    animation: shimmer-fast 0.8s infinite;
+}
+
+@keyframes shimmer-fast {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Critical CSS Marker */
+/* Above this line: Critical rendering path CSS */
+/* Below this line: Enhancement CSS that can be lazy loaded */
+
+/* Smooth scroll behavior */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Parallax effects for portfolio */
+    .portfolio-section {
+        transform-style: preserve-3d;
+    }
+    
+    .parallax-element {
+        transform: translateZ(var(--parallax-depth, 0));
+        transition: transform 0.6s var(--ease-3);
+    }
+}
+
+/* Print styles for documentation */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+
+/* Component Philosophy: Contrast Creates Focus */
+/* High contrast states for critical interactive elements */
+.high-contrast-focus:focus-visible {
+    outline: 3px solid var(--brand-primary-lime);
+    outline-offset: 2px;
+    box-shadow: 
+        0 0 0 6px var(--color-background-primary),
+        0 0 0 9px var(--brand-primary-lime);
+}
+
+/* Performance optimization utilities */
+.gpu-accelerated {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.reduce-paint {
+    contain: layout style paint;
+}
+
+/* ==========================================================================
+   LEGACY STYLES (Preserved from v2.7.2)
+   ==========================================================================
+   
+   "Old patterns remain,
+    Migration paths clearly marked,
+    Progress without loss."
+   */
+
+/* Dark theme adjustments */
 @media (prefers-color-scheme: dark) {
     :root {
         color-scheme: dark;
     }
 }
 
-/* ==========================================================================
-   GLOBAL INHERITANCE & BROWSER RESETS
-   ========================================================================== */
-
-/* 1. Set the base text color and background for the entire document. */
+/* Global inheritance */
 html, body {
     color: var(--color-text-default);
     background-color: var(--color-background-primary);
 }
 
-/* 2. Force form elements to inherit typography and color.
-      This is the key fix for browser default styles (e.g., black text in dropdowns). */
-button,
-input,
-select,
-textarea {
+button, input, select, textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    color: inherit; /* Use the color from the parent element */
+    color: inherit;
 }
 
-/* 3. Explicitly style dropdown options, as they don't inherit well. */
 select option {
     background: var(--color-background-secondary);
     color: var(--color-text-default);
 }
 
-/* ==========================================================================
-   COMPONENT STYLES
-   ========================================================================== */
-
-/* Typography - Using Open Props font scales */
+/* Typography (preserved for backward compatibility) */
 .text-heading-xl { 
-    font-size: var(--font-size-7); /* Reduced from 8 */
+    font-size: var(--font-size-7);
     font-weight: var(--font-weight-7); 
     line-height: var(--font-lineheight-1);
 }
 
 .text-heading-lg { 
-    font-size: var(--font-size-5); /* Reduced from 6 */
+    font-size: var(--font-size-5);
     font-weight: var(--font-weight-6); 
     line-height: var(--font-lineheight-2);
 }
 
 .text-heading-md { 
-    font-size: var(--font-size-3); /* Reduced from 4 */
+    font-size: var(--font-size-3);
     font-weight: var(--font-weight-6); 
     line-height: var(--font-lineheight-3);
 }
@@ -174,7 +1269,7 @@ main {
     animation: var(--animation-fade-in);
 }
 
-/* Scrollbar styling using Open Props colors */
+/* Scrollbar styling */
 .content-wrapper::-webkit-scrollbar { width: var(--size-2); }
 .content-wrapper::-webkit-scrollbar-track { background-color: transparent; }
 .content-wrapper::-webkit-scrollbar-thumb { 
@@ -187,8 +1282,8 @@ main {
 .card {
     background: var(--color-background-secondary);
     border-radius: var(--radius-3);
-    padding: var(--size-3); /* Reduced from 4 */
-    margin-bottom: var(--size-2); /* Reduced from 3 */
+    padding: var(--size-3);
+    margin-bottom: var(--size-2);
     box-shadow: var(--shadow-2);
     transition: all var(--animation-duration-2) var(--ease-3);
     animation: var(--animation-slide-in-up);
@@ -199,17 +1294,17 @@ main {
 /* Token Summary */
 .token-summary { 
     text-align: center; 
-    padding: var(--size-6) var(--size-4); /* Reduced from 8,6 */
+    padding: var(--size-6) var(--size-4);
 }
 
 .token-summary .token-count-total { 
     color: var(--brand-primary-lime); 
-    margin-bottom: var(--size-1); /* Reduced from 2 */
+    margin-bottom: var(--size-1);
 }
 
 .token-summary .token-label { 
     color: var(--color-text-muted); 
-    margin-bottom: var(--size-4); /* Reduced from 6 */
+    margin-bottom: var(--size-4);
 }
 
 .token-breakdown { 
@@ -217,7 +1312,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
     gap: var(--size-2); 
     border-top: 1px solid var(--gray-8);
-    padding-top: var(--size-4); /* Reduced from 6 */
+    padding-top: var(--size-4);
 }
 
 @media (max-width: 600px) {
@@ -238,11 +1333,11 @@ main {
     text-align: center; 
     transition: all var(--animation-duration-2) var(--ease-3);
     cursor: default;
-    padding: var(--size-2); /* Reduced from 3,1 */
+    padding: var(--size-2);
     border-radius: var(--radius-2);
     background: var(--surface-2);
     border: 1px solid transparent;
-    min-height: 60px; /* Reduced from 80px */
+    min-height: 60px;
     display: flex; 
     flex-direction: column; 
     align-items: center; 
@@ -250,14 +1345,14 @@ main {
 }
 
 .token-type-stat .icon { 
-    font-size: var(--font-size-3); /* Reduced from 4 */
-    margin-bottom: var(--size-1); /* Reduced from 2 */
+    font-size: var(--font-size-3);
+    margin-bottom: var(--size-1);
     transition: transform var(--animation-duration-2) var(--ease-spring-3);
     display: block;
 }
 
 .token-type-stat .count { 
-    font-size: var(--font-size-2); /* Reduced from 3 */
+    font-size: var(--font-size-2);
     font-weight: var(--font-weight-6); 
     margin-bottom: var(--size-1);
 }
@@ -345,10 +1440,10 @@ main {
     font-size: var(--font-size-1);
 }
 
-/* Buttons */
+/* Legacy Buttons (for backward compatibility) */
 .btn {
     width: 100%; 
-    padding: var(--size-2) var(--size-3); /* Reduced from 3,4 */
+    padding: var(--size-2) var(--size-3);
     border-radius: var(--radius-2);
     font-weight: var(--font-weight-6); 
     cursor: pointer; 
@@ -453,7 +1548,7 @@ main {
 
 /* Icon-only Button */
 .btn-icon-only {
-    width: var(--size-8); /* Reduced from hardcoded 32px */
+    width: var(--size-8);
     height: var(--size-8);
     padding: 0;
     border-radius: 50%;
@@ -501,7 +1596,7 @@ main {
 }
 
 .collection-item {
-    padding: var(--size-2); /* Reduced from 3 */
+    padding: var(--size-2);
     background: var(--color-background-secondary);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-2);
@@ -511,7 +1606,7 @@ main {
     align-items: center;
     gap: var(--size-3);
     position: relative;
-    min-height: 48px; /* Reduced from 60px */
+    min-height: 48px;
 }
 
 .advanced-mode .collection-item {
@@ -529,7 +1624,7 @@ main {
 }
 
 .collection-checkbox {
-    width: 14px; /* Reduced from 16px */
+    width: 14px;
     height: 14px;
     border: 2px solid var(--color-border-default);
     border-radius: var(--radius-1);
@@ -625,6 +1720,7 @@ main {
     align-items: center;
     z-index: 1000;
     padding: var(--size-6);
+    -webkit-backdrop-filter: blur(4px); /* Safari */
     backdrop-filter: blur(4px);
 }
 
@@ -632,17 +1728,17 @@ main {
     background: var(--color-background-secondary);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-3);
-    padding: var(--size-4); /* Reduced from 6 */
+    padding: var(--size-4);
     text-align: center;
-    max-width: 280px; /* Reduced from 320px */
+    max-width: 280px;
     width: 90%;
     animation: var(--animation-scale-up);
 }
 
 .success-icon {
-    font-size: var(--font-size-7); /* Reduced from 8 */
+    font-size: var(--font-size-7);
     color: var(--brand-primary-lime);
-    margin-bottom: var(--size-3); /* Reduced from 4 */
+    margin-bottom: var(--size-3);
     filter: drop-shadow(0 0 15px color-mix(in srgb, var(--brand-primary-lime) 40%, transparent));
     animation: successPop 0.6s ease-out;
 }
@@ -667,25 +1763,25 @@ main {
     background: var(--gradient-7);
     border: 1px dashed color-mix(in srgb, var(--brand-primary-lime) 20%, transparent);
     border-radius: var(--radius-3);
-    padding: var(--size-8) var(--size-4); /* Reduced from 10,6 */
+    padding: var(--size-8) var(--size-4);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--size-4);
-    min-height: 240px; /* Reduced from 300px */
+    min-height: 240px;
     justify-content: center;
 }
 
 .empty-state-icon {
-    width: var(--size-10); /* Reduced from 12 */
+    width: var(--size-10);
     height: var(--size-10);
     background: color-mix(in srgb, var(--brand-primary-lime) 10%, transparent);
     border-radius: var(--radius-round);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--font-size-3); /* Reduced from 4 */
+    font-size: var(--font-size-3);
     color: var(--brand-primary-lime);
     margin-bottom: var(--size-2);
 }
@@ -725,7 +1821,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: var(--size-3);
-    padding: var(--size-3); /* Reduced from 5 */
+    padding: var(--size-3);
 }
 
 .skeleton-item {
@@ -736,8 +1832,14 @@ main {
     overflow: hidden;
 }
 
-/* Original shimmer skeleton (default) */
-.skeleton-item::after {
+/* Original shimmer skeleton (for backward compatibility) */
+.skeleton-shimmer {
+    background: var(--gray-8);
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-shimmer::after {
     content: '';
     position: absolute;
     top: 0;
@@ -753,28 +1855,22 @@ main {
     animation: shimmerOverlay 1.5s infinite;
 }
 
-@keyframes shimmerOverlay {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
 .skeleton-item.small { 
     height: 40px; 
 }
 
 .skeleton-item:first-child {
-    height: 180px; /* Token summary card */
+    height: 180px;
 }
 
-/* Additional Skeleton Variations */
-/* Pulse Skeleton (Now the default for loading state) */
+/* Skeleton Variations */
 .skeleton-pulse {
     background: var(--gray-7);
     animation: skeleton-pulse 2s ease-in-out infinite;
 }
 
 .skeleton-pulse::after {
-    display: none; /* Remove shimmer overlay */
+    display: none;
 }
 
 @keyframes skeleton-pulse {
@@ -782,7 +1878,6 @@ main {
     50% { opacity: 0.4; }
 }
 
-/* Subtle Wave Skeleton */
 .skeleton-subtle {
     background: linear-gradient(
         90deg,
@@ -798,12 +1893,6 @@ main {
     display: none;
 }
 
-@keyframes skeleton-wave {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-/* Breathing Skeleton */
 .skeleton-breathe {
     background: var(--gray-7);
     animation: skeleton-breathe 2.5s ease-in-out infinite;
@@ -824,7 +1913,6 @@ main {
     }
 }
 
-/* Branded Skeleton */
 .skeleton-brand {
     background: linear-gradient(
         90deg,
@@ -845,7 +1933,8 @@ main {
 .about-modal {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.85); /* Simplified from color-mix */
+    background-color: rgba(0, 0, 0, 0.85);
+    -webkit-backdrop-filter: blur(10px); /* Safari */
     backdrop-filter: blur(10px);
     z-index: 1001;
     display: flex;
@@ -866,8 +1955,8 @@ main {
     background: var(--color-background-secondary);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-4);
-    padding: var(--size-4); /* Reduced from 6 */
-    max-width: 280px; /* Reduced from 320px */
+    padding: var(--size-4);
+    max-width: 280px;
     width: 90%;
     text-align: center;
     position: relative;
@@ -878,12 +1967,12 @@ main {
 }
 
 .about-content h2 {
-    font-size: var(--font-size-3); /* Reduced header size */
+    font-size: var(--font-size-3);
 }
 
 .about-close {
     position: absolute;
-    top: var(--size-2); /* Reduced from 3 */
+    top: var(--size-2);
     right: var(--size-2);
     background: transparent;
     border: none;
@@ -905,7 +1994,7 @@ main {
 }
 
 .about-avatar {
-    width: var(--size-12); /* Reduced from 16 */
+    width: var(--size-12);
     height: var(--size-12);
     border-radius: var(--radius-round);
     margin: 0 auto;
@@ -938,7 +2027,7 @@ main {
 .about-links {
     display: flex;
     justify-content: center;
-    gap: var(--size-2); /* Reduced from 3 */
+    gap: var(--size-2);
 }
 
 .about-link {
@@ -1061,7 +2150,7 @@ main {
     will-change: opacity, visibility;
 }
 
-/* Animation Keyframes */
+/* Animation Keyframes (Consolidated) */
 @keyframes pulse-glow {
     0%, 100% { 
         transform: scale(1);
@@ -1078,6 +2167,16 @@ main {
     100% { transform: rotate(360deg); }
 }
 
+@keyframes shimmerOverlay {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes skeleton-wave {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
 @keyframes checkmarkAnimation {
     0% { transform: scale(0) rotate(-180deg); opacity: 0; }
     70% { transform: scale(1.1) rotate(10deg); opacity: 1; }
@@ -1090,79 +2189,6 @@ main {
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-/* ==========================================================================
-   NEW: FORM ENHANCEMENTS PREP
-   ========================================================================== */
-
-/* Collection search */
-.collection-search {
-    width: 100%;
-    padding: var(--size-2) var(--size-3);
-    background: var(--color-background-tertiary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    font-size: var(--font-size-1);
-    margin-bottom: var(--size-3);
-}
-
-.collection-search:focus {
-    outline: none;
-    border-color: var(--color-border-interactive-focus);
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
-}
-
-/* Advanced Filters Section */
-.filters-section {
-    background: var(--color-background-secondary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    padding: var(--size-3);
-    margin-bottom: var(--size-3);
-}
-
-.filters-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-}
-
-.filters-content {
-    margin-top: var(--size-3);
-    padding-top: var(--size-3);
-    border-top: 1px solid var(--color-border-default);
-}
-
-/* Filter chips */
-.filter-chips {
-    display: flex;
-    gap: var(--size-2);
-    flex-wrap: wrap;
-}
-
-.filter-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-1);
-    padding: var(--size-1) var(--size-2);
-    background: var(--color-background-tertiary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-1);
-    font-size: var(--font-size-1);
-    cursor: pointer;
-    transition: all var(--animation-duration-2) var(--ease-3);
-}
-
-.filter-chip:hover {
-    border-color: var(--brand-primary-lime);
-}
-
-.filter-chip.active {
-    background: rgba(210, 255, 55, 0.1);
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-}
-
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
     * {
@@ -1171,3 +2197,11 @@ main {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ==========================================================================
+   END OF TOKEN EXPORTER DESIGN SYSTEM v3.0.2
+   
+   "Code complete, system whole,
+    From tokens to components bright,
+    Excellence achieved."
+   ========================================================================== */
