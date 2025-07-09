@@ -6,9 +6,12 @@
 
 This project was created by [Nate Mills](https://natemills.me) to solve a common workflow problem for design and development teams.
 
-[![Install from Figma Community](https://img.shields.io/badge/Install%20from-Figma%20Community-F7C600?style=for-the-badge&logo=figma&logoColor=black)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
-[![View Live Guide](https://img.shields.io/badge/View-Live%20Guide-blue?style=for-the-badge&logo=storybook&logoColor=white)](https://n8mills-ui.github.io/token-exporter-ds/design-system-guide.html)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](./LICENSE)
+
+[![Install on Figma](https://img.shields.io/badge/Install-Figma%20Community-F7C600?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
+[![View the Guide](https://img.shields.io/badge/View-Live%20Guide-D2FF37?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iYmxhY2siPjxwYXRoIGQ9Ik0xMiwyQzYuNDgsMiwyLDYuNDgsMiwxMnM0LjQ4LDEwLDEwLDEwczEwLTQuNDgsMTAtMTBTMTcuNTIsMiwxMiwyek0xMiw0YzEuNjYsMCwzLDIuMjQsMyw1cy0xLjM0LDUtMyw1cy0zLTIuMjQtMy01UzEwLjM0LDQsMTIsNHpNMTIsMjAuMmMtMi41LDAtNC43MS0xLjI4LTgtMy4yMmMwLTIuNjYsNS4zMy00LjA4LDgtNC4wOHM4LDEuNDIsOCw0LjA4QzE2LjcxLDE4LjkyLDE0LjUsMjAuMiwxMiwyMC4yeiIvPjwvc3ZnPg==&logoColor=black)](https://n8mills-ui.github.io/token-exporter-ds/design-system-guide.html)
+[![Portfolio](https://img.shields.io/badge/Nate%20Mills-Portfolio-D2FF37?style=for-the-badge&logo=aboutme&logoColor=black)](https://natemills.me)
+[![Connect on LinkedIn](https://img.shields.io/badge/Connect-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/millsdesign/)
+
 
 ## The Problem It Solves
 
