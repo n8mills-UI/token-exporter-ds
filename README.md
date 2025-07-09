@@ -6,14 +6,9 @@
 
 This project was created by [Nate Mills](https://natemills.me) to solve a common workflow problem for design and development teams.
 
-[![Figma Community](https://img.shields.io/badge/Figma-Community-F7C600?style=for-the-badge&logo=figma&logoColor=black)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
-[![GitHub license](https://img.shields.io/github/license/n8mills-UI/token-exporter-ds?style=for-the-badge)](./LICENSE)
-
-## Live Links
-
-* **Install the Plugin:** [Figma Community Page](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
-* **Live Design System Guide:** [View the Guide](https://n8mills-ui.github.io/token-exporter-ds/design-system-guide.html)
-* **Live CSS File (CDN):** `https://cdn.jsdelivr.net/gh/n8mills-UI/token-exporter-ds/design-system.css`
+[![Install from Figma Community](https://img.shields.io/badge/Install%20from-Figma%20Community-F7C600?style=for-the-badge&logo=figma&logoColor=black)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
+[![View Live Guide](https://img.shields.io/badge/View-Live%20Guide-blue?style=for-the-badge&logo=storybook&logoColor=white)](https://n8mills-ui.github.io/token-exporter-ds/design-system-guide.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](./LICENSE)
 
 ## The Problem It Solves
 
@@ -48,3 +43,4 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 * **Shoelace** for high-quality, accessible web components in the plugin's UI.
 * **AI-Assisted Development** using tools like Claude and Gemini to accelerate coding and problem-solving.
 * **jsDelivr** for fast and reliable CDN hosting.
+
