@@ -1,6 +1,6 @@
 # Token Exporter for Figma
 
-![Token Exporter Hero Image][(https://s3-figma-plugin-images-production-sig.figma.com/plugins/carousel/img/1521741753717588633/9f215e89a92da2cf3e49ce8c23796cbb1ce204f1?Expires=1753056000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=OEMtDtJRcgtGOdalWBAo1mLe9EtS~t2DtkM6A~RM7JruZuQwgkzWj9ZnwCJApv7TSQnyPeV6nocKNt4cK8hQu5aB0LxiwV~8qmddC9NeGqdBGglrUE853tYvtFkHb4Sz-0u99BLUSntDZVj~6PC81akICPXDkGayTLKvS6x5k0qpG26TX57WBIixYvyMz-wSbomA8nRTbkJLEu5k1dAa5-iLqEDP0hZrCNno5qYIfqcDHpZOXYayPyfnDRJNwc9Gs0SP8CPdzABYtxQSKLL2~-vbsAB4QMd~echefsAL1lFgSAGW6bgVDYJeYA3aS6o3AMUlYpgnH59g65CPxlfZfg__)](https://github.com/n8mills-UI/token-exporter-ds/issues/1#issue-3214368580)
+![Token Exporter Hero Image](https://github.com/n8mills-UI/token-exporter-ds/issues/1#issue-3214368500)
 
 > A simple, powerful Figma plugin to transform your design variables into production-ready code with one click.
 
