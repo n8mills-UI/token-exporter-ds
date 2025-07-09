@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Token Exporter - Design System Guide v2.7.1</title>
+    <title>Token Exporter - Design System Guide v2.7.3</title>
     
-    <!-- External Libraries -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Lucide Icons Script -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     
     <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/n8mills-UI/token-exporter-ds@main/design-system.css">
@@ -53,7 +53,7 @@
             color: var(--color-text-default) !important;
         }
 
-        .section-title i {
+        .section-title .lucide {
             color: var(--brand-primary-lime);
             margin-right: var(--size-2);
         }
@@ -175,10 +175,10 @@
             border-radius: 0 var(--radius-1) var(--radius-1) 0;
         }
         
-        .nav-links i {
+        .nav-links .lucide {
             width: 16px;
-            text-align: center;
-            font-size: var(--font-size-0);
+            height: 16px;
+            stroke-width: 2.5px;
         }
 
         /* Sidebar Footer */
@@ -247,9 +247,11 @@
             gap: var(--size-3);
         }
         
-        .main-section-title i {
+        .main-section-title .lucide {
             color: var(--brand-primary-lime);
-            font-size: 1em;
+            width: 1em;
+            height: 1em;
+            stroke-width: 2.5px;
         }
         
         .section-description {
@@ -282,10 +284,12 @@
             gap: var(--size-3);
         }
 
-        .category-title i, .component-title i {
+        .category-title .lucide, .component-title .lucide {
             color: var(--brand-primary-lime);
-            font-size: 1em;
-            padding-right: var(--size-1);
+            width: 1em;
+            height: 1em;
+            stroke-width: 2.5px;
+            margin-right: var(--size-1);
         }
         
         .category-description, .component-description {
@@ -459,7 +463,6 @@
         }
 
         .success-icon {
-            font-size: var(--font-size-8);
             color: var(--brand-primary-lime);
             margin-bottom: var(--size-4);
             display: block;
@@ -494,11 +497,11 @@
             color: var(--brand-primary-lime);
         }
 
-        .advanced-link i {
+        .advanced-link .lucide {
             transition: transform var(--animation-duration-2) var(--ease-3);
         }
 
-        .advanced-link:hover i {
+        .advanced-link:hover .lucide {
             transform: translateX(2px);
         }
 
@@ -730,8 +733,12 @@
 
         .about-link {
             color: var(--color-text-secondary);
-            font-size: var(--font-size-3);
             transition: all var(--animation-duration-2) var(--ease-3);
+        }
+        
+        .about-link .lucide {
+            width: 24px;
+            height: 24px;
         }
 
         .about-link:hover {
@@ -783,199 +790,48 @@
         }
         
         /* NEW SKELETON STYLES - To be added to CSS */
-        /* Pulse Skeleton (Default) */
-        .skeleton-pulse {
-            background: var(--gray-7);
-            animation: skeleton-pulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes skeleton-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        
-        /* Subtle Wave Skeleton */
-        .skeleton-subtle {
-            background: linear-gradient(
-                90deg,
-                var(--gray-7) 25%,
-                var(--gray-6) 50%,
-                var(--gray-7) 75%
-            );
-            background-size: 200% 100%;
-            animation: skeleton-wave 3s ease-in-out infinite;
-        }
-        
-        @keyframes skeleton-wave {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        /* Breathing Skeleton */
-        .skeleton-breathe {
-            background: var(--gray-7);
-            animation: skeleton-breathe 2.5s ease-in-out infinite;
-        }
-        
-        @keyframes skeleton-breathe {
-            0%, 100% { 
-                opacity: 0.5;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.8;
-                transform: scale(1.02);
-            }
-        }
-        
-        /* Branded Skeleton */
-        .skeleton-brand {
-            background: linear-gradient(
-                90deg,
-                rgba(210, 255, 55, 0.05) 25%,
-                rgba(210, 255, 55, 0.1) 50%,
-                rgba(210, 255, 55, 0.05) 75%
-            );
-            background-size: 200% 100%;
-            animation: skeleton-wave 2s ease-in-out infinite;
-            border: 1px solid rgba(210, 255, 55, 0.1);
-        }
-        
-        /* Shimmer Skeleton (Already in CSS) */
-        .skeleton-shimmer {
-            background: var(--gray-8);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .skeleton-shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                transparent 100%
-            );
-            animation: shimmerOverlay 1.5s infinite;
-        }
+        .skeleton-pulse { background: var(--gray-7); animation: skeleton-pulse 2s ease-in-out infinite; }
+        @keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .skeleton-subtle { background: linear-gradient(90deg, var(--gray-7) 25%, var(--gray-6) 50%, var(--gray-7) 75%); background-size: 200% 100%; animation: skeleton-wave 3s ease-in-out infinite; }
+        @keyframes skeleton-wave { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .skeleton-breathe { background: var(--gray-7); animation: skeleton-breathe 2.5s ease-in-out infinite; }
+        @keyframes skeleton-breathe { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } }
+        .skeleton-brand { background: linear-gradient(90deg, rgba(210, 255, 55, 0.05) 25%, rgba(210, 255, 55, 0.1) 50%, rgba(210, 255, 55, 0.05) 75%); background-size: 200% 100%; animation: skeleton-wave 2s ease-in-out infinite; border: 1px solid rgba(210, 255, 55, 0.1); }
+        .skeleton-shimmer { background: var(--gray-8); position: relative; overflow: hidden; }
+        .skeleton-shimmer::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%); animation: shimmerOverlay 1.5s infinite; }
         
         /* NEW BUTTON STYLES - To be added to CSS */
-        .btn-icon-only {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            border-radius: 50%;
-            border: 1px solid var(--color-border-default);
-            background: transparent;
-            color: var(--color-text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .btn-icon-only:hover {
-            color: var(--brand-primary-lime);
-            border-color: var(--brand-primary-lime);
-            background: rgba(210, 255, 55, 0.1);
-        }
+        .btn-icon-only { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--color-border-default); background: transparent; color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+        .btn-icon-only:hover { color: var(--brand-primary-lime); border-color: var(--brand-primary-lime); background: rgba(210, 255, 55, 0.1); }
         
         /* Animations */
-        @keyframes pulse-glow {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3));
-            }
-            50% { 
-                transform: scale(1.05);
-                filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5));
-            }
-        }
-        
-        @keyframes wave-animation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes pulse-glow { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5)); } }
+        @keyframes wave-animation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         /* Responsive styles */
         @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-            
-            .guide-sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .guide-sidebar.open {
-                transform: translateX(0);
-                box-shadow: var(--shadow-5);
-            }
-            
-            .guide-content {
-                margin-left: 0;
-                max-width: 100vw;
-                width: 100%;
-                padding: var(--size-4);
-                padding-top: calc(var(--size-4) + 48px + var(--size-3));
-                box-sizing: border-box;
-            }
-            
-            .about-section {
-                margin-left: calc(-1 * var(--size-4));
-                margin-right: calc(-1 * var(--size-4));
-                padding: var(--size-6) var(--size-4);
-            }
-            
-            .about-content-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .about-links {
-                justify-content: center;
-            }
-            
-            .color-grid,
-            .shadow-grid,
-            .radius-grid,
-            .tokens-grid,
-            .variants-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .gray-scale-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-            
-            .spacing-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            
-            .token-breakdown {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: var(--size-3) !important;
-            }
+            .mobile-menu-toggle { display: block; }
+            .guide-sidebar { transform: translateX(-100%); }
+            .guide-sidebar.open { transform: translateX(0); box-shadow: var(--shadow-5); }
+            .guide-content { margin-left: 0; max-width: 100vw; width: 100%; padding: var(--size-4); padding-top: calc(var(--size-4) + 48px + var(--size-3)); box-sizing: border-box; }
+            .about-section { margin-left: calc(-1 * var(--size-4)); margin-right: calc(-1 * var(--size-4)); padding: var(--size-6) var(--size-4); }
+            .about-content-grid { grid-template-columns: 1fr; text-align: center; }
+            .about-links { justify-content: center; }
+            .color-grid, .shadow-grid, .radius-grid, .tokens-grid, .variants-grid { grid-template-columns: 1fr; }
+            .gray-scale-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+            .spacing-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .token-breakdown { grid-template-columns: repeat(2, 1fr) !important; gap: var(--size-3) !important; }
         }
         
         @media (max-width: 400px) {
-            .token-breakdown {
-                grid-template-columns: 1fr !important;
-                gap: var(--size-2) !important;
-            }
+            .token-breakdown { grid-template-columns: 1fr !important; gap: var(--size-2) !important; }
         }
     </style>
 </head>
 <body>
     <!-- Mobile menu toggle -->
     <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
+        <i data-lucide="menu"></i>
     </button>
 
     <div class="guide-container">
@@ -1007,44 +863,44 @@
                 <div class="nav-section">
                     <h3 class="nav-section-title">Foundation</h3>
                     <ul class="nav-links">
-                        <li><a href="#overview" class="nav-link"><i class="fas fa-home"></i> Overview</a></li>
-                        <li><a href="#colors" class="nav-link"><i class="fas fa-palette"></i> Colors</a></li>
-                        <li><a href="#typography" class="nav-link"><i class="fas fa-font"></i> Typography</a></li>
-                        <li><a href="#spacing" class="nav-link"><i class="fas fa-arrows-alt-h"></i> Spacing</a></li>
-                        <li><a href="#shadows" class="nav-link"><i class="fas fa-layer-group"></i> Shadows</a></li>
-                        <li><a href="#border-radius" class="nav-link"><i class="fas fa-square"></i> Border Radius</a></li>
-                        <li><a href="#animations" class="nav-link"><i class="fas fa-play"></i> Animations</a></li>
+                        <li><a href="#overview" class="nav-link"><i data-lucide="layout-dashboard"></i> Overview</a></li>
+                        <li><a href="#colors" class="nav-link"><i data-lucide="palette"></i> Colors</a></li>
+                        <li><a href="#typography" class="nav-link"><i data-lucide="type"></i> Typography</a></li>
+                        <li><a href="#spacing" class="nav-link"><i data-lucide="move-horizontal"></i> Spacing</a></li>
+                        <li><a href="#shadows" class="nav-link"><i data-lucide="layers"></i> Shadows</a></li>
+                        <li><a href="#border-radius" class="nav-link"><i data-lucide="square"></i> Border Radius</a></li>
+                        <li><a href="#animations" class="nav-link"><i data-lucide="play-circle"></i> Animations</a></li>
                     </ul>
                 </div>
                 
                 <div class="nav-section">
                     <h3 class="nav-section-title">Components</h3>
                     <ul class="nav-links">
-                        <li><a href="#token-summary" class="nav-link"><i class="fas fa-chart-pie"></i> Token Summary</a></li>
-                        <li><a href="#buttons" class="nav-link"><i class="fas fa-mouse-pointer"></i> Buttons</a></li>
-                        <li><a href="#forms" class="nav-link"><i class="fas fa-list-alt"></i> Forms</a></li>
-                        <li><a href="#collection-items" class="nav-link"><i class="fas fa-list"></i> Collections</a></li>
-                        <li><a href="#loading-states" class="nav-link"><i class="fas fa-spinner"></i> Loading States</a></li>
-                        <li><a href="#modals" class="nav-link"><i class="fas fa-window-restore"></i> Modals</a></li>
-                        <li><a href="#modular-cards" class="nav-link"><i class="fas fa-layer-group"></i> Modular Card States</a></li>
-                        <li><a href="#advanced-toggle" class="nav-link"><i class="fas fa-sliders-h"></i> Mode Toggle</a></li>
-                        <li><a href="#footer" class="nav-link"><i class="fas fa-heart"></i> Footer</a></li>
+                        <li><a href="#token-summary" class="nav-link"><i data-lucide="pie-chart"></i> Token Summary</a></li>
+                        <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
+                        <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
+                        <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
+                        <li><a href="#loading-states" class="nav-link"><i data-lucide="loader-2"></i> Loading States</a></li>
+                        <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
+                        <li><a href="#modular-cards" class="nav-link"><i data-lucide="layout-grid"></i> Modular Card States</a></li>
+                        <li><a href="#advanced-toggle" class="nav-link"><i data-lucide="sliders-horizontal"></i> Mode Toggle</a></li>
+                        <li><a href="#footer" class="nav-link"><i data-lucide="heart"></i> Footer</a></li>
                     </ul>
                 </div>
                 
                 <div class="nav-section">
                     <h3 class="nav-section-title">Patterns</h3>
                     <ul class="nav-links">
-                        <li><a href="#user-flows" class="nav-link"><i class="fas fa-route"></i> User Flows</a></li>
-                        <li><a href="#state-management" class="nav-link"><i class="fas fa-cogs"></i> State Management</a></li>
-                        <li><a href="#performance" class="nav-link"><i class="fas fa-tachometer-alt"></i> Performance</a></li>
-                        <li><a href="#error-handling" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Error Handling</a></li>
+                        <li><a href="#user-flows" class="nav-link"><i data-lucide="git-branch"></i> User Flows</a></li>
+                        <li><a href="#state-management" class="nav-link"><i data-lucide="cpu"></i> State Management</a></li>
+                        <li><a href="#performance" class="nav-link"><i data-lucide="zap"></i> Performance</a></li>
+                        <li><a href="#error-handling" class="nav-link"><i data-lucide="alert-triangle"></i> Error Handling</a></li>
                     </ul>
                 </div>
             </div>
             <div class="sidebar-footer">
                  <ul class="nav-links">
-                    <li><a href="#about" class="nav-link"><i class="fas fa-user-circle"></i> About & Links</a></li>
+                    <li><a href="#about" class="nav-link"><i data-lucide="circle-user-round"></i> About & Links</a></li>
                 </ul>
             </div>
         </nav>
@@ -1058,7 +914,7 @@
                         Design System Guide
                     </h1>
                     <p class="text-body-lg guide-subtitle">
-                        VERSION 2.7.1
+                        VERSION 2.7.3
                     </p>
                     <p class="section-description">
                         A comprehensive design system built on Open Props foundation with custom brand identity. 
@@ -1068,7 +924,7 @@
                 
                 <div class="pattern-section">
                     <h3 class="text-heading-md pattern-title">
-                        <i class="fas fa-info-circle"></i>
+                        <i data-lucide="info"></i>
                         How to Use This Guide
                     </h3>
                     <div class="pattern-content">
@@ -1083,7 +939,7 @@
 
                 <div class="pattern-section">
                     <h3 class="text-heading-md pattern-title">
-                        <i class="fas fa-layer-group"></i>
+                        <i data-lucide="layers"></i>
                         System Architecture
                     </h3>
                     <div class="pattern-content">
@@ -1103,7 +959,7 @@
 
                 <div class="pattern-section">
                     <h3 class="text-heading-md pattern-title">
-                        <i class="fas fa-book"></i>
+                        <i data-lucide="book-open"></i>
                         Component Documentation Standard
                     </h3>
                     <div class="pattern-content">
@@ -1145,7 +1001,7 @@
             <section id="colors" class="content-section">
                 <div class="section-header">
                     <h2 class="text-heading-xl main-section-title">
-                        <i class="fas fa-palette"></i>
+                        <i data-lucide="palette"></i>
                         Color System
                     </h2>
                     <p class="section-description">
@@ -1154,7 +1010,7 @@
                 </div>
 
                 <div id="brand-colors" class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-star"></i> Brand Colors</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="star"></i> Brand Colors</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
                     <div class="tokens-grid color-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime</div><div class="token-value">#D2FF37</div><div class="token-preview"><div class="color-preview" style="background: var(--brand-primary-lime);" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--brand-secondary-yellow</div><div class="token-value">#EEFF00</div><div class="token-preview"><div class="color-preview" style="background: var(--brand-secondary-yellow);" data-hex="#EEFF00"></div></div></div><button class="token-copy" onclick="copyToken('--brand-secondary-yellow')">Copy</button></div>
@@ -1164,7 +1020,7 @@
                 </div>
 
                 <div id="gray-scale" class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-adjust"></i> Gray Scale (Primitives)</h2><p class="category-description">The full grayscale palette that underpins the UI's surfaces and text colors.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="bar-chart-2"></i> Gray Scale (Primitives)</h2><p class="category-description">The full grayscale palette that underpins the UI's surfaces and text colors.</p></div>
                     <div class="tokens-grid gray-scale-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--gray-0</div><div class="token-value">#ffffff</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-0);" data-hex="#ffffff"></div></div></div><button class="token-copy" onclick="copyToken('--gray-0')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--gray-1</div><div class="token-value">#f0f0f0</div><div class="token-preview"><div class="color-preview" style="background: var(--gray-1);" data-hex="#f0f0f0"></div></div></div><button class="token-copy" onclick="copyToken('--gray-1')">Copy</button></div>
@@ -1180,7 +1036,7 @@
                 </div>
 
                 <div id="semantic-colors" class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-brush"></i> Semantic Colors</h2><p class="category-description">Purpose-driven color tokens that map to specific UI contexts for consistency across components.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="pen-tool"></i> Semantic Colors</h2><p class="category-description">Purpose-driven color tokens that map to specific UI contexts for consistency across components.</p></div>
                     <div class="tokens-grid color-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--color-text-default</div><div class="token-value">var(--gray-0)</div><div class="token-preview"><div class="text-preview"><div style="color: var(--color-text-default);">Default text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-default')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--color-text-secondary</div><div class="token-value">var(--gray-2)</div><div class="token-preview"><div class="text-preview"><div style="color: var(--color-text-secondary);">Secondary text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-secondary')">Copy</button></div>
@@ -1197,7 +1053,7 @@
                 </div>
 
                 <div id="category-colors" class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-tags"></i> Token Category Colors</h2><p class="category-description">Distinctive colors assigned to each token type for visual categorization.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="tag"></i> Token Category Colors</h2><p class="category-description">Distinctive colors assigned to each token type for visual categorization.</p></div>
                     <div class="tokens-grid color-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--category-color-cyan</div><div class="token-value">#00D1FF</div><div class="token-preview"><div class="color-preview" style="background: var(--category-color-cyan);" data-hex="#00D1FF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-cyan')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--category-color-purple</div><div class="token-value">#B48CFF</div><div class="token-preview"><div class="color-preview" style="background: var(--category-color-purple);" data-hex="#B48CFF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-purple')">Copy</button></div>
@@ -1209,14 +1065,11 @@
 
             <!-- Typography Section -->
             <section id="typography" class="content-section">
-                <div class="section-header">
-                    <h2 class="text-heading-xl main-section-title"><i class="fas fa-font"></i> Typography System</h2>
-                    <p class="section-description">Text styles and font families that create readable, hierarchical content.</p>
-                </div>
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i data-lucide="type"></i> Typography System</h2><p class="section-description">Text styles and font families that create readable, hierarchical content.</p></div>
                 <div class="token-category">
                     <div class="category-header">
                         <h2 class="text-heading-lg category-title">
-                            <i class="fas fa-text-height"></i> Typography Scale
+                            <i data-lucide="align-left"></i> Typography Scale
                         </h2>
                         <p class="category-description">
                             Complete typography scale using Open Props font sizing. All sizes are defined in our CSS.
@@ -1266,9 +1119,9 @@
 
             <!-- Spacing Section -->
             <section id="spacing" class="content-section">
-                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-arrows-alt-h"></i> Spacing System</h2><p class="section-description">Consistent spacing scale for layouts and component padding.</p></div>
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i data-lucide="move-horizontal"></i> Spacing System</h2><p class="section-description">Consistent spacing scale for layouts and component padding.</p></div>
                 <div class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-ruler"></i> Spacing Scale</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Spacing Scale</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
                     <div class="tokens-grid spacing-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 4px; height: 4px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar" style="width: 8px; height: 8px;"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
@@ -1282,9 +1135,9 @@
 
             <!-- Shadows Section -->
             <section id="shadows" class="content-section">
-                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-layer-group"></i> Shadow System</h2><p class="section-description">Elevation and depth through carefully crafted shadows.</p></div>
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i data-lucide="layers"></i> Shadow System</h2><p class="section-description">Elevation and depth through carefully crafted shadows.</p></div>
                 <div class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-cube"></i> Shadow Tokens</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="copy"></i> Shadow Tokens</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
                     <div class="tokens-grid shadow-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview" style="box-shadow: var(--shadow-2)"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview" style="box-shadow: var(--shadow-3)"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
@@ -1295,9 +1148,9 @@
 
             <!-- Border Radius Section -->
             <section id="border-radius" class="content-section">
-                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-square"></i> Border Radius</h2><p class="section-description">Consistent corner rounding for a cohesive visual language.</p></div>
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i data-lucide="square"></i> Border Radius</h2><p class="section-description">Consistent corner rounding for a cohesive visual language.</p></div>
                 <div class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-shapes"></i> Radius Tokens</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Radius Tokens</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
                     <div class="tokens-grid radius-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview" style="border-radius: var(--radius-1)"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview" style="border-radius: var(--radius-2)"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
@@ -1309,9 +1162,9 @@
 
             <!-- Animations Section -->
             <section id="animations" class="content-section">
-                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i class="fas fa-play"></i> Animation System</h2><p class="section-description">Motion design tokens for smooth, consistent animations.</p></div>
+                <div class="section-header"><h2 class="text-heading-xl main-section-title"><i data-lucide="play-circle"></i> Animation System</h2><p class="section-description">Motion design tokens for smooth, consistent animations.</p></div>
                 <div class="token-category">
-                    <div class="category-header"><h2 class="text-heading-lg category-title"><i class="fas fa-magic"></i> Animation Tokens</h2><p class="category-description">Open Props animation and easing tokens for smooth motion design.</p></div>
+                    <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="film"></i> Animation Tokens</h2><p class="category-description">Open Props animation and easing tokens for smooth motion design.</p></div>
                     <div class="tokens-grid animation-grid">
                         <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div><button class="token-copy" onclick="copyToken('--ease-3')">Copy</button></div>
                         <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div><button class="token-copy" onclick="copyToken('--ease-spring-3')">Copy</button></div>
@@ -1323,13 +1176,13 @@
             <!-- COMPONENT LIBRARY SECTION -->
             <section id="components" class="content-section">
                 <div class="section-header">
-                    <h2 class="text-heading-xl main-section-title"><i class="fas fa-cubes"></i> Component Library</h2>
+                    <h2 class="text-heading-xl main-section-title"><i data-lucide="component"></i> Component Library</h2>
                     <p class="section-description">Reusable UI components that consume foundation tokens. Each component shows which tokens it uses and how they create consistent, scalable interfaces.</p>
                 </div>
 
                 <div id="token-summary" class="component-section">
                     <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-chart-pie"></i> Token Summary Card</h2>
+                        <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Summary Card</h2>
                         <p class="component-description">The central dashboard component that displays the total count of design tokens and breaks them down by type. In advanced mode, token types become clickable for filtering.</p>
                         <div class="token-usage">
                             <div class="token-usage-title">Tokens Used:</div>
@@ -1342,23 +1195,23 @@
                         </div>
                     </div>
                     <div class="component-body">
-                        <div class="example-container"><div class="example-label">Simple Mode (All Active)</div><div class="card token-summary"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="fas fa-palette icon"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="fas fa-font icon"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="fas fa-hashtag icon"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="fas fa-toggle-on icon"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
-                        <div class="example-container"><div class="example-label">Advanced Mode (Selective)</div><div class="card token-summary advanced-mode"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="fas fa-palette icon"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="fas fa-font icon"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="fas fa-hashtag icon"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="fas fa-toggle-on icon"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
+                        <div class="example-container"><div class="example-label">Simple Mode (All Active)</div><div class="card token-summary"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
+                        <div class="example-container"><div class="example-label">Advanced Mode (Selective)</div><div class="card token-summary advanced-mode"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="card token-summary"&gt;...&lt;/div&gt;</code></div>
                     </div>
                 </div>
 
                 <div id="buttons" class="component-section">
                     <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-mouse-pointer"></i> Buttons</h2>
+                        <h2 class="text-heading-lg component-title"><i data-lucide="mouse-pointer-2"></i> Buttons</h2>
                         <p class="component-description">Primary and secondary button styles with hover effects, disabled states, shine animations, and icon-only variants for various UI needs.</p>
                     </div>
                     <div class="component-body">
                         <h3 style="color: var(--brand-primary-lime); margin-bottom: var(--size-4);">Standard Buttons</h3>
                         <div class="variants-grid">
-                            <div class="example-container"><div class="example-label">Primary</div><button class="btn primary"><i class="fas fa-magic-wand-sparkles"></i> Package Tokens</button></div>
-                            <div class="example-container"><div class="example-label">Secondary</div><button class="btn secondary"><i class="fas fa-arrow-left"></i> Back</button></div>
-                            <div class="example-container"><div class="example-label">Disabled</div><button class="btn primary" disabled><i class="fas fa-magic-wand-sparkles"></i> Package 0 Tokens</button></div>
+                            <div class="example-container"><div class="example-label">Primary</div><button class="btn primary"><i data-lucide="rocket"></i> Package Tokens</button></div>
+                            <div class="example-container"><div class="example-label">Secondary</div><button class="btn secondary"><i data-lucide="arrow-left"></i> Back</button></div>
+                            <div class="example-container"><div class="example-label">Disabled</div><button class="btn primary" disabled><i data-lucide="rocket"></i> Package 0 Tokens</button></div>
                         </div>
                         
                         <h3 style="color: var(--brand-primary-lime); margin-top: var(--size-6); margin-bottom: var(--size-4);">Icon-Only Buttons</h3>
@@ -1366,20 +1219,20 @@
                             <div class="example-container" style="flex: none;">
                                 <div class="example-label">Close Button</div>
                                 <button class="btn-icon-only">
-                                    <i class="fas fa-times"></i>
+                                    <i data-lucide="x-circle"></i>
                                 </button>
                             </div>
                             <div class="example-container" style="flex: none;">
                                 <div class="example-label">Social Icons</div>
                                 <div style="display: flex; gap: var(--size-2);">
                                     <button class="btn-icon-only">
-                                        <i class="fab fa-twitter"></i>
+                                        <i data-lucide="twitter"></i>
                                     </button>
                                     <button class="btn-icon-only">
-                                        <i class="fab fa-github"></i>
+                                        <i data-lucide="github"></i>
                                     </button>
                                     <button class="btn-icon-only">
-                                        <i class="fab fa-linkedin-in"></i>
+                                        <i data-lucide="linkedin"></i>
                                     </button>
                                 </div>
                             </div>
@@ -1387,35 +1240,35 @@
                                 <div class="example-label">Action Icons</div>
                                 <div style="display: flex; gap: var(--size-2);">
                                     <button class="btn-icon-only">
-                                        <i class="fas fa-download"></i>
+                                        <i data-lucide="download"></i>
                                     </button>
                                     <button class="btn-icon-only">
-                                        <i class="fas fa-share"></i>
+                                        <i data-lucide="share-2"></i>
                                     </button>
                                     <button class="btn-icon-only">
-                                        <i class="fas fa-bookmark"></i>
+                                        <i data-lucide="bookmark"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;button class="btn primary"&gt;...&lt;/button&gt;
-&lt;button class="btn-icon-only"&gt;&lt;i class="fas fa-times"&gt;&lt;/i&gt;&lt;/button&gt;</code></div>
+&lt;button class="btn-icon-only"&gt;&lt;i data-lucide="x-circle"&gt;&lt;/i&gt;&lt;/button&gt;</code></div>
                     </div>
                 </div>
 
                 <div id="forms" class="component-section">
-                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-list-alt"></i> Forms</h2><p class="component-description">Form elements including the format selector dropdown with custom styling.</p></div>
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="file-text"></i> Forms</h2><p class="component-description">Form elements including the format selector dropdown with custom styling.</p></div>
                     <div class="component-body">
-                        <div class="example-container"><div class="example-label">Live Example</div><div class="card export-section"><h3 class="text-label section-title"><i class="fas fa-rocket"></i> Quick Export</h3><p class="text-body-md subtitle">Export all your tokens in your preferred format</p><div class="format-select-wrapper"><select class="format-select"><option value="all">All Formats</option><option value="css" selected>CSS Variables</option><option value="swift">Swift (iOS)</option></select></div><button class="btn primary"><i class="fas fa-magic-wand-sparkles"></i> Package 247 Tokens</button></div></div>
+                        <div class="example-container"><div class="example-label">Live Example</div><div class="card export-section"><h3 class="text-label section-title"><i data-lucide="send"></i> Quick Export</h3><p class="text-body-md subtitle">Export all your tokens in your preferred format</p><div class="format-select-wrapper"><select class="format-select"><option value="all">All Formats</option><option value="css" selected>CSS Variables</option><option value="swift">Swift (iOS)</option></select></div><button class="btn primary"><i data-lucide="rocket"></i> Package 247 Tokens</button></div></div>
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="card export-section"&gt;...&lt;/div&gt;</code></div>
                     </div>
                 </div>
 
                 <div id="collection-items" class="component-section">
-                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-list"></i> Collection Items</h2><p class="component-description">Individual collection list items with custom checkboxes, info, and token type pills.</p></div>
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="list"></i> Collection Items</h2><p class="component-description">Individual collection list items with custom checkboxes, info, and token type pills.</p></div>
                     <div class="component-body">
-                        <div class="example-container"><div class="example-label">Live Example</div><div class="collection-list" style="max-height: none;"><div class="collection-item selected"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Brand Colors</div><div class="collection-pills"><div class="collection-pill color"><i class="fas fa-palette"></i> <span>24</span></div><div class="collection-pill text"><i class="fas fa-font"></i> <span>8</span></div></div></div><div class="text-caption collection-count">32 tokens</div></div><div class="collection-item"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Typography Scale</div><div class="collection-pills"><div class="collection-pill text"><i class="fas fa-font"></i> <span>16</span></div><div class="collection-pill number"><i class="fas fa-hashtag"></i> <span>12</span></div></div></div><div class="text-caption collection-count">28 tokens</div></div></div></div>
+                        <div class="example-container"><div class="example-label">Live Example</div><div class="collection-list" style="max-height: none;"><div class="collection-item selected"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Brand Colors</div><div class="collection-pills"><div class="collection-pill color"><i class="icon" data-lucide="palette"></i> <span>24</span></div><div class="collection-pill text"><i class="icon" data-lucide="type"></i> <span>8</span></div></div></div><div class="text-caption collection-count">32 tokens</div></div><div class="collection-item"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Typography Scale</div><div class="collection-pills"><div class="collection-pill text"><i class="icon" data-lucide="type"></i> <span>16</span></div><div class="collection-pill number"><i class="icon" data-lucide="hash"></i> <span>12</span></div></div></div><div class="text-caption collection-count">28 tokens</div></div></div></div>
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="collection-item selected"&gt;...&lt;/div&gt;</code></div>
                     </div>
                 </div>
@@ -1424,7 +1277,7 @@
                 <div id="loading-states" class="component-section">
                     <div class="component-header">
                         <h2 class="text-heading-lg component-title">
-                            <i class="fas fa-spinner"></i> Loading States
+                            <i data-lucide="loader-2"></i> Loading States
                         </h2>
                         <p class="component-description">
                             Skeleton loading components provide visual feedback during data fetching. 
@@ -1493,13 +1346,13 @@
                 </div>
                 
                 <div id="modals" class="component-section">
-                    <div class="component-header"><h2 class="text-heading-lg component-title"><i class="fas fa-window-restore"></i> Modals</h2><p class="component-description">The modal component used for the "About" section in the plugin, featuring a blurred backdrop.</p></div>
+                    <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="app-window"></i> Modals</h2><p class="component-description">The modal component used for the "About" section in the plugin, featuring a blurred backdrop.</p></div>
                     <div class="component-body">
                         <div class="example-container" style="height: 450px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
                             <div class="example-label">Live Example</div>
                              <div class="about-modal show" style="position: absolute; z-index: 1;">
                                 <div class="about-content">
-                                    <button class="about-close"> <i class="fas fa-times"></i> </button>
+                                    <button class="about-close"> <i data-lucide="x-circle"></i> </button>
                                     <div class="about-avatar" style="background-image: var(--asset-url-avatar);"></div>
                                     <h2 class="text-heading-md">NATE MILLS</h2>
                                     <p class="text-body-md">Building accessible design systems that scale.</p>
@@ -1514,7 +1367,7 @@
                 <div id="modular-cards" class="component-section">
                     <div class="component-header">
                         <h2 class="text-heading-lg component-title">
-                            <i class="fas fa-layer-group"></i> Modular Card States
+                            <i data-lucide="layout-grid"></i> Modular Card States
                         </h2>
                         <p class="component-description">
                             The plugin interface transforms through different states based on user data and actions. 
@@ -1529,8 +1382,8 @@
                                 <div class="example-label">Empty State</div>
                                 <div style="background: var(--bg-color); padding: var(--size-6); border-radius: var(--radius-3); min-height: 400px; display: flex; align-items: center; justify-content: center;">
                                     <div class="empty-state" style="max-width: 360px; width: 100%;">
-                                        <div style="font-size: 64px; margin-bottom: var(--size-4); animation: pulse-glow 2s ease-in-out infinite;">
-                                            <i class="fas fa-cube" style="color: var(--brand-primary-lime);"></i>
+                                        <div class="empty-state-icon" style="animation: pulse-glow 2s ease-in-out infinite;">
+                                            <i data-lucide="package" style="width: var(--font-size-3); height: var(--font-size-3);"></i>
                                         </div>
                                         <div>
                                             <div class="text-heading-lg empty-state-title">Let's build something!</div>
@@ -1539,21 +1392,21 @@
                                             </div>
                                             <div style="display: flex; gap: var(--size-3); justify-content: center; margin-bottom: var(--size-4);">
                                                 <div style="text-align: center;">
-                                                    <i class="fas fa-palette" style="color: #00D1FF; font-size: 24px; margin-bottom: var(--size-1);"></i>
+                                                    <i data-lucide="palette" style="color: #00D1FF; width: 24px; height: 24px; margin-bottom: var(--size-1);"></i>
                                                     <div class="text-caption">Colors</div>
                                                 </div>
                                                 <div style="text-align: center;">
-                                                    <i class="fas fa-font" style="color: #B48CFF; font-size: 24px; margin-bottom: var(--size-1);"></i>
+                                                    <i data-lucide="type" style="color: #B48CFF; width: 24px; height: 24px; margin-bottom: var(--size-1);"></i>
                                                     <div class="text-caption">Typography</div>
                                                 </div>
                                                 <div style="text-align: center;">
-                                                    <i class="fas fa-arrows-alt-h" style="color: #FFB86C; font-size: 24px; margin-bottom: var(--size-1);"></i>
+                                                    <i data-lucide="move-horizontal" style="color: #FFB86C; width: 24px; height: 24px; margin-bottom: var(--size-1);"></i>
                                                     <div class="text-caption">Spacing</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <button class="btn primary" style="width: auto;">
-                                            Create variables <i class="fas fa-arrow-right" style="margin-left: var(--size-2);"></i>
+                                            Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -1582,22 +1435,22 @@
                                         <!-- Token type skeletons -->
                                         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-2); padding-top: var(--size-4); border-top: 1px solid var(--color-border-default);">
                                             <div style="text-align: center;">
-                                                <i class="fas fa-palette" style="font-size: 18px; color: #00D1FF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <i data-lucide="palette" style="width: 18px; height: 18px; color: #00D1FF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
                                                 <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
                                                 <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">colors</div>
                                             </div>
                                             <div style="text-align: center;">
-                                                <i class="fas fa-font" style="font-size: 18px; color: #B48CFF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <i data-lucide="type" style="width: 18px; height: 18px; color: #B48CFF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
                                                 <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
                                                 <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">text</div>
                                             </div>
                                             <div style="text-align: center;">
-                                                <i class="fas fa-toggle-on" style="font-size: 18px; color: #FF74BC; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <i data-lucide="toggle-right" style="width: 18px; height: 18px; color: #FF74BC; margin-bottom: var(--size-2); opacity: 0.3;"></i>
                                                 <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
                                                 <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">states</div>
                                             </div>
                                             <div style="text-align: center;">
-                                                <i class="fas fa-hashtag" style="font-size: 18px; color: #FFB86C; margin-bottom: var(--size-2); opacity: 0.3;"></i>
+                                                <i data-lucide="hash" style="width: 18px; height: 18px; color: #FFB86C; margin-bottom: var(--size-2); opacity: 0.3;"></i>
                                                 <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
                                                 <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">numbers</div>
                                             </div>
@@ -1654,7 +1507,7 @@
                                 <!-- Control Button -->
                                 <div style="text-align: center; margin-top: var(--size-4);">
                                     <button class="btn secondary" id="modular-liquid-play-btn" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="toggleModularLiquidAnimation()">
-                                        <i class="fas fa-play"></i> Play Animation
+                                        <i data-lucide="play"></i> Play Animation
                                     </button>
                                 </div>
                             </div>
@@ -1684,13 +1537,13 @@
                                 <div class="card token-summary" style="text-align: center; position: relative; padding: var(--size-8) var(--size-6);">
                                     <!-- Close button (circular, outline, secondary) -->
                                     <button class="btn-icon-only" style="position: absolute; top: var(--size-3); right: var(--size-3);">
-                                        <i class="fas fa-times"></i>
+                                        <i data-lucide="x-circle"></i>
                                     </button>
                                     
-                                    <i class="fas fa-check-circle" style="font-size: 64px; color: var(--brand-primary-lime); margin-bottom: var(--size-4); animation: checkmarkAnimation 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;"></i>
+                                    <i data-lucide="check-circle-2" class="success-icon"></i>
                                     <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Export Complete!</div>
                                     <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-6);">247 tokens packaged successfully</div>
-                                    <button class="btn primary"><i class="fas fa-download"></i> Download design-tokens.zip</button>
+                                    <button class="btn primary"><i data-lucide="download"></i> Download design-tokens.zip</button>
                                 </div>
                             </div>
                             <div class="state-documentation">
@@ -1708,20 +1561,20 @@
                 <!-- Advanced Toggle -->
                 <div id="advanced-toggle" class="component-section">
                     <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-sliders-h"></i> Mode Toggle</h2>
+                        <h2 class="text-heading-lg component-title"><i data-lucide="sliders-horizontal"></i> Mode Toggle</h2>
                         <p class="component-description">Toggle between simple and advanced export modes for different user needs.</p>
                     </div>
                     <div class="component-body">
                         <div class="example-container">
                             <div class="example-label">Simple Mode Toggle</div>
                             <div class="advanced-toggle">
-                                <a href="#" class="advanced-link text-body-md">Need specific tokens? <i class="fas fa-arrow-right"></i></a>
+                                <a href="#" class="advanced-link text-body-md">Need specific tokens? <i data-lucide="arrow-right"></i></a>
                             </div>
                         </div>
                         <div class="example-container" style="margin-top: var(--size-4);">
                             <div class="example-label">Advanced Mode Toggle</div>
                             <div class="advanced-toggle">
-                                <button class="btn secondary"><i class="fas fa-arrow-left"></i> Back to Simple Export</button>
+                                <button class="btn secondary"><i data-lucide="arrow-left"></i> Back to Simple Export</button>
                             </div>
                         </div>
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="advanced-toggle"&gt;...&lt;/div&gt;</code></div>
@@ -1731,7 +1584,7 @@
                 <!-- Footer -->
                 <div id="footer" class="component-section">
                     <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i class="fas fa-heart"></i> Footer</h2>
+                        <h2 class="text-heading-lg component-title"><i data-lucide="heart"></i> Footer</h2>
                         <p class="component-description">Plugin footer with attribution and animated heart.</p>
                     </div>
                     <div class="component-body">
@@ -1750,12 +1603,12 @@
             <!-- PATTERNS SECTION -->
             <section id="patterns" class="content-section">
                 <div class="section-header">
-                    <h2 class="text-heading-xl main-section-title"><i class="fas fa-sitemap"></i> Design Patterns</h2>
+                    <h2 class="text-heading-xl main-section-title"><i data-lucide="git-branch"></i> Design Patterns</h2>
                     <p class="section-description">Interaction flows, state management patterns, and behavioral guidelines that define how components work together to create intuitive user experiences.</p>
                 </div>
 
                 <div id="user-flows" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-route"></i> User Flow Patterns</h2>
+                    <h2 class="text-heading-lg pattern-title"><i data-lucide="git-merge"></i> User Flow Patterns</h2>
                     <div class="pattern-content">
                         <h4>Simple Mode Flow (Default)</h4>
                         <p><strong>Goal:</strong> Export all tokens with minimal user input</p>
@@ -1766,7 +1619,7 @@
                     </div>
                 </div>
                 <div id="state-management" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-cogs"></i> State Management</h2>
+                    <h2 class="text-heading-lg pattern-title"><i data-lucide="cpu"></i> State Management</h2>
                     <div class="pattern-content">
                         <h4>Centralized State Object</h4>
                         <pre>const appState = {
@@ -1786,7 +1639,7 @@
                     </div>
                 </div>
                 <div id="performance" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-tachometer-alt"></i> Performance Patterns</h2>
+                    <h2 class="text-heading-lg pattern-title"><i data-lucide="zap"></i> Performance Patterns</h2>
                     <div class="pattern-content">
                         <h4>Batch Processing</h4>
                         <pre>// Process large datasets in chunks to avoid blocking
@@ -1805,7 +1658,7 @@ const variablesToProcess = allVariables.filter(v => {
                     </div>
                 </div>
                 <div id="error-handling" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i class="fas fa-exclamation-triangle"></i> Error Handling</h2>
+                    <h2 class="text-heading-lg pattern-title"><i data-lucide="alert-triangle"></i> Error Handling</h2>
                     <div class="pattern-content">
                         <h4>Graceful Degradation</h4>
                         <pre>try {
@@ -1828,7 +1681,7 @@ if (collectionIds.length === 0) {
             <section id="about" class="content-section about-section">
                 <div class="section-header">
                     <h2 class="text-heading-xl main-section-title">
-                        <i class="fas fa-user-circle"></i>
+                        <i data-lucide="circle-user-round"></i>
                         About the Creator
                     </h2>
                 </div>
@@ -1847,19 +1700,19 @@ if (collectionIds.length === 0) {
                             </p>
                             <div class="about-links">
                                 <a href="https://natemills.me" target="_blank" class="about-link" title="Portfolio">
-                                    <i class="fas fa-briefcase"></i>
+                                    <i data-lucide="briefcase"></i>
                                 </a>
                                 <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="about-link" title="LinkedIn">
-                                    <i class="fab fa-linkedin-in"></i>
+                                    <i data-lucide="linkedin"></i>
                                 </a>
                                 <a href="https://www.figma.com/@mills" target="_blank" class="about-link" title="Figma">
-                                    <i class="fab fa-figma"></i>
+                                    <i data-lucide="figma"></i>
                                 </a>
                                 <a href="https://www.buymeacoffee.com/natemills" target="_blank" class="about-link" title="Buy me a coffee">
-                                    <i class="fas fa-coffee"></i>
+                                    <i data-lucide="coffee"></i>
                                 </a>
                                 <a href="mailto:nate@natemills.me" class="about-link" title="Email">
-                                    <i class="fas fa-envelope"></i>
+                                    <i data-lucide="mail"></i>
                                 </a>
                             </div>
                         </div>
@@ -1870,7 +1723,7 @@ if (collectionIds.length === 0) {
             <!-- Footer -->
             <footer style="text-align: center; padding-top: var(--size-8); border-top: 1px solid var(--color-border-default); margin-top: var(--size-8);">
                 <p class="text-body-md" style="color: var(--color-text-muted);">
-                    <strong>Token Exporter Design System Guide v2.7.1</strong>
+                    <strong>Token Exporter Design System Guide v2.7.3</strong>
                 </p>
             </footer>
         </main>
@@ -1892,7 +1745,6 @@ if (collectionIds.length === 0) {
                 });
             });
 
-            // Use a more inclusive selector to observe all relevant sections
             const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
             const observer = new IntersectionObserver(entries => {
                 let visibleSections = [];
@@ -1903,13 +1755,11 @@ if (collectionIds.length === 0) {
                 });
 
                 if (visibleSections.length > 0) {
-                    // Find the topmost visible section to set as active
                     visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
                     const activeId = visibleSections[0].getAttribute('id');
                     
                     navLinks.forEach(link => {
                         const linkHref = link.getAttribute('href');
-                        // Special handling for consolidated "Colors" link
                         if (linkHref === '#colors') {
                             const isColorSectionVisible = activeId === 'colors' || activeId === 'brand-colors' || activeId === 'gray-scale' || activeId === 'semantic-colors' || activeId === 'category-colors';
                             link.classList.toggle('active', isColorSectionVisible);
@@ -1934,27 +1784,28 @@ if (collectionIds.length === 0) {
                 mobileMenuToggle.addEventListener('click', () => {
                     sidebar.classList.toggle('open');
                     const isOpen = sidebar.classList.contains('open');
-                    mobileMenuToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+                    mobileMenuToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+                    lucide.createIcons();
                 });
                 
-                // Close sidebar when clicking outside on mobile
                 document.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768 && 
                         !sidebar.contains(e.target) && 
                         !mobileMenuToggle.contains(e.target) && 
                         sidebar.classList.contains('open')) {
                         sidebar.classList.remove('open');
-                        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
+                        lucide.createIcons();
                     }
                 });
                 
-                // Close sidebar when clicking a nav link on mobile
                 const navLinks = document.querySelectorAll('.nav-link');
                 navLinks.forEach(link => {
                     link.addEventListener('click', () => {
                         if (window.innerWidth <= 768) {
                             sidebar.classList.remove('open');
-                            mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                            mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
+                            lucide.createIcons();
                         }
                     });
                 });
@@ -1994,7 +1845,7 @@ if (collectionIds.length === 0) {
             });
         }
         
-        // Modular Card Liquid Animation with BLACK text that moves
+        // Modular Card Liquid Animation
         let modularLiquidAnimationInterval = null;
         let modularCurrentStage = 0;
         const modularStages = [
@@ -2010,11 +1861,13 @@ if (collectionIds.length === 0) {
             if (modularLiquidAnimationInterval) {
                 clearInterval(modularLiquidAnimationInterval);
                 modularLiquidAnimationInterval = null;
-                btn.innerHTML = '<i class="fas fa-play"></i> Play Animation';
+                btn.innerHTML = '<i data-lucide="play"></i> Play Animation';
                 modularCurrentStage = 0;
                 updateModularLiquidStage();
+                lucide.createIcons();
             } else {
-                btn.innerHTML = '<i class="fas fa-pause"></i> Pause Animation';
+                btn.innerHTML = '<i data-lucide="pause"></i> Pause Animation';
+                lucide.createIcons();
                 
                 modularLiquidAnimationInterval = setInterval(() => {
                     modularCurrentStage = (modularCurrentStage + 1) % modularStages.length;
@@ -2024,7 +1877,8 @@ if (collectionIds.length === 0) {
                         setTimeout(() => {
                             clearInterval(modularLiquidAnimationInterval);
                             modularLiquidAnimationInterval = null;
-                            btn.innerHTML = '<i class="fas fa-play"></i> Play Animation';
+                            btn.innerHTML = '<i data-lucide="play"></i> Play Animation';
+                            lucide.createIcons();
                         }, 1000);
                     }
                 }, 2000);
@@ -2036,25 +1890,19 @@ if (collectionIds.length === 0) {
             const waves = document.querySelectorAll('#modular-liquid-demo .liquid-wave');
             const container = document.getElementById('modular-percentage-container');
             
-            // Update water level
             waves.forEach(wave => {
                 wave.style.top = (75 - (stage.percent * 0.75)) + '%';
             });
             
-            // Update percentage text
             document.getElementById('modular-progress-number').textContent = stage.percent;
             
-            // Move text with water, but stop at center
             if (stage.percent <= 50) {
-                // Move from bottom (15px) to center (50px)
                 const newBottom = 15 + ((50 - 15) * (stage.percent / 50));
                 container.style.bottom = newBottom + 'px';
             } else {
-                // Keep at center
                 container.style.bottom = '50px';
             }
             
-            // Update labels
             document.getElementById('modular-stage-label').textContent = stage.label;
             document.getElementById('modular-stage-detail').textContent = stage.detail;
         }
@@ -2063,6 +1911,7 @@ if (collectionIds.length === 0) {
         document.addEventListener('DOMContentLoaded', () => {
             initializeNavigation();
             initializeMobileMenu();
+            lucide.createIcons(); // Initial call to render all icons
         });
     </script>
 </body>
