@@ -6,13 +6,13 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v3.0.2 | Crafted with ❤️ by Nate Mills
+Token Exporter Design System v4.0.0 | Crafted with ❤️ by Nate Mills
 Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v3.0.2 - Complete Implementation
+   TOKEN EXPORTER DESIGN SYSTEM v4.0.0 - Complete Implementation
    ==========================================================================
    
    PHASES INCLUDED:
@@ -22,20 +22,10 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
    ✓ Phase 4: Advanced Features & Interactions
    ✓ Phase 5: Launch Prep & Technical Excellence
    
-   FIXES IN v3.0.1:
-   ✓ Added Shoelace CSS import
-   ✓ Added color-mix() fallbacks for browser compatibility
-   ✓ Removed duplicate code (typography, animations)
-   ✓ Added webkit prefixes for backdrop-filter
-   ✓ Added more haiku comments
-   ✓ Removed unused selectors
-   ✓ Fixed magic numbers with comments
-   
-   FIXES IN v3.0.2:
-   ✓ Fixed import order (Shoelace before Open Props)
-   ✓ Restored missing animation keyframes
-   ✓ Restored performance optimization classes
-   ✓ Fixed broken animation references
+   FIXES IN v4.0.0:
+   ✓ Migrated all icons from Font Awesome to support Lucide
+   ✓ Added missing --gradient-7 variable for global consistency
+   ✓ Updated version number
    
    ========================================================================== */
 
@@ -104,6 +94,9 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
     /* Font overrides */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Monaco', 'Menlo', monospace;
+
+    /* Missing Gradient Fix */
+    --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
 }
 
 /* ==========================================================================
@@ -113,10 +106,9 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 /*
  * Shoelace Theming
  * Mapping our tokens to Shoelace design system
- * 
- * "Design tokens flow like water,
- *  From brand to component parts,
- *  Consistency blooms."
+ * * "Design tokens flow like water,
+ * From brand to component parts,
+ * Consistency blooms."
  */
 
 :root {
@@ -343,10 +335,9 @@ sl-spinner {
 /*
  * Portfolio Components
  * Creating compelling case study elements
- * 
- * "Stories unfold here,
- *  Design decisions revealed,
- *  Impact crystallized."
+ * * "Stories unfold here,
+ * Design decisions revealed,
+ * Impact crystallized."
  */
 
 /* Case Study Sections */
@@ -439,24 +430,6 @@ sl-spinner {
     gap: var(--size-2);
 }
 
-.project-overview h3::before {
-    content: '';
-    display: inline-block;
-    width: var(--size-6);
-    height: var(--size-6);
-    background: rgba(210, 255, 55, 0.1);
-    border-radius: var(--radius-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-}
-
-.challenge h3::before { content: '\f059'; } /* question-circle */
-.solution h3::before { content: '\f0eb'; } /* lightbulb */
-.impact h3::before { content: '\f201'; } /* line-chart */
-
 /* Impact Metrics */
 .impact-metrics {
     list-style: none;
@@ -489,18 +462,6 @@ sl-spinner {
     padding: var(--size-5);
     margin: var(--size-6) 0;
     position: relative;
-}
-
-.design-rationale::before {
-    content: '\f0eb'; /* lightbulb */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    top: var(--size-3);
-    right: var(--size-3);
-    font-size: var(--font-size-6);
-    color: var(--brand-primary-lime);
-    opacity: 0.1;
 }
 
 .design-rationale h4 {
@@ -577,10 +538,9 @@ sl-spinner {
 /*
  * Interactive Components
  * Living, breathing design system elements
- * 
- * "Interaction sparks joy,
- *  Components dance with purpose,
- *  Experience blooms bright."
+ * * "Interaction sparks joy,
+ * Components dance with purpose,
+ * Experience blooms bright."
  */
 
 /* Component Playground */
@@ -807,10 +767,7 @@ sl-spinner {
     margin-bottom: var(--size-4);
 }
 
-.search-container::before {
-    content: '\f002'; /* search icon */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
+.search-container .lucide-search {
     position: absolute;
     left: var(--size-3);
     top: 50%;
@@ -967,10 +924,9 @@ sl-spinner {
 /*
  * Final Polish & Performance
  * Every detail matters, every byte counts
- * 
- * "Polish brings the shine,
- *  Performance keeps them engaged,
- *  Excellence revealed."
+ * * "Polish brings the shine,
+ * Performance keeps them engaged,
+ * Excellence revealed."
  */
 
 /* Community Engagement Section */
@@ -1427,16 +1383,18 @@ main {
 }
 
 .format-select-wrapper::after {
-    content: '\f078'; 
-    font-family: 'Font Awesome 6 Free'; 
-    font-weight: 900;
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1em;
+    height: 1em;
     position: absolute; 
     right: var(--size-4); 
     top: 50%; 
     transform: translateY(-50%);
     pointer-events: none; 
-    color: var(--color-text-muted); 
-    transition: color var(--animation-duration-2) var(--ease-3);
+    transition: all var(--animation-duration-2) var(--ease-3);
     font-size: var(--font-size-1);
 }
 
@@ -1639,14 +1597,15 @@ main {
 }
 
 .collection-item.selected .collection-checkbox::after {
-    content: '\f00c';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231E1E1E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-check'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+    width: 10px;
+    height: 10px;
+    background-size: contain;
     position: absolute;
-    top: 0;
-    left: var(--size-1);
-    color: var(--brand-text-dark);
-    font-size: var(--font-size-00);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .collection-info {
@@ -2131,7 +2090,7 @@ main {
     outline-offset: 2px;
 }
 
-/* Icon consistency */
+/* Icon consistency (Legacy) */
 .fas, .fab {
     width: 1em;
     text-align: center;
@@ -2199,7 +2158,7 @@ main {
 }
 
 /* ==========================================================================
-   END OF TOKEN EXPORTER DESIGN SYSTEM v3.0.2
+   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.0
    
    "Code complete, system whole,
     From tokens to components bright,
