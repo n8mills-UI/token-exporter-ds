@@ -6,13 +6,13 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v4.0.1 | Crafted with ❤️ by Nate Mills
+Token Exporter Design System v4.0.2 | Crafted with ❤️ by Nate Mills
 Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v4.0.1 - Complete Implementation
+   TOKEN EXPORTER DESIGN SYSTEM v4.0.2 - Complete Implementation
    ==========================================================================
    
    PHASES INCLUDED:
@@ -22,9 +22,10 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
    ✓ Phase 4: Advanced Features & Interactions
    ✓ Phase 5: Launch Prep & Technical Excellence
    
-   FIXES IN v4.0.1:
-   ✓ Added specific base styles for Lucide icons to fix sizing and alignment.
-   ✓ Replaced Font Awesome checkbox/select icons with inline SVGs.
+   FIXES IN v4.0.2:
+   ✓ Corrected icon-only button styles to fix sizing and stroke-width.
+   ✓ Re-implemented and verified SVG icons for checkboxes and select arrows.
+   ✓ Refined base Lucide icon styles for better contextual application.
    ✓ Updated version number.
    
    ========================================================================== */
@@ -111,15 +112,17 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
     color: inherit;
 }
 
-.btn .lucide,
-.btn-icon-only .lucide {
+.btn .lucide {
     width: 1.2em;
     height: 1.2em;
     transform: translateY(-1px); /* Optical alignment */
 }
 
 .btn-icon-only .lucide {
-     transform: none; /* Reset for centered icon buttons */
+    width: 1.2em;
+    height: 1.2em;
+    stroke-width: 2.5px;
+    transform: none; /* Reset for centered icon buttons */
 }
 
 .empty-state-icon .lucide {
@@ -2199,7 +2202,7 @@ main {
 }
 
 /* ==========================================================================
-   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.1
+   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.2
    
    "Code complete, system whole,
     From tokens to components bright,
