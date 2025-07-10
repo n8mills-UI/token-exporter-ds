@@ -23,12 +23,12 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 ## Key Features
 
 * **Multi-Format Export:** Natively export your tokens to 6 different formats, ensuring your code speaks the language of every platform:
-    * CSS (Custom Properties)
-    * Swift (iOS Development)
-    * Android (XML)
-    * Flutter (Dart)
-    * JSON (W3C Standard)
-    * Tailwind CSS (JavaScript Config)
+    * **CSS** (Custom Properties)
+    * **Swift** (iOS Development)
+    * **Android** (XML)
+    * **Flutter** (Dart)
+    * **JSON** (W3C Standard)
+    * **Tailwind CSS** (JavaScript Config)
 * **Intelligent Alias Resolution:** Accurately resolves complex, nested variable aliases to their final, concrete values while preventing infinite loops.
 * **Smart Name Sanitization:** Automatically converts your Figma variable names (e.g., `Spacing/5 (20px)`) into the correct format for each platform (`spacing-5` for CSS, `spacing5` for Swift, `spacing_5` for Android).
 * **Context-Aware Unit Handling:** Correctly identifies unitless tokens (like `line-height` or `font-weight`) and applies `px` units to all other dimensions.
