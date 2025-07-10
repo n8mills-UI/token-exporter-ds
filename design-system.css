@@ -6,13 +6,13 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v4.0.0 | Crafted with ❤️ by Nate Mills
+Token Exporter Design System v4.0.1 | Crafted with ❤️ by Nate Mills
 Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v4.0.0 - Complete Implementation
+   TOKEN EXPORTER DESIGN SYSTEM v4.0.1 - Complete Implementation
    ==========================================================================
    
    PHASES INCLUDED:
@@ -22,10 +22,10 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
    ✓ Phase 4: Advanced Features & Interactions
    ✓ Phase 5: Launch Prep & Technical Excellence
    
-   FIXES IN v4.0.0:
-   ✓ Migrated all icons from Font Awesome to support Lucide
-   ✓ Added missing --gradient-7 variable for global consistency
-   ✓ Updated version number
+   FIXES IN v4.0.1:
+   ✓ Added specific base styles for Lucide icons to fix sizing and alignment.
+   ✓ Replaced Font Awesome checkbox/select icons with inline SVGs.
+   ✓ Updated version number.
    
    ========================================================================== */
 
@@ -97,6 +97,53 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 
     /* Missing Gradient Fix */
     --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
+}
+
+/* ==========================================================================
+   Base Icon Styles for Lucide
+   ========================================================================== */
+
+.lucide {
+    width: 1em;
+    height: 1em;
+    stroke-width: 2.5px;
+    vertical-align: middle;
+    color: inherit;
+}
+
+.btn .lucide,
+.btn-icon-only .lucide {
+    width: 1.2em;
+    height: 1.2em;
+    transform: translateY(-1px); /* Optical alignment */
+}
+
+.btn-icon-only .lucide {
+     transform: none; /* Reset for centered icon buttons */
+}
+
+.empty-state-icon .lucide {
+    width: var(--font-size-5);
+    height: var(--font-size-5);
+}
+
+.token-type-stat .icon.lucide {
+    width: var(--font-size-3);
+    height: var(--font-size-3);
+}
+
+.collection-pill .lucide {
+    width: 12px;
+    height: 12px;
+}
+
+.section-title .lucide {
+    color: var(--brand-primary-lime);
+}
+
+.about-link .lucide {
+    width: 24px;
+    height: 24px;
 }
 
 /* ==========================================================================
@@ -1301,7 +1348,6 @@ main {
 }
 
 .token-type-stat .icon { 
-    font-size: var(--font-size-3);
     margin-bottom: var(--size-1);
     transition: transform var(--animation-duration-2) var(--ease-spring-3);
     display: block;
@@ -1341,11 +1387,6 @@ main {
     display: flex; 
     align-items: center; 
     gap: var(--size-2);
-}
-
-.section-title i { 
-    color: var(--brand-primary-lime); 
-    font-size: var(--font-size-1);
 }
 
 .subtitle { 
@@ -2158,7 +2199,7 @@ main {
 }
 
 /* ==========================================================================
-   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.0
+   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.1
    
    "Code complete, system whole,
     From tokens to components bright,
