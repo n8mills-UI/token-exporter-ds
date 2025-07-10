@@ -797,7 +797,6 @@
                         <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
                         <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
                         <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
-                        <li><a href="#loading-states" class="nav-link"><i data-lucide="loader-2"></i> Loading States</a></li>
                         <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
                         <li><a href="#modular-cards" class="nav-link"><i data-lucide="layout-grid"></i> Modular Card States</a></li>
                         <li><a href="#advanced-toggle" class="nav-link"><i data-lucide="sliders-horizontal"></i> Mode Toggle</a></li>
@@ -1185,78 +1184,6 @@
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="collection-item selected"&gt;...&lt;/div&gt;</code></div>
                     </div>
                 </div>
-
-                <!-- Loading States Section -->
-                <div id="loading-states" class="component-section">
-                    <div class="component-header">
-                        <h2 class="text-heading-lg component-title">
-                            <i data-lucide="loader-2"></i> Loading States
-                        </h2>
-                        <p class="component-description">
-                            Skeleton loading components provide visual feedback during data fetching. 
-                            We offer 5 different skeleton styles to match your design needs.
-                        </p>
-                    </div>
-                    <div class="component-body">
-                        <h3 style="color: var(--brand-primary-lime); margin-bottom: var(--size-4);">
-                            5 Skeleton Variations
-                        </h3>
-                        
-                        <!-- All 5 skeleton options clearly displayed -->
-                        <div class="example-container">
-                            <div class="example-label">1. Pulse Skeleton (Default)</div>
-                            <div class="skeleton-container">
-                                <div class="skeleton-item skeleton-pulse"></div>
-                                <div style="display: flex; gap: var(--size-2); margin-top: var(--size-2);">
-                                    <div class="skeleton-item skeleton-pulse" style="height: 40px; flex: 1;"></div>
-                                    <div class="skeleton-item skeleton-pulse" style="height: 40px; flex: 1;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="example-container">
-                            <div class="example-label">2. Subtle Wave Skeleton</div>
-                            <div class="skeleton-container">
-                                <div class="skeleton-item skeleton-subtle"></div>
-                                <div class="skeleton-item skeleton-subtle small" style="animation-delay: 0.1s;"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="example-container">
-                            <div class="example-label">3. Breathing Skeleton</div>
-                            <div class="skeleton-container">
-                                <div class="skeleton-item skeleton-breathe"></div>
-                                <div class="skeleton-item skeleton-breathe small" style="animation-delay: 0.3s;"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="example-container">
-                            <div class="example-label">4. Branded Skeleton</div>
-                            <div class="skeleton-container">
-                                <div class="skeleton-item skeleton-brand"></div>
-                                <div class="skeleton-item skeleton-brand small"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="example-container">
-                            <div class="example-label">5. Shimmer Skeleton (Original)</div>
-                            <div class="skeleton-container">
-                                <div class="skeleton-item skeleton-shimmer"></div>
-                                <div class="skeleton-item skeleton-shimmer small"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="code-block">
-                            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                            <code>/* Add class to skeleton-item for different effects */
-.skeleton-item.skeleton-pulse    /* Soft opacity animation */
-.skeleton-item.skeleton-subtle   /* Gentle gradient wave */
-.skeleton-item.skeleton-breathe  /* Scale + opacity breathing */
-.skeleton-item.skeleton-brand    /* Branded tint animation */
-.skeleton-item.skeleton-shimmer  /* Classic shimmer (default) */</code>
-                        </div>
-                    </div>
-                </div>
                 
                 <div id="modals" class="component-section">
                     <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="app-window"></i> Modals</h2><p class="component-description">The modal component used for the "About" section in the plugin, featuring a blurred backdrop.</p></div>
@@ -1333,50 +1260,41 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Loading State -->
                         <div class="state-group">
                             <div class="example-container">
                                 <div class="example-label">Loading State</div>
-                                <div class="card token-summary">
-                                    <div class="skeleton-container" style="padding: 0;">
-                                        <!-- Main count skeleton -->
-                                        <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--size-4);">
-                                            <div class="skeleton-item skeleton-pulse" style="width: 120px; height: 48px; margin-bottom: var(--size-2);"></div>
-                                            <div class="skeleton-item skeleton-pulse" style="width: 180px; height: 16px;"></div>
+                                <div class="card token-summary-skeleton">
+                                    <div class="skeleton-item skeleton-heading"></div>
+                                    <div class="skeleton-item skeleton-subheading"></div>
+                                    <div class="skeleton-breakdown">
+                                        <div class="skeleton-stat">
+                                            <div class="skeleton-item skeleton-icon"></div>
+                                            <div class="skeleton-item skeleton-text"></div>
                                         </div>
-                                        <!-- Token type skeletons -->
-                                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-2); padding-top: var(--size-4); border-top: 1px solid var(--color-border-default);">
-                                            <div style="text-align: center;">
-                                                <i data-lucide="palette" style="width: 18px; height: 18px; color: #00D1FF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
-                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
-                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">colors</div>
-                                            </div>
-                                            <div style="text-align: center;">
-                                                <i data-lucide="type" style="width: 18px; height: 18px; color: #B48CFF; margin-bottom: var(--size-2); opacity: 0.3;"></i>
-                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
-                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">text</div>
-                                            </div>
-                                            <div style="text-align: center;">
-                                                <i data-lucide="toggle-right" style="width: 18px; height: 18px; color: #FF74BC; margin-bottom: var(--size-2); opacity: 0.3;"></i>
-                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
-                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">states</div>
-                                            </div>
-                                            <div style="text-align: center;">
-                                                <i data-lucide="hash" style="width: 18px; height: 18px; color: #FFB86C; margin-bottom: var(--size-2); opacity: 0.3;"></i>
-                                                <div class="skeleton-item skeleton-pulse small" style="width: 30px; height: 16px; margin: 0 auto var(--size-1);"></div>
-                                                <div class="text-caption" style="color: var(--color-text-muted); opacity: 0.3;">numbers</div>
-                                            </div>
+                                        <div class="skeleton-stat">
+                                            <div class="skeleton-item skeleton-icon"></div>
+                                            <div class="skeleton-item skeleton-text"></div>
+                                        </div>
+                                        <div class="skeleton-stat">
+                                            <div class="skeleton-item skeleton-icon"></div>
+                                            <div class="skeleton-item skeleton-text"></div>
+                                        </div>
+                                        <div class="skeleton-stat">
+                                            <div class="skeleton-item skeleton-icon"></div>
+                                            <div class="skeleton-item skeleton-text"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="state-documentation">
+                             <div class="state-documentation">
                                 <div class="state-documentation-title">Key Info:</div>
-                                <div class="token-list">
-                                    <span class="token-badge">Uses skeleton-pulse</span>
-                                    <span class="token-badge">Icons at 30% opacity</span>
-                                    <span class="token-badge">Only numbers load</span>
+                                <p style="color: var(--color-text-secondary); margin: 0;">This component provides a high-fidelity loading state for the Token Summary card, preventing layout shift while collections are fetched. It uses a soft pulse animation for a modern feel.</p>
+                                <div class="token-list" style="margin-top: var(--size-2);">
+                                    <span class="token-badge">Replaces old skeleton examples</span>
+                                    <span class="token-badge">Uses skeleton-pulse animation</span>
+                                    <span class="token-badge">1:1 match of component layout</span>
                                 </div>
                             </div>
                         </div>
