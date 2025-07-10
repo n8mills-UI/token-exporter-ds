@@ -31,33 +31,6 @@
             background: var(--color-background-primary);
         }
 
-        /* FIX: Override blue gradient for Empty State component within the guide */
-        .guide-content {
-            --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
-        }
-
-        /* FIX: Ensure all text in components is visible */
-        .guide-content .token-type-stat .count,
-        .guide-content .token-type-stat .label,
-        .guide-content .collection-name,
-        .guide-content .collection-count,
-        .guide-content .collection-info,
-        .guide-content .collection-pill span,
-        .guide-content .section-title-component,
-        .guide-content .subtitle {
-            color: var(--color-text-default);
-        }
-
-        /* Fix for section titles in components */
-        .section-title {
-            color: var(--color-text-default) !important;
-        }
-
-        .section-title .lucide {
-            color: var(--brand-primary-lime);
-            margin-right: var(--size-2);
-        }
-
         /* Guide Layout */
         .guide-container {
             display: flex;
@@ -504,32 +477,6 @@
         .advanced-link:hover .lucide {
             transform: translateX(2px);
         }
-
-        /* Footer section styles */
-        .footer-section {
-            text-align: center;
-            padding: var(--size-3);
-            border-top: 1px solid var(--color-border-default);
-        }
-
-        .footer-section a {
-            color: var(--color-text-muted);
-            text-decoration: none;
-            transition: all var(--animation-duration-2) var(--ease-3);
-        }
-
-        .footer-section a:hover {
-            color: var(--brand-primary-lime);
-        }
-
-        .footer-section .heart {
-            display: inline-block;
-            transition: transform var(--animation-duration-3) var(--ease-spring-4);
-        }
-
-        .footer-section a:hover .heart {
-            transform: scale(1.2);
-        }
         
         .example-container {
             background: var(--color-background-primary);
@@ -677,16 +624,6 @@
             font-size: var(--font-size-0);
         }
         
-        /* About Section */
-        .about-section {
-            background: var(--color-background-secondary);
-            margin-left: calc(-1 * var(--size-6));
-            margin-right: calc(-1 * var(--size-6));
-            padding: var(--size-8) var(--size-6);
-            margin-top: var(--size-10);
-            border-top: 2px solid var(--color-border-default);
-        }
-
         .about-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -707,7 +644,6 @@
             background-position: center;
             border: 3px solid var(--brand-primary-lime);
             background-color: var(--gray-7);
-            background-image: var(--asset-url-avatar);
         }
 
         .about-info-column h3 {
@@ -789,25 +725,6 @@
             margin-bottom: var(--size-2);
         }
         
-        /* NEW SKELETON STYLES - To be added to CSS */
-        .skeleton-pulse { background: var(--gray-7); animation: skeleton-pulse 2s ease-in-out infinite; }
-        @keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .skeleton-subtle { background: linear-gradient(90deg, var(--gray-7) 25%, var(--gray-6) 50%, var(--gray-7) 75%); background-size: 200% 100%; animation: skeleton-wave 3s ease-in-out infinite; }
-        @keyframes skeleton-wave { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .skeleton-breathe { background: var(--gray-7); animation: skeleton-breathe 2.5s ease-in-out infinite; }
-        @keyframes skeleton-breathe { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } }
-        .skeleton-brand { background: linear-gradient(90deg, rgba(210, 255, 55, 0.05) 25%, rgba(210, 255, 55, 0.1) 50%, rgba(210, 255, 55, 0.05) 75%); background-size: 200% 100%; animation: skeleton-wave 2s ease-in-out infinite; border: 1px solid rgba(210, 255, 55, 0.1); }
-        .skeleton-shimmer { background: var(--gray-8); position: relative; overflow: hidden; }
-        .skeleton-shimmer::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%); animation: shimmerOverlay 1.5s infinite; }
-        
-        /* NEW BUTTON STYLES - To be added to CSS */
-        .btn-icon-only { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--color-border-default); background: transparent; color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
-        .btn-icon-only:hover { color: var(--brand-primary-lime); border-color: var(--brand-primary-lime); background: rgba(210, 255, 55, 0.1); }
-        
-        /* Animations */
-        @keyframes pulse-glow { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5)); } }
-        @keyframes wave-animation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
         /* Responsive styles */
         @media (max-width: 768px) {
             .mobile-menu-toggle { display: block; }
@@ -884,7 +801,6 @@
                         <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
                         <li><a href="#modular-cards" class="nav-link"><i data-lucide="layout-grid"></i> Modular Card States</a></li>
                         <li><a href="#advanced-toggle" class="nav-link"><i data-lucide="sliders-horizontal"></i> Mode Toggle</a></li>
-                        <li><a href="#footer" class="nav-link"><i data-lucide="heart"></i> Footer</a></li>
                     </ul>
                 </div>
                 
@@ -913,7 +829,6 @@
                     <h1 class="guide-main-title">
                         Design System Guide
                     </h1>
-                 
                     <p class="section-description">
                         A comprehensive design system built on Open Props foundation with custom brand identity. 
                         This guide shows how foundation tokens power the components, creating consistent and scalable interfaces for the Token Exporter plugin.
@@ -1351,7 +1266,7 @@
                              <div class="about-modal show" style="position: absolute; z-index: 1;">
                                 <div class="about-content">
                                     <button class="about-close"> <i data-lucide="x-circle"></i> </button>
-                                    <div class="about-avatar" style="background-image: var(--asset-url-avatar);"></div>
+                                    <div class="about-avatar"></div>
                                     <h2 class="text-heading-md">NATE MILLS</h2>
                                     <p class="text-body-md">Building accessible design systems that scale.</p>
                                 </div>
@@ -1579,23 +1494,6 @@
                     </div>
                 </div>
 
-                <!-- Footer -->
-                <div id="footer" class="component-section">
-                    <div class="component-header">
-                        <h2 class="text-heading-lg component-title"><i data-lucide="heart"></i> Footer</h2>
-                        <p class="component-description">Plugin footer with attribution and animated heart.</p>
-                    </div>
-                    <div class="component-body">
-                        <div class="example-container">
-                            <div class="example-label">Live Example</div>
-                            <div class="footer-section">
-                                <a href="#" class="text-caption">created with <span class="heart">❤️</span> by nate mills</a>
-                            </div>
-                        </div>
-                        <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="footer-section"&gt;...&lt;/div&gt;</code></div>
-                    </div>
-                </div>
-
             </section>
 
             <!-- PATTERNS SECTION -->
@@ -1717,7 +1615,6 @@ if (collectionIds.length === 0) {
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 
