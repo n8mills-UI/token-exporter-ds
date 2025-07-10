@@ -2341,12 +2341,15 @@ main {
 }
 
 .success-icon {
-    font-size: var(--font-size-7);
+    width: var(--size-10);
+    height: var(--size-10);
     color: var(--brand-primary-lime);
-    margin-bottom: var(--size-3);
+    margin: 0 auto var(--size-4);
+    display: block;
     filter: drop-shadow(0 0 15px rgba(210, 255, 55, 0.4));
     animation: successPop 0.6s ease-out;
 }
+
 
 .success-title {
     margin-bottom: var(--size-2);
@@ -2508,12 +2511,11 @@ main {
 /* About Section */
 .about-section {
     background: var(--color-background-secondary);
-    margin-left: calc(-1 * var(--size-6));
-    margin-right: calc(-1 * var(--size-6));
-    padding: var(--size-8) var(--size-6) var(--size-8) var(--size-6);
+    padding: var(--size-8) var(--size-6);
     margin-top: var(--size-10);
     border-top: 2px solid var(--color-border-default);
 }
+
 
 .about-container {
     max-width: 1200px;
@@ -2536,6 +2538,7 @@ main {
     border: 3px solid var(--brand-primary-lime);
     background-color: var(--gray-7);
     background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
+    margin: 0 auto;
 }
 
 .about-info-column h3 {
