@@ -2076,15 +2076,21 @@
         }
         
         // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeNavigation();
-            initializeMobileMenu();
-            lucide.createIcons();
-            
-            animateCounters();
-            initFAQAccordion();
-            initTechHover();
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize all main functions
+    initializeNavigation();
+    initializeMobileMenu();
+    animateCounters();
+    initFAQAccordion();
+    initTechHover();
+});
+
+// Use the more robust 'window.onload' event for icons.
+// This guarantees that EVERYTHING on the page is fully loaded
+// before we try to draw the icons.
+window.addEventListener('load', () => {
+  lucide.createIcons();
+});
     </script>
 
 
