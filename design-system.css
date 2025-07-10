@@ -29,6 +29,7 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 /* 1. Import Shoelace FIRST - Component library base styles */
 @import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css";
 
+
 /* 2. Import Open Props SECOND - Our foundation overrides */
 @import "https://unpkg.com/open-props/style";
 @import "https://unpkg.com/open-props/normalize";
@@ -951,7 +952,28 @@ sl-spinner {
 /* ==========================================================================
    GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
    ========================================================================== */
+.example-container {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-6) var(--size-4) var(--size-4); /* Increased top padding */
+            margin-bottom: var(--size-4);
+            position: relative;
+        }
 
+        .example-label {
+            position: absolute;
+            top: var(--size-3); /* Position within the new padding area */
+            left: var(--size-4);
+            background: transparent; /* No background */
+            border: none; /* No border */
+            padding: 0; /* No extra padding */
+            font-size: var(--font-size-0); /* Slightly larger for a sub-header feel */
+            font-weight: var(--font-weight-6);
+            color: var(--brand-primary-lime);
+            text-transform: uppercase;
+            letter-spacing: var(--font-letterspacing-2);
+        }
 .token-exporter-logo {
     display: inline-block;
     width: 48px;
