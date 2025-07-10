@@ -2048,36 +2048,51 @@
         
         // --- COPY FUNCTIONALITY ---
         function copyToken(tokenName) {
-            navigator.clipboard.writeText(tokenName).then(() => {
-                const buttons = document.querySelectorAll('.token-copy');
-                buttons.forEach(button => {
-                    if (button.onclick && button.onclick.toString().includes(`'${tokenName}'`)) {
-                        const originalText = button.textContent;
-                        button.textContent = 'Copied!';
-                        button.style.color = 'var(--brand-primary-lime)';
-                        setTimeout(() => {
-                            button.textContent = originalText;
-                            button.style.color = '';
-                        }, 2000);
-                    }
-                });
-            });
-        }
+    navigator.clipboard.writeText(tokenName).then(() => {
+        const buttons = document.querySelectorAll('.token-copy');
+        buttons.forEach(button => {
+            // Check if this button is the one for the specific token
+            if (button.getAttribute('onclick') === `copyToken('${tokenName}')`) {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i data-lucide="check" style="width: 1em; height: 1em;"></i> Copied!';
+                button.style.color = 'var(--brand-primary-lime)';
+                lucide.createIcons(); // Re-render the new icon
+
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.color = '';
+                    // Note: lucide icons in the original state are assumed to be text, not icons.
+                }, 2000);
+            }
+        });
+    }).catch(err => {
+        console.error('Failed to copy token: ', err);
+    });
+}
         
         function copyCode(button) {
-            const codeBlock = button.nextElementSibling;
-            const code = codeBlock.textContent.trim();
-            
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = button.textContent;
-                button.textContent = 'Copied!';
-                button.style.color = 'var(--brand-primary-lime)';
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.color = '';
-                }, 2000);
-            });
-        }
+    const codeBlock = button.nextElementSibling;
+    if (!codeBlock || codeBlock.tagName.toLowerCase() !== 'code') {
+        console.error('Could not find code element to copy.');
+        return;
+    }
+    const code = codeBlock.textContent.trim();
+
+    navigator.clipboard.writeText(code).then(() => {
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i data-lucide="check" style="width: 1em; height: 1em;"></i> Copied!';
+        button.style.color = 'var(--brand-primary-lime)';
+        lucide.createIcons();
+
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.color = '';
+            // The original button text is "Copy", so no need to re-render icons here.
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy code: ', err);
+    });
+}
         
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -2105,7 +2120,15 @@ window.addEventListener('load', () => {
 });
     </script>
 
-
+<div class="version-badge">v<span id="version"></span></div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const version = getComputedStyle(document.documentElement).getPropertyValue('--system-version').replace(/['"]/g,'').trim();
+        if (version) {
+            document.getElementById('version').textContent = version;
+        }
+    });
+</script>
 
 </body>
 </html>
