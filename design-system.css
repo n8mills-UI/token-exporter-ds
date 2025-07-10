@@ -6,19 +6,21 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v4.0.5 | Crafted with ❤️ by Nate Mills
+Token Exporter Design System v4.0.6 | Crafted with ❤️ by Nate Mills
 Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v4.0.5 - Complete Implementation
+   TOKEN EXPORTER DESIGN SYSTEM v4.0.6 - Complete Implementation
    ==========================================================================
    
-   FIXES IN v4.0.5:
-   ✓ Removed unused animations (gradient-shift, bounce)
-   ✓ Standardized focus states to use box-shadow approach
+   CHANGES IN v4.0.6:
+   ✓ Removed unused animations (gradient-shift, bounce) 
    ✓ Removed unused --asset-url-avatar variable
+   ✓ Standardized all focus states to box-shadow approach
+   ✓ Fixed button icon alignment (removed translateY)
+   ✓ Consolidated duplicate .about-avatar styles
    ✓ Cleaned up unused CSS
    ✓ Fixed icon vertical alignment
    
@@ -109,7 +111,6 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 .btn .lucide {
     width: 1.2em;
     height: 1.2em;
-    /* Removed transform: translateY(-1px) - was breaking flex alignment */
 }
 
 .btn-icon-only .lucide {
@@ -326,11 +327,6 @@ sl-select::part(combobox):hover {
     border-color: var(--gray-5);
 }
 
-sl-select::part(combobox):focus-within {
-    border-color: var(--color-border-interactive-focus);
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
-}
-
 /* Shoelace Dialog Styling */
 sl-dialog::part(panel) {
     background: var(--color-background-secondary);
@@ -358,11 +354,6 @@ sl-input::part(input) {
 sl-input::part(input):hover {
     background: var(--surface-3);
     border-color: var(--gray-5);
-}
-
-sl-input::part(input):focus {
-    border-color: var(--color-border-interactive-focus);
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
 }
 
 /* Shoelace Spinner */
@@ -827,12 +818,6 @@ sl-spinner {
     font-size: var(--font-size-1);
     transition: border-color var(--animation-duration-2) var(--ease-3),
                 box-shadow var(--animation-duration-2) var(--ease-3);
-}
-
-.collection-search:focus {
-    outline: none;
-    border-color: var(--color-border-interactive-focus);
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
 }
 
 /* Bulk Selection Tools */
@@ -1410,12 +1395,6 @@ main {
     border-color: var(--gray-5);
 }
 
-.format-select:focus { 
-    outline: none; 
-    border-color: var(--color-border-interactive-focus); 
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
-}
-
 .format-select-wrapper::after {
     content: '';
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
@@ -1530,11 +1509,6 @@ main {
 .btn.primary:disabled, .btn.primary.disabled {
     background: var(--color-background-disabled);
     background-image: none;
-}
-
-.btn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
 }
 
 .btn.tertiary:focus-visible {
@@ -2206,10 +2180,15 @@ main {
 }
         
 /* Focus States for Accessibility - STANDARDIZED */
-.collection-item:focus-visible,
 .btn:focus-visible,
+.btn-icon-only:focus-visible,
+.collection-item:focus-visible,
 .format-select:focus-visible,
-.about-close:focus-visible {
+.search-input:focus-visible,
+.about-close:focus-visible,
+sl-button::part(base):focus-visible,
+sl-select::part(combobox):focus-visible,
+sl-input::part(input):focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
 }
@@ -2239,12 +2218,6 @@ main {
     transform: translateY(-50%);
     color: var(--color-text-muted);
     pointer-events: none;
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--color-border-interactive-focus);
-    box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
 }
 
 /* Performance optimizations */
@@ -2314,7 +2287,7 @@ main {
 }
 
 /* ==========================================================================
-   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.5
+   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.6
    
    "Code complete, system whole,
     From tokens to components bright,

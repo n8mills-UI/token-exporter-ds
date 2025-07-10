@@ -18,7 +18,6 @@
         
         :root {
             /* Asset URLs - Tokenized for maintainability */
-            --asset-url-avatar: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
         }
 
         /* Prevent layout shift when scrollbar appears */
@@ -777,42 +776,62 @@
                 <h1 class="text-heading-md guide-title">Token Exporter</h1>
             </div>
             <div class="nav-wrapper">
-                <div class="nav-section">
-                    <h3 class="nav-section-title">Foundation</h3>
-                    <ul class="nav-links">
-                        <li><a href="#overview" class="nav-link"><i data-lucide="layout-dashboard"></i> Overview</a></li>
-                        <li><a href="#colors" class="nav-link"><i data-lucide="palette"></i> Colors</a></li>
-                        <li><a href="#typography" class="nav-link"><i data-lucide="type"></i> Typography</a></li>
-                        <li><a href="#spacing" class="nav-link"><i data-lucide="move-horizontal"></i> Spacing</a></li>
-                        <li><a href="#shadows" class="nav-link"><i data-lucide="layers"></i> Shadows</a></li>
-                        <li><a href="#border-radius" class="nav-link"><i data-lucide="square"></i> Border Radius</a></li>
-                        <li><a href="#animations" class="nav-link"><i data-lucide="play-circle"></i> Animations</a></li>
-                    </ul>
-                </div>
-                
-                <div class="nav-section">
-                    <h3 class="nav-section-title">Components</h3>
-                    <ul class="nav-links">
-                        <li><a href="#token-summary" class="nav-link"><i data-lucide="pie-chart"></i> Token Summary</a></li>
-                        <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
-                        <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
-                        <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
-                        <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
-                        <li><a href="#modular-cards" class="nav-link"><i data-lucide="layout-grid"></i> Modular Card States</a></li>
-                        <li><a href="#advanced-toggle" class="nav-link"><i data-lucide="sliders-horizontal"></i> Mode Toggle</a></li>
-                    </ul>
-                </div>
-                
-                <div class="nav-section">
-                    <h3 class="nav-section-title">Patterns</h3>
-                    <ul class="nav-links">
-                        <li><a href="#user-flows" class="nav-link"><i data-lucide="git-branch"></i> User Flows</a></li>
-                        <li><a href="#state-management" class="nav-link"><i data-lucide="cpu"></i> State Management</a></li>
-                        <li><a href="#performance" class="nav-link"><i data-lucide="zap"></i> Performance</a></li>
-                        <li><a href="#error-handling" class="nav-link"><i data-lucide="alert-triangle"></i> Error Handling</a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="nav-section">
+        <h3 class="nav-section-title">Foundation</h3>
+        <ul class="nav-links">
+            <li><a href="#overview" class="nav-link"><i data-lucide="layout-dashboard"></i> Overview</a></li>
+            <li><a href="#colors" class="nav-link"><i data-lucide="palette"></i> Colors</a></li>
+            <li><a href="#typography" class="nav-link"><i data-lucide="type"></i> Typography</a></li>
+            <li><a href="#spacing" class="nav-link"><i data-lucide="move-horizontal"></i> Spacing</a></li>
+            <li><a href="#shadows" class="nav-link"><i data-lucide="layers"></i> Shadows</a></li>
+            <li><a href="#border-radius" class="nav-link"><i data-lucide="square"></i> Border Radius</a></li>
+            <li><a href="#animations" class="nav-link"><i data-lucide="play-circle"></i> Animations</a></li>
+        </ul>
+    </div>
+    
+    <div class="nav-section">
+        <h3 class="nav-section-title">Core Components</h3>
+        <ul class="nav-links">
+            <li><a href="#token-summary" class="nav-link"><i data-lucide="pie-chart"></i> Token Summary</a></li>
+            <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
+            <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
+            <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
+            <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
+            <li><a href="#modular-cards" class="nav-link"><i data-lucide="layout-grid"></i> Modular Card States</a></li>
+            <li><a href="#advanced-toggle" class="nav-link"><i data-lucide="sliders-horizontal"></i> Mode Toggle</a></li>
+        </ul>
+    </div>
+    
+    <div class="nav-section">
+        <h3 class="nav-section-title">Advanced Components</h3>
+        <ul class="nav-links">
+            <li><a href="#filter-system" class="nav-link"><i data-lucide="filter"></i> Filters</a></li>
+            <li><a href="#collection-search" class="nav-link"><i data-lucide="search"></i> Search</a></li>
+            <li><a href="#recent-collections" class="nav-link"><i data-lucide="clock"></i> Recent</a></li>
+            <li><a href="#bulk-actions" class="nav-link"><i data-lucide="check-square"></i> Bulk Actions</a></li>
+            <li><a href="#export-preview" class="nav-link"><i data-lucide="code-2"></i> Export Preview</a></li>
+            <li><a href="#performance-utilities" class="nav-link"><i data-lucide="zap"></i> Performance</a></li>
+            <li><a href="#skeleton-variants" class="nav-link"><i data-lucide="loader"></i> Skeletons</a></li>
+        </ul>
+    </div>
+    
+    <div class="nav-section">
+        <h3 class="nav-section-title">External Libraries</h3>
+        <ul class="nav-links">
+            <li><a href="#shoelace-integration" class="nav-link"><i data-lucide="package-2"></i> Shoelace</a></li>
+        </ul>
+    </div>
+    
+    <div class="nav-section">
+        <h3 class="nav-section-title">Patterns</h3>
+        <ul class="nav-links">
+            <li><a href="#user-flows" class="nav-link"><i data-lucide="git-branch"></i> User Flows</a></li>
+            <li><a href="#state-management" class="nav-link"><i data-lucide="cpu"></i> State Management</a></li>
+            <li><a href="#performance" class="nav-link"><i data-lucide="zap"></i> Performance</a></li>
+            <li><a href="#error-handling" class="nav-link"><i data-lucide="alert-triangle"></i> Error Handling</a></li>
+        </ul>
+    </div>
+</div>
             <div class="sidebar-footer">
                  <ul class="nav-links">
                     <li><a href="#about" class="nav-link"><i data-lucide="circle-user-round"></i> About & Links</a></li>
@@ -1415,81 +1434,391 @@
             </section>
 
             <!-- PATTERNS SECTION -->
-            <section id="patterns" class="content-section">
-                <div class="section-header">
-                    <h2 class="text-heading-xl main-section-title"><i data-lucide="git-branch"></i> Design Patterns</h2>
-                    <p class="section-description">Interaction flows, state management patterns, and behavioral guidelines that define how components work together to create intuitive user experiences.</p>
-                </div>
+           <section id="advanced-components" class="content-section">
+    <div class="section-header">
+        <h2 class="text-heading-xl main-section-title">
+            <i data-lucide="sparkles"></i>
+            Advanced Components
+        </h2>
+        <p class="section-description">
+            Additional UI components for enhanced functionality including filters, bulk actions, and specialized widgets.
+        </p>
+    </div>
 
-                <div id="user-flows" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i data-lucide="git-merge"></i> User Flow Patterns</h2>
-                    <div class="pattern-content">
-                        <h4>Simple Mode Flow (Default)</h4>
-                        <p><strong>Goal:</strong> Export all tokens with minimal user input</p>
-                        <pre>Load Plugin → Show Loading → Fetch Collections → Show Summary → Select Format → Export</pre>
-                        <h4>Advanced Mode Flow</h4>
-                        <p><strong>Goal:</strong> Granular control over token selection</p>
-                        <pre>Simple Mode → Toggle Advanced → Manual Selection → Configure Types → Export</pre>
+    <div id="filter-system" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="filter"></i> Filter System
+            </h2>
+            <p class="component-description">
+                Expandable filter groups with chip-based selection for refining large datasets. Features smooth animations and clear visual states.
+            </p>
+            <div class="token-usage">
+                <div class="token-usage-title">Tokens Used:</div>
+                <div class="token-list">
+                    <span class="token-badge">--color-background-secondary</span>
+                    <span class="token-badge">--radius-3</span>
+                    <span class="token-badge">--brand-primary-lime</span>
+                    <span class="token-badge">--animation-duration-3</span>
+                </div>
+            </div>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="example-label">Collapsed State</div>
+                <div class="filter-group">
+                    <div class="filter-header">
+                        <span>Filter by Type</span>
+                        <i class="filter-toggle-icon lucide" data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="filter-content">
+                        </div>
+                </div>
+            </div>
+
+            <div class="example-container">
+                <div class="example-label">Expanded State with Active Filters</div>
+                <div class="filter-group expanded">
+                    <div class="filter-header">
+                        <span>Filter by Type</span>
+                        <i class="filter-toggle-icon lucide" data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="filter-content">
+                        <div class="filter-chips">
+                            <div class="filter-chip">Colors</div>
+                            <div class="filter-chip active">
+                                Typography
+                                <span class="remove-icon">×</span>
+                            </div>
+                            <div class="filter-chip">Spacing</div>
+                            <div class="filter-chip active">
+                                Effects
+                                <span class="remove-icon">×</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id="state-management" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i data-lucide="cpu"></i> State Management</h2>
-                    <div class="pattern-content">
-                        <h4>Centralized State Object</h4>
-                        <pre>const appState = {
-    mode: 'simple', 'advanced' 
-    collections: [],
-    selectedCollections: new Set(),
-    selectedFormat: 'css',
-    selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
-    isLoading: true,
-};</pre>
-                        <h4>Key Principles</h4>
-                        <ul>
-                            <li><strong>Single Source of Truth:</strong> All state lives in one object</li>
-                            <li><strong>Set-based Selection:</strong> Efficient selection/deselection</li>
-                            <li><strong>Immediate UI Sync:</strong> State changes trigger instant visual updates</li>
-                        </ul>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;div class="filter-group expanded"&gt;
+    &lt;div class="filter-header"&gt;
+        &lt;span&gt;Filter by Type&lt;/span&gt;
+        &lt;i class="filter-toggle-icon" data-lucide="chevron-down"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="filter-content"&gt;
+        &lt;div class="filter-chips"&gt;
+            &lt;div class="filter-chip active"&gt;Typography&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code>
+            </div>
+        </div>
+    </div>
+
+    <div id="collection-search" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="search"></i> Collection Search
+            </h2>
+            <p class="component-description">
+                Search input with icon positioning for filtering collections. Appears automatically when collections exceed 5 items.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="example-label">Search Input</div>
+                <div class="search-container">
+                    <i class="lucide lucide-search" data-lucide="search"></i>
+                    <input type="text" class="collection-search search-input" placeholder="Search collections...">
+                </div>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;div class="search-container"&gt;
+    &lt;i class="lucide-search" data-lucide="search"&gt;&lt;/i&gt;
+    &lt;input type="text" class="collection-search" placeholder="Search collections..."&gt;
+&lt;/div&gt;</code>
+            </div>
+        </div>
+    </div>
+
+    <div id="recent-collections" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="clock"></i> Recent Collections
+            </h2>
+            <p class="component-description">
+                Quick access widget showing recently used collections with chip-based UI for rapid selection.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="example-label">Recent Collections Widget</div>
+                <div class="recent-collections">
+                    <div class="recent-collections-header">
+                        <i data-lucide="clock"></i>
+                        Recent Collections
+                    </div>
+                    <div class="recent-collections-list">
+                        <div class="recent-chip">Brand Colors</div>
+                        <div class="recent-chip">Typography Scale</div>
+                        <div class="recent-chip">Spacing Tokens</div>
+                        <div class="recent-chip">Component States</div>
                     </div>
                 </div>
-                <div id="performance" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i data-lucide="zap"></i> Performance Patterns</h2>
-                    <div class="pattern-content">
-                        <h4>Batch Processing</h4>
-                        <pre>// Process large datasets in chunks to avoid blocking
-const BATCH_SIZE = 100;
-for (let j = 0; j < items.length; j += BATCH_SIZE) {
-    // ... process batch ...
-    await new Promise(resolve => setTimeout(resolve, 0));
-}</pre>
-                        <h4>Early Filtering</h4>
-                        <pre>// Filter variables by type early to avoid unnecessary processing
-const variablesToProcess = allVariables.filter(v => {
-    if (!collectionIds.includes(v.variableCollectionId)) return false;
-    if (v.resolvedType === 'COLOR' && !activeTokenTypes.includes('color')) return false;
-    return true;
-});</pre>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;div class="recent-collections"&gt;
+    &lt;div class="recent-collections-header"&gt;
+        &lt;i data-lucide="clock"&gt;&lt;/i&gt; Recent Collections
+    &lt;/div&gt;
+    &lt;div class="recent-collections-list"&gt;
+        &lt;div class="recent-chip"&gt;Brand Colors&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code>
+            </div>
+        </div>
+    </div>
+
+    <div id="bulk-actions" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="check-square"></i> Bulk Actions
+            </h2>
+            <p class="component-description">
+                Contextual action bar that appears when multiple items are selected. Features smooth slide-in animation.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="example-label">Bulk Actions Bar (Visible State)</div>
+                <div class="bulk-actions visible">
+                    <span class="text-body-md">3 collections selected</span>
+                    <div style="display: flex; gap: var(--size-2); margin-left: auto;">
+                        <button class="btn tertiary" style="width: auto;">
+                            Select All
+                        </button>
+                        <button class="btn tertiary" style="width: auto;">
+                            Clear Selection
+                        </button>
                     </div>
                 </div>
-                <div id="error-handling" class="pattern-section">
-                    <h2 class="text-heading-lg pattern-title"><i data-lucide="alert-triangle"></i> Error Handling</h2>
-                    <div class="pattern-content">
-                        <h4>Graceful Degradation</h4>
-                        <pre>try {
-    // Risky operation
-} catch (error) {
-    console.error('Error:', error);
-    figma.notify('An error occurred.', { error: true });
-    // Show a safe fallback state in the UI
-}</pre>
-                        <h4>User-Friendly Messages</h4>
-                        <pre>// Convert technical errors to actionable messages
-if (collectionIds.length === 0) {
-    figma.notify('Please select at least one collection.', { error: true });
-}</pre>
-                    </div>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;div class="bulk-actions visible"&gt;
+    &lt;span&gt;3 collections selected&lt;/span&gt;
+    &lt;button class="btn tertiary"&gt;Select All&lt;/button&gt;
+&lt;/div&gt;</code>
+            </div>
+        </div>
+    </div>
+
+    <div id="export-preview" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="code-2"></i> Export Preview
+            </h2>
+            <p class="component-description">
+                Code preview window showing a sample of generated tokens before download. Features syntax highlighting appearance and scrollable content.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="example-label">CSS Variables Preview</div>
+                <div class="export-preview">
+                    <pre><code>:root {
+  /* Brand Colors */
+  --brand-primary-lime: #D2FF37;
+  --brand-secondary-yellow: #EEFF00;
+  --brand-text-dark: #1E1E1E;
+  
+  /* Token Categories */
+  --category-color-cyan: #00D1FF;
+  --category-color-purple: #B48CFF;
+  --category-color-orange: #FFB86C;
+  --category-color-pink: #FF74BC;
+  
+  /* Gray Scale */
+  --gray-0: #ffffff;
+  --gray-1: #f0f0f0;
+  --gray-2: #cccccc;
+}</code></pre>
                 </div>
-            </section>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;div class="export-preview"&gt;
+    &lt;pre&gt;&lt;code&gt;:root {
+  --brand-primary-lime: #D2FF37;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</code>
+            </div>
+        </div>
+    </div>
+
+    <div id="performance-utilities" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="zap"></i> Performance Utilities
+            </h2>
+            <p class="component-description">
+                CSS utility classes for optimizing rendering performance and paint operations.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="example-label">Utility Classes</div>
+                <div class="pattern-content">
+                    <h4>GPU Acceleration</h4>
+                    <pre><code>.gpu-accelerated {
+    will-change: transform;
+    transform: translateZ(0);
+}</code></pre>
+                    
+                    <h4>Reduce Paint</h4>
+                    <pre><code>.reduce-paint {
+    contain: layout style paint;
+}</code></pre>
+                    
+                    <p style="margin-top: var(--size-4);">
+                        Apply these utilities to frequently animated elements or complex components to improve performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="skeleton-variants" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="loader"></i> Skeleton Loading Variants
+            </h2>
+            <p class="component-description">
+                Multiple skeleton loading styles for different aesthetic preferences and performance requirements.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="variants-grid">
+                <div class="example-container">
+                    <div class="example-label">Shimmer Fast</div>
+                    <div class="skeleton-shimmer-fast" style="height: 60px; border-radius: var(--radius-3);"></div>
+                </div>
+                
+                <div class="example-container">
+                    <div class="example-label">Pulse</div>
+                    <div class="skeleton-item skeleton-pulse"></div>
+                </div>
+                
+                <div class="example-container">
+                    <div class="example-label">Wave</div>
+                    <div class="skeleton-item skeleton-subtle"></div>
+                </div>
+                
+                <div class="example-container">
+                    <div class="example-label">Breathe</div>
+                    <div class="skeleton-item skeleton-breathe"></div>
+                </div>
+                
+                <div class="example-container">
+                    <div class="example-label">Brand</div>
+                    <div class="skeleton-item skeleton-brand"></div>
+                </div>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;div class="skeleton-shimmer-fast"&gt;&lt;/div&gt;
+&lt;div class="skeleton-item skeleton-pulse"&gt;&lt;/div&gt;
+&lt;div class="skeleton-item skeleton-brand"&gt;&lt;/div&gt;</code>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="shoelace-integration" class="content-section">
+    <div class="section-header">
+        <h2 class="text-heading-xl main-section-title">
+            <i data-lucide="package-2"></i>
+            External Library Integration
+        </h2>
+        <p class="section-description">
+            How Token Exporter integrates with Shoelace web components, mapping our design tokens to their theming system.
+        </p>
+    </div>
+
+    <div class="pattern-section">
+        <h3 class="text-heading-md pattern-title">
+            <i data-lucide="palette"></i>
+            Shoelace Theme Mapping
+        </h3>
+        <div class="pattern-content">
+            <p>Token Exporter maps its design tokens to Shoelace CSS custom properties for seamless integration:</p>
+            
+            <h4>Color Mapping</h4>
+            <pre><code>/* Primary Colors */
+--sl-color-primary-600: var(--brand-primary-lime);
+--sl-color-primary-500: var(--brand-secondary-yellow);
+
+/* Neutral Colors */
+--sl-color-neutral-0: var(--gray-0);
+--sl-color-neutral-800: var(--gray-9);</code></pre>
+
+            <h4>Typography Mapping</h4>
+            <pre><code>--sl-font-sans: var(--font-sans);
+--sl-font-mono: var(--font-mono);
+--sl-font-weight-semibold: var(--font-weight-6);</code></pre>
+
+            <h4>Spacing & Radius</h4>
+            <pre><code>--sl-spacing-medium: var(--size-4);
+--sl-border-radius-medium: var(--radius-2);</code></pre>
+        </div>
+    </div>
+
+    <div class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title">
+                <i data-lucide="square-mouse-pointer"></i> Shoelace Button
+            </h2>
+            <p class="component-description">
+                Enhanced button component using Shoelace's sl-button with custom theming.
+            </p>
+        </div>
+        <div class="component-body">
+            <div class="variants-grid">
+                <div class="example-container">
+                    <div class="example-label">Primary Variant</div>
+                    <sl-button variant="primary">
+                        <i slot="prefix" data-lucide="rocket"></i>
+                        Export Tokens
+                    </sl-button>
+                </div>
+                
+                <div class="example-container">
+                    <div class="example-label">Circle Icon Button</div>
+                    <sl-button variant="default" circle>
+                        <i data-lucide="x"></i>
+                    </sl-button>
+                </div>
+            </div>
+            
+            <div class="code-block">
+                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>&lt;sl-button variant="primary"&gt;
+    &lt;i slot="prefix" data-lucide="rocket"&gt;&lt;/i&gt;
+    Export Tokens
+&lt;/sl-button&gt;</code>
+            </div>
+        </div>
+    </div>
+</section>
 
             <!-- ABOUT SECTION -->
             <section id="about" class="content-section about-section">
