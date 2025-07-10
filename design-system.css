@@ -2599,9 +2599,9 @@ main {
     filter: brightness(1.1);
 }
 
-.footer-cta .lucide {
-    width: 16px;
-    height: 16px;
+.footer-cta svg { /* Changed from .lucide to svg for the inline logo */
+    width: 15px;
+    height: 15px;
     flex-shrink: 0;
 }
 
@@ -2657,6 +2657,7 @@ main {
         padding-bottom: 0;
     }
 }
+
 
         
 /* State groups with better hierarchy */
