@@ -952,28 +952,25 @@ sl-spinner {
 /* ==========================================================================
    GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
    ========================================================================== */
-.example-container {
-    background: var(--color-background-primary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    padding: var(--size-6) var(--size-4) var(--size-4); /* Increased top padding */
-    margin-bottom: var(--size-4);
-    position: relative;
-}
+        .example-container {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            padding: var(--size-6) var(--size-4) var(--size-4); /* Increased top padding */
+            margin-top: var(--size-6); /* Add margin to separate from the label */
+            position: relative;
+        }
 
-.example-label {
-    position: absolute;
-    top: var(--size-3); /* Position within the new padding area */
-    left: var(--size-4);
-    background: transparent; /* No background */
-    border: none; /* No border */
-    padding: 0; /* No extra padding */
-    font-size: var(--font-size-0); /* Slightly larger for a sub-header feel */
-    font-weight: var(--font-weight-6);
-    color: var(--brand-primary-lime);
-    text-transform: uppercase;
-    letter-spacing: var(--font-letterspacing-2);
-}
+        .example-label {
+            /* This is no longer positioned absolutely */
+            margin-bottom: calc(-1 * var(--size-4)); /* Pull the container up slightly */
+            font-size: var(--font-size-0);
+            font-weight: var(--font-weight-6);
+            color: var(--brand-primary-lime);
+            text-transform: uppercase;
+            letter-spacing: var(--font-letterspacing-2);
+        }
+
 .token-exporter-logo {
     display: inline-block;
     width: 48px;
