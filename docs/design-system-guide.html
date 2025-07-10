@@ -2082,7 +2082,7 @@
             });
         }
         
-        // --- INITIALIZATION ---
+// --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all main functions
     initializeNavigation();
@@ -2091,6 +2091,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initFAQAccordion();
     initTechHover();
 });
+
+// Use the more robust 'window.onload' event for icons.
+// This guarantees that EVERYTHING on the page is fully loaded
+// before we try to draw the icons.
+window.addEventListener('load', () => {
+  lucide.createIcons();
+});
+
 
 // Use the more robust 'window.onload' event for icons.
 // This guarantees that EVERYTHING on the page is fully loaded
