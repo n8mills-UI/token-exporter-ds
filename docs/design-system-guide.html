@@ -7,7 +7,6 @@
     
     <!-- Lucide Icons Script -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/n8mills-UI/token-exporter-ds@main/design-system.css">
@@ -843,91 +842,101 @@
         <!-- Main Content -->
         <main class="guide-content">
             <!-- Overview Section -->
-            <section id="overview" class="content-section">
-                <div class="section-header">
-                    <h1 class="guide-main-title">
-                        Design System Guide
-                    </h1>
-                    <p class="section-description">
-                        A comprehensive design system built on Open Props foundation with custom brand identity. 
-                        This guide shows how foundation tokens power the components, creating consistent and scalable interfaces for the Token Exporter plugin.
-                    </p>
+<section id="overview" class="content-section" style="padding: 0;">
+    <!-- Cyberpunk stats banner -->
+    <div class="cyber-banner">
+        <div class="cyber-stats">
+            <div class="cyber-stat">
+                <i data-lucide="git-commit"></i>
+                <span><strong>500+</strong> commits</span>
+            </div>
+            <div class="cyber-stat">
+                <i data-lucide="bot"></i>
+                <span><strong>247</strong> tokens</span>
+            </div>
+            <div class="cyber-stat">
+                <i data-lucide="coffee"></i>
+                <span><strong>∞</strong> coffee</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <div class="portfolio-hero">
+        <div style="position: relative; z-index: 1;">
+            <!-- Logo component -->
+            <div class="hero-logo">
+                <div class="token-exporter-logo xl">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_hero_logo)">
+                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_hero_logo)"/>
+                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        </g>
+                        <defs>
+                            <linearGradient id="paint0_linear_hero_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#D2FF37"/>
+                                <stop offset="1" stop-color="#EEFF00"/>
+                            </linearGradient>
+                            <clipPath id="clip0_hero_logo">
+                                <rect width="355" height="355" rx="58" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
                 </div>
-                
-                <div class="pattern-section">
-                    <h3 class="text-heading-md pattern-title">
-                        <i data-lucide="info"></i>
-                        How to Use This Guide
-                    </h3>
-                    <div class="pattern-content">
-                        <p>This guide documents every design token and component used in the Token Exporter plugin. 
-                        It serves as both a reference and a playground for understanding how the design system works.</p>
-                        
-                        <p><strong>Important Note:</strong> The guide itself uses enhanced typography and spacing 
-                        for optimal documentation readability. Component examples, however, are rendered exactly 
-                        as they appear in the plugin, using only the `design-system.css` styles.</p>
-                    </div>
+            </div>
+
+            <h1 class="guide-main-title" style="font-size: var(--font-size-8); margin-bottom: var(--size-3);">
+                Token Exporter
+            </h1>
+
+            <p class="hero-tagline">
+                Transform Figma variables into production-ready code with one click.
+            </p>
+            <p class="hero-description">
+                Built on Open Props foundation with 435+ tokens. Powered by AI-assisted development.
+            </p>
+
+            <div class="hero-metadata">
+                <span style="font-size: var(--font-size-0);">v4.0.6</span>
+                <span class="separator">•</span>
+                <span style="font-size: var(--font-size-0);">Updated Jul 2025</span>
+            </div>
+
+            <div class="hero-footer">
+                <div class="social-links">
+                    <a href="https://github.com/n8mills-UI" class="social-link" title="GitHub">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"></path></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/millsdesign/" class="social-link" title="LinkedIn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    </a>
+                    <a href="https://natemills.me" class="social-link" title="Portfolio">
+                        <i data-lucide="briefcase"></i>
+                    </a>
+                    <a href="https://www.figma.com/@mills" class="social-link" title="Figma">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><path d="M15 0H9C4.029 0 0 4.029 0 9v6c0 4.971 4.029 9 9 9h6c4.971 0 9-4.029 9-9V9c0-4.971-4.029-9-9-9zM9 22.5a7.5 7.5 0 0 1 0-15v7.5a7.5 7.5 0 0 1 0 7.5zm7.5 0a7.5 7.5 0 0 1-7.5-7.5H15a7.5 7.5 0 0 1 1.5 7.5zM22.5 9a7.5 7.5 0 0 1-7.5 7.5V9a7.5 7.5 0 1 1 7.5 0z"></path></svg>
+                    </a>
+                    <a href="mailto:nate@natemills.me" class="social-link" title="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
                 </div>
 
-                <div class="pattern-section">
-                    <h3 class="text-heading-md pattern-title">
-                        <i data-lucide="layers"></i>
-                        System Architecture
-                    </h3>
-                    <div class="pattern-content">
-                        <p><strong style="color: var(--brand-primary-lime);">Foundation Layer:</strong> 
-                        Open Props provides 435+ battle-tested design tokens for spacing, typography, colors, animations, and more. We override only what's needed for brand identity.</p>
-                        
-                        <p><strong style="color: var(--brand-primary-lime);">Brand Layer:</strong> 
-                        Custom lime/yellow brand colors, category colors for token types, and semantic color mappings for dark interfaces.</p>
-                        
-                        <p><strong style="color: var(--brand-primary-lime);">Component Layer:</strong> 
-                        Reusable UI components that consume foundation tokens, ensuring consistency and maintainability.</p>
-                        
-                        <p><strong style="color: var(--brand-primary-lime);">Pattern Layer:</strong> 
-                        Interaction flows, state management, and behavioral guidelines that define how components work together.</p>
-                    </div>
+                <div class="figma-cta">
+                    <a href="https://www.figma.com/community/plugin/1521741753717588633" class="figma-pill">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" style="margin-right: 4px;"><path d="M15 0H9C4.029 0 0 4.029 0 9v6c0 4.971 4.029 9 9 9h6c4.971 0 9-4.029 9-9V9c0-4.971-4.029-9-9-9zM9 22.5a7.5 7.5 0 0 1 0-15v7.5a7.5 7.5 0 0 1 0 7.5zm7.5 0a7.5 7.5 0 0 1-7.5-7.5H15a7.5 7.5 0 0 1 1.5 7.5zM22.5 9a7.5 7.5 0 0 1-7.5 7.5V9a7.5 7.5 0 1 1 7.5 0z"></path></svg>
+                        <span>Get the Plugin</span>
+                    </a>
                 </div>
 
-                <div class="pattern-section">
-                    <h3 class="text-heading-md pattern-title">
-                        <i data-lucide="book-open"></i>
-                        Component Documentation Standard
-                    </h3>
-                    <div class="pattern-content">
-                        <p>Each component in this guide follows a consistent documentation pattern for clarity and completeness:</p>
-                        
-                        <h4>1. Component Header</h4>
-                        <ul>
-                            <li><strong>Title & Icon:</strong> Clear component name with relevant icon</li>
-                            <li><strong>Description:</strong> What it does and when to use it</li>
-                            <li><strong>Token Usage:</strong> List of design tokens the component consumes</li>
-                        </ul>
-                        
-                        <h4>2. Live Demo Section</h4>
-                        <ul>
-                            <li><strong>Interactive Example:</strong> Working component demonstration</li>
-                            <li><strong>Controls:</strong> Play/pause buttons for animations, state toggles for variations</li>
-                            <li><strong>Real Context:</strong> Shown within actual plugin UI context when relevant</li>
-                        </ul>
-                        
-                        <h4>3. Documentation</h4>
-                        <ul>
-                            <li><strong>How It Works:</strong> Technical explanation of functionality</li>
-                            <li><strong>Design Decisions:</strong> Why certain choices were made</li>
-                            <li><strong>Implementation Notes:</strong> Important details for developers</li>
-                        </ul>
-                        
-                        <h4>4. Code Reference</h4>
-                        <ul>
-                            <li><strong>Example Code:</strong> Key implementation snippets</li>
-                            <li><strong>Copy Button:</strong> Quick access to code samples</li>
-                        </ul>
-                        
-                        <p style="margin-top: var(--size-4);"><strong>Future Enhancements:</strong> Resizable preview panels, theme toggles, accessibility notes, and multi-framework examples.</p>
-                    </div>
-                </div>
-            </section>
+                <p>
+                    Created with <span class="heart">❤️</span> by Nate Mills
+                </p>
+            </div>
+        </div>
+    </section>
+
 
             <!-- Color System Section -->
             <section id="colors" class="content-section">
