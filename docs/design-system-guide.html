@@ -2022,7 +2022,6 @@
                     sidebar.classList.toggle('open');
                     const isOpen = sidebar.classList.contains('open');
                     mobileMenuToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
-                    lucide.createIcons();
                 });
                 
                 document.addEventListener('click', (e) => {
@@ -2032,7 +2031,6 @@
                         sidebar.classList.contains('open')) {
                         sidebar.classList.remove('open');
                         mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
-                        lucide.createIcons();
                     }
                 });
                 
@@ -2042,7 +2040,6 @@
                         if (window.innerWidth <= 768) {
                             sidebar.classList.remove('open');
                             mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
-                            lucide.createIcons();
                         }
                     });
                 });
