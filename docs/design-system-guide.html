@@ -1870,7 +1870,7 @@
         </main>
     </div>
 
-        <script>
+           <script>
         // Simple counter animation
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
@@ -1905,86 +1905,66 @@
             });
         }
         
-        // FAQ accordion behavior
+        // FAQ accordion behavior - UPDATED to allow multiple open
         function initFAQAccordion() {
             const faqItems = document.querySelectorAll('.faq-item');
-            if (!faqItems.length) return; // Defensive check
+            if (!faqItems.length) return;
             
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
-                if (!question) return; // Defensive check
+                if (!question) return;
                 
                 question.addEventListener('click', () => {
-                    const wasOpen = item.classList.contains('open');
-                    // Close all
-                    faqItems.forEach(other => other.classList.remove('open'));
-                    // Toggle current
-                    if (!wasOpen) item.classList.add('open');
+                    item.classList.toggle('open');
                 });
             });
         }
         
-        // Tech stack hover behavior
+        // Tech stack hover behavior - UPDATED with click/tap support
         function initTechHover() {
             const techItems = document.querySelectorAll('.tech-item[data-tech]');
             const defaultContent = document.getElementById('tech-info-default');
             if (!techItems.length || !defaultContent) return;
+
+            const showTechInfo = (tech) => {
+                document.querySelectorAll('.tech-info-content').forEach(content => {
+                    content.style.display = 'none';
+                    content.classList.remove('active');
+                });
+                const targetContent = document.getElementById(`tech-info-${tech}`);
+                if (targetContent) {
+                    targetContent.style.display = 'block';
+                    setTimeout(() => targetContent.classList.add('active'), 10);
+                }
+                techItems.forEach(ti => ti.classList.remove('active'));
+                const activeItem = document.querySelector(`.tech-item[data-tech="${tech}"]`);
+                if (activeItem) activeItem.classList.add('active');
+            };
+
+            const showDefaultInfo = () => {
+                 document.querySelectorAll('.tech-info-content').forEach(content => {
+                    content.style.display = 'none';
+                    content.classList.remove('active');
+                });
+                if (defaultContent) {
+                    defaultContent.style.display = 'block';
+                    setTimeout(() => defaultContent.classList.add('active'), 10);
+                }
+                techItems.forEach(item => item.classList.remove('active'));
+            };
             
-            if (defaultContent) {
-                defaultContent.style.display = 'block';
-                defaultContent.classList.add('active');
-            }
+            showDefaultInfo(); // Show default on load
             
             techItems.forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    const tech = item.getAttribute('data-tech');
-                    document.querySelectorAll('.tech-info-content').forEach(content => {
-                        content.style.display = 'none';
-                        content.classList.remove('active');
-                    });
-                    const targetContent = document.getElementById(`tech-info-${tech}`);
-                    if (targetContent) {
-                        targetContent.style.display = 'block';
-                        setTimeout(() => targetContent.classList.add('active'), 10);
-                    }
-                    techItems.forEach(ti => ti.classList.remove('active'));
-                    item.classList.add('active');
-                });
+                const tech = item.getAttribute('data-tech');
+                item.addEventListener('mouseenter', () => showTechInfo(tech));
+                item.addEventListener('click', () => showTechInfo(tech));
             });
             
             const techGrid = document.querySelector('.tech-stack-grid');
             if (techGrid) {
-                techGrid.addEventListener('mouseleave', () => {
-                    document.querySelectorAll('.tech-info-content').forEach(content => {
-                        content.style.display = 'none';
-                        content.classList.remove('active');
-                    });
-                    if (defaultContent) {
-                        defaultContent.style.display = 'block';
-                        setTimeout(() => defaultContent.classList.add('active'), 10);
-                    }
-                    techItems.forEach(item => item.classList.remove('active'));
-                });
+                techGrid.addEventListener('mouseleave', showDefaultInfo);
             }
-        }
-        
-        // Check if Font Awesome loaded
-        function checkFontAwesome() {
-            const testIcon = document.createElement('i');
-            testIcon.className = 'fas fa-check';
-            testIcon.style.position = 'fixed';
-            testIcon.style.top = '-9999px';
-            document.body.appendChild(testIcon);
-            
-            setTimeout(() => {
-                const width = window.getComputedStyle(testIcon, ':before').width;
-                if (width === 'auto' || width === '0px') {
-                    document.querySelectorAll('.tech-item').forEach(item => {
-                        item.classList.add('fa-failed');
-                    });
-                }
-                document.body.removeChild(testIcon);
-            }, 1000);
         }
 
         // --- SMOOTH NAVIGATION & ACTIVE HIGHLIGHTING ---
@@ -2106,15 +2086,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             initializeNavigation();
             initializeMobileMenu();
-            lucide.createIcons(); // Initial call to render all icons
+            lucide.createIcons();
             
-            // New functions for hero section
             animateCounters();
             initFAQAccordion();
             initTechHover();
-            checkFontAwesome();
         });
     </script>
+
 
 
 </body>
