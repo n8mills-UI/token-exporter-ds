@@ -6,26 +6,17 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v4.0.2 | Crafted with ❤️ by Nate Mills
+Token Exporter Design System v4.0.4 | Crafted with ❤️ by Nate Mills
 Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v4.0.2 - Complete Implementation
+   TOKEN EXPORTER DESIGN SYSTEM v4.0.4 - Complete Implementation
    ==========================================================================
    
-   PHASES INCLUDED:
-   ✓ Phase 1: Foundation & Critical Fixes (from v2.7.2)
-   ✓ Phase 2: Shoelace Integration & Component Enhancement
-   ✓ Phase 3: Portfolio Enhancement & Storytelling
-   ✓ Phase 4: Advanced Features & Interactions
-   ✓ Phase 5: Launch Prep & Technical Excellence
-   
-   FIXES IN v4.0.2:
-   ✓ Corrected icon-only button styles to fix sizing and stroke-width.
-   ✓ Re-implemented and verified SVG icons for checkboxes and select arrows.
-   ✓ Refined base Lucide icon styles for better contextual application.
+   FIXES IN v4.0.4:
+   ✓ Adjusted .about-section to function as a true page footer.
    ✓ Updated version number.
    
    ========================================================================== */
@@ -1932,75 +1923,32 @@ main {
     display: none;
 }
 
-/* About Modal */
-.about-modal {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.85);
-    -webkit-backdrop-filter: blur(10px); /* Safari */
-    backdrop-filter: blur(10px);
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--size-4);
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--animation-duration-3) var(--ease-3);
-}
-
-.about-modal.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.about-content {
+/* About Section */
+.about-section {
     background: var(--color-background-secondary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-4);
-    padding: var(--size-4);
-    max-width: 280px;
-    width: 90%;
-    text-align: center;
-    position: relative;
-    animation: var(--animation-scale-up);
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-4);
+    margin-left: calc(-1 * var(--size-6));
+    margin-right: calc(-1 * var(--size-6));
+    padding: var(--size-8) var(--size-6) var(--size-8) var(--size-6);
+    margin-top: var(--size-10);
+    border-top: 2px solid var(--color-border-default);
 }
 
-.about-content h2 {
-    font-size: var(--font-size-3);
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.about-close {
-    position: absolute;
-    top: var(--size-2);
-    right: var(--size-2);
-    background: transparent;
-    border: none;
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-2);
-    cursor: pointer;
-    padding: var(--size-2);
-    border-radius: var(--radius-1);
-    transition: all var(--animation-duration-2) var(--ease-3);
-    display: flex;
+.about-content-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--size-8);
     align-items: center;
-    justify-content: center;
-    width: var(--size-8);
-    height: var(--size-8);
-}
-
-.about-close:hover {
-    background: var(--color-background-tertiary);
 }
 
 .about-avatar {
-    width: var(--size-12);
-    height: var(--size-12);
+    width: calc(var(--size-16) * 1.5);
+    height: calc(var(--size-16) * 1.5);
     border-radius: var(--radius-round);
-    margin: 0 auto;
     background-size: cover;
     background-position: center;
     border: 3px solid var(--brand-primary-lime);
@@ -2008,123 +1956,104 @@ main {
     background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
 }
 
-.about-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-1);
-    padding-bottom: var(--size-3);
-    margin-bottom: var(--size-3);
-    border-bottom: 1px solid var(--color-border-default);
+.about-info-column h3 {
+    margin-bottom: var(--size-2);
 }
 
 .about-title {
     color: var(--color-text-secondary);
-    font-size: var(--font-size-2);
+    margin-bottom: var(--size-3);
 }
 
 .about-description {
     color: var(--color-text-secondary);
+    max-width: 60ch;
     line-height: var(--font-lineheight-3);
+    margin-bottom: var(--size-4);
 }
 
 .about-links {
     display: flex;
-    justify-content: center;
-    gap: var(--size-2);
+    gap: var(--size-4);
 }
 
 .about-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--size-fluid-5);
-    height: var(--size-fluid-5);
-    background: var(--color-background-tertiary);
-    border-radius: var(--radius-2);
     color: var(--color-text-secondary);
-    text-decoration: none;
     transition: all var(--animation-duration-2) var(--ease-3);
+}
+        
+.about-link .lucide {
+    width: 24px;
+    height: 24px;
 }
 
 .about-link:hover {
-    background: var(--brand-primary-lime);
-    color: var(--brand-text-dark);
+    color: var(--brand-primary-lime);
     transform: translateY(-2px);
 }
 
-.about-tagline {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-00);
-}
-
-.about-tagline .heart {
+.heart {
     color: var(--category-color-pink);
-    animation: heartbeat 1.5s ease-in-out infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-/* Advanced toggle */
-.advanced-toggle {
-    text-align: center;
-    margin-top: var(--size-3);
-}
-
-.advanced-link {
-    color: var(--color-text-muted);
-    text-decoration: none;
-    font-weight: var(--font-weight-5);
-    transition: color var(--animation-duration-2) var(--ease-3);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-1);
-}
-
-.advanced-link:hover {
-    color: var(--brand-primary-lime);
-}
-
-.advanced-link i {
-    font-size: var(--font-size-0);
-    transition: transform var(--animation-duration-2) var(--ease-spring-3);
-}
-
-.advanced-link:hover i {
-    transform: translateX(2px);
-}
-
-/* Footer */
-.footer-section {
-    text-align: center;
-    line-height: 1.4;
-    margin: var(--size-3) 0 0;
-    padding: var(--size-3);
-    border-top: 1px solid var(--color-border-default);
-    margin-top: auto;
-}
-
-.footer-section a {
-    color: var(--color-text-muted);
-    text-decoration: none;
-    transition: all var(--animation-duration-2) var(--ease-3);
-}
-
-.footer-section a:hover {
-    color: var(--brand-primary-lime);
-}
-
-.footer-section .heart {
     display: inline-block;
     transition: transform var(--animation-duration-3) var(--ease-spring-4);
 }
 
-.footer-section a:hover .heart {
+.about-description:hover .heart {
     transform: scale(1.2);
 }
-
+        
+/* State groups with better hierarchy */
+.state-group {
+    margin-bottom: var(--size-8); /* Large gap between groups */
+}
+        
+.state-group-header {
+    background: rgba(210, 255, 55, 0.03);
+    border: 1px solid rgba(210, 255, 55, 0.1);
+    border-radius: var(--radius-3);
+    padding: var(--size-4);
+    margin-bottom: var(--size-4);
+}
+        
+.state-group-title {
+    color: var(--brand-primary-lime);
+    margin-bottom: var(--size-2);
+}
+        
+.state-documentation {
+    margin-top: var(--size-1); /* Small gap - attached to parent */
+    background: var(--gray-8);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    padding: var(--size-3);
+}
+        
+.state-documentation-title {
+    color: var(--brand-primary-lime);
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-2);
+}
+        
+/* NEW SKELETON STYLES - To be added to CSS */
+.skeleton-pulse { background: var(--gray-7); animation: skeleton-pulse 2s ease-in-out infinite; }
+@keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.skeleton-subtle { background: linear-gradient(90deg, var(--gray-7) 25%, var(--gray-6) 50%, var(--gray-7) 75%); background-size: 200% 100%; animation: skeleton-wave 3s ease-in-out infinite; }
+@keyframes skeleton-wave { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.skeleton-breathe { background: var(--gray-7); animation: skeleton-breathe 2.5s ease-in-out infinite; }
+@keyframes skeleton-breathe { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } }
+.skeleton-brand { background: linear-gradient(90deg, rgba(210, 255, 55, 0.05) 25%, rgba(210, 255, 55, 0.1) 50%, rgba(210, 255, 55, 0.05) 75%); background-size: 200% 100%; animation: skeleton-wave 2s ease-in-out infinite; border: 1px solid rgba(210, 255, 55, 0.1); }
+.skeleton-shimmer { background: var(--gray-8); position: relative; overflow: hidden; }
+.skeleton-shimmer::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%); animation: shimmerOverlay 1.5s infinite; }
+        
+/* NEW BUTTON STYLES - To be added to CSS */
+.btn-icon-only { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--color-border-default); background: transparent; color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+.btn-icon-only:hover { color: var(--brand-primary-lime); border-color: var(--brand-primary-lime); background: rgba(210, 255, 55, 0.1); }
+        
+/* Animations */
+@keyframes pulse-glow { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5)); } }
+@keyframes wave-animation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
 /* Focus States for Accessibility */
 .collection-item:focus-visible,
 .btn:focus-visible,
@@ -2202,7 +2131,7 @@ main {
 }
 
 /* ==========================================================================
-   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.2
+   END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.4
    
    "Code complete, system whole,
     From tokens to components bright,
