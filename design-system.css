@@ -2448,43 +2448,27 @@ main {
     height: 180px;
 }
 
-/* Skeleton Variations */
-.skeleton-pulse {
-    background: var(--gray-7);
-    animation: skeleton-pulse 2s ease-in-out infinite;
+/* Skeleton Loading */
+.skeleton-item {
+    height: 60px;
+    background: var(--gray-8);
+    border-radius: var(--radius-3);
+    position: relative;
+    overflow: hidden;
 }
 
-.skeleton-pulse::after {
-    display: none;
+.skeleton-item.small { 
+    height: 40px; 
 }
 
-@keyframes skeleton-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+.skeleton-item:first-child {
+    height: 180px;
 }
 
-.skeleton-subtle {
-    background: linear-gradient(
-        90deg,
-        var(--gray-7) 25%,
-        var(--gray-6) 50%,
-        var(--gray-7) 75%
-    );
-    background-size: 200% 100%;
-    animation: skeleton-wave 3s ease-in-out infinite;
-}
-
-.skeleton-subtle::after {
-    display: none;
-}
-
+/* The chosen 'breathe' animation */
 .skeleton-breathe {
     background: var(--gray-7);
     animation: skeleton-breathe 2.5s ease-in-out infinite;
-}
-
-.skeleton-breathe::after {
-    display: none;
 }
 
 @keyframes skeleton-breathe {
@@ -2498,21 +2482,6 @@ main {
     }
 }
 
-.skeleton-brand {
-    background: linear-gradient(
-        90deg,
-        rgba(210, 255, 55, 0.05) 25%,
-        rgba(210, 255, 55, 0.1) 50%,
-        rgba(210, 255, 55, 0.05) 75%
-    );
-    background-size: 200% 100%;
-    animation: skeleton-wave 2s ease-in-out infinite;
-    border: 1px solid rgba(210, 255, 55, 0.1);
-}
-
-.skeleton-brand::after {
-    display: none;
-}
 
 /* About Section */
 .about-section {
