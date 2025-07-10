@@ -22,7 +22,7 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
    ✓ Fixed button icon alignment (removed translateY)
    ✓ Consolidated duplicate .about-avatar styles
    ✓ Cleaned up unused CSS
-   ✓ Fixed icon vertical alignment
+   ✓ Added new styles for portfolio hero section
    
    ========================================================================== */
 
@@ -947,6 +947,7 @@ sl-spinner {
     animation-direction: reverse;
     opacity: 0.5;
 }
+
 /* ==========================================================================
    GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
    ========================================================================== */
@@ -1553,37 +1554,6 @@ sl-spinner {
     51%, 100% { opacity: 0; }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .guide-content {
-        margin-left: 0;
-    }
-    
-    .cyber-stats {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .impact-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .hero-metadata {
-        flex-direction: column;
-        gap: var(--size-2);
-    }
-    
-    .hero-metadata .separator {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .cyber-stats {
-        flex-direction: column;
-        gap: var(--size-2);
-    }
-}
 /* ==========================================================================
    PHASE 5: LAUNCH PREP & TECHNICAL EXCELLENCE
    ========================================================================== */
