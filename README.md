@@ -1,6 +1,6 @@
 # Token Exporter for Figma
 
-![Token Exporter Hero Image](https://private-user-images.githubusercontent.com/128465128/463975158-947a34c3-57a7-4673-ad56-90a1c46642d0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTIwMzI2NTAsIm5iZiI6MTc1MjAzMjM1MCwicGF0aCI6Ii8xMjg0NjUxMjgvNDYzOTc1MTU4LTk0N2EzNGMzLTU3YTctNDY3My1hZDU2LTkwYTFjNDY2NDJkMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzA5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcwOVQwMzM5MTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lZTZhZWI3MzBkYmM2MDJjNmM3OTQwOGIzMWY0YTJmZTAxN2E1ZTg3ZmFjZWY2YjI2ZWY2ZDI1NzRkYzJmOGEzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.e5UBGjdxilFiv_Mra-drxCq4vMj_oGiGPovKNm0IdLw)
+![Token Exporter Hero Image](https://res.cloudinary.com/dbmvymdp1/image/upload/v1752106527/Figma_01_sk7ne5.png)
 
 > A simple, powerful Figma plugin to transform your design variables into production-ready code with one click. It's a zero-config alternative to Style Dictionary, designed to make your design-to-development workflow seamless, fast, and error-free.
 
