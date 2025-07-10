@@ -7,11 +7,14 @@
     
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- INLINE CRITICAL CSS FOR PLUGIN RELIABILITY -->
+    <!-- 
+      INLINE CRITICAL CSS FOR PLUGIN RELIABILITY
+      This uses the fully updated design-system.css (v3.2.0)
+    -->
     <style>
-        /* Critical CSS from design-system.css v3.0.2 - Plugin Only */
+        /* Critical CSS from design-system.css v3.2.0 - Plugin Only */
         @import "https://unpkg.com/open-props/normalize";
         
         :root {
@@ -138,91 +141,22 @@
             --font-letterspacing-6: .75em;
             --font-letterspacing-7: 1em;
             
-            /* Liquid Progress */
-        .liquid-progress {
-            --progress-size: 120px;
-            position: relative;
-            width: var(--progress-size);
-            height: var(--progress-size);
-            border-radius: 50%;
-            background: var(--gray-8);
-            border: 3px solid var(--gray-7);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15);
-            overflow: hidden;
-        }
-        
-        .liquid-progress-inner {
-            position: absolute;
-            inset: 6px;
-            border-radius: 50%;
-            background: var(--gray-9);
-            overflow: hidden;
-        }
-        
-        .liquid-wave {
-            position: absolute;
-            top: 75%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: var(--brand-gradient-lime);
-            border-radius: 45%;
-            animation: wave-animation 4s linear infinite;
-            opacity: 0.9;
-        }
-        
-        .liquid-wave:nth-child(2) {
-            animation-duration: 6s;
-            animation-direction: reverse;
-            opacity: 0.5;
-        }
-        
-        /* Animations */
-            --animation-duration-1: 100ms;
-            --animation-duration-2: 200ms;
-            --animation-duration-3: 300ms;
-            --animation-duration-4: 400ms;
-            
-            /* Easings */
-            --ease-1: cubic-bezier(.25, 0, .5, 1);
-            --ease-2: cubic-bezier(.25, 0, .4, 1);
-            --ease-3: cubic-bezier(.25, 0, .3, 1);
-            --ease-4: cubic-bezier(.25, 0, .2, 1);
-            --ease-5: cubic-bezier(.25, 0, .1, 1);
-            --ease-in-1: cubic-bezier(.25, 0, 1, 1);
-            --ease-in-2: cubic-bezier(.5, 0, 1, 1);
-            --ease-in-3: cubic-bezier(.7, 0, 1, 1);
-            --ease-in-4: cubic-bezier(.9, 0, 1, 1);
-            --ease-in-5: cubic-bezier(1, 0, 1, 1);
-            --ease-out-1: cubic-bezier(0, 0, .75, 1);
-            --ease-out-2: cubic-bezier(0, 0, .5, 1);
-            --ease-out-3: cubic-bezier(0, 0, .3, 1);
-            --ease-out-4: cubic-bezier(0, 0, .1, 1);
-            --ease-out-5: cubic-bezier(0, 0, 0, 1);
-            --ease-spring-1: cubic-bezier(.5, -.5, .1, 1.5);
-            --ease-spring-2: cubic-bezier(.5, -1, .1, 1.8);
-            --ease-spring-3: cubic-bezier(.5, -1.5, .1, 2.1);
-            --ease-spring-4: cubic-bezier(.5, -2, .1, 2.4);
-            --ease-spring-5: cubic-bezier(.5, -2.5, .1, 2.7);
-            
-            /* Animations */
-            --animation-fade-in: fade-in .5s var(--ease-3);
-            --animation-fade-out: fade-out .5s var(--ease-3);
-            --animation-scale-up: scale-up .5s var(--ease-3);
-            --animation-scale-down: scale-down .5s var(--ease-3);
-            --animation-slide-in-up: slide-in-up .5s var(--ease-3);
-            --animation-slide-in-down: slide-in-down .5s var(--ease-3);
-            --animation-slide-in-right: slide-in-right .5s var(--ease-3);
-            --animation-slide-in-left: slide-in-left .5s var(--ease-3);
-            --animation-slide-out-up: slide-out-up .5s var(--ease-3);
-            --animation-slide-out-down: slide-out-down .5s var(--ease-3);
-            --animation-slide-out-right: slide-out-right .5s var(--ease-3);
-            --animation-slide-out-left: slide-out-left .5s var(--ease-3);
-            --animation-shake-x: shake-x .75s var(--ease-out-5);
-            --animation-shake-y: shake-y .75s var(--ease-out-5);
-            --animation-spin: spin 2s linear infinite;
-            --animation-blink: blink 1s var(--ease-out-3) infinite;
-            
+            /* Base Icon Styles for Lucide */
+            .lucide {
+                width: 1em;
+                height: 1em;
+                stroke-width: 2.5px;
+                vertical-align: middle;
+                color: inherit; /* Inherit color from parent by default */
+            }
+
+            .btn .lucide, .btn-icon-only .lucide { width: 1.2em; height: 1.2em; transform: translateY(1px); }
+            .empty-state-icon .lucide { width: var(--font-size-5); height: var(--font-size-5); }
+            .token-type-stat .icon.lucide { width: var(--font-size-3); height: var(--font-size-3); }
+            .collection-pill .lucide { width: 12px; height: 12px; }
+            .section-title .lucide { color: var(--brand-primary-lime); }
+            .about-link .lucide { width: 24px; height: 24px; }
+
             /* Fix the gradient-7 issue */
             --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
         }
@@ -335,7 +269,7 @@
         
         .token-type-stat {
             text-align: center; 
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             cursor: default;
             padding: var(--size-2);
             border-radius: var(--radius-2);
@@ -349,9 +283,8 @@
         }
         
         .token-type-stat .icon { 
-            font-size: var(--font-size-3);
             margin-bottom: var(--size-1);
-            transition: transform var(--animation-duration-2) var(--ease-spring-3);
+            transition: transform 0.2s ease-in-out;
             display: block;
         }
         
@@ -368,11 +301,12 @@
         .token-type-stat.number .icon { color: var(--category-color-orange); }
         
         /* Advanced mode */
-        .advanced-mode .token-type-stat { cursor: pointer; }
+        .advanced-mode .token-type-stat { cursor: pointer; will-change: transform; }
         .advanced-mode .token-type-stat:hover { 
             background: var(--surface-3);
             border-color: var(--gray-5);
         }
+        .advanced-mode .token-type-stat:hover .icon { transform: scale(1.1); }
         .advanced-mode .token-type-stat.active { 
             background: rgba(210, 255, 55, 0.1);
             border-color: var(--brand-primary-lime);
@@ -390,11 +324,6 @@
             gap: var(--size-2);
         }
         
-        .section-title i { 
-            color: var(--brand-primary-lime); 
-            font-size: var(--font-size-1);
-        }
-        
         .subtitle { 
             color: var(--color-text-muted); 
             margin-bottom: var(--size-4);
@@ -406,7 +335,6 @@
             margin-bottom: var(--size-4);
         }
         
-        /* Enhanced Dropdown (Shoelace-inspired) */
         .format-select {
             width: 100%; 
             padding: var(--size-3) var(--size-8) var(--size-3) var(--size-4);
@@ -416,7 +344,7 @@
             font-weight: var(--font-weight-5);
             cursor: pointer; 
             appearance: none; 
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             color: var(--color-text-default);
             font-family: inherit;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
@@ -436,16 +364,18 @@
         }
         
         .format-select-wrapper::after {
-            content: '\f078'; 
-            font-family: 'Font Awesome 6 Free'; 
-            font-weight: 900;
+            content: '';
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 1em;
+            height: 1em;
             position: absolute; 
             right: var(--size-4); 
             top: 50%; 
             transform: translateY(-50%);
             pointer-events: none; 
-            color: var(--color-text-muted); 
-            transition: color var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             font-size: var(--font-size-1);
         }
         
@@ -456,7 +386,7 @@
             border-radius: var(--radius-2);
             font-weight: var(--font-weight-6); 
             cursor: pointer; 
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             border: none; 
             display: flex; 
             align-items: center; 
@@ -466,6 +396,7 @@
             overflow: hidden;
             font-family: inherit;
             font-size: var(--font-size-1);
+            will-change: transform, filter, box-shadow;
         }
         
         .btn::before {
@@ -476,7 +407,7 @@
             width: 100%; 
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s var(--ease-out-5);
+            transition: left 0.5s ease-in-out;
         }
         
         .btn:hover:not(:disabled)::before { 
@@ -547,7 +478,8 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
+            will-change: color, border-color, background;
         }
         
         .btn-icon-only:hover {
@@ -571,17 +503,13 @@
             background: var(--color-background-secondary);
             border: 1px solid var(--color-border-default);
             border-radius: var(--radius-2);
-            cursor: default;
-            transition: all var(--animation-duration-2) var(--ease-3);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
             display: flex;
             align-items: center;
             gap: var(--size-3);
             position: relative;
             min-height: 48px;
-        }
-        
-        .advanced-mode .collection-item {
-            cursor: pointer;
         }
         
         .collection-item:hover {
@@ -600,8 +528,9 @@
             border: 2px solid var(--color-border-default);
             border-radius: var(--radius-1);
             position: relative;
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             flex-shrink: 0;
+            pointer-events: none; /* Let parent handle click */
         }
         
         .collection-item.selected .collection-checkbox {
@@ -610,14 +539,15 @@
         }
         
         .collection-item.selected .collection-checkbox::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+            content: '';
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231E1E1E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-check'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+            width: 10px;
+            height: 10px;
+            background-size: contain;
             position: absolute;
-            top: 0;
-            left: var(--size-1);
-            color: var(--brand-text-dark);
-            font-size: var(--font-size-00);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         
         .collection-info {
@@ -631,6 +561,9 @@
         .collection-name {
             font-weight: var(--font-weight-5);
             margin-bottom: var(--size-1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .collection-count {
@@ -653,7 +586,7 @@
             border-radius: var(--radius-1);
             font-size: var(--font-size-00);
             font-weight: var(--font-weight-5);
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
         }
         
         .collection-pill.color {
@@ -703,10 +636,10 @@
             text-align: center;
             max-width: 280px;
             width: 90%;
+            will-change: transform;
         }
         
         .success-icon {
-            font-size: var(--font-size-7);
             color: var(--brand-primary-lime);
             margin-bottom: var(--size-3);
             filter: drop-shadow(0 0 15px rgba(210, 255, 55, 0.4));
@@ -751,7 +684,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: var(--font-size-3);
             color: var(--brand-primary-lime);
             margin-bottom: var(--size-2);
         }
@@ -774,7 +706,7 @@
             display: inline-flex;
             align-items: center;
             gap: var(--size-2);
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             padding: var(--size-2) var(--size-3);
             border-radius: var(--radius-2);
             border: 1px solid transparent;
@@ -810,29 +742,6 @@
             height: 180px;
         }
         
-        /* Skeleton Variations */
-        .skeleton-shimmer {
-            background: var(--gray-8);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .skeleton-shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                transparent 100%
-            );
-            animation: shimmerOverlay 1.5s infinite;
-        }
-        
         .skeleton-pulse {
             background: var(--gray-7);
             animation: skeleton-pulse 2s ease-in-out infinite;
@@ -841,34 +750,6 @@
         @keyframes skeleton-pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
-        }
-        
-        .skeleton-subtle {
-            background: linear-gradient(90deg, var(--gray-7) 25%, var(--gray-6) 50%, var(--gray-7) 75%);
-            background-size: 200% 100%;
-            animation: skeleton-wave 3s ease-in-out infinite;
-        }
-        
-        @keyframes skeleton-wave {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        .skeleton-breathe {
-            background: var(--gray-7);
-            animation: skeleton-breathe 2.5s ease-in-out infinite;
-        }
-        
-        @keyframes skeleton-breathe {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.02); }
-        }
-        
-        .skeleton-brand {
-            background: linear-gradient(90deg, rgba(210, 255, 55, 0.05) 25%, rgba(210, 255, 55, 0.1) 50%, rgba(210, 255, 55, 0.05) 75%);
-            background-size: 200% 100%;
-            animation: skeleton-wave 2s ease-in-out infinite;
-            border: 1px solid rgba(210, 255, 55, 0.1);
         }
         
         /* About Modal */
@@ -885,7 +766,7 @@
             padding: var(--size-4);
             opacity: 0;
             visibility: hidden;
-            transition: all var(--animation-duration-3) var(--ease-3);
+            transition: all 0.3s ease-in-out;
         }
         
         .about-modal.show {
@@ -922,7 +803,7 @@
             cursor: pointer;
             padding: var(--size-2);
             border-radius: var(--radius-1);
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -981,7 +862,8 @@
             border-radius: var(--radius-2);
             color: var(--color-text-secondary);
             text-decoration: none;
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
+            will-change: transform;
         }
         
         .about-link:hover {
@@ -1010,7 +892,7 @@
             color: var(--color-text-muted);
             text-decoration: none;
             font-weight: var(--font-weight-5);
-            transition: color var(--animation-duration-2) var(--ease-3);
+            transition: color 0.2s ease-in-out;
             display: inline-flex;
             align-items: center;
             gap: var(--size-1);
@@ -1022,7 +904,7 @@
         
         .advanced-link i {
             font-size: var(--font-size-0);
-            transition: transform var(--animation-duration-2) var(--ease-spring-3);
+            transition: transform 0.2s ease-in-out;
         }
         
         .advanced-link:hover i {
@@ -1042,7 +924,7 @@
         .footer-section a {
             color: var(--color-text-muted);
             text-decoration: none;
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
         }
         
         .footer-section a:hover {
@@ -1051,7 +933,7 @@
         
         .footer-section .heart {
             display: inline-block;
-            transition: transform var(--animation-duration-3) var(--ease-spring-4);
+            transition: transform 0.3s ease-in-out;
         }
         
         .footer-section a:hover .heart {
@@ -1097,7 +979,7 @@
             border: 1px solid var(--color-border-default);
             border-radius: var(--radius-2);
             font-size: var(--font-size-1);
-            transition: all var(--animation-duration-2) var(--ease-3);
+            transition: all 0.2s ease-in-out;
             color: var(--color-text-default);
             margin-bottom: var(--size-3);
         }
@@ -1106,15 +988,13 @@
             position: relative;
         }
         
-        .search-wrapper::before {
-            content: '\f002';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+        .search-wrapper .lucide-search {
             position: absolute;
             left: var(--size-3);
             top: 50%;
             transform: translateY(-50%);
             color: var(--color-text-muted);
+            pointer-events: none;
         }
         
         .search-input:focus {
@@ -1123,34 +1003,7 @@
             box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
         }
         
-        /* Icon consistency */
-        .fas, .fab {
-            width: 1em;
-            text-align: center;
-        }
-        
         /* Animations */
-        @keyframes pulse-glow {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3));
-            }
-            50% { 
-                transform: scale(1.05);
-                filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5));
-            }
-        }
-        
-        @keyframes wave-animation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes shimmerOverlay {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
         @keyframes successPop {
             0% { transform: scale(0) rotate(-180deg); opacity: 0; }
             70% { transform: scale(1.1) rotate(10deg); opacity: 1; }
@@ -1162,6 +1015,11 @@
             50% { transform: scale(1.1); }
         }
         
+        @keyframes skeleton-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
         /* Reduce motion */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -1184,7 +1042,7 @@
     <!-- The About Modal is static and only needs listeners attached once -->
     <div class="about-modal" id="about-modal">
         <div class="about-content">
-            <button class="about-close"> <i class="fas fa-times"></i> </button>
+            <button class="about-close" aria-label="Close about modal"> <i data-lucide="x"></i> </button>
             <div class="about-avatar"></div>
             <div class="about-header">
                 <h2 class="text-heading-md">NATE MILLS</h2>
@@ -1192,10 +1050,10 @@
             </div>
             <p class="text-body-md about-description"> Building accessible design systems that scale, with 20 years of industry experience. </p>
             <div class="about-links">
-                <a href="#" class="about-link" data-url="https://natemills.me" title="Portfolio"><i class="fa-solid fa-briefcase"></i></a>
-                <a href="#" class="about-link" data-url="https://www.linkedin.com/in/millsdesign/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="about-link" data-url="https://www.figma.com/@mills" title="Figma"><i class="fab fa-figma"></i></a>
-                <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="#" class="about-link" data-url="https://natemills.me" title="Portfolio"><i data-lucide="briefcase"></i></a>
+                <a href="#" class="about-link" data-url="https://www.linkedin.com/in/millsdesign/" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="about-link" data-url="https://www.figma.com/@mills" title="Figma"><i data-lucide="figma"></i></a>
+                <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email"><i data-lucide="mail"></i></a>
             </div>
             <div class="text-label about-tagline"> MADE WITH <span class="heart">❤️</span> FOR THE DESIGN COMMUNITY </div>
         </div>
@@ -1210,6 +1068,7 @@
             mode: 'simple', collections: [], selectedCollections: new Set(),
             selectedFormat: 'css', selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
             globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 }, isLoading: true,
+            searchTerm: '',
         };
 
         // --- DOM Elements ---
@@ -1219,161 +1078,166 @@
             aboutModal: document.getElementById('about-modal'),
         };
 
-        // --- UTILITY ---
+        // --- UTILITIES ---
         const openUrl = (url) => parent.postMessage({ pluginMessage: { type: 'open-url', url } }, '*');
-
-        // --- UI RENDERING ---
         
-        function initialRender() {
-            DOMElements.contentWrapper.innerHTML = `
-                <div id="main-content">
-                    <!-- Loading state will be shown initially -->
-                </div>
-                <div class="footer-section">
-                    <a href="#" id="about-link" class="text-caption">created with <span class="heart">❤️</span> by nate mills</a>
-                </div>
-            `;
-            updateDynamicContent();
-            attachStaticEventListeners(); // Attach listeners to static elements ONCE.
-        }
-
-        function updateDynamicContent() {
-            const container = document.getElementById('main-content');
-            if (!container) return;
-
-            container.className = appState.mode === 'advanced' ? 'advanced-mode' : '';
-
-            if (appState.isLoading) {
-                container.innerHTML = renderLoadingState();
-                return;
+        const renderIcons = () => {
+            try {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            } catch (error) {
+                console.error("Lucide icon rendering failed:", error);
+                // Optionally, post a message back to the plugin to notify about the failure
+                parent.postMessage({ pluginMessage: { type: 'notify', message: 'Icon library failed to load.', error: true } }, '*');
             }
-            
-            if (appState.collections.length === 0) {
-                container.innerHTML = renderEmptyState();
-                attachDynamicEventListeners();
-                return;
-            }
-
-            // Render the main content
-            container.innerHTML = `
-                <div class="card token-summary" id="token-summary">
-                    ${renderTokenSummary()}
-                </div>
-                <div class="card export-section">
-                    <h3 class="text-label section-title"><i class="fas fa-rocket"></i> ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}</h3>
-                    <p class="text-body-md subtitle">Export all your tokens in your preferred format</p>
-                    ${renderExportSection()}
-                    ${appState.mode === 'advanced' ? '<button class="btn tertiary" style="margin-top: var(--size-3);"><i class="fas fa-sliders-h"></i> Advanced Filters</button>' : ''}
-                </div>
-                <div class="card collections-section" id="collections-section">
-                    <h3 class="text-label section-title"><i class="fas fa-layer-group"></i> Select Collections</h3>
-                    ${appState.collections.length > 5 ? '<div class="search-wrapper"><input type="text" class="search-input" placeholder="Search collections..." id="collection-search"></div>' : ''}
-                    <div class="collection-list" id="collection-list">${renderCollectionsList()}</div>
-                </div>
-                <div class="advanced-toggle">
-                    ${renderAdvancedToggle()}
-                </div>
-            `;
-            attachDynamicEventListeners();
-        }
-
-        // --- COMPONENT RENDERERS (These functions generate HTML strings) ---
-        
-        const renderTokenSummary = () => {
-            const total = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
-            const tokenTypes = [
-                { type: 'color', icon: 'fa-palette', label: 'colors' }, { type: 'text', icon: 'fa-font', label: 'text' },
-                { type: 'number', icon: 'fa-hashtag', label: 'numbers' }, { type: 'states', icon: 'fa-toggle-on', label: 'states' }
-            ];
-            const breakdown = tokenTypes.map(({ type, icon, label }) => {
-                const count = appState.globalTokenCounts[type] || 0;
-                const isActive = appState.selectedTokenTypes.has(type);
-                const isDisabled = count === 0;
-                return `<div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}" data-type="${type}">
-                            <i class="fas ${icon} icon"></i>
-                            <div class="count">${count}</div>
-                            <div class="text-label label">${label}</div>
-                        </div>`;
-            }).join('');
-
-            return `<div class="text-label">Design Tokens</div>
-                    <div class="text-heading-xl token-count-total">${total}</div>
-                    <div class="text-label token-label">Design Tokens Ready to Export</div>
-                    <div class="token-breakdown">${breakdown}</div>`;
         };
 
-        const renderExportSection = () => {
-            const formats = [
-                { value: 'css', label: 'CSS Variables' }, { value: 'swift', label: 'Swift (iOS)' },
-                { value: 'android', label: 'Android XML' }, { value: 'flutter', label: 'Flutter' },
-                { value: 'w3c', label: 'JSON (W3C)' }, { value: 'tailwind', label: 'Tailwind Config' }
-            ];
-            return `<div class="format-select-wrapper">
+        const debounce = (func, delay) => {
+            let timeout;
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        };
+
+        // --- UI RENDERING (MODULARIZED) ---
+        
+        function createTokenStat(type, icon, label, count, isActive) {
+            const isDisabled = count === 0;
+            const li = document.createElement('div');
+            li.className = `token-type-stat ${type} ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`;
+            li.dataset.type = type;
+            li.innerHTML = `
+                <i data-lucide="${icon}" class="icon"></i>
+                <div class="count">${count}</div>
+                <div class="text-label label">${label}</div>
+            `;
+            return li;
+        }
+
+        function createCollectionItem(collection) {
+            const item = document.createElement('div');
+            item.className = `collection-item ${appState.selectedCollections.has(collection.id) ? 'selected' : ''}`;
+            item.dataset.collectionId = collection.id;
+
+            const pills = Object.entries(collection.counts)
+                .filter(([, count]) => count > 0)
+                .map(([type]) => {
+                    const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
+                    const isDisabled = !appState.selectedTokenTypes.has(type);
+                    return `<div class="collection-pill ${type} ${isDisabled ? 'disabled' : ''}">
+                                <i data-lucide="${iconMap[type]}"></i> <span>${collection.counts[type]}</span>
+                            </div>`;
+                }).join('');
+
+            item.innerHTML = `
+                <div class="collection-checkbox"></div>
+                <div class="collection-info">
+                    <div class="text-body-lg collection-name">${collection.name}</div>
+                    <div class="collection-pills">${pills}</div>
+                </div>
+                <div class="text-caption collection-count">${collection.totalVariables} tokens</div>
+            `;
+            return item;
+        }
+
+        function renderUI() {
+            const mainContent = document.getElementById('main-content');
+            if (!mainContent) return;
+
+            // Clear previous content
+            mainContent.innerHTML = '';
+            mainContent.className = appState.mode === 'advanced' ? 'advanced-mode' : '';
+
+            if (appState.isLoading) {
+                mainContent.innerHTML = `<div class="skeleton-container">
+                    <div class="skeleton-item skeleton-pulse"></div>
+                    <div class="skeleton-item skeleton-pulse small"></div>
+                    <div class="skeleton-item skeleton-pulse small"></div>
+                </div>`;
+            } else if (appState.collections.length === 0) {
+                mainContent.innerHTML = `<div class="empty-state">
+                    <div class="empty-state-icon" style="animation: pulse-glow 2s ease-in-out infinite;">
+                        <i data-lucide="package-plus"></i>
+                    </div>
+                    <div>
+                        <div class="text-heading-lg empty-state-title">Let's build something!</div>
+                        <div class="text-body-md empty-state-subtitle" style="margin-bottom: var(--size-4);">
+                            Turn your colors, text styles, and spacing into code-ready tokens.
+                        </div>
+                    </div>
+                    <button class="btn primary empty-state-action" style="width: auto;">
+                        Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i>
+                    </button>
+                </div>`;
+            } else {
+                // Main UI
+                const tokenSummaryCard = document.createElement('div');
+                tokenSummaryCard.className = 'card token-summary';
+                const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
+                tokenSummaryCard.innerHTML = `<div class="text-label">Design Tokens</div>
+                    <div class="text-heading-xl token-count-total">${totalTokens}</div>
+                    <div class="text-label token-label">Design Tokens Ready to Export</div>`;
+                
+                const breakdown = document.createElement('div');
+                breakdown.className = 'token-breakdown';
+                const tokenTypes = [
+                    { type: 'color', icon: 'palette', label: 'colors' }, { type: 'text', icon: 'type', label: 'text' },
+                    { type: 'number', icon: 'hash', label: 'numbers' }, { type: 'states', icon: 'toggle-right', label: 'states' }
+                ];
+                tokenTypes.forEach(({ type, icon, label }) => {
+                    const count = appState.globalTokenCounts[type] || 0;
+                    const isActive = appState.selectedTokenTypes.has(type);
+                    breakdown.appendChild(createTokenStat(type, icon, label, count, isActive));
+                });
+                tokenSummaryCard.appendChild(breakdown);
+                mainContent.appendChild(tokenSummaryCard);
+
+                const exportCard = document.createElement('div');
+                exportCard.className = 'card export-section';
+                const formats = [
+                    { value: 'css', label: 'CSS Variables' }, { value: 'swift', label: 'Swift (iOS)' },
+                    { value: 'android', label: 'Android XML' }, { value: 'flutter', label: 'Flutter' },
+                    { value: 'w3c', label: 'JSON (W3C)' }, { value: 'tailwind', label: 'Tailwind Config' }
+                ];
+                exportCard.innerHTML = `<h3 class="text-label section-title"><i data-lucide="rocket"></i> ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}</h3>
+                    <p class="text-body-md subtitle">Export your tokens in your preferred format</p>
+                    <div class="format-select-wrapper">
                         <select class="format-select" id="format-select">
                             <option value="all">All Formats</option>
                             ${formats.map(f => `<option value="${f.value}" ${appState.selectedFormat === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}
                         </select>
                     </div>
                     <button class="btn primary" id="export-btn"></button>`;
-        };
+                mainContent.appendChild(exportCard);
 
-        const renderCollectionsList = () => appState.collections.map(collection => {
-            const pills = Object.entries(collection.counts)
-                .filter(([, count]) => count > 0)
-                .map(([type]) => {
-                    const iconMap = { color: 'fa-palette', text: 'fa-font', states: 'fa-toggle-on', number: 'fa-hashtag' };
-                    return `<div class="collection-pill ${type} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}">
-                                <i class="fas ${iconMap[type]}"></i> <span>${collection.counts[type]}</span>
-                            </div>`;
-                }).join('');
-            return `<div class="collection-item ${appState.selectedCollections.has(collection.id) ? 'selected' : ''}" data-collection-id="${collection.id}">
-                        <div class="collection-checkbox"></div>
-                        <div class="collection-info">
-                            <div class="text-body-lg collection-name">${collection.name}</div>
-                            <div class="collection-pills">${pills}</div>
-                        </div>
-                        <div class="text-caption collection-count">${collection.totalVariables} tokens</div>
-                    </div>`;
-        }).join('');
+                const collectionsCard = document.createElement('div');
+                collectionsCard.className = 'card collections-section';
+                collectionsCard.innerHTML = `<h3 class="text-label section-title"><i data-lucide="layers"></i> Select Collections</h3>`;
+                if (appState.collections.length > 5) {
+                    collectionsCard.innerHTML += `<div class="search-wrapper"><i data-lucide="search" class="lucide-search"></i><input type="text" class="search-input" placeholder="Search collections..." id="collection-search" value="${appState.searchTerm}"></div>`;
+                }
+                const collectionList = document.createElement('div');
+                collectionList.className = 'collection-list';
+                const filteredCollections = appState.collections.filter(c => c.name.toLowerCase().includes(appState.searchTerm.toLowerCase()));
+                filteredCollections.forEach(c => collectionList.appendChild(createCollectionItem(c)));
+                collectionsCard.appendChild(collectionList);
+                mainContent.appendChild(collectionsCard);
 
-        const renderAdvancedToggle = () => appState.mode === 'simple'
-            ? `<a href="#" class="advanced-link text-body-md" id="toggle-advanced">Need specific tokens? <i class="fas fa-arrow-right"></i></a>`
-            : `<button class="btn secondary" id="toggle-simple"><i class="fas fa-arrow-left"></i> Back to Simple Export</button>`;
-
-        const renderEmptyState = () => `<div class="empty-state">
-                        <div style="font-size: 64px; margin-bottom: var(--size-4); animation: pulse-glow 2s ease-in-out infinite;">
-                            <i class="fas fa-cube" style="color: var(--brand-primary-lime);"></i>
-                        </div>
-                        <div>
-                            <div class="text-heading-lg empty-state-title">Let's build something!</div>
-                            <div class="text-body-md empty-state-subtitle" style="margin-bottom: var(--size-4);">
-                                Turn your colors, text styles, and spacing into code-ready tokens.
-                            </div>
-                            <div style="display: flex; gap: var(--size-3); justify-content: center; margin-bottom: var(--size-4);">
-                                <div style="text-align: center;">
-                                    <i class="fas fa-palette" style="color: #00D1FF; font-size: 24px; margin-bottom: var(--size-1);"></i>
-                                    <div class="text-caption">Colors</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <i class="fas fa-font" style="color: #B48CFF; font-size: 24px; margin-bottom: var(--size-1);"></i>
-                                    <div class="text-caption">Typography</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <i class="fas fa-arrows-alt-h" style="color: #FFB86C; font-size: 24px; margin-bottom: var(--size-1);"></i>
-                                    <div class="text-caption">Spacing</div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn primary" style="width: auto;">
-                            Create variables <i class="fas fa-arrow-right" style="margin-left: var(--size-2);"></i>
-                        </button>
-                    </div>`;
-
-        const renderLoadingState = () => `<div class="skeleton-container">
-                        <div class="skeleton-item skeleton-pulse"></div>
-                        <div class="skeleton-item skeleton-pulse small"></div>
-                        <div class="skeleton-item skeleton-pulse small"></div>
-                    </div>`;
+                const toggleContainer = document.createElement('div');
+                toggleContainer.className = 'advanced-toggle';
+                toggleContainer.innerHTML = appState.mode === 'simple'
+                    ? `<a href="#" class="advanced-link text-body-md" id="toggle-advanced">Customize Your Export <i data-lucide="arrow-right"></i></a>`
+                    : `<button class="btn secondary" id="toggle-simple"><i data-lucide="arrow-left"></i> Back to Simple Export</button>`;
+                mainContent.appendChild(toggleContainer);
+            }
+            
+            attachDynamicEventListeners();
+            updateExportButton();
+            renderIcons();
+        }
         
         // --- EVENT HANDLERS ---
         
@@ -1381,6 +1245,7 @@
             document.getElementById('about-link')?.addEventListener('click', e => {
                 e.preventDefault();
                 DOMElements.aboutModal.classList.add('show');
+                renderIcons();
             });
 
             DOMElements.aboutModal.addEventListener('click', e => { 
@@ -1401,53 +1266,53 @@
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
 
-            const newMainContent = mainContent.cloneNode(true);
-            mainContent.parentNode.replaceChild(newMainContent, mainContent);
-
-            newMainContent.addEventListener('click', (e) => {
-                const collectionItem = e.target.closest('.collection-item');
-                const tokenStat = e.target.closest('.token-type-stat:not(.disabled)');
-                const advancedToggle = e.target.closest('#toggle-advanced');
-                const simpleToggle = e.target.closest('#toggle-simple');
-                const exportBtn = e.target.closest('#export-btn');
-                const emptyStateLink = e.target.closest('.empty-state-action');
-
-                if (collectionItem) {
-                    const id = collectionItem.dataset.collectionId;
-                    appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
-                    collectionItem.classList.toggle('selected');
-                    updateExportButton();
-                }
-                else if (tokenStat && appState.mode === 'advanced') {
-                    const type = tokenStat.dataset.type;
-                    appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
-                    updateDynamicContent();
-                }
-                else if (advancedToggle) {
-                    e.preventDefault();
-                    appState.mode = 'advanced';
+            mainContent.querySelector('#export-btn')?.addEventListener('click', handleExport);
+            
+            mainContent.querySelector('#toggle-advanced')?.addEventListener('click', e => {
+                e.preventDefault();
+                const previousSelections = new Set(appState.selectedCollections);
+                appState.mode = 'advanced';
+                // Preserve selections if any were made, otherwise select all
+                if (previousSelections.size > 0 && previousSelections.size < appState.collections.length) {
+                    appState.selectedCollections = previousSelections;
+                } else {
                     appState.selectedCollections = new Set(appState.collections.map(c => c.id));
-                    updateDynamicContent();
                 }
-                else if (simpleToggle) {
-                    appState.mode = 'simple';
-                    updateDynamicContent();
-                }
-                else if (exportBtn) {
-                    handleExport();
-                }
-                else if (emptyStateLink) {
-                    e.preventDefault();
-                    openUrl(emptyStateLink.dataset.url);
-                }
+                renderUI();
+            });
+
+            mainContent.querySelector('#toggle-simple')?.addEventListener('click', () => {
+                appState.mode = 'simple';
+                renderUI();
             });
             
-            const formatSelect = newMainContent.querySelector('#format-select');
-            if(formatSelect) {
-                formatSelect.addEventListener('change', e => { appState.selectedFormat = e.target.value; });
+            mainContent.querySelectorAll('.collection-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const id = item.dataset.collectionId;
+                    appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+                    renderUI();
+                });
+            });
+
+            if (appState.mode === 'advanced') {
+                mainContent.querySelectorAll('.token-type-stat:not(.disabled)').forEach(stat => {
+                    stat.addEventListener('click', () => {
+                        const type = stat.dataset.type;
+                        appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
+                        renderUI();
+                    });
+                });
             }
 
-            updateExportButton();
+            mainContent.querySelector('#format-select')?.addEventListener('change', e => { appState.selectedFormat = e.target.value; });
+            
+            const debouncedRender = debounce(() => renderUI(), 300);
+            mainContent.querySelector('#collection-search')?.addEventListener('input', e => {
+                appState.searchTerm = e.target.value;
+                debouncedRender();
+            });
+
+            mainContent.querySelector('.empty-state-action')?.addEventListener('click', () => openUrl('https://help.figma.com/hc/en-us/articles/360041085694-Create-and-use-variables'));
         }
 
         function updateExportButton() {
@@ -1461,7 +1326,8 @@
                 }, 0);
             
             btn.disabled = selectedCount === 0;
-            btn.innerHTML = `<i class="fas fa-magic-wand-sparkles"></i> Package ${selectedCount} Token${selectedCount !== 1 ? 's' : ''}`;
+            btn.innerHTML = `<i data-lucide="package-check"></i> Export ${selectedCount} Token${selectedCount !== 1 ? 's' : ''}`;
+            renderIcons();
         }
 
         // --- EXPORT & PROGRESS ---
@@ -1470,22 +1336,17 @@
             const tokenTypes = Array.from(appState.selectedTokenTypes);
             if (collectionIds.length === 0 || tokenTypes.length === 0) return;
             const formats = appState.selectedFormat === 'all' ? ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'] : [appState.selectedFormat];
-            showProgress('Generating...');
+            showProgress('Analyzing tokens...');
             parent.postMessage({ pluginMessage: { type: 'export-tokens', collectionIds, formats, activeTokenTypes: tokenTypes } }, '*');
         }
 
         function showProgress(message) {
             DOMElements.progressOverlay.style.display = 'flex';
             DOMElements.progressOverlay.innerHTML = `<div class="progress-container">
-                <div class="liquid-progress">
-                    <div class="liquid-progress-inner">
-                        <div class="liquid-wave"></div>
-                        <div class="liquid-wave"></div>
-                    </div>
-                </div>
                 <div class="text-heading-md success-title" style="margin-top: var(--size-4);">${message}</div>
                 <p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p>
             </div>`;
+            renderIcons();
         }
 
         function showSuccessState(data) {
@@ -1494,22 +1355,23 @@
                 return;
             }
             DOMElements.progressOverlay.innerHTML = `<div class="progress-container">
-                <i class="fas fa-check-circle success-icon"></i>
+                <i data-lucide="check-circle-2" class="success-icon" style="width: 48px; height: 48px;"></i>
                 <h2 class="text-heading-md success-title">Export Complete!</h2>
                 <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
                 <div class="action-buttons">
-                    <button class="btn primary" id="save-btn"><i class="fas fa-download"></i> Download Tokens</button>
-                    <button class="btn secondary" id="close-progress-btn"><i class="fas fa-times"></i> Close</button>
+                    <button class="btn primary" id="save-btn"><i data-lucide="download"></i> Download Your Files</button>
+                    <button class="btn secondary" id="close-progress-btn"><i data-lucide="x"></i> Close</button>
                 </div>
             </div>`;
             DOMElements.progressOverlay.querySelector('#save-btn').onclick = () => triggerSave(data);
             DOMElements.progressOverlay.querySelector('#close-progress-btn').onclick = hideProgress;
+            renderIcons();
         }
 
         function showErrorState(message) {
             DOMElements.progressOverlay.style.display = 'flex';
             DOMElements.progressOverlay.innerHTML = `<div class="progress-container">
-                <i class="fas fa-exclamation-triangle success-icon" style="color:var(--color-text-error);"></i>
+                <i data-lucide="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 48px; height: 48px;"></i>
                 <h2 class="text-heading-md success-title">Export Failed</h2>
                 <p class="text-body-md success-subtitle">${message}</p>
                 <div class="action-buttons">
@@ -1517,6 +1379,7 @@
                 </div>
             </div>`;
             DOMElements.progressOverlay.querySelector('#close-progress-btn').onclick = hideProgress;
+            renderIcons();
         }
 
         function triggerSave(data) {
@@ -1548,7 +1411,15 @@
 
         // --- INITIALIZATION & MESSAGE HANDLING ---
         document.addEventListener('DOMContentLoaded', () => {
-            initialRender();
+            // Initial render structure
+            DOMElements.contentWrapper.innerHTML = `
+                <div id="main-content"></div>
+                <div class="footer-section">
+                    <a href="#" id="about-link" class="text-caption">created with <span class="heart">❤️</span> by nate mills</a>
+                </div>
+            `;
+            renderUI(); // Initial render call
+            attachStaticEventListeners();
             parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
         });
 
@@ -1562,7 +1433,7 @@
                     appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
                     appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
                     appState.selectedCollections = new Set(appState.collections.map(c => c.id));
-                    updateDynamicContent();
+                    renderUI();
                     break;
                 case 'export-result':
                     showSuccessState(msg.data);
