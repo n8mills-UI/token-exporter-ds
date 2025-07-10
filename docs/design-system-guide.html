@@ -1866,62 +1866,252 @@
         </main>
     </div>
 
-    <script>
-    // --- SMOOTH NAVIGATION & ACTIVE HIGHLIGHTING ---
-    function initializeNavigation() {
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
-        const observer = new IntersectionObserver(entries => {
-            let visibleSections = [];
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    visibleSections.push(entry.target);
-                }
-            });
-
-            if (visibleSections.length > 0) {
-                visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-                const activeId = visibleSections[0].getAttribute('id');
-
-                navLinks.forEach(link => {
-                    const linkHref = link.getAttribute('href');
-                    if (linkHref === '#colors') {
-                        const isColorSectionVisible = activeId === 'colors' || activeId === 'brand-colors' || activeId === 'gray-scale' || activeId === 'semantic-colors' || activeId === 'category-colors';
-                        link.classList.toggle('active', isColorSectionVisible);
+        <script>
+        // Simple counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            if (!counters.length) return; // Defensive check
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
                     } else {
-                        link.classList.toggle('active', linkHref === `#${activeId}`);
+                        counter.textContent = target;
                     }
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(counter);
+            });
+        }
+        
+        // FAQ accordion behavior
+        function initFAQAccordion() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            if (!faqItems.length) return; // Defensive check
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                if (!question) return; // Defensive check
+                
+                question.addEventListener('click', () => {
+                    const wasOpen = item.classList.contains('open');
+                    // Close all
+                    faqItems.forEach(other => other.classList.remove('open'));
+                    // Toggle current
+                    if (!wasOpen) item.classList.add('open');
+                });
+            });
+        }
+        
+        // Tech stack hover behavior
+        function initTechHover() {
+            const techItems = document.querySelectorAll('.tech-item[data-tech]');
+            const defaultContent = document.getElementById('tech-info-default');
+            if (!techItems.length || !defaultContent) return;
+            
+            if (defaultContent) {
+                defaultContent.style.display = 'block';
+                defaultContent.classList.add('active');
+            }
+            
+            techItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const tech = item.getAttribute('data-tech');
+                    document.querySelectorAll('.tech-info-content').forEach(content => {
+                        content.style.display = 'none';
+                        content.classList.remove('active');
+                    });
+                    const targetContent = document.getElementById(`tech-info-${tech}`);
+                    if (targetContent) {
+                        targetContent.style.display = 'block';
+                        setTimeout(() => targetContent.classList.add('active'), 10);
+                    }
+                    techItems.forEach(ti => ti.classList.remove('active'));
+                    item.classList.add('active');
+                });
+            });
+            
+            const techGrid = document.querySelector('.tech-stack-grid');
+            if (techGrid) {
+                techGrid.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.tech-info-content').forEach(content => {
+                        content.style.display = 'none';
+                        content.classList.remove('active');
+                    });
+                    if (defaultContent) {
+                        defaultContent.style.display = 'block';
+                        setTimeout(() => defaultContent.classList.add('active'), 10);
+                    }
+                    techItems.forEach(item => item.classList.remove('active'));
                 });
             }
-        }, { rootMargin: "-40% 0px -60% 0px" });
+        }
+        
+        // Check if Font Awesome loaded
+        function checkFontAwesome() {
+            const testIcon = document.createElement('i');
+            testIcon.className = 'fas fa-check';
+            testIcon.style.position = 'fixed';
+            testIcon.style.top = '-9999px';
+            document.body.appendChild(testIcon);
+            
+            setTimeout(() => {
+                const width = window.getComputedStyle(testIcon, ':before').width;
+                if (width === 'auto' || width === '0px') {
+                    document.querySelectorAll('.tech-item').forEach(item => {
+                        item.classList.add('fa-failed');
+                    });
+                }
+                document.body.removeChild(testIcon);
+            }, 1000);
+        }
 
-        sections.forEach(section => {
-            observer.observe(section);
+        // --- SMOOTH NAVIGATION & ACTIVE HIGHLIGHTING ---
+        function initializeNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
+            const observer = new IntersectionObserver(entries => {
+                let visibleSections = [];
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        visibleSections.push(entry.target);
+                    }
+                });
+
+                if (visibleSections.length > 0) {
+                    visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+                    const activeId = visibleSections[0].getAttribute('id');
+                    
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        if (linkHref === '#colors') {
+                            const isColorSectionVisible = activeId === 'colors' || activeId === 'brand-colors' || activeId === 'gray-scale' || activeId === 'semantic-colors' || activeId === 'category-colors';
+                            link.classList.toggle('active', isColorSectionVisible);
+                        } else {
+                            link.classList.toggle('active', linkHref === `#${activeId}`);
+                        }
+                    });
+                }
+            }, { rootMargin: "-40% 0px -60% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // --- MOBILE MENU FUNCTIONALITY ---
+        function initializeMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    const isOpen = sidebar.classList.contains('open');
+                    mobileMenuToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+                    lucide.createIcons();
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768 && 
+                        !sidebar.contains(e.target) && 
+                        !mobileMenuToggle.contains(e.target) && 
+                        sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                        mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
+                        lucide.createIcons();
+                    }
+                });
+                
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove('open');
+                            mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
+                            lucide.createIcons();
+                        }
+                    });
+                });
+            }
+        }
+        
+        // --- COPY FUNCTIONALITY ---
+        function copyToken(tokenName) {
+            navigator.clipboard.writeText(tokenName).then(() => {
+                const buttons = document.querySelectorAll('.token-copy');
+                buttons.forEach(button => {
+                    if (button.onclick && button.onclick.toString().includes(`'${tokenName}'`)) {
+                        const originalText = button.textContent;
+                        button.textContent = 'Copied!';
+                        button.style.color = 'var(--brand-primary-lime)';
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.style.color = '';
+                        }, 2000);
+                    }
+                });
+            });
+        }
+        
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.textContent.trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.color = 'var(--brand-primary-lime)';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+        
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeNavigation();
+            initializeMobileMenu();
+            lucide.createIcons(); // Initial call to render all icons
+            
+            // New functions for hero section
+            animateCounters();
+            initFAQAccordion();
+            initTechHover();
+            checkFontAwesome();
         });
-    }
+    </script>
 
-    // --- MOBILE MENU FUNCTIONALITY ---
-    // ... (the rest of the old script) ...
-
-    // --- INITIALIZATION ---
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeNavigation();
-        initializeMobileMenu();
-        lucide.createIcons(); // Initial call to render all icons
-    });
-</script>
 
 </body>
 </html>
