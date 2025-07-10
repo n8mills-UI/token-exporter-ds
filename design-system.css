@@ -23,12 +23,15 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
    ✓ Consolidated duplicate .about-avatar styles
    ✓ Cleaned up unused CSS
    ✓ Added new styles for portfolio hero section
+   ✓ Added component documentation markers
+   ✓ Added version management system
+   ✓ Fixed mobile menu z-index
+   ✓ Removed duplicate @keyframes
    
    ========================================================================== */
 
 /* 1. Import Shoelace FIRST - Component library base styles */
 @import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css";
-
 
 /* 2. Import Open Props SECOND - Our foundation overrides */
 @import "https://unpkg.com/open-props/style";
@@ -40,6 +43,11 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
    ========================================================================== */
 
 :root {
+    /* Version Management System */
+    --system-version: "4.0.6";
+    --system-updated: "2025-01-30";
+    --system-stage: "production";
+    
     /* --- Brand Colors --- */
     --brand-primary-lime: #D2FF37;
     --brand-secondary-yellow: #EEFF00;
@@ -96,6 +104,34 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
     /* Missing Gradient Fix */
     --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
 }
+
+/* ==========================================================================
+   COMPONENT DOCUMENTATION SYSTEM
+   Use these markers to identify component scope and purpose
+   ========================================================================== */
+
+/* @docs-only-start - Components only for guide showcase */
+/* Portfolio hero, cyber-banner, tech stack grid, FAQ section, etc.
+   These components are for the design system guide showcase only.
+   They are NOT used in the plugin and should not be included in ui.html */
+/* @docs-only-end */
+
+/* @plugin-only-start - Components used in Figma plugin */
+/* Token summary, collection items, export section, modals, etc.
+   These are the core components that power the actual Figma plugin */
+/* @plugin-only-end */
+
+/* @future-feature-start - Reserved for roadmap */
+/* Theme switcher, advanced animations, AI integration, etc. */
+/* @future-feature-end */
+
+/* @deprecated-start - To be removed in next version */
+/* Legacy components that are being phased out */
+/* @deprecated-end */
+
+/* @experimental-start - Use at your own risk */
+/* Beta features under active development */
+/* @experimental-end */
 
 /* ==========================================================================
    Base Icon Styles for Lucide
@@ -375,6 +411,7 @@ sl-spinner {
  * Impact crystallized."
  */
 
+/* @docs-only-start */
 /* Case Study Sections */
 .portfolio-intro {
     padding: var(--size-10) 0;
@@ -563,6 +600,7 @@ sl-spinner {
     border-color: var(--brand-primary-lime);
     box-shadow: var(--shadow-3);
 }
+/* @docs-only-end */
 
 /* ==========================================================================
    PHASE 4: ADVANCED FEATURES & INTERACTIONS
@@ -952,24 +990,26 @@ sl-spinner {
 /* ==========================================================================
    GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
    ========================================================================== */
-        .example-container {
-            background: var(--color-background-primary);
-            border: 1px solid var(--color-border-default);
-            border-radius: var(--radius-2);
-            padding: var(--size-6) var(--size-4) var(--size-4); /* Increased top padding */
-            margin-top: var(--size-6); /* Add margin to separate from the label */
-            position: relative;
-        }
 
-        .example-label {
-            /* This is no longer positioned absolutely */
-            margin-bottom: calc(-1 * var(--size-4)); /* Pull the container up slightly */
-            font-size: var(--font-size-0);
-            font-weight: var(--font-weight-6);
-            color: var(--brand-primary-lime);
-            text-transform: uppercase;
-            letter-spacing: var(--font-letterspacing-2);
-        }
+/* @docs-only-start */
+.example-container {
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    padding: var(--size-6) var(--size-4) var(--size-4); /* Increased top padding */
+    margin-top: var(--size-6); /* Add margin to separate from the label */
+    position: relative;
+}
+
+.example-label {
+    /* This is no longer positioned absolutely */
+    margin-bottom: calc(-1 * var(--size-4)); /* Pull the container up slightly */
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-6);
+    color: var(--brand-primary-lime);
+    text-transform: uppercase;
+    letter-spacing: var(--font-letterspacing-2);
+}
 
 .token-exporter-logo {
     display: inline-block;
@@ -1157,11 +1197,6 @@ sl-spinner {
 .hero-footer .heart {
     color: var(--category-color-pink);
     animation: heartbeat 1.5s ease-in-out infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
 }
 
 /* Icon-text component pattern */
@@ -1572,6 +1607,7 @@ sl-spinner {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
 }
+/* @docs-only-end */
 
 /* ==========================================================================
    PHASE 5: LAUNCH PREP & TECHNICAL EXCELLENCE
@@ -1696,6 +1732,7 @@ sl-spinner {
 
 .version-badge:hover {
     opacity: 1;
+    cursor: help;
 }
 
 /* Loading Performance */
@@ -1772,13 +1809,20 @@ sl-spinner {
 }
 
 /* Performance optimization utilities */
-.gpu-accelerated {
+.gpu-accelerated,
+.card,
+.collection-item,
+.btn,
+.token-type-stat {
     will-change: transform;
     transform: translateZ(0);
 }
 
-.reduce-paint {
+.reduce-paint,
+.skeleton-pulse,
+.liquid-wave {
     contain: layout style paint;
+    will-change: opacity, transform;
 }
 
 /* ==========================================================================
@@ -2504,11 +2548,67 @@ main {
     }
 }
 
+/* Token Summary Skeleton */
+.card.token-summary-skeleton {
+    padding: var(--size-6) var(--size-4);
+    text-align: center;
+}
+
+.skeleton-heading {
+    width: 60%;
+    height: var(--font-size-8);
+    background: var(--gray-7);
+    border-radius: var(--radius-2);
+    margin: 0 auto var(--size-4);
+    animation: skeleton-breathe 2.5s ease-in-out infinite;
+}
+
+.skeleton-subheading {
+    width: 80%;
+    height: var(--font-size-1);
+    background: var(--gray-7);
+    border-radius: var(--radius-1);
+    margin: 0 auto var(--size-6);
+    animation: skeleton-breathe 2.5s ease-in-out infinite;
+}
+
+.skeleton-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--size-2);
+    border-top: 1px solid var(--gray-8);
+    padding-top: var(--size-4);
+}
+
+.skeleton-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-2);
+}
+
+.skeleton-stat .skeleton-icon {
+    width: var(--font-size-3);
+    height: var(--font-size-3);
+    background: var(--gray-7);
+    border-radius: var(--radius-1);
+    animation: skeleton-breathe 2.5s ease-in-out infinite;
+}
+
+.skeleton-stat .skeleton-text {
+    width: 60px;
+    height: var(--font-size-1);
+    background: var(--gray-7);
+    border-radius: var(--radius-1);
+    animation: skeleton-breathe 2.5s ease-in-out infinite;
+}
 
 /* ==========================================================================
    Guide Footer
    ========================================================================== */
 
+/* @docs-only-start */
 .guide-footer {
     background: #0a0a0a;
     position: relative;
@@ -2637,9 +2737,15 @@ main {
     color: var(--brand-primary-lime);
     transform: translateY(-2px);
 }
+/* @docs-only-end */
 
 /* Responsive */
 @media (max-width: 768px) {
+    .guide-sidebar { 
+        transform: translateX(-100%);
+        z-index: 1000; /* Mobile menu z-index fix */
+    }
+    
     .footer-content {
         flex-direction: column;
         gap: var(--size-4);
@@ -2656,10 +2762,20 @@ main {
         gap: var(--size-3);
         padding-bottom: 0;
     }
+    
+    .token-breakdown {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--size-3) !important;
+    }
 }
 
+@media (max-width: 400px) {
+    .token-breakdown {
+        grid-template-columns: 1fr !important;
+        gap: var(--size-2) !important;
+    }
+}
 
-        
 /* State groups with better hierarchy */
 .state-group {
     margin-bottom: var(--size-8); /* Large gap between groups */
@@ -2757,6 +2873,34 @@ main {
     background: var(--color-background-tertiary);
 }
 
+/* @docs-only-start */
+.about-avatar {
+    width: var(--size-16);
+    height: var(--size-16);
+    border-radius: var(--radius-round);
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--brand-primary-lime);
+    background-color: var(--gray-7);
+    background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
+}
+/* @docs-only-end */
+
+/* @plugin-only-start */
+.about-avatar {
+    width: var(--size-12);
+    height: var(--size-12);
+    border-radius: var(--radius-round);
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--brand-primary-lime);
+    background-color: var(--gray-7);
+    background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
+}
+/* @plugin-only-end */
+
 .about-header {
     display: flex;
     flex-direction: column;
@@ -2850,6 +2994,11 @@ main {
     0% { transform: rotate(0deg); } 
     100% { transform: rotate(360deg); } 
 }
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
         
 /* Focus States for Accessibility - STANDARDIZED */
 .btn:focus-visible,
@@ -2860,7 +3009,10 @@ main {
 .about-close:focus-visible,
 sl-button::part(base):focus-visible,
 sl-select::part(combobox):focus-visible,
-sl-input::part(input):focus-visible {
+sl-input::part(input):focus-visible,
+.high-contrast-focus:focus-visible,
+.footer-social-link:focus-visible,
+.footer-cta:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2);
 }
@@ -2906,22 +3058,6 @@ sl-input::part(input):focus-visible {
 }
 
 /* Animation Keyframes (Consolidated) */
-@keyframes pulse-glow {
-    0%, 100% { 
-        transform: scale(1);
-        filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3));
-    }
-    50% { 
-        transform: scale(1.05);
-        filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5));
-    }
-}
-
-@keyframes wave-animation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 @keyframes shimmerOverlay {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
@@ -2942,11 +3078,6 @@ sl-input::part(input):focus-visible {
     0% { transform: scale(0) rotate(-180deg); opacity: 0; }
     70% { transform: scale(1.1) rotate(10deg); opacity: 1; }
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
 }
 
 /* Reduce motion */
