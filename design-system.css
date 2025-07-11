@@ -1101,7 +1101,7 @@ sl-spinner {
 
 /* Hero section */
 .portfolio-hero {
-    min-height: calc(100vh - 40px);
+    min-height: calc(80vh - 40px);
     display: flex;
     flex-direction: column;
     justify-content: center;
