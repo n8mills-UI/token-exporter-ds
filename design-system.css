@@ -140,55 +140,20 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 .lucide {
     width: 1em;
     height: 1em;
-    stroke-width: 2px;
+    stroke-width: var(--stroke-regular);  /* <-- Now uses token! */
     vertical-align: middle;
     color: inherit;
 }
 
-/* Large icons need thicker strokes to maintain visual weight */
-.empty-state-icon .lucide,
-.success-icon {
-    stroke-width: 2.5px;
+/* Fix specific problems */
+.btn-icon-only .lucide,
+.nav-links .lucide {
+    stroke-width: var(--stroke-thin);
 }
 
-.btn .lucide {
-    width: 1.2em;
-    height: 1.2em;
-}
-
-.btn .lucide {
-    width: 1.2em;
-    height: 1.2em;
-}
-
-.btn-icon-only .lucide {
-    width: 1.2em;
-    height: 1.2em;
-    stroke-width: 2.5px;
-}
-
+.success-icon,
 .empty-state-icon .lucide {
-    width: var(--font-size-5);
-    height: var(--font-size-5);
-}
-
-.token-type-stat .icon.lucide {
-    width: var(--font-size-3);
-    height: var(--font-size-3);
-}
-
-.collection-pill .lucide {
-    width: 12px;
-    height: 12px;
-}
-
-.section-title .lucide {
-    color: var(--brand-primary-lime);
-}
-
-.about-link .lucide {
-    width: 24px;
-    height: 24px;
+    stroke-width: var(--stroke-thick);
 }
 
 /* ==========================================================================
@@ -258,6 +223,11 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
     --sl-border-radius-large: var(--radius-3);
     --sl-border-radius-x-large: var(--radius-4);
     
+    /* Stroke weights using Open Props border sizes */
+    --stroke-thin: var(--border-size-1);      /* 1px */
+    --stroke-regular: var(--border-size-2);   /* 2px */
+    --stroke-thick: var(--border-size-3);     /* 3px */
+
     /* Shoelace Shadows */
     --sl-shadow-x-small: var(--shadow-2);
     --sl-shadow-small: var(--shadow-3);
