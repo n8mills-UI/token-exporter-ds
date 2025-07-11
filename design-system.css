@@ -991,6 +991,25 @@ sl-spinner {
    GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
    ========================================================================== */
 
+.guide-content {
+    flex: 1;
+    max-width: calc(100vw - 280px);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.content-section {
+    margin-bottom: var(--size-10);
+    scroll-margin-top: var(--size-6);
+    padding: 0 var(--size-6);
+}
+
+#overview {
+    padding: 0; /* Ensures hero has no padding */
+}
+
 /* @docs-only-start */
 .example-container {
     background: var(--color-background-primary);
