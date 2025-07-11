@@ -3147,754 +3147,399 @@ sl-input::part(input):focus-visible,
     <div class="progress-overlay" id="progress-overlay" style="display: none;"></div>
 
     <script>
-        // --- STATE MANAGEMENT ---
-        const appState = {
-            mode: 'simple', collections: [], selectedCollections: new Set(),
-            selectedFormat: 'css', selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
-            globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 }, isLoading: true,
-            searchTerm: '',
+    // --- STATE MANAGEMENT ---
+    const appState = {
+        mode: 'simple',
+        collections: [],
+        selectedCollections: new Set(),
+        selectedFormat: 'css',
+        selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
+        globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 },
+        isLoading: true,
+        searchTerm: '',
+    };
+
+    // --- DOM Elements (to be populated once DOM is ready) ---
+    const DOMElements = {
+        contentWrapper: null,
+        progressOverlay: null,
+        aboutModal: null,
+        footer: null,
+    };
+
+    // --- UTILITIES ---
+    const openUrl = (url) => parent.postMessage({ pluginMessage: { type: 'open-url', url } }, '*');
+    const debounce = (func, delay) => {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
         };
+    };
+    const renderIcons = () => {
+        try {
+            if (window.lucide) window.lucide.createIcons();
+        } catch (error) {
+            console.error("Lucide icon rendering failed:", error);
+        }
+    };
 
-        // --- DOM Elements ---
-        const DOMElements = {
-            contentWrapper: document.getElementById('content-wrapper'),
-            progressOverlay: document.getElementById('progress-overlay'),
-            aboutModal: document.getElementById('about-modal'),
-        };
+    // --- ROBUST ELEMENT CREATION ---
+    function createElement(tag, options = {}, children = []) {
+        const el = document.createElement(tag);
+        Object.entries(options).forEach(([key, value]) => {
+            if (key === 'className') el.className = value;
+            else if (key === 'textContent') el.textContent = value;
+            else if (key === 'onclick') el.onclick = value;
+            else el.setAttribute(key, value);
+        });
+        children.forEach(child => {
+            if (child) el.appendChild(child);
+        });
+        return el;
+    }
 
-        // --- UTILITIES ---
-        const openUrl = (url) => parent.postMessage({ pluginMessage: { type: 'open-url', url } }, '*');
-        
-        const debounce = (func, delay) => {
-            let timeout;
-            return function(...args) {
-                const context = this;
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(context, args), delay);
-            };
-        };
-        
-        const renderIcons = () => {
-            try {
-                if (window.lucide) {
-                    lucide.createIcons();
-                }
-            } catch (error) {
-                console.error("Lucide icon rendering failed:", error);
-                parent.postMessage({ pluginMessage: { type: 'notify', message: 'Icon library failed to load.', error: true } }, '*');
-            }
-        };
+    // --- UI RENDERING LOGIC ---
+    function renderUI() {
+        if (!DOMElements.contentWrapper) return; // Guard clause
 
-        // --- SECURE DOM CREATION FUNCTIONS ---
-        
-        function createTokenStat(type, icon, label, count, isActive) {
-            const isDisabled = count === 0;
-            const div = document.createElement('div');
-            div.className = `token-type-stat ${type} ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`;
-            div.dataset.type = type;
-            
-            const iconEl = document.createElement('i');
-            iconEl.setAttribute('data-lucide', icon);
-            iconEl.className = 'icon';
-            
-            const countEl = document.createElement('div');
-            countEl.className = 'count';
-            countEl.textContent = count;
-            
-            const labelEl = document.createElement('div');
-            labelEl.className = 'text-label label';
-            labelEl.textContent = label;
-            
-            div.appendChild(iconEl);
-            div.appendChild(countEl);
-            div.appendChild(labelEl);
-            
-            return div;
+        // Clear previous content but preserve the footer
+        while (DOMElements.contentWrapper.firstChild && DOMElements.contentWrapper.firstChild !== DOMElements.footer) {
+            DOMElements.contentWrapper.removeChild(DOMElements.contentWrapper.firstChild);
         }
 
-        function createCollectionItem(collection) {
-            const item = document.createElement('div');
-            item.className = `collection-item ${appState.selectedCollections.has(collection.id) ? 'selected' : ''}`;
-            item.dataset.collectionId = collection.id;
+        const mainDiv = createElement('div', { id: 'main-content', className: appState.mode === 'advanced' ? 'advanced-mode' : '' });
 
-            const checkbox = document.createElement('div');
-            checkbox.className = 'collection-checkbox';
-            
-            const info = document.createElement('div');
-            info.className = 'collection-info';
-            
-            const name = document.createElement('div');
-            name.className = 'text-body-lg collection-name';
-            name.textContent = collection.name;
-            
-            const pills = document.createElement('div');
-            pills.className = 'collection-pills';
-            
-            Object.entries(collection.counts).forEach(([type, count]) => {
-                if (count > 0) {
-                    const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
-                    const isDisabled = !appState.selectedTokenTypes.has(type);
-                    
-                    const pill = document.createElement('div');
-                    pill.className = `collection-pill ${type} ${isDisabled ? 'disabled' : ''}`;
-                    
-                    const icon = document.createElement('i');
-                    icon.setAttribute('data-lucide', iconMap[type]);
-                    
-                    const span = document.createElement('span');
-                    span.textContent = count;
-                    
-                    pill.appendChild(icon);
-                    pill.appendChild(span);
-                    pills.appendChild(pill);
-                }
-            });
-            
-            info.appendChild(name);
-            info.appendChild(pills);
-            
-            const countDiv = document.createElement('div');
-            countDiv.className = 'text-caption collection-count';
-            countDiv.textContent = `${collection.totalVariables} tokens`;
-            
-            item.appendChild(checkbox);
-            item.appendChild(info);
-            item.appendChild(countDiv);
-            
-            return item;
-        }
-
-        function createEmptyState() {
-            const container = document.createElement('div');
-            container.className = 'empty-state';
-            
-            const iconContainer = document.createElement('div');
-            iconContainer.className = 'empty-state-icon';
-            
-            const mainIcon = document.createElement('i');
-            mainIcon.setAttribute('data-lucide', 'package');
-            iconContainer.appendChild(mainIcon);
-            
-            const content = document.createElement('div');
-            
-            const title = document.createElement('div');
-            title.className = 'text-heading-lg empty-state-title';
-            title.textContent = "Let's build something!";
-            
-            const subtitle = document.createElement('div');
-            subtitle.className = 'text-body-md empty-state-subtitle';
-            subtitle.textContent = 'Turn your colors, text styles, and spacing into code-ready tokens.';
-            
-            const tokenTypes = document.createElement('div');
-            tokenTypes.style.cssText = 'display: flex; gap: var(--size-3); justify-content: center; margin-bottom: var(--size-4); margin-top: var(--size-4);';
-            
-            const types = [
-                { icon: 'palette', color: '#00D1FF', label: 'Colors' },
-                { icon: 'type', color: '#B48CFF', label: 'Text' },
-                { icon: 'hash', color: '#FFB86C', label: 'Numbers' },
-                { icon: 'toggle-right', color: '#FF74BC', label: 'States' }
-            ];
-            
-            types.forEach(type => {
-                const typeDiv = document.createElement('div');
-                typeDiv.style.textAlign = 'center';
-                
-                const icon = document.createElement('i');
-                icon.setAttribute('data-lucide', type.icon);
-                icon.style.cssText = `color: ${type.color}; width: 24px; height: 24px; margin-bottom: var(--size-1);`;
-                
-                const label = document.createElement('div');
-                label.className = 'text-caption';
-                label.textContent = type.label;
-                
-                typeDiv.appendChild(icon);
-                typeDiv.appendChild(label);
-                tokenTypes.appendChild(typeDiv);
-            });
-            
-            content.appendChild(title);
-            content.appendChild(subtitle);
-            content.appendChild(tokenTypes);
-            
-            const button = document.createElement('button');
-            button.className = 'btn primary empty-state-action';
-            button.style.width = 'auto';
-            button.setAttribute('aria-label', 'Navigate to create variables in Figma');
-            button.textContent = 'Create variables ';
-            
-            const arrow = document.createElement('i');
-            arrow.setAttribute('data-lucide', 'arrow-right');
-            arrow.style.marginLeft = 'var(--size-2)';
-            button.appendChild(arrow);
-            
-            container.appendChild(iconContainer);
-            container.appendChild(content);
-            container.appendChild(button);
-            
-            return container;
-        }
-
-        function createSkeletonContainer() {
-            const container = document.createElement('div');
-            container.className = 'skeleton-container';
-            
-            const skeleton1 = document.createElement('div');
-            skeleton1.className = 'skeleton-item skeleton-pulse';
-            
-            const skeleton2 = document.createElement('div');
-            skeleton2.className = 'skeleton-item skeleton-pulse small';
-            
-            const skeleton3 = document.createElement('div');
-            skeleton3.className = 'skeleton-item skeleton-pulse small';
-            
-            container.appendChild(skeleton1);
-            container.appendChild(skeleton2);
-            container.appendChild(skeleton3);
-            
-            return container;
-        }
-
-        function createTokenSummaryCard() {
-            const card = document.createElement('div');
-            card.className = 'card token-summary';
-            
-            const label1 = document.createElement('div');
-            label1.className = 'text-label';
-            label1.textContent = 'Design Tokens';
-            
-            const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
-            const countTotal = document.createElement('div');
-            countTotal.className = 'text-heading-xl token-count-total';
-            countTotal.textContent = totalTokens;
-            
-            const label2 = document.createElement('div');
-            label2.className = 'text-label token-label';
-            label2.textContent = 'Design Tokens Ready to Export';
-            
-            const breakdown = document.createElement('div');
-            breakdown.className = 'token-breakdown';
-            
-            const tokenTypes = [
-                { type: 'color', icon: 'palette', label: 'colors' },
-                { type: 'text', icon: 'type', label: 'text' },
-                { type: 'number', icon: 'hash', label: 'numbers' },
-                { type: 'states', icon: 'toggle-right', label: 'states' }
-            ];
-            
-            tokenTypes.forEach(({ type, icon, label }) => {
-                const count = appState.globalTokenCounts[type] || 0;
-                const isActive = appState.selectedTokenTypes.has(type);
-                breakdown.appendChild(createTokenStat(type, icon, label, count, isActive));
-            });
-            
-            card.appendChild(label1);
-            card.appendChild(countTotal);
-            card.appendChild(label2);
-            card.appendChild(breakdown);
-            
-            return card;
-        }
-
-        function createExportCard() {
-            const card = document.createElement('div');
-            card.className = 'card export-section';
-            
-            const title = document.createElement('h3');
-            title.className = 'text-label section-title';
-            
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', 'rocket');
-            title.appendChild(icon);
-            title.appendChild(document.createTextNode(` ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}`));
-            
-            const subtitle = document.createElement('p');
-            subtitle.className = 'text-body-md subtitle';
-            subtitle.textContent = 'Export your tokens in your preferred format';
-            
-            const selectWrapper = document.createElement('div');
-            selectWrapper.className = 'format-select-wrapper';
-            
-            const select = document.createElement('select');
-            select.className = 'format-select';
-            select.id = 'format-select';
-            
-            const allOption = document.createElement('option');
-            allOption.value = 'all';
-            allOption.textContent = 'All Formats';
-            select.appendChild(allOption);
-            
-            const formats = [
-                { value: 'css', label: 'CSS Variables' },
-                { value: 'swift', label: 'Swift (iOS)' },
-                { value: 'android', label: 'Android XML' },
-                { value: 'flutter', label: 'Flutter' },
-                { value: 'w3c', label: 'JSON (W3C)' },
-                { value: 'tailwind', label: 'Tailwind Config' }
-            ];
-            
-            formats.forEach(f => {
-                const option = document.createElement('option');
-                option.value = f.value;
-                option.textContent = f.label;
-                option.selected = appState.selectedFormat === f.value;
-                select.appendChild(option);
-            });
-            
-            selectWrapper.appendChild(select);
-            
-            const exportBtn = document.createElement('button');
-            exportBtn.className = 'btn primary';
-            exportBtn.id = 'export-btn';
-            
-            card.appendChild(title);
-            card.appendChild(subtitle);
-            card.appendChild(selectWrapper);
-            card.appendChild(exportBtn);
-            
-            return card;
-        }
-
-        function createCollectionsCard() {
-            const card = document.createElement('div');
-            card.className = 'card collections-section';
-            
-            const title = document.createElement('h3');
-            title.className = 'text-label section-title';
-            
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', 'layers');
-            title.appendChild(icon);
-            title.appendChild(document.createTextNode(' Select Collections'));
-            
-            card.appendChild(title);
-            
-            if (appState.collections.length > 5) {
-                const searchWrapper = document.createElement('div');
-                searchWrapper.className = 'search-wrapper';
-                
-                const searchIcon = document.createElement('i');
-                searchIcon.setAttribute('data-lucide', 'search');
-                searchIcon.className = 'lucide-search';
-                
-                const searchInput = document.createElement('input');
-                searchInput.type = 'text';
-                searchInput.className = 'search-input';
-                searchInput.placeholder = 'Search collections...';
-                searchInput.id = 'collection-search';
-                searchInput.value = appState.searchTerm;
-                
-                searchWrapper.appendChild(searchIcon);
-                searchWrapper.appendChild(searchInput);
-                card.appendChild(searchWrapper);
-            }
-            
-            const collectionList = document.createElement('div');
-            collectionList.className = 'collection-list';
-            
-            const filteredCollections = appState.collections.filter(c => 
-                c.name.toLowerCase().includes(appState.searchTerm.toLowerCase())
-            );
-            
-            filteredCollections.forEach(c => {
-                collectionList.appendChild(createCollectionItem(c));
-            });
-            
-            card.appendChild(collectionList);
-            
-            return card;
-        }
-
-        function createToggleContainer() {
-            const container = document.createElement('div');
-            container.className = 'advanced-toggle';
-            
-            if (appState.mode === 'simple') {
-                const link = document.createElement('a');
-                link.href = '#';
-                link.className = 'advanced-link text-body-md';
-                link.id = 'toggle-advanced';
-                link.textContent = 'Customize Your Export ';
-                
-                const arrow = document.createElement('i');
-                arrow.setAttribute('data-lucide', 'arrow-right');
-                link.appendChild(arrow);
-                
-                container.appendChild(link);
-            } else {
-                const button = document.createElement('button');
-                button.className = 'btn secondary';
-                button.id = 'toggle-simple';
-                
-                const backIcon = document.createElement('i');
-                backIcon.setAttribute('data-lucide', 'arrow-left');
-                button.appendChild(backIcon);
-                button.appendChild(document.createTextNode(' Back to Simple Export'));
-                
-                container.appendChild(button);
-            }
-            
-            return container;
-        }
-
-        function renderUI() {
-            const mainContent = document.getElementById('main-content');
-            if (!mainContent) return;
-
-            // Clear previous content
-            while (mainContent.firstChild) {
-                mainContent.removeChild(mainContent.firstChild);
-            }
-            mainContent.className = appState.mode === 'advanced' ? 'advanced-mode' : '';
-
-            if (appState.isLoading) {
-                mainContent.appendChild(createSkeletonContainer());
-            } else if (appState.collections.length === 0) {
-                mainContent.appendChild(createEmptyState());
-            } else {
-                // Main UI
-                mainContent.appendChild(createTokenSummaryCard());
-                mainContent.appendChild(createExportCard());
-                
-                if (appState.mode === 'advanced') {
-                    mainContent.appendChild(createCollectionsCard());
-                }
-                
-                mainContent.appendChild(createToggleContainer());
-            }
-            
-            attachDynamicEventListeners();
-            updateExportButton();
-            renderIcons();
-        }
-        
-        // --- EVENT HANDLERS ---
-        
-        function attachStaticEventListeners() {
-            document.getElementById('about-link')?.addEventListener('click', e => {
-                e.preventDefault();
-                DOMElements.aboutModal.classList.add('show');
-                renderIcons();
-            });
-
-            DOMElements.aboutModal.addEventListener('click', e => { 
-                if (e.target.closest('.about-close') || e.target === DOMElements.aboutModal) {
-                    DOMElements.aboutModal.classList.remove('show');
-                }
-            });
-
-            DOMElements.aboutModal.querySelectorAll('.about-link').forEach(link => {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    openUrl(link.dataset.url);
-                });
-            });
-        }
-        
-        function attachDynamicEventListeners() {
-            const mainContent = document.getElementById('main-content');
-            if (!mainContent) return;
-
-            mainContent.querySelector('#export-btn')?.addEventListener('click', handleExport);
-            
-            mainContent.querySelector('#toggle-advanced')?.addEventListener('click', e => {
-                e.preventDefault();
-                const previousSelections = new Set(appState.selectedCollections);
-                appState.mode = 'advanced';
-                // Preserve selections if any were made, otherwise select all
-                if (previousSelections.size > 0 && previousSelections.size < appState.collections.length) {
-                    appState.selectedCollections = previousSelections;
-                } else {
-                    appState.selectedCollections = new Set(appState.collections.map(c => c.id));
-                }
-                renderUI();
-            });
-
-            mainContent.querySelector('#toggle-simple')?.addEventListener('click', () => {
-                appState.mode = 'simple';
-                renderUI();
-            });
-            
-            mainContent.querySelectorAll('.collection-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const id = item.dataset.collectionId;
-                    appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
-                    renderUI();
-                });
-            });
-
+        if (appState.isLoading) {
+            mainDiv.innerHTML = `<div class="skeleton-container"><div class="skeleton-item skeleton-pulse"></div><div class="skeleton-item skeleton-pulse small"></div><div class="skeleton-item skeleton-pulse small"></div></div>`;
+        } else if (appState.collections.length === 0) {
+            mainDiv.innerHTML = `<div class="empty-state"><div class="empty-state-icon"><i data-lucide="package"></i></div><div><div class="text-heading-lg empty-state-title">Let's build something!</div><div class="text-body-md empty-state-subtitle">Turn your colors, text styles, and spacing into code-ready tokens.</div></div><button class="btn primary empty-state-action" style="width: auto;" aria-label="Navigate to create variables in Figma">Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i></button></div>`;
+        } else {
+            mainDiv.appendChild(createTokenSummaryCard());
+            mainDiv.appendChild(createExportCard());
             if (appState.mode === 'advanced') {
-                mainContent.querySelectorAll('.token-type-stat:not(.disabled)').forEach(stat => {
-                    stat.addEventListener('click', () => {
-                        const type = stat.dataset.type;
-                        appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
-                        renderUI();
-                    });
-                });
+                mainDiv.appendChild(createCollectionsCard());
             }
-
-            mainContent.querySelector('#format-select')?.addEventListener('change', e => { 
-                appState.selectedFormat = e.target.value; 
-            });
-            
-            const debouncedRender = debounce(() => renderUI(), 300);
-            mainContent.querySelector('#collection-search')?.addEventListener('input', e => {
-                appState.searchTerm = e.target.value;
-                debouncedRender();
-            });
-
-            mainContent.querySelector('.empty-state-action')?.addEventListener('click', () => 
-                openUrl('https://help.figma.com/hc/en-us/articles/360041085694-Create-and-use-variables')
-            );
+            mainDiv.appendChild(createToggleContainer());
         }
 
-        function updateExportButton() {
-            const btn = document.getElementById('export-btn');
-            if (!btn) return;
-            
-            const selectedCount = appState.mode === 'simple' 
-                ? Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0)
-                : appState.collections.reduce((count, col) => {
-                    if (!appState.selectedCollections.has(col.id)) return count;
-                    return count + Object.entries(col.counts).reduce((subCount, [type, num]) => 
-                        appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
-                }, 0);
-            
-            btn.disabled = selectedCount === 0;
-            
-            // Clear and rebuild button content
-            while (btn.firstChild) {
-                btn.removeChild(btn.firstChild);
-            }
-            
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', 'package-check');
-            btn.appendChild(icon);
-            btn.appendChild(document.createTextNode(` Export ${selectedCount} Token${selectedCount !== 1 ? 's' : ''}`));
-            
-            renderIcons();
-        }
+        // Insert the new content before the footer
+        DOMElements.contentWrapper.insertBefore(mainDiv, DOMElements.footer);
+        
+        attachDynamicEventListeners();
+        renderIcons();
+    }
+    
+    function createTokenSummaryCard() {
+        const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
+        const selectedCount = appState.mode === 'simple' ? totalTokens : appState.collections.reduce((count, col) => {
+            if (!appState.selectedCollections.has(col.id)) return count;
+            return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
+        }, 0);
 
-        // --- EXPORT & PROGRESS ---
-        function handleExport() {
-            const collectionIds = appState.mode === 'simple' 
-                ? appState.collections.map(c => c.id) 
-                : Array.from(appState.selectedCollections);
-            const tokenTypes = Array.from(appState.selectedTokenTypes);
-            if (collectionIds.length === 0 || tokenTypes.length === 0) return;
-            const formats = appState.selectedFormat === 'all' 
-                ? ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'] 
-                : [appState.selectedFormat];
-            showProgress('Analyzing tokens...');
-            parent.postMessage({ pluginMessage: { 
-                type: 'export-tokens', collectionIds, formats, activeTokenTypes: tokenTypes 
-            } }, '*');
-        }
-
-        function showProgress(message) {
-            DOMElements.progressOverlay.style.display = 'flex';
-            
-            const container = document.createElement('div');
-            container.className = 'progress-container';
-            
-            const title = document.createElement('div');
-            title.className = 'text-heading-md success-title';
-            title.style.marginTop = 'var(--size-4)';
-            title.textContent = message;
-            
-            const subtitle = document.createElement('p');
-            subtitle.className = 'text-body-md success-subtitle';
-            subtitle.textContent = 'Please wait while your tokens are packaged.';
-            
-            container.appendChild(title);
-            container.appendChild(subtitle);
-            
-            while (DOMElements.progressOverlay.firstChild) {
-                DOMElements.progressOverlay.removeChild(DOMElements.progressOverlay.firstChild);
-            }
-            DOMElements.progressOverlay.appendChild(container);
-        }
-
-        function showSuccessState(data) {
-            if (!data || data.length === 0) {
-                showErrorState('No tokens matched your selected criteria.');
-                return;
-            }
-            
-            const container = document.createElement('div');
-            container.className = 'progress-container';
-            
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', 'check-circle-2');
-            icon.className = 'success-icon';
-            icon.style.cssText = 'width: 48px; height: 48px;';
-            
-            const title = document.createElement('h2');
-            title.className = 'text-heading-md success-title';
-            title.textContent = 'Export Complete!';
-            
-            const subtitle = document.createElement('p');
-            subtitle.className = 'text-body-md success-subtitle';
-            subtitle.textContent = 'Your design tokens are ready.';
-            
-            const buttons = document.createElement('div');
-            buttons.className = 'action-buttons';
-            
-            const saveBtn = document.createElement('button');
-            saveBtn.className = 'btn primary';
-            saveBtn.id = 'save-btn';
-            const downloadIcon = document.createElement('i');
-            downloadIcon.setAttribute('data-lucide', 'download');
-            saveBtn.appendChild(downloadIcon);
-            saveBtn.appendChild(document.createTextNode(' Download Your Files'));
-            saveBtn.onclick = () => triggerSave(data);
-            
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'btn secondary';
-            closeBtn.id = 'close-progress-btn';
-            const closeIcon = document.createElement('i');
-            closeIcon.setAttribute('data-lucide', 'x');
-            closeBtn.appendChild(closeIcon);
-            closeBtn.appendChild(document.createTextNode(' Close'));
-            closeBtn.onclick = hideProgress;
-            
-            buttons.appendChild(saveBtn);
-            buttons.appendChild(closeBtn);
-            
-            container.appendChild(icon);
-            container.appendChild(title);
-            container.appendChild(subtitle);
-            container.appendChild(buttons);
-            
-            while (DOMElements.progressOverlay.firstChild) {
-                DOMElements.progressOverlay.removeChild(DOMElements.progressOverlay.firstChild);
-            }
-            DOMElements.progressOverlay.appendChild(container);
-            renderIcons();
-        }
-
-        function showErrorState(message) {
-            DOMElements.progressOverlay.style.display = 'flex';
-            
-            const container = document.createElement('div');
-            container.className = 'progress-container';
-            
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', 'alert-triangle');
-            icon.className = 'success-icon';
-            icon.style.cssText = 'color:var(--color-text-error); width: 48px; height: 48px;';
-            
-            const title = document.createElement('h2');
-            title.className = 'text-heading-md success-title';
-            title.textContent = 'Export Failed';
-            
-            const subtitle = document.createElement('p');
-            subtitle.className = 'text-body-md success-subtitle';
-            subtitle.textContent = message;
-            
-            const buttons = document.createElement('div');
-            buttons.className = 'action-buttons';
-            
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'btn primary';
-            closeBtn.id = 'close-progress-btn';
-            closeBtn.textContent = 'Try Again';
-            closeBtn.onclick = hideProgress;
-            
-            buttons.appendChild(closeBtn);
-            
-            container.appendChild(icon);
-            container.appendChild(title);
-            container.appendChild(subtitle);
-            container.appendChild(buttons);
-            
-            while (DOMElements.progressOverlay.firstChild) {
-                DOMElements.progressOverlay.removeChild(DOMElements.progressOverlay.firstChild);
-            }
-            DOMElements.progressOverlay.appendChild(container);
-            renderIcons();
-        }
-
-        function triggerSave(data) {
-            const link = document.createElement('a');
-            if (data.length === 1) {
-                const file = data[0];
-                const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
-                link.href = URL.createObjectURL(blob);
-                link.download = file.filename;
-            } else {
-                const zip = new JSZip();
-                data.forEach(file => zip.file(file.filename, file.content));
-                zip.generateAsync({ type: 'blob' }).then(blob => {
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'design-tokens.zip';
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                });
-                return;
-            }
-            link.click();
-            URL.revokeObjectURL(link.href);
-            hideProgress();
-        }
-
-        function hideProgress() {
-            DOMElements.progressOverlay.style.display = 'none';
-        }
-
-        // --- INITIALIZATION & MESSAGE HANDLING ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initial render structure
-            const mainDiv = document.createElement('div');
-            mainDiv.id = 'main-content';
-            
-            const footerDiv = document.createElement('div');
-            footerDiv.className = 'footer-section';
-            
-            const aboutLink = document.createElement('a');
-            aboutLink.href = '#';
-            aboutLink.id = 'about-link';
-            aboutLink.className = 'text-caption';
-            aboutLink.textContent = 'created with ';
-            
-            const heart = document.createElement('span');
-            heart.className = 'heart';
-            heart.textContent = '❤️';
-            
-            aboutLink.appendChild(heart);
-            aboutLink.appendChild(document.createTextNode(' by nate mills'));
-            
-            footerDiv.appendChild(aboutLink);
-            
-            DOMElements.contentWrapper.appendChild(mainDiv);
-            DOMElements.contentWrapper.appendChild(footerDiv);
-            
-            renderUI();
-            attachStaticEventListeners();
-            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+        const tokenTypes = ['color', 'text', 'number', 'states'].map(type => {
+            const iconMap = { color: 'palette', text: 'type', number: 'hash', states: 'toggle-right' };
+            const count = appState.globalTokenCounts[type] || 0;
+            const isActive = appState.selectedTokenTypes.has(type);
+            return createElement('div', {
+                className: `token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}`,
+                'data-type': type
+            }, [
+                createElement('i', { className: 'icon', 'data-lucide': iconMap[type] }),
+                createElement('div', { className: 'count', textContent: count }),
+                createElement('div', { className: 'text-label label', textContent: type })
+            ]);
         });
 
-        window.onmessage = (event) => {
-            const msg = event.data.pluginMessage;
-            if (!msg) return;
-            switch (msg.type) {
-                case 'all-collections':
-                    appState.isLoading = false;
-                    appState.collections = msg.collections || [];
-                    appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
-                    appState.selectedTokenTypes = new Set(
-                        Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0)
-                    );
-                    appState.selectedCollections = new Set(appState.collections.map(c => c.id));
-                    renderUI();
-                    break;
-                case 'export-result':
-                    showSuccessState(msg.data);
-                    break;
-                case 'notify':
-                    if (msg.error) showErrorState(msg.message);
-                    break;
+        return createElement('div', { className: 'card token-summary' }, [
+            createElement('div', { className: 'text-label', textContent: appState.mode === 'simple' ? 'Design Tokens' : 'Selected Tokens' }),
+            createElement('div', { className: 'text-heading-xl token-count-total', textContent: selectedCount }),
+            createElement('div', { className: 'text-label token-label', textContent: 'Design Tokens Ready to Export' }),
+            createElement('div', { className: 'token-breakdown' }, tokenTypes)
+        ]);
+    }
+
+    function createExportCard() {
+         const selectedTokenCount = appState.mode === 'simple' 
+            ? Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0)
+            : appState.collections.reduce((count, col) => {
+                if (!appState.selectedCollections.has(col.id)) return count;
+                return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
+            }, 0);
+
+        const options = ['all', 'css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'].map(f =>
+            createElement('option', {
+                value: f,
+                textContent: f === 'all' ? 'All Formats' : {css: 'CSS Variables', swift: 'Swift (iOS)', android: 'Android XML', flutter: 'Flutter', w3c: 'JSON (W3C)', tailwind: 'Tailwind Config'}[f],
+                ...(appState.selectedFormat === f && { selected: true })
+            })
+        );
+
+        return createElement('div', { className: 'card export-section' }, [
+            createElement('h3', { className: 'text-label section-title' }, [createElement('i', {'data-lucide': 'rocket'}), document.createTextNode(` ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}`)]),
+            createElement('p', { className: 'text-body-md subtitle', textContent: 'Export your tokens in your preferred format' }),
+            createElement('div', { className: 'format-select-wrapper' }, [createElement('select', { className: 'format-select', id: 'format-select' }, options)]),
+            createElement('button', {
+                className: 'btn primary',
+                id: 'export-btn',
+                ...(selectedTokenCount === 0 && { disabled: true })
+            }, [
+                createElement('i', { 'data-lucide': 'package-check' }),
+                document.createTextNode(` Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}`)
+            ])
+        ]);
+    }
+
+    function createCollectionsCard() {
+        const filteredCollections = appState.collections.filter(c => c.name.toLowerCase().includes(appState.searchTerm.toLowerCase()));
+        const collectionItems = filteredCollections.map(c => {
+            const isSelected = appState.selectedCollections.has(c.id);
+            const pills = Object.entries(c.counts).map(([type, count]) => {
+                if (count === 0) return null;
+                const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
+                return createElement('div', { className: `collection-pill ${type} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}` }, [
+                    createElement('i', { 'data-lucide': iconMap[type] }),
+                    createElement('span', { textContent: count })
+                ]);
+            }).filter(Boolean);
+
+            return createElement('div', { className: `collection-item ${isSelected ? 'selected' : ''}`, 'data-collection-id': c.id }, [
+                createElement('div', { className: 'collection-checkbox' }),
+                createElement('div', { className: 'collection-info' }, [
+                    createElement('div', { className: 'text-body-lg collection-name', textContent: c.name }),
+                    createElement('div', { className: 'collection-pills' }, pills)
+                ]),
+                createElement('div', { className: 'text-caption collection-count', textContent: `${c.totalVariables} tokens` })
+            ]);
+        });
+
+        const searchInput = appState.collections.length > 5 ?
+            createElement('div', { className: 'search-wrapper' }, [
+                createElement('i', { 'data-lucide': 'search', className: 'lucide-search' }),
+                createElement('input', { type: 'text', className: 'search-input', placeholder: 'Search collections...', id: 'collection-search', value: appState.searchTerm })
+            ]) : null;
+
+        return createElement('div', { className: 'card collections-section' }, [
+            createElement('h3', { className: 'text-label section-title' }, [createElement('i', {'data-lucide': 'layers'}), document.createTextNode(' Select Collections')]),
+            searchInput,
+            createElement('div', { className: 'collection-list' }, collectionItems)
+        ].filter(Boolean));
+    }
+
+    function createToggleContainer() {
+        if (appState.mode === 'simple') {
+            return createElement('div', { className: 'advanced-toggle' }, [
+                createElement('a', { href: '#', className: 'advanced-link text-body-md', id: 'toggle-advanced' }, [
+                    document.createTextNode('Customize Your Export '),
+                    createElement('i', { 'data-lucide': 'arrow-right' })
+                ])
+            ]);
+        } else {
+            return createElement('div', { className: 'advanced-toggle' }, [
+                createElement('button', { className: 'btn secondary', id: 'toggle-simple' }, [
+                    createElement('i', { 'data-lucide': 'arrow-left' }),
+                    document.createTextNode(' Back to Simple Export')
+                ])
+            ]);
+        }
+    }
+
+    // --- EVENT HANDLERS ---
+    function attachStaticEventListeners() {
+        DOMElements.aboutModal?.addEventListener('click', e => {
+            if (e.target.closest('.about-close') || e.target === DOMElements.aboutModal) {
+                DOMElements.aboutModal.classList.remove('show');
             }
-        };
-    </script>
+        });
+        DOMElements.aboutModal?.querySelectorAll('.about-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                openUrl(link.dataset.url);
+            });
+        });
+        DOMElements.footer?.querySelector('#about-link')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            DOMElements.aboutModal.classList.add('show');
+            renderIcons();
+        });
+    }
+
+    const debouncedRender = debounce(() => renderUI(), 300);
+
+    function attachDynamicEventListeners() {
+        document.getElementById('export-btn')?.addEventListener('click', handleExport);
+        document.getElementById('toggle-advanced')?.addEventListener('click', e => {
+            e.preventDefault();
+            appState.mode = 'advanced';
+            renderUI();
+        });
+        document.getElementById('toggle-simple')?.addEventListener('click', () => {
+            appState.mode = 'simple';
+            renderUI();
+        });
+        document.querySelectorAll('.collection-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const id = item.dataset.collectionId;
+                if (appState.mode === 'advanced') {
+                    appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+                    renderUI();
+                }
+            });
+        });
+        if (appState.mode === 'advanced') {
+            document.querySelectorAll('.token-type-stat:not(.disabled)').forEach(stat => {
+                stat.addEventListener('click', () => {
+                    const type = stat.dataset.type;
+                    appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
+                    renderUI();
+                });
+            });
+        }
+        document.getElementById('format-select')?.addEventListener('change', e => {
+            appState.selectedFormat = e.target.value;
+        });
+        document.getElementById('collection-search')?.addEventListener('input', e => {
+            appState.searchTerm = e.target.value;
+            debouncedRender();
+        });
+        document.querySelector('.empty-state-action')?.addEventListener('click', () =>
+            openUrl('https://help.figma.com/hc/en-us/articles/360041085694-Create-and-use-variables')
+        );
+    }
+
+    // --- EXPORT & PROGRESS ---
+    function handleExport() {
+        const collectionIds = appState.mode === 'simple' ? appState.collections.map(c => c.id) : Array.from(appState.selectedCollections);
+        const tokenTypes = Array.from(appState.selectedTokenTypes);
+        if (collectionIds.length === 0 || tokenTypes.length === 0) return;
+        const formats = appState.selectedFormat === 'all' ? ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'] : [appState.selectedFormat];
+        
+        showProgress('Analyzing tokens...');
+        parent.postMessage({ pluginMessage: { type: 'export-tokens', collectionIds, formats, activeTokenTypes: tokenTypes } }, '*');
+    }
+
+    function showProgress(message) {
+        DOMElements.progressOverlay.style.display = 'flex';
+        DOMElements.progressOverlay.innerHTML = `<div class="progress-container"><div class="text-heading-md success-title" style="margin-top: var(--size-4);">${message}</div><p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p></div>`;
+    }
+
+    function showSuccessState(data) {
+        if (!data || data.length === 0) {
+            showErrorState('No tokens matched your selected criteria.');
+            return;
+        }
+        DOMElements.progressOverlay.innerHTML = `
+            <div class="progress-container">
+                <i data-lucide="check-circle-2" class="success-icon" style="width: 48px; height: 48px;"></i>
+                <h2 class="text-heading-md success-title">Export Complete!</h2>
+                <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
+                <div class="action-buttons">
+                    <button class="btn primary" id="save-btn"><i data-lucide="download"></i> Download Your Files</button>
+                    <button class="btn secondary" id="close-progress-btn"><i data-lucide="x"></i> Close</button>
+                </div>
+            </div>`;
+        renderIcons();
+        DOMElements.progressOverlay.querySelector('#save-btn').onclick = () => triggerSave(data);
+        DOMElements.progressOverlay.querySelector('#close-progress-btn').onclick = hideProgress;
+    }
+
+    function showErrorState(message) {
+        DOMElements.progressOverlay.style.display = 'flex';
+        DOMElements.progressOverlay.innerHTML = `
+            <div class="progress-container">
+                <i data-lucide="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 48px; height: 48px;"></i>
+                <h2 class="text-heading-md success-title">Export Failed</h2>
+                <p class="text-body-md success-subtitle">${message}</p>
+                <div class="action-buttons">
+                    <button class="btn primary" id="close-progress-btn">Try Again</button>
+                </div>
+            </div>`;
+        renderIcons();
+        DOMElements.progressOverlay.querySelector('#close-progress-btn').onclick = hideProgress;
+    }
+
+    function triggerSave(data) {
+        const link = document.createElement('a');
+        if (data.length === 1) {
+            const file = data[0];
+            const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
+            link.href = URL.createObjectURL(blob);
+            link.download = file.filename;
+        } else {
+            const zip = new JSZip();
+            data.forEach(file => zip.file(file.filename, file.content));
+            zip.generateAsync({ type: 'blob' }).then(blob => {
+                link.href = URL.createObjectURL(blob);
+                link.download = 'design-tokens.zip';
+                link.click();
+                URL.revokeObjectURL(link.href);
+            });
+            return;
+        }
+        link.click();
+        URL.revokeObjectURL(link.href);
+        hideProgress();
+    }
+
+    function hideProgress() {
+        DOMElements.progressOverlay.style.display = 'none';
+    }
+
+    // --- INITIALIZATION & MESSAGE HANDLING ---
+    function initialize() {
+        // Find essential elements
+        DOMElements.contentWrapper = document.getElementById('content-wrapper');
+        DOMElements.progressOverlay = document.getElementById('progress-overlay');
+        DOMElements.aboutModal = document.getElementById('about-modal');
+        
+        // Create and append the footer dynamically
+        DOMElements.footer = createElement('div', { className: 'footer-section' }, [
+            createElement('a', { href: '#', id: 'about-link', className: 'text-caption' }, [
+                document.createTextNode('created with '),
+                createElement('span', { className: 'heart', textContent: '❤️' }),
+                document.createTextNode(' by nate mills')
+            ])
+        ]);
+        DOMElements.contentWrapper.appendChild(DOMElements.footer);
+
+        if (!DOMElements.contentWrapper) {
+            console.error("Critical Error: #content-wrapper not found. UI cannot be rendered.");
+            return;
+        }
+
+        renderUI();
+        attachStaticEventListeners();
+        parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+    }
+
+    window.onmessage = (event) => {
+        const msg = event.data.pluginMessage;
+        if (!msg) return;
+        switch (msg.type) {
+            case 'all-collections':
+                appState.isLoading = false;
+                appState.collections = msg.collections || [];
+                appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
+                appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
+                appState.selectedCollections = new Set(appState.collections.map(c => c.id));
+                renderUI();
+                break;
+            case 'export-result':
+                showSuccessState(msg.data);
+                break;
+            case 'notify':
+                if (msg.error) showErrorState(msg.message);
+                break;
+        }
+    };
+    
+    // Defer initialization until the DOM is fully parsed and ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+        initialize();
+    }
+</script>
+
 </body>
 </html>
