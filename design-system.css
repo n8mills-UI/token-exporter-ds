@@ -1114,6 +1114,8 @@ sl-spinner {
         var(--portfolio-gradient-dark);
     position: relative;
     overflow: hidden;
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 .portfolio-hero::before {

@@ -54,7 +54,6 @@
             flex: 1;
             max-width: calc(100vw - 280px);
             width: 100%;
-            padding: var(--size-6);
             box-sizing: border-box;
             overflow-wrap: break-word;
             word-wrap: break-word;
@@ -186,8 +185,12 @@
         .content-section {
             margin-bottom: var(--size-10);
             scroll-margin-top: var(--size-6);
+            padding: 0 var(--size-6);
+
         }
-        
+        #overview {
+            padding: 0; /* Ensures hero has no padding */
+        }
         .section-header {
             margin-bottom: var(--size-6);
             padding-bottom: var(--size-4);
