@@ -1057,7 +1057,7 @@ sl-spinner {
 }
 
 /* Overwrite guide padding for full-width hero */
-..guide-content {
+.guide-content {
     flex: 1;
     max-width: calc(100vw - 280px);
     width: 100%;
