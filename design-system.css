@@ -1576,7 +1576,7 @@ sl-spinner {
 .tech-item:hover {
     border-color: var(--brand-primary-lime);
     transform: scale(1.05);
-    z-index: var(--layer-base)0;
+    z-index: var(--layer-card);
 }
 
 .tech-logo {
