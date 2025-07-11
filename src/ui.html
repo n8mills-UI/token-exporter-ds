@@ -343,7 +343,6 @@
             }).join('');
 
             DOMElements.tokenSummaryCard.innerHTML = `
-                <div class="text-label">${appState.mode === 'simple' ? 'Design Tokens' : 'Selected Tokens'}</div>
                 <div class="text-heading-xl token-count-total">${selectedCount}</div>
                 <div class="text-label token-label">Design Tokens Ready to Export</div>
                 <div class="token-breakdown">${tokenTypesHTML}</div>`;
@@ -583,8 +582,27 @@
             }
         };
 
-        // Wait for the DOM to be fully ready before initializing
-        document.addEventListener('DOMContentLoaded', initialize);
+     // Wait for the DOM to be fully ready before initializing
+document.addEventListener('DOMContentLoaded', initialize);
+
+// Dev mode - load mock data after 1 second if no Figma response
+setTimeout(() => {
+    if (DOMElements.skeletonLoader.style.display !== 'none') {
+        console.log('Dev mode: Loading mock data');
+        // Mock data for development
+        appState.collections = [
+            { id: '1', name: 'Brand Colors', counts: { color: 24, text: 8, number: 12, states: 4 }, totalVariables: 48 },
+            { id: '2', name: 'Typography', counts: { color: 0, text: 16, number: 12, states: 0 }, totalVariables: 28 }
+        ];
+        appState.globalTokenCounts = { color: 679, text: 10, number: 97, states: 0 };
+        appState.selectedTokenTypes = new Set(['color', 'text', 'number', 'states']);
+        appState.selectedCollections = new Set(['1', '2']);
+        
+        DOMElements.skeletonLoader.style.display = 'none';
+        DOMElements.mainUI.style.display = 'block';
+        updateUI();
+    }
+}, 1000);
     </script>
 </body>
 </html>
