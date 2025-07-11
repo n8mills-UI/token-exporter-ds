@@ -1038,8 +1038,13 @@ sl-spinner {
 }
 
 /* Overwrite guide padding for full-width hero */
-.guide-content {
-    padding: 0;
+..guide-content {
+    flex: 1;
+    max-width: calc(100vw - 280px);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* Cyberpunk stats banner */
@@ -1157,6 +1162,7 @@ sl-spinner {
     max-width: 60ch;
     margin: 0 auto var(--size-2);
     line-height: var(--font-lineheight-3);
+    padding: 0 var(--size-4);
 }
 
 .hero-description {
