@@ -38,45 +38,52 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 @import "https://unpkg.com/open-props/normalize";
 @import "https://unpkg.com/open-props/buttons";
 
-/* ==========================================================================
-   PHASE 1: FOUNDATION (from v2.7.2)
-   ========================================================================== */
 
-:root {
-    /* Version Management System */
-    --system-version: "4.0.6";
-    --system-updated: "2025-01-30";
+::root {
+    /* =========================
+       VERSION & METADATA
+       ========================= */
+    --system-version: "4.0.0";
+    --system-updated: "2025-01-11";
     --system-stage: "production";
     
-    /* --- Brand Colors --- */
+    /* =========================
+       BRAND COLORS
+       ========================= */
     --brand-primary-lime: #D2FF37;
     --brand-secondary-yellow: #EEFF00;
     --brand-text-dark: #1E1E1E;
     --brand-gradient-lime: linear-gradient(180deg, var(--brand-primary-lime) 0%, var(--brand-secondary-yellow) 100%);
     
-    /* Token Category Colors */
+    /* RGB values for opacity mixing */
+    --brand-primary-lime-rgb: 210, 255, 55;
+    --brand-secondary-yellow-rgb: 238, 255, 0;
+    
+    /* =========================
+       TOKEN CATEGORY COLORS
+       ========================= */
     --category-color-cyan: #00D1FF;
     --category-color-purple: #B48CFF;
     --category-color-orange: #FFB86C;
     --category-color-pink: #FF74BC;
     
-    /* Map to Open Props color system */
-    --color-primary: var(--brand-primary-lime);
-    --color-secondary: var(--brand-secondary-yellow);
-    
-    /* Override Open Props grays */
-    --gray-9: #1e1e1e;
-    --gray-8: #2a2a2a;
-    --gray-7: #3a3a3a;
-    --gray-6: #444444;
-    --gray-5: #666666;
-    --gray-4: #999999;
-    --gray-3: #a0a0a0;
-    --gray-2: #cccccc;
-    --gray-1: #f0f0f0;
+    /* =========================
+       GRAYSCALE PALETTE
+       ========================= */
     --gray-0: #ffffff;
+    --gray-1: #f0f0f0;
+    --gray-2: #cccccc;
+    --gray-3: #a0a0a0;
+    --gray-4: #999999;
+    --gray-5: #666666;
+    --gray-6: #444444;
+    --gray-7: #3a3a3a;
+    --gray-8: #2a2a2a;
+    --gray-9: #1e1e1e;
     
-    /* Semantic color mappings */
+    /* =========================
+       SEMANTIC COLORS
+       ========================= */
     --color-text-default: var(--gray-0);
     --color-text-secondary: var(--gray-2);
     --color-text-muted: var(--gray-3);
@@ -91,18 +98,183 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
     --color-border-default: var(--gray-6);
     --color-border-interactive-focus: var(--brand-primary-lime);
     
-    /* Override Open Props surface colors */
+    /* =========================
+       SURFACE COLORS
+       ========================= */
     --surface-1: var(--gray-9);
     --surface-2: var(--gray-8);
     --surface-3: var(--gray-7);
     --surface-4: var(--gray-6);
     
-    /* Font overrides */
+    /* =========================
+       TYPOGRAPHY
+       ========================= */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Monaco', 'Menlo', monospace;
-
-    /* Missing Gradient Fix */
-    --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
+    
+    /* =========================
+       Z-INDEX LAYERS (NEW!)
+       ========================= */
+    --layer-base: var(--layer-1);          /* 1 - Base elements */
+    --layer-card: var(--layer-2);          /* 2 - Cards, elevated surfaces */
+    --layer-dropdown: var(--layer-3);      /* 3 - Dropdowns, tooltips */
+    --layer-modal: var(--layer-4);         /* 4 - Modals, dialogs */
+    --layer-notification: var(--layer-5);  /* 5 - Toasts, alerts */
+    
+    /* =========================
+       SEMANTIC SPACING (NEW!)
+       ========================= */
+    --spacing-xs: var(--size-1);     /* 4px - Inline elements */
+    --spacing-sm: var(--size-2);     /* 8px - Tight spacing */
+    --spacing-md: var(--size-4);     /* 16px - Default spacing */
+    --spacing-lg: var(--size-6);     /* 24px - Section spacing */
+    --spacing-xl: var(--size-8);     /* 32px - Large sections */
+    --spacing-2xl: var(--size-10);   /* 40px - Major sections */
+    
+    /* Component-specific spacing */
+    --spacing-card: var(--size-3);
+    --spacing-section: var(--size-10);
+    --spacing-input: var(--size-2) var(--size-3);
+    --spacing-button: var(--size-2) var(--size-3);
+    
+    /* =========================
+       OPACITY SCALE (NEW!)
+       ========================= */
+    --opacity-0: 0;
+    --opacity-5: 0.05;
+    --opacity-10: 0.1;
+    --opacity-20: 0.2;
+    --opacity-40: 0.4;
+    --opacity-50: 0.5;
+    --opacity-60: 0.6;
+    --opacity-80: 0.8;
+    --opacity-90: 0.9;
+    --opacity-100: 1;
+    
+    /* Semantic opacity */
+    --opacity-disabled: var(--opacity-60);
+    --opacity-hover: var(--opacity-80);
+    --opacity-backdrop: 0.85;
+    --opacity-overlay: var(--opacity-10);
+    
+    /* =========================
+       COMPONENT SIZES (NEW!)
+       ========================= */
+    --component-height-xs: var(--size-6);  /* 24px */
+    --component-height-sm: var(--size-7);  /* 28px */
+    --component-height-md: var(--size-8);  /* 32px */
+    --component-height-lg: var(--size-9);  /* 36px */
+    --component-height-xl: var(--size-10); /* 40px */
+    
+    /* =========================
+       ICON SIZES (NEW!)
+       ========================= */
+    --icon-xs: var(--size-3);  /* 12px */
+    --icon-sm: var(--size-4);  /* 16px */
+    --icon-md: var(--size-5);  /* 20px */
+    --icon-lg: var(--size-6);  /* 24px */
+    --icon-xl: var(--size-8);  /* 32px */
+    
+    /* =========================
+       CONTENT WIDTHS (NEW!)
+       ========================= */
+    --content-xs: 320px;
+    --content-sm: 640px;
+    --content-md: 768px;
+    --content-lg: 1024px;
+    --content-xl: 1280px;
+    --content-prose: 65ch;
+    
+    /* =========================
+       BLUR VALUES (NEW!)
+       ========================= */
+    --blur-sm: blur(4px);
+    --blur-md: blur(8px);
+    --blur-lg: blur(16px);
+    --blur-xl: blur(24px);
+    
+    /* =========================
+       TRANSITIONS (NEW!)
+       ========================= */
+    --transition-fast: all var(--animation-duration-2) var(--ease-3);
+    --transition-medium: all var(--animation-duration-3) var(--ease-3);
+    --transition-slow: all var(--animation-duration-4) var(--ease-3);
+    
+    /* =========================
+       FOCUS STATES (NEW!)
+       ========================= */
+    --focus-ring: 0 0 0 3px rgba(var(--brand-primary-lime-rgb), 0.2);
+    --focus-ring-error: 0 0 0 3px rgba(var(--red-6-rgb, 255, 0, 0), 0.2);
+    
+    /* =========================
+       SHOELACE THEME MAPPINGS
+       ========================= */
+    /* Primary Color Mapping */
+    --sl-color-primary-50: #f7ffd4;
+    --sl-color-primary-100: #f0ffaa;
+    --sl-color-primary-200: #e8ff81;
+    --sl-color-primary-300: #e1ff57;
+    --sl-color-primary-400: #daff2e;
+    --sl-color-primary-500: var(--brand-secondary-yellow);
+    --sl-color-primary-600: var(--brand-primary-lime);
+    --sl-color-primary-700: #a3cc00;
+    --sl-color-primary-800: #7a9900;
+    --sl-color-primary-900: #526600;
+    --sl-color-primary-950: #293300;
+    
+    /* Neutral Color Mapping */
+    --sl-color-neutral-0: var(--gray-0);
+    --sl-color-neutral-50: var(--gray-1);
+    --sl-color-neutral-100: var(--gray-2);
+    --sl-color-neutral-200: var(--gray-3);
+    --sl-color-neutral-300: var(--gray-4);
+    --sl-color-neutral-400: var(--gray-5);
+    --sl-color-neutral-500: var(--gray-6);
+    --sl-color-neutral-600: var(--gray-7);
+    --sl-color-neutral-700: var(--gray-8);
+    --sl-color-neutral-800: var(--gray-9);
+    --sl-color-neutral-900: #0a0a0a;
+    --sl-color-neutral-950: #000000;
+    
+    /* Shoelace Typography */
+    --sl-font-sans: var(--font-sans);
+    --sl-font-mono: var(--font-mono);
+    --sl-font-weight-normal: var(--font-weight-4);
+    --sl-font-weight-semibold: var(--font-weight-6);
+    --sl-font-weight-bold: var(--font-weight-7);
+    
+    /* Shoelace Spacing */
+    --sl-spacing-small: var(--size-2);
+    --sl-spacing-medium: var(--size-4);
+    --sl-spacing-large: var(--size-6);
+    
+    /* Shoelace Borders */
+    --sl-border-radius-small: var(--radius-1);
+    --sl-border-radius-medium: var(--radius-2);
+    --sl-border-radius-large: var(--radius-3);
+    --sl-border-radius-x-large: var(--radius-4);
+    
+    /* Stroke weights */
+    --stroke-thin: var(--border-size-1);      /* 1px */
+    --stroke-regular: var(--border-size-2);   /* 2px */
+    --stroke-thick: var(--border-size-3);     /* 3px */
+    
+    /* Shoelace Shadows */
+    --sl-shadow-x-small: var(--shadow-2);
+    --sl-shadow-small: var(--shadow-3);
+    --sl-shadow-medium: var(--shadow-4);
+    --sl-shadow-large: var(--shadow-5);
+    
+    /* Shoelace Transitions */
+    --sl-transition-x-slow: var(--animation-duration-4);
+    --sl-transition-slow: var(--animation-duration-3);
+    --sl-transition-medium: var(--animation-duration-2);
+    --sl-transition-fast: var(--animation-duration-1);
+    
+    /* =========================
+       DEPRECATED (Remove in v5)
+       ========================= */
+    /* --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8)); */
 }
 
 /* ==========================================================================
