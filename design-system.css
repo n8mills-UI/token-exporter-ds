@@ -1010,24 +1010,36 @@ sl-spinner {
     padding: 0; /* Ensures hero has no padding */
 }
 
+
 /* @docs-only-start */
+/* Example Container System - Improved wrapper pattern */
+.example-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    margin-bottom: var(--size-4);
+}
+
 .example-container {
     background: var(--color-background-primary);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-2);
-    padding: var(--size-6) var(--size-4) var(--size-4); /* Increased top padding */
-    margin-top: var(--size-6); /* Add margin to separate from the label */
+    padding: var(--size-4);
     position: relative;
 }
 
 .example-label {
-    /* This is no longer positioned absolutely */
-    margin-bottom: calc(-1 * var(--size-4)); /* Pull the container up slightly */
     font-size: var(--font-size-0);
     font-weight: var(--font-weight-6);
     color: var(--brand-primary-lime);
     text-transform: uppercase;
     letter-spacing: var(--font-letterspacing-2);
+    padding-left: var(--size-1);
+}
+
+/* Fallback for existing structure without wrapper */
+.example-label + .example-container {
+    margin-top: var(--size-2);
 }
 
 .token-exporter-logo {
