@@ -2349,7 +2349,7 @@ main {
     width: 100%; 
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s var(--ease-out-5);
+    transition: left var(--animation-duration-4) var(--ease-out-5); /* --animation-duration-4 is 500ms or 0.5s */
 }
 
 .btn:hover:not(:disabled)::before { 
@@ -3037,7 +3037,7 @@ main {
 /* @docs-only-end */
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     .guide-sidebar { 
         transform: translateX(-100%);
         z-index: var(--layer-modal); /* Mobile menu z-index fix */
@@ -3066,7 +3066,7 @@ main {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 25rem) {
     .token-breakdown {
         grid-template-columns: 1fr !important;
         gap: var(--size-2) !important;
