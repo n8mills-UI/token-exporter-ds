@@ -9,15 +9,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- Final v4.0.6 Design System Styles (Optimized for Plugin) -->
+    <!-- Final v4.0.6 Design System Styles -->
     <style>
         /*
-        ==========================================================================
-        Token Exporter Design System v4.0.6 | INLINE & OPTIMIZED FOR FIGMA PLUGIN
-        ==========================================================================
+        ████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗    ███████╗██╗  ██╗██████╗  ██████╗ ██████╗ ████████╗███████╗██████╗ 
+        ╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║    ██╔════╝╚██╗██╔╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗
+           ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║    █████╗   ╚███╔╝ ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██████╔╝
+           ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║    ██╔══╝   ██╔██╗ ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██╔══██╗
+           ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
+           ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+        ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+        Token Exporter Design System v4.0.6 | Crafted with ❤️ by Nate Mills
+        Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
+        ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
         */
 
+        /* 1. Import Shoelace FIRST - Component library base styles */
+        @import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css";
+        @import "https://unpkg.com/open-props/style";
+        @import "https://unpkg.com/open-props/normalize";
+        @import "https://unpkg.com/open-props/buttons";
+
         :root {
+            --system-version: "4.0.6";
             --brand-primary-lime: #D2FF37;
             --brand-secondary-yellow: #EEFF00;
             --brand-text-dark: #1E1E1E;
@@ -31,104 +45,111 @@
             --gray-7: #3a3a3a;
             --gray-6: #444444;
             --gray-5: #666666;
+            --gray-4: #999999;
             --gray-3: #a0a0a0;
             --gray-2: #cccccc;
+            --gray-1: #f0f0f0;
             --gray-0: #ffffff;
             --color-text-default: var(--gray-0);
             --color-text-secondary: var(--gray-2);
             --color-text-muted: var(--gray-3);
             --color-text-on-brand: var(--brand-text-dark);
-            --color-text-error: #ff6b6b;
+            --color-text-error: var(--red-6);
             --color-background-primary: var(--gray-9);
             --color-background-secondary: var(--gray-8);
             --color-background-tertiary: var(--gray-7);
             --color-background-disabled: #333333;
             --color-border-default: var(--gray-6);
             --color-border-interactive-focus: var(--brand-primary-lime);
+            --surface-1: var(--gray-9);
+            --surface-2: var(--gray-8);
+            --surface-3: var(--gray-7);
+            --surface-4: var(--gray-6);
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --size-1: 0.25rem; --size-2: 0.5rem; --size-3: 0.75rem; --size-4: 1rem;
-            --size-5: 1.25rem; --size-6: 1.5rem; --size-8: 2rem; --size-9: 2.25rem;
-            --size-10: 2.5rem; --size-12: 3.5rem;
-            --radius-1: 0.125rem; --radius-2: 0.375rem; --radius-3: 0.5rem;
-            --radius-4: 1rem; --radius-round: 9999px;
-            --font-size-00: .75rem; --font-size-0: .875rem; --font-size-1: 1rem;
-            --font-size-2: 1.125rem; --font-size-3: 1.25rem; --font-size-5: 2rem;
-            --font-size-7: 3rem;
-            --font-weight-4: 400; --font-weight-5: 500; --font-weight-6: 600;
-            --font-weight-7: 700;
-            --font-lineheight-3: 1.5;
-            --font-letterspacing-2: .05em;
+            --font-mono: 'Monaco', 'Menlo', monospace;
             --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8));
         }
-        
-        html { overflow: hidden; }
-        body { color: var(--color-text-default); background-color: var(--color-background-primary); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; }
+        .lucide { width: 1em; height: 1em; stroke-width: 2.5px; vertical-align: middle; color: inherit; }
+        .btn .lucide, .btn-icon-only .lucide { width: 1.2em; height: 1.2em; }
+        .empty-state-icon .lucide { width: var(--font-size-5); height: var(--font-size-5); }
+        .token-type-stat .icon.lucide { width: var(--font-size-3); height: var(--font-size-3); }
+        .collection-pill .lucide { width: 12px; height: 12px; }
+        .section-title .lucide { color: var(--brand-primary-lime); }
+        .about-link .lucide { width: 24px; height: 24px; }
+        html, body { color: var(--color-text-default); background-color: var(--color-background-primary); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; margin: 0; padding: 0; }
         * { box-sizing: border-box; }
-        .text-heading-xl { font-size: var(--font-size-7); font-weight: var(--font-weight-7); }
-        .text-heading-lg { font-size: var(--font-size-5); font-weight: var(--font-weight-6); }
-        .text-heading-md { font-size: var(--font-size-3); font-weight: var(--font-weight-6); }
-        .text-body-lg { font-size: var(--font-size-2); font-weight: var(--font-weight-5); }
-        .text-body-md { font-size: var(--font-size-1); font-weight: var(--font-weight-4); }
+        .text-heading-xl { font-size: var(--font-size-7); font-weight: var(--font-weight-7); line-height: var(--font-lineheight-1); }
+        .text-heading-lg { font-size: var(--font-size-5); font-weight: var(--font-weight-6); line-height: var(--font-lineheight-2); }
+        .text-heading-md { font-size: var(--font-size-3); font-weight: var(--font-weight-6); line-height: var(--font-lineheight-3); }
+        .text-body-lg { font-size: var(--font-size-2); font-weight: var(--font-weight-5); line-height: var(--font-lineheight-3); }
+        .text-body-md { font-size: var(--font-size-1); font-weight: var(--font-weight-4); line-height: var(--font-lineheight-3); }
         .text-label { font-size: var(--font-size-0); font-weight: var(--font-weight-6); text-transform: uppercase; letter-spacing: var(--font-letterspacing-2); }
         .text-caption { font-size: var(--font-size-00); font-weight: var(--font-weight-5); }
-        main { display: flex; flex-direction: column; flex-grow: 1; min-height: 0; }
+        main { display: flex; flex-direction: column; position: relative; min-height: 100vh; }
         .content-wrapper { padding: var(--size-3); flex-grow: 1; overflow-y: auto; }
-        .content-wrapper::-webkit-scrollbar { width: var(--size-2); }
-        .content-wrapper::-webkit-scrollbar-track { background-color: transparent; }
-        .content-wrapper::-webkit-scrollbar-thumb { background-color: var(--gray-6); border-radius: var(--radius-1); }
-        .card { background: var(--color-background-secondary); border-radius: var(--radius-3); padding: var(--size-3); margin-bottom: var(--size-2); border: 1px solid var(--color-border-default); }
+        .card { background: var(--color-background-secondary); border-radius: var(--radius-3); padding: var(--size-3); margin-bottom: var(--size-2); box-shadow: var(--shadow-2); border: 1px solid var(--color-border-default); }
         .token-summary { text-align: center; padding: var(--size-6) var(--size-4); }
         .token-summary .token-count-total { color: var(--brand-primary-lime); margin-bottom: var(--size-1); }
         .token-summary .token-label { color: var(--color-text-muted); margin-bottom: var(--size-4); }
-        .token-breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-2); border-top: 1px solid var(--gray-8); padding-top: var(--size-4); }
-        .token-type-stat { text-align: center; transition: all 0.2s ease-in-out; cursor: default; padding: var(--size-2); border-radius: var(--radius-2); background: var(--color-background-tertiary); border: 1px solid transparent; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .token-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-2); border-top: 1px solid var(--gray-8); padding-top: var(--size-4); }
+        .token-type-stat { text-align: center; transition: all 0.2s ease-in-out; cursor: default; padding: var(--size-2); border-radius: var(--radius-2); background: var(--surface-2); border: 1px solid transparent; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .token-type-stat .icon { margin-bottom: var(--size-1); transition: transform 0.2s ease-in-out; display: block; }
         .token-type-stat .count { font-size: var(--font-size-2); font-weight: var(--font-weight-6); margin-bottom: var(--size-1); }
         .token-type-stat.color .icon { color: var(--category-color-cyan); }
         .token-type-stat.text .icon { color: var(--category-color-purple); }
         .token-type-stat.states .icon { color: var(--category-color-pink); }
         .token-type-stat.number .icon { color: var(--category-color-orange); }
-        .advanced-mode .token-type-stat { cursor: pointer; }
-        .advanced-mode .token-type-stat:hover { background: var(--color-background-tertiary); border-color: var(--gray-5); }
+        .advanced-mode .token-type-stat { cursor: pointer; will-change: transform; }
+        .advanced-mode .token-type-stat:hover { background: var(--surface-3); border-color: var(--gray-5); }
+        .advanced-mode .token-type-stat:hover .icon { transform: scale(1.1); }
         .advanced-mode .token-type-stat.active { background: rgba(210, 255, 55, 0.1); border-color: var(--brand-primary-lime); }
         .advanced-mode .token-type-stat.disabled { opacity: 0.4; cursor: not-allowed; }
         .section-title { margin-bottom: var(--size-3); display: flex; align-items: center; gap: var(--size-2); }
-        .section-title .lucide { color: var(--brand-primary-lime); }
         .subtitle { color: var(--color-text-muted); margin-bottom: var(--size-4); }
         .format-select-wrapper { position: relative; margin-bottom: var(--size-4); }
-        .format-select { width: 100%; padding: var(--size-3) var(--size-8) var(--size-3) var(--size-4); background: var(--color-background-tertiary); border: 1px solid var(--color-border-default); border-radius: var(--radius-2); font-weight: var(--font-weight-5); cursor: pointer; appearance: none; transition: all 0.2s ease-in-out; color: var(--color-text-default); font-family: inherit; }
-        .format-select:hover { background: var(--color-background-tertiary); border-color: var(--brand-primary-lime); }
-        .format-select-wrapper::after { content: ''; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; width: 1em; height: 1em; position: absolute; right: var(--size-4); top: 50%; transform: translateY(-50%); pointer-events: none; }
-        .btn { width: 100%; padding: var(--size-2) var(--size-3); border-radius: var(--radius-2); font-weight: var(--font-weight-6); cursor: pointer; transition: all 0.2s ease-in-out; border: none; display: flex; align-items: center; justify-content: center; gap: var(--size-2); position: relative; overflow: hidden; font-family: inherit; font-size: var(--font-size-1); }
+        .format-select { width: 100%; padding: var(--size-3) var(--size-8) var(--size-3) var(--size-4); background: var(--color-background-tertiary); border: 1px solid var(--color-border-default); border-radius: var(--radius-2); font-weight: var(--font-weight-5); cursor: pointer; appearance: none; transition: all 0.2s ease-in-out; color: var(--color-text-default); font-family: inherit; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); }
+        .format-select:hover { background: var(--surface-3); border-color: var(--brand-primary-lime); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .format-select:focus { outline: none; border-color: var(--color-border-interactive-focus); box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2); background: var(--color-background-secondary); }
+        .format-select-wrapper::after { content: ''; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; width: 1em; height: 1em; position: absolute; right: var(--size-4); top: 50%; transform: translateY(-50%); pointer-events: none; transition: all 0.2s ease-in-out; font-size: var(--font-size-1); }
+        .btn { width: 100%; padding: var(--size-2) var(--size-3); border-radius: var(--radius-2); font-weight: var(--font-weight-6); cursor: pointer; transition: all 0.2s ease-in-out; border: none; display: flex; align-items: center; justify-content: center; gap: var(--size-2); position: relative; overflow: hidden; font-family: inherit; font-size: var(--font-size-1); will-change: transform, filter, box-shadow; }
+        .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); transition: left 0.5s ease-in-out; }
+        .btn:hover:not(:disabled)::before { left: 100%; }
         .btn.primary { background: var(--brand-gradient-lime); color: var(--color-text-on-brand); box-shadow: 0 4px 15px rgba(210, 255, 55, 0.15); }
         .btn.primary:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(210, 255, 55, 0.25); }
         .btn.secondary { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); color: var(--color-text-default); }
         .btn.secondary:hover:not(:disabled) { background: var(--color-background-tertiary); border-color: var(--gray-5); transform: translateY(-1px); }
-        .btn:disabled { background: var(--color-background-disabled); color: var(--gray-5); cursor: not-allowed; opacity: 0.6; }
+        .btn.tertiary { background: transparent; color: var(--brand-primary-lime); border: none; padding: var(--size-2) var(--size-3); font-weight: var(--font-weight-5); }
+        .btn.tertiary:hover:not(:disabled) { background: rgba(210, 255, 55, 0.1); transform: translateY(-1px); }
+        .btn:disabled { background: var(--color-background-disabled); color: var(--gray-5); cursor: not-allowed; transform: none; filter: none; box-shadow: none; opacity: 0.6; }
+        .btn:disabled::before { display: none; }
+        .btn-icon-only { width: var(--size-8); height: var(--size-8); padding: 0; border-radius: 50%; border: 1px solid var(--color-border-default); background: transparent; color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease-in-out; will-change: color, border-color, background; }
+        .btn-icon-only:hover { color: var(--brand-primary-lime); border-color: var(--brand-primary-lime); background: rgba(210, 255, 55, 0.1); }
         .collection-list { display: flex; flex-direction: column; gap: var(--size-2); max-height: 300px; overflow-y: auto; padding-right: var(--size-1); }
-        .collection-item { padding: var(--size-2); background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: var(--radius-2); cursor: pointer; transition: all 0.2s ease-in-out; display: flex; align-items: center; gap: var(--size-3); min-height: 48px; }
+        .collection-item { padding: var(--size-2); background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: var(--radius-2); cursor: pointer; transition: all 0.2s ease-in-out; display: flex; align-items: center; gap: var(--size-3); position: relative; min-height: 48px; }
         .collection-item:hover { background: var(--color-background-tertiary); border-color: var(--gray-5); }
         .collection-item.selected { background: rgba(210, 255, 55, 0.05); border-color: var(--brand-primary-lime); }
         .collection-checkbox { width: 14px; height: 14px; border: 2px solid var(--color-border-default); border-radius: var(--radius-1); position: relative; transition: all 0.2s ease-in-out; flex-shrink: 0; pointer-events: none; }
         .collection-item.selected .collection-checkbox { background: var(--brand-gradient-lime); border-color: var(--brand-primary-lime); }
-        .collection-item.selected .collection-checkbox::after { content: ''; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231E1E1E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); width: 10px; height: 10px; background-size: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .collection-item.selected .collection-checkbox::after { content: ''; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231E1E1E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-check'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); width: 10px; height: 10px; background-size: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
         .collection-info { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
         .collection-name { font-weight: var(--font-weight-5); margin-bottom: var(--size-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .collection-count { color: var(--color-text-secondary); flex-shrink: 0; }
         .collection-pills { display: flex; gap: var(--size-1); flex-wrap: wrap; margin-top: var(--size-1); }
-        .collection-pill { display: inline-flex; align-items: center; gap: var(--size-1); padding: var(--size-1); border-radius: var(--radius-1); font-size: var(--font-size-00); font-weight: var(--font-weight-5); }
+        .collection-pill { display: inline-flex; align-items: center; gap: var(--size-1); padding: var(--size-1); border-radius: var(--radius-1); font-size: var(--font-size-00); font-weight: var(--font-weight-5); transition: all 0.2s ease-in-out; }
         .collection-pill.color { background: rgba(0, 209, 255, 0.1); color: var(--category-color-cyan); }
         .collection-pill.text { background: rgba(180, 140, 255, 0.1); color: var(--category-color-purple); }
         .collection-pill.number { background: rgba(255, 184, 108, 0.1); color: var(--category-color-orange); }
         .collection-pill.states { background: rgba(255, 116, 188, 0.1); color: var(--category-color-pink); }
         .collection-pill.disabled { opacity: 0.5; }
-        .progress-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; padding: var(--size-6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
-        .progress-container { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: var(--radius-3); padding: var(--size-4); text-align: center; max-width: 280px; width: 90%; }
+        .progress-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; padding: var(--size-6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+        .progress-container { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: var(--radius-3); padding: var(--size-4); text-align: center; max-width: 280px; width: 90%; will-change: transform; }
         .success-icon { color: var(--brand-primary-lime); margin-bottom: var(--size-3); filter: drop-shadow(0 0 15px rgba(210, 255, 55, 0.4)); animation: successPop 0.6s ease-out; }
         .success-title { margin-bottom: var(--size-2); }
         .success-subtitle { color: var(--color-text-secondary); margin-bottom: var(--size-5); }
         .action-buttons { display: flex; gap: var(--size-3); flex-direction: column; }
         .empty-state { background: var(--gradient-7); border: 1px dashed rgba(210, 255, 55, 0.2); border-radius: var(--radius-3); padding: var(--size-8) var(--size-4); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--size-4); min-height: 240px; justify-content: center; }
-        .empty-state-icon { width: var(--size-10); height: var(--size-10); background: rgba(210, 255, 55, 0.1); border-radius: var(--radius-round); display: flex; align-items: center; justify-content: center; color: var(--brand-primary-lime); margin-bottom: var(--size-2); }
+        .empty-state-icon { width: var(--size-10); height: var(--size-10); background: rgba(210, 255, 55, 0.1); border-radius: var(--radius-round); display: flex; align-items: center; justify-content: center; color: var(--brand-primary-lime); margin-bottom: var(--size-2); animation: pulse-glow 2s ease-in-out infinite; }
+        @keyframes pulse-glow { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(210, 255, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(210, 255, 55, 0.5)); } }
         .empty-state-title { font-weight: var(--font-weight-5); margin-bottom: var(--size-1); }
         .empty-state-subtitle { color: var(--color-text-secondary); max-width: 280px; line-height: var(--font-lineheight-3); }
         .empty-state-action { color: var(--brand-primary-lime); text-decoration: none; font-weight: var(--font-weight-5); display: inline-flex; align-items: center; gap: var(--size-2); transition: all 0.2s ease-in-out; padding: var(--size-2) var(--size-3); border-radius: var(--radius-2); border: 1px solid transparent; }
@@ -139,77 +160,92 @@
         .skeleton-item:first-child { height: 180px; }
         .skeleton-pulse { background: var(--gray-7); animation: skeleton-pulse 2s ease-in-out infinite; }
         @keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .about-modal { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1001; display: none; align-items: center; justify-content: center; padding: var(--size-4); transition: all 0.3s ease-in-out; }
-        .about-modal.show { display: flex; }
+        .about-modal { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1001; display: flex; align-items: center; justify-content: center; padding: var(--size-4); opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out; }
+        .about-modal.show { opacity: 1; visibility: visible; }
         .about-content { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: var(--radius-4); padding: var(--size-4); max-width: 280px; width: 90%; text-align: center; position: relative; display: flex; flex-direction: column; gap: var(--size-4); }
-        .about-close { position: absolute; top: var(--size-2); right: var(--size-2); background: transparent; border: none; color: var(--color-text-secondary); cursor: pointer; padding: var(--size-2); border-radius: var(--radius-1); transition: all 0.2s ease-in-out; display: flex; align-items: center; justify-content: center; width: var(--size-8); height: var(--size-8); }
+        .about-content h2 { font-size: var(--font-size-3); }
+        .about-close { position: absolute; top: var(--size-2); right: var(--size-2); background: transparent; border: none; color: var(--color-text-secondary); font-size: var(--font-size-2); cursor: pointer; padding: var(--size-2); border-radius: var(--radius-1); transition: all 0.2s ease-in-out; display: flex; align-items: center; justify-content: center; width: var(--size-8); height: var(--size-8); }
         .about-close:hover { background: var(--color-background-tertiary); }
         .about-avatar { width: var(--size-12); height: var(--size-12); border-radius: var(--radius-round); margin: 0 auto; background-size: cover; background-position: center; border: 3px solid var(--brand-primary-lime); background-color: var(--gray-7); background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png'); }
         .about-header { display: flex; flex-direction: column; gap: var(--size-1); padding-bottom: var(--size-3); margin-bottom: var(--size-3); border-bottom: 1px solid var(--color-border-default); }
+        .about-title { color: var(--color-text-secondary); font-size: var(--font-size-2); }
+        .about-description { color: var(--color-text-secondary); line-height: var(--font-lineheight-3); }
         .about-links { display: flex; justify-content: center; gap: var(--size-2); }
-        .about-link { display: flex; align-items: center; justify-content: center; width: var(--size-9); height: var(--size-9); background: var(--color-background-tertiary); border-radius: var(--radius-2); color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s ease-in-out; }
+        .about-link { display: flex; align-items: center; justify-content: center; width: var(--size-9); height: var(--size-9); background: var(--color-background-tertiary); border-radius: var(--radius-2); color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s ease-in-out; will-change: transform; }
         .about-link:hover { background: var(--brand-primary-lime); color: var(--brand-text-dark); transform: translateY(-2px); }
         .about-tagline { color: var(--color-text-muted); font-size: var(--font-size-00); }
-        .heart { color: var(--category-color-pink); animation: heartbeat 1.5s ease-in-out infinite; }
+        .about-tagline .heart { color: var(--category-color-pink); animation: heartbeat 1.5s ease-in-out infinite; }
         .advanced-toggle { text-align: center; margin-top: var(--size-3); }
         .advanced-link { color: var(--color-text-muted); text-decoration: none; font-weight: var(--font-weight-5); transition: color 0.2s ease-in-out; display: inline-flex; align-items: center; gap: var(--size-1); }
         .advanced-link:hover { color: var(--brand-primary-lime); }
-        .footer-section { text-align: center; line-height: 1.4; padding: var(--size-3); border-top: 1px solid var(--color-border-default); margin-top: auto; }
+        .advanced-link i { font-size: var(--font-size-0); transition: transform 0.2s ease-in-out; }
+        .advanced-link:hover i { transform: translateX(2px); }
+        .footer-section { text-align: center; line-height: 1.4; margin: var(--size-3) 0 0; padding: var(--size-3); border-top: 1px solid var(--color-border-default); margin-top: auto; }
         .footer-section a { color: var(--color-text-muted); text-decoration: none; transition: all 0.2s ease-in-out; }
         .footer-section a:hover { color: var(--brand-primary-lime); }
+        .footer-section .heart { display: inline-block; transition: transform 0.3s ease-in-out; }
+        .footer-section a:hover .heart { transform: scale(1.2); }
+        .content-wrapper::-webkit-scrollbar, .collection-list::-webkit-scrollbar { width: var(--size-2); }
+        .content-wrapper::-webkit-scrollbar-track, .collection-list::-webkit-scrollbar-track { background-color: transparent; }
+        .content-wrapper::-webkit-scrollbar-thumb, .collection-list::-webkit-scrollbar-thumb { background-color: var(--gray-6); border-radius: var(--radius-1); }
+        .content-wrapper::-webkit-scrollbar-thumb:hover, .collection-list::-webkit-scrollbar-thumb:hover { background-color: var(--gray-5); }
+        .collection-item:focus-visible, .btn:focus-visible, .format-select:focus-visible, .about-close:focus-visible { outline: 2px solid var(--brand-primary-lime); outline-offset: 2px; }
         .search-input { width: 100%; padding: var(--size-2) var(--size-3) var(--size-2) var(--size-8); background: var(--color-background-tertiary); border: 1px solid var(--color-border-default); border-radius: var(--radius-2); font-size: var(--font-size-1); transition: all 0.2s ease-in-out; color: var(--color-text-default); margin-bottom: var(--size-3); }
         .search-wrapper { position: relative; }
         .search-wrapper .lucide-search { position: absolute; left: var(--size-3); top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+        .search-input:focus { outline: none; border-color: var(--color-border-interactive-focus); box-shadow: 0 0 0 3px rgba(210, 255, 55, 0.2); }
         @keyframes successPop { 0% { transform: scale(0) rotate(-180deg); opacity: 0; } 70% { transform: scale(1.1) rotate(10deg); opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
     </style>
 </head>
 <body>
     <main>
-        <!-- This wrapper contains the static HTML skeleton -->
+        <!-- Static HTML Skeleton -->
         <div class="content-wrapper" id="content-wrapper">
-            
-            <!-- Loading State (Visible by default) -->
-            <div class="skeleton-container" id="skeleton-loader">
-                <div class="skeleton-item skeleton-pulse"></div>
-                <div class="skeleton-item skeleton-pulse small"></div>
-                <div class="skeleton-item skeleton-pulse small"></div>
+            <!-- This container will be populated by the script -->
+            <div id="main-content-container">
+                <!-- Initial loading state -->
+                <div class="skeleton-container" id="skeleton-loader">
+                    <div class="skeleton-item skeleton-pulse"></div>
+                    <div class="skeleton-item skeleton-pulse small"></div>
+                    <div class="skeleton-item skeleton-pulse small"></div>
+                </div>
+
+                <!-- Empty state (hidden by default) -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-state-icon"><i data-lucide="package"></i></div>
+                    <div>
+                        <div class="text-heading-lg empty-state-title">Let's build something!</div>
+                        <div class="text-body-md empty-state-subtitle">Turn your colors, text styles, and spacing into code-ready tokens.</div>
+                    </div>
+                    <button class="btn primary empty-state-action" style="width: auto;" aria-label="Navigate to create variables in Figma">
+                        Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i>
+                    </button>
+                </div>
+
+                <!-- Main UI (hidden by default) -->
+                <div id="main-ui" style="display: none;">
+                    <div class="card token-summary" id="token-summary-card">
+                        <!-- Content will be injected here -->
+                    </div>
+                    <div class="card export-section" id="export-card">
+                        <!-- Content will be injected here -->
+                    </div>
+                    <div class="card collections-section" id="collections-card" style="display: none;">
+                        <!-- Content will be injected here -->
+                    </div>
+                    <div class="advanced-toggle" id="advanced-toggle-container">
+                        <!-- Content will be injected here -->
+                    </div>
+                </div>
             </div>
 
-            <!-- Empty State (Hidden by default) -->
-            <div class="empty-state" id="empty-state" style="display: none;">
-                <div class="empty-state-icon"><i data-lucide="package"></i></div>
-                <div>
-                    <div class="text-heading-lg empty-state-title">Let's build something!</div>
-                    <div class="text-body-md empty-state-subtitle">Turn your colors, text styles, and spacing into code-ready tokens.</div>
-                </div>
-                <button class="btn primary empty-state-action" style="width: auto;" aria-label="Navigate to create variables in Figma">
-                    Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i>
-                </button>
+            <div class="footer-section">
+                <a href="#" id="about-link" class="text-caption">
+                    created with <span class="heart">❤️</span> by nate mills
+                </a>
             </div>
-
-            <!-- Main UI (Hidden by default) -->
-            <div id="main-ui" style="display: none;">
-                <div class="card token-summary" id="token-summary-card">
-                    <!-- JS will populate this -->
-                </div>
-                <div class="card export-section" id="export-card">
-                    <!-- JS will populate this -->
-                </div>
-                <div class="card collections-section" id="collections-card" style="display: none;">
-                    <!-- JS will populate this -->
-                </div>
-                <div class="advanced-toggle" id="advanced-toggle-container">
-                    <!-- JS will populate this -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Static Footer -->
-        <div class="footer-section">
-            <a href="#" id="about-link" class="text-caption">
-                created with <span class="heart">❤️</span> by nate mills
-            </a>
         </div>
     </main>
 
@@ -220,22 +256,20 @@
             <div class="about-avatar"></div>
             <div class="about-header">
                 <h2 class="text-heading-md">NATE MILLS</h2>
-                <div class="text-body-lg" style="color: var(--color-text-secondary);">Senior UI Designer</div>
+                <div class="text-body-lg about-title">Senior UI Designer</div>
             </div>
-            <p class="text-body-md" style="color: var(--color-text-secondary);">Building accessible design systems that scale.</p>
+            <p class="text-body-md about-description"> Building accessible design systems that scale, with 20 years of industry experience. </p>
             <div class="about-links">
                 <a href="#" class="about-link" data-url="https://natemills.me" title="Portfolio"><i data-lucide="briefcase"></i></a>
                 <a href="#" class="about-link" data-url="https://www.linkedin.com/in/millsdesign/" title="LinkedIn"><i data-lucide="linkedin"></i></a>
                 <a href="#" class="about-link" data-url="https://www.figma.com/@mills" title="Figma"><i data-lucide="figma"></i></a>
-                <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email">
-                    <i data-lucide="mail"></i>
-                </a>
+                <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email"><i data-lucide="mail"></i></a>
             </div>
             <div class="text-label about-tagline"> MADE WITH <span class="heart">❤️</span> FOR THE DESIGN COMMUNITY </div>
         </div>
     </div>
     
-    <div class="progress-overlay" id="progress-overlay"></div>
+    <div class="progress-overlay" id="progress-overlay" style="display: none;"></div>
 
     <script>
         // --- STATE & CONFIG ---
@@ -246,10 +280,8 @@
             selectedFormat: 'css',
             selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
             globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 },
-            searchTerm: '',
         };
 
-        // --- DOM Elements ---
         const DOMElements = {
             skeletonLoader: document.getElementById('skeleton-loader'),
             emptyState: document.getElementById('empty-state'),
@@ -280,7 +312,7 @@
             }
         };
 
-        // --- UI UPDATE ("HYDRATION") FUNCTIONS ---
+        // --- UI UPDATE FUNCTIONS ---
         function updateUI() {
             DOMElements.mainUI.classList.toggle('advanced-mode', appState.mode === 'advanced');
             updateTokenSummary();
@@ -298,19 +330,23 @@
                 return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
             }, 0);
 
-            DOMElements.tokenSummaryCard.querySelector('.token-count-total').textContent = selectedCount;
-            DOMElements.tokenSummaryCard.querySelector('.token-label').textContent = `${appState.mode === 'simple' ? 'Design Tokens' : 'Selected Tokens'} Ready to Export`;
-            
-            ['color', 'text', 'number', 'states'].forEach(type => {
-                const statEl = DOMElements.tokenSummaryCard.querySelector(`[data-type="${type}"]`);
-                if (statEl) {
-                    const count = appState.globalTokenCounts[type] || 0;
-                    const isActive = appState.selectedTokenTypes.has(type);
-                    statEl.querySelector('.count').textContent = count;
-                    statEl.classList.toggle('active', isActive);
-                    statEl.classList.toggle('disabled', count === 0);
-                }
-            });
+            const tokenTypesHTML = ['color', 'text', 'number', 'states'].map(type => {
+                const iconMap = { color: 'palette', text: 'type', number: 'hash', states: 'toggle-right' };
+                const count = appState.globalTokenCounts[type] || 0;
+                const isActive = appState.selectedTokenTypes.has(type);
+                return `
+                    <div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}" data-type="${type}">
+                        <i class="icon" data-lucide="${iconMap[type]}"></i>
+                        <div class="count">${count}</div>
+                        <div class="text-label label">${type}</div>
+                    </div>`;
+            }).join('');
+
+            DOMElements.tokenSummaryCard.innerHTML = `
+                <div class="text-label">${appState.mode === 'simple' ? 'Design Tokens' : 'Selected Tokens'}</div>
+                <div class="text-heading-xl token-count-total">${selectedCount}</div>
+                <div class="text-label token-label">Design Tokens Ready to Export</div>
+                <div class="token-breakdown">${tokenTypesHTML}</div>`;
         }
 
         function updateExportCard() {
@@ -321,12 +357,19 @@
                     return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
                 }, 0);
 
-            const exportBtn = DOMElements.exportCard.querySelector('#export-btn');
-            exportBtn.disabled = selectedTokenCount === 0;
-            exportBtn.innerHTML = `<i data-lucide="package-check"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}`;
+            const optionsHTML = ['all', 'css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'].map(f =>
+                `<option value="${f}" ${appState.selectedFormat === f ? 'selected' : ''}>${f === 'all' ? 'All Formats' : {css: 'CSS Variables', swift: 'Swift (iOS)', android: 'Android XML', flutter: 'Flutter', w3c: 'JSON (W3C)', tailwind: 'Tailwind Config'}[f]}</option>`
+            ).join('');
 
-            const select = DOMElements.exportCard.querySelector('#format-select');
-            select.value = appState.selectedFormat;
+            DOMElements.exportCard.innerHTML = `
+                <h3 class="text-label section-title"><i data-lucide="rocket"></i> ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}</h3>
+                <p class="text-body-md subtitle">Export your tokens in your preferred format</p>
+                <div class="format-select-wrapper">
+                    <select class="format-select" id="format-select">${optionsHTML}</select>
+                </div>
+                <button class="btn primary" id="export-btn" ${selectedTokenCount === 0 ? 'disabled' : ''}>
+                    <i data-lucide="package-check"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}
+                </button>`;
         }
 
         function updateCollectionsCard() {
@@ -336,10 +379,8 @@
             }
             DOMElements.collectionsCard.style.display = 'block';
 
-            const list = DOMElements.collectionsCard.querySelector('.collection-list');
             const filteredCollections = appState.collections.filter(c => c.name.toLowerCase().includes(appState.searchTerm || ''));
-            
-            list.innerHTML = filteredCollections.map(c => {
+            const collectionItemsHTML = filteredCollections.map(c => {
                 const isSelected = appState.selectedCollections.has(c.id);
                 const pillsHTML = Object.entries(c.counts).map(([type, count]) => {
                     if (count === 0) return '';
@@ -357,6 +398,17 @@
                         <div class="text-caption collection-count">${c.totalVariables} tokens</div>
                     </div>`;
             }).join('');
+
+            const searchInputHTML = appState.collections.length > 5 ? `
+                <div class="search-wrapper">
+                    <i data-lucide="search" class="lucide-search"></i>
+                    <input type="text" class="search-input" placeholder="Search collections..." id="collection-search" value="${appState.searchTerm || ''}">
+                </div>` : '';
+
+            DOMElements.collectionsCard.innerHTML = `
+                <h3 class="text-label section-title"><i data-lucide="layers"></i> Select Collections</h3>
+                ${searchInputHTML}
+                <div class="collection-list">${collectionItemsHTML}</div>`;
         }
 
         function updateToggleContainer() {
@@ -371,17 +423,15 @@
         const debouncedUpdate = debounce(() => updateUI(), 250);
 
         function attachEventListeners() {
-            // Static listeners that only need to be attached once
+            // Static listeners
             DOMElements.aboutLink.onclick = (e) => {
                 e.preventDefault();
-                DOMElements.aboutModal.style.display = 'flex';
-                setTimeout(() => DOMElements.aboutModal.classList.add('show'), 10);
+                DOMElements.aboutModal.classList.add('show');
                 renderIcons();
             };
             DOMElements.aboutModal.onclick = (e) => {
                 if (e.target.closest('.about-close') || e.target === DOMElements.aboutModal) {
                     DOMElements.aboutModal.classList.remove('show');
-                    setTimeout(() => DOMElements.aboutModal.style.display = 'none', 300);
                 }
             };
             DOMElements.aboutModal.querySelectorAll('.about-link').forEach(link => {
@@ -390,46 +440,65 @@
                     openUrl(link.dataset.url);
                 };
             });
-            
-            // Event delegation for dynamic content
-            document.body.addEventListener('click', (e) => {
-                const exportBtn = e.target.closest('#export-btn');
-                const toggleAdvanced = e.target.closest('#toggle-advanced');
-                const toggleSimple = e.target.closest('#toggle-simple');
-                const collectionItem = e.target.closest('.collection-item');
-                const tokenTypeStat = e.target.closest('.token-type-stat:not(.disabled)');
-                const emptyAction = e.target.closest('.empty-state-action');
+            const emptyStateAction = document.querySelector('.empty-state-action');
+            if (emptyStateAction) {
+                emptyStateAction.addEventListener('click', () =>
+                    openUrl('https://help.figma.com/hc/en-us/articles/360041085694-Create-and-use-variables')
+                );
+            }
+        }
 
-                if (exportBtn) handleExport();
-                if (toggleAdvanced) { e.preventDefault(); appState.mode = 'advanced'; updateUI(); }
-                if (toggleSimple) { appState.mode = 'simple'; updateUI(); }
-                if (collectionItem && appState.mode === 'advanced') {
-                    const id = collectionItem.dataset.collectionId;
-                    appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+        function attachDynamicEventListeners() {
+            const exportBtn = document.getElementById('export-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', handleExport);
+            }
+            const toggleAdvanced = document.getElementById('toggle-advanced');
+            if (toggleAdvanced) {
+                toggleAdvanced.addEventListener('click', e => {
+                    e.preventDefault();
+                    appState.mode = 'advanced';
                     updateUI();
-                }
-                if (tokenTypeStat && appState.mode === 'advanced') {
-                    const type = tokenTypeStat.dataset.type;
-                    appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
+                });
+            }
+            const toggleSimple = document.getElementById('toggle-simple');
+            if (toggleSimple) {
+                toggleSimple.addEventListener('click', () => {
+                    appState.mode = 'simple';
                     updateUI();
-                }
-                if (emptyAction) {
-                    openUrl('https://help.figma.com/hc/en-us/articles/360041085694-Create-and-use-variables');
-                }
+                });
+            }
+            document.querySelectorAll('.collection-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const id = item.dataset.collectionId;
+                    if (appState.mode === 'advanced') {
+                        appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+                        updateUI();
+                    }
+                });
             });
-
-            document.body.addEventListener('change', (e) => {
-                if (e.target.id === 'format-select') {
+            if (appState.mode === 'advanced') {
+                document.querySelectorAll('.token-type-stat:not(.disabled)').forEach(stat => {
+                    stat.addEventListener('click', () => {
+                        const type = stat.dataset.type;
+                        appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
+                        updateUI();
+                    });
+                });
+            }
+            const formatSelect = document.getElementById('format-select');
+            if (formatSelect) {
+                formatSelect.addEventListener('change', e => {
                     appState.selectedFormat = e.target.value;
-                }
-            });
-
-            document.body.addEventListener('input', (e) => {
-                if (e.target.id === 'collection-search') {
+                });
+            }
+            const collectionSearch = document.getElementById('collection-search');
+            if (collectionSearch) {
+                collectionSearch.addEventListener('input', e => {
                     appState.searchTerm = e.target.value;
                     debouncedUpdate();
-                }
-            });
+                });
+            }
         }
 
         // --- EXPORT & PROGRESS ---
@@ -443,7 +512,7 @@
         }
         function showProgress(message) {
             DOMElements.progressOverlay.style.display = 'flex';
-            DOMElements.progressOverlay.innerHTML = `<div class="progress-container"><div class="text-heading-md success-title">${message}</div><p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p></div>`;
+            DOMElements.progressOverlay.innerHTML = `<div class="progress-container"><div class="text-heading-md success-title" style="margin-top: var(--size-4);">${message}</div><p class="text-body-md success-subtitle">Please wait while your tokens are packaged.</p></div>`;
         }
         function showSuccessState(data) {
             if (!data || data.length === 0) { showErrorState('No tokens matched your selected criteria.'); return; }
