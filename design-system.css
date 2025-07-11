@@ -336,7 +336,7 @@ body {
 
 .success-icon,
 .empty-state-icon .lucide {
-    stroke-width: var(--stroke-thick);
+    stroke-width: var(--stroke-regular);
 }
 
 /* ==========================================================================
@@ -2649,7 +2649,7 @@ main {
 }
 
 /* Empty State */
-/* Empty State Container - Fixed inline styles */
+
 .empty-state-container {
     background: var(--color-background-primary);
     padding: var(--size-6);
