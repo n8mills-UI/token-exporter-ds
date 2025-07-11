@@ -1274,51 +1274,52 @@
         <div class="component-body">
             
             <!-- Empty State -->
-            <div class="state-group">
-                <div class="example-wrapper">
-                    <div class="example-label">Empty State</div>
-                    <div class="example-container">
-                        <div style="background: var(--bg-color); padding: var(--size-6); border-radius: var(--radius-3); min-height: 400px; display: flex; align-items: center; justify-content: center;">
-                            <div class="empty-state" style="max-width: 360px; width: 100%;">
-                                <div class="empty-state-icon" style="animation: pulse-glow 2s ease-in-out infinite;">
-                                    <i data-lucide="package" style="width: var(--font-size-3); height: var(--font-size-3);"></i>
-                                </div>
-                                <div>
-                                    <div class="text-heading-lg empty-state-title">Let's build something!</div>
-                                    <div class="text-body-md empty-state-subtitle" style="margin-bottom: var(--size-4);">
-                                        Turn your colors, text styles, and spacing into code-ready tokens.
-                                    </div>
-                                    <div style="display: flex; gap: var(--size-3); justify-content: center; margin-bottom: var(--size-4);">
-                                        <div style="text-align: center;">
-                                            <i data-lucide="palette" style="color: #00D1FF; width: 24px; height: 24px; margin-bottom: var(--size-1);"></i>
-                                            <div class="text-caption">Colors</div>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <i data-lucide="type" style="color: #B48CFF; width: 24px; height: 24px; margin-bottom: var(--size-1);"></i>
-                                            <div class="text-caption">Typography</div>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <i data-lucide="move-horizontal" style="color: #FFB86C; width: 24px; height: 24px; margin-bottom: var(--size-1);"></i>
-                                            <div class="text-caption">Spacing</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn primary" style="width: auto;">
-                                    Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i>
-                                </button>
+             <!-- Empty State -->
+<div class="state-group">
+    <div class="example-wrapper">
+        <div class="example-label">Empty State</div>
+        <div class="example-container">
+            <div class="empty-state-container">
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i data-lucide="package"></i>
+                    </div>
+                    <div>
+                        <div class="text-heading-lg empty-state-title">Let's build something!</div>
+                        <div class="text-body-md empty-state-subtitle">
+                            Turn your colors, text styles, and spacing into code-ready tokens.
+                        </div>
+                        <div class="empty-state-categories">
+                            <div class="empty-state-category">
+                                <i data-lucide="palette" class="category-icon-cyan"></i>
+                                <div class="text-caption">Colors</div>
+                            </div>
+                            <div class="empty-state-category">
+                                <i data-lucide="type" class="category-icon-purple"></i>
+                                <div class="text-caption">Typography</div>
+                            </div>
+                            <div class="empty-state-category">
+                                <i data-lucide="move-horizontal" class="category-icon-orange"></i>
+                                <div class="text-caption">Spacing</div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="state-documentation">
-                    <div class="state-documentation-title">Key Info:</div>
-                    <div class="token-list">
-                        <span class="token-badge">Full interface takeover</span>
-                        <span class="token-badge">Friendly messaging</span>
-                        <span class="token-badge">Clear CTA</span>
-                    </div>
+                    <button class="btn primary btn-auto-width">
+                        Create variables <i data-lucide="arrow-right"></i>
+                    </button>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="state-documentation">
+        <div class="state-documentation-title">Key Info:</div>
+        <div class="token-list">
+            <span class="token-badge">Full interface takeover</span>
+            <span class="token-badge">Friendly messaging</span>
+            <span class="token-badge">Clear CTA</span>
+        </div>
+    </div>
+</div>
 
             <!-- Loading State -->
             <div class="state-group">
