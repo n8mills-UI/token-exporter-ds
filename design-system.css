@@ -411,6 +411,43 @@ body {
     --stroke-regular: var(--border-size-2);   /* 2px */
     --stroke-thick: var(--border-size-3);     /* 3px */
 
+    /* Z-index standardization */
+    --layer-base: var(--layer-1);          /* 1 */
+    --layer-card: var(--layer-2);          /* 2 */
+    --layer-dropdown: var(--layer-3);      /* 3 */
+    --layer-modal: var(--layer-4);         /* 4 */
+    --layer-notification: var(--layer-5);  /* 5 */
+    
+    /* Semantic spacing */
+    --spacing-xs: var(--size-1);      /* 4px */
+    --spacing-sm: var(--size-2);      /* 8px */
+    --spacing-md: var(--size-4);      /* 16px */
+    --spacing-lg: var(--size-6);      /* 24px */
+    --spacing-xl: var(--size-8);      /* 32px */
+    --spacing-section: var(--size-10); /* For major sections */
+    
+    /* Opacity scale */
+    --opacity-disabled: 0.6;
+    --opacity-hover: 0.8;
+    --opacity-backdrop: 0.85;
+    --opacity-overlay: 0.1;
+    
+    /* Component sizes */
+    --component-height-md: var(--size-8);  /* 32px */
+    --component-height-lg: var(--size-9);  /* 36px */
+    --icon-sm: var(--size-4);              /* 16px */
+    --icon-md: var(--size-5);              /* 20px */
+    --icon-lg: var(--size-6);              /* 24px */
+    
+    /* Content widths */
+    --content-prose: 65ch;
+    --content-lg: 1024px;
+    --content-xl: 1280px;
+    
+    /* Blur tokens */
+    --blur-sm: blur(4px);
+    --blur-md: blur(10px);
+
     /* Shoelace Shadows */
     --sl-shadow-x-small: var(--shadow-2);
     --sl-shadow-small: var(--shadow-3);
