@@ -1008,7 +1008,6 @@
                         </p>
                     </div>
                     <div class="tokens-grid text-grid">
-        
                         <div class="example-container">
                         
                             <div style="display: flex; flex-direction: column; gap: var(--size-3);">
@@ -1128,10 +1127,14 @@
                         </div>
                     </div>
                     <div class="component-body">
+                        
                         <div class="example-label">Simple Mode (All Active)</div>
-<div class="example-container"><div class="card token-summary"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
+                        <div class="example-container">
+                        <div class="card token-summary"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
+                        
                         <div class="example-label">Advanced Mode (Selective)</div>
-<div class="example-container"><div class="card token-summary advanced-mode"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
+                        <div class="example-container">
+                        <div class="card token-summary advanced-mode"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="card token-summary"&gt;...&lt;/div&gt;</code></div>
                     </div>
                 </div>
@@ -1142,7 +1145,7 @@
                         <p class="component-description">Primary and secondary button styles with hover effects, disabled states, shine animations, and icon-only variants for various UI needs.</p>
                     </div>
                     <div class="component-body">
-                        <h3 style="color: var(--brand-primary-lime); margin-bottom: var(--size-4);">Standard Buttons</h3>
+                        <h3 style="color: var(--brand-primary-lime); margin-bottom: var(--size-8);">Standard Buttons</h3>
                         <div class="variants-grid">
                             <div class="example-label">Primary</div>
 <div class="example-container"><button class="btn primary"><i data-lucide="rocket"></i> Package Tokens</button></div>
@@ -1153,42 +1156,48 @@
                         </div>
                         
                         <h3 style="color: var(--brand-primary-lime); margin-top: var(--size-6); margin-bottom: var(--size-4);">Icon-Only Buttons</h3>
-                        <div style="display: flex; gap: var(--size-4); align-items: center; flex-wrap: wrap;">
-                            <div class="example-container" style="flex: none;">
-                                <div class="example-label">Close Button</div>
-                                <button class="btn-icon-only">
-                                    <i data-lucide="x-circle"></i>
-                                </button>
-                            </div>
-                            <div class="example-container" style="flex: none;">
-                                <div class="example-label">Social Icons</div>
-                                <div style="display: flex; gap: var(--size-2);">
-                                    <button class="btn-icon-only">
-                                        <i data-lucide="twitter"></i>
-                                    </button>
-                                    <button class="btn-icon-only">
-                                        <i data-lucide="github"></i>
-                                    </button>
-                                    <button class="btn-icon-only">
-                                        <i data-lucide="linkedin"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="example-container" style="flex: none;">
-                                <div class="example-label">Action Icons</div>
-                                <div style="display: flex; gap: var(--size-2);">
-                                    <button class="btn-icon-only">
-                                        <i data-lucide="download"></i>
-                                    </button>
-                                    <button class="btn-icon-only">
-                                        <i data-lucide="share-2"></i>
-                                    </button>
-                                    <button class="btn-icon-only">
-                                        <i data-lucide="bookmark"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+<div style="display: flex; gap: var(--size-4); align-items: center; flex-wrap: wrap;">
+    <div class="example-wrapper" style="flex: none;">
+        <div class="example-label">Close Button</div>
+        <div class="example-container">
+            <button class="btn-icon-only">
+                <i data-lucide="x-circle"></i>
+            </button>
+        </div>
+    </div>
+    <div class="example-wrapper" style="flex: none;">
+        <div class="example-label">Social Icons</div>
+        <div class="example-container">
+            <div style="display: flex; gap: var(--size-2);">
+                <button class="btn-icon-only">
+                    <i data-lucide="twitter"></i>
+                </button>
+                <button class="btn-icon-only">
+                    <i data-lucide="github"></i>
+                </button>
+                <button class="btn-icon-only">
+                    <i data-lucide="linkedin"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="example-wrapper" style="flex: none;">
+        <div class="example-label">Action Icons</div>
+        <div class="example-container">
+            <div style="display: flex; gap: var(--size-2);">
+                <button class="btn-icon-only">
+                    <i data-lucide="download"></i>
+                </button>
+                <button class="btn-icon-only">
+                    <i data-lucide="share-2"></i>
+                </button>
+                <button class="btn-icon-only">
+                    <i data-lucide="bookmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
                         
                         <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;button class="btn primary"&gt;...&lt;/button&gt;
 &lt;button class="btn-icon-only"&gt;&lt;i data-lucide="x-circle"&gt;&lt;/i&gt;&lt;/button&gt;</code></div>
