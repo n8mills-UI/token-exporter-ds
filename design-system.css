@@ -140,9 +140,20 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 .lucide {
     width: 1em;
     height: 1em;
-    stroke-width: 2.5px;
+    stroke-width: 2px;
     vertical-align: middle;
     color: inherit;
+}
+
+/* Large icons need thicker strokes to maintain visual weight */
+.empty-state-icon .lucide,
+.success-icon {
+    stroke-width: 2.5px;
+}
+
+.btn .lucide {
+    width: 1.2em;
+    height: 1.2em;
 }
 
 .btn .lucide {
