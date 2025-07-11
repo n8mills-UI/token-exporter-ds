@@ -1162,7 +1162,7 @@ sl-spinner {
     max-width: 60ch;
     margin: 0 auto var(--size-2);
     line-height: var(--font-lineheight-3);
-    padding: 0 var(--size-4);
+    padding: 0 var(--size-8);
 }
 
 .hero-description {
