@@ -38,6 +38,17 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 @import "https://unpkg.com/open-props/normalize";
 @import "https://unpkg.com/open-props/buttons";
 
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+html {
+    font-size: 100%; /* Respects user browser settings, 1rem = 16px */
+}
+
+body {
+    font-size: var(--font-size-0); /* 14px for plugin interface */
+}
 
 ::root {
     /* =========================
