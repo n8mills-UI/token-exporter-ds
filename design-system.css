@@ -1762,15 +1762,6 @@ sl-spinner {
 }
 
 
-.social-link:hover {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-    transform: translateY(-2px);
-}
-
-.social-link .lucide {
-    stroke-width: var(--stroke-thin); /* Thinner stroke for icons */
-}
 
 
 
@@ -2987,12 +2978,6 @@ main {
 }
 
 
-
-.footer-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(210, 255, 55, 0.25);
-    filter: brightness(1.1);
-}
 
 .footer-cta svg { /* Changed from .lucide to svg for the inline logo */
     width: 15px;
