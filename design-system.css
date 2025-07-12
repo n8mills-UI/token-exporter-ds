@@ -442,39 +442,6 @@ body {
 /* Portfolio hero, cyber-banner, tech stack grid, FAQ section, etc.
    These components are for the design system guide showcase only.
    They are NOT used in the plugin and should not be included in ui.html */
-
-/* ==================================
-   HERO SECTION BUG FIXES (v4.1.0)
-   ================================== */
-
-/*
- * Rationale: A block of high-specificity CSS rules to definitively fix
- * visual and functional bugs in the hero section. These rules target
- * elements only within the `.portfolio-hero` to avoid side effects
- * and win any specificity conflicts with legacy styles.
-*/
-
-/* FIX 1: Lift the hero content above the background pseudo-element */
-.portfolio-hero > .relative {
-    position: relative;
-    z-index: var(--layer-base); /* This is the key fix for making links clickable */
-}
-
-/* FIX 2: Correct the social icon stroke width using a token */
-.portfolio-hero .social-link .lucide {
-    stroke-width: var(--stroke-regular); /* CORRECTED: Now uses a token */
-}
-
-/* FIX 3: Override legacy button width for the hero's CTA */
-.portfolio-hero .btn.primary {
-    width: auto;
-    display: inline-flex;
-}
-
-/* FIX 4: Increase metadata font size for accessibility */
-.portfolio-hero .hero-metadata {
-    font-size: var(--font-size-1); /* Increased from --font-size-00 */
-}
 /* @docs-only-end */
 
 /* @plugin-only-start - Components used in Figma plugin */
@@ -1340,89 +1307,40 @@ sl-spinner {
     word-wrap: break-word;
 }
 
-/* Cyberpunk stats banner */
-.cyber-banner {
-    background: #0a0a0a;
-    border-bottom: var(--border-size-1) solid var(--gray-7);
-    padding: var(--size-2) 0;
-    overflow: hidden;
-    position: relative;
-}
-
-.cyber-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(210, 255, 55, 0.1), transparent);
-    animation: cyber-scan 8s linear infinite;
-}
-
-@keyframes cyber-scan {
-    to { left: 100%; }
-}
-
-.cyber-stats {
-    display: flex;
-    gap: var(--size-6);
-    justify-content: center;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: var(--font-size-0);
-    position: relative;
-    z-index: var(--layer-base);
-}
-
-.cyber-stat {
-    display: flex;
-    align-items: center;
-    gap: var(--size-1);
-    color: var(--color-text-muted);
-    transition: all 0.3s var(--ease-3);
-}
-
-.cyber-stat:hover {
-    color: var(--brand-primary-lime);
-    transform: scale(var(--scale-sm)); /* CORRECTED: Was scale(1.05) */
-}
-
-.cyber-stat i {
-    color: var(--brand-primary-lime);
-    font-size: var(--font-size-00);
-}
-
-.cyber-stat strong {
-    color: var(--brand-primary-lime);
-}
-
 /* Hero section */
 .portfolio-hero {
-    min-height: calc(100vh - 40px);
+    position: relative; 
+    min-height: calc(100vh - var(--size-10));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     padding: var(--size-8) var(--size-6);
     background: 
         radial-gradient(circle at 20% 50%, rgba(210, 255, 55, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(238, 255, 0, 0.05) 0%, transparent 50%),
         var(--portfolio-gradient-dark);
-    position: relative;
     mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    text-align: center;
+    overflow: hidden; 
+}
+
+.hero-content-wrapper {
+    position: relative; 
+    z-index: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4);
 }
 
 .portfolio-hero::before {
-    z-index: 0;
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    inset: 0;
+    z-index: 0; 
+    pointer-events: none; 
     background: repeating-linear-gradient(
         45deg,
         transparent,
@@ -1436,6 +1354,22 @@ sl-spinner {
 @keyframes subtle-shift {
     to { transform: translate(20px, 20px); }
 }
+
+.hero-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-6);
+    margin-top: var(--size-4);
+}
+
+.social-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--size-3);
+}
+
 
 /* Hero content */
 .hero-logo {
