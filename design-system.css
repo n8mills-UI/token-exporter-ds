@@ -270,8 +270,8 @@ body {
     --sl-transition-medium: var(--animation-duration-2);
     --sl-transition-fast: var(--animation-duration-1);
     
-        /* ==========================================================================
-    UTILITY CLASSES - Foundation v4.1.0
+    /* ==========================================================================
+    UTILITY CLASSES - Foundation 
     ========================================================================== */
 
     /*
@@ -346,13 +346,36 @@ body {
     .absolute { position: absolute; }
     .relative { position: relative; }
     .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+    .z-1 { z-index: var(--layer-base); }       /* z-index: 1 */
+    .z-2 { z-index: var(--layer-card); }       /* z-index: 2 */
+    .z-3 { z-index: var(--layer-dropdown); }   /* z-index: 3 */
+    .z-4 { z-index: var(--layer-modal); }      /* z-index: 4 */
+    .z-5 { z-index: var(--layer-notification); } /* z-index: 5 */
 
-    /* Text Alignment */
+    /* Text Alignment & Sizing */
     .text-center { text-align: center; }
+    .text-size-8 { font-size: var(--font-size-8); }
+    .text-size-0 { font-size: var(--font-size-0); }
+
+    /* NEW: Dedicated class for token descriptions */
+    .token-description-code {
+        font-family: var(--font-mono);
+        color: var(--color-text-muted);
+        font-size: var(--font-size-0);
+    }
 
     /* Overflow */
     .overflow-hidden { overflow: hidden; }
 
+    /* =========================
+    COMPONENT HELPERS
+    ========================= */
+
+    /* Overrides legacy .btn width for specific use cases */
+    .btn-content-width {
+        width: auto;
+        display: inline-flex;
+    }
 
 }
 
@@ -1685,7 +1708,20 @@ sl-spinner {
     transition: all 0.2s var(--ease-3);
     text-decoration: none;
     font-size: var(--font-size-2);
+    position: relative; /* Added for z-index context */
+    z-index: var(--layer-base); /* Ensures it's clickable */
 }
+
+.social-link:hover {
+    border-color: var(--brand-primary-lime);
+    color: var(--brand-primary-lime);
+    transform: translateY(-2px);
+}
+
+.social-link .lucide {
+    stroke-width: 2px; /* Thinner stroke for icons */
+}
+
 
 .social-link:hover {
     border-color: var(--brand-primary-lime);
