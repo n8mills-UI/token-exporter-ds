@@ -282,6 +282,90 @@ body {
     --sl-transition-medium: var(--animation-duration-2);
     --sl-transition-fast: var(--animation-duration-1);
     
+        /* ==========================================================================
+    UTILITY CLASSES - Foundation v4.1.0
+    ========================================================================== */
+
+    /*
+    * Why use utility classes?
+    * --------------------------
+    * These classes allow us to apply single, token-based styles directly in
+    * the HTML. This is essential for the design system guide, as it removes
+    * hardcoded inline `style` attributes and keeps all styling logic within
+
+    * the CSS, our single source of truth. This approach is inspired by
+    * modern utility-first frameworks like Tailwind CSS.
+    */
+
+    /* Background Color Utilities */
+    .bg-brand-primary-lime { background-color: var(--brand-primary-lime); }
+    .bg-brand-secondary-yellow { background-color: var(--brand-secondary-yellow); }
+    .bg-surface-1 { background-color: var(--surface-1); }
+    .bg-surface-2 { background-color: var(--surface-2); }
+    .bg-surface-3 { background-color: var(--surface-3); }
+    .bg-gray-9 { background-color: var(--gray-9); }
+    .bg-transparent { background-color: transparent; }
+
+    /* Text Color Utilities */
+    .text-brand-primary-lime { color: var(--brand-primary-lime); }
+    .text-color-default { color: var(--color-text-default); }
+    .text-color-secondary { color: var(--color-text-secondary); }
+    .text-color-muted { color: var(--color-text-muted); }
+
+    /* Dimension Utilities (Width & Height) */
+    .w-4 { width: var(--size-4); }
+    .h-4 { height: var(--size-4); }
+    .w-8 { width: var(--size-8); }
+    .h-8 { height: var(--size-8); }
+    .w-full { width: 100%; }
+    .h-full { height: 100%; }
+    .w-auto { width: auto; }
+    .h-auto { height: auto; }
+
+    /* Spacing Utilities (Margin & Padding) */
+    .m-0 { margin: 0; }
+    .m-auto { margin: auto; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+
+    .mb-2 { margin-bottom: var(--size-2); }
+    .mb-3 { margin-bottom: var(--size-3); }
+    .mb-4 { margin-bottom: var(--size-4); }
+    .mb-6 { margin-bottom: var(--size-6); }
+    .mb-8 { margin-bottom: var(--size-8); }
+
+    .mt-4 { margin-top: var(--size-4); }
+
+    .p-0 { padding: 0; }
+    .p-4 { padding: var(--size-4); }
+    .p-6 { padding: var(--size-6); }
+
+    .py-2 { padding-top: var(--size-2); padding-bottom: var(--size-2); }
+    .px-4 { padding-left: var(--size-4); padding-right: var(--size-4); }
+
+    /* Flexbox & Grid Utilities */
+    .flex { display: flex; }
+    .inline-flex { display: inline-flex; }
+    .grid { display: grid; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .gap-2 { gap: var(--size-2); }
+    .gap-3 { gap: var(--size-3); }
+    .gap-4 { gap: var(--size-4); }
+    .gap-6 { gap: var(--size-6); }
+
+    /* Sizing & Positioning */
+    .absolute { position: absolute; }
+    .relative { position: relative; }
+    .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+    /* Text Alignment */
+    .text-center { text-align: center; }
+
+    /* Overflow */
+    .overflow-hidden { overflow: hidden; }
+
+
     /* =========================
        DEPRECATED (Remove in v5)
        ========================= */
