@@ -94,7 +94,9 @@ body {
     
     --color-border-default: var(--gray-6);
     --color-border-interactive-focus: var(--brand-primary-lime);
-    
+    --color-backdrop-rgb: 0, 0, 0; /* Black for dark theme */
+    --color-backdrop: rgba(var(--color-backdrop-rgb), var(--opacity-backdrop));
+
     /* =========================
        SURFACE COLORS
        ========================= */
@@ -521,7 +523,7 @@ sl-dialog::part(panel) {
 }
 
 sl-dialog::part(overlay) {
-    background-color: rgba(0, 0, 0, var(--opacity-backdrop));
+    background-color: var(--color-backdrop);
     -webkit-backdrop-filter: var(--blur-md); /* Safari */
     backdrop-filter: var(--blur-md);
 }
