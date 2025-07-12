@@ -431,7 +431,63 @@ body {
         display: inline-flex;
     }
 
+/* ===================================================================
+   UNIFIED BUTTON & ICON STYLES (Audited & Vetted)
+   =================================================================== */
 
+/* Unified style for ALL social icon links (Hero and Footer) */
+.social-link,
+.footer-social-link {
+    width: var(--component-height-lg);
+    height: var(--component-height-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-round);
+    background: var(--color-background-secondary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    color: var(--color-text-secondary);
+    transition: all 0.2s var(--ease-3);
+    text-decoration: none;
+}
+
+.social-link:hover,
+.footer-social-link:hover {
+    border-color: var(--brand-primary-lime);
+    color: var(--brand-primary-lime);
+    transform: translateY(-2px);
+}
+
+/* Unified style for ALL social icon's inner SVG/Lucide icon */
+.social-link .lucide,
+.footer-social-link .lucide {
+    stroke-width: var(--stroke-thin);
+    width: var(--icon-md);
+    height: var(--icon-md);
+}
+
+/* Unified style for the "Get Plugin" button in the footer */
+.footer-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--spacing-button);
+    background: var(--brand-gradient-lime);
+    color: var(--color-text-on-brand);
+    border: none;
+    border-radius: var(--radius-2);
+    text-decoration: none;
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-6);
+    transition: all 0.2s var(--ease-3);
+    height: var(--component-height-lg);
+}
+
+.footer-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(210, 255, 55, 0.25);
+    filter: brightness(1.1);
+}
 
 /* ==========================================================================
    COMPONENT DOCUMENTATION SYSTEM
@@ -1363,12 +1419,7 @@ sl-spinner {
     margin-top: var(--size-4);
 }
 
-.social-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: var(--size-3);
-}
+
 
 
 /* Hero content */
@@ -1710,23 +1761,6 @@ sl-spinner {
     padding: 0 var(--size-3) var(--size-3) var(--size-3);
 }
 
-
-.social-link {
-    width: var(--size-8);
-    height: var(--size-8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-round);
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    color: var(--color-text-secondary);
-    transition: all 0.2s var(--ease-3);
-    text-decoration: none;
-    font-size: var(--font-size-2);
-    position: relative; /* Added for z-index context */
-    z-index: var(--layer-base); /* Ensures it's clickable */
-}
 
 .social-link:hover {
     border-color: var(--brand-primary-lime);
@@ -2952,22 +2986,7 @@ main {
     padding-bottom: var(--border-size-2); /* CORRECTED: Was 2px for alignment */
 }
 
-/* Pill-shaped branded CTA */
-.footer-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-2);
-    padding: var(--size-1) var(--size-3);
-    background: var(--brand-gradient-lime);
-    color: var(--brand-text-dark);
-    border: none;
-    border-radius: var(--radius-round);
-    text-decoration: none;
-    font-size: var(--font-size-0);
-    font-weight: var(--font-weight-6);
-    transition: all 0.2s var(--ease-3);
-    height: var(--component-height-lg); /* CORRECTED: Was 36px */
-}
+
 
 .footer-cta:hover {
     transform: translateY(-1px);
@@ -2980,40 +2999,6 @@ main {
     height: 15px;
     flex-shrink: 0;
 }
-
-/* Social links */
-.footer-social-links {
-    display: flex;
-    gap: var(--size-3);
-}
-
-.footer-social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--component-height-lg); /* CORRECTED: Was 36px */
-    height: var(--component-height-lg); /* CORRECTED: Was 36px */
-    border-radius: var(--radius-round);
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    color: var(--color-text-secondary);
-    transition: all 0.2s var(--ease-3);
-    text-decoration: none;
-}
-
-/* Override Lucide stroke width for social icons */
-.footer-social-link .lucide {
-    stroke-width: var(--stroke-thin); /* CORRECTED: Was 1.5px */
-    width: var(--size-4); /* CORRECTED: Was 16px */
-    height: var(--size-4); /* CORRECTED: Was 16px */
-}
-
-.footer-social-link:hover {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-    transform: translateY(-2px);
-}
-/* @docs-only-end */
 
 /* Responsive */
 @media (max-width: 48rem) {
