@@ -435,9 +435,8 @@ body {
    UNIFIED BUTTON & ICON STYLES (Audited & Vetted)
    =================================================================== */
 
-/* Unified style for ALL social icon links (Hero and Footer) */
-.social-link,
-.footer-social-link {
+/* Social icon links - used in hero and footer */
+.social-link {
     width: var(--component-height-lg);
     height: var(--component-height-lg);
     display: flex;
@@ -451,28 +450,27 @@ body {
     text-decoration: none;
 }
 
+.social-link:hover {
+    border-color: var(--brand-primary-lime);
+    color: var(--brand-primary-lime);
+    transform: translateY(-2px);
+}
+
+.social-link .lucide {
+    stroke-width: var(--stroke-thin);
+    width: var(--icon-md);
+    height: var(--icon-md);
+}
+
+/* Container for social links - DELETE THIS if it exists elsewhere */
 .social-links {
     display: flex;
     gap: var(--size-3);
     justify-content: center;
     align-items: center;
 }
-.social-link:hover,
-.footer-social-link:hover {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-    transform: translateY(-2px);
-}
 
-/* Unified style for ALL social icon's inner SVG/Lucide icon */
-.social-link .lucide,
-.footer-social-link .lucide {
-    stroke-width: var(--stroke-thin);
-    width: var(--icon-md);
-    height: var(--icon-md);
-}
-
-/* Unified style for the "Get Plugin" button in the footer */
+/* Footer CTA button */
 .footer-cta {
     display: inline-flex;
     align-items: center;
