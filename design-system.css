@@ -1370,9 +1370,15 @@ sl-spinner {
 
 /* Hero section */
 .portfolio-hero {
-    mask-image: none;
-    -webkit-mask-image: none;
     position: relative;
+    min-height: calc(100vh - var(--size-10));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--size-8) var(--size-6);
+    text-align: center;
+    overflow: hidden;
 }
 
 /* Add a pseudo-element just for the masked background */
@@ -1385,8 +1391,8 @@ sl-spinner {
         radial-gradient(circle at 20% 50%, rgba(210, 255, 55, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(238, 255, 0, 0.05) 0%, transparent 50%),
         var(--portfolio-gradient-dark);
-    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
     pointer-events: none;
 }
 
