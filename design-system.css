@@ -451,6 +451,12 @@ body {
     text-decoration: none;
 }
 
+.social-links {
+    display: flex;
+    gap: var(--size-3);
+    justify-content: center;
+    align-items: center;
+}
 .social-link:hover,
 .footer-social-link:hover {
     border-color: var(--brand-primary-lime);
