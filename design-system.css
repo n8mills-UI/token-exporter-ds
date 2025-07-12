@@ -12,22 +12,8 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 */
 
 /* ==========================================================================
-   TOKEN EXPORTER DESIGN SYSTEM v4.0.6 - Complete Implementation
-   ==========================================================================
-   
-   CHANGES IN v4.0.6:
-   ✓ Removed unused animations (gradient-shift, bounce) 
-   ✓ Removed unused --asset-url-avatar variable
-   ✓ Standardized all focus states to box-shadow approach
-   ✓ Fixed button icon alignment (removed translateY)
-   ✓ Consolidated duplicate .about-avatar styles
-   ✓ Cleaned up unused CSS
-   ✓ Added new styles for portfolio hero section
-   ✓ Added component documentation markers
-   ✓ Added version management system
-   ✓ Fixed mobile menu z-index
-   ✓ Removed duplicate @keyframes
-   
+   DESIGN SYSTEM CSS
+   Version 4.0.6 - 2025-01-11
    ========================================================================== */
 
 /* 1. Import Shoelace FIRST - Component library base styles */
@@ -366,10 +352,6 @@ body {
     .overflow-hidden { overflow: hidden; }
 
 
-    /* =========================
-       DEPRECATED (Remove in v5)
-       ========================= */
-    /* --gradient-7: linear-gradient(135deg, var(--gray-9), var(--gray-8)); */
 }
 
 /* ==========================================================================
@@ -424,126 +406,8 @@ body {
 }
 
 /* ==========================================================================
-   PHASE 2: SHOELACE INTEGRATION
+    COMPONENT STYLING
    ========================================================================== */
-
-/*
- * Shoelace Theming
- * Mapping our tokens to Shoelace design system
- * * "Design tokens flow like water,
- * From brand to component parts,
- * Consistency blooms."
- */
-
-:root {
-    /* Shoelace Primary Color Mapping with fallbacks for older browsers */
-    --sl-color-primary-50: #f7ffd4; /* fallback */
-    --sl-color-primary-50: color-mix(in srgb, var(--brand-primary-lime) 10%, white);
-    --sl-color-primary-100: #f0ffaa; /* fallback */
-    --sl-color-primary-100: color-mix(in srgb, var(--brand-primary-lime) 20%, white);
-    --sl-color-primary-200: #e8ff81; /* fallback */
-    --sl-color-primary-200: color-mix(in srgb, var(--brand-primary-lime) 30%, white);
-    --sl-color-primary-300: #e1ff57; /* fallback */
-    --sl-color-primary-300: color-mix(in srgb, var(--brand-primary-lime) 40%, white);
-    --sl-color-primary-400: #daff2e; /* fallback */
-    --sl-color-primary-400: color-mix(in srgb, var(--brand-primary-lime) 50%, white);
-    --sl-color-primary-500: var(--brand-secondary-yellow);
-    --sl-color-primary-600: var(--brand-primary-lime);
-    --sl-color-primary-700: #a3cc00; /* fallback */
-    --sl-color-primary-700: color-mix(in srgb, var(--brand-primary-lime) 90%, black);
-    --sl-color-primary-800: #7a9900; /* fallback */
-    --sl-color-primary-800: color-mix(in srgb, var(--brand-primary-lime) 80%, black);
-    --sl-color-primary-900: #526600; /* fallback */
-    --sl-color-primary-900: color-mix(in srgb, var(--brand-primary-lime) 70%, black);
-    --sl-color-primary-950: #293300; /* fallback */
-    --sl-color-primary-950: color-mix(in srgb, var(--brand-primary-lime) 60%, black);
-    
-    /* Shoelace Neutral Mapping */
-    --sl-color-neutral-0: var(--gray-0);
-    --sl-color-neutral-50: var(--gray-1);
-    --sl-color-neutral-100: var(--gray-2);
-    --sl-color-neutral-200: var(--gray-3);
-    --sl-color-neutral-300: var(--gray-4);
-    --sl-color-neutral-400: var(--gray-5);
-    --sl-color-neutral-500: var(--gray-6);
-    --sl-color-neutral-600: var(--gray-7);
-    --sl-color-neutral-700: var(--gray-8);
-    --sl-color-neutral-800: var(--gray-9);
-    --sl-color-neutral-900: #0a0a0a;
-    --sl-color-neutral-950: #000000;
-    
-    /* Shoelace Typography */
-    --sl-font-sans: var(--font-sans);
-    --sl-font-mono: var(--font-mono);
-    --sl-font-weight-normal: var(--font-weight-4);
-    --sl-font-weight-semibold: var(--font-weight-6);
-    --sl-font-weight-bold: var(--font-weight-7);
-    
-    /* Shoelace Spacing */
-    --sl-spacing-small: var(--size-2);
-    --sl-spacing-medium: var(--size-4);
-    --sl-spacing-large: var(--size-6);
-    
-    /* Shoelace Borders */
-    --sl-border-radius-small: var(--radius-1);
-    --sl-border-radius-medium: var(--radius-2);
-    --sl-border-radius-large: var(--radius-3);
-    --sl-border-radius-x-large: var(--radius-4);
-    
-    /* Stroke weights using Open Props border sizes */
-    --stroke-thin: var(--border-size-1);      /* 1px */
-    --stroke-regular: var(--border-size-2);   /* 2px */
-    --stroke-thick: var(--border-size-3);     /* 3px */
-
-    /* Z-index standardization */
-    --layer-base: var(--layer-1);          /* 1 */
-    --layer-card: var(--layer-2);          /* 2 */
-    --layer-dropdown: var(--layer-3);      /* 3 */
-    --layer-modal: var(--layer-4);         /* 4 */
-    --layer-notification: var(--layer-5);  /* 5 */
-    
-    /* Semantic spacing */
-    --spacing-xs: var(--size-1);      /* 4px */
-    --spacing-sm: var(--size-2);      /* 8px */
-    --spacing-md: var(--size-4);      /* 16px */
-    --spacing-lg: var(--size-6);      /* 24px */
-    --spacing-xl: var(--size-8);      /* 32px */
-    --spacing-section: var(--size-10); /* For major sections */
-    
-    /* Opacity scale */
-    --opacity-disabled: 0.6;
-    --opacity-hover: 0.8;
-    --opacity-backdrop: 0.85;
-    --opacity-overlay: 0.1;
-    
-    /* Component sizes */
-    --component-height-md: var(--size-8);  /* 32px */
-    --component-height-lg: var(--size-9);  /* 36px */
-    --icon-sm: var(--size-4);              /* 16px */
-    --icon-md: var(--size-5);              /* 20px */
-    --icon-lg: var(--size-6);              /* 24px */
-    
-    /* Content widths */
-    --content-prose: 65ch;
-    --content-lg: 1024px;
-    --content-xl: 1280px;
-    
-    /* Blur tokens */
-    --blur-sm: blur(4px);
-    --blur-md: blur(10px);
-
-    /* Shoelace Shadows */
-    --sl-shadow-x-small: var(--shadow-2);
-    --sl-shadow-small: var(--shadow-3);
-    --sl-shadow-medium: var(--shadow-4);
-    --sl-shadow-large: var(--shadow-5);
-    
-    /* Shoelace Transitions */
-    --sl-transition-x-slow: var(--animation-duration-4);
-    --sl-transition-slow: var(--animation-duration-3);
-    --sl-transition-medium: var(--animation-duration-2);
-    --sl-transition-fast: var(--animation-duration-1);
-}
 
 /* Shoelace Button Styling */
 sl-button::part(base) {
@@ -3469,6 +3333,35 @@ sl-input::part(input):focus-visible,
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ==========================================================================
+   THEMING STRATEGY & FUTURE IMPLEMENTATIONS
+   ========================================================================== */
+
+/*
+ * The design system is architected to support multiple themes. The default
+ * theme is dark. A new theme can be created by applying a data-theme
+ * attribute (e.g., <html data-theme="light">) and redefining the
+ * semantic color tokens below.
+*/
+
+/*
+[data-theme="light"] {
+    /* PROPOSED LIGHT THEME MAPPINGS (Example) */
+    /*
+    --gray-0: #1e1e1e;
+    --gray-9: #ffffff;
+
+    --color-text-default: var(--gray-0);
+    --color-background-primary: var(--gray-9);
+    --color-background-secondary: #f0f0f0;
+    --color-border-default: #e0e0e0;
+
+    --color-backdrop-rgb: 255, 255, 255;
+}
+*/
+
+
 
 /* ==========================================================================
    END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.6
