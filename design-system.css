@@ -6,15 +6,11 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v4.0.6 | Crafted with ❤️ by Nate Mills
+Token Exporter Design System v4.0.7 | Crafted with ❤️ by Nate Mills
 Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
-/* ==========================================================================
-   DESIGN SYSTEM CSS
-   Version 4.0.6 - 2025-01-11
-   ========================================================================== */
 
 /* 1. Import Shoelace FIRST - Component library base styles */
 @import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css";
@@ -587,7 +583,7 @@ sl-dialog::part(overlay) {
 }
 
 sl-dialog::part(header) {
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
 }
 
 /* Shoelace Input Styling */
@@ -835,7 +831,7 @@ sl-spinner {
 .playground-controls {
     background: var(--color-background-tertiary);
     padding: var(--size-4);
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--size-4);
@@ -901,7 +897,7 @@ sl-spinner {
 .playground-code {
     background: var(--gray-9);
     padding: var(--size-4);
-    border-top: 1px solid var(--color-border-default);
+    border-top: var(--border-size-1) solid var(--color-border-default);
 }
 
 .playground-code pre {
@@ -1291,7 +1287,7 @@ sl-spinner {
 /* Cyberpunk stats banner */
 .cyber-banner {
     background: #0a0a0a;
-    border-bottom: 1px solid var(--gray-7);
+    border-bottom: var(--border-size-1) solid var(--gray-7);
     padding: var(--size-2) 0;
     overflow: hidden;
     position: relative;
@@ -2211,7 +2207,7 @@ main {
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
     gap: var(--size-2); 
-    border-top: 1px solid var(--gray-8);
+    border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
 }
 
@@ -2517,8 +2513,9 @@ main {
 }
 
 .collection-checkbox {
-    width: 14px;
-    height: 14px;
+    /* TASK 1.1: Tokenizing dimensions */
+    width: var(--size-3); /* Was 14px */
+    height: var(--size-3); /* Was 14px */
     border: var(--border-size-2) solid var(--color-border-default);
     border-radius: var(--radius-1);
     position: relative;
@@ -2689,22 +2686,22 @@ main {
 /* Category icon colors */
 .category-icon-cyan {
     color: var(--category-color-cyan);
-    width: 24px;
-    height: 24px;
+    width: var(--size-6);
+    height: var(--size-6);
     margin-bottom: var(--size-1);
 }
 
 .category-icon-purple {
     color: var(--category-color-purple);
-    width: 24px;
-    height: 24px;
+    width: var(--size-6);
+    height: var(--size-6);
     margin-bottom: var(--size-1);
 }
 
 .category-icon-orange {
     color: var(--category-color-orange);
-    width: 24px;
-    height: 24px;
+    width: var(--size-6);
+    height: var(--size-6);
     margin-bottom: var(--size-1);
 }
 
@@ -2718,7 +2715,7 @@ main {
 
 .empty-state {
     background: var(--gradient-7);
-    border: 1px dashed rgba(210, 255, 55, 0.2);
+    border: var(--border-size-1) dashed rgba(210, 255, 55, 0.2);
     border-radius: var(--radius-3);
     padding: var(--size-8) var(--size-4);
     text-align: center;
@@ -2884,7 +2881,7 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: var(--size-2);
-    border-top: 1px solid var(--gray-8);
+    border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
 }
 
@@ -2931,7 +2928,7 @@ main {
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
+    height: var(--border-size-1);
     background: var(--brand-gradient-lime);
     opacity: 0.8;
 }
@@ -3215,7 +3212,7 @@ main {
     gap: var(--size-1);
     padding-bottom: var(--size-3);
     margin-bottom: var(--size-3);
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
 }
 
 .about-tagline {
@@ -3263,7 +3260,7 @@ main {
     line-height: 1.4;
     margin: var(--size-3) 0 0;
     padding: var(--size-3);
-    border-top: 1px solid var(--color-border-default);
+    border-top: var(--border-size-1) solid var(--color-border-default);
     margin-top: auto;
 }
 
