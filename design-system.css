@@ -270,7 +270,9 @@ body {
     --sl-transition-medium: var(--animation-duration-2);
     --sl-transition-fast: var(--animation-duration-1);
     
-    /* ==========================================================================
+}
+
+/* ==========================================================================
     UTILITY CLASSES - Foundation 
     ========================================================================== */
 
@@ -377,7 +379,7 @@ body {
         display: inline-flex;
     }
 
-}
+
 
 /* ==========================================================================
    COMPONENT DOCUMENTATION SYSTEM
@@ -388,6 +390,39 @@ body {
 /* Portfolio hero, cyber-banner, tech stack grid, FAQ section, etc.
    These components are for the design system guide showcase only.
    They are NOT used in the plugin and should not be included in ui.html */
+
+/* ==================================
+   HERO SECTION BUG FIXES (v4.1.0)
+   ================================== */
+
+/*
+ * Rationale: A block of high-specificity CSS rules to definitively fix
+ * visual and functional bugs in the hero section. These rules target
+ * elements only within the `.portfolio-hero` to avoid side effects
+ * and win any specificity conflicts with legacy styles.
+*/
+
+/* FIX 1: Lift the hero content above the background pseudo-element */
+.portfolio-hero > .relative {
+    position: relative;
+    z-index: var(--layer-base); /* This is the key fix for making links clickable */
+}
+
+/* FIX 2: Correct the social icon stroke width using a token */
+.portfolio-hero .social-link .lucide {
+    stroke-width: var(--stroke-regular); /* CORRECTED: Now uses a token */
+}
+
+/* FIX 3: Override legacy button width for the hero's CTA */
+.portfolio-hero .btn.primary {
+    width: auto;
+    display: inline-flex;
+}
+
+/* FIX 4: Increase metadata font size for accessibility */
+.portfolio-hero .hero-metadata {
+    font-size: var(--font-size-1); /* Increased from --font-size-00 */
+}
 /* @docs-only-end */
 
 /* @plugin-only-start - Components used in Figma plugin */
@@ -1186,6 +1221,7 @@ sl-spinner {
 
 
 /* @docs-only-start */
+
 /* Example Container System - Improved wrapper pattern */
 .example-wrapper {
     display: flex;
@@ -1383,10 +1419,11 @@ sl-spinner {
     justify-content: center;
     align-items: center;
     font-family: var(--font-mono);
-    font-size: var(--font-size-00);
+    font-size: var(--font-size-0); /* UPDATED: Increased for accessibility */
     color: var(--color-text-muted);
     text-transform: uppercase;
 }
+
 
 .hero-metadata .separator {
     color: var(--color-text-muted);
@@ -1687,13 +1724,6 @@ sl-spinner {
     padding: 0 var(--size-3) var(--size-3) var(--size-3);
 }
 
-/* Social links */
-.social-links {
-    display: flex;
-    gap: var(--size-3);
-    justify-content: center;
-    margin-bottom: var(--size-4);
-}
 
 .social-link {
     width: var(--size-8);
@@ -1719,15 +1749,10 @@ sl-spinner {
 }
 
 .social-link .lucide {
-    stroke-width: 2px; /* Thinner stroke for icons */
+    stroke-width: var(--stroke-regular); /* Thinner stroke for icons */
 }
 
 
-.social-link:hover {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-    transform: translateY(-2px);
-}
 
 /* Branded Figma CTA */
 .figma-cta {
