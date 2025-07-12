@@ -472,7 +472,7 @@ body {
 }
 
 /* Footer CTA button */
-.footer-cta {
+.btn.primary {
     display: inline-flex;
     align-items: center;
     gap: var(--size-2);
@@ -488,7 +488,7 @@ body {
     height: var(--component-height-lg);
 }
 
-.footer-cta:hover {
+.btn.primary a:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(210, 255, 55, 0.25);
     filter: brightness(1.1);
