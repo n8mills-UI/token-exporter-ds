@@ -1801,7 +1801,7 @@ sl-spinner {
 }
 
 .social-link .lucide {
-    stroke-width: var(--stroke-regular); /* Thinner stroke for icons */
+    stroke-width: var(--stroke-thin); /* Thinner stroke for icons */
 }
 
 

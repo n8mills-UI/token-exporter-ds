@@ -16,7 +16,156 @@
            GUIDE-SPECIFIC STYLES
            ========================================================================== */
         
-    
+    /* --- START: New Mobile Header & Menu Styles --- */
+.mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--size-10);
+    background: var(--color-background-secondary);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    z-index: 100;
+    display: none; /* Hidden by default, shown on mobile via media query */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--size-3);
+    transform: translateY(0);
+    transition: transform var(--transition-medium);
+    box-sizing: border-box;
+}
+
+.mobile-header.hidden {
+    transform: translateY(-100%);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+}
+
+.mobile-header-logo {
+    height: var(--size-7);
+    width: var(--size-7);
+    flex-shrink: 0;
+}
+
+.header-title {
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+    line-height: 1.2;
+}
+
+.mobile-menu-toggle-right {
+    background: transparent;
+    border: none;
+    color: var(--color-text-default);
+    cursor: pointer;
+    padding: var(--size-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: var(--color-backdrop);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+    border-left: var(--border-size-1) solid var(--color-border-default);
+    z-index: 101;
+    transform: translateX(100%);
+    transition: transform var(--transition-medium);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+.menu-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: var(--size-12);
+    padding: 0 var(--size-6);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    flex-shrink: 0;
+}
+
+.menu-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-default);
+    cursor: pointer;
+    padding: var(--size-2);
+    display: flex;
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+    pointer-events: none;
+}
+
+.menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: var(--size-4);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.mobile-nav-links a {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+    padding: var(--size-3);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-1);
+    transition: all 0.2s ease;
+}
+
+.mobile-nav-links a:hover,
+.mobile-nav-links a.active {
+    background: var(--color-background-secondary);
+    color: var(--brand-primary-lime);
+}
+
+/* Show the new header on mobile and adjust main content padding */
+@media (max-width: 768px) {
+    .mobile-header {
+        display: flex;
+    }
+    .guide-content {
+        /* This correctly applies padding ONLY to the top, allowing the hero to be full-bleed */
+        padding-top: var(--size-12);
+    }
+}
+/* --- END: New Mobile Header & Menu Styles --- */
+
 
         /* Prevent layout shift when scrollbar appears */
         html {
@@ -37,7 +186,7 @@
         .guide-sidebar {
             width: 280px;
             background: var(--color-background-secondary);
-            border-right: 1px solid var(--color-border-default);
+            border-right: var(--border-size-1) solid var(--color-border-default);
             position: fixed;
             height: 100vh;
             z-index: var(--layer-dropdown);
@@ -60,7 +209,7 @@
         /* Sidebar Header */
         .guide-header {
             padding: var(--size-5);
-            border-bottom: 1px solid var(--color-border-default);
+            border-bottom: var(--border-size-1) solid var(--color-border-default);
             display: flex;
             align-items: center;
             gap: var(--size-3);
@@ -147,13 +296,13 @@
         .nav-links .lucide {
             width: 16px;
             height: 16px;
-            stroke-width: 2.5px;
+            stroke-width: var(--stroke-regular);
         }
 
         /* Sidebar Footer */
         .sidebar-footer {
             padding: var(--size-2) var(--size-4);
-            border-top: 1px solid var(--color-border-default);
+            border-top: var(--border-size-1) solid var(--color-border-default);
             flex-shrink: 0;
         }
         
@@ -165,7 +314,7 @@
             left: var(--size-4);
             z-index: var(--layer-dropdown);
             background: var(--color-background-secondary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-3);
             color: var(--color-text-default);
@@ -192,7 +341,7 @@
         .section-header {
             margin-bottom: var(--size-6);
             padding-bottom: var(--size-4);
-            border-bottom: 2px solid var(--color-border-default);
+            border-bottom: var(--border-size-2) solid var(--color-border-default);
         }
         
         .guide-main-title {
@@ -224,7 +373,7 @@
             color: var(--brand-primary-lime);
             width: 1em;
             height: 1em;
-            stroke-width: 2.5px;
+            stroke-width: var(--stroke-regular);
         }
         
         .section-description {
@@ -239,14 +388,14 @@
             margin-bottom: var(--size-8);
             background: var(--color-background-secondary);
             border-radius: var(--radius-3);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             overflow: hidden;
         }
         
         .category-header, .component-header {
             padding: var(--size-6);
             background: var(--color-background-tertiary);
-            border-bottom: 1px solid var(--color-border-default);
+            border-bottom: var(--border-size-1) solid var(--color-border-default);
         }
         
         .category-title, .component-title {
@@ -261,7 +410,7 @@
             color: var(--brand-primary-lime);
             width: 1em;
             height: 1em;
-            stroke-width: 2.5px;
+            stroke-width: var(--stroke-regular);
             margin-right: var(--size-1);
         }
         
@@ -298,7 +447,7 @@
         
         .token-item {
             background: var(--color-background-primary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-4);
             transition: all var(--animation-duration-2) var(--ease-3);
@@ -340,7 +489,7 @@
             width: 100%;
             height: 60px;
             border-radius: var(--radius-2);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             position: relative;
             overflow: hidden;
         }
@@ -362,7 +511,7 @@
             padding: var(--size-3);
             background: var(--color-background-tertiary);
             border-radius: var(--radius-2);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             color: var(--color-text-default);
         }
         
@@ -370,7 +519,7 @@
             background: var(--color-background-tertiary);
             border-radius: var(--radius-2);
             padding: var(--size-2);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             position: relative;
         }
         
@@ -384,14 +533,14 @@
             width: 100%;
             height: 60px;
             border-radius: var(--radius-2);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
         }
 
         .shadow-preview, .radius-preview {
             width: 100%;
             height: 80px;
             background: var(--color-background-tertiary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -399,7 +548,7 @@
         
         .token-copy {
             background: var(--color-background-secondary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-1);
             padding: var(--size-1) var(--size-2);
             font-size: var(--font-size-00);
@@ -427,7 +576,7 @@
 
         .progress-container {
             background: var(--color-background-secondary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-3);
             padding: var(--size-6);
             text-align: center;
@@ -480,7 +629,7 @@
         
         .example-container {
             background: var(--color-background-primary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-4);
             margin-bottom: var(--size-4);
@@ -491,7 +640,7 @@
         
         .code-block {
             background: var(--gray-9);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-4);
             margin-bottom: var(--size-4);
@@ -512,7 +661,7 @@
             top: var(--size-2);
             right: var(--size-2);
             background: var(--color-background-secondary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-1);
             padding: var(--size-1) var(--size-2);
             font-size: var(--font-size-00);
@@ -529,7 +678,7 @@
         /* Token usage display */
         .token-usage {
             background: var(--color-background-primary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-3);
             margin-top: var(--size-3);
@@ -550,7 +699,7 @@
 
         .token-badge {
             background: var(--color-background-tertiary);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-1);
             padding: var(--size-1) var(--size-2);
             font-family: var(--font-mono);
@@ -569,7 +718,7 @@
         .pattern-section {
             background: var(--color-background-secondary);
             border-radius: var(--radius-3);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             padding: var(--size-6);
             margin-bottom: var(--size-6);
         }
@@ -595,7 +744,7 @@
         
         .pattern-content pre {
             background: var(--gray-9);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-3);
             overflow-x: auto;
@@ -630,7 +779,7 @@
             border-radius: var(--radius-round);
             background-size: cover;
             background-position: center;
-            border: 3px solid var(--brand-primary-lime);
+            border: var(--border-size-3) solid var(--brand-primary-lime);
             background-color: var(--gray-7);
         }
 
@@ -687,7 +836,7 @@
         
         .state-group-header {
             background: rgba(210, 255, 55, 0.03);
-            border: 1px solid rgba(210, 255, 55, 0.1);
+            border: var(--border-size-1) solid rgba(210, 255, 55, 0.1);
             border-radius: var(--radius-3);
             padding: var(--size-4);
             margin-bottom: var(--size-4);
@@ -701,7 +850,7 @@
         .state-documentation {
             margin-top: var(--size-1); /* Small gap - attached to parent */
             background: var(--gray-8);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             padding: var(--size-3);
         }
@@ -735,9 +884,38 @@
 </head>
 <body>
     <!-- Mobile menu toggle -->
-    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+  <!-- START: New Mobile Header -->
+<header class="mobile-header" id="mobile-header">
+    <div class="header-brand">
+        <div class="mobile-header-logo">
+            <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_mobile_logo)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_mobile_logo)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g>
+                <defs><linearGradient id="paint0_linear_mobile_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_mobile_logo"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs>
+            </svg>
+        </div>
+        <span class="header-title">Token Exporter</span>
+    </div>
+    <button class="mobile-menu-toggle-right" id="mobile-menu-toggle-right" aria-label="Toggle navigation">
         <i data-lucide="menu"></i>
     </button>
+</header>
+<!-- END: New Mobile Header -->
+
+<!-- START: New Mobile Menu Panel -->
+<div class="menu-overlay" id="menu-overlay"></div>
+<nav class="mobile-menu" id="mobile-menu">
+    <div class="menu-header">
+         <button class="menu-close-btn" id="menu-close-btn" aria-label="Close navigation">
+            <i data-lucide="x"></i>
+        </button>
+    </div>
+    <!-- The navigation links will be dynamically populated by the existing sidebar script -->
+    <ul class="mobile-nav-links" id="mobile-nav-links">
+        <!-- Links will be inserted here by JavaScript -->
+    </ul>
+</nav>
+<!-- END: New Mobile Menu Panel -->
+
 
     <div class="guide-container">
         <!-- Sidebar Navigation -->
@@ -832,23 +1010,7 @@
         <main class="guide-content">
             <!-- Overview Section -->
 <section id="overview" class="content-section" style="padding: 0;">
-    <!-- Cyberpunk stats banner -->
-    <div class="cyber-banner">
-        <div class="cyber-stats">
-            <div class="cyber-stat">
-                <i data-lucide="git-commit"></i>
-                <span><strong>500+</strong> commits</span>
-            </div>
-            <div class="cyber-stat">
-                <i data-lucide="bot"></i>
-                <span><strong>247</strong> tokens</span>
-            </div>
-            <div class="cyber-stat">
-                <i data-lucide="coffee"></i>
-                <span><strong>∞</strong> coffee</span>
-            </div>
-        </div>
-    </div>
+   
 
     <!-- HERO SECTION -->
     <div class="portfolio-hero">
@@ -887,11 +1049,7 @@
                 Built on Open Props foundation with 435+ tokens. Powered by AI-assisted development.
             </p>
 
-            <div class="hero-metadata">
-                <span class="text-size-0">v4.1.0</span> <!-- UPDATED -->
-                <span class="separator">•</span>
-                <span class="text-size-0">Updated July 2025</span> <!-- UPDATED -->
-            </div>
+            
 
           <div class="hero-footer">
                 <div class="social-links">
@@ -1380,7 +1538,7 @@
                         <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
                             <div class="liquid-progress-overlay" id="modular-liquid-demo" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--size-6); z-index: var(--layer-card);">
                                 <!-- Centered animation -->
-                                <div class="liquid-progress" style="--progress-size: 120px; position: relative; width: var(--progress-size); height: var(--progress-size); border-radius: 50%; background: #2a2a2a; border: 3px solid #333; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15); overflow: hidden; margin-bottom: var(--size-4);">
+                                <div class="liquid-progress" style="--progress-size: 120px; position: relative; width: var(--progress-size); height: var(--progress-size); border-radius: 50%; background: #2a2a2a; border: var(--border-size-3) solid #333; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15); overflow: hidden; margin-bottom: var(--size-4);">
                                     <div class="liquid-progress-inner" style="position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border-radius: 50%; background: #1a1a1a; overflow: hidden;">
                                         <div class="liquid-wave" id="modular-liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 4s linear infinite; opacity: 0.9; transition: top 0.5s ease;"></div>
                                         <!-- Second wave for depth -->
@@ -1946,258 +2104,248 @@
         </main>
     </div>
 
-           <script>
-        // Simple counter animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            if (!counters.length) return; // Defensive check
-            
-            counters.forEach(counter => {
-                const target = parseInt(counter.dataset.target);
-                const duration = 2000;
-                const increment = target / (duration / 16);
-                let current = 0;
-                
-                const updateCounter = () => {
-                    current += increment;
-                    if (current < target) {
-                        counter.textContent = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            updateCounter();
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                });
-                
-                observer.observe(counter);
-            });
-        }
-        
-        // FAQ accordion behavior - UPDATED to allow multiple open
-        function initFAQAccordion() {
-            const faqItems = document.querySelectorAll('.faq-item');
-            if (!faqItems.length) return;
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                if (!question) return;
-                
-                question.addEventListener('click', () => {
-                    item.classList.toggle('open');
-                });
-            });
-        }
-        
-        // Tech stack hover behavior - UPDATED with click/tap support
-        function initTechHover() {
-            const techItems = document.querySelectorAll('.tech-item[data-tech]');
-            const defaultContent = document.getElementById('tech-info-default');
-            if (!techItems.length || !defaultContent) return;
 
-            const showTechInfo = (tech) => {
-                document.querySelectorAll('.tech-info-content').forEach(content => {
-                    content.style.display = 'none';
-                    content.classList.remove('active');
-                });
-                const targetContent = document.getElementById(`tech-info-${tech}`);
-                if (targetContent) {
-                    targetContent.style.display = 'block';
-                    setTimeout(() => targetContent.classList.add('active'), 10);
+<script>
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeNavigation();
+        initializeMobileMenu(); // This is the new, updated function
+        initializeScrollHeader(); // This is the new function for the header
+        animateCounters();
+        initFAQAccordion();
+        initTechHover();
+    });
+
+    // --- Initialize Lucide Icons ---
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+
+    // --- ORIGINAL FUNCTIONS FROM YOUR FILE ---
+    function animateCounters() {
+        const counters = document.querySelectorAll('.counter');
+        if (!counters.length) return;
+        counters.forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target;
                 }
-                techItems.forEach(ti => ti.classList.remove('active'));
-                const activeItem = document.querySelector(`.tech-item[data-tech="${tech}"]`);
-                if (activeItem) activeItem.classList.add('active');
             };
-
-            const showDefaultInfo = () => {
-                 document.querySelectorAll('.tech-info-content').forEach(content => {
-                    content.style.display = 'none';
-                    content.classList.remove('active');
-                });
-                if (defaultContent) {
-                    defaultContent.style.display = 'block';
-                    setTimeout(() => defaultContent.classList.add('active'), 10);
-                }
-                techItems.forEach(item => item.classList.remove('active'));
-            };
-            
-            showDefaultInfo(); // Show default on load
-            
-            techItems.forEach(item => {
-                const tech = item.getAttribute('data-tech');
-                item.addEventListener('mouseenter', () => showTechInfo(tech));
-                item.addEventListener('click', () => showTechInfo(tech));
-            });
-            
-            const techGrid = document.querySelector('.tech-stack-grid');
-            if (techGrid) {
-                techGrid.addEventListener('mouseleave', showDefaultInfo);
-            }
-        }
-
-        // --- SMOOTH NAVIGATION & ACTIVE HIGHLIGHTING ---
-        function initializeNavigation() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = link.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-
-            const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
-            const observer = new IntersectionObserver(entries => {
-                let visibleSections = [];
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        visibleSections.push(entry.target);
+                        updateCounter();
+                        observer.unobserve(entry.target);
                     }
                 });
-
-                if (visibleSections.length > 0) {
-                    visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-                    const activeId = visibleSections[0].getAttribute('id');
-                    
-                    navLinks.forEach(link => {
-                        const linkHref = link.getAttribute('href');
-                        if (linkHref === '#colors') {
-                            const isColorSectionVisible = activeId === 'colors' || activeId === 'brand-colors' || activeId === 'gray-scale' || activeId === 'semantic-colors' || activeId === 'category-colors';
-                            link.classList.toggle('active', isColorSectionVisible);
-                        } else {
-                            link.classList.toggle('active', linkHref === `#${activeId}`);
-                        }
-                    });
-                }
-            }, { rootMargin: "-40% 0px -60% 0px" });
-
-            sections.forEach(section => {
-                observer.observe(section);
             });
-        }
-        
-        // --- MOBILE MENU FUNCTIONALITY ---
-        function initializeMobileMenu() {
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const sidebar = document.getElementById('sidebar');
+            observer.observe(counter);
+        });
+    }
 
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    sidebar.classList.toggle('open');
-                    const isOpen = sidebar.classList.contains('open');
-                    mobileMenuToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
-                });
-                
-                document.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768 && 
-                        !sidebar.contains(e.target) && 
-                        !mobileMenuToggle.contains(e.target) && 
-                        sidebar.classList.contains('open')) {
-                        sidebar.classList.remove('open');
-                        mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
-                    }
-                });
-                
-                const navLinks = document.querySelectorAll('.nav-link');
+    function initFAQAccordion() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        if (!faqItems.length) return;
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            if (!question) return;
+            question.addEventListener('click', () => {
+                item.classList.toggle('open');
+            });
+        });
+    }
+
+    function initTechHover() {
+        const techItems = document.querySelectorAll('.tech-item[data-tech]');
+        const defaultContent = document.getElementById('tech-info-default');
+        if (!techItems.length || !defaultContent) return;
+        const showTechInfo = (tech) => {
+            document.querySelectorAll('.tech-info-content').forEach(content => {
+                content.style.display = 'none';
+                content.classList.remove('active');
+            });
+            const targetContent = document.getElementById(`tech-info-${tech}`);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                setTimeout(() => targetContent.classList.add('active'), 10);
+            }
+            techItems.forEach(ti => ti.classList.remove('active'));
+            const activeItem = document.querySelector(`.tech-item[data-tech="${tech}"]`);
+            if (activeItem) activeItem.classList.add('active');
+        };
+        const showDefaultInfo = () => {
+             document.querySelectorAll('.tech-info-content').forEach(content => {
+                content.style.display = 'none';
+                content.classList.remove('active');
+            });
+            if (defaultContent) {
+                defaultContent.style.display = 'block';
+                setTimeout(() => defaultContent.classList.add('active'), 10);
+            }
+            techItems.forEach(item => item.classList.remove('active'));
+        };
+        showDefaultInfo();
+        techItems.forEach(item => {
+            const tech = item.getAttribute('data-tech');
+            item.addEventListener('mouseenter', () => showTechInfo(tech));
+            item.addEventListener('click', () => showTechInfo(tech));
+        });
+        const techGrid = document.querySelector('.tech-stack-grid');
+        if (techGrid) {
+            techGrid.addEventListener('mouseleave', showDefaultInfo);
+        }
+    }
+
+    function initializeNavigation() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
+        const observer = new IntersectionObserver(entries => {
+            let visibleSections = [];
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    visibleSections.push(entry.target);
+                }
+            });
+            if (visibleSections.length > 0) {
+                visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+                const activeId = visibleSections[0].getAttribute('id');
                 navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 768) {
-                            sidebar.classList.remove('open');
-                            mobileMenuToggle.innerHTML = '<i data-lucide="menu"></i>';
-                        }
-                    });
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref === '#colors') {
+                        const isColorSectionVisible = activeId === 'colors' || activeId === 'brand-colors' || activeId === 'gray-scale' || activeId === 'semantic-colors' || activeId === 'category-colors';
+                        link.classList.toggle('active', isColorSectionVisible);
+                    } else {
+                        link.classList.toggle('active', linkHref === `#${activeId}`);
+                    }
                 });
             }
-        }
-        
-        // --- COPY FUNCTIONALITY ---
-        function copyToken(tokenName) {
-    navigator.clipboard.writeText(tokenName).then(() => {
-        const buttons = document.querySelectorAll('.token-copy');
-        buttons.forEach(button => {
-            // Check if this button is the one for the specific token
-            if (button.getAttribute('onclick') === `copyToken('${tokenName}')`) {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i data-lucide="check" style="width: 1em; height: 1em;"></i> Copied!';
-                button.style.color = 'var(--brand-primary-lime)';
-                lucide.createIcons(); // Re-render the new icon
+        }, { rootMargin: "-40% 0px -60% 0px" });
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    }
 
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.color = '';
-                    // Note: lucide icons in the original state are assumed to be text, not icons.
-                }, 2000);
+    function copyToken(tokenName) {
+        navigator.clipboard.writeText(tokenName).then(() => {
+            const buttons = document.querySelectorAll('.token-copy');
+            buttons.forEach(button => {
+                if (button.getAttribute('onclick') === `copyToken('${tokenName}')`) {
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i data-lucide="check" style="width: 1em; height: 1em;"></i> Copied!';
+                    button.style.color = 'var(--brand-primary-lime)';
+                    lucide.createIcons();
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.style.color = '';
+                    }, 2000);
+                }
+            });
+        }).catch(err => {
+            console.error('Failed to copy token: ', err);
+        });
+    }
+    
+    function copyCode(button) {
+        const codeBlock = button.nextElementSibling;
+        if (!codeBlock || codeBlock.tagName.toLowerCase() !== 'code') {
+            console.error('Could not find code element to copy.');
+            return;
+        }
+        const code = codeBlock.textContent.trim();
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i data-lucide="check" style="width: 1em; height: 1em;"></i> Copied!';
+            button.style.color = 'var(--brand-primary-lime)';
+            lucide.createIcons();
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.color = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy code: ', err);
+        });
+    }
+
+    // --- NEW & UPDATED FUNCTIONS FOR MOBILE HEADER ---
+    function initializeMobileMenu() {
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle-right');
+        const menuCloseBtn = document.getElementById('menu-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const sidebar = document.getElementById('sidebar');
+        const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+
+        const populateMobileMenu = () => {
+            const sidebarLinks = sidebar.querySelectorAll('.nav-links li');
+            mobileNavLinksContainer.innerHTML = '';
+            sidebarLinks.forEach(link => {
+                mobileNavLinksContainer.appendChild(link.cloneNode(true));
+            });
+        };
+
+        const openMenu = () => {
+            mobileMenu.classList.add('open');
+            menuOverlay.classList.add('open');
+        };
+
+        const closeMenu = () => {
+            mobileMenu.classList.remove('open');
+            menuOverlay.classList.remove('open');
+        };
+        
+        populateMobileMenu();
+        mobileMenuToggle.addEventListener('click', openMenu);
+        menuCloseBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        
+        mobileNavLinksContainer.addEventListener('click', (e) => {
+            if (e.target.closest('a')) {
+                closeMenu();
             }
         });
-    }).catch(err => {
-        console.error('Failed to copy token: ', err);
-    });
-}
-        
-        function copyCode(button) {
-    const codeBlock = button.nextElementSibling;
-    if (!codeBlock || codeBlock.tagName.toLowerCase() !== 'code') {
-        console.error('Could not find code element to copy.');
-        return;
     }
-    const code = codeBlock.textContent.trim();
 
-    navigator.clipboard.writeText(code).then(() => {
-        const originalText = button.innerHTML;
-        button.innerHTML = '<i data-lucide="check" style="width: 1em; height: 1em;"></i> Copied!';
-        button.style.color = 'var(--brand-primary-lime)';
-        lucide.createIcons();
+    function initializeScrollHeader() {
+        const header = document.getElementById('mobile-header');
+        if (!header) return;
 
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.color = '';
-            // The original button text is "Copy", so no need to re-render icons here.
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy code: ', err);
-    });
-}
-        
-// --- INITIALIZATION ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all main functions
-    initializeNavigation();
-    initializeMobileMenu();
-    animateCounters();
-    initFAQAccordion();
-    initTechHover();
-});
+        let lastScrollY = window.scrollY;
+        const headerHeight = parseFloat(getComputedStyle(header).height);
 
-// Use the more robust 'window.onload' event for icons.
-// This guarantees that EVERYTHING on the page is fully loaded
-// before we try to draw the icons.
-window.addEventListener('load', () => {
-  lucide.createIcons();
-});
+        window.addEventListener('scroll', () => {
+            if (document.getElementById('mobile-menu').classList.contains('open')) return;
+            
+            if (lastScrollY < window.scrollY && window.scrollY > headerHeight) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+    }
+</script>
 
-
-// Use the more robust 'window.onload' event for icons.
-// This guarantees that EVERYTHING on the page is fully loaded
-// before we try to draw the icons.
-window.addEventListener('load', () => {
-  lucide.createIcons();
-});
-    </script>
-
-<div class="version-badge">v<span id="version"></span></div>
-<script>
+<a href="YOUR_GITHUB_REPO_URL" target="_blank" rel="noopener noreferrer" class="version-badge" title="View on GitHub">
+    v<span id="version"></span>
+</a><script>
     document.addEventListener('DOMContentLoaded', () => {
         const version = getComputedStyle(document.documentElement).getPropertyValue('--system-version').replace(/['"]/g,'').trim();
         if (version) {
