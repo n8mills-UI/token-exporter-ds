@@ -3332,27 +3332,27 @@ sl-input::part(input):focus-visible,
 
 
 /* ==========================================================================
-   UNIFIED BUTTON SYSTEM (REFACTORED)
-   This new system unifies all button types for consistency.
+   UNIFIED BUTTON SYSTEM (V2 - WITH SIZING)
+   This new system unifies all button types and adds size variants.
    ========================================================================== */
 
-/* Base styles for all buttons */
+/* Base styles for all buttons - Defaults to MEDIUM size */
 .btn {
     /* Core Layout & Sizing */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--size-2);
-    height: var(--component-height-lg); /* 36px */
-    padding: 0 var(--size-4); /* 16px horizontal padding */
-    width: auto; /* Allow button to size to its content */
+    height: var(--component-height-md); /* Default: 32px */
+    padding: 0 var(--size-3); /* Default: 12px horizontal padding */
+    width: auto;
     
     /* Typography */
     font-family: var(--font-sans);
-    font-size: var(--font-size-1); /* 16px */
+    font-size: var(--font-size-0); /* Default: 14px */
     font-weight: var(--font-weight-6);
     text-decoration: none;
-    line-height: 1; /* Prevents extra space */
+    line-height: 1;
 
     /* Appearance & Transitions */
     border-radius: var(--radius-2);
@@ -3361,6 +3361,19 @@ sl-input::part(input):focus-visible,
     transition: all var(--transition-fast);
     position: relative;
     overflow: hidden;
+}
+
+/* -- Sizing Modifiers -- */
+.btn.btn-sm {
+    height: var(--component-height-sm); /* 28px */
+    padding: 0 var(--size-2); /* 8px horizontal padding */
+    font-size: var(--font-size-00); /* 12px */
+}
+
+.btn.btn-lg {
+    height: var(--component-height-lg); /* 36px */
+    padding: 0 var(--size-4); /* 16px horizontal padding */
+    font-size: var(--font-size-1); /* 16px */
 }
 
 /* Shine effect for hover on all buttons */
@@ -3424,9 +3437,9 @@ sl-input::part(input):focus-visible,
 /* -- Icon-Only & Social Link Buttons -- */
 .btn-icon-only,
 .social-link {
-    width: var(--component-height-lg);  /* 36px */
-    height: var(--component-height-lg); /* 36px */
-    padding: 0; /* Remove padding for icon-only */
+    width: var(--component-height-md);  /* Default: 32px */
+    height: var(--component-height-md); /* Default: 32px */
+    padding: 0;
     border-radius: var(--radius-round);
     background: var(--color-background-secondary);
     border: var(--border-size-1) solid var(--color-border-default);
@@ -3437,6 +3450,20 @@ sl-input::part(input):focus-visible,
     justify-content: center;
     text-decoration: none;
 }
+
+/* Sizing modifiers for icon buttons */
+.btn-icon-only.btn-sm,
+.social-link.btn-sm {
+    width: var(--component-height-sm);
+    height: var(--component-height-sm);
+}
+
+.btn-icon-only.btn-lg,
+.social-link.btn-lg {
+    width: var(--component-height-lg);
+    height: var(--component-height-lg);
+}
+
 
 .btn-icon-only:hover,
 .social-link:hover {
@@ -3449,14 +3476,21 @@ sl-input::part(input):focus-visible,
 .btn .lucide,
 .btn-icon-only .lucide,
 .social-link .lucide {
-    width: var(--icon-md); /* 20px */
-    height: var(--icon-md); /* 20px */
-    stroke-width: var(--stroke-thin); /* 1px */
+    width: var(--icon-sm); /* Default: 16px */
+    height: var(--icon-sm); /* Default: 16px */
+    stroke-width: var(--stroke-thin);
+}
+
+.btn.btn-lg .lucide,
+.btn-icon-only.btn-lg .lucide,
+.social-link.btn-lg .lucide {
+    width: var(--icon-md); /* 20px on large buttons */
+    height: var(--icon-md);
 }
 
 
 /* ==========================================================================
-   HERO & FOOTER LAYOUT (REFACTORED)
+   HERO, FOOTER & MOBILE LAYOUT (REFACTORED)
    ========================================================================== */
 
 /* -- Hero Section -- */
@@ -3465,9 +3499,15 @@ sl-input::part(input):focus-visible,
     padding: var(--size-8) var(--size-6);
     min-height: 80vh;
     display: flex;
+    flex-direction: column; /* Align items in a column */
     align-items: center;
-    justify-content: center; /* Center content horizontally */
-    text-align: center; /* Center all text */
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-main-title {
+    line-height: 1.1; /* Tighter line height for wrapping */
+    margin-bottom: var(--size-4); /* Adds space below title */
 }
 
 /* Restores the background pattern */
@@ -3475,7 +3515,7 @@ sl-input::part(input):focus-visible,
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: -1; /* Place behind content */
     background: repeating-linear-gradient(
         45deg,
         transparent,
@@ -3485,30 +3525,28 @@ sl-input::part(input):focus-visible,
     );
     animation: subtle-shift 20s linear infinite;
     pointer-events: none;
-    mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
 }
 
 .hero-footer {
     margin-top: var(--size-6);
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items vertically in the column */
+    align-items: center;
     gap: var(--size-4);
 }
 
 .social-links {
     display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
+    flex-direction: row;
     justify-content: center;
-    gap: var(--size-3); /* Reduced gap for closer icons */
+    gap: var(--size-3);
 }
 
 /* -- Guide Footer -- */
 .guide-footer {
     background: #0a0a0a;
     position: relative;
-    padding: var(--size-6) var(--size-8); /* Adjusted padding */
+    padding: var(--size-6) var(--size-8);
     margin-top: var(--size-10);
 }
 
@@ -3516,9 +3554,10 @@ sl-input::part(input):focus-visible,
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Pushes items to edges */
+    align-items: center;
+    justify-content: space-between;
     gap: var(--size-8);
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 .footer-actions {
@@ -3529,8 +3568,23 @@ sl-input::part(input):focus-visible,
 
 .footer-social-links {
     display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    gap: var(--size-3); /* Add spacing between footer icons */
+    flex-direction: row;
+    gap: var(--size-3);
+}
+
+/* -- Mobile Header & Menu Polish -- */
+.mobile-header .mobile-menu-toggle-right .lucide {
+    width: var(--icon-lg); /* 24px - Increase hamburger size */
+    height: var(--icon-lg);
+}
+
+.mobile-menu .menu-header {
+    height: var(--size-10); /* Match the main mobile header height */
+}
+
+.mobile-menu .menu-close-btn .lucide {
+    width: var(--icon-lg); /* 24px - Increase close icon size */
+    height: var(--icon-lg);
 }
 
 
@@ -3540,7 +3594,7 @@ sl-input::part(input):focus-visible,
 
 /* Fixes the blue gradient on the empty state example */
 .empty-state {
-    background: var(--gradient-7); /* Uses existing grey gradient */
+    background: var(--gradient-7);
     border: var(--border-size-1) dashed rgba(var(--brand-primary-lime-rgb), var(--opacity-20));
     border-radius: var(--radius-3);
     padding: var(--size-8) var(--size-4);
