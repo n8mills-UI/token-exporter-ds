@@ -1,28 +1,32 @@
 #!/bin/bash
 # scripts/sync-css.sh
 
-echo "🔄 Syncing design-system.css to ui.html..."
+echo "🔄 Syncing CSS from docs/ to src/ui.html..."
+
+# Define paths relative to the project root
+CSS_SOURCE_FILE="docs/design-system.css"
+UI_HTML_FILE="src/ui.html"
 
 # Validate source file exists
-if [ ! -f "design-system.css" ]; then
-    echo "❌ Error: design-system.css not found"
+if [ ! -f "$CSS_SOURCE_FILE" ]; then
+    echo "❌ Error: Source file not found at $CSS_SOURCE_FILE"
     exit 1
 fi
 
 # Validate target file exists
-if [ ! -f "src/ui.html" ]; then
-    echo "❌ Error: src/ui.html not found"
+if [ ! -f "$UI_HTML_FILE" ]; then
+    echo "❌ Error: Target file not found at $UI_HTML_FILE"
     exit 1
 fi
 
 # Create backup
-cp src/ui.html src/ui.html.backup
+cp "$UI_HTML_FILE" "$UI_HTML_FILE.backup"
 
-# Prepare CSS content for insertion with indentation
+# Prepare CSS content for insertion
 {
     echo "  <style>"
-    echo "  /* === SYNCED FROM design-system.css | $(date) === */"
-    sed 's/^/  /' design-system.css
+    echo "  /* === SYNCED FROM $CSS_SOURCE_FILE | $(date) === */"
+    sed 's/^/  /' "$CSS_SOURCE_FILE"
     echo "  /* === END SYNCED CSS === */"
     echo "  </style>"
 } > temp-style-block.txt
@@ -33,11 +37,11 @@ BEGIN { p=1 }
 // { print; system("cat temp-style-block.txt"); p=0 }
 // { p=1 }
 p { print }
-' src/ui.html > src/ui.html.new
+' "$UI_HTML_FILE" > "$UI_HTML_FILE.new"
 
 # Replace original file and cleanup
-mv src/ui.html.new src/ui.html
+mv "$UI_HTML_FILE.new" "$UI_HTML_FILE"
 rm temp-style-block.txt
 
 echo "✅ CSS successfully synced to ui.html"
-echo "📁 Backup saved as ui.html.backup"
+echo "📁 Backup saved as $UI_HTML_FILE.backup"
