@@ -621,146 +621,128 @@ body {
 }
 
 /* ==========================================================================
-    COMPONENT STYLING
+   SHOELACE COMPONENT THEME (REFACTORED)
+   This block themes Shoelace components using the design system's tokens.
    ========================================================================== */
 
-/* Shoelace Button Styling */
-sl-button::part(base) {
-    transition: all var(--sl-transition-medium) var(--ease-3);
-    font-weight: var(--font-weight-6);
-    position: relative;
-    overflow: hidden;
+:root {
+    /* Map Design Tokens to Shoelace Theme Properties */
+
+    /* Primary Color Mapping */
+    --sl-color-primary-50: #f7ffd4;
+    --sl-color-primary-100: #f0ffaa;
+    --sl-color-primary-200: #e8ff81;
+    --sl-color-primary-300: #e1ff57;
+    --sl-color-primary-400: #daff2e;
+    --sl-color-primary-500: var(--brand-secondary-yellow);
+    --sl-color-primary-600: var(--brand-primary-lime); /* Main brand color */
+    --sl-color-primary-700: #a3cc00;
+    --sl-color-primary-800: #7a9900;
+    --sl-color-primary-900: #526600;
+    --sl-color-primary-950: #293300;
+    
+    /* Neutral (Gray) Color Mapping */
+    --sl-color-neutral-0: var(--gray-9); /* Surface color */
+    --sl-color-neutral-50: var(--gray-8);
+    --sl-color-neutral-100: var(--gray-7);
+    --sl-color-neutral-200: var(--gray-6);
+    --sl-color-neutral-300: var(--gray-5);
+    --sl-color-neutral-400: var(--gray-4);
+    --sl-color-neutral-500: var(--gray-3);
+    --sl-color-neutral-600: var(--gray-2);
+    --sl-color-neutral-700: var(--gray-1);
+    --sl-color-neutral-800: var(--gray-0); /* Text color */
+    --sl-color-neutral-900: #000;
+    --sl-color-neutral-950: #000;
+
+    /* Typography Mapping */
+    --sl-font-sans: var(--font-sans);
+    --sl-font-mono: var(--font-mono);
+    --sl-font-weight-semibold: var(--font-weight-6);
+    --sl-font-weight-bold: var(--font-weight-7);
+
+    /* Spacing & Radius Mapping */
+    --sl-spacing-small: var(--size-2);
+    --sl-spacing-medium: var(--size-3);
+    --sl-spacing-large: var(--size-4);
+    --sl-border-radius-medium: var(--radius-2);
+    --sl-border-radius-large: var(--radius-3);
+    --sl-border-radius-circle: var(--radius-round); /* Fix for circle buttons */
+    
+    /* Input Mapping */
+    --sl-input-background-color: var(--color-background-secondary);
+    --sl-input-border-color: var(--color-border-default);
+    --sl-input-color: var(--color-text-default);
+    --sl-input-background-color-hover: var(--color-background-tertiary);
 }
 
-/* Primary variant */
+/* --- Component-Specific Theming --- */
+
+/* sl-button */
+sl-button::part(base) {
+    transition: all var(--transition-fast);
+}
+
 sl-button[variant="primary"]::part(base) {
-    background: var(--brand-gradient-lime);
-    border-color: var(--brand-primary-lime);
     color: var(--color-text-on-brand);
-    box-shadow: var(--shadow-brand); /* CORRECTED: Was hardcoded rgba() */
+    box-shadow: var(--shadow-brand);
 }
 
 sl-button[variant="primary"]::part(base):hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-brand-hover); /* CORRECTED: Was hardcoded rgba() */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-brand-hover);
 }
 
-/* Secondary (default) variant */
-sl-button[variant="default"]::part(base) {
-    background: var(--color-background-secondary);
-    border-color: var(--color-border-default);
-    color: var(--color-text-default);
+/* sl-icon-button */
+sl-icon-button::part(base) {
+    color: var(--color-text-secondary);
 }
-
-sl-button[variant="default"]::part(base):hover {
-    background: var(--color-background-tertiary);
-    border-color: var(--gray-5);
-    transform: translateY(-1px);
-}
-
-/* Text variant (tertiary) */
-sl-button[variant="text"]::part(base) {
-    background: transparent;
-    border-color: transparent;
+sl-icon-button::part(base):hover {
     color: var(--brand-primary-lime);
 }
 
-sl-button[variant="text"]::part(base):hover {
-    background: rgba(210, 255, 55, 0.1);
+
+/* ==========================================================================
+   FINAL HERO SECTION POLISH
+   ========================================================================== */
+
+.portfolio-hero {
+    position: relative;
+    padding: var(--size-8) var(--size-6);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-/* Disabled state */
-sl-button[disabled]::part(base) {
-    background: var(--color-background-disabled);
-    border-color: var(--color-border-default);
-    color: var(--gray-5);
-    opacity: var(--opacity-disabled);
-    cursor: not-allowed;
-}
-
-/* Icon button circle variant */
-sl-button[circle]::part(base) {
-    border-radius: var(--radius-round);
-    width: var(--size-8);
-    height: var(--size-8);
-    padding: 0;
-}
-
-/* Shoelace shine effect */
-sl-button::part(base)::before {
+/* FIX: Restores radial gradients and pattern */
+.portfolio-hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left var(--animation-duration-4) var(--ease-out-5);
+    inset: 0;
+    z-index: -1;
+    background: 
+        /* Color glows */
+        radial-gradient(circle at 20% 50%, rgba(210, 255, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(238, 255, 0, 0.04) 0%, transparent 40%),
+        /* Diagonal line pattern */
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(210, 255, 55, 0.02) 10px,
+            rgba(210, 255, 55, 0.02) 20px
+        );
+    animation: subtle-shift 20s linear infinite;
+    pointer-events: none;
 }
+@keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
 
-sl-button::part(base):hover::before {
-    left: 100%;
-}
-
-/* Shoelace Dropdown Styling */
-sl-dropdown::part(panel) {
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-3);
-    box-shadow: var(--shadow-4);
-}
-
-sl-dropdown::part(trigger) {
-    cursor: pointer;
-}
-
-/* Shoelace Select Styling */
-sl-select::part(combobox) {
-    background: var(--color-background-tertiary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    color: var(--color-text-default);
-    transition: all var(--sl-transition-medium) var(--ease-3);
-}
-
-sl-select::part(combobox):hover {
-    background: var(--surface-3);
-    border-color: var(--gray-5);
-}
-
-/* Shoelace Dialog Styling */
-sl-dialog::part(panel) {
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-4);
-}
-
-sl-dialog::part(overlay) {
-    background-color: var(--color-backdrop);
-    -webkit-backdrop-filter: var(--blur-md); /* Safari */
-    backdrop-filter: var(--blur-md);
-}
-
-sl-dialog::part(header) {
-    border-bottom: var(--border-size-1) solid var(--color-border-default); /* CORRECTED: Was 1px */
-}
-
-/* Shoelace Input Styling */
-sl-input::part(input) {
-    background: var(--color-background-tertiary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    color: var(--color-text-default);
-}
-
-sl-input::part(input):hover {
-    background: var(--surface-3);
-    border-color: var(--gray-5);
-}
-
-/* Shoelace Spinner */
-sl-spinner {
-    --indicator-color: var(--brand-primary-lime);
-    --track-color: var(--gray-7);
+/* FIX: Tightens line-height and adds margin */
+.hero-main-title {
+    line-height: 1.1;
+    margin-bottom: var(--size-4);
 }
 
 /* ==========================================================================
