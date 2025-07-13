@@ -96,64 +96,56 @@ This section is for developers who want to contribute to the project.
 
 ### Project Philosophy
 
-This system follows a "CSS First" approach. All style changes, bug fixes, and new tokens are made in a single source of truth (`src/design-system.css`). This ensures consistency and maintainability.
+This system follows a **"CSS First"** approach. All style changes are made in a single source of truth (`design-system.css`). Due to Figma's security policy, we use an automation script to inject these styles directly into the plugin's UI file.
 
-Due to Figma's Content Security Policy (CSP), the plugin cannot link to external stylesheets. Therefore, we use a simple build process to inject the master CSS file into the plugin's HTML. This document outlines that process.
+### ⚙️ One-Time Setup
 
-### One-Time Setup - ON HOLD
+First, let's get your local environment ready. You only need to do this once.
 
-1.  **Install Node.js:** If you don't already have it, download and install Node.js from the official website. This gives you the ability to run JavaScript scripts from your terminal.
+1.  **Install Node.js:** If you don't already have it, download and install the **LTS** version from the official website. This is what allows your computer to run the project's scripts.
     <br>
     <a href="https://nodejs.org/">
       <img src="https://img.shields.io/badge/Download_Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Download Node.js">
     </a>
-2.  **Initialize the Project:** If you've just cloned the repository, run `npm init -y` to create a `package.json` file.
-3.  **Install Dependencies:** Open your terminal (see below) in the project's root folder and run this one command:
-    ```bash
-    npm install
-    ```
-    This will read the `package.json` file and install the necessary development tools, like `clean-css`.
+2.  **Initialize the Project:** Open a terminal in the project's root folder and run `npm init -y` to create your `package.json` file.
+3.  **Install Dependencies:** In the same terminal, run `npm install`. This command sets up the environment needed for our scripts.
 
-### The Development Terminal
+### 🚀 The CSS Sync Command
 
-You can use any command-line terminal, but the easiest way is to use the one built into VS Code.
+After you've made a change to the styles, you need to sync them to the plugin.
 
-* **How to open it:** In VS Code, go to the top menu and select `Terminal` > `New Terminal`. A panel will open at the bottom of your editor. This is where you will run the build command.
+> **Key Command:** In your VS Code terminal, just run:
+> ```bash
+> npm run sync
+> ```
 
-### The Build Command
-
-After making any change to `src/design-system.css`, you must run the build script to update the plugin file.
-
-1.  Open the terminal in VS Code.
-2.  Type the following command and press Enter:
-    ```bash
-    node build.js
-    ```
-That's it. The script will automatically take the latest CSS, minify it, and inject it into `dist/ui.html`. The `dist/ui.html` file is now ready to be used in your Figma plugin.
+This command runs the `scripts/sync-css.sh` file, which automatically finds the latest CSS, and injects it into the plugin's `ui.html` file.
 
 ### ✨ The Golden Workflow
 
-1.  **📝 Edit the Source of Truth:** Make all your style changes in the `src/design-system.css` file.
-2.  **🔬 Verify in the Guide (Optional but Recommended):** Open the `docs/design-system-guide.html` file in your browser. Since it links directly to the CSS, your changes will appear there instantly. This is a great way to test without running the build.
-3.  **🚀 Build the Plugin:** Run `node build.js` in your terminal.
-4.  **📦 Use the Final File:** The `dist/ui.html` file is now updated and ready for use.
+| Step | Action | Purpose |
+| :--- | :--- | :--- |
+| **1. 📝 Edit** | Make all your style changes in **`docs/design-system.css`**. | Your single source of truth. |
+| **2. 🔬 Preview** | Open **`docs/design-system-guide.html`** in your browser. | See your changes live without any builds. |
+| **3. 🔄 Sync** | Run **`npm run sync`** in your terminal. | Updates the Figma plugin's UI with your new styles. |
+| **4. ✅ Verify** | Test the **`src/ui.html`** file in the Figma plugin. | The final check to make sure everything works. |
 
-> **Warning**
-> **NEVER edit `dist/ui.html` directly.** Your changes will be overwritten the next time the build script is run.
+> **🛑 IMPORTANT**
+> Never edit the `src/ui.html` file directly. All your changes will be deleted the next time you run the sync script.
 
 ### Project Structure
-
-```
-token-exporter/
+```text
+token-exporter-ds/
+├── docs/
+│   ├── design-system-guide.html # Standalone design system documentation
+│   └── design-system.css      # ✅ EDIT THIS FILE
+├── scripts/
+│   └── sync-css.sh              # The automation script
 ├── src/
-│   ├── design-system.css    # ✅ EDIT THIS FILE. The single source of truth for all styles.
-│   └── ui.template.html     # Plugin HTML template. DO NOT EDIT unless changing structure.
-├── build/
-│   └── build.js             # The automation script. DO NOT EDIT.
-├── dist/
-│   └── ui.html              # ❌ DO NOT EDIT THIS FILE. It is generated by the build script.
-└── docs/
-    └── design-system-guide.html # Documentation site for testing and reference.
+│   ├── code.js                  # Main plugin logic
+│   └── ui.html                  # ❌ DO NOT EDIT THIS FILE
+├── package.json                 # Project scripts runner
+└── README.md                    # Project documentation
 ```
 
 <br>
@@ -177,3 +169,11 @@ The Figma plugin is updated periodically with stable features from the design sy
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+
+
+
+
+
+
