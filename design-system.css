@@ -3335,6 +3335,162 @@ sl-input::part(input):focus-visible,
     }
 }
 
+
+      /* ==========================================================================
+           GUIDE LAYOUT STYLES
+           ========================================================================== */
+        
+    /* --- START: New Mobile Header & Menu Styles --- */
+.mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--size-10);
+    background: var(--color-background-secondary);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    z-index: 100;
+    display: none; /* Hidden by default, shown on mobile via media query */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--size-3);
+    transform: translateY(0);
+    transition: transform var(--transition-medium);
+    box-sizing: border-box;
+}
+
+.mobile-header.hidden {
+    transform: translateY(-100%);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+}
+
+.mobile-header-logo {
+    height: var(--size-7);
+    width: var(--size-7);
+    flex-shrink: 0;
+}
+
+.header-title {
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+    line-height: 1.2;
+}
+
+.mobile-menu-toggle-right {
+    background: transparent;
+    border: none;
+    color: var(--color-text-default);
+    cursor: pointer;
+    padding: var(--size-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: var(--color-backdrop);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+    border-left: var(--border-size-1) solid var(--color-border-default);
+    z-index: 101;
+    transform: translateX(100%);
+    transition: transform var(--transition-medium);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+.menu-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: var(--size-12);
+    padding: 0 var(--size-6);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    flex-shrink: 0;
+}
+
+.menu-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-default);
+    cursor: pointer;
+    padding: var(--size-2);
+    display: flex;
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+    pointer-events: none;
+}
+
+.menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: var(--size-4);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.mobile-nav-links a {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+    padding: var(--size-3);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-1);
+    transition: all 0.2s ease;
+}
+
+.mobile-nav-links a:hover,
+.mobile-nav-links a.active {
+    background: var(--color-background-secondary);
+    color: var(--brand-primary-lime);
+}
+
+/* Show the new header on mobile and adjust main content padding */
+@media (max-width: 768px) {
+    .mobile-header {
+        display: flex;
+    }
+    .guide-content {
+        /* This correctly applies padding ONLY to the top, allowing the hero to be full-bleed */
+        padding-top: var(--size-12);
+    }
+}
+
+
+
 /* ==========================================================================
    THEMING STRATEGY & FUTURE IMPLEMENTATIONS
    ========================================================================== */
