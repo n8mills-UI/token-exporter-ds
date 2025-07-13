@@ -1,0 +1,25 @@
+{
+  "name": "token-exporter-ds",
+  "version": "1.0.0",
+  "description": "![Token Exporter Hero Image](https://res.cloudinary.com/dbmvymdp1/image/upload/v1752106527/Figma_01_sk7ne5.png)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "sync": "./scripts/sync-css.sh",
+    "dev": "npm run sync && echo 'Watching for changes...'",
+    "build": "npm run sync"
+ },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n8mills-UI/token-exporter-ds.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n8mills-UI/token-exporter-ds/issues"
+  },
+  "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme"
+}
