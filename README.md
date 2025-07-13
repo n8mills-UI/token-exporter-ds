@@ -100,7 +100,7 @@ This system follows a "CSS First" approach. All style changes, bug fixes, and ne
 
 Due to Figma's Content Security Policy (CSP), the plugin cannot link to external stylesheets. Therefore, we use a simple build process to inject the master CSS file into the plugin's HTML. This document outlines that process.
 
-### One-Time Setup
+### One-Time Setup - ON HOLD
 
 1.  **Install Node.js:** If you don't already have it, download and install Node.js from the official website. This gives you the ability to run JavaScript scripts from your terminal.
     <br>
