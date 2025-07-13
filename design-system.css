@@ -1359,22 +1359,16 @@ sl-spinner {
     --portfolio-gradient-dark: linear-gradient(180deg, #0a0a0a 0%, var(--gray-9) 100%);
 }
 
-/* Overwrite guide padding for full-width hero */
-.guide-content {
-    flex: 1;
-    max-width: calc(100vw - 280px);
-    width: 100%;
-    box-sizing: border-box;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}
-
-/* 2. FIXED MASK - Pattern visible, fades at bottom */
+/* PORTFOLIO HERO SECTION - Complete replacement */
 .portfolio-hero {
     position: relative;
+    padding: var(--size-8) var(--size-6) var(--size-6) var(--size-6);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
 }
 
-/* Background gradient ONLY (no pattern) */
+/* Background gradient (no mask needed) */
 .portfolio-hero::after {
     content: '';
     position: absolute;
@@ -1384,13 +1378,10 @@ sl-spinner {
         radial-gradient(circle at 20% 50%, rgba(210, 255, 55, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(238, 255, 0, 0.05) 0%, transparent 50%),
         linear-gradient(180deg, #0a0a0a 0%, #1e1e1e 100%);
-    /* Fade the background at bottom */
-    mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
     pointer-events: none;
 }
 
-/* Pattern overlay - NO MASK on this one */
+/* Pattern overlay with BOTTOM fade only */
 .portfolio-hero::before {
     content: '';
     position: absolute;
@@ -1405,27 +1396,29 @@ sl-spinner {
     );
     animation: subtle-shift 20s linear infinite;
     pointer-events: none;
-    /* NO MASK HERE - Pattern stays visible */
+    /* Fade pattern at bottom only for smooth transition */
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
 }
 
-/* Keep content above backgrounds */
+/* Content wrapper */
 .hero-content-wrapper {
     position: relative;
     z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-/* Animation for pattern */
+/* Pattern animation */
 @keyframes subtle-shift {
     0% { transform: translate(0, 0); }
     100% { transform: translate(20px, 20px); }
 }
 
-
-
-
-/* Hero content */
+/* Hero logo with animation */
 .hero-logo {
-    margin-bottom: var(--size-4);
+    margin-bottom: var(--size-3);
     animation: gentle-float 3s ease-in-out infinite;
 }
 
@@ -1434,69 +1427,82 @@ sl-spinner {
     50% { transform: translateY(-10px); }
 }
 
+/* Hero title with TIGHT line height */
+.hero-main-title {
+    font-size: calc(var(--font-size-8) * 1.2);
+    font-weight: var(--font-weight-7);
+    line-height: 1.1; /* Very tight for mobile wrapping */
+    letter-spacing: -0.02em;
+    color: var(--brand-primary-lime);
+    margin-bottom: var(--size-3);
+    margin-top: 0;
+}
+
+/* Tagline with improved hierarchy */
 .hero-tagline {
     font-size: var(--font-size-3);
     color: var(--color-text-secondary);
     max-width: 60ch;
-    margin: 0 auto var(--size-2);
+    margin: 0 auto var(--size-3); /* Tighter spacing */
     line-height: var(--font-lineheight-3);
-    padding: 0 var(--size-8);
+    padding: 0 var(--size-4);
 }
 
+/* Description with proper spacing */
 .hero-description {
     color: var(--color-text-muted);
     max-width: 50ch;
-    margin: 0 auto var(--size-6);
+    margin: 0 auto var(--size-5); /* Reduced bottom margin */
     line-height: var(--font-lineheight-3);
-    padding: 0 var(--size-8);
+    padding: 0 var(--size-4);
+    font-size: var(--font-size-1);
 }
 
-.hero-metadata {
-    display: flex;
-    gap: var(--size-3);
-    justify-content: center;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: var(--font-size-0); /* UPDATED: Increased for accessibility */
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-}
-
-
-.hero-metadata .separator {
-    color: var(--color-text-muted);
-}
-
+/* Hero footer container */
 .hero-footer {
-    margin-top: var(--size-8);
+    margin-top: var(--size-6);
     text-align: center;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--size-6);
+    align-items: center;
+    gap: var(--size-4);
 }
 
+/* SOCIAL LINKS - Force proper spacing */
+.hero-social-links {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: var(--size-6) !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 2;
+    position: relative;
+}
+
+/* Ensure social links are clickable */
+.hero-social-links .social-link {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 2;
+}
+
+/* CTA Button container */
+.figma-cta {
+    margin: var(--size-4) 0;
+}
+
+/* Attribution text */
 .hero-footer p {
     color: var(--color-text-muted);
     font-size: var(--font-size-0);
-    margin: 0 auto;
-    text-align: center;
+    margin: 0;
 }
 
 .hero-footer .heart {
     color: var(--category-color-pink);
     animation: heartbeat 1.5s ease-in-out infinite;
-}
-
-/* Icon-text component pattern */
-.icon-text {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-1);
-}
-
-.icon-text i {
-    font-size: 1em;
 }
 
 /* Condensed content section */
@@ -1506,6 +1512,25 @@ sl-spinner {
     margin: 0 auto;
 }
 
+/* Mobile responsiveness for hero */
+@media (max-width: 768px) {
+    .portfolio-hero {
+        min-height: auto;
+        padding: var(--size-6) var(--size-4);
+    }
+    
+    .hero-main-title {
+        font-size: var(--font-size-7);
+    }
+    
+    .hero-tagline {
+        font-size: var(--font-size-2);
+    }
+    
+    .hero-social-links {
+        gap: var(--size-4) !important;
+    }
+}
 /* Impact stats */
 .impact-stats {
     display: grid;
