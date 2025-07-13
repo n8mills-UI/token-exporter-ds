@@ -436,7 +436,6 @@ body {
    UNIFIED BUTTON & ICON STYLES (Audited & Vetted)
    =================================================================== */
 
-/* Social icon links - used in hero and footer */
 .social-link {
     width: var(--component-height-lg);
     height: var(--component-height-lg);
@@ -463,16 +462,15 @@ body {
     height: var(--icon-md);
 }
 
-/* Container for social links - DELETE THIS if it exists elsewhere */
 .social-links {
      display: flex;
-    flex-direction: row;  /* Force horizontal */
+    flex-direction: row;
     gap: var(--size-10);
     justify-content: center;
     align-items: center;
 }
 
-/* Footer CTA button */
+
 .btn.primary {
     display: inline-flex;
     align-items: center;
@@ -1469,24 +1467,8 @@ sl-spinner {
     gap: var(--size-4);
 }
 
-/* SOCIAL LINKS - Force proper spacing */
-.hero-social-links {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: var(--size-6) !important;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    z-index: 2;
-    position: relative;
-}
 
-/* Ensure social links are clickable */
-.hero-social-links .social-link {
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 2;
-}
+
 
 /* CTA Button container */
 .figma-cta {
@@ -1527,9 +1509,6 @@ sl-spinner {
         font-size: var(--font-size-2);
     }
     
-    .hero-social-links {
-        gap: var(--size-4) !important;
-    }
 }
 /* Impact stats */
 .impact-stats {
@@ -1792,9 +1771,7 @@ sl-spinner {
 
 
 /* Branded Figma CTA */
-.figma-cta {
-    margin-bottom: var(--size-4);
-}
+
 
 .figma-pill {
     display: inline-flex;
@@ -1817,9 +1794,6 @@ sl-spinner {
     box-shadow: 0 6px 20px rgba(210, 255, 55, 0.25);
 }
 
-.figma-pill i {
-    font-size: var(--font-size-2);
-}
 
 /* Section headers */
 .section-header {
@@ -2407,7 +2381,7 @@ main {
 .btn.primary { 
     background: var(--brand-gradient-lime); 
     color: var(--color-text-on-brand); 
-    box-shadow: 0 4px 15px rgba(210, 255, 55, 0.15);
+    box-shadow: none;
 }
 
 .btn.primary:hover:not(:disabled) {
