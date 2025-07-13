@@ -1,47 +1,61 @@
 #!/bin/bash
-# scripts/sync-css.sh
+# scripts/sync-css.sh (v3.1 - With safety checks)
 
-echo "🔄 Syncing CSS from docs/ to src/ui.html..."
+echo "🔄 Building ui.html from template..."
 
-# Define paths relative to the project root
+# --- File Paths ---
+TEMPLATE_FILE="src/ui.template.html"
 CSS_SOURCE_FILE="docs/design-system.css"
-UI_HTML_FILE="src/ui.html"
+OUTPUT_FILE="src/ui.html"
 
-# Validate source file exists
+# --- Validation ---
+if [ ! -f "$TEMPLATE_FILE" ]; then
+    echo "❌ Error: Template file not found at $TEMPLATE_FILE"
+    exit 1
+fi
 if [ ! -f "$CSS_SOURCE_FILE" ]; then
-    echo "❌ Error: Source file not found at $CSS_SOURCE_FILE"
+    echo "❌ Error: CSS source file not found at $CSS_SOURCE_FILE"
     exit 1
 fi
 
-# Validate target file exists
-if [ ! -f "$UI_HTML_FILE" ]; then
-    echo "❌ Error: Target file not found at $UI_HTML_FILE"
-    exit 1
+# --- Optional: Backup existing file ---
+if [ -f "$OUTPUT_FILE" ]; then
+    cp "$OUTPUT_FILE" "${OUTPUT_FILE}.backup"
+    echo "📦 Backed up existing ui.html"
 fi
 
-# Create backup
-cp "$UI_HTML_FILE" "$UI_HTML_FILE.backup"
+# --- Build Process (your existing code) ---
+cat > "$OUTPUT_FILE" << EOL
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter v4.0.6</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Injected CSS -->
+    <style>
+    /* === SYNCED FROM $CSS_SOURCE_FILE | $(date) === */
+EOL
 
-# Prepare CSS content for insertion
-{
-    echo "  <style>"
-    echo "  /* === SYNCED FROM $CSS_SOURCE_FILE | $(date) === */"
-    sed 's/^/  /' "$CSS_SOURCE_FILE"
-    echo "  /* === END SYNCED CSS === */"
-    echo "  </style>"
-} > temp-style-block.txt
+cat "$CSS_SOURCE_FILE" >> "$OUTPUT_FILE"
 
-# Replace content between style markers in ui.html
-awk '
-BEGIN { p=1 }
-// { print; system("cat temp-style-block.txt"); p=0 }
-// { p=1 }
-p { print }
-' "$UI_HTML_FILE" > "$UI_HTML_FILE.new"
+cat >> "$OUTPUT_FILE" << EOL
+    </style>
+</head>
+EOL
 
-# Replace original file and cleanup
-mv "$UI_HTML_FILE.new" "$UI_HTML_FILE"
-rm temp-style-block.txt
+cat "$TEMPLATE_FILE" >> "$OUTPUT_FILE"
+echo "</html>" >> "$OUTPUT_FILE"
 
-echo "✅ CSS successfully synced to ui.html"
-echo "📁 Backup saved as $UI_HTML_FILE.backup"
+# --- Optional: Sanity check file size ---
+FILE_SIZE=$(stat -f%z "$OUTPUT_FILE" 2>/dev/null || stat -c%s "$OUTPUT_FILE" 2>/dev/null)
+if [ "$FILE_SIZE" -gt 1048576 ]; then  # 1MB
+    echo "⚠️  Warning: Generated file is larger than 1MB (${FILE_SIZE} bytes)"
+fi
+
+echo "✅ Build complete: $OUTPUT_FILE (${FILE_SIZE} bytes)"

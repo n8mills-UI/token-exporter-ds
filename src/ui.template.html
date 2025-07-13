@@ -1,24 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Token Exporter v4.0.6</title>
-    
-    <!-- External Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
-    
-<!-- CSS_SYNC_START -->
-<!-- The build script will inject the minified CSS here. -->
-<!-- CSS_SYNC_END -->
-</head>
 <body>
     <main>
-        <!-- Static HTML Skeleton -->
+        <!-- This is the main content wrapper -->
         <div class="content-wrapper" id="content-wrapper">
+            
             <!-- This container will be populated by the script -->
             <div id="main-content-container">
+                
                 <!-- Initial loading state -->
                 <div class="skeleton-container" id="skeleton-loader">
                     <div class="skeleton-item skeleton-pulse"></div>
@@ -41,22 +28,23 @@
                 <!-- Main UI (hidden by default) -->
                 <div id="main-ui" style="display: none;">
                     <div class="card token-summary" id="token-summary-card">
-                        <!-- Content will be injected here -->
+                        <!-- Token Summary will be injected here by the script -->
                     </div>
                     <div class="card export-section" id="export-card">
-                        <!-- Content will be injected here -->
+                        <!-- Export options will be injected here by the script -->
                     </div>
                     <div class="card collections-section" id="collections-card" style="display: none;">
-                        <!-- Content will be injected here -->
+                        <!-- Collection list will be injected here by the script -->
                     </div>
                     <div class="advanced-toggle" id="advanced-toggle-container">
-                        <!-- Content will be injected here -->
+                        <!-- Mode toggle will be injected here by the script -->
                     </div>
                 </div>
             </div>
 
+            <!-- Single footer is here, at the bottom of the content wrapper -->
             <div class="footer-section">
-                <a href="#" id="about-link" class="text-caption">
+                <a href="#" id="about-link" class="text-body-md">
                     created with <span class="heart">❤️</span> by nate mills
                 </a>
             </div>
@@ -152,7 +140,7 @@
                     <div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}" data-type="${type}">
                         <i class="icon" data-lucide="${iconMap[type]}"></i>
                         <div class="count">${count}</div>
-                        <div class="text-label label">${type}</div>
+                        <div class="text-label label" style="color: var(--color-text-muted);">${type}</div>
                     </div>`;
             }).join('');
 
@@ -396,27 +384,7 @@
             }
         };
 
-     // Wait for the DOM to be fully ready before initializing
-document.addEventListener('DOMContentLoaded', initialize);
-
-// Dev mode - load mock data after 1 second if no Figma response
-setTimeout(() => {
-    if (DOMElements.skeletonLoader.style.display !== 'none') {
-        console.log('Dev mode: Loading mock data');
-        // Mock data for development
-        appState.collections = [
-            { id: '1', name: 'Brand Colors', counts: { color: 24, text: 8, number: 12, states: 4 }, totalVariables: 48 },
-            { id: '2', name: 'Typography', counts: { color: 0, text: 16, number: 12, states: 0 }, totalVariables: 28 }
-        ];
-        appState.globalTokenCounts = { color: 679, text: 10, number: 97, states: 0 };
-        appState.selectedTokenTypes = new Set(['color', 'text', 'number', 'states']);
-        appState.selectedCollections = new Set(['1', '2']);
-        
-        DOMElements.skeletonLoader.style.display = 'none';
-        DOMElements.mainUI.style.display = 'block';
-        updateUI();
-    }
-}, 1000);
+        // Wait for the DOM to be fully ready before initializing
+        document.addEventListener('DOMContentLoaded', initialize);
     </script>
 </body>
-</html>
