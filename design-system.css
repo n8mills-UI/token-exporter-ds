@@ -429,6 +429,7 @@ body {
     .btn-content-width {
         width: auto;
         display: inline-flex;
+        
     }
 
 /* ===================================================================
@@ -466,7 +467,7 @@ body {
 .social-links {
      display: flex;
     flex-direction: row;  /* Force horizontal */
-    gap: var(--size-3);
+    gap: var(--size-10);
     justify-content: center;
     align-items: center;
 }
@@ -1368,20 +1369,12 @@ sl-spinner {
     word-wrap: break-word;
 }
 
-/* Hero section */
+/* 2. FIXED MASK - Pattern visible, fades at bottom */
 .portfolio-hero {
     position: relative;
-    min-height: calc(100vh - var(--size-10));
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: var(--size-8) var(--size-6);
-    text-align: center;
-    overflow: hidden;
 }
 
-/* Add a pseudo-element just for the masked background */
+/* Background gradient ONLY (no pattern) */
 .portfolio-hero::after {
     content: '';
     position: absolute;
@@ -1390,27 +1383,19 @@ sl-spinner {
     background: 
         radial-gradient(circle at 20% 50%, rgba(210, 255, 55, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(238, 255, 0, 0.05) 0%, transparent 50%),
-        var(--portfolio-gradient-dark);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+        linear-gradient(180deg, #0a0a0a 0%, #1e1e1e 100%);
+    /* Fade the background at bottom */
+    mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
     pointer-events: none;
 }
 
-.hero-content-wrapper {
-    position: relative; 
-    z-index: 1; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--size-4);
-}
-
+/* Pattern overlay - NO MASK on this one */
 .portfolio-hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 0; 
-    pointer-events: none; 
+    z-index: 0;
     background: repeating-linear-gradient(
         45deg,
         transparent,
@@ -1419,18 +1404,20 @@ sl-spinner {
         rgba(210, 255, 55, 0.02) 20px
     );
     animation: subtle-shift 20s linear infinite;
+    pointer-events: none;
+    /* NO MASK HERE - Pattern stays visible */
 }
 
+/* Keep content above backgrounds */
+.hero-content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* Animation for pattern */
 @keyframes subtle-shift {
-    to { transform: translate(20px, 20px); }
-}
-
-.hero-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--size-6);
-    margin-top: var(--size-4);
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, 20px); }
 }
 
 
