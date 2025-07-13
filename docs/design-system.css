@@ -684,7 +684,7 @@ sl-button::part(base) {
 }
 
 sl-button[variant="primary"]::part(base) {
-    color: var(--color-text-on-brand);
+    color: var(--brand-text-dark); /* This fixes the text color */
     box-shadow: var(--shadow-brand);
 }
 
