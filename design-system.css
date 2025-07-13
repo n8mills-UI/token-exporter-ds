@@ -3499,13 +3499,13 @@ sl-input::part(input):focus-visible,
     padding: var(--size-8) var(--size-6);
     min-height: 80vh;
     display: flex;
-    flex-direction: column; /* Align items in a column */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.hero-main-title {
+.guide-main-title {
     line-height: 1.1; /* Tighter line height for wrapping */
     margin-bottom: var(--size-4); /* Adds space below title */
 }
@@ -3557,7 +3557,7 @@ sl-input::part(input):focus-visible,
     align-items: center;
     justify-content: space-between;
     gap: var(--size-8);
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    flex-wrap: wrap;
 }
 
 .footer-actions {
@@ -4474,6 +4474,7 @@ body {
 @media (max-width: 400px) {
     .token-breakdown { grid-template-columns: 1fr !important; gap: var(--size-2) !important; }
 }
+
 
 
 
