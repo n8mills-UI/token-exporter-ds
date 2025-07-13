@@ -3331,11 +3331,234 @@ sl-input::part(input):focus-visible,
 }
 
 
-      /* ==========================================================================
-           GUIDE LAYOUT STYLES
-           ========================================================================== */
+/* ==========================================================================
+   UNIFIED BUTTON SYSTEM (REFACTORED)
+   This new system unifies all button types for consistency.
+   ========================================================================== */
+
+/* Base styles for all buttons */
+.btn {
+    /* Core Layout & Sizing */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-2);
+    height: var(--component-height-lg); /* 36px */
+    padding: 0 var(--size-4); /* 16px horizontal padding */
+    width: auto; /* Allow button to size to its content */
+    
+    /* Typography */
+    font-family: var(--font-sans);
+    font-size: var(--font-size-1); /* 16px */
+    font-weight: var(--font-weight-6);
+    text-decoration: none;
+    line-height: 1; /* Prevents extra space */
+
+    /* Appearance & Transitions */
+    border-radius: var(--radius-2);
+    border: var(--border-size-1) solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine effect for hover on all buttons */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease-in-out;
+}
+
+.btn:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+/* -- Primary Button (e.g., Get Plugin) -- */
+.btn.primary {
+    background: var(--brand-gradient-lime);
+    color: var(--color-text-on-brand);
+    border-color: var(--brand-primary-lime);
+    box-shadow: var(--shadow-brand);
+}
+
+.btn.primary:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-brand-hover);
+}
+
+/* -- Secondary Button -- */
+.btn.secondary {
+    background: var(--color-background-secondary);
+    color: var(--color-text-default);
+    border-color: var(--color-border-default);
+}
+
+.btn.secondary:hover:not(:disabled) {
+    background: var(--color-background-tertiary);
+    border-color: var(--gray-5);
+    transform: translateY(-1px);
+}
+
+/* -- Disabled State -- */
+.btn:disabled {
+    background: var(--color-background-disabled);
+    color: var(--gray-5);
+    border-color: var(--color-background-disabled);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: var(--opacity-disabled);
+}
+
+.btn:disabled::before {
+    display: none;
+}
+
+/* -- Icon-Only & Social Link Buttons -- */
+.btn-icon-only,
+.social-link {
+    width: var(--component-height-lg);  /* 36px */
+    height: var(--component-height-lg); /* 36px */
+    padding: 0; /* Remove padding for icon-only */
+    border-radius: var(--radius-round);
+    background: var(--color-background-secondary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-icon-only:hover,
+.social-link:hover {
+    border-color: var(--brand-primary-lime);
+    color: var(--brand-primary-lime);
+    transform: translateY(-2px);
+}
+
+/* Icon sizing within all buttons */
+.btn .lucide,
+.btn-icon-only .lucide,
+.social-link .lucide {
+    width: var(--icon-md); /* 20px */
+    height: var(--icon-md); /* 20px */
+    stroke-width: var(--stroke-thin); /* 1px */
+}
+
+
+/* ==========================================================================
+   HERO & FOOTER LAYOUT (REFACTORED)
+   ========================================================================== */
+
+/* -- Hero Section -- */
+.portfolio-hero {
+    position: relative;
+    padding: var(--size-8) var(--size-6);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    text-align: center; /* Center all text */
+}
+
+/* Restores the background pattern */
+.portfolio-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(210, 255, 55, 0.02) 10px,
+        rgba(210, 255, 55, 0.02) 20px
+    );
+    animation: subtle-shift 20s linear infinite;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+}
+
+.hero-footer {
+    margin-top: var(--size-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items vertically in the column */
+    gap: var(--size-4);
+}
+
+.social-links {
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: center;
+    gap: var(--size-3); /* Reduced gap for closer icons */
+}
+
+/* -- Guide Footer -- */
+.guide-footer {
+    background: #0a0a0a;
+    position: relative;
+    padding: var(--size-6) var(--size-8); /* Adjusted padding */
+    margin-top: var(--size-10);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Pushes items to edges */
+    gap: var(--size-8);
+}
+
+.footer-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4);
+}
+
+.footer-social-links {
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    gap: var(--size-3); /* Add spacing between footer icons */
+}
+
+
+/* ==========================================================================
+   COMPONENT-SPECIFIC FIXES
+   ========================================================================== */
+
+/* Fixes the blue gradient on the empty state example */
+.empty-state {
+    background: var(--gradient-7); /* Uses existing grey gradient */
+    border: var(--border-size-1) dashed rgba(var(--brand-primary-lime-rgb), var(--opacity-20));
+    border-radius: var(--radius-3);
+    padding: var(--size-8) var(--size-4);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4);
+    min-height: 240px;
+    justify-content: center;
+}
+
+
+/* ==========================================================================
+   EXISTING GUIDE LAYOUT STYLES (PREVIOUSLY ADDED)
+   ========================================================================== */
         
-    /* --- START: New Mobile Header & Menu Styles --- */
+/* --- START: New Mobile Header & Menu Styles --- */
 .mobile-header {
     position: fixed;
     top: 0;
@@ -3483,6 +3706,8 @@ sl-input::part(input):focus-visible,
         padding-top: var(--size-12);
     }
 }
+/* --- END: New Mobile Header & Menu Styles --- */
+
 
 /* Prevent layout shift when scrollbar appears */
 html {
@@ -4195,6 +4420,7 @@ body {
 @media (max-width: 400px) {
     .token-breakdown { grid-template-columns: 1fr !important; gap: var(--size-2) !important; }
 }
+
 
 
 /* ==========================================================================
