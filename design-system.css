@@ -11,11 +11,6 @@ Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
-/* ==========================================================================
-   DESIGN SYSTEM CSS
-   Version 4.0.6 - 2025-01-11
-   ========================================================================== */
-
 /* 1. Import Shoelace FIRST - Component library base styles */
 @import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css";
 
