@@ -81,7 +81,11 @@ body {
     --color-text-muted: var(--gray-3);
     --color-text-on-brand: var(--brand-text-dark);
     --color-text-error: var(--red-6);
-    
+
+    --color-status-success: var(--brand-primary-lime);
+    --color-status-warning: var(--category-color-orange);  /* Optional, for future use */
+    --color-status-error: var(--color-text-muted);         /* For "not applicable" state */
+
     --color-background-primary: var(--gray-9);
     --color-background-secondary: var(--gray-8);
     --color-background-tertiary: var(--gray-7);
@@ -91,6 +95,8 @@ body {
     --color-border-interactive-focus: var(--brand-primary-lime);
     --color-backdrop-rgb: 0, 0, 0; /* Black for dark theme */
     --color-backdrop: rgba(var(--color-backdrop-rgb), var(--opacity-backdrop));
+
+ 
 
     /* =========================
        SURFACE COLORS
@@ -4363,7 +4369,164 @@ body {
 }
 
 
+/* ==========================================================================
+   GUIDE PATTERNS: COMPONENT STRATEGY
+   ========================================================================== */
 
+.static-reference-section {
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-4);
+    background-color: var(--color-background-secondary);
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+}
+
+.at-a-glance {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+}
+
+.glance-pane {
+    padding: var(--size-6);  /* Using Open Props spacing tokens */
+    display: flex;
+    flex-direction: column;
+}
+
+.glance-pane:first-child {
+    border-right: var(--border-size-1) solid var(--color-border-default);
+}
+
+.glance-pane h3 {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-3);
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    color: var(--color-text-default);
+}
+
+.glance-pane h3 .lucide {
+    color: var(--brand-primary-lime);
+}
+
+.glance-pane p {
+    font-size: var(--font-size-1);
+    max-width: 100%;
+    color: var(--color-text-muted);
+    margin-bottom: var(--size-4);
+    line-height: var(--font-lineheight-3);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--size-3);
+}
+
+.feature-card {
+    background-color: var(--color-background-tertiary);
+    padding: var(--size-4);
+    border-radius: var(--radius-2);
+    border: var(--border-size-1) solid var(--color-border-default);
+}
+
+.feature-card h4 {
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-6);
+    margin: 0 0 var(--size-2) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    color: var(--color-text-default);
+}
+
+.feature-card h4 .lucide {
+    color: var(--brand-primary-lime);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+}
+
+.feature-card p {
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
+    line-height: var(--font-lineheight-3);
+    margin: 0;
+}
+
+.quick-reference {
+    padding: var(--size-6);
+}
+
+.quick-reference h3 {
+    text-align: center;
+    margin-bottom: var(--size-4);
+    color: var(--color-text-default);
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-6);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.comparison-table th, 
+.comparison-table td {
+    padding: var(--size-4) var(--size-5);
+    text-align: left;
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+}
+
+.comparison-table thead th {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+}
+
+.comparison-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table .feature-col {
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+}
+
+.comparison-table .lucide {
+    vertical-align: middle;
+}
+
+.comparison-table th .lucide {
+    color: var(--brand-primary-lime);
+}
+
+/* Updated to use correct variable names */
+.check-mark { color: var(--color-status-success); }
+.x-mark { color: var(--color-status-error); }
+
+@media (max-width: 768px) {
+    .at-a-glance { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .glance-pane:first-child { 
+        border-right: none; 
+        border-bottom: var(--border-size-1) solid var(--color-border-default); 
+    }
+    
+    .comparison-table th, 
+    .comparison-table td { 
+        padding: var(--size-3); 
+        font-size: var(--font-size-0); 
+    }
+    
+    .quick-reference {
+        padding: var(--size-4);
+    }
+}
 
 /* ==========================================================================
    THEMING STRATEGY & FUTURE IMPLEMENTATIONS
