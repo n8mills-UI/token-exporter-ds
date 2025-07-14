@@ -715,7 +715,7 @@ sl-icon-button::part(base):hover {
 .portfolio-hero {
     position: relative;
     padding: var(--size-8) var(--size-6);
-    min-height: 80vh;
+    min-height: 95vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1425,7 +1425,7 @@ sl-icon-button::part(base):hover {
 .portfolio-hero {
     position: relative;
     padding: var(--size-8) var(--size-6);
-    min-height: 80vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column; /* Ensures vertical alignment */
     align-items: center;
@@ -1433,25 +1433,6 @@ sl-icon-button::part(base):hover {
     text-align: center;
 }
 
-/* Restores the background pattern */
-.portfolio-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(210, 255, 55, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(238, 255, 0, 0.04) 0%, transparent 40%),
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 10px,
-            rgba(210, 255, 55, 0.02) 10px,
-            rgba(210, 255, 55, 0.02) 20px
-        );
-    animation: subtle-shift 20s linear infinite;
-    pointer-events: none;
-}
 @keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
 
 
@@ -3403,22 +3384,6 @@ sl-input::part(input):focus-visible,
     margin-bottom: var(--size-4); /* Adds space below title */
 }
 
-/* Restores the background pattern */
-.portfolio-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1; /* Place behind content */
-    background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 10px,
-        rgba(210, 255, 55, 0.02) 10px,
-        rgba(210, 255, 55, 0.02) 20px
-    );
-    animation: subtle-shift 20s linear infinite;
-    pointer-events: none;
-}
 
 .hero-footer {
     margin-top: var(--size-6);
