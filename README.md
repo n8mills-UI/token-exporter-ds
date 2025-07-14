@@ -13,68 +13,77 @@ This project was created by [Nate Mills](https://natemills.me) to solve a common
 
 <br>
 
-## Table of Contents
-1. [The Problem It Solves](#the-problem-it-solves)
-2. [Key Features](#key-features)
-3. [How It Works](#how-it-works)
-4. [Built With](#built-with)
-5. [How to Contribute & Development Workflow](#how-to-contribute--development-workflow)
-6. [Project Status](#project-status)
+## 📑 Table of Contents
+
+1. [🧩 The Problem It Solves](#-the-problem-it-solves)
+2. [🚀 Key Features](#-key-features)
+3. [⚙️ How It Works](#️-how-it-works)
+4. [🛠 Built With](#-built-with)
+5. [🤝 How to Contribute & Development Workflow](#-how-to-contribute--development-workflow)
+6. [📈 Project Status](#-project-status)
+7. [📄 License](#-license)
 
 ---
 
 <br>
 
-## The Problem It Solves
+## 🧩 The Problem It Solves
 
 Manual token exporting from Figma is slow, error-prone, and creates a disconnect between design and development. Existing tools often lack the flexibility to export for multiple platforms natively. This plugin solves that problem by providing a fast, automated, and multi-format export pipeline.
 
 <br>
 
-## Key Features
+## 🚀 Key Features
 
-* **Multi-Platform Token Export**
-    Natively export your tokens to 6 different formats, ensuring your code speaks the language of every platform:
-    * **CSS** (W3C Custom Properties)
-    * **Swift** (for iOS)
-    * **Android** (XML Resources)
-    * **Flutter** (Dart)
-    * **JSON** (W3C Design Token Standard)
-    * **Tailwind CSS** (Theme Configuration)
+- **Multi-Platform Token Export**  
+  Natively export your tokens to 6 different formats:
+  - **CSS** (W3C Custom Properties)
+  - **Swift** (for iOS)
+  - **Android** (XML Resources)
+  - **Flutter** (Dart)
+  - **JSON** (W3C Design Token Standard)
+  - **Tailwind CSS** (Theme Configuration)
 
-* **Intelligent Alias Resolution**
-    Accurately resolves deeply nested variable aliases to their final, concrete values while preventing infinite loops.
+- **Intelligent Alias Resolution**  
+  Resolves deeply nested aliases to final values and avoids infinite loops.
 
-* **Platform-Native Name Sanitization**
-    Automatically converts your Figma variable names (e.g., `Spacing/5 (20px)`) into the correct format for each target platform (`--spacing-5` for CSS, `spacing5` for Swift, `spacing_5` for Android).
+- **Platform-Native Name Sanitisation**  
+  Converts names like `Spacing/5 (20px)` to `--spacing-5`, `spacing5`, `spacing_5`.
 
-* **Context-Aware Unit Handling**
-    Correctly identifies unitless tokens (like `line-height` or `font-weight`) and applies `px` units to all other numeric dimensions.
-
-<br>
-
-## How It Works
-
-1.  **Organize Your Variables:** Ensure your design tokens (colors, numbers, strings) are organized in Figma variable collections.
-2.  **Launch the Plugin:** Open Token Exporter. It will automatically detect and display your collections.
-3.  **Filter Token Types:** Use the toggles to select which token types you want to export (Colors, Numbers, States, Text).
-4.  **Select Collections:** Choose which variable collections you want to include.
-5.  **Choose Formats:** Select one or more export formats from the dropdown.
-6.  **Generate Your Tokens:** Click "Package Tokens" to generate and download your perfectly formatted files.
+- **Context-Aware Unit Handling**  
+  Appends `px` to numeric values except for unitless types like `line-height`.
 
 <br>
 
-<a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter">
-  <img src="https://img.shields.io/badge/Install_Token_Exporter_on_Figma-black?style=for-the-badge&logo=figma&logoColor=white" alt="Install on Figma">
-</a>
+## ⚙️ How It Works
+
+1. **Organise Your Variables**  
+   Use Figma variable collections for your tokens.
+
+2. **Launch the Plugin**  
+   It auto-detects your collections.
+
+3. **Filter Token Types**  
+   Choose token types: Colors, Numbers, States, Text.
+
+4. **Select Collections**  
+   Pick the variable collections you want to export.
+
+5. **Choose Formats**  
+   Select one or more export formats from the dropdown.
+
+6. **Generate Tokens**  
+   Click **Package Tokens** and download the results.
 
 <br>
+
+[![Install Token Exporter on Figma](https://img.shields.io/badge/Install_Token_Exporter_on_Figma-black?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
 
 ---
 
 <br>
 
-## Built With
+## 🛠 Built With
 
 <p>
   <a href="https://www.figma.com/plugin-docs/api/api-overview/"><img src="https://img.shields.io/badge/Figma_Plugin_API-000000?style=for-the-badge&logo=figma&logoColor=white" alt="Figma Plugin API"></a>&nbsp;
@@ -84,15 +93,15 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
   <a href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/jsDelivr-000000?style=for-the-badge&logo=jsdelivr&logoColor=white" alt="jsDelivr"></a>
 </p>
 
-<br>
-
 ---
 
 <br>
 
-## How to Contribute & Development Workflow
+## 🤝 How to Contribute & Development Workflow
 
 This section is for developers who want to contribute to the project.
+
+
 
 ### Project Philosophy
 
@@ -154,7 +163,7 @@ token-exporter-ds/
 
 <br>
 
-## Project Status
+## 📈 Project Status
 
 This project is under active development. The [Live Design System](https://n8mills-ui.github.io/token-exporter-ds/docs/design-system-guide.html) always reflects the latest, bleeding-edge version of the styles and components.
 
@@ -166,7 +175,7 @@ The Figma plugin is updated periodically with stable features from the design sy
 
 <br>
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
