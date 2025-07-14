@@ -1,4 +1,4 @@
-// Main plugin code for Token Exporter - Fixed & Improved Version
+// Main plugin code for Token Exporter - v4.0.0
 // Addresses performance, error handling, code quality, and JS compatibility issues
 
 // Show the UI. The window is resizable by the user by default in Figma.
