@@ -1110,14 +1110,11 @@
     <!-- NEW: Component Strategy Overview -->
     <div class="pattern-section">
         <h3 class="text-heading-md pattern-title">
-            <i data-lucide="git-compare"></i>
-            Component Strategy: Why Two Systems?
-        </h3>
-        <div class="pattern-content">
-            <div class="why-dual-approach">
-                <h4><i data-lucide="help-circle" aria-hidden="true"></i> Why do we maintain two component systems?</h4>
-                <p>Our dual approach solves a fundamental challenge: Figma plugins cannot execute JavaScript or load external resources due to security constraints. This means Shoelace's powerful web components simply won't work inside the plugin environment. By maintaining Figma-native components for design and Shoelace components for the web, we get the best of both worlds—seamless design workflows and production-ready code.</p>
-            </div>
+    <i data-lucide="git-compare"></i>
+    Component Strategy: Why Two Systems?
+</h3>
+<div class="pattern-content">
+    <p style="margin-bottom: var(--size-6);">Our dual approach solves a fundamental challenge: Figma plugins cannot execute JavaScript or load external resources due to security constraints. This means Shoelace's powerful web components simply won't work inside the plugin environment. By maintaining Figma-native components for design and Shoelace components for the web, we get the best of both worlds—seamless design workflows and production-ready code.</p>
 
             <div class="component-comparison">
                 <div class="comparison-card">
@@ -1142,7 +1139,6 @@
                 </div>
             </div>
 
-            <h4 style="margin-top: var(--size-4); margin-bottom: var(--size-2);">Feature Comparison</h4>
             <div class="table-wrapper">
                 <table class="comparison-table" role="table" aria-label="Comparison of Figma and Shoelace component features">
                     <thead>
@@ -1214,76 +1210,9 @@
         </div>
     </div>
 
-    <!-- EXISTING: Shoelace Theme Mapping -->
-    <div class="pattern-section">
-        <h3 class="text-heading-md pattern-title">
-            <i data-lucide="palette"></i>
-            Shoelace Theme Mapping
-        </h3>
-        <div class="pattern-content">
-            <p>Token Exporter maps its design tokens to Shoelace CSS custom properties for seamless integration:</p>
-            
-            <h4>Color Mapping</h4>
-            <pre><code>/* Primary Colors */
---sl-color-primary-600: var(--brand-primary-lime);
---sl-color-primary-500: var(--brand-secondary-yellow);
 
-/* Neutral Colors */
---sl-color-neutral-0: var(--gray-0);
---sl-color-neutral-800: var(--gray-9);</code></pre>
 
-            <h4>Typography Mapping</h4>
-            <pre><code>--sl-font-sans: var(--font-sans);
---sl-font-mono: var(--font-mono);
---sl-font-weight-semibold: var(--font-weight-6);</code></pre>
 
-            <h4>Spacing & Radius</h4>
-            <pre><code>--sl-spacing-medium: var(--size-4);
---sl-border-radius-medium: var(--radius-2);</code></pre>
-        </div>
-    </div>
-
-    <!-- EXISTING: Implementation Examples -->
-    <div class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="square-mouse-pointer"></i> Shoelace Button
-            </h2>
-            <p class="component-description">
-                Enhanced button component using Shoelace's sl-button with custom theming.
-            </p>
-        </div>
-        <div class="component-body">
-            <div class="variants-grid">
-                <div class="example-wrapper">
-                    <div class="example-label">Primary Variant</div>
-                    <div class="example-container">
-                        <sl-button variant="primary">
-                            <i slot="prefix" data-lucide="rocket"></i>
-                            Export Tokens
-                        </sl-button>
-                    </div>
-                </div>
-                
-                <div class="example-wrapper">
-                    <div class="example-label">Circle Icon Button</div>
-                    <div class="example-container">
-                        <sl-button variant="default" circle>
-                            <i data-lucide="x"></i>
-                        </sl-button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="code-block">
-                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                <code>&lt;sl-button variant="primary"&gt;
-    &lt;i slot="prefix" data-lucide="rocket"&gt;&lt;/i&gt;
-    Export Tokens
-&lt;/sl-button&gt;</code>
-            </div>
-        </div>
-    </div>
 </section>
 
 <!-- Guide Footer Section -->
