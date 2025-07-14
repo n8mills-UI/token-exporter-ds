@@ -4,77 +4,93 @@
 
 > A simple, powerful Figma plugin to transform your design variables into production-ready code with one click. It's a zero-config alternative to Style Dictionary, designed to make your design-to-development workflow seamless, fast, and error-free.
 
-This project was created by [Nate Mills](https://natemills.me) to solve a common workflow problem for design and development teams.
+<br>
 
 [![Figma](https://img.shields.io/badge/Install_on_Figma-e8ff0c?style=for-the-badge&logo=figma&logoColor=black)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
 [![Live Design System](https://img.shields.io/badge/Live_Design_System-e8ff0c?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iYmxhY2siPjxwYXRoIGQ9Ik0xNCAySDRjLTEuMSAwLTIgLjktMiAydjE2YzAgMS4xLjkgMiAyIDJoMTZjMS4xIDAgMi0uOSAyLTJWOGwtNi02em0yIDE2SDh2LTJoOHYyem0wLTRIOHYtMmg4djJ6bS00LTRIOHYtMmg0djJ6Ii8+PC9zdmc+&logoColor=black)](https://n8mills-ui.github.io/token-exporter-ds/docs/design-system-guide.html)
 [![See My Portfolio](https://img.shields.io/badge/See_My_Portfolio-e8ff0c?style=for-the-badge&logoColor=black)](https://natemills.me)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/millsdesign/)
 
-<br>
 
-## Table of Contents
-1. [The Problem It Solves](#the-problem-it-solves)
-2. [Key Features](#key-features)
-3. [How It Works](#how-it-works)
-4. [Built With](#built-with)
-5. [How to Contribute & Development Workflow](#how-to-contribute--development-workflow)
-6. [Project Status](#project-status)
+This project was created by [Nate Mills](https://natemills.me) to solve a common workflow problem for design and development teams.
 
 ---
 
+
+
 <br>
 
-## The Problem It Solves
+## Table of Contents
+
+1. [🚨 The Problem It Solves](#-the-problem-it-solves)
+2. [🚀 Key Features](#-key-features)
+3. [⚙️ How It Works](#️-how-it-works)
+4. [🛠 Built With](#-built-with)
+5. [👨‍💻 Development Workflow](#-development-workflow)
+6. [📁 Project Structure](#-project-structure)
+7. [🍴 Running Your Own Fork](#-running-your-own-fork)
+8. [📄 License](#-license)
+
+
+<br>
+
+## 🚨 The Problem It Solves
 
 Manual token exporting from Figma is slow, error-prone, and creates a disconnect between design and development. Existing tools often lack the flexibility to export for multiple platforms natively. This plugin solves that problem by providing a fast, automated, and multi-format export pipeline.
 
 <br>
 
-## Key Features
+## 🚀 Key Features
 
-* **Multi-Platform Token Export**
-    Natively export your tokens to 6 different formats, ensuring your code speaks the language of every platform:
-    * **CSS** (W3C Custom Properties)
-    * **Swift** (for iOS)
-    * **Android** (XML Resources)
-    * **Flutter** (Dart)
-    * **JSON** (W3C Design Token Standard)
-    * **Tailwind CSS** (Theme Configuration)
+- **Multi-Platform Token Export**  
+  Natively export your tokens to 6 different formats:
+  - **CSS** (W3C Custom Properties)
+  - **Swift** (for iOS)
+  - **Android** (XML Resources)
+  - **Flutter** (Dart)
+  - **JSON** (W3C Design Token Standard)
+  - **Tailwind CSS** (Theme Configuration)
 
-* **Intelligent Alias Resolution**
-    Accurately resolves deeply nested variable aliases to their final, concrete values while preventing infinite loops.
+- **Intelligent Alias Resolution**  
+  Resolves deeply nested aliases to final values and avoids infinite loops.
 
-* **Platform-Native Name Sanitization**
-    Automatically converts your Figma variable names (e.g., `Spacing/5 (20px)`) into the correct format for each target platform (`--spacing-5` for CSS, `spacing5` for Swift, `spacing_5` for Android).
+- **Platform-Native Name Sanitization**  
+  Converts names like `Spacing/5 (20px)` to `--spacing-5`, `spacing5`, `spacing_5`.
 
-* **Context-Aware Unit Handling**
-    Correctly identifies unitless tokens (like `line-height` or `font-weight`) and applies `px` units to all other numeric dimensions.
-
-<br>
-
-## How It Works
-
-1.  **Organize Your Variables:** Ensure your design tokens (colors, numbers, strings) are organized in Figma variable collections.
-2.  **Launch the Plugin:** Open Token Exporter. It will automatically detect and display your collections.
-3.  **Filter Token Types:** Use the toggles to select which token types you want to export (Colors, Numbers, States, Text).
-4.  **Select Collections:** Choose which variable collections you want to include.
-5.  **Choose Formats:** Select one or more export formats from the dropdown.
-6.  **Generate Your Tokens:** Click "Package Tokens" to generate and download your perfectly formatted files.
+- **Context-Aware Unit Handling**  
+  Appends `px` to numeric values except for unitless types like `line-height`.
 
 <br>
 
-<a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter">
-  <img src="https://img.shields.io/badge/Install_Token_Exporter_on_Figma-black?style=for-the-badge&logo=figma&logoColor=white" alt="Install on Figma">
-</a>
+## ⚙️ How It Works
+
+1. **Organize Your Variables**  
+   Use Figma variable collections for your tokens.
+
+2. **Launch the Plugin**  
+   It auto-detects your collections.
+
+3. **Filter Token Types**  
+   Choose token types: Colors, Numbers, States, Text.
+
+4. **Select Collections**  
+   Pick the variable collections you want to export.
+
+5. **Choose Formats**  
+   Select one or more export formats from the dropdown.
+
+6. **Generate Tokens**  
+   Click **Package Tokens** and download the results.
 
 <br>
 
----
+[![Install Token Exporter on Figma](https://img.shields.io/badge/Install_Token_Exporter_on_Figma-black?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
+
+
 
 <br>
 
-## Built With
+## 🛠 Built With
 
 <p>
   <a href="https://www.figma.com/plugin-docs/api/api-overview/"><img src="https://img.shields.io/badge/Figma_Plugin_API-000000?style=for-the-badge&logo=figma&logoColor=white" alt="Figma Plugin API"></a>&nbsp;
@@ -84,91 +100,189 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
   <a href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/jsDelivr-000000?style=for-the-badge&logo=jsdelivr&logoColor=white" alt="jsDelivr"></a>
 </p>
 
-<br>
 
----
 
 <br>
 
-## How to Contribute & Development Workflow
+## 👨‍💻 Development Workflow
 
-This section is for developers who want to contribute to the project.
+This project uses a **CSS-first workflow**. All styles originate from a single source of truth (`design-system.css`) and are synchronized into the plugin UI.
 
-### Project Philosophy
+### ⚠️ Important Constraints
 
-This system follows a **"CSS First"** approach. All style changes are made in a single source of truth (`design-system.css`). Due to Figma's security policy, we use an automation script to inject these styles directly into the plugin's UI file.
+- **Figma CSP Restrictions**: External CSS links work in the guide but NOT in the plugin due to Content Security Policy
+- **File Size Limit**: The `design-system-guide.html` is ~50KB - use `update` commands only, never `rewrite`
+- **CSS Location**: The main CSS file is hosted on GitHub via jsDelivr CDN for the guide
 
-### ⚙️ One-Time Setup
+<br>
 
-First, let's get your local environment ready. You only need to do this once.
+### 🔧 Prerequisites
 
-1.  **Install Node.js:** If you don't already have it, download and install the **LTS** version from the official website. This is what allows your computer to run the project's scripts.
-    <br>
-    <a href="https://nodejs.org/">
-      <img src="https://img.shields.io/badge/Download_Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Download Node.js">
-    </a>
-2.  **Initialize the Project:** Open a terminal in the project's root folder and run `npm init -y` to create your `package.json` file.
-3.  **Install Dependencies:** In the same terminal, run `npm install`. This command sets up the environment needed for our scripts.
+1. Install [Node.js](https://nodejs.org/) (LTS version)
+2. Clone the repository
+3. Run `npm install` to install dependencies
 
-### 🚀 The CSS Sync Command
-
-After you've made a change to the styles, you need to sync them to the plugin.
-
-> **Key Command:** In your VS Code terminal, just run:
-> ```bash
-> npm run sync
-> ```
-
-This command runs the `scripts/sync-css.sh` file, which automatically finds the latest CSS, and injects it into the plugin's `ui.html` file.
+<br>
 
 ### ✨ The Golden Workflow
 
 | Step | Action | Purpose |
 | :--- | :--- | :--- |
-| **1. 📝 Edit** | Make all your style changes in **`docs/design-system.css`**. | Your single source of truth. |
-| **2. 🔬 Preview** | Open **`docs/design-system-guide.html`** in your browser. | See your changes live without any builds. |
-| **3. 🔄 Sync** | Run **`npm run sync`** in your terminal. | Updates the Figma plugin's UI with your new styles. |
-| **4. ✅ Verify** | Test the **`src/ui.html`** file in the Figma plugin. | The final check to make sure everything works. |
+| **1. Edit** | **`design-system.css`** | Single source of truth for all styles |
+| **2. Preview** | **`docs/design-system-guide.html`** | Live preview via external CSS link (auto-updates) |
+| **3. Sync** | **`npm run sync`** | Injects CSS into plugin's UI file |
+| **4. Verify** | **`src/ui.html`** in Figma | Final testing in plugin environment |
 
-> **🛑 IMPORTANT**
-> Never edit the `src/ui.html` file directly. All your changes will be deleted the next time you run the sync script.
+> **🛑 CRITICAL WARNING**  
+> NEVER edit `src/ui.html` directly! All changes will be overwritten by the sync script.
 
-### Project Structure
-```text
-token-exporter-ds/
-├── docs/
-│   ├── design-system-guide.html # Standalone design system documentation
-│   └── design-system.css      # ✅ EDIT THIS FILE
-├── scripts/
-│   └── sync-css.sh              # The automation script
-├── src/
-│   ├── code.js                  # Main plugin logic
-│   └── ui.html                  # ❌ DO NOT EDIT THIS FILE
-├── package.json                 # Project scripts runner
-└── README.md                    # Project documentation
+<br>
+
+### 🔄 The Sync Process
+
+The `npm run sync` command runs `scripts/sync-css.sh`, which:
+
+1. Reads the entire `design-system.css` file
+2. Finds the CSS injection markers in `ui.html`
+3. Replaces the content between markers with the updated CSS
+4. Creates a backup of the original file
+
+Example of what the script does:
+```bash
+#!/bin/bash
+# Simplified version of sync-css.sh
+CSS_FILE="./design-system.css"
+UI_FILE="./src/ui.html"
+
+# Read CSS content
+CSS_CONTENT=$(cat "$CSS_FILE")
+
+# Inject between markers in ui.html
+# <!-- CSS_INJECT_START -->
+# ... CSS content goes here ...
+# <!-- CSS_INJECT_END -->
 ```
 
 <br>
 
----
+### 🎯 Quick Start Commands
+
+```bash
+# One-time setup
+npm install
+
+# Daily workflow
+npm run sync      # Sync CSS to plugin after changes
+npm run dev       # Sync and watch for changes
+npm run clean     # Remove backup files
+```
+
+
 
 <br>
 
-## Project Status
+## 📁 Project Structure
 
-This project is under active development. The [Live Design System](https://n8mills-ui.github.io/token-exporter-ds/docs/design-system-guide.html) always reflects the latest, bleeding-edge version of the styles and components.
+```text
+token-exporter-ds/
+├── design-system.css            # ✅ EDIT THIS - Source of truth for all styles
+├── docs/
+│   └── design-system-guide.html # Live documentation (uses external CSS link)
+├── scripts/
+│   └── sync-css.sh              # Automation script for CSS injection
+├── src/
+│   ├── code.js                  # Plugin logic (TypeScript compiled)
+│   └── ui.html                  # ❌ DO NOT EDIT - Plugin UI (inline CSS)
+├── manifest.json                # Figma plugin configuration
+├── package.json                 # NPM scripts and dependencies
+├── package-lock.json            # 🔒 AUTO-GENERATED – Do not edit
+├── LICENSE                      # ✅ Free to use, modify, and share under the MIT License.
+└── README.md                    # This file
+```
 
-The Figma plugin is updated periodically with stable features from the design system. We are currently implementing the automated build process outlined above, which will soon ensure the plugin and the design system are always perfectly in sync.
+### 📝 File Details
+
+- **`design-system.css`** (~40KB): Edit all styles here. Hosted on GitHub, served via jsDelivr CDN.
+- **`docs/design-system-guide.html`** (~50KB): Documentation site. Links to external CSS.
+- **`src/ui.html`** (~15KB): Plugin interface. Uses inline CSS due to Figma's security restrictions.
+- **`manifest.json`**: Defines allowed domains for the plugin (cdnjs, jsdelivr, etc.)
+
 
 <br>
 
----
+## 🍴 Running Your Own Fork
+
+Want to run your own version or test changes locally?
+
+1. **Fork & Clone**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/token-exporter-ds.git
+   cd token-exporter-ds
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Update Figma Plugin Settings**
+   - Open Figma Desktop
+   - Go to Plugins → Development → Import plugin from manifest
+   - Select your local `manifest.json` file
+
+4. **Make Your Changes**
+   - Edit `design-system.css`
+   - Run `npm run sync`
+   - Test in Figma
+
+5. **Deploy Your Version**
+   - Push to your GitHub fork
+   - Update the jsDelivr URL in `design-system-guide.html` to point to your repo
+   - The guide will now use your CSS version
+
+
 
 <br>
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+
+<br>
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. **CSS First**: All style changes must start in `design-system.css`
+2. **Test Thoroughly**: Verify changes work in both the guide and plugin
+3. **Follow Conventions**: Use existing naming patterns and token structure
+4. **Document Changes**: Update comments in CSS for significant changes
+
+For major changes, please open an issue first to discuss what you would like to change.
+
+
+
+<br>
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/n8mills-UI/token-exporter-ds/issues)
+- **Plugin Support**: [Figma Community](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
+- **Portfolio**: [natemills.me](https://natemills.me)
+
+<br>
+
+---
+
+<br>
+
+
+Made with ❤️ by [Nate Mills](https://natemills.me)
+
+
 
 
 
