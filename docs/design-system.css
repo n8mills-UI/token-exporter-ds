@@ -2917,6 +2917,16 @@ sl-select::part(combobox):focus-visible,
 sl-input::part(input):focus-visible,
 .high-contrast-focus:focus-visible,
 .footer-social-link:focus-visible,
+.token-copy:focus-visible,
+.social-link:focus-visible,
+.faq-question:focus-visible,
+.tech-item:focus-visible,
+.mobile-menu-toggle-right:focus-visible,
+.menu-close-btn:focus-visible,
+.mobile-nav-links a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(210, 255, 55, 0.2);
+}
 .footer-cta:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgb(210, 255, 55, 0.2);
@@ -3661,13 +3671,24 @@ body {
     margin-right: var(--size-1);
 }
 
+.example-subheader {
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-4);
+    margin-top: var(--size-6);
+    font-size: var(--font-size-2);
+}
+.example-subheader:first-of-type {
+    margin-top: 0;
+}
+
 .category-description, .component-description {
     color: var(--color-text-secondary);
     margin: 0;
 }
 
 .tokens-grid {
-    padding: var(--size-6);
+    padding: var(--size-6) 0;
     display: grid;
     gap: var(--size-4);
 }
@@ -3812,7 +3833,7 @@ body {
 
 /* Component Library Styles */
 .component-body {
-    padding: var(--size-6);
+    padding: var(--size-6) 0;
 }
 
 /* Progress overlay styles for guide examples */
@@ -3880,6 +3901,7 @@ body {
     border-radius: var(--radius-2);
     padding: var(--size-4);
     margin-bottom: var(--size-4);
+    margin: 0 var(--size-6);
     position: relative;
 }
 
