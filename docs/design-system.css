@@ -2681,10 +2681,7 @@ main {
     }
 }
 
-/* State groups with better hierarchy */
-.state-group {
-    margin-bottom: var(--size-8); /* Large gap between groups */
-}
+
         
 .state-group-header {
     background: rgb(210, 255, 55, 0.03);
@@ -3451,6 +3448,7 @@ body {
     box-sizing: border-box;
     overflow-wrap: break-word;
     word-wrap: break-word;
+    min-width: 0;
 }
 
 /* Sidebar Header */
@@ -4107,6 +4105,21 @@ body {
     font-size: var(--font-size-1);
     font-weight: var(--font-weight-6);
     margin-bottom: var(--size-2);
+}
+
+/* New grid layout for the export flow demo */
+.export-flow-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--size-4);
+    align-items: stretch; /* Makes cards equal height */
+}
+
+/* On mobile, stack them back to a single column */
+@media (width <= 900px) {
+    .export-flow-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Responsive styles */

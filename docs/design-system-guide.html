@@ -390,15 +390,7 @@
         <div class="component-header">
             <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Summary Card</h2>
             <p class="component-description">The central dashboard component that displays the total count of design tokens and breaks them down by type. In advanced mode, token types become clickable for filtering.</p>
-            <div class="token-usage">
-                <div class="token-usage-title">Tokens Used:</div>
-                <div class="token-list">
-                    <span class="token-badge">--size-8</span>
-                    <span class="token-badge">--size-6</span>
-                    <span class="token-badge">--size-4</span>
-                    <span class="token-badge">--radius-3</span>
-                </div>
-            </div>
+            
         </div>
         <div class="component-body">
             
@@ -550,7 +542,6 @@
         <div class="component-body">
             
             <!-- Empty State -->
-             <!-- Empty State -->
 <div class="state-group">
     <div class="example-wrapper">
         <div class="example-label">Empty State</div>
@@ -587,14 +578,7 @@
             </div>
         </div>
     </div>
-    <div class="state-documentation">
-        <div class="state-documentation-title">Key Info:</div>
-        <div class="token-list">
-            <span class="token-badge">Full interface takeover</span>
-            <span class="token-badge">Friendly messaging</span>
-            <span class="token-badge">Clear CTA</span>
-        </div>
-    </div>
+    
 </div>
 
             <!-- Loading State -->
@@ -626,19 +610,12 @@
                         </div>
                     </div>
                 </div>
-                 <div class="state-documentation">
-                    <div class="state-documentation-title">Key Info:</div>
-                    <p style="color: var(--color-text-secondary); margin: 0;">This component provides a high-fidelity loading state for the Token Summary card, preventing layout shift while collections are fetched. It uses a soft pulse animation for a modern feel.</p>
-                    <div class="token-list" style="margin-top: var(--size-2);">
-                        <span class="token-badge">Replaces old skeleton examples</span>
-                        <span class="token-badge">Uses skeleton-pulse animation</span>
-                        <span class="token-badge">1:1 match of component layout</span>
-                    </div>
-                </div>
+                 
             </div>
             
-            <!-- Export Flow States Group -->
-            <div class="state-group">
+          
+                
+                <div class="state-group">
                 <div class="state-group-header">
                     <h3 class="state-group-title">Export Flow States</h3>
                     <p style="color: var(--color-text-secondary); margin: 0;">
@@ -646,27 +623,22 @@
                     </p>
                 </div>
                 
-                <!-- Processing State -->
                 <div class="example-wrapper">
                     <div class="example-label">Processing State (Export Progress)</div>
                     <div class="example-container">
                         <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
                             <div class="liquid-progress-overlay" id="modular-liquid-demo" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--size-6); z-index: var(--layer-card);">
-                                <!-- Centered animation -->
                                 <div class="liquid-progress" style="--progress-size: 120px; position: relative; width: var(--progress-size); height: var(--progress-size); border-radius: 50%; background: #2a2a2a; border: var(--border-size-3) solid #333; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15); overflow: hidden; margin-bottom: var(--size-4);">
                                     <div class="liquid-progress-inner" style="position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border-radius: 50%; background: #1a1a1a; overflow: hidden;">
                                         <div class="liquid-wave" id="modular-liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 4s linear infinite; opacity: 0.9; transition: top 0.5s ease;"></div>
-                                        <!-- Second wave for depth -->
                                         <div class="liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 6s linear infinite reverse; opacity: 0.5; transition: top 0.5s ease;"></div>
                                     </div>
-                                    <!-- Black text that moves with water -->
                                     <div id="modular-percentage-container" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; align-items: baseline; transition: bottom 0.5s ease;">
                                         <span id="modular-progress-number" style="font-size: 24px; font-weight: 600; color: var(--brand-text-dark); text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);">25</span>
                                         <span style="font-size: 14px; font-weight: 400; color: var(--brand-text-dark); margin-left: 2px; text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);">%</span>
                                     </div>
                                 </div>
                                 
-                                <!-- Centered text below -->
                                 <div style="text-align: center;">
                                     <div class="text-label" id="modular-stage-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2); text-transform: uppercase; letter-spacing: 0.1em;">ANALYZING TOKENS</div>
                                     <div class="text-body-md" id="modular-stage-detail" style="color: var(--color-text-secondary);">Scanning your variable collections...</div>
@@ -675,7 +647,6 @@
                         </div>
                     </div>
                     
-                    <!-- Control Button -->
                     <div style="text-align: center; margin-top: var(--size-4);">
                         <button class="btn secondary" id="modular-liquid-play-btn" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="toggleModularLiquidAnimation()">
                             <i data-lucide="play"></i> Play Animation
@@ -683,7 +654,6 @@
                     </div>
                 </div>
                 
-                <!-- 4 Stage Documentation -->
                 <div class="state-documentation mb-4">
                 <div class="state-documentation-title">4 Stage Process:</div>
                 <div class="grid grid-cols-2 gap-2 mt-2">
@@ -698,6 +668,32 @@
                     </div>
                     <div class="bg-gray-8 p-2 rounded-1">
                         <strong class="text-brand-primary-lime">Stage 4 (100%):</strong> Finalizing - Ready to download
+                    </div>
+                </div>
+            </div>
+
+                
+                <div class="example-wrapper">
+                    <div class="example-label">Success State (Download Ready)</div>
+                    <div class="example-container">
+                        <div class="card token-summary" style="text-align: center; position: relative; padding: var(--size-8) var(--size-6);">
+                            <button class="btn-icon-only" style="position: absolute; top: var(--size-3); right: var(--size-3);">
+                                <i data-lucide="x-circle"></i>
+                            </button>
+                            
+                            <i data-lucide="check-circle-2" class="success-icon"></i>
+                            <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Export Complete!</div>
+                            <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-6);">247 tokens packaged successfully</div>
+                            <button class="btn primary"><i data-lucide="download"></i> Download design-tokens.zip</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="state-documentation">
+                    <div class="state-documentation-title">Key Info:</div>
+                    <div class="token-list">
+                        <span class="token-badge">Follows processing state</span>
+                        <span class="token-badge">Icon-only close button</span>
+                        <span class="token-badge">Clear download CTA</span>
                     </div>
                 </div>
             </div>
@@ -720,14 +716,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="state-documentation">
-                    <div class="state-documentation-title">Key Info:</div>
-                    <div class="token-list">
-                        <span class="token-badge">Follows processing state</span>
-                        <span class="token-badge">Icon-only close button</span>
-                        <span class="token-badge">Clear download CTA</span>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
