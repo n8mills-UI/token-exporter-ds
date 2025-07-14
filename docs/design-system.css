@@ -721,41 +721,7 @@ sl-icon-button::part(base):hover {
 }
 
 
-/* ==========================================================================
-   FINAL HERO SECTION POLISH
-   ========================================================================== */
 
-.portfolio-hero {
-    position: relative;
-    padding: var(--size-8) var(--size-6);
-    min-height: 95vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-/* FIX: Restores radial gradients and pattern */
-.portfolio-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: 
-        /* Color glows */
-        radial-gradient(circle at 20% 50%, rgb(210, 255, 55, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgb(238, 255, 0, 0.04) 0%, transparent 40%),
-        /* Diagonal line pattern */
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 10px,
-            rgb(210, 255, 55, 0.02) 10px,
-            rgb(210, 255, 55, 0.02) 20px
-        );
-    animation: subtle-shift 20s linear infinite;
-    pointer-events: none;
-}
 
 @keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
 
@@ -1438,17 +1404,6 @@ sl-icon-button::part(base):hover {
     --portfolio-gradient-dark: linear-gradient(180deg, #0a0a0a 0%, var(--gray-9) 100%);
 }
 
-/* PORTFOLIO HERO SECTION - Complete replacement */
-.portfolio-hero {
-    position: relative;
-    padding: var(--size-8) var(--size-6);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column; /* Ensures vertical alignment */
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
 
 @keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
 
@@ -3396,22 +3351,6 @@ sl-input::part(input):focus-visible,
    HERO, FOOTER & MOBILE LAYOUT (REFACTORED)
    ========================================================================== */
 
-/* -- Hero Section -- */
-.portfolio-hero {
-    position: relative;
-    padding: var(--size-8) var(--size-6);
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.guide-main-title {
-    line-height: 1.1; /* Tighter line height for wrapping */
-    margin-bottom: var(--size-4); /* Adds space below title */
-}
 
 
 .hero-footer {
@@ -3474,6 +3413,42 @@ sl-input::part(input):focus-visible,
     height: var(--icon-lg);
 }
 
+/* ==========================================================================
+   FINAL HERO SECTION POLISH
+   ========================================================================== */
+
+/* FINAL HERO SECTION POLISH */
+.portfolio-hero {
+    position: relative;
+    padding: var(--size-8) var(--size-6);
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    isolation: isolate; /* Add this line */
+}
+
+/* FIX: Restores radial gradients and pattern */
+.portfolio-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* This will now work as intended */
+    background: 
+        /* Color glows */
+        radial-gradient(circle at 20% 50%, rgb(210, 255, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgb(238, 255, 0, 0.04) 0%, transparent 40%),
+        /* Diagonal line pattern */
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgb(210, 255, 55, 0.02) 10px,
+            rgb(210, 255, 55, 0.02) 20px
+        );
+    pointer-events: none;
+}
 
 /* ==========================================================================
    COMPONENT-SPECIFIC FIXES
