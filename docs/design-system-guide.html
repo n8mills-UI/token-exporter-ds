@@ -219,78 +219,7 @@
     </div>
 </section>
 
-<!-- Component Strategy Section -->
-<section class="static-reference-section">
-    <div class="at-a-glance">
-        <div class="glance-pane">
-            <h3><i data-lucide="figma"></i> Figma Components</h3>
-            <p>Lightweight, static variants used to design and prototype with maximum speed and fidelity directly in Figma. They are the visual source of truth.</p>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4><i data-lucide="zap"></i>Optimized for Design</h4>
-                    <p>Built for Auto Layout and Variants, ensuring a seamless design workflow.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="gem"></i>Pixel-Perfect</h4>
-                    <p>Visually identical to production code, so what you see is what you get.</p>
-                </div>
-            </div>
-        </div>
-        <div class="glance-pane">
-            <h3><i data-lucide="code-2"></i> Web Components</h3>
-            <p>Production-ready components for use in live applications, engineered with complex logic, accessibility, and interactivity baked in.</p>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4><i data-lucide="box-select"></i>Interactive</h4>
-                    <p>Comes with built-in states and functionality that are triggered with code.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="shield-check"></i>Robust & Accessible</h4>
-                    <p>Engineered with ARIA roles and keyboard navigation out of the box.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="quick-reference">
-        <h3>Feature Quick-Reference</h3>
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th><i data-lucide="figma"></i> Figma Components</th>
-                    <th><i data-lucide="book-open"></i> Web Components</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="feature-col">Primary Use Case</td>
-                    <td>Visual design & prototyping</td>
-                    <td>Live application development</td>
-                </tr>
-                <tr>
-                    <td class="feature-col">Technology</td>
-                    <td>Figma Variants</td>
-                    <td>HTML & JavaScript (Shoelace)</td>
-                </tr>
-                <tr>
-                    <td class="feature-col">Interactivity</td>
-                    <td>Static (Visual states only)</td>
-                    <td>Dynamic (Coded states & events)</td>
-                </tr>
-                <tr>
-                    <td class="feature-col">Accessibility (A11y)</td>
-                    <td><i data-lucide="x" class="x-mark"></i> Not Applicable</td>
-                    <td><i data-lucide="check" class="check-mark"></i> Built-in (ARIA, Keyboard Nav)</td>
-                </tr>
-                <tr>
-                    <td class="feature-col">Performance</td>
-                    <td><i data-lucide="check" class="check-mark"></i> High (Optimized for canvas)</td>
-                    <td><i data-lucide="check" class="check-mark"></i> High (Optimized for browser)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
+
 
           <!-- Color System Section -->
             <section id="colors" class="content-section">
@@ -1168,16 +1097,124 @@
 </section>
 
 <section id="shoelace-integration" class="content-section">
-    <div class="section-header">
+   <div class="section-header">
         <h2 class="text-heading-xl main-section-title">
             <i data-lucide="package-2"></i>
-            External Library Integration
+            Shoelace Integration
         </h2>
         <p class="section-description">
-            How Token Exporter integrates with Shoelace web components, mapping our design tokens to their theming system.
+            How Token Exporter leverages Shoelace web components and our strategic approach to component architecture.
         </p>
     </div>
 
+    <!-- NEW: Component Strategy Overview -->
+    <div class="pattern-section">
+        <h3 class="text-heading-md pattern-title">
+            <i data-lucide="git-compare"></i>
+            Component Strategy: Why Two Systems?
+        </h3>
+        <div class="pattern-content">
+            <div class="why-dual-approach">
+                <h4><i data-lucide="help-circle" aria-hidden="true"></i> Why do we maintain two component systems?</h4>
+                <p>Our dual approach solves a fundamental challenge: Figma plugins cannot execute JavaScript or load external resources due to security constraints. This means Shoelace's powerful web components simply won't work inside the plugin environment. By maintaining Figma-native components for design and Shoelace components for the web, we get the best of both worlds—seamless design workflows and production-ready code.</p>
+            </div>
+
+            <div class="component-comparison">
+                <div class="comparison-card">
+                    <h4><i data-lucide="figma" aria-label="Figma"></i> Figma Components</h4>
+                    <p>Purpose-built for the design phase, these lightweight variants enable rapid prototyping directly in Figma.</p>
+                    <ul class="feature-list" role="list">
+                        <li><i data-lucide="zap" aria-hidden="true"></i> Instant loading in Figma canvas</li>
+                        <li><i data-lucide="layers" aria-hidden="true"></i> Auto Layout & Variants support</li>
+                        <li><i data-lucide="eye" aria-hidden="true"></i> Visual states only (no code)</li>
+                        <li><i data-lucide="package" aria-hidden="true"></i> Zero dependencies</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h4><i data-lucide="code-2" aria-label="Code"></i> Shoelace Components</h4>
+                    <p>Production-ready web components with built-in functionality for live applications.</p>
+                    <ul class="feature-list" role="list">
+                        <li><i data-lucide="shield-check" aria-hidden="true"></i> ARIA compliant & accessible</li>
+                        <li><i data-lucide="sparkles" aria-hidden="true"></i> Interactive states & animations</li>
+                        <li><i data-lucide="keyboard" aria-hidden="true"></i> Keyboard navigation built-in</li>
+                        <li><i data-lucide="globe" aria-hidden="true"></i> Framework agnostic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4 style="margin-top: var(--size-4); margin-bottom: var(--size-2);">Feature Comparison</h4>
+            <div class="table-wrapper">
+                <table class="comparison-table" role="table" aria-label="Comparison of Figma and Shoelace component features">
+                    <thead>
+                        <tr>
+                            <th scope="col">Feature</th>
+                            <th scope="col"><i data-lucide="figma" aria-hidden="true"></i> Figma</th>
+                            <th scope="col"><i data-lucide="code-2" aria-hidden="true"></i> Shoelace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="feature-col">Environment</th>
+                            <td>Design canvas</td>
+                            <td>Web browser</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="feature-col">Technology</th>
+                            <td>Figma Variants</td>
+                            <td>Web Components</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="feature-col">Interactivity</th>
+                            <td>
+                                <span class="status-icon status-no">
+                                    <i data-lucide="x" aria-hidden="true"></i>
+                                    <span class="sr-only">No:</span> Static only
+                                </span>
+                            </td>
+                            <td>
+                                <span class="status-icon status-yes">
+                                    <i data-lucide="check" aria-hidden="true"></i>
+                                    <span class="sr-only">Yes:</span> Fully interactive
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="feature-col">Accessibility</th>
+                            <td>
+                                <span class="status-icon status-partial">
+                                    <i data-lucide="minus" aria-hidden="true"></i>
+                                    <span class="sr-only">Partial:</span> Visual only
+                                </span>
+                            </td>
+                            <td>
+                                <span class="status-icon status-yes">
+                                    <i data-lucide="check" aria-hidden="true"></i>
+                                    <span class="sr-only">Yes:</span> WCAG compliant
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="feature-col">JavaScript Required</th>
+                            <td>
+                                <span class="status-icon status-yes">
+                                    <i data-lucide="check" aria-hidden="true"></i>
+                                    <span class="sr-only">Good:</span> No
+                                </span>
+                            </td>
+                            <td>
+                                <span class="status-icon status-no">
+                                    <i data-lucide="x" aria-hidden="true"></i>
+                                    <span class="sr-only">Note:</span> Yes
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXISTING: Shoelace Theme Mapping -->
     <div class="pattern-section">
         <h3 class="text-heading-md pattern-title">
             <i data-lucide="palette"></i>
@@ -1206,6 +1243,7 @@
         </div>
     </div>
 
+    <!-- EXISTING: Implementation Examples -->
     <div class="component-section">
         <div class="component-header">
             <h2 class="text-heading-lg component-title">
@@ -1217,23 +1255,23 @@
         </div>
         <div class="component-body">
             <div class="variants-grid">
-                <div class="example-wrapper"></div>
-                <div class="example-label">Primary Variant</div>
-                <div class="example-container">
-
-                    <sl-button variant="primary">
-                        <i slot="prefix" data-lucide="rocket"></i>
-                        Export Tokens
-                    </sl-button>
+                <div class="example-wrapper">
+                    <div class="example-label">Primary Variant</div>
+                    <div class="example-container">
+                        <sl-button variant="primary">
+                            <i slot="prefix" data-lucide="rocket"></i>
+                            Export Tokens
+                        </sl-button>
+                    </div>
                 </div>
                 
-                    <div class="example-wrapper"></div>
+                <div class="example-wrapper">
                     <div class="example-label">Circle Icon Button</div>
                     <div class="example-container">
-
-                    <sl-button variant="default" circle>
-                        <i data-lucide="x"></i>
-                    </sl-button>
+                        <sl-button variant="default" circle>
+                            <i data-lucide="x"></i>
+                        </sl-button>
+                    </div>
                 </div>
             </div>
             
