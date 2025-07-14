@@ -77,6 +77,7 @@
                 <h1 class="text-heading-md guide-title">Token Exporter</h1>
             </div>
             <div class="nav-wrapper">
+    <!-- Foundation (no changes) -->
     <div class="nav-section">
         <h3 class="nav-section-title">Foundation</h3>
         <ul class="nav-links">
@@ -90,46 +91,26 @@
         </ul>
     </div>
     
+    <!-- Simplified Components -->
     <div class="nav-section">
-        <h3 class="nav-section-title">Core Components</h3>
+        <h3 class="nav-section-title">Components</h3>
         <ul class="nav-links">
             <li><a href="#token-summary" class="nav-link"><i data-lucide="pie-chart"></i> Token Summary</a></li>
-            <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
-            <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
+            <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons & Controls</a></li>
+            <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms & Inputs</a></li>
             <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
             <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
-            <li><a href="#modular-cards" class="nav-link"><i data-lucide="layout-grid"></i> Modular Card States</a></li>
-            <li><a href="#advanced-toggle" class="nav-link"><i data-lucide="sliders-horizontal"></i> Mode Toggle</a></li>
         </ul>
     </div>
     
+    <!-- New Plugin States section -->
     <div class="nav-section">
-        <h3 class="nav-section-title">Advanced Components</h3>
+        <h3 class="nav-section-title">Plugin States</h3>
         <ul class="nav-links">
-            <li><a href="#filter-system" class="nav-link"><i data-lucide="filter"></i> Filters</a></li>
-            <li><a href="#collection-search" class="nav-link"><i data-lucide="search"></i> Search</a></li>
-            <li><a href="#recent-collections" class="nav-link"><i data-lucide="clock"></i> Recent</a></li>
-            <li><a href="#bulk-actions" class="nav-link"><i data-lucide="check-square"></i> Bulk Actions</a></li>
-            <li><a href="#export-preview" class="nav-link"><i data-lucide="code-2"></i> Export Preview</a></li>
-            <li><a href="#performance-utilities" class="nav-link"><i data-lucide="zap"></i> Performance</a></li>
-            <li><a href="#skeletons" class="nav-link"><i data-lucide="loader"></i> Skeletons</a></li>
-        </ul>
-    </div>
-    
-    <div class="nav-section">
-        <h3 class="nav-section-title">External Libraries</h3>
-        <ul class="nav-links">
-            <li><a href="#shoelace-integration" class="nav-link"><i data-lucide="package-2"></i> Shoelace</a></li>
-        </ul>
-    </div>
-    
-    <div class="nav-section">
-        <h3 class="nav-section-title">Patterns</h3>
-        <ul class="nav-links">
-            <li><a href="#user-flows" class="nav-link"><i data-lucide="git-branch"></i> User Flows</a></li>
-            <li><a href="#state-management" class="nav-link"><i data-lucide="cpu"></i> State Management</a></li>
-            <li><a href="#performance" class="nav-link"><i data-lucide="zap"></i> Performance</a></li>
-            <li><a href="#error-handling" class="nav-link"><i data-lucide="alert-triangle"></i> Error Handling</a></li>
+            <li><a href="#empty-state" class="nav-link"><i data-lucide="package"></i> Empty State</a></li>
+            <li><a href="#loading-state" class="nav-link"><i data-lucide="loader"></i> Loading State</a></li>
+            <li><a href="#export-flow" class="nav-link"><i data-lucide="send"></i> Export Flow</a></li>
+            <li><a href="#success-state" class="nav-link"><i data-lucide="check-circle"></i> Success State</a></li>
         </ul>
     </div>
 </div>
@@ -751,312 +732,33 @@
         </div>
     </div>
 
-    <!-- Advanced Toggle -->
-    <div id="advanced-toggle" class="component-section">
+    <!-- Advanced Filter -->
+    <div id="advanced-filter" class="component-section">
         <div class="component-header">
-            <h2 class="text-heading-lg component-title"><i data-lucide="sliders-horizontal"></i> Mode Toggle</h2>
-            <p class="component-description">Toggle between simple and advanced export modes for different user needs.</p>
+            <h2 class="text-heading-lg component-title"><i data-lucide="sliders-horizontal"></i> Advanced Filtering</h2>
+            <p class="component-description">Switch between simple and advanced filtering modes for different user needs.</p>
         </div>
         <div class="component-body">
             <div class="example-wrapper">
-                <div class="example-label">Simple Mode Toggle</div>
+                <div class="example-label">Simple Mode</div>
                 <div class="example-container">
-                    <div class="advanced-toggle">
-                        <a href="#" class="advanced-link text-body-md">Need specific tokens? <i data-lucide="arrow-right"></i></a>
+                    <div class="advanced-filter">
+                        <a href="#" class="advanced-filter-link text-body-md">Need specific tokens? <i data-lucide="arrow-right"></i></a>
                     </div>
                 </div>
             </div>
             <div class="example-wrapper" style="margin-top: var(--size-4);">
-                <div class="example-label">Advanced Mode Toggle</div>
+                <div class="example-label">Advanced Mode</div>
                 <div class="example-container">
-                    <div class="advanced-toggle">
+                    <div class="advanced-filter">
                         <button class="btn secondary"><i data-lucide="arrow-left"></i> Back to Simple Export</button>
                     </div>
                 </div>
             </div>
-            <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="advanced-toggle"&gt;...&lt;/div&gt;</code></div>
+            <div class="code-block"><button class="code-copy-btn" onclick="copyCode(this)">Copy</button><code>&lt;div class="advanced-filter"&gt;...&lt;/div&gt;</code></div>
         </div>
     </div>
-
-</section>
-
-            <!-- PATTERNS SECTION -->
-           <section id="advanced-components" class="content-section">
-    <div class="section-header">
-        <h2 class="text-heading-xl main-section-title">
-            <i data-lucide="sparkles"></i>
-            Advanced Components
-        </h2>
-        <p class="section-description">
-            Additional UI components for enhanced functionality including filters, bulk actions, and specialized widgets.
-        </p>
-    </div>
-
-    <div id="filter-system" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="filter"></i> Filter System
-            </h2>
-            <p class="component-description">
-                Expandable filter groups with chip-based selection for refining large datasets. Features smooth animations and clear visual states.
-            </p>
-            <div class="token-usage">
-                <div class="token-usage-title">Tokens Used:</div>
-                <div class="token-list">
-                    <span class="token-badge">--color-background-secondary</span>
-                    <span class="token-badge">--radius-3</span>
-                    <span class="token-badge">--brand-primary-lime</span>
-                    <span class="token-badge">--animation-duration-3</span>
-                </div>
-            </div>
-        </div>
-        <div class="component-body">
-            <div class="example-wrapper">
-                <div class="example-label">Collapsed State</div>
-                <div class="example-container">
-                    <div class="filter-group">
-                        <div class="filter-header">
-                            <span>Filter by Type</span>
-                            <i class="filter-toggle-icon lucide" data-lucide="chevron-down"></i>
-                        </div>
-                        <div class="filter-content">
-                            </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="example-wrapper">
-                <div class="example-label">Expanded State with Active Filters</div>
-                <div class="example-container">
-                    <div class="filter-group expanded">
-                        <div class="filter-header">
-                            <span>Filter by Type</span>
-                            <i class="filter-toggle-icon lucide" data-lucide="chevron-down"></i>
-                        </div>
-                        <div class="filter-content">
-                            <div class="filter-chips">
-                                <div class="filter-chip">Colors</div>
-                                <div class="filter-chip active">
-                                    Typography
-                                    <span class="remove-icon">×</span>
-                                </div>
-                                <div class="filter-chip">Spacing</div>
-                                <div class="filter-chip active">
-                                    Effects
-                                    <span class="remove-icon">×</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="code-block">
-                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                <code>&lt;div class="filter-group expanded"&gt;
-    &lt;div class="filter-header"&gt;
-        &lt;span&gt;Filter by Type&lt;/span&gt;
-        &lt;i class="filter-toggle-icon" data-lucide="chevron-down"&gt;&lt;/i&gt;
-    &lt;/div&gt;
-    &lt;div class="filter-content"&gt;
-        &lt;div class="filter-chips"&gt;
-            &lt;div class="filter-chip active"&gt;Typography&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code>
-            </div>
-        </div>
-    </div>
-
-    <div id="collection-search" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="search"></i> Collection Search
-            </h2>
-            <p class="component-description">
-                Search input with icon positioning for filtering collections. Appears automatically when collections exceed 5 items.
-            </p>
-        </div>
-        <div class="component-body">
-            <div class="example-wrapper">
-                <div class="example-label">Search Input</div>
-                <div class="example-container">
-                    <div class="search-container">
-                        <i class="lucide lucide-search" data-lucide="search"></i>
-                        <input type="text" class="collection-search search-input" placeholder="Search collections...">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="code-block">
-                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                <code>&lt;div class="search-container"&gt;
-    &lt;i class="lucide-search" data-lucide="search"&gt;&lt;/i&gt;
-    &lt;input type="text" class="collection-search" placeholder="Search collections..."&gt;
-&lt;/div&gt;</code>
-            </div>
-        </div>
-    </div>
-
-    <div id="recent-collections" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="clock"></i> Recent Collections
-            </h2>
-            <p class="component-description">
-                Quick access widget showing recently used collections with chip-based UI for rapid selection.
-            </p>
-        </div>
-        <div class="component-body">
-            <div class="example-wrapper">
-                <div class="example-label">Recent Collections Widget</div>
-                <div class="example-container">
-                    <div class="recent-collections">
-                        <div class="recent-collections-header">
-                            <i data-lucide="clock"></i>
-                            Recent Collections
-                        </div>
-                        <div class="recent-collections-list">
-                            <div class="recent-chip">Brand Colors</div>
-                            <div class="recent-chip">Typography Scale</div>
-                            <div class="recent-chip">Spacing Tokens</div>
-                            <div class="recent-chip">Component States</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="code-block">
-                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                <code>&lt;div class="recent-collections"&gt;
-    &lt;div class="recent-collections-header"&gt;
-        &lt;i data-lucide="clock"&gt;&lt;/i&gt; Recent Collections
-    &lt;/div&gt;
-    &lt;div class="recent-collections-list"&gt;
-        &lt;div class="recent-chip"&gt;Brand Colors&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code>
-            </div>
-        </div>
-    </div>
-
-    <div id="bulk-actions" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="check-square"></i> Bulk Actions
-            </h2>
-            <p class="component-description">
-                Contextual action bar that appears when multiple items are selected. Features smooth slide-in animation.
-            </p>
-        </div>
-        <div class="component-body">
-            <div class="example-wrapper">
-                <div class="example-label">Bulk Actions Bar (Visible State)</div>
-                <div class="example-container">
-                    <div class="bulk-actions visible">
-                        <span class="text-body-md">3 collections selected</span>
-                        <div style="display: flex; gap: var(--size-2); margin-left: auto;">
-                            <button class="btn tertiary" style="width: auto;">
-                                Select All
-                            </button>
-                            <button class="btn tertiary" style="width: auto;">
-                                Clear Selection
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="code-block">
-                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                <code>&lt;div class="bulk-actions visible"&gt;
-    &lt;span&gt;3 collections selected&lt;/span&gt;
-    &lt;button class="btn tertiary"&gt;Select All&lt;/button&gt;
-&lt;/div&gt;</code>
-            </div>
-        </div>
-    </div>
-
-    <div id="export-preview" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="code-2"></i> Export Preview
-            </h2>
-            <p class="component-description">
-                Code preview window showing a sample of generated tokens before download. Features syntax highlighting appearance and scrollable content.
-            </p>
-        </div>
-        <div class="component-body">
-            <div class="example-wrapper"></div>
-            <div class="example-label">CSS Variables Preview</div>
-            <div class="example-container">
-                
-                <div class="export-preview">
-                    <pre><code>:root {
-  /* Brand Colors */
-  --brand-primary-lime: #D2FF37;
-  --brand-secondary-yellow: #EEFF00;
-  --brand-text-dark: #1E1E1E;
-  
-  /* Token Categories */
-  --category-color-cyan: #00D1FF;
-  --category-color-purple: #B48CFF;
-  --category-color-orange: #FFB86C;
-  --category-color-pink: #FF74BC;
-  
-  /* Gray Scale */
-  --gray-0: #ffffff;
-  --gray-1: #f0f0f0;
-  --gray-2: #cccccc;
-}</code></pre>
-                </div>
-            </div>
-            
-            <div class="code-block">
-                <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
-                <code>&lt;div class="export-preview"&gt;
-    &lt;pre&gt;&lt;code&gt;:root {
-  --brand-primary-lime: #D2FF37;
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;</code>
-            </div>
-        </div>
-    </div>
-
-    <div id="performance-utilities" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="zap"></i> Performance Utilities
-            </h2>
-            <p class="component-description">
-                CSS utility classes for optimizing rendering performance and paint operations.
-            </p>
-        </div>
-        <div class="component-body">
-            <div class="example-wrapper"></div>
-            <div class="example-label">Utility Classes</div>
-            <div class="example-container">
-                <div class="pattern-content">
-                    <h4>GPU Acceleration</h4>
-                    <pre><code>.gpu-accelerated {
-    will-change: transform;
-    transform: translateZ(0);
-}</code></pre>
-                    
-                    <h4>Reduce Paint</h4>
-                    <pre><code>.reduce-paint {
-    contain: layout style paint;
-}</code></pre>
-                    
-                    <p style="margin-top: var(--size-4);">
-                        Apply these utilities to frequently animated elements or complex components to improve performance.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-            <!-- Skeleton Loading Section -->
+<!-- Skeleton Loading Section -->
             <div id="skeletons" class="component-section">
                 <div class="component-header">
                     <h2 class="text-heading-lg component-title">
@@ -1093,127 +795,8 @@
                     </div>
                 </div>
             </div>
-
 </section>
 
-<section id="shoelace-integration" class="content-section">
-   <div class="section-header">
-        <h2 class="text-heading-xl main-section-title">
-            <i data-lucide="package-2"></i>
-            Shoelace Integration
-        </h2>
-        <p class="section-description">
-            How Token Exporter leverages Shoelace web components and our strategic approach to component architecture.
-        </p>
-    </div>
-
-    <!-- NEW: Component Strategy Overview -->
-    <div class="pattern-section">
-        <h3 class="text-heading-md pattern-title">
-    <i data-lucide="git-compare"></i>
-    Component Strategy: Why Two Systems?
-</h3>
-<div class="pattern-content">
-    <p style="margin-bottom: var(--size-6);">Our dual approach solves a fundamental challenge: Figma plugins cannot execute JavaScript or load external resources due to security constraints. This means Shoelace's powerful web components simply won't work inside the plugin environment. By maintaining Figma-native components for design and Shoelace components for the web, we get the best of both worlds—seamless design workflows and production-ready code.</p>
-
-            <div class="component-comparison">
-                <div class="comparison-card">
-                    <h4><i data-lucide="figma" aria-label="Figma"></i> Figma Components</h4>
-                    <p>Purpose-built for the design phase, these lightweight variants enable rapid prototyping directly in Figma.</p>
-                    <ul class="feature-list" role="list">
-                        <li><i data-lucide="zap" aria-hidden="true"></i> Instant loading in Figma canvas</li>
-                        <li><i data-lucide="layers" aria-hidden="true"></i> Auto Layout & Variants support</li>
-                        <li><i data-lucide="eye" aria-hidden="true"></i> Visual states only (no code)</li>
-                        <li><i data-lucide="package" aria-hidden="true"></i> Zero dependencies</li>
-                    </ul>
-                </div>
-                <div class="comparison-card">
-                    <h4><i data-lucide="code-2" aria-label="Code"></i> Shoelace Components</h4>
-                    <p>Production-ready web components with built-in functionality for live applications.</p>
-                    <ul class="feature-list" role="list">
-                        <li><i data-lucide="shield-check" aria-hidden="true"></i> ARIA compliant & accessible</li>
-                        <li><i data-lucide="sparkles" aria-hidden="true"></i> Interactive states & animations</li>
-                        <li><i data-lucide="keyboard" aria-hidden="true"></i> Keyboard navigation built-in</li>
-                        <li><i data-lucide="globe" aria-hidden="true"></i> Framework agnostic</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="table-wrapper">
-                <table class="comparison-table" role="table" aria-label="Comparison of Figma and Shoelace component features">
-                    <thead>
-                        <tr>
-                            <th scope="col">Feature</th>
-                            <th scope="col"><i data-lucide="figma" aria-hidden="true"></i> Figma</th>
-                            <th scope="col"><i data-lucide="code-2" aria-hidden="true"></i> Shoelace</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row" class="feature-col">Environment</th>
-                            <td>Design canvas</td>
-                            <td>Web browser</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="feature-col">Technology</th>
-                            <td>Figma Variants</td>
-                            <td>Web Components</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="feature-col">Interactivity</th>
-                            <td>
-                                <span class="status-icon status-no">
-                                    <i data-lucide="x" aria-hidden="true"></i>
-                                    <span class="sr-only">No:</span> Static only
-                                </span>
-                            </td>
-                            <td>
-                                <span class="status-icon status-yes">
-                                    <i data-lucide="check" aria-hidden="true"></i>
-                                    <span class="sr-only">Yes:</span> Fully interactive
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="feature-col">Accessibility</th>
-                            <td>
-                                <span class="status-icon status-partial">
-                                    <i data-lucide="minus" aria-hidden="true"></i>
-                                    <span class="sr-only">Partial:</span> Visual only
-                                </span>
-                            </td>
-                            <td>
-                                <span class="status-icon status-yes">
-                                    <i data-lucide="check" aria-hidden="true"></i>
-                                    <span class="sr-only">Yes:</span> WCAG compliant
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="feature-col">JavaScript Required</th>
-                            <td>
-                                <span class="status-icon status-yes">
-                                    <i data-lucide="check" aria-hidden="true"></i>
-                                    <span class="sr-only">Good:</span> No
-                                </span>
-                            </td>
-                            <td>
-                                <span class="status-icon status-no">
-                                    <i data-lucide="x" aria-hidden="true"></i>
-                                    <span class="sr-only">Note:</span> Yes
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-
-
-
-</section>
 
 <!-- Guide Footer Section -->
 <footer id="about" class="guide-footer">
@@ -1284,6 +867,76 @@
         initTechHover();
     });
 
+// Animation control for export flow demo
+let animationInterval;
+let currentProgress = 0;
+
+function toggleModularLiquidAnimation() {
+    const btn = document.getElementById('modular-liquid-play-btn');
+    const wave = document.getElementById('modular-liquid-wave');
+    const progressNum = document.getElementById('modular-progress-number');
+    const stageLabel = document.getElementById('modular-stage-label');
+    const stageDetail = document.getElementById('modular-stage-detail');
+    const percentContainer = document.getElementById('modular-percentage-container');
+    
+    if (animationInterval) {
+        // Stop animation
+        clearInterval(animationInterval);
+        animationInterval = null;
+        btn.innerHTML = '<i data-lucide="play"></i> Play Animation';
+        currentProgress = 0;
+        updateProgress(0);
+        lucide.createIcons();
+        return;
+    }
+    
+    // Start animation
+    btn.innerHTML = '<i data-lucide="pause"></i> Pause Animation';
+    lucide.createIcons();
+    
+    animationInterval = setInterval(() => {
+        currentProgress += 2;
+        
+        if (currentProgress > 100) {
+            currentProgress = 0;
+        }
+        
+        updateProgress(currentProgress);
+    }, 100);
+    
+    
+    function updateProgress(progress) {
+        // Update water level (inverse - 75% = empty, 10% = full)
+        const waterLevel = 75 - (progress * 0.65);
+        wave.style.top = waterLevel + '%';
+        
+        // Update percentage
+        progressNum.textContent = progress;
+        
+        // Update percentage container position
+        if (progress > 50) {
+            percentContainer.style.bottom = '40px';
+        } else {
+            percentContainer.style.bottom = '5px';
+        }
+        
+        // Update stage labels
+        if (progress <= 25) {
+            stageLabel.textContent = 'ANALYZING';
+            stageDetail.textContent = 'Your variable collections...';
+        } else if (progress <= 50) {
+            stageLabel.textContent = 'PACKAGING';
+            stageDetail.textContent = 'Creating export packages...';
+        } else if (progress <= 75) {
+            stageLabel.textContent = 'SANITIZING';
+            stageDetail.textContent = 'Validating syntax...';
+        } else {
+            stageLabel.textContent = 'FINALIZING';
+            stageDetail.textContent = 'Preparing download...';
+        }
+    }
+}
+    
     // --- Initialize Lucide Icons ---
     window.addEventListener('load', () => {
       lucide.createIcons();
@@ -1384,7 +1037,7 @@
                 }
             });
         });
-        const sections = document.querySelectorAll('.content-section, .token-category, .component-section, .pattern-section');
+        const sections = document.querySelectorAll('.content-section, .token-category, .component-section,');
         const observer = new IntersectionObserver(entries => {
             let visibleSections = [];
             entries.forEach(entry => {
