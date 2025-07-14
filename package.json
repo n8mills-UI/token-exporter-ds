@@ -7,11 +7,11 @@
     "doc": "docs"
   },
   "scripts": {
-  "sync": "./scripts/sync-css.sh",
-  "dev": "npm run sync && echo 'Watching for changes...'",
-  "build": "npm run sync",
-  "clean": "rm -f src/ui.html.backup"
-},
+    "sync": "./scripts/sync-css.sh",
+    "dev": "npm run sync && echo 'Watching for changes...'",
+    "build": "npm run sync",
+    "clean": "rm -f src/ui.html.backup"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/n8mills-UI/token-exporter-ds.git"
@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/n8mills-UI/token-exporter-ds/issues"
   },
-  "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme"
+  "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme",
+  "devDependencies": {
+    "stylelint": "^16.21.1",
+    "stylelint-config-standard": "^38.0.0"
+  }
 }

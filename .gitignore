@@ -2,4 +2,5 @@
 integrated-project-roadmap.md
 *.backup
 _sandbox/
+node_modules/
 
