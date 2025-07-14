@@ -13,25 +13,28 @@ This project was created by [Nate Mills](https://natemills.me) to solve a common
 
 <br>
 
-## 📑 Table of Contents
+## Table of Contents
 
-1. [🧩 The Problem It Solves](#-the-problem-it-solves)
+1. [🚨 The Problem It Solves](#-the-problem-it-solves)
 2. [🚀 Key Features](#-key-features)
 3. [⚙️ How It Works](#️-how-it-works)
 4. [🛠 Built With](#-built-with)
-5. [🤝 How to Contribute & Development Workflow](#-how-to-contribute--development-workflow)
-6. [📈 Project Status](#-project-status)
-7. [📄 License](#-license)
+5. [🧑‍💻 Local Development](#-local-development)
+6. [🚧 Project Status](#-project-status)
+7. [📦 Local Development](#-local-development)
+8. [ 📁 Folder Structure](#-folder-structure)
+9. [📄 License](#-license)
 
 ---
 
 <br>
 
-## 🧩 The Problem It Solves
+## 🚨 The Problem It Solves
 
 Manual token exporting from Figma is slow, error-prone, and creates a disconnect between design and development. Existing tools often lack the flexibility to export for multiple platforms natively. This plugin solves that problem by providing a fast, automated, and multi-format export pipeline.
 
 <br>
+
 
 ## 🚀 Key Features
 
@@ -97,50 +100,63 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 
 <br>
 
-## 🤝 How to Contribute & Development Workflow
+## 🧑‍💻 Local Development
 
-This section is for developers who want to contribute to the project.
+This project uses a CSS-first workflow. You **only edit one CSS file**, and then sync it into the plugin UI.
+
+<br>
+
+### ⚙️ Setup
+
+1. Install [Node.js](https://nodejs.org/) (LTS version)
+2. Run `npm init -y` to generate `package.json`
+3. Run `npm install` to install dependencies
+
+<br>
+
+### 🔄 Sync CSS Changes
+
+Use the terminal to run:
+
+```bash
+npm run sync
+```
+
+This runs `scripts/sync-css.sh`, which injects the CSS into the plugin’s UI file.
 
 
+<br>
 
-### Project Philosophy
+---
 
-This system follows a **"CSS First"** approach. All style changes are made in a single source of truth (`design-system.css`). Due to Figma's security policy, we use an automation script to inject these styles directly into the plugin's UI file.
+<br>
 
-### ⚙️ One-Time Setup
 
-First, let's get your local environment ready. You only need to do this once.
+## 🙌 How to Contribute
 
-1.  **Install Node.js:** If you don't already have it, download and install the **LTS** version from the official website. This is what allows your computer to run the project's scripts.
-    <br>
-    <a href="https://nodejs.org/">
-      <img src="https://img.shields.io/badge/Download_Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Download Node.js">
-    </a>
-2.  **Initialize the Project:** Open a terminal in the project's root folder and run `npm init -y` to create your `package.json` file.
-3.  **Install Dependencies:** In the same terminal, run `npm install`. This command sets up the environment needed for our scripts.
+* Open a PR or issue
+* Stick to the CSS-first approach (edit `design-system.css`, then `npm run sync`)
+* Follow the "Golden Workflow":
 
-### 🚀 The CSS Sync Command
 
-After you've made a change to the styles, you need to sync them to the plugin.
-
-> **Key Command:** In your VS Code terminal, just run:
-> ```bash
-> npm run sync
-> ```
-
-This command runs the `scripts/sync-css.sh` file, which automatically finds the latest CSS, and injects it into the plugin's `ui.html` file.
 
 ### ✨ The Golden Workflow
 
 | Step | Action | Purpose |
 | :--- | :--- | :--- |
-| **1. 📝 Edit** | Make all your style changes in **`docs/design-system.css`**. | Your single source of truth. |
-| **2. 🔬 Preview** | Open **`docs/design-system-guide.html`** in your browser. | See your changes live without any builds. |
-| **3. 🔄 Sync** | Run **`npm run sync`** in your terminal. | Updates the Figma plugin's UI with your new styles. |
-| **4. ✅ Verify** | Test the **`src/ui.html`** file in the Figma plugin. | The final check to make sure everything works. |
+| **1. Edit** |  **`docs/design-system.css`**. | Your single source of truth > Make all your style changes in. |
+| **2. Preview** | **`docs/design-system-guide.html`** | See your changes live without any builds > Open in your browser. |
+| **3. Sync** | **`npm run sync`** | Updates the Figma plugin's UI with your new styles > Run in your terminal. |
+| **4. Verify** |  **`src/ui.html`**  | The final check to make sure everything works > Test in the Figma plugin. |
 
 > **🛑 IMPORTANT**
 > Never edit the `src/ui.html` file directly. All your changes will be deleted the next time you run the sync script.
+
+<br>
+
+---
+
+<br>
 
 ### Project Structure
 ```text
@@ -156,6 +172,19 @@ token-exporter-ds/
 ├── package.json                 # Project scripts runner
 └── README.md                    # Project documentation
 ```
+> Tip: Use `docs/design-system-guide.html` to preview styles without opening Figma.
+<br>
+
+---
+
+<br>
+
+## 🚧 Project Status
+
+This project is under active development. The [Live Design System](https://n8mills-ui.github.io/token-exporter-ds/docs/design-system-guide.html) always reflects the latest, bleeding-edge version of the styles and components.
+
+The Figma plugin is updated periodically with stable features from the design system. We are currently implementing the automated build process outlined above, which will soon ensure the plugin and the design system are always perfectly in sync.
+
 
 <br>
 
@@ -163,11 +192,52 @@ token-exporter-ds/
 
 <br>
 
-## 📈 Project Status
+## 📦 Local Development
 
-This project is under active development. The [Live Design System](https://n8mills-ui.github.io/token-exporter-ds/docs/design-system-guide.html) always reflects the latest, bleeding-edge version of the styles and components.
+Want to run your own fork locally or test updates before publishing? Follow these steps:
 
-The Figma plugin is updated periodically with stable features from the design system. We are currently implementing the automated build process outlined above, which will soon ensure the plugin and the design system are always perfectly in sync.
+1. Clone this repo:
+
+```bash
+git clone https://github.com/n8mills/token-exporter-ds.git
+cd token-exporter-ds
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Open `manifest.json` in your Figma plugin settings, and point to the correct `src/code.js` and `src/ui.html` paths.
+4. Build or test your changes using the `npm run sync` script.
+
+<br>
+
+---
+
+<br>
+
+
+## 📁 Folder Structure
+
+```
+token-exporter-ds/
+├── docs/                       # Design system guide & editable CSS
+│   ├── design-system-guide.html
+│   └── design-system.css
+├── scripts/                    # Automation scripts (e.g. CSS injector)
+│   └── sync-css.sh
+├── src/                        # Plugin source (logic and UI)
+│   ├── code.js
+│   └── ui.html
+├── .gitignore                  # Files to exclude from Git tracking
+├── LICENSE                     # Open source license (MIT)
+├── manifest.json              # Figma plugin configuration
+├── package.json                # Dependencies and project scripts
+├── package-lock.json           # Locked package versions (auto-generated)
+└── README.md                   # Project documentation (you're here!)
+```
 
 <br>
 
