@@ -103,9 +103,9 @@
         </ul>
     </div>
     
-    <!-- New Plugin States section -->
+    <!-- New card States section -->
     <div class="nav-section">
-        <h3 class="nav-section-title">Plugin States</h3>
+        <h3 class="nav-section-title">Card States</h3>
         <ul class="nav-links">
             <li><a href="#empty-state" class="nav-link"><i data-lucide="package"></i> Empty State</a></li>
             <li><a href="#loading-state" class="nav-link"><i data-lucide="loader"></i> Loading State</a></li>
@@ -390,19 +390,19 @@
 
     <div id="token-summary" class="component-section">
         <div class="component-header">
-            <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Summary Card</h2>
+            <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Card</h2>
             <p class="component-description">The central dashboard component that displays the total count of design tokens and breaks them down by type. In advanced mode, token types become clickable for filtering.</p>
             
         </div>
         <div class="component-body">
             
-            <div class="example-label">Simple Mode (All Active)</div>
+            <div class="example-label">Default (All Active)</div>
             <div class="example-container">
-            <div class="card token-summary"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
+            <div class="card token-summary"><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
             
             <div class="example-label">Advanced Mode (Selective)</div>
             <div class="example-container">
-            <div class="card token-summary advanced-mode"><div class="text-label">Design Tokens</div><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
+            <div class="card token-summary advanced-mode"><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
         </div>
     </div>
 
@@ -529,148 +529,124 @@
         </div>
     </div>
 
-    <!-- Modular Card States -->
-    <div id="modular-cards" class="component-section">
+   </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+   CARD STATES SECTION
+   ========================================================================== -->
+<section id="card-states" class="content-section">
+    <div class="section-header">
+        <h2 class="text-heading-xl main-section-title">
+            <i data-lucide="layout-grid"></i>
+            Card States
+        </h2>
+        <p class="section-description">
+            The card interface transforms through different states based on user data and actions. All transitions happen in-place for a seamless experience.
+        </p>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="component-section">
         <div class="component-header">
-            <h2 class="text-heading-lg component-title">
-                <i data-lucide="layout-grid"></i> Modular Card States
-            </h2>
-            <p class="component-description">
-                The plugin interface transforms through different states based on user data and actions. 
-                All transitions happen in-place for a seamless experience.
-            </p>
+            <h2 class="text-heading-lg component-title"><i data-lucide="package"></i> Empty State</h2>
+            <p class="component-description">Shown when the user has no variable collections in their Figma file.</p>
         </div>
         <div class="component-body">
-            
-            <!-- Empty State -->
-<div class="state-group">
-    <div class="example-wrapper">
-        <div class="example-label">Empty State</div>
-        <div class="example-container">
-            <div class="empty-state-container">
-                <div class="empty-state">
+            <div class="example-container">
+                <div class="empty-state" style="min-height: 400px; justify-content: space-around;">
                     <div class="empty-state-icon">
-                        <div class="token-exporter-logo">
-                            <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_empty_logo)">
-                                    <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo)"/>
-                                    <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                                    <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                                    <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                                </g>
-                                <defs>
-                                    <linearGradient id="paint0_linear_empty_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                        <stop stop-color="#D2FF37"/>
-                                        <stop offset="1" stop-color="#EEFF00"/>
-                                    </linearGradient>
-                                    <clipPath id="clip0_empty_logo">
-                                        <rect width="355" height="355" rx="58" fill="white"/>
-                                    </clipPath>
-                                </defs>
-                            </svg>
+                        <div class="token-exporter-logo large">
+                             <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
                         </div>
                     </div>
                     <div>
                         <div class="text-heading-lg empty-state-title">Let's build something!</div>
-                        <div class="text-body-md empty-state-subtitle">
-                            Start by creating Figma variables for your design tokens.
-                        </div>
-                        <div class="empty-state-categories">
-                            <div class="empty-state-category">
-                                <i data-lucide="palette" class="category-icon-cyan"></i>
-                                <div class="text-caption">Colors</div>
-                            </div>
-                            <div class="empty-state-category">
-                                <i data-lucide="type" class="category-icon-purple"></i>
-                                <div class="text-caption">Text</div>
-                            </div>
-                            <div class="empty-state-category">
-                                <i data-lucide="hash" class="category-icon-orange"></i>
-                                <div class="text-caption">Numbers</div>
-                            </div>
-                            <div class="empty-state-category">
-                                <i data-lucide="toggle-right" class="category-icon-pink"></i>
-                                <div class="text-caption">States</div>
-                            </div>
-                        </div>
+                        <div class="text-body-md empty-state-subtitle">Start by creating Figma variables for your design tokens.</div>
                     </div>
-                    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" 
-                       class="btn primary btn-auto-width" 
-                       target="_blank" rel="noopener noreferrer">
+                    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn primary btn-inline" target="_blank" rel="noopener noreferrer">
                         Learn About Variables <i data-lucide="arrow-up-right"></i>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    
-</div>
 
-            <!-- Loading State -->
-            <div class="state-group">
-                <div class="example-wrapper">
-                    <div class="example-label">Loading State</div>
-                    <div class="example-container">
-                        <div class="card token-summary-skeleton">
-                            <div class="skeleton-item skeleton-heading"></div>
-                            <div class="skeleton-item skeleton-subheading"></div>
-                            <div class="skeleton-breakdown">
-                                <div class="skeleton-stat">
-                                    <div class="skeleton-item skeleton-icon"></div>
-                                    <div class="skeleton-item skeleton-text"></div>
-                                </div>
-                                <div class="skeleton-stat">
-                                    <div class="skeleton-item skeleton-icon"></div>
-                                    <div class="skeleton-item skeleton-text"></div>
-                                </div>
-                                <div class="skeleton-stat">
-                                    <div class="skeleton-item skeleton-icon"></div>
-                                    <div class="skeleton-item skeleton-text"></div>
-                                </div>
-                                <div class="skeleton-stat">
-                                    <div class="skeleton-item skeleton-icon"></div>
-                                    <div class="skeleton-item skeleton-text"></div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Loading State -->
+    <div id="loading-state" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="loader"></i> Loading State</h2>
+            <p class="component-description">A high-fidelity skeleton loader shown while the plugin is analyzing variable collections.</p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="card token-summary-skeleton">
+                    <div class="skeleton-heading"></div>
+                    <div class="skeleton-subheading"></div>
+                    <div class="skeleton-breakdown">
+                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
                     </div>
                 </div>
-                 
-            </div>
-            
-          
-                
-        
-
-                
-                <!-- Success State -->
-                <div class="example-wrapper">
-                    <div class="example-label">Success State (Download Ready)</div>
-                    <div class="example-container">
-                        <div class="card token-summary" style="text-align: center; position: relative; padding: var(--size-8) var(--size-6);">
-                            <!-- Close button (circular, outline, secondary) -->
-                            <button class="btn-icon-only" style="position: absolute; top: var(--size-3); right: var(--size-3);">
-                                <i data-lucide="x-circle"></i>
-                            </button>
-                            
-                            <i data-lucide="check-circle-2" class="success-icon"></i>
-                            <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Export Complete!</div>
-                            <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-6);">247 tokens packaged successfully</div>
-                            <button class="btn primary"><i data-lucide="download"></i> Download design-tokens.zip</button>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
         </div>
     </div>
 
-  
+    <!-- Export Flow -->
+    <div id="export-flow" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="send"></i> Export Flow Animation</h2>
+            <p class="component-description">The interactive progress indicator shown during the token export process, providing real-time feedback.</p>
+        </div>
+        <div class="component-body">
+            <div class="example-container">
+                <div class="export-flow-grid">
+                    <div class="progress-container" style="margin: auto; background: var(--color-background-tertiary); padding: var(--size-4); border-radius: var(--radius-3);">
+                        <div class="liquid-progress">
+                            <div class="liquid-progress-inner">
+                                <div class="liquid-wave" id="modular-liquid-wave"></div>
+                            </div>
+                            <div id="modular-percentage-container" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); color: white; font-size: var(--font-size-4); font-weight: var(--font-weight-7);">
+                                <span id="modular-progress-number">0</span>%
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; gap: var(--size-2);">
+                        <div class="text-label" id="modular-stage-label">ANALYZING TOKENS</div>
+                        <p class="text-body-md" id="modular-stage-detail">Scanning your variable collections...</p>
+                        <button class="btn secondary btn-inline" id="modular-liquid-play-btn" onclick="toggleModularLiquidAnimation()">
+                            <i data-lucide="play"></i> Play Animation
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Success State -->
+    <div id="success-state" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="check-circle"></i> Success State</h2>
+            <p class="component-description">The confirmation modal shown after a successful export, allowing the user to download their files.</p>
+        </div>
+        <div class="component-body">
+            <div class="example-container" style="height: 300px; display: flex; align-items: center; justify-content: center;">
+                <div class="progress-container" style="animation: none; max-width: 320px;">
+                    <i data-lucide="check-circle-2" class="success-icon" style="width: 48px; height: 48px; animation: none;"></i>
+                    <h2 class="text-heading-md success-title">Export Complete!</h2>
+                    <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
+                    <div class="action-buttons">
+                        <button class="btn primary"><i data-lucide="download"></i> Download Your Files</button>
+                        <button class="btn secondary">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-
-</main>
-</div>
 
 
 <!-- Guide Footer Section -->
