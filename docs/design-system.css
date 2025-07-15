@@ -3688,7 +3688,7 @@ body {
 }
 
 .tokens-grid {
-    padding: var(--size-6) 0;
+    padding: var(--size-6);
     display: grid;
     gap: var(--size-4);
 }
@@ -3833,7 +3833,7 @@ body {
 
 /* Component Library Styles */
 .component-body {
-    padding: var(--size-6) 0;
+    padding: var(--size-6);
 }
 
 /* Progress overlay styles for guide examples */
@@ -3901,7 +3901,6 @@ body {
     border-radius: var(--radius-2);
     padding: var(--size-4);
     margin-bottom: var(--size-4);
-    margin: 0 var(--size-6);
     position: relative;
 }
 
