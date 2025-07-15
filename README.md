@@ -106,21 +106,21 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 
 ## 👨‍💻 Development Workflow
 
-This project uses a **CSS-first workflow**. All styles originate from a single source of truth (`design-system.css`) and are synchronized into the plugin UI.
+This project uses a **CSS-first workflow**. All styles originate from a single source of truth (`design-system.css`) and are automatically bundled and synchronized into the plugin UI.
 
 ### ⚠️ Important Constraints
 
-- **Figma CSP Restrictions**: External CSS links work in the guide but NOT in the plugin due to Content Security Policy
-- **File Size Limit**: The `design-system-guide.html` is ~50KB - use `update` commands only, never `rewrite`
-- **CSS Location**: The main CSS file is hosted on GitHub via jsDelivr CDN for the guide
+- **Figma CSP Restrictions**: The Figma plugin environment blocks external CSS `@import` rules for security. Our build script works around this by automatically bundling these files.
+- **File Size Limit**: The `design-system-guide.html` is ~50KB - use `update` commands only, never `rewrite`.
+- **CSS Location**: The main CSS file is hosted on GitHub and served via jsDelivr CDN for the live design system guide.
 
 <br>
 
 ### 🔧 Prerequisites
 
-1. Install [Node.js](https://nodejs.org/) (LTS version)
-2. Clone the repository
-3. Run `npm install` to install dependencies
+1.  Install [Node.js](https://nodejs.org/) (LTS version).
+2.  Install `curl` if it's not already on your system (it's pre-installed on macOS and most Linux distributions).
+3.  Clone the repository and run `npm install` to install dependencies.
 
 <br>
 
@@ -128,40 +128,26 @@ This project uses a **CSS-first workflow**. All styles originate from a single s
 
 | Step | Action | Purpose |
 | :--- | :--- | :--- |
-| **1. Edit** | **`design-system.css`** | Single source of truth for all styles |
-| **2. Preview** | **`docs/design-system-guide.html`** | Live preview via external CSS link (auto-updates) |
-| **3. Sync** | **`npm run sync`** | Injects CSS into plugin's UI file |
-| **4. Verify** | **`src/ui.html`** in Figma | Final testing in plugin environment |
+| **1. Edit** | **`design-system.css`** | Single source of truth for all your custom styles. |
+| **2. Preview** | **`docs/design-system-guide.html`** | Open this file in a browser for a live preview of your changes. |
+| **3. Sync** | **`npm run sync`** | Bundles all CSS and injects it into the plugin's UI file. |
+| **4. Verify** | **Reload the plugin** in Figma | Final testing in the actual plugin environment. |
 
-> **🛑 CRITICAL WARNING**  
-> NEVER edit `src/ui.html` directly! All changes will be overwritten by the sync script.
+> **🛑 CRITICAL WARNING**
+> NEVER edit `src/ui.html` directly! All changes will be overwritten every time you run the sync script.
 
 <br>
 
 ### 🔄 The Sync Process
 
-The `npm run sync` command runs `scripts/sync-css.sh`, which:
+The `npm run sync` command executes the `scripts/sync-css.sh` script, which now performs an automated bundling process:
 
-1. Reads the entire `design-system.css` file
-2. Finds the CSS injection markers in `ui.html`
-3. Replaces the content between markers with the updated CSS
-4. Creates a backup of the original file
+1.  **Fetches External CSS**: It uses `curl` to download the content of the Shoelace and Open Props stylesheets defined by the `@import` URLs in `design-system.css`.
+2.  **Reads Local CSS**: It reads your custom styles from `design-system.css`, ignoring the `@import` rules themselves.
+3.  **Bundles Everything**: It combines the fetched external styles and your local styles into a single, temporary CSS bundle.
+4.  **Injects into Template**: It creates the final `src/ui.html` by injecting this complete CSS bundle into the `src/ui.template.html` file.
 
-Example of what the script does:
-```bash
-#!/bin/bash
-# Simplified version of sync-css.sh
-CSS_FILE="./design-system.css"
-UI_FILE="./src/ui.html"
-
-# Read CSS content
-CSS_CONTENT=$(cat "$CSS_FILE")
-
-# Inject between markers in ui.html
-# <!-- CSS_INJECT_START -->
-# ... CSS content goes here ...
-# <!-- CSS_INJECT_END -->
-```
+This ensures the final `ui.html` is a self-contained file with no external dependencies, making it fully compliant with Figma's security policies.
 
 <br>
 
@@ -172,14 +158,15 @@ CSS_CONTENT=$(cat "$CSS_FILE")
 npm install
 
 # Daily workflow
-npm run sync      # Sync CSS to plugin after changes
-npm run dev       # Sync and watch for changes
-npm run clean     # Remove backup files
+npm run sync      # Sync CSS to plugin after making style changes
+npm run dev       # (If configured) Watch for changes and sync automatically
+npm run clean     # Remove backup files created by the script
 ```
 
 
-
 <br>
+
+
 
 ## 📁 Project Structure
 
