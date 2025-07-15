@@ -546,12 +546,30 @@
             <div class="empty-state-container">
                 <div class="empty-state">
                     <div class="empty-state-icon">
-                        <i data-lucide="package"></i>
+                        <div class="token-exporter-logo">
+                            <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_empty_logo)">
+                                    <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo)"/>
+                                    <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                    <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                                    <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                </g>
+                                <defs>
+                                    <linearGradient id="paint0_linear_empty_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#D2FF37"/>
+                                        <stop offset="1" stop-color="#EEFF00"/>
+                                    </linearGradient>
+                                    <clipPath id="clip0_empty_logo">
+                                        <rect width="355" height="355" rx="58" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
                     </div>
                     <div>
                         <div class="text-heading-lg empty-state-title">Let's build something!</div>
                         <div class="text-body-md empty-state-subtitle">
-                            Turn your colors, text styles, and spacing into code-ready tokens.
+                            Start by creating Figma variables for your design tokens.
                         </div>
                         <div class="empty-state-categories">
                             <div class="empty-state-category">
@@ -560,17 +578,23 @@
                             </div>
                             <div class="empty-state-category">
                                 <i data-lucide="type" class="category-icon-purple"></i>
-                                <div class="text-caption">Typography</div>
+                                <div class="text-caption">Text</div>
                             </div>
                             <div class="empty-state-category">
-                                <i data-lucide="move-horizontal" class="category-icon-orange"></i>
-                                <div class="text-caption">Spacing</div>
+                                <i data-lucide="hash" class="category-icon-orange"></i>
+                                <div class="text-caption">Numbers</div>
+                            </div>
+                            <div class="empty-state-category">
+                                <i data-lucide="toggle-right" class="category-icon-pink"></i>
+                                <div class="text-caption">States</div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn primary btn-auto-width">
-                        Create variables <i data-lucide="arrow-right"></i>
-                    </button>
+                    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" 
+                       class="btn primary btn-auto-width" 
+                       target="_blank" rel="noopener noreferrer">
+                        Learn About Variables <i data-lucide="arrow-up-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -612,81 +636,7 @@
             
           
                 
-                <div class="state-group">
-                <div class="state-group-header">
-                    <h3 class="state-group-title">Export Flow States</h3>
-                    <p style="color: var(--color-text-secondary); margin: 0;">
-                        The export process follows a 4-stage animation sequence
-                    </p>
-                </div>
-                
-                <div class="example-wrapper">
-                    <div class="example-label">Processing State (Export Progress)</div>
-                    <div class="example-container">
-                        <div class="card token-summary" style="position: relative; overflow: hidden; min-height: 300px;">
-                            <div class="liquid-progress-overlay" id="modular-liquid-demo" style="position: absolute; inset: 0; background: rgba(30, 30, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--size-6); z-index: var(--layer-card);">
-                                <div class="liquid-progress" style="--progress-size: 120px; position: relative; width: var(--progress-size); height: var(--progress-size); border-radius: 50%; background: #2a2a2a; border: var(--border-size-3) solid #333; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(210, 255, 55, 0.15); overflow: hidden; margin-bottom: var(--size-4);">
-                                    <div class="liquid-progress-inner" style="position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border-radius: 50%; background: #1a1a1a; overflow: hidden;">
-                                        <div class="liquid-wave" id="modular-liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 4s linear infinite; opacity: 0.9; transition: top 0.5s ease;"></div>
-                                        <div class="liquid-wave" style="position: absolute; top: 75%; left: -50%; width: 200%; height: 200%; background: var(--brand-gradient-lime); border-radius: 45%; animation: wave-animation 6s linear infinite reverse; opacity: 0.5; transition: top 0.5s ease;"></div>
-                                    </div>
-                                    <div id="modular-percentage-container" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; align-items: baseline; transition: bottom 0.5s ease;">
-                                        <span id="modular-progress-number" style="font-size: 24px; font-weight: 600; color: var(--brand-text-dark); text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);">25</span>
-                                        <span style="font-size: 14px; font-weight: 400; color: var(--brand-text-dark); margin-left: 2px; text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);">%</span>
-                                    </div>
-                                </div>
-                                
-                                <div style="text-align: center;">
-                                    <div class="text-label" id="modular-stage-label" style="color: var(--brand-primary-lime); margin-bottom: var(--size-2); text-transform: uppercase; letter-spacing: 0.1em;">ANALYZING TOKENS</div>
-                                    <div class="text-body-md" id="modular-stage-detail" style="color: var(--color-text-secondary);">Scanning your variable collections...</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: var(--size-4);">
-                        <button class="btn secondary" id="modular-liquid-play-btn" style="width: auto; padding: var(--size-2) var(--size-4);" onclick="toggleModularLiquidAnimation()">
-                            <i data-lucide="play"></i> Play Animation
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="state-documentation mb-4">
-                <div class="state-documentation-title">4 Stage Process:</div>
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                    <div class="bg-gray-8 p-2 rounded-1">
-                        <strong class="text-brand-primary-lime">Stage 1 (25%):</strong> Analyzing - Scanning collections
-                    </div>
-                    <div class="bg-gray-8 p-2 rounded-1">
-                        <strong class="text-brand-primary-lime">Stage 2 (50%):</strong> Packaging - Creating files
-                    </div>
-                    <div class="bg-gray-8 p-2 rounded-1">
-                        <strong class="text-brand-primary-lime">Stage 3 (75%):</strong> Sanitizing - Validating output
-                    </div>
-                    <div class="bg-gray-8 p-2 rounded-1">
-                        <strong class="text-brand-primary-lime">Stage 4 (100%):</strong> Finalizing - Ready to download
-                    </div>
-                </div>
-            </div>
-
-                
-                <div class="example-wrapper">
-                    <div class="example-label">Success State (Download Ready)</div>
-                    <div class="example-container">
-                        <div class="card token-summary" style="text-align: center; position: relative; padding: var(--size-8) var(--size-6);">
-                            <button class="btn-icon-only" style="position: absolute; top: var(--size-3); right: var(--size-3);">
-                                <i data-lucide="x-circle"></i>
-                            </button>
-                            
-                            <i data-lucide="check-circle-2" class="success-icon"></i>
-                            <div class="text-heading-lg" style="margin-bottom: var(--size-2);">Export Complete!</div>
-                            <div class="text-body-md" style="color: var(--color-text-secondary); margin-bottom: var(--size-6);">247 tokens packaged successfully</div>
-                            <button class="btn primary"><i data-lucide="download"></i> Download design-tokens.zip</button>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+        
 
                 
                 <!-- Success State -->
