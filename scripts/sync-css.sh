@@ -1,5 +1,5 @@
 #!/bin/bash
-# scripts/sync-css.sh (v4.2 - Final Build Fix)
+# scripts/sync-css.sh (v4.3 - Final with -L flag)
 
 echo "🔄 Building ui.html from template..."
 
@@ -32,6 +32,7 @@ URL_OPENPROPS_BUTTONS="https://unpkg.com/open-props/buttons.min.css"
 > "$TEMP_BUNDLE_FILE"
 
 # Fetch external CSS content and append to the temporary file.
+# The -L flag is CRITICAL to follow redirects from unpkg.com
 echo "   - Fetching Shoelace..."
 curl -sL "$URL_SHOEALACE" >> "$TEMP_BUNDLE_FILE"
 echo "   - Fetching Open Props (Style)..."
@@ -73,7 +74,7 @@ cat "$TEMP_BUNDLE_FILE" >> "$OUTPUT_FILE"
 echo "    </style>" >> "$OUTPUT_FILE"
 echo "</head>" >> "$OUTPUT_FILE"
 
-# 4. **THE FIX:** Directly append the entire template file, which contains the <body>
+# 4. Directly append the entire template file, which contains the <body>
 cat "$TEMPLATE_FILE" >> "$OUTPUT_FILE"
 
 # 5. Append the final closing </html> tag
