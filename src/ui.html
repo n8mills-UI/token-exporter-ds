@@ -11,7 +11,7 @@
     
     <!-- Injected CSS -->
     <style>
-    /* === SYNCED & BUNDLED | Tue Jul 15 23:07:29 AEST 2025 === */
+    /* === SYNCED & BUNDLED | Wed Jul 16 08:21:51 AEST 2025 === */
 :host,
 .sl-theme-dark {
   color-scheme: dark;
@@ -1577,6 +1577,18 @@ sl-icon-button::part(base):hover {
     overflow: hidden;
 }
 
+/* ADDED: New rule to fix text contrast */
+#modular-percentage-container {
+    color: var(--brand-text-dark);
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-7);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom var(--animation-duration-3) var(--ease-3);
+    bottom: 15px; /* Default position */
+}
+
 .liquid-progress-inner {
     position: absolute;
     inset: 6px;
@@ -2455,12 +2467,13 @@ main {
     margin-bottom: var(--size-4);
 }
 
-.token-breakdown { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
-    gap: var(--size-2); 
+.token-breakdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* CHANGED: Enforces 4 columns */
+    gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
+    flex-wrap: nowrap; /* ADDED: Prevents wrapping */
 }
 
 @media (width <= 600px) {
@@ -2478,7 +2491,7 @@ main {
 }
 
 .token-type-stat {
-    text-align: center; 
+    text-align: center;
     transition: background var(--animation-duration-2) var(--ease-3),
                 border-color var(--animation-duration-2) var(--ease-3);
     cursor: default;
@@ -2487,10 +2500,15 @@ main {
     background: var(--surface-2);
     border: var(--border-size-1) solid transparent;
     min-height: 60px;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+}
+
+/* ADDED: New rule to fix text color inconsistency */
+.token-type-stat .label {
+    color: var(--color-text-muted);
 }
 
 .token-type-stat .icon { 
