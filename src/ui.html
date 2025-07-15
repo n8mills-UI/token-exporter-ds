@@ -11,7 +11,7 @@
     
     <!-- Injected CSS -->
     <style>
-    /* === SYNCED & BUNDLED | Tue Jul 15 21:06:23 AEST 2025 === */
+    /* === SYNCED & BUNDLED | Tue Jul 15 23:07:29 AEST 2025 === */
 :host,
 .sl-theme-dark {
   color-scheme: dark;
@@ -2256,31 +2256,6 @@ sl-icon-button::part(base):hover {
     cursor: help;
 }
 
-/* Loading Performance */
-.skeleton-shimmer-fast {
-    background: var(--gray-8);
-    position: relative;
-    overflow: hidden;
-}
-
-.skeleton-shimmer-fast::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgb(210, 255, 55, 0.08) 50%,
-        transparent 100%
-    );
-    animation: shimmer-fast 0.8s infinite;
-}
-
-@keyframes shimmer-fast {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
 /* Critical CSS Marker */
 
 /* Above this line: Critical rendering path CSS */
@@ -2920,56 +2895,6 @@ main {
     background: rgb(210, 255, 55, 0.1);
     border-color: var(--brand-primary-lime);
     transform: translateY(-1px);
-}
-
-/* Skeleton Loading */
-.skeleton-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-3);
-    padding: var(--size-3);
-}
-
-.skeleton-item {
-    height: 60px;
-    background: var(--gray-8);
-    border-radius: var(--radius-3);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Original shimmer skeleton (for backward compatibility) */
-.skeleton-shimmer {
-    background: var(--gray-8);
-    position: relative;
-    overflow: hidden;
-}
-
-.skeleton-shimmer::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgb(255, 255, 255, 0.1) 50%,
-        transparent 100%
-    );
-    animation: shimmerOverlay 1.5s infinite;
-}
-
-.skeleton-item.small { 
-    height: 40px; 
-}
-
-.skeleton-item:first-child {
-    height: 180px;
-}
-
-/* The chosen 'breathe' animation */
-.skeleton-breathe {
-    background: var(--gray-7);
-    animation: skeleton-breathe 2.5s ease-in-out infinite;
 }
 
 @keyframes skeleton-breathe {
