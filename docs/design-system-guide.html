@@ -737,76 +737,6 @@
         initFAQAccordion();
         initTechHover();
     });
-
-// Animation control for export flow demo
-let animationInterval;
-let currentProgress = 0;
-
-function toggleModularLiquidAnimation() {
-    const btn = document.getElementById('modular-liquid-play-btn');
-    const wave = document.getElementById('modular-liquid-wave');
-    const progressNum = document.getElementById('modular-progress-number');
-    const stageLabel = document.getElementById('modular-stage-label');
-    const stageDetail = document.getElementById('modular-stage-detail');
-    const percentContainer = document.getElementById('modular-percentage-container');
-    
-    if (animationInterval) {
-        // Stop animation
-        clearInterval(animationInterval);
-        animationInterval = null;
-        btn.innerHTML = '<i data-lucide="play"></i> Play Animation';
-        currentProgress = 0;
-        updateProgress(0);
-        lucide.createIcons();
-        return;
-    }
-    
-    // Start animation
-    btn.innerHTML = '<i data-lucide="pause"></i> Pause Animation';
-    lucide.createIcons();
-    
-    animationInterval = setInterval(() => {
-        currentProgress += 2;
-        
-        if (currentProgress > 100) {
-            currentProgress = 0;
-        }
-        
-        updateProgress(currentProgress);
-    }, 100);
-    
-    
-    function updateProgress(progress) {
-        // Update water level (inverse - 75% = empty, 10% = full)
-        const waterLevel = 75 - (progress * 0.65);
-        wave.style.top = waterLevel + '%';
-        
-        // Update percentage
-        progressNum.textContent = progress;
-        
-        // Update percentage container position
-        if (progress > 50) {
-            percentContainer.style.bottom = '40px';
-        } else {
-            percentContainer.style.bottom = '5px';
-        }
-        
-        // Update stage labels
-        if (progress <= 25) {
-            stageLabel.textContent = 'ANALYZING';
-            stageDetail.textContent = 'Your variable collections...';
-        } else if (progress <= 50) {
-            stageLabel.textContent = 'PACKAGING';
-            stageDetail.textContent = 'Creating export packages...';
-        } else if (progress <= 75) {
-            stageLabel.textContent = 'SANITIZING';
-            stageDetail.textContent = 'Validating syntax...';
-        } else {
-            stageLabel.textContent = 'FINALIZING';
-            stageDetail.textContent = 'Preparing download...';
-        }
-    }
-}
     
     // --- Initialize Lucide Icons ---
     window.addEventListener('load', () => {
@@ -895,6 +825,77 @@ function toggleModularLiquidAnimation() {
             techGrid.addEventListener('mouseleave', showDefaultInfo);
         }
     }
+
+// Animation control for export flow demo
+let animationInterval;
+let currentProgress = 0;
+
+function toggleModularLiquidAnimation() {
+    const btn = document.getElementById('modular-liquid-play-btn');
+    const wave = document.getElementById('modular-liquid-wave');
+    const progressNum = document.getElementById('modular-progress-number');
+    const stageLabel = document.getElementById('modular-stage-label');
+    const stageDetail = document.getElementById('modular-stage-detail');
+    const percentContainer = document.getElementById('modular-percentage-container');
+    
+    if (!wave || !progressNum) return; // Safety check
+    
+    if (animationInterval) {
+        // Stop animation
+        clearInterval(animationInterval);
+        animationInterval = null;
+        btn.innerHTML = '<i data-lucide="play"></i> Play Animation';
+        currentProgress = 0;
+        updateProgress(0);
+        lucide.createIcons();
+        return;
+    }
+    
+    // Start animation
+    btn.innerHTML = '<i data-lucide="pause"></i> Pause Animation';
+    lucide.createIcons();
+    
+    animationInterval = setInterval(() => {
+        currentProgress += 2;
+        
+        if (currentProgress > 100) {
+            currentProgress = 0;
+        }
+        
+        updateProgress(currentProgress);
+    }, 100);
+    
+    function updateProgress(progress) {
+        // Update water level (inverse - 75% = empty, 10% = full)
+        const waterLevel = 75 - (progress * 0.65);
+        wave.style.top = waterLevel + '%';
+        
+        // Update percentage
+        progressNum.textContent = progress;
+        
+        // Update percentage container position
+        if (progress > 50) {
+            percentContainer.style.bottom = '50px';
+        } else {
+            percentContainer.style.bottom = '15px';
+        }
+        
+        // Update stage labels
+        if (progress <= 25) {
+            stageLabel.textContent = 'ANALYZING';
+            stageDetail.textContent = 'Variable collections...';
+        } else if (progress <= 50) {
+            stageLabel.textContent = 'PACKAGING';
+            stageDetail.textContent = 'Creating package...';
+        } else if (progress <= 75) {
+            stageLabel.textContent = 'SANITIZING';
+            stageDetail.textContent = 'Validating syntax...';
+        } else {
+            stageLabel.textContent = 'FINALIZING';
+            stageDetail.textContent = 'Preparing download...';
+        }
+    }
+}
 
     function initializeNavigation() {
         const navLinks = document.querySelectorAll('.nav-link');
