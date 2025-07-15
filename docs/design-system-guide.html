@@ -95,22 +95,11 @@
     <div class="nav-section">
         <h3 class="nav-section-title">Components</h3>
         <ul class="nav-links">
-            <li><a href="#token-summary" class="nav-link"><i data-lucide="pie-chart"></i> Token Summary</a></li>
+            <li><a href="#token-card" class="nav-link"><i data-lucide="pie-chart"></i> Token Card</a></li>
             <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons & Controls</a></li>
             <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms & Inputs</a></li>
             <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
             <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
-        </ul>
-    </div>
-    
-    <!-- New card States section -->
-    <div class="nav-section">
-        <h3 class="nav-section-title">Card States</h3>
-        <ul class="nav-links">
-            <li><a href="#empty-state" class="nav-link"><i data-lucide="package"></i> Empty State</a></li>
-            <li><a href="#loading-state" class="nav-link"><i data-lucide="loader"></i> Loading State</a></li>
-            <li><a href="#export-flow" class="nav-link"><i data-lucide="send"></i> Export Flow</a></li>
-            <li><a href="#success-state" class="nav-link"><i data-lucide="check-circle"></i> Success State</a></li>
         </ul>
     </div>
 </div>
@@ -383,107 +372,216 @@
 <section id="components" class="content-section">
     <div class="section-header">
         <h2 class="text-heading-xl main-section-title"><i data-lucide="component"></i> Component Library</h2>
-        <p class="section-description">The building blocks of the interface. A collection of reusable components built with design tokens.
-
-</p>
+        <p class="section-description">The building blocks of the interface. A collection of reusable components built with design tokens.</p>
     </div>
 
-    <div id="token-summary" class="component-section">
+    <!-- Consolidated Token Card Section -->
+    <div id="token-card" class="component-section">
         <div class="component-header">
             <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Card</h2>
-            <p class="component-description">The central dashboard component that displays the total count of design tokens and breaks them down by type. In advanced mode, token types become clickable for filtering.</p>
-            
+            <p class="component-description">The central dashboard component that displays the total count of design tokens. The card transforms to show different states like loading, success, or an empty state if no tokens are found.</p>
         </div>
         <div class="component-body">
+            <!-- Default State -->
+            <h3 class="example-subheader">Default & Advanced States</h3>
+            <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="example-wrapper">
+                    <div class="example-label">Default</div>
+                    <div class="example-container">
+                        <div class="card token-summary">
+                            <div class="text-heading-xl token-count-total">247</div>
+                            <div class="text-label token-label">Design Tokens Ready to Export</div>
+                            <div class="token-breakdown">
+                                <div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div>
+                                <div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div>
+                                <div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div>
+                                <div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+                    <div class="example-label">Advanced Mode</div>
+                     <div class="example-container">
+                        <div class="card token-summary advanced-mode">
+                            <div class="text-heading-xl token-count-total">131</div>
+                            <div class="text-label token-label">Design Tokens Selected</div>
+                            <div class="token-breakdown">
+                                <div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div>
+                                <div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div>
+                                <div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div>
+                                <div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading & Exporting States -->
+            <h3 class="example-subheader">Loading & Exporting States</h3>
+            <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+                 <div class="example-wrapper">
+                    <div class="example-label">Loading</div>
+                    <div class="example-container">
+                        <div class="card token-summary-skeleton">
+                            <div class="skeleton-heading"></div>
+                            <div class="skeleton-subheading"></div>
+                            <div class="skeleton-breakdown">
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+    <div class="example-label">Exporting</div>
+    <div class="example-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--size-4); min-height: 278px;">
+        
+        <!-- Vertically Centered Content -->
+        <div class="liquid-progress">
+            <div class="liquid-progress-inner">
+                <div class="liquid-wave" id="modular-liquid-wave"></div>
+            </div>
+            <div id="modular-percentage-container">
+                <span id="modular-progress-number">0</span>%
+            </div>
+        </div>
+
+        <div>
+            <div class="text-label" id="modular-stage-label">ANALYZING TOKENS</div>
+            <p class="text-body-md" id="modular-stage-detail" style="color: var(--color-text-muted);">Scanning collections...</p>
+        </div>
+
+        <button class="btn secondary btn-inline" id="modular-liquid-play-btn" onclick="toggleModularLiquidAnimation()">
+            <i data-lucide="play"></i>
+            <span>Play Animation</span>
+        </button>
+
+    </div>
+</div>
+
+            </div>
             
-            <div class="example-label">Default (All Active)</div>
-            <div class="example-container">
-            <div class="card token-summary"><div class="text-heading-xl token-count-total">247</div><div class="text-label token-label">Design Tokens Ready to Export</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number active"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states"><i class="icon" data-lucide="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div></div></div></div>
-            
-            <div class="example-label">Advanced Mode (Selective)</div>
-            <div class="example-container">
-            <div class="card token-summary advanced-mode"><div class="text-heading-xl token-count-total">131</div><div class="text-label token-label">Design Tokens Selected</div><div class="token-breakdown"><div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div><div class="token-type-stat text active"><i class="icon" data-lucide="type"></i><div class="count">42</div><div class="text-label label">text</div></div><div class="token-type-stat number"><i class="icon" data-lucide="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div><div class="token-type-stat states disabled"><i class="icon" data-lucide="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div></div></div></div>
+            <!-- Success & Empty States -->
+            <h3 class="example-subheader">Success & Empty States</h3>
+             <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="example-wrapper">
+                    <div class="example-label">Success</div>
+                    <div class="example-container" style="display: flex; align-items: center; justify-content: center;">
+                        <div class="progress-container" style="animation: none; max-width: 320px;">
+                            <i data-lucide="check-circle-2" class="success-icon" style="width: 48px; height: 48px; animation: none;"></i>
+                            <h2 class="text-heading-md success-title">Export Complete!</h2>
+                            <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
+                            <div class="action-buttons">
+                                <button class="btn primary"><i data-lucide="download"></i> Download Files</button>
+                                <button class="btn secondary">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+                    <div class="example-label">Empty State</div>
+                    <div class="example-container">
+                        <div class="empty-state" style="min-height: 100%; justify-content: space-around;">
+                            <div class="empty-state-icon">
+                                <div class="token-exporter-logo large">
+                                     <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo_refactor)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo_refactor)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo_refactor" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo_refactor"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-heading-lg empty-state-title">Let's build something!</div>
+                                <div class="text-body-md empty-state-subtitle">Start by creating Figma variables.</div>
+                            </div>
+                            <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn primary btn-inline" target="_blank" rel="noopener noreferrer">
+                                Learn How <i data-lucide="arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div id="buttons" class="component-section">
-    <div class="component-header">
-        <h2 class="text-heading-lg component-title"><i data-lucide="mouse-pointer-2"></i> Buttons</h2>
-        <p class="component-description">A unified system for all actions. Buttons default to full-width for consistency within containers, with an inline variant for content-hugging behavior.</p>
-    </div>
-    <div class="component-body">
-        <!-- Group 1: Standard Variants -->
-        <h3 class="example-subheader">Standard Variants</h3>
-        <div class="variants-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-            <div class="example-wrapper">
-                <div class="example-label">Primary</div>
-                <div class="example-container">
-                    <button class="btn primary"><i data-lucide="rocket"></i> Primary Action</button>
-                </div>
-            </div>
-            <div class="example-wrapper">
-                <div class="example-label">Secondary</div>
-                <div class="example-container">
-                    <button class="btn secondary"><i data-lucide="arrow-left"></i> Secondary Action</button>
-                </div>
-            </div>
-            <div class="example-wrapper">
-                <div class="example-label">Tertiary (Text)</div>
-                <div class="example-container">
-                    <button class="btn tertiary">Tertiary Action <i data-lucide="arrow-right"></i></button>
-                </div>
-            </div>
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="mouse-pointer-2"></i> Buttons</h2>
+            <p class="component-description">A unified system for all actions. Buttons default to full-width for consistency within containers, with an inline variant for content-hugging behavior.</p>
         </div>
+        <div class="component-body">
+            <!-- Group 1: Standard Variants -->
+            <h3 class="example-subheader">Standard Variants</h3>
+            <div class="variants-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+                <div class="example-wrapper">
+                    <div class="example-label">Primary</div>
+                    <div class="example-container">
+                        <button class="btn primary"><i data-lucide="rocket"></i> Primary Action</button>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+                    <div class="example-label">Secondary</div>
+                    <div class="example-container">
+                        <button class="btn secondary"><i data-lucide="arrow-left"></i> Secondary Action</button>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+                    <div class="example-label">Tertiary (Text)</div>
+                    <div class="example-container">
+                        <button class="btn tertiary">Tertiary Action <i data-lucide="arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Group 2: Inline & Icon Buttons -->
-        <h3 class="example-subheader">Inline & Icon Buttons</h3>
-        <div class="variants-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-            <div class="example-wrapper">
-                <div class="example-label">Inline Button</div>
-                <div class="example-container">
-                    <button class="btn secondary btn-inline"><i data-lucide="arrow-left"></i> Back</button>
+            <!-- Group 2: Inline & Icon Buttons -->
+            <h3 class="example-subheader">Inline & Icon Buttons</h3>
+            <div class="variants-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="example-wrapper">
+                    <div class="example-label">Inline Button</div>
+                    <div class="example-container">
+                        <button class="btn secondary btn-inline"><i data-lucide="arrow-left"></i> Back</button>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+                    <div class="example-label">Icon-Only Button</div>
+                    <div class="example-container">
+                        <button class="btn-icon-only"><i data-lucide="download"></i></button>
+                    </div>
+                </div>
+                <div class="example-wrapper">
+                    <div class="example-label">Social Icons</div>
+                    <div class="example-container" style="display: flex; gap: var(--size-2); justify-content: center;">
+                        <button class="btn-icon-only" title="GitHub"><i data-lucide="github"></i></button>
+                        <button class="btn-icon-only" title="LinkedIn"><i data-lucide="linkedin"></i></button>
+                        <button class="btn-icon-only" title="Mail"><i data-lucide="mail"></i></button>
+                    </div>
                 </div>
             </div>
-            <div class="example-wrapper">
-                <div class="example-label">Icon-Only Button</div>
-                <div class="example-container">
-                    <button class="btn-icon-only"><i data-lucide="download"></i></button>
-                </div>
-            </div>
-            <div class="example-wrapper">
-                <div class="example-label">Social Icons</div>
-                <div class="example-container" style="display: flex; gap: var(--size-2); justify-content: center;">
-                    <button class="btn-icon-only" title="GitHub"><i data-lucide="github"></i></button>
-                    <button class="btn-icon-only" title="LinkedIn"><i data-lucide="linkedin"></i></button>
-                    <button class="btn-icon-only" title="Mail"><i data-lucide="mail"></i></button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Group 3: States -->
-        <h3 class="example-subheader">Interactive States</h3>
-        <div class="variants-grid">
-            <div class="example-wrapper">
-                <div class="example-label">Hover State</div>
-                <div class="example-container">
-                    <button class="btn primary" id="hover-example">Hover over me</button>
+            <!-- Group 3: States -->
+            <h3 class="example-subheader">Interactive States</h3>
+            <div class="variants-grid">
+                <div class="example-wrapper">
+                    <div class="example-label">Hover State</div>
+                    <div class="example-container">
+                        <button class="btn primary" id="hover-example">Hover over me</button>
+                    </div>
                 </div>
-            </div>
-            <div class="example-wrapper">
-                <div class="example-label">Focus State</div>
-                <div class="example-container">
-                    <button class="btn secondary">Click to Focus</button>
+                <div class="example-wrapper">
+                    <div class="example-label">Focus State</div>
+                    <div class="example-container">
+                        <button class="btn secondary">Click to Focus</button>
+                    </div>
                 </div>
-            </div>
-            <div class="example-wrapper">
-                <div class="example-label">Disabled State</div>
-                <div class="example-container">
-                    <button class="btn primary" disabled>Disabled Action</button>
+                <div class="example-wrapper">
+                    <div class="example-label">Disabled State</div>
+                    <div class="example-container">
+                        <button class="btn primary" disabled>Disabled Action</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <div id="forms" class="component-section">
@@ -523,124 +621,6 @@
                             <h2 class="text-heading-md">NATE MILLS</h2>
                             <p class="text-body-md">Building accessible design systems that scale.</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   </div>
-    </div>
-</section>
-
-<!-- ==========================================================================
-   CARD STATES SECTION
-   ========================================================================== -->
-<section id="card-states" class="content-section">
-    <div class="section-header">
-        <h2 class="text-heading-xl main-section-title">
-            <i data-lucide="layout-grid"></i>
-            Card States
-        </h2>
-        <p class="section-description">
-            The card interface transforms through different states based on user data and actions. All transitions happen in-place for a seamless experience.
-        </p>
-    </div>
-
-    <!-- Empty State -->
-    <div id="empty-state" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title"><i data-lucide="package"></i> Empty State</h2>
-            <p class="component-description">Shown when the user has no variable collections in their Figma file.</p>
-        </div>
-        <div class="component-body">
-            <div class="example-container">
-                <div class="empty-state" style="min-height: 400px; justify-content: space-around;">
-                    <div class="empty-state-icon">
-                        <div class="token-exporter-logo large">
-                             <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="text-heading-lg empty-state-title">Let's build something!</div>
-                        <div class="text-body-md empty-state-subtitle">Start by creating Figma variables for your design tokens.</div>
-                    </div>
-                    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn primary btn-inline" target="_blank" rel="noopener noreferrer">
-                        Learn About Variables <i data-lucide="arrow-up-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Loading State -->
-    <div id="loading-state" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title"><i data-lucide="loader"></i> Loading State</h2>
-            <p class="component-description">A high-fidelity skeleton loader shown while the plugin is analyzing variable collections.</p>
-        </div>
-        <div class="component-body">
-            <div class="example-container">
-                <div class="card token-summary-skeleton">
-                    <div class="skeleton-heading"></div>
-                    <div class="skeleton-subheading"></div>
-                    <div class="skeleton-breakdown">
-                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                        <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Export Flow -->
-    <div id="export-flow" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title"><i data-lucide="send"></i> Export Flow Animation</h2>
-            <p class="component-description">The interactive progress indicator shown during the token export process, providing real-time feedback.</p>
-        </div>
-        <div class="component-body">
-            <div class="example-container">
-                <div class="export-flow-grid">
-                    <div class="progress-container" style="margin: auto; background: var(--color-background-tertiary); padding: var(--size-4); border-radius: var(--radius-3);">
-                        <div class="liquid-progress">
-                            <div class="liquid-progress-inner">
-                                <div class="liquid-wave" id="modular-liquid-wave"></div>
-                            </div>
-                            <div id="modular-percentage-container" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); color: white; font-size: var(--font-size-4); font-weight: var(--font-weight-7);">
-                                <span id="modular-progress-number">0</span>%
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; justify-content: center; gap: var(--size-2);">
-                        <div class="text-label" id="modular-stage-label">ANALYZING TOKENS</div>
-                        <p class="text-body-md" id="modular-stage-detail">Scanning your variable collections...</p>
-                        <button class="btn secondary btn-inline" id="modular-liquid-play-btn" onclick="toggleModularLiquidAnimation()">
-                            <i data-lucide="play"></i> Play Animation
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success State -->
-    <div id="success-state" class="component-section">
-        <div class="component-header">
-            <h2 class="text-heading-lg component-title"><i data-lucide="check-circle"></i> Success State</h2>
-            <p class="component-description">The confirmation modal shown after a successful export, allowing the user to download their files.</p>
-        </div>
-        <div class="component-body">
-            <div class="example-container" style="height: 300px; display: flex; align-items: center; justify-content: center;">
-                <div class="progress-container" style="animation: none; max-width: 320px;">
-                    <i data-lucide="check-circle-2" class="success-icon" style="width: 48px; height: 48px; animation: none;"></i>
-                    <h2 class="text-heading-md success-title">Export Complete!</h2>
-                    <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
-                    <div class="action-buttons">
-                        <button class="btn primary"><i data-lucide="download"></i> Download Your Files</button>
-                        <button class="btn secondary">Close</button>
                     </div>
                 </div>
             </div>
