@@ -1,5 +1,5 @@
 #!/bin/bash
-# scripts/sync-css.sh (v4.0 - With automated bundling)
+# scripts/sync-css.sh (v4.1 - With corrected URLs)
 
 echo "🔄 Building ui.html from template..."
 
@@ -22,17 +22,16 @@ fi
 # --- Automated Bundling ---
 echo "📦 Bundling CSS from external imports..."
 
-# URLs from @import rules in design-system.css
+# CORRECTED URLs that point to the raw CSS files
 URL_SHOEALACE="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css"
-URL_OPENPROPS_STYLE="https://unpkg.com/open-props/style"
-URL_OPENPROPS_NORMALIZE="https://unpkg.com/open-props/normalize"
-URL_OPENPROPS_BUTTONS="https://unpkg.com/open-props/buttons"
+URL_OPENPROPS_STYLE="https://unpkg.com/open-props/open-props.min.css"
+URL_OPENPROPS_NORMALIZE="https://unpkg.com/open-props/normalize.min.css"
+URL_OPENPROPS_BUTTONS="https://unpkg.com/open-props/buttons.min.css"
 
 # Clear or create the temporary bundle file
 > "$TEMP_BUNDLE_FILE"
 
 # Fetch external CSS content and append to the temporary file.
-# The '-s' flag makes curl silent.
 echo "   - Fetching Shoelace..."
 curl -s "$URL_SHOEALACE" >> "$TEMP_BUNDLE_FILE"
 echo "   - Fetching Open Props (Style)..."
@@ -76,8 +75,12 @@ cat >> "$OUTPUT_FILE" << EOL
 </head>
 EOL
 
-cat "$TEMPLATE_FILE" >> "$OUTPUT_FILE"
+# This is a corrected build step. It was missing the body content before.
+# It now correctly appends the content from the template file.
+body_content=$(sed -n '/<body/,/<\/body>/p' "$TEMPLATE_FILE")
+echo "$body_content" >> "$OUTPUT_FILE"
 echo "</html>" >> "$OUTPUT_FILE"
+
 
 # --- Cleanup ---
 rm "$TEMP_BUNDLE_FILE"
