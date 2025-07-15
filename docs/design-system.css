@@ -493,6 +493,18 @@ body {
     box-shadow: var(--shadow-brand);
 }
 
+/* Make primary buttons fill their container by default (for plugin) */
+.btn.primary {
+    width: 100%;
+}
+
+/* Exception: Keep hero and footer buttons narrow */
+.figma-cta .btn,
+.footer-content > .btn,
+.hero-footer .btn {
+    width: auto; /* Makes these buttons hug their text */
+}
+
 .btn.primary:hover:not(:disabled) {
     filter: brightness(1.1);
     transform: translateY(-2px);
@@ -2574,6 +2586,7 @@ main {
     position: relative;
     padding: var(--size-8) var(--size-8);
     margin-top: var(--size-10);
+    margin-left: 280px;
 }
 
 /* Thin branded divider line */
@@ -2595,6 +2608,8 @@ main {
     align-items: flex-end; /* Bottom align everything */
     justify-content: space-between;
     gap: var(--size-8);
+    margin-left: var(--size-6); /* Reset to match mobile padding */
+    padding-right: var(--size-6); /* Match content padding */
 }
 
 /* Enhanced brand column */
@@ -2649,6 +2664,10 @@ main {
     .guide-sidebar { 
         transform: translateX(-100%);
         z-index: var(--layer-modal); /* Mobile menu z-index fix */
+    }
+
+    .guide-footer {
+        margin-left: 0; /* ADD THIS NEW RULE */
     }
     
     .footer-content {
