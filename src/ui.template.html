@@ -372,21 +372,19 @@
                 const successIcon = document.createElement('div');
                 successIcon.className = 'te-success-icon';
                 successIcon.innerHTML = '<i data-lucide="check-circle"></i>';
+                // FIX: This line was missing. It adds the icon to the page.
                 celebrationContainer.appendChild(successIcon);
             }
             
+            // FIX: This must be called *after* the icon is added to the DOM.
             renderIcons();
 
-         setTimeout(() => {
+            setTimeout(() => {
                 updateTokenSummary(); // Restore the card's original content
-                renderIcons(); // Re-render icons after updating HTML
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
             }, 2500);
-
-            DOMElements.progressOverlay.style.display = 'none'; // Hide the progress overlay
-            container.innerHTML = ''; // Clear the loader content
         }
         
         function showErrorState(message) {
