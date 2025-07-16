@@ -667,17 +667,21 @@
 <script>
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {
+        // Functions that DON'T depend on external scripts can run here
         initializeNavigation();
         initializeMobileMenu();
         initializeScrollHeader();
         animateCounters();
         initFAQAccordion();
         initTechHover();
-        initializeGuideLoader(); // ADDED: Loader init is now here
     });
     
-    // --- Initialize Lucide Icons ---
+    // --- Initialize Lucide Icons & Dependent Animations ---
     window.addEventListener('load', () => {
+      // FIX: Run the loader setup here to ensure Lucide is ready
+      initializeGuideLoader(); 
+      
+      // This will now correctly render ALL icons, including dynamic ones
       lucide.createIcons();
     });
 
