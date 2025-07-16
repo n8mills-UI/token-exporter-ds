@@ -1957,6 +1957,28 @@ main {
 }
 .content-wrapper::-webkit-scrollbar-thumb:hover { background-color: var(--gray-5); }
 
+/* ADDED: New rules for global scrollbar styling */
+/* For Webkit browsers like Chrome, Safari, Edge */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track invisible */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--gray-7); /* Subtle thumb color */
+    border-radius: 20px;
+    border: 3px solid var(--color-background-primary); /* Creates padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gray-6);
+}
+
+
 /* Card Component */
 .card {
     background: var(--color-background-secondary);
@@ -2437,32 +2459,26 @@ main {
     text-align: center;
     position: relative;
     z-index: var(--layer-card);
-    
-    /* Glass effect */
     background: rgba(42, 42, 42, 0.6);
     backdrop-filter: var(--blur-xl);
     -webkit-backdrop-filter: var(--blur-xl);
     
-    /* Fallback */
     @supports not (backdrop-filter: blur(1px)) {
         background: rgba(42, 42, 42, 0.95);
     }
     
-    /* Softer corners */
     border-radius: var(--radius-4);
-    
     border: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     
-    padding: var(--size-4);
+    padding: var(--size-3); /* Reduced padding */
     display: flex;
     flex-direction: column;
-    gap: var(--size-3);
+    gap: var(--size-2); /* Reduced gap */
     align-items: center;
-    min-width: 280px;
+    min-width: 240px; /* Reduced min-width */
     
+    transform: scale(0.9); /* ADDED: Scales the entire element down */
     transition: all var(--transition-fast);
     will-change: transform, opacity;
 }
@@ -2470,10 +2486,21 @@ main {
 .te-progress-percent {
     font-family: var(--font-mono);
     font-weight: var(--font-weight-7);
-    font-size: var(--font-size-5);
+    font-size: var(--font-size-4); /* CHANGED: Uses type scale */
     color: var(--color-text-default);
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ADDED: New rules for button refinement */
+.btn.btn-sm.btn-inline {
+    font-size: var(--font-size-0); /* Slightly larger text */
+}
+
+.btn.btn-sm.btn-inline .lucide {
+    width: var(--icon-xs); /* Smaller icon */
+    height: var(--icon-xs);
+    stroke-width: var(--stroke-thick); /* Thicker stroke for visibility */
 }
 
 .te-progress-track {
@@ -2708,11 +2735,10 @@ main {
 
 .skeleton-breakdown {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* CHANGED: Enforces 4 columns */
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
-    flex-wrap: nowrap; /* ADDED: Prevents wrapping */
 }
 
 .skeleton-stat {
