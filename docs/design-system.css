@@ -2043,6 +2043,8 @@ main {
     margin-bottom: var(--size-1);
     transition: transform var(--animation-duration-2) var(--ease-spring-3);
     display: block;
+    /* FIX: Increase icon size */
+    font-size: var(--font-size-2);
 }
 
 /* Media query for smaller card widths, typical for the plugin */
@@ -2724,7 +2726,8 @@ main {
 
 .skeleton-breakdown {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    /* FIX: Enforce 4 columns to match the real component */
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
