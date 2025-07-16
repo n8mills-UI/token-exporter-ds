@@ -420,11 +420,11 @@
             <!-- Loading & Exporting States -->
             <h3 class="example-subheader">Loading & Exporting States</h3>
 <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
-    <!-- Loading State Card -->
+    <!-- Card 1: Loading State -->
     <div class="example-wrapper">
         <div class="example-label">Loading</div>
-        <div class="example-container" style="min-height: 278px;">
-            <div class="card token-summary-skeleton">
+        <div class="example-container">
+            <div class="card token-summary-skeleton" style="min-height: 278px;">
                 <div class="skeleton-heading"></div>
                 <div class="skeleton-subheading"></div>
                 <div class="skeleton-breakdown">
@@ -436,7 +436,7 @@
             </div>
         </div>
     </div>
-    <!-- Progress Flow Card -->
+    <!-- Card 2: Progress Flow State -->
     <div class="example-wrapper">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div class="example-label">Progress Flow</div>
@@ -445,21 +445,24 @@
                 <span>Play Demo</span>
             </button>
         </div>
-        <div class="example-container" style="min-height: 278px; display: flex; align-items: center; justify-content: center;">
-            <div class="te-progress-loader" id="guideProgressLoader">
-                <div class="te-icon-grid" id="guideIconGrid"></div>
-                <div class="te-celebration" id="guideCelebration"></div>
-                <div class="te-glass-status" id="guideGlassStatus">
-                    <p class="te-progress-percent" id="guideProgressPercent">0%</p>
-                    <div class="te-progress-track">
-                        <div class="te-progress-fill" id="guideProgressFill"></div>
+        <div class="example-container">
+            <div class="card" style="min-height: 278px; padding: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                <div class="te-progress-loader" id="guideProgressLoader">
+                    <div class="te-icon-grid" id="guideIconGrid"></div>
+                    <div class="te-celebration" id="guideCelebration"></div>
+                    <div class="te-glass-status" id="guideGlassStatus">
+                        <p class="te-progress-percent" id="guideProgressPercent">0%</p>
+                        <div class="te-progress-track">
+                            <div class="te-progress-fill" id="guideProgressFill"></div>
+                        </div>
+                        <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
                     </div>
-                    <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
             </div>
             

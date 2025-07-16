@@ -1959,7 +1959,6 @@ main {
 
 /* ADDED: New rules for global scrollbar styling */
 /* For Webkit browsers like Chrome, Safari, Edge */
-
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -1977,6 +1976,7 @@ main {
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--gray-6);
 }
+
 
 
 /* Card Component */
@@ -4027,6 +4027,13 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--size-4);
     margin-bottom: var(--size-4);
+}
+
+/* ADDED: New rule for responsive stacking */
+@media (width <= 900px) {
+    .variants-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Pattern Section Styles */
