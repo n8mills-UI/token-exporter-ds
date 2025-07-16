@@ -283,7 +283,7 @@ Token Exporter Design System v4.0.7   |   Crafted with ❤️ by Nate Mills
 │  ╔╗╔╔═╗╔╦╗╔═╗       │ │  NAME: NATE MILLS               │
 │  ║║║╠═╣ ║ ╠╣        │ │  CLASS: DESIGN WIZARD           │
 │  ╝╚╝╩ ╩ ╩ ╚═╝       │ │  LEVEL: SENIOR+                 │
-│  ╔╦╗╦╦  ╦  ╔═╗      │ │  XP: ████████████ MAX           │
+│  ╔╦╗╦╦  ╦  ╔═╗      │ │  XP: █ █ █ █ █ █ █ MAX          │
 │  ║║║║║  ║  ╚═╗      │ │  SPECIAL: TOKEN EXPORTER        │
 │  ╩ ╩╩╩═╝╩═╝╚═╝      │ │  POWER: DESIGN SYSTEMS          │
 └─────────────────────┘ └─────────────────────────────────┘
