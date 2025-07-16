@@ -419,26 +419,11 @@
 
             <!-- Loading & Exporting States -->
             <h3 class="example-subheader">Loading & Exporting States</h3>
-            <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
-                 <div class="example-wrapper">
-                    <div class="example-label">Loading</div>
-                    <div class="example-container">
-                        <div class="card token-summary-skeleton">
-                            <div class="skeleton-heading"></div>
-                            <div class="skeleton-subheading"></div>
-                            <div class="skeleton-breakdown">
-                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+<div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+    <!-- Loading State Card -->
     <div class="example-wrapper">
         <div class="example-label">Loading</div>
-        <div class="example-container">
+        <div class="example-container" style="min-height: 278px;">
             <div class="card token-summary-skeleton">
                 <div class="skeleton-heading"></div>
                 <div class="skeleton-subheading"></div>
@@ -451,6 +436,7 @@
             </div>
         </div>
     </div>
+    <!-- Progress Flow Card -->
     <div class="example-wrapper">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div class="example-label">Progress Flow</div>
@@ -459,7 +445,7 @@
                 <span>Play Demo</span>
             </button>
         </div>
-        <div class="example-container" style="min-height: 278px;">
+        <div class="example-container" style="min-height: 278px; display: flex; align-items: center; justify-content: center;">
             <div class="te-progress-loader" id="guideProgressLoader">
                 <div class="te-icon-grid" id="guideIconGrid"></div>
                 <div class="te-celebration" id="guideCelebration"></div>
