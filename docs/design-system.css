@@ -2877,19 +2877,14 @@ main {
         gap: var(--size-3);
         padding-bottom: 0;
     }
-    
-    .token-breakdown {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: var(--size-3) !important;
-    }
 }
 
-@media (width <= 25rem) {
-    .token-breakdown {
-        grid-template-columns: 1fr !important;
-        gap: var(--size-2) !important;
-    }
-}
+/*
+* The media queries for .token-breakdown were removed from here.
+* This ensures the component maintains its 4-column grid layout
+* even in the narrow Figma plugin viewport (<=400px), aligning
+* its behavior with the design system's primary intent.
+*/
 
 
         
@@ -4215,12 +4210,13 @@ body {
     .color-grid, .shadow-grid, .radius-grid, .tokens-grid, .variants-grid { grid-template-columns: 1fr; }
     .gray-scale-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
     .spacing-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-    .token-breakdown { grid-template-columns: repeat(2, 1fr) !important; gap: var(--size-3) !important; }
+    /* The .token-breakdown rule has been removed from this media query. */
 }
 
-@media (width <= 400px) {
-    .token-breakdown { grid-template-columns: 1fr !important; gap: var(--size-2) !important; }
-}
+/*
+* The media query for .token-breakdown at 400px was removed to ensure
+* the component maintains its 4-column grid layout in the plugin.
+*/
 
 /* ==========================================================================
    SHOELACE INTEGRATION ENHANCEMENTS
