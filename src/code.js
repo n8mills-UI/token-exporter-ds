@@ -2,8 +2,10 @@
 // Addresses performance, error handling, code quality, and JS compatibility issues
 
 // Show the UI. The window is resizable by the user by default in Figma.
-figma.showUI(__html__, { title: "Token Exporter", width: 380, height: 650 });
-
+figma.showUI(__html__, { title: "Token Exporter", width: 420, height: 650 });
+setTimeout(() => {
+    figma.ui.resize(420, 650);
+}, 100);
 let globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
 
 // --- CONSTANTS ---

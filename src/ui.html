@@ -11,7 +11,7 @@
     
     <!-- Injected CSS -->
     <style>
-    /* === SYNCED & BUNDLED | Wed Jul 16 14:35:12 AEST 2025 === */
+    /* === SYNCED & BUNDLED | Wed Jul 16 15:23:06 AEST 2025 === */
 :host,
 .sl-theme-dark {
   color-scheme: dark;
@@ -2490,13 +2490,13 @@ main {
 
 .token-breakdown {
     display: grid;
-    /* Re-enforce 4 columns to prevent wrapping */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Always 4 columns */
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
+    /* Force horizontal layout in plugin */
+    min-width: 280px; /* Minimum width to prevent wrapping */
 }
-
 
 .token-type-stat {
     text-align: center;
@@ -2512,38 +2512,45 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* Prevent individual stats from growing too large */
+    max-width: 80px;
 }
 
-/* ADDED: New rule to fix text color inconsistency and add responsive font size */
 .token-type-stat .label {
     color: var(--color-text-muted);
-    /* Make font size responsive: min 10px, scales with viewport, max 12px */
-    font-size: clamp(0.625rem, 2.5vw, 0.75rem);
+    /* Remove clamp, use fixed small size for narrow spaces */
+    font-size: var(--font-size-00); /* 10px */
+    line-height: 1.2;
 }
 
 .token-type-stat .icon { 
     margin-bottom: var(--size-1);
     transition: transform var(--animation-duration-2) var(--ease-spring-3);
     display: block;
-    /* FIX: Increase icon size */
-    font-size: var(--font-size-2);
+    /* Make icons slightly smaller in plugin context */
+    font-size: var(--font-size-1); /* 14px instead of default */
 }
-
-/* Media query for smaller card widths, typical for the plugin */
-@media (max-width: 400px) {
-    .token-breakdown {
-        gap: var(--size-1); /* Reduce gap between items */
-    }
-    .token-type-stat {
-        padding: var(--size-1); /* Reduce padding inside items */
-    }
-}
-
 
 .token-type-stat .count { 
     font-size: var(--font-size-2);
     font-weight: var(--font-weight-6); 
     margin-bottom: var(--size-1);
+}
+
+/* For very narrow plugin windows, make everything smaller but keep horizontal */
+@container (max-width: 320px) {
+    .token-breakdown {
+        gap: var(--size-1);
+    }
+    
+    .token-type-stat {
+        padding: var(--size-1);
+        min-height: 50px;
+    }
+    
+    .token-type-stat .count {
+        font-size: var(--font-size-1); /* Smaller numbers */
+    }
 }
 
 /* Token type colors */
@@ -2924,7 +2931,7 @@ main {
     margin: 0 auto;
     position: relative;
     justify-content: center;
-    /* overflow: hidden; */ /* This was correctly removed previously */
+    
 }
 
 /* Glassmorphism status box */
@@ -5037,6 +5044,11 @@ body {
 
     <script>
         // --- STATE & CONFIG ---
+        // Debug: Check actual widths
+        console.log('Plugin window width:', window.innerWidth);
+        console.log('Token card width:', document.querySelector('.token-summary')?.offsetWidth);
+        
+        // --- STATE ---
         const appState = {
             mode: 'simple',
             collections: [],
@@ -5334,12 +5346,16 @@ body {
             
             renderIcons();
 
-            setTimeout(() => {
+         setTimeout(() => {
                 updateTokenSummary(); // Restore the card's original content
+                renderIcons(); // Re-render icons after updating HTML
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
             }, 2500);
+
+            DOMElements.progressOverlay.style.display = 'none'; // Hide the progress overlay
+            container.innerHTML = ''; // Clear the loader content
         }
         
         function showErrorState(message) {
