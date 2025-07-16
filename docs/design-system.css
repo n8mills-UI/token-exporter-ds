@@ -2412,6 +2412,242 @@ main {
     margin-bottom: var(--size-1);
 }
 
+/* ==========================================================================
+   PROGRESS LOADER - UNIFIED FLOW
+   Replaces separate progress and success states
+   ========================================================================== */
+
+/* Main container */
+.te-progress-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4);
+    width: 100%;
+    max-width: 400px;
+    height: 320px;
+    margin: 0 auto;
+    position: relative;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Glassmorphism status box */
+.te-glass-status {
+    text-align: center;
+    position: relative;
+    z-index: var(--layer-card);
+    
+    /* Glass effect */
+    background: rgba(42, 42, 42, 0.6);
+    backdrop-filter: var(--blur-xl);
+    -webkit-backdrop-filter: var(--blur-xl);
+    
+    /* Fallback */
+    @supports not (backdrop-filter: blur(1px)) {
+        background: rgba(42, 42, 42, 0.95);
+    }
+    
+    /* Softer corners */
+    border-radius: var(--radius-4);
+    
+    border: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    padding: var(--size-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    align-items: center;
+    min-width: 280px;
+    
+    transition: all var(--transition-fast);
+    will-change: transform, opacity;
+}
+
+.te-progress-percent {
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-7);
+    font-size: var(--font-size-5);
+    color: var(--color-text-default);
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.te-progress-track {
+    width: 200px;
+    height: 12px;
+    background: rgba(58, 58, 58, 0.8);
+    border-radius: var(--radius-round);
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.te-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--brand-gradient-lime);
+    border-radius: var(--radius-round);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(210, 255, 55, 0.5);
+    will-change: width;
+    transition: width 0.2s ease-out;
+}
+
+.te-progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%
+    );
+    animation: te-shimmer 1.5s infinite;
+}
+
+@keyframes te-shimmer {
+    0% { transform: translateX(-200%); }
+    100% { transform: translateX(200%); }
+}
+
+.te-status-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Icon grid */
+.te-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    position: absolute;
+    inset: 0;
+    padding: var(--size-3);
+    gap: var(--size-1);
+    will-change: transform;
+    transition: opacity 0.5s ease-out;
+}
+
+.te-icon-grid.fade-out {
+    opacity: 0;
+}
+
+.te-icon-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color);
+    animation: te-vortex-swirl 3s infinite ease-in-out;
+    animation-delay: var(--delay);
+    opacity: 0;
+    filter: blur(var(--blur));
+    will-change: transform, opacity;
+}
+
+.te-icon-cell .lucide {
+    width: 100%;
+    height: 100%;
+    stroke-width: var(--stroke-regular);
+}
+
+@keyframes te-vortex-swirl {
+    0% {
+        transform: translate(var(--x-start), var(--y-start)) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(0, 0) scale(var(--scale, 1));
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x-end), var(--y-end)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Celebration container */
+.te-celebration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--layer-notification);
+}
+
+/* Large success icon */
+.te-success-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: var(--brand-primary-lime);
+    filter: drop-shadow(0 0 30px var(--brand-primary-lime));
+    animation: te-success-pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.te-success-icon .lucide {
+    width: 160px;
+    height: 160px;
+    stroke-width: var(--stroke-thin);
+}
+
+@keyframes te-success-pop {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Radial burst confetti */
+.te-confetti-burst {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color);
+    top: 50%;
+    left: 50%;
+    animation: te-burst-out 1.5s ease-out forwards;
+}
+
+@keyframes te-burst-out {
+    0% {
+        transform: translate(-50%, -50%) translate(0, 0) scale(0);
+        opacity: 1;
+    }
+    100% {
+        /* Long transform split properly for linting */
+        transform: translate(-50%, -50%) translate(var(--burst-x), var(--burst-y)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Hide status during celebration */
+.te-celebrating .te-glass-status {
+    animation: te-fade-scale-out 0.4s forwards;
+}
+
+@keyframes te-fade-scale-out {
+    to {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
 
 .empty-state-action {
     color: var(--brand-primary-lime);

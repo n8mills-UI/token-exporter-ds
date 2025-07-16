@@ -436,29 +436,23 @@
                     </div>
                 </div>
                 <div class="example-wrapper">
-    <div class="example-label">Exporting</div>
-    <div class="example-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--size-4); min-height: 278px;">
-        
-        <!-- Vertically Centered Content -->
-        <div class="liquid-progress">
-            <div class="liquid-progress-inner">
-                <div class="liquid-wave" id="modular-liquid-wave"></div>
-            </div>
-            <div id="modular-percentage-container">
-                <span id="modular-progress-number">0</span>%
+    <div class="example-label">Progress Flow</div>
+    <div class="example-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 320px;">
+        <div class="te-progress-loader" id="guideProgressLoader">
+            <div class="te-icon-grid" id="guideIconGrid"></div>
+            <div class="te-celebration" id="guideCelebration"></div>
+            <div class="te-glass-status" id="guideGlassStatus">
+                <p class="te-progress-percent" id="guideProgressPercent">0%</p>
+                <div class="te-progress-track">
+                    <div class="te-progress-fill" id="guideProgressFill"></div>
+                </div>
+                <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
             </div>
         </div>
-
-        <div>
-            <div class="text-label" id="modular-stage-label">ANALYZING TOKENS</div>
-            <p class="text-body-md" id="modular-stage-detail" style="color: var(--color-text-muted);">Scanning collections...</p>
-        </div>
-
-        <button class="btn secondary btn-inline" id="modular-liquid-play-btn" onclick="toggleModularLiquidAnimation()">
+        <button class="btn secondary btn-inline" onclick="demoGuideExport()">
             <i data-lucide="play"></i>
-            <span>Play Animation</span>
+            <span>Demo Export</span>
         </button>
-
     </div>
 </div>
 
@@ -786,72 +780,147 @@
 let animationInterval;
 let currentProgress = 0;
 
-function toggleModularLiquidAnimation() {
-    const btn = document.getElementById('modular-liquid-play-btn');
-    const wave = document.getElementById('modular-liquid-wave');
-    const progressNum = document.getElementById('modular-progress-number');
-    const stageLabel = document.getElementById('modular-stage-label');
-    const stageDetail = document.getElementById('modular-stage-detail');
-    const percentContainer = document.getElementById('modular-percentage-container');
+// New unified progress loader
+function initializeGuideLoader() {
+    const grid = document.getElementById('guideIconGrid');
+    if (!grid) return;
     
-    if (!wave || !progressNum) return; // Safety check
+    const tokenTypes = [
+        { icon: 'palette', color: '--category-color-cyan' },
+        { icon: 'type', color: '--category-color-purple' },
+        { icon: 'hash', color: '--category-color-orange' },
+        { icon: 'toggle-right', color: '--category-color-pink' }
+    ];
     
-    if (animationInterval) {
-        // Stop animation
-        clearInterval(animationInterval);
-        animationInterval = null;
-        btn.innerHTML = '<i data-lucide="play"></i> Play Animation';
-        currentProgress = 0;
-        updateProgress(0);
-        lucide.createIcons();
-        return;
+    // Create icon grid
+    for (let i = 0; i < 60; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('te-icon-cell');
+        
+        const category = tokenTypes[i % tokenTypes.length];
+        const icon = document.createElement('i');
+        icon.setAttribute('data-lucide', category.icon);
+        cell.appendChild(icon);
+        cell.style.setProperty('--color', `var(${category.color})`);
+        
+        // Animation properties
+        const isFocused = Math.random() > 0.3;
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 150 + Math.random() * 50;
+        
+        cell.style.setProperty('--x-start', `${Math.cos(angle) * radius}px`);
+        cell.style.setProperty('--y-start', `${Math.sin(angle) * radius}px`);
+        cell.style.setProperty('--x-end', `${Math.cos(angle + Math.PI) * radius}px`);
+        cell.style.setProperty('--y-end', `${Math.sin(angle + Math.PI) * radius}px`);
+        cell.style.setProperty('--delay', `${Math.random() * 1.5}s`);
+        cell.style.setProperty('--scale', 0.7 + Math.random() * 0.6);
+        cell.style.setProperty('--blur', isFocused ? '0px' : `${Math.random() * 3}px`);
+        
+        grid.appendChild(cell);
     }
     
-    // Start animation
-    btn.innerHTML = '<i data-lucide="pause"></i> Pause Animation';
+    lucide.createIcons();
+}
+
+let guideExportInterval = null;
+let guideIsExporting = false;
+
+function demoGuideExport() {
+    if (guideIsExporting) return;
+    
+    guideIsExporting = true;
+    let progress = 0;
+    let targetProgress = 0;
+    
+    const progressStages = [
+        { percent: 25, label: "Warming up" },
+        { percent: 50, label: "Finding" },
+        { percent: 75, label: "Building" },
+        { percent: 95, label: "Checking" }
+    ];
+    
+    const percentEl = document.getElementById('guideProgressPercent');
+    const fillEl = document.getElementById('guideProgressFill');
+    const labelEl = document.getElementById('guideStatusLabel');
+    
+    guideExportInterval = setInterval(() => {
+        const speed = Math.random() > 0.7 ? 0.5 : 2;
+        targetProgress = Math.min(targetProgress + speed, 100);
+        
+        const smoothingFactor = 0.1;
+        progress += (targetProgress - progress) * smoothingFactor;
+        
+        if (progress >= 99.5) {
+            progress = 100;
+            clearInterval(guideExportInterval);
+            guideSuccessAnimation();
+            return;
+        }
+        
+        const displayProgress = Math.floor(progress);
+        percentEl.textContent = `${displayProgress}%`;
+        fillEl.style.width = `${progress}%`;
+        
+        const currentStage = progressStages.find(s => displayProgress <= s.percent) || progressStages[progressStages.length - 1];
+        labelEl.textContent = currentStage.label;
+    }, 50);
+}
+
+function guideSuccessAnimation() {
+    const container = document.getElementById('guideProgressLoader');
+    const celebrationContainer = document.getElementById('guideCelebration');
+    const grid = document.getElementById('guideIconGrid');
+    
+    container.classList.add('te-celebrating');
+    grid.classList.add('fade-out');
+    
+    // Success icon
+    const successIcon = document.createElement('div');
+    successIcon.className = 'te-success-icon';
+    successIcon.innerHTML = '<i data-lucide="check-circle"></i>';
+    celebrationContainer.appendChild(successIcon);
+    
+    // Confetti
+    const tokenTypes = [
+        { color: '--category-color-cyan' },
+        { color: '--category-color-purple' },
+        { color: '--category-color-orange' },
+        { color: '--category-color-pink' }
+    ];
+    
+    for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.className = 'te-confetti-burst';
+            const angle = (i / 40) * Math.PI * 2;
+            const distance = 200 + Math.random() * 100;
+            confetti.style.setProperty('--burst-x', `${Math.cos(angle) * distance}px`);
+            confetti.style.setProperty('--burst-y', `${Math.sin(angle) * distance}px`);
+            confetti.style.setProperty('--color', `var(${tokenTypes[i % tokenTypes.length].color})`);
+            celebrationContainer.appendChild(confetti);
+        }, i * 10);
+    }
+    
     lucide.createIcons();
     
-    animationInterval = setInterval(() => {
-        currentProgress += 2;
-        
-        if (currentProgress > 100) {
-            currentProgress = 0;
-        }
-        
-        updateProgress(currentProgress);
-    }, 100);
-    
-    function updateProgress(progress) {
-        // Update water level (inverse - 75% = empty, 10% = full)
-        const waterLevel = 75 - (progress * 0.65);
-        wave.style.top = waterLevel + '%';
-        
-        // Update percentage
-        progressNum.textContent = progress;
-        
-        // Update percentage container position
-        if (progress > 50) {
-            percentContainer.style.bottom = '50px';
-        } else {
-            percentContainer.style.bottom = '15px';
-        }
-        
-        // Update stage labels
-        if (progress <= 25) {
-            stageLabel.textContent = 'ANALYZING';
-            stageDetail.textContent = 'Variable collections...';
-        } else if (progress <= 50) {
-            stageLabel.textContent = 'PACKAGING';
-            stageDetail.textContent = 'Creating package...';
-        } else if (progress <= 75) {
-            stageLabel.textContent = 'SANITIZING';
-            stageDetail.textContent = 'Validating syntax...';
-        } else {
-            stageLabel.textContent = 'FINALIZING';
-            stageDetail.textContent = 'Preparing download...';
-        }
-    }
+    // Reset after delay
+    setTimeout(() => {
+        container.classList.remove('te-celebrating');
+        grid.classList.remove('fade-out');
+        celebrationContainer.innerHTML = '';
+        document.getElementById('guideGlassStatus').style.opacity = '1';
+        document.getElementById('guideGlassStatus').style.transform = 'scale(1)';
+        document.getElementById('guideProgressPercent').textContent = '0%';
+        document.getElementById('guideProgressFill').style.width = '0%';
+        document.getElementById('guideStatusLabel').textContent = 'Ready to export';
+        guideIsExporting = false;
+    }, 3000);
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeGuideLoader();
+});
 
     function initializeNavigation() {
         const navLinks = document.querySelectorAll('.nav-link');
