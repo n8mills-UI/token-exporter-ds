@@ -4412,7 +4412,7 @@ body {
         max-width: 100vw;
         width: 100%;
         padding: 0;
-        padding-top: var(--size-12);
+        padding-top: var(--size-10);
         box-sizing: border-box;
     }
 
