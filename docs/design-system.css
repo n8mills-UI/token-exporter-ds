@@ -6,8 +6,7 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Token Exporter Design System v4.0.6 | Crafted with ❤️ by Nate Mills
-Foundation: Open Props | Components: Shoelace | Portfolio: Career Advancement
+Token Exporter Design System v4.0.6   |   Crafted with ❤️ by Nate Mills
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 */
 
@@ -4152,229 +4151,6 @@ body {
 * the component maintains its 4-column grid layout in the plugin.
 */
 
-/* ==========================================================================
-   SHOELACE INTEGRATION ENHANCEMENTS
-   ========================================================================== */
-
-/* Screen reader only text for accessibility */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Pattern sections within Shoelace */
-#shoelace-integration .pattern-section {
-    margin-bottom: var(--size-6);
-    padding: var(--size-4);
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-3);
-}
-
-#shoelace-integration .pattern-section + .pattern-section {
-    margin-top: var(--size-6);
-}
-
-/* Component comparison grid */
-#shoelace-integration .component-comparison {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--size-4);
-    margin: var(--size-4) 0;
-}
-
-#shoelace-integration .comparison-card {
-    background: var(--color-background-tertiary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    padding: var(--size-4);
-}
-
-#shoelace-integration .comparison-card h4 {
-    font-size: var(--font-size-2);
-    font-weight: var(--font-weight-6);
-    margin-bottom: var(--size-3);
-    display: flex;
-    align-items: center;
-    gap: var(--size-2);
-    color: var(--color-text-default);
-}
-
-#shoelace-integration .comparison-card h4 .lucide {
-    color: var(--brand-primary-lime);
-    width: var(--icon-md);
-    height: var(--icon-md);
-}
-
-#shoelace-integration .feature-list {
-    list-style: none;
-    padding: 0;
-    margin: var(--size-3) 0 0 0;
-}
-
-#shoelace-integration .feature-list li {
-    padding: var(--size-2) 0;
-    border-bottom: var(--border-size-1) solid var(--color-border-default);
-    font-size: var(--font-size-1);
-    color: var(--color-text-secondary);
-    display: flex;
-    align-items: center;
-    gap: var(--size-2);
-}
-
-#shoelace-integration .feature-list li:last-child {
-    border-bottom: none;
-}
-
-#shoelace-integration .feature-list .lucide {
-    color: var(--brand-primary-lime);
-    width: var(--icon-sm);
-    height: var(--icon-sm);
-    flex-shrink: 0;
-    margin-top: var(--size-0);
-}
-
-/* Comparison table with proper styling */
-#shoelace-integration .table-wrapper {
-    background: var(--color-background-secondary);
-    border-radius: var(--radius-3);
-    padding: var(--size-1);
-    overflow: hidden;
-    margin-top: var(--size-4);
-}
-
-#shoelace-integration .comparison-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: var(--color-background-tertiary);
-    border-radius: var(--radius-2);
-    overflow: hidden;
-}
-
-#shoelace-integration .comparison-table th,
-#shoelace-integration .comparison-table td {
-    padding: var(--size-3) var(--size-4); 
-    text-align: left;
-    border-bottom: var(--border-size-1) solid var(--color-border-default);
-}
-
-#shoelace-integration .comparison-table th:first-child,
-#shoelace-integration .comparison-table td:first-child {
-    width: auto;
-    white-space: nowrap;
-}
-
-#shoelace-integration .comparison-table thead th {
-    background: var(--color-background-secondary);
-    font-size: var(--font-size-1);
-    font-weight: var(--font-weight-6);
-    color: var(--color-text-default);
-}
-
-/* Add scope attribute styling */
-#shoelace-integration .comparison-table th[scope="col"] {
-    vertical-align: bottom;
-}
-
-#shoelace-integration .comparison-table th[scope="row"] {
-    font-weight: var(--font-weight-6);
-}
-
-#shoelace-integration .comparison-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Remove ALL hover effects on table */
-#shoelace-integration .comparison-table tr {
-    background: transparent;
-    cursor: default;
-}
-
-#shoelace-integration .comparison-table tr:hover {
-    background: transparent;
-}
-
-#shoelace-integration .comparison-table tbody tr:hover td {
-    background: transparent;
-}
-
-/* Icon alignment in table */
-#shoelace-integration .comparison-table .lucide {
-    width: var(--icon-sm);
-    height: var(--icon-sm);
-    vertical-align: text-bottom;
-    display: inline-block;
-    margin-right: var(--size-1);
-}
-
-#shoelace-integration .comparison-table th .lucide {
-    color: var(--brand-primary-lime);
-}
-
-/* Status indicators with accessibility */
-#shoelace-integration .status-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-1);
-}
-
-#shoelace-integration .status-yes {
-    color: var(--color-status-success);
-}
-
-#shoelace-integration .status-no {
-    color: var(--color-status-error);
-}
-
-#shoelace-integration .status-partial {
-    color: var(--color-status-warning);
-}
-
-/* Feature column styling */
-#shoelace-integration .feature-col {
-    font-weight: var(--font-weight-6);
-    color: var(--color-text-default);
-}
-
-/* Why section */
-#shoelace-integration .why-dual-approach {
-    background: rgb(210, 255, 55, 0.03);
-    border: var(--border-size-1) solid rgb(210, 255, 55, 0.1);
-    border-radius: var(--radius-3);
-    padding: var(--size-4);
-    margin: var(--size-4) 0;
-}
-
-#shoelace-integration .why-dual-approach h4 {
-    color: var(--brand-primary-lime);
-    font-size: var(--font-size-2);
-    margin-bottom: var(--size-2);
-}
-
-/* Responsive design */
-@media (width <= 768px) {
-    #shoelace-integration .component-comparison {
-        grid-template-columns: 1fr;
-        gap: var(--size-3);
-    }
-    
-    #shoelace-integration .comparison-table {
-        font-size: var(--font-size-0);
-    }
-    
-    #shoelace-integration .comparison-table th,
-    #shoelace-integration .comparison-table td {
-        padding: var(--size-2) var(--size-3);
-    }
-}
 
 /* ==========================================================================
    CONSOLIDATED RESPONSIVE STYLES (CORRECTED)
@@ -4422,7 +4198,6 @@ body {
     .shadow-grid,
     .radius-grid,
     .tokens-grid,
-    #shoelace-integration .component-comparison {
         grid-template-columns: 1fr;
     }
 
@@ -4471,17 +4246,8 @@ body {
         gap: var(--size-3);
         padding-bottom: 0;
     }
-    
-    /* Shoelace Integration Table */
-    #shoelace-integration .comparison-table {
-        font-size: var(--font-size-0);
-    }
-    
-    #shoelace-integration .comparison-table th,
-    #shoelace-integration .comparison-table td {
-        padding: var(--size-2) var(--size-3);
-    }
-}
+
+
 
 /* ==========================================================================
    THEMING STRATEGY & FUTURE IMPLEMENTATIONS
