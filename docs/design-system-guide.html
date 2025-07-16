@@ -435,24 +435,43 @@
                         </div>
                     </div>
                 </div>
-                <div class="example-wrapper">
-    <div class="example-label">Progress Flow</div>
-    <div class="example-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 320px;">
-        <div class="te-progress-loader" id="guideProgressLoader">
-            <div class="te-icon-grid" id="guideIconGrid"></div>
-            <div class="te-celebration" id="guideCelebration"></div>
-            <div class="te-glass-status" id="guideGlassStatus">
-                <p class="te-progress-percent" id="guideProgressPercent">0%</p>
-                <div class="te-progress-track">
-                    <div class="te-progress-fill" id="guideProgressFill"></div>
+                <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+    <div class="example-wrapper">
+        <div class="example-label">Loading</div>
+        <div class="example-container">
+            <div class="card token-summary-skeleton">
+                <div class="skeleton-heading"></div>
+                <div class="skeleton-subheading"></div>
+                <div class="skeleton-breakdown">
+                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
                 </div>
-                <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
             </div>
         </div>
-        <button class="btn secondary btn-inline" onclick="demoGuideExport()">
-            <i data-lucide="play"></i>
-            <span>Demo Export</span>
-        </button>
+    </div>
+    <div class="example-wrapper">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="example-label">Progress Flow</div>
+            <button class="btn secondary btn-sm btn-inline" onclick="demoGuideExport()">
+                <i data-lucide="play"></i>
+                <span>Play Demo</span>
+            </button>
+        </div>
+        <div class="example-container" style="min-height: 278px;">
+            <div class="te-progress-loader" id="guideProgressLoader">
+                <div class="te-icon-grid" id="guideIconGrid"></div>
+                <div class="te-celebration" id="guideCelebration"></div>
+                <div class="te-glass-status" id="guideGlassStatus">
+                    <p class="te-progress-percent" id="guideProgressPercent">0%</p>
+                    <div class="te-progress-track">
+                        <div class="te-progress-fill" id="guideProgressFill"></div>
+                    </div>
+                    <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -681,11 +700,12 @@
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {
         initializeNavigation();
-        initializeMobileMenu(); // This is the new, updated function
-        initializeScrollHeader(); // This is the new function for the header
+        initializeMobileMenu();
+        initializeScrollHeader();
         animateCounters();
         initFAQAccordion();
         initTechHover();
+        initializeGuideLoader(); // ADDED: Loader init is now here
     });
     
     // --- Initialize Lucide Icons ---
@@ -917,10 +937,6 @@ function guideSuccessAnimation() {
     }, 3000);
 }
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-    initializeGuideLoader();
-});
 
     function initializeNavigation() {
         const navLinks = document.querySelectorAll('.nav-link');

@@ -2708,10 +2708,11 @@ main {
 
 .skeleton-breakdown {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* CHANGED: Enforces 4 columns */
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
+    flex-wrap: nowrap; /* ADDED: Prevents wrapping */
 }
 
 .skeleton-stat {
@@ -3295,19 +3296,21 @@ sl-input::part(input):focus-visible,
     left: 0;
     width: 100%;
     height: var(--size-10);
-    background: var(--color-background-secondary);
-    backdrop-filter: var(--blur-md);
-    backdrop-filter: var(--blur-md);
-    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    /* CHANGED: Swapped solid color for semi-transparent for glass effect */
+    background: rgba(42, 42, 42, 0.6); 
+    backdrop-filter: var(--blur-lg);
+    -webkit-backdrop-filter: var(--blur-lg);
+    border-bottom: var(--border-size-1) solid rgba(255, 255, 255, 0.1); /* Softer border */
     z-index: 100;
-    display: none; /* Hidden by default, shown on mobile via media query */
+    display: none;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--size-3);
+    padding: 0 var(--size-4); /* Adjusted padding */
     transform: translateY(0);
     transition: transform var(--transition-medium);
     box-sizing: border-box;
 }
+
 
 .mobile-header.hidden {
     transform: translateY(-100%);
