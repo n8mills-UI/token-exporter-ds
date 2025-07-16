@@ -375,18 +375,20 @@
         <p class="section-description">The building blocks of the interface. A collection of reusable components built with design tokens.</p>
     </div>
 
-    <!-- Consolidated Token Card Section -->
+    <!-- REFACTORED: Token Card Section -->
     <div id="token-card" class="component-section">
         <div class="component-header">
             <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Card</h2>
-            <p class="component-description">The central dashboard component that displays the total count of design tokens. The card transforms to show different states like loading, success, or an empty state if no tokens are found.</p>
+            <p class="component-description">The central dashboard component that displays the total count of design tokens. It transforms to show different states like loading, success, or an empty state if no tokens are found.</p>
         </div>
         <div class="component-body">
-            <!-- Default State -->
-            <h3 class="example-subheader">Default & Advanced States</h3>
-            <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+            <h3 class="example-subheader">Component States & Examples</h3>
+            <p class="category-description" style="margin-bottom: var(--size-4);">This component adapts to various contexts. Below are its primary states, from default view to the interactive progress flow.</p>
+            
+            <div class="variants-grid">
+                <!-- Card 1: Default State -->
                 <div class="example-wrapper">
-                    <div class="example-label">Default</div>
+                    <div class="example-label">Default State</div>
                     <div class="example-container">
                         <div class="card token-summary">
                             <div class="text-heading-xl token-count-total">247</div>
@@ -400,9 +402,11 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Card 2: Advanced Mode -->
                 <div class="example-wrapper">
                     <div class="example-label">Advanced Mode</div>
-                     <div class="example-container">
+                    <div class="example-container">
                         <div class="card token-summary advanced-mode">
                             <div class="text-heading-xl token-count-total">131</div>
                             <div class="text-label token-label">Design Tokens Selected</div>
@@ -415,79 +419,54 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Loading & Exporting States -->
-            <h3 class="example-subheader">Loading & Exporting States</h3>
-<div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
-    <!-- Card 1: Loading State -->
-    <div class="example-wrapper">
-        <div class="example-label">Loading</div>
-        <div class="example-container">
-            <div class="card token-summary-skeleton" style="min-height: 278px;">
-                <div class="skeleton-heading"></div>
-                <div class="skeleton-subheading"></div>
-                <div class="skeleton-breakdown">
-                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                    <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Card 2: Progress Flow State -->
-    <div class="example-wrapper">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="example-label">Progress Flow</div>
-            <button class="btn secondary btn-sm btn-inline" onclick="demoGuideExport()">
-                <i data-lucide="play"></i>
-                <span>Play Demo</span>
-            </button>
-        </div>
-        <div class="example-container">
-            <div class="card" style="min-height: 278px; padding: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
-                <div class="te-progress-loader" id="guideProgressLoader">
-                    <div class="te-icon-grid" id="guideIconGrid"></div>
-                    <div class="te-celebration" id="guideCelebration"></div>
-                    <div class="te-glass-status" id="guideGlassStatus">
-                        <p class="te-progress-percent" id="guideProgressPercent">0%</p>
-                        <div class="te-progress-track">
-                            <div class="te-progress-fill" id="guideProgressFill"></div>
-                        </div>
-                        <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-            </div>
-            
-            <!-- Success & Empty States -->
-            <h3 class="example-subheader">Success & Empty States</h3>
-             <div class="variants-grid" style="grid-template-columns: 1fr 1fr;">
+                <!-- Card 3: Loading Skeleton -->
                 <div class="example-wrapper">
-                    <div class="example-label">Success</div>
-                    <div class="example-container" style="display: flex; align-items: center; justify-content: center;">
-                        <div class="progress-container" style="animation: none; max-width: 320px;">
-                            <i data-lucide="check-circle-2" class="success-icon" style="width: 48px; height: 48px; animation: none;"></i>
-                            <h2 class="text-heading-md success-title">Export Complete!</h2>
-                            <p class="text-body-md success-subtitle">Your design tokens are ready.</p>
-                            <div class="action-buttons">
-                                <button class="btn primary"><i data-lucide="download"></i> Download Files</button>
-                                <button class="btn secondary">Close</button>
+                    <div class="example-label">Loading State</div>
+                    <div class="example-container">
+                        <div class="card token-summary-skeleton">
+                            <div class="skeleton-heading"></div>
+                            <div class="skeleton-subheading"></div>
+                            <div class="skeleton-breakdown">
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton-icon"></div><div class="skeleton-text"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Card 4: Progress Flow -->
+                <div class="example-wrapper">
+                    <div class="example-label" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Progress & Success Flow</span>
+                        <button class="btn secondary btn-sm btn-inline" onclick="demoGuideExport()">
+                            <i data-lucide="play"></i>
+                            <span>Play Demo</span>
+                        </button>
+                    </div>
+                    <div class="example-container">
+                        <div class="te-progress-loader" id="guideProgressLoader">
+                            <div class="te-icon-grid" id="guideIconGrid"></div>
+                            <div class="te-celebration" id="guideCelebration"></div>
+                            <div class="te-glass-status" id="guideGlassStatus">
+                                <p class="te-progress-percent" id="guideProgressPercent">0%</p>
+                                <div class="te-progress-track">
+                                    <div class="te-progress-fill" id="guideProgressFill"></div>
+                                </div>
+                                <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Empty State -->
                 <div class="example-wrapper">
                     <div class="example-label">Empty State</div>
                     <div class="example-container">
-                        <div class="empty-state" style="min-height: 100%; justify-content: space-around;">
-                            <div class="empty-state-icon">
+                        <div class="empty-state">
+                             <div class="empty-state-icon">
                                 <div class="token-exporter-logo large">
                                      <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo_refactor)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo_refactor)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo_refactor" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo_refactor"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
                                 </div>
