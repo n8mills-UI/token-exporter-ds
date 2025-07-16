@@ -2016,6 +2016,7 @@ main {
     padding-top: var(--size-4);
 }
 
+
 .token-type-stat {
     text-align: center;
     transition: background var(--animation-duration-2) var(--ease-3),
