@@ -11,7 +11,7 @@
     
     <!-- Injected CSS -->
     <style>
-    /* === SYNCED & BUNDLED | Wed Jul 16 11:14:12 AEST 2025 === */
+    /* === SYNCED & BUNDLED | Wed Jul 16 13:50:03 AEST 2025 === */
 :host,
 .sl-theme-dark {
   color-scheme: dark;
@@ -1100,7 +1100,6 @@ body {
 }
 
 /* Fix specific problems */
-.btn-icon-only .lucide,
 .nav-links .lucide {
     stroke-width: var(--stroke-thin);
 }
@@ -2438,6 +2437,28 @@ main {
 }
 .content-wrapper::-webkit-scrollbar-thumb:hover { background-color: var(--gray-5); }
 
+/* ADDED: New rules for global scrollbar styling */
+/* For Webkit browsers like Chrome, Safari, Edge */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track invisible */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--gray-7); /* Subtle thumb color */
+    border-radius: 20px;
+    border: 3px solid var(--color-background-primary); /* Creates padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gray-6);
+}
+
+
+
 /* Card Component */
 .card {
     background: var(--color-background-secondary);
@@ -2469,25 +2490,11 @@ main {
 
 .token-breakdown {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* CHANGED: Enforces 4 columns */
+    /* Re-enforce 4 columns to prevent wrapping */
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
-    flex-wrap: nowrap; /* ADDED: Prevents wrapping */
-}
-
-@media (width <= 600px) {
-    .token-breakdown {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--size-3);
-    }
-}
-
-@media (width <= 400px) {
-    .token-breakdown {
-        grid-template-columns: 1fr;
-        gap: var(--size-2);
-    }
 }
 
 .token-type-stat {
@@ -2506,9 +2513,11 @@ main {
     justify-content: center;
 }
 
-/* ADDED: New rule to fix text color inconsistency */
+/* ADDED: New rule to fix text color inconsistency and add responsive font size */
 .token-type-stat .label {
     color: var(--color-text-muted);
+    /* Make font size responsive: min 10px, scales with viewport, max 12px */
+    font-size: clamp(0.625rem, 2.5vw, 0.75rem);
 }
 
 .token-type-stat .icon { 
@@ -2516,6 +2525,17 @@ main {
     transition: transform var(--animation-duration-2) var(--ease-spring-3);
     display: block;
 }
+
+/* Media query for smaller card widths, typical for the plugin */
+@media (max-width: 400px) {
+    .token-breakdown {
+        gap: var(--size-1); /* Reduce gap between items */
+    }
+    .token-type-stat {
+        padding: var(--size-1); /* Reduce padding inside items */
+    }
+}
+
 
 .token-type-stat .count { 
     font-size: var(--font-size-2);
@@ -2813,11 +2833,39 @@ main {
     margin-bottom: var(--size-4);
 }
 
+.empty-state-icon {
+    width: var(--size-10);
+    height: var(--size-10);
+    background: transparent;
+    border-radius: var(--radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-3);
+    color: var(--brand-primary-lime);
+}
+
+
+.empty-state-icon .token-exporter-logo {
+    width: var(--size-8);
+    height: var(--size-8);
+}
+
+.empty-state-header {
+    margin-bottom: var(--size-6);  /* Space before categories */
+}
+
+.empty-state-title {
+    font-weight: var(--font-weight-5);
+    margin-bottom: var(--size-1);
+}
+
 .empty-state-categories {
     display: flex;
-    gap: var(--size-6);  /* Increased from size-3 (12px) to size-6 (24px) */
+    gap: var(--size-4);
     justify-content: center;
     margin-bottom: var(--size-4);
+    margin-top: var(--size-2);
 }
 
 .empty-state-category {
@@ -2826,11 +2874,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: var(--size-2);
-    min-width: 60px;  /* Ensures consistent width */
-}
-
-.empty-state .btn {
-    margin-top: auto;
+    min-width: 60px;
 }
 
 /* Category icon colors */
@@ -2859,39 +2903,6 @@ main {
     color: var(--category-color-pink);
 }
 
-.btn-auto-width {
-    width: auto;
-    margin-top: auto;  /* Pushes button to bottom */
-}
-
-
-
-.empty-state-icon {
-    width: var(--size-10);
-    height: var(--size-10);
-    background: transparent;
-    border-radius: var(--radius-round);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--font-size-3);
-    color: var(--brand-primary-lime);
-}
-    
-
-.empty-state-icon .token-exporter-logo {
-    width: var(--size-8);
-    height: var(--size-8);
-}
-
-.empty-state-header {
-    margin-bottom: var(--size-6);  /* Space before categories */
-}
-
-.empty-state-title {
-    font-weight: var(--font-weight-5);
-    margin-bottom: var(--size-1);
-}
 
 /* ==========================================================================
    PROGRESS LOADER - UNIFIED FLOW
@@ -2918,32 +2929,26 @@ main {
     text-align: center;
     position: relative;
     z-index: var(--layer-card);
-    
-    /* Glass effect */
     background: rgba(42, 42, 42, 0.6);
     backdrop-filter: var(--blur-xl);
     -webkit-backdrop-filter: var(--blur-xl);
     
-    /* Fallback */
     @supports not (backdrop-filter: blur(1px)) {
         background: rgba(42, 42, 42, 0.95);
     }
     
-    /* Softer corners */
     border-radius: var(--radius-4);
-    
     border: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     
-    padding: var(--size-4);
+    padding: var(--size-3); /* Reduced padding */
     display: flex;
     flex-direction: column;
-    gap: var(--size-3);
+    gap: var(--size-2); /* Reduced gap */
     align-items: center;
-    min-width: 280px;
+    min-width: 240px; /* Reduced min-width */
     
+    transform: scale(0.9); /* ADDED: Scales the entire element down */
     transition: all var(--transition-fast);
     will-change: transform, opacity;
 }
@@ -2951,10 +2956,21 @@ main {
 .te-progress-percent {
     font-family: var(--font-mono);
     font-weight: var(--font-weight-7);
-    font-size: var(--font-size-5);
+    font-size: var(--font-size-4); /* CHANGED: Uses type scale */
     color: var(--color-text-default);
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ADDED: New rules for button refinement */
+.btn.btn-sm.btn-inline {
+    font-size: var(--font-size-0); /* Slightly larger text */
+}
+
+.btn.btn-sm.btn-inline .lucide {
+    width: var(--icon-xs); /* Smaller icon */
+    height: var(--icon-xs);
+    stroke-width: var(--stroke-thick); /* Thicker stroke for visibility */
 }
 
 .te-progress-track {
@@ -3189,7 +3205,7 @@ main {
 
 .skeleton-breakdown {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
@@ -3776,19 +3792,20 @@ sl-input::part(input):focus-visible,
     left: 0;
     width: 100%;
     height: var(--size-10);
-    background: var(--color-background-secondary);
-    backdrop-filter: var(--blur-md);
-    backdrop-filter: var(--blur-md);
-    border-bottom: var(--border-size-1) solid var(--color-border-default);
-    z-index: 100;
-    display: none; /* Hidden by default, shown on mobile via media query */
+    background: rgba(42, 42, 42, 0.6); 
+    backdrop-filter: var(--blur-lg);
+    -webkit-backdrop-filter: var(--blur-lg);
+    border-bottom: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
+    z-index: var(--layer-modal); /* FIX: Use token for z-index */
+    display: none;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--size-3);
+    padding: 0 var(--size-4);
     transform: translateY(0);
     transition: transform var(--transition-medium);
     box-sizing: border-box;
 }
+
 
 .mobile-header.hidden {
     transform: translateY(-100%);
@@ -4401,8 +4418,11 @@ body {
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-2);
     padding: var(--size-4);
-    margin-bottom: var(--size-4);
     position: relative;
+    /* FIX: Ensure all containers have the same height */
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
 }
 
 .code-block {
@@ -4476,9 +4496,16 @@ body {
 
 .variants-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--size-4);
     margin-bottom: var(--size-4);
+}
+
+/* ADDED: New rule for responsive stacking */
+@media (width <= 900px) {
+    .variants-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Pattern Section Styles */
