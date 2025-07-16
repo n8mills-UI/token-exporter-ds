@@ -11,7 +11,7 @@
     
     <!-- Injected CSS -->
     <style>
-    /* === SYNCED & BUNDLED | Wed Jul 16 16:49:26 AEST 2025 === */
+    /* === SYNCED & BUNDLED | Wed Jul 16 18:30:56 AEST 2025 === */
 :host,
 .sl-theme-dark {
   color-scheme: dark;
@@ -4858,7 +4858,7 @@ body {
 }
 
 /* ==========================================================================
-   CONSOLIDATED RESPONSIVE STYLES
+   CONSOLIDATED RESPONSIVE STYLES (CORRECTED)
    ========================================================================== */
 
 /*
@@ -4883,17 +4883,12 @@ body {
         z-index: var(--layer-modal);
     }
 
-    .guide-sidebar.open {
-        transform: translateX(0);
-        box-shadow: var(--shadow-5);
-    }
-    
     .guide-content {
         margin-left: 0;
         max-width: 100vw;
         width: 100%;
         padding: 0;
-        padding-top: var(--size-10);
+        padding-top: var(--size-10); /* Corrected to match header height */
         box-sizing: border-box;
     }
 
@@ -4907,7 +4902,8 @@ body {
     .color-grid,
     .shadow-grid,
     .radius-grid,
-    .tokens-grid {
+    .tokens-grid,
+    #shoelace-integration .component-comparison {
         grid-template-columns: 1fr;
     }
 
@@ -4957,12 +4953,7 @@ body {
         padding-bottom: 0;
     }
     
-    /* Shoelace Integration Examples */
-    #shoelace-integration .component-comparison {
-        grid-template-columns: 1fr;
-        gap: var(--size-3);
-    }
-    
+    /* Shoelace Integration Table */
     #shoelace-integration .comparison-table {
         font-size: var(--font-size-0);
     }
