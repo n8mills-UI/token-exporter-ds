@@ -315,9 +315,9 @@
         }
 
         function showProgress() {
-            DOMElements.progressOverlay.style.display = 'flex';
-            DOMElements.progressOverlay.innerHTML = `
-                <div class="te-progress-loader" id="pluginProgressLoader">
+            // Target the token summary card instead of the full-screen overlay
+            DOMElements.tokenSummaryCard.innerHTML = `
+                <div class="te-progress-loader" id="pluginProgressLoader" style="height: 194px;">
                     <div class="te-icon-grid" id="pluginIconGrid"></div>
                     <div class="te-celebration" id="pluginCelebration"></div>
                     <div class="te-glass-status" id="pluginGlassStatus">
@@ -352,35 +352,46 @@
 
         function showSuccessState(fileData) {
             const container = document.getElementById('pluginProgressLoader');
-            const celebrationContainer = document.getElementById('pluginCelebration');
-            const grid = document.getElementById('pluginIconGrid');
-            
-            if (!container || !celebrationContainer || !grid) return;
+            if (!container) { // If container isn't there, just restore and save
+                updateTokenSummary();
+                if (fileData && fileData.length > 0) triggerSave(fileData);
+                return;
+            }
             
             container.classList.add('te-celebrating');
-            grid.classList.add('fade-out');
+            const grid = document.getElementById('pluginIconGrid');
+            if(grid) grid.classList.add('fade-out');
 
-            const successIcon = document.createElement('div');
-            successIcon.className = 'te-success-icon';
-            successIcon.innerHTML = '<i data-lucide="check-circle"></i>';
-            celebrationContainer.appendChild(successIcon);
+            const celebrationContainer = document.getElementById('pluginCelebration');
+            if(celebrationContainer) {
+                const successIcon = document.createElement('div');
+                successIcon.className = 'te-success-icon';
+                successIcon.innerHTML = '<i data-lucide="check-circle"></i>';
+                celebrationContainer.appendChild(successIcon);
+            }
             
             renderIcons();
 
             setTimeout(() => {
-                hideProgress();
+                updateTokenSummary(); // Restore the card's original content
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
-            }, 2500); // Wait for animation to finish then download & close
+            }, 2500);
         }
         
         function showErrorState(message) {
-            DOMElements.progressOverlay.style.display = 'flex';
-            DOMElements.progressOverlay.innerHTML = `<div class="progress-container" style="animation: none;"><i data-lucide="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 48px; height: 48px; animation: none;"></i><h2 class="text-heading-md success-title">Export Failed</h2><p class="text-body-md success-subtitle">${message}</p><div class="action-buttons"><button class="btn secondary" id="close-progress-btn">Close</button></div></div>`;
+            // Show the error state inside the token card
+            DOMElements.tokenSummaryCard.innerHTML = `
+                <div class="progress-container" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">
+                    <i data-lucide="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 40px; height: 40px; animation: none; margin-bottom: var(--size-2);"></i>
+                    <h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>
+                    <p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">${message}</p>
+                    <button class="btn secondary btn-inline" id="close-error-btn">Try Again</button>
+                </div>`;
             renderIcons();
-            const closeBtn = DOMElements.progressOverlay.querySelector('#close-progress-btn');
-            if (closeBtn) closeBtn.onclick = hideProgress;
+            const closeBtn = document.getElementById('close-error-btn');
+            if (closeBtn) closeBtn.onclick = updateTokenSummary; // Restore card on click
         }
 
         function triggerSave(data) {
@@ -390,7 +401,6 @@
                 link.href = URL.createObjectURL(blob);
                 link.download = data[0].filename;
             } else {
-                // JSZip is not included, so we handle multiple files by downloading them individually.
                 data.forEach((file, index) => {
                     setTimeout(() => {
                         const fileLink = document.createElement('a');
@@ -399,17 +409,12 @@
                         fileLink.download = file.filename;
                         fileLink.click();
                         URL.revokeObjectURL(fileLink.href);
-                    }, index * 300); // Stagger downloads
+                    }, index * 300);
                 });
                 return;
             }
             link.click();
             URL.revokeObjectURL(link.href);
-        }
-
-        function hideProgress() { 
-            DOMElements.progressOverlay.style.display = 'none'; 
-            DOMElements.progressOverlay.innerHTML = '';
         }
 
         function initializePluginLoader() {
@@ -421,7 +426,8 @@
                 { icon: 'hash', color: '--category-color-orange' }, { icon: 'toggle-right', color: '--category-color-pink' }
             ];
             
-            for (let i = 0; i < 60; i++) {
+            // Reduce icon count for smaller container
+            for (let i = 0; i < 40; i++) {
                 const cell = document.createElement('div');
                 cell.classList.add('te-icon-cell');
                 
@@ -432,15 +438,15 @@
                 cell.style.setProperty('--color', `var(${category.color})`);
                 
                 const angle = Math.random() * Math.PI * 2;
-                const radius = 150 + Math.random() * 50;
+                const radius = 120 + Math.random() * 40; // Smaller radius
                 
                 cell.style.setProperty('--x-start', `${Math.cos(angle) * radius}px`);
                 cell.style.setProperty('--y-start', `${Math.sin(angle) * radius}px`);
                 cell.style.setProperty('--x-end', `${Math.cos(angle + Math.PI) * radius}px`);
                 cell.style.setProperty('--y-end', `${Math.sin(angle + Math.PI) * radius}px`);
                 cell.style.setProperty('--delay', `${Math.random() * 1.5}s`);
-                cell.style.setProperty('--scale', 0.7 + Math.random() * 0.6);
-                cell.style.setProperty('--blur', (Math.random() > 0.3) ? '0px' : `${Math.random() * 3}px`);
+                cell.style.setProperty('--scale', 0.6 + Math.random() * 0.5);
+                cell.style.setProperty('--blur', (Math.random() > 0.3) ? '0px' : `${Math.random() * 2}px`);
                 
                 grid.appendChild(cell);
             }

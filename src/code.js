@@ -320,24 +320,23 @@ async function getCollectionsForUI() {
  */
 async function generateExportData(collectionIds, formats, activeTokenTypes) {
     try {
-        // Validate inputs first
+        // --- Stage 1: Validation & Setup (0% -> 25%) ---
+        figma.ui.postMessage({ type: 'export-progress', percent: 10 });
         const validationErrors = validateExportInputs(collectionIds, formats, activeTokenTypes);
         if (validationErrors.length > 0) {
-            const errorMessage = validationErrors.join('; ');
-            figma.notify(errorMessage, { error: true, timeout: 5000 });
+            figma.notify(validationErrors.join('; '), { error: true, timeout: 5000 });
+            figma.ui.postMessage({ type: 'export-result', data: [] });
             return [];
         }
-
         checkMemoryUsage();
+        await new Promise(resolve => setTimeout(resolve, 500)); // Increased delay
 
+        // --- Stage 2: Fetching & Filtering (25% -> 50%) ---
+        figma.ui.postMessage({ type: 'export-progress', percent: 25 });
         const allVariables = await figma.variables.getLocalVariablesAsync();
         const collections = await figma.variables.getLocalVariableCollectionsAsync();
-        
-        // Filter variables by type early for performance
         const variablesToProcess = allVariables.filter(v => {
             if (!collectionIds.includes(v.variableCollectionId)) return false;
-            
-            // Early type filtering to avoid processing unnecessary variables
             switch (v.resolvedType) {
                 case 'COLOR': return activeTokenTypes.includes('color');
                 case 'STRING': return activeTokenTypes.includes('text');
@@ -346,142 +345,83 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
                 default: return false;
             }
         });
-        
-        if (variablesToProcess.length > 1000) {
-            figma.notify('Processing large number of variables. This may take a moment.', { timeout: 3000 });
-        }
+        await new Promise(resolve => setTimeout(resolve, 750)); // Increased delay
 
+        // --- Stage 3: Processing Tokens (50% -> 75%) ---
+        figma.ui.postMessage({ type: 'export-progress', percent: 50 });
         const designTokens = {};
-
-        // Process variables in batches to prevent freezing
-        for (let i = 0; i < variablesToProcess.length; i += BATCH_SIZE) {
-            const batch = variablesToProcess.slice(i, i + BATCH_SIZE);
+        for (const v of variablesToProcess) {
+            const collection = collections.find(c => c.id === v.variableCollectionId);
+            if (!collection) continue;
             
-            // Process batch in parallel where possible
-            const batchResults = await Promise.all(batch.map(async (v) => {
-                try {
-                    const collection = collections.find(c => c.id === v.variableCollectionId);
-                    if (!collection) return null;
-                
-                    const modeId = collection.defaultModeId || 
-                        (collection.modes && collection.modes.length > 0 ? collection.modes[0].modeId : null);
-                    if (!modeId) {
-                        console.warn(`No mode found for collection ${collection.name}`);
-                        return null;
-                    }
-                    
-                    const value = await resolveVariableValue(v, modeId, allVariables);
-                    if (!value) return null;
+            const modeId = collection.defaultModeId || (collection.modes.length > 0 ? collection.modes[0].modeId : null);
+            if (!modeId) continue;
 
-                    return { variable: v, value, collection };
-                } catch (error) {
-                    console.error('Error processing variable:', createStructuredError('processVariable', error, {
-                        variableName: v.name,
-                        variableId: v.id
-                    }));
-                    return null;
-                }
-            }));
+            const value = await resolveVariableValue(v, modeId, allVariables);
+            if (value === null) continue;
 
-            // Process results and build token structure
-            batchResults.filter(Boolean).forEach(({ variable: v, value, collection }) => {
-                let primitiveValue = value;
-                if (typeof value === 'object' && value !== null && value.r === undefined) {
-                    if (typeof value.value === 'number') {
-                        primitiveValue = value.value;
-                    } else {
-                        console.warn('Could not resolve variable value for non-color object:', v.name, value);
-                        return;
-                    }
-                }
+            // BUG FIX: Scoped tokenData to this loop iteration to prevent data corruption.
+            let tokenData = null; 
+            const primitiveValue = value;
 
-                let tokenData = null;
+            if (v.resolvedType === 'COLOR' && activeTokenTypes.includes('color')) {
+                const { r, g, b, a } = primitiveValue;
+                const toHex = (c) => Math.round(c * 255).toString(16).padStart(2, '0');
+                const colorValue = a < 1 ? `rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, ${a.toFixed(3)})` : `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+                tokenData = { value: colorValue, type: 'color', raw: primitiveValue };
+            } else if (v.resolvedType === 'STRING' && activeTokenTypes.includes('text')) {
+                tokenData = { value: `"${primitiveValue}"`, type: 'string', raw: primitiveValue };
+            } else if (v.resolvedType === 'BOOLEAN' && activeTokenTypes.includes('states')) {
+                tokenData = { value: primitiveValue, type: 'boolean', raw: primitiveValue };
+            } else if (v.resolvedType === 'FLOAT' && activeTokenTypes.includes('number')) {
+                const isUnitless = v.scopes.some(scope => UNITLESS_SCOPES.includes(scope));
+                tokenData = { value: isUnitless ? primitiveValue : `${primitiveValue}px`, type: isUnitless ? 'number' : 'dimension', raw: primitiveValue };
+            }
 
-                // Convert Figma variables to standardized token format
-                if (activeTokenTypes.includes('color') && v.resolvedType === 'COLOR') {
-                    const { r, g, b, a } = primitiveValue;
-                    const toHex = (c) => Math.round(c * 255).toString(16).padStart(2, '0');
-                    
-                    let colorValue;
-                    if (a !== undefined && a < 1) {
-                        colorValue = `rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, ${a.toFixed(3)})`;
-                    } else {
-                        colorValue = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-                    }
-                    
-                    tokenData = { value: colorValue, type: 'color', raw: primitiveValue };
-                } 
-                else if (v.resolvedType === 'STRING' && activeTokenTypes.includes('text')) {
-                    tokenData = { value: `"${primitiveValue}"`, type: 'string', raw: primitiveValue };
-                } 
-                else if (v.resolvedType === 'BOOLEAN' && activeTokenTypes.includes('states')) {
-                    tokenData = { value: primitiveValue, type: 'boolean', raw: primitiveValue };
-                }
-                else if (v.resolvedType === 'FLOAT' && activeTokenTypes.includes('number')) {
-                    const isUnitless = v.scopes.some(scope => UNITLESS_SCOPES.includes(scope));
-
-                    if (isUnitless) {
-                        tokenData = { value: primitiveValue, type: 'number', raw: primitiveValue };
-                    } else {
-                        tokenData = { value: `${primitiveValue}px`, type: 'dimension', raw: primitiveValue };
-                    }
-                }
-
-                if (!tokenData) return;
-
-                // Create nested object structure from variable name
+            if (tokenData) {
                 const path = v.name.split('/');
                 let currentLevel = designTokens;
-                path.forEach((p, i) => {
+                path.forEach((p, j) => {
                     const key = sanitizeName(p, 'w3c');
-                    if (i === path.length - 1) {
+                    if (j === path.length - 1) {
                         currentLevel[key] = tokenData;
                     } else {
-                        if (!currentLevel[key]) currentLevel[key] = {};
+                        currentLevel[key] = currentLevel[key] || {};
                         currentLevel = currentLevel[key];
                     }
                 });
-            });
-            
-            // Send progress updates and yield control
-            if (i % 500 === 0 && i > 0) {
-                await new Promise(resolve => setTimeout(resolve, 0));
-                const progress = Math.round(i / variablesToProcess.length * 100);
-                figma.ui.postMessage({ 
-                    type: 'export-progress', 
-                    percent: progress 
-                });
             }
         }
+        await new Promise(resolve => setTimeout(resolve, 750)); // Increased delay
 
-        // Check if any tokens were processed
+        // --- Stage 4: Generating Files (75% -> 95%) ---
+        figma.ui.postMessage({ type: 'export-progress', percent: 75 });
         if (Object.keys(designTokens).length === 0) {
             figma.notify('No tokens found matching the selected criteria.', { error: true });
+            figma.ui.postMessage({ type: 'export-result', data: [] });
             return [];
         }
-
-        // Generate file content for each selected format
         const exportFiles = formats.map(format => generateFormatContent(designTokens, format)).filter(Boolean);
-        
-        // Check export size before sending
+        await new Promise(resolve => setTimeout(resolve, 500)); // Increased delay
+
+        // --- Stage 5: Finalizing (95% -> 100%) ---
+        figma.ui.postMessage({ type: 'export-progress', percent: 95 });
         const totalSize = exportFiles.reduce((sum, file) => sum + file.content.length, 0);
         if (totalSize > MAX_EXPORT_SIZE) {
             figma.notify('Export too large (>50MB). Try selecting fewer collections.', { error: true });
+            figma.ui.postMessage({ type: 'export-result', data: [] });
             return [];
         }
         
+        // This is the final step before returning data to the UI message handler.
+        figma.ui.postMessage({ type: 'export-progress', percent: 100 });
         return exportFiles;
 
     } catch (error) {
-        const structuredError = createStructuredError('generateExportData', error, {
-            collectionIds,
-            formats,
-            activeTokenTypes
-        });
+        const structuredError = createStructuredError('generateExportData', error, { collectionIds, formats, activeTokenTypes });
         console.error('Error generating export data:', structuredError);
-        
-        const userMessage = 'Failed to generate export data. Please try again with fewer selections.';
-        figma.notify(userMessage, { error: true, timeout: 5000 });
+        figma.notify('Failed to generate export data. Please try again.', { error: true });
+        figma.ui.postMessage({ type: 'export-result', data: [] });
         return [];
     }
 }
