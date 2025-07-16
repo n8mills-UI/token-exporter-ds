@@ -11,7 +11,7 @@
     
     <!-- Injected CSS -->
     <style>
-    /* === SYNCED & BUNDLED | Wed Jul 16 13:50:03 AEST 2025 === */
+    /* === SYNCED & BUNDLED | Wed Jul 16 14:35:12 AEST 2025 === */
 :host,
 .sl-theme-dark {
   color-scheme: dark;
@@ -2497,6 +2497,7 @@ main {
     padding-top: var(--size-4);
 }
 
+
 .token-type-stat {
     text-align: center;
     transition: background var(--animation-duration-2) var(--ease-3),
@@ -2524,6 +2525,8 @@ main {
     margin-bottom: var(--size-1);
     transition: transform var(--animation-duration-2) var(--ease-spring-3);
     display: block;
+    /* FIX: Increase icon size */
+    font-size: var(--font-size-2);
 }
 
 /* Media query for smaller card widths, typical for the plugin */
@@ -2921,14 +2924,14 @@ main {
     margin: 0 auto;
     position: relative;
     justify-content: center;
-    overflow: hidden;
+    /* overflow: hidden; */ /* This was correctly removed previously */
 }
 
 /* Glassmorphism status box */
 .te-glass-status {
     text-align: center;
     position: relative;
-    z-index: var(--layer-card);
+    z-index: var(--layer-card); /* FIX: This ensures the panel is on top */
     background: rgba(42, 42, 42, 0.6);
     backdrop-filter: var(--blur-xl);
     -webkit-backdrop-filter: var(--blur-xl);
@@ -2937,18 +2940,18 @@ main {
         background: rgba(42, 42, 42, 0.95);
     }
     
-    border-radius: var(--radius-4);
+    border-radius: var(--radius-3); /* FIX: Reduced radius from previous step */
     border: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     
-    padding: var(--size-3); /* Reduced padding */
+    padding: var(--size-3);
     display: flex;
     flex-direction: column;
-    gap: var(--size-2); /* Reduced gap */
+    gap: var(--size-2);
     align-items: center;
-    min-width: 240px; /* Reduced min-width */
+    min-width: 240px;
     
-    transform: scale(0.9); /* ADDED: Scales the entire element down */
+    transform: scale(0.9);
     transition: all var(--transition-fast);
     will-change: transform, opacity;
 }
@@ -2956,21 +2959,21 @@ main {
 .te-progress-percent {
     font-family: var(--font-mono);
     font-weight: var(--font-weight-7);
-    font-size: var(--font-size-4); /* CHANGED: Uses type scale */
+    font-size: var(--font-size-4);
     color: var(--color-text-default);
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* ADDED: New rules for button refinement */
+/* Button refinement rules are correct */
 .btn.btn-sm.btn-inline {
-    font-size: var(--font-size-0); /* Slightly larger text */
+    font-size: var(--font-size-0);
 }
 
 .btn.btn-sm.btn-inline .lucide {
-    width: var(--icon-xs); /* Smaller icon */
+    width: var(--icon-xs);
     height: var(--icon-xs);
-    stroke-width: var(--stroke-thick); /* Thicker stroke for visibility */
+    stroke-width: var(--stroke-thick);
 }
 
 .te-progress-track {
@@ -3031,6 +3034,7 @@ main {
     gap: var(--size-1);
     will-change: transform;
     transition: opacity 0.5s ease-out;
+    z-index: var(--layer-base); /* FIX: Explicitly set z-index to be behind the glass panel */
 }
 
 .te-icon-grid.fade-out {
@@ -3205,7 +3209,8 @@ main {
 
 .skeleton-breakdown {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    /* FIX: Enforce 4 columns to match the real component */
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--size-2);
     border-top: var(--border-size-1) solid var(--gray-8);
     padding-top: var(--size-4);
@@ -3234,6 +3239,7 @@ main {
     border-radius: var(--radius-1);
     animation: skeleton-breathe 2.5s ease-in-out infinite;
 }
+
 
 /* ==========================================================================
    Guide Footer
