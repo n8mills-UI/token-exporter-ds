@@ -453,138 +453,105 @@ body {
  }
 
 /* ==========================================================================
- COMPONENT: UNIFIED BUTTON SYSTEM (V4)
- ========================================================================== */
+   COMPONENT: UNIFIED BUTTON SYSTEM (V8)
+   ========================================================================== */
 
-/*
- * Base .btn class
- * Establishes all shared properties for layout, typography, and interaction.
- * Defaults to `width: 100%` for consistency in containers.
-*/
 .btn {
- /* Core Layout & Sizing */
- display: inline-flex;
- align-items: center;
- justify-content: center;
- gap: var(--size-2);
- height: var(--component-height-md); /* Default: 32px */
- padding: 0 var(--size-3);
- width: 100%; /* Default to full-width */
-
- /* Typography */
- font-family: var(--font-sans);
- font-size: var(--font-size-0); /* Default: 14px */
- font-weight: var(--font-weight-6);
- text-decoration: none;
- line-height: 1;
-
- /* Appearance & Transitions */
- border-radius: var(--radius-2);
- border: var(--border-size-1) solid transparent;
- cursor: pointer;
- transition: all var(--transition-fast);
- position: relative;
- overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: var(--transition-fast);
+    text-shadow: none !important;
 }
 
-/* -- Sizing Modifiers -- */
-.btn.btn-sm {
- height: var(--component-height-sm); /* 28px */
- padding: 0 var(--size-2);
- font-size: var(--font-size-00); /* 12px */
+.btn .lucide {
+    text-shadow: none !important;
+    stroke-width: var(--stroke-regular);
 }
 
-.btn.btn-lg {
- height: var(--component-height-lg); /* 36px */
- padding: 0 var(--size-4);
- font-size: var(--font-size-1); /* 16px */
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
 }
 
-/* -- Width Modifiers -- */
-.btn.btn-inline {
- width: auto; /* Overrides default to hug content */
+/* --- SIZES --- */
+.btn-sm { font-size: 12px; height: 28px; padding: 0 12px; gap: 6px; }
+.btn-sm .lucide { width: 14px; height: 14px; }
+
+.btn-md { font-size: 14px; height: 32px; padding: 0 16px; gap: 8px; }
+.btn-md .lucide { width: 16px; height: 16px; }
+
+.btn-lg { font-size: 16px; height: 40px; padding: 0 20px; gap: 10px; }
+.btn-lg .lucide { width: 18px; height: 18px; }
+
+/* --- VARIANTS & STATES --- */
+.btn-primary { background: var(--brand-gradient-lime); color: var(--color-text-on-brand); box-shadow: var(--shadow-brand); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
+.btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
+
+.btn-secondary { background: var(--color-background-secondary); color: var(--color-text-default); border-color: var(--color-border-default); }
+.btn-secondary:hover:not(:disabled) { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
+.btn-secondary:active:not(:disabled) { background: var(--color-background-primary); }
+
+.btn-tertiary { background: transparent; color: var(--color-text-secondary); }
+.btn-tertiary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.05); color: var(--brand-primary-lime); }
+.btn-tertiary:active:not(:disabled) { background: rgba(255, 255, 255, 0.1); }
+
+/* --- ICON-ONLY BUTTON --- */
+.btn-icon { padding: 0; border-radius: 50%; background: var(--color-background-secondary); color: var(--color-text-secondary); border: 1px solid var(--color-border-default); }
+.btn-icon.btn-sm { width: 28px; height: 28px; }
+.btn-icon.btn-md { width: 32px; height: 32px; }
+.btn-icon.btn-lg { width: 40px; height: 40px; }
+.btn-icon:hover:not(:disabled) { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); transform: rotate(15deg); }
+.btn-icon:active:not(:disabled) { transform: rotate(0) scale(0.95); }
+
+/* --- DISABLED STATE (Applies to all) --- */
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
 }
 
-/* -- Style Variants -- */
+/* --- V8 BUTTON DOCUMENTATION STYLES --- */
+.guide-container .section { margin-bottom: 4rem; }
+.guide-container .section-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border-default); }
+.guide-container .section-title { font-size: 1.75rem; font-weight: 700; color: var(--brand-primary-lime); display: flex; align-items: center; gap: 0.75rem; }
+.guide-container .section-description { margin-top: 0.5rem; color: var(--color-text-secondary); max-width: 65ch; }
+.subsection { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
+.subsection-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text-default); }
+.button-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); align-items: center; gap: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: 8px; }
+.icon-only-showcase { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: 8px; }
+.usage-guidelines { background: rgba(210, 255, 55, 0.05); border: 1px solid rgba(210, 255, 55, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; }
+.usage-guidelines h4 { color: var(--brand-primary-lime); margin-bottom: 0.75rem; }
+.usage-guidelines ul { list-style: none; padding: 0; }
+.usage-guidelines li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; color: var(--color-text-secondary); }
+.usage-guidelines li:before { content: '→'; position: absolute; left: 0; color: var(--brand-primary-lime); }
 
-/* Primary Button */
-.btn.primary {
- background: var(--brand-gradient-lime);
- color: var(--color-text-on-brand);
- border-color: var(--brand-primary-lime);
- box-shadow: var(--shadow-brand);
-}
-
-.btn.primary:hover:not(:disabled) {
- filter: brightness(1.1);
- transform: translateY(-2px);
- box-shadow: var(--shadow-brand-hover);
-}
-
-/* Secondary Button */
-.btn.secondary {
- background: var(--color-background-secondary);
- color: var(--color-text-default);
- border-color: var(--color-border-default);
-}
-
-.btn.secondary:hover:not(:disabled) {
- background: var(--color-background-tertiary);
- border-color: var(--gray-5);
- transform: translateY(-1px);
-}
-
-/* NEW: Tertiary / Text Button */
-.btn.tertiary {
- background: transparent;
- color: var(--color-text-muted);
- border-color: transparent;
- box-shadow: none;
-}
-
-.btn.tertiary:hover:not(:disabled) {
- background: var(--color-background-tertiary);
- color: var(--brand-primary-lime);
- transform: none; /* No vertical lift */
-}
-
-
-/* -- Disabled State (applies to all variants) -- */
-.btn:disabled, .btn.disabled {
- background: var(--color-background-disabled);
- color: var(--gray-5);
- border-color: var(--color-background-disabled);
- cursor: not-allowed;
- transform: none;
- box-shadow: none;
- opacity: var(--opacity-disabled);
-}
-
-/* -- Icon-Only Button -- */
-.btn-icon-only {
- /* This modifier is intended to be used with the base .btn class */
- width: var(--component-height-md);
- height: var(--component-height-md);
- padding: 0;
- border-radius: var(--radius-round);
- background: var(--color-background-secondary);
- border: var(--border-size-1) solid var(--color-border-default);
- color: var(--color-text-secondary);
-}
-
-.btn-icon-only:hover:not(:disabled) {
- border-color: var(--brand-primary-lime);
- color: var(--brand-primary-lime);
- transform: translateY(-2px);
-}
-
-/* Icon sizing within all buttons */
-.btn .lucide,
-.btn-icon-only .lucide {
- width: var(--icon-sm); /* Default: 16px */
- height: var(--icon-sm);
- stroke-width: var(--stroke-regular);
-}
+/* STATE COMPARISON MATRIX */
+.state-comparison-grid { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 1rem; align-items: center; }
+.state-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); text-align: center; padding: 0.5rem; background: var(--color-background-primary); border-radius: 4px; }
+.state-label { font-size: 0.875rem; color: var(--color-text-secondary); text-align: right; padding-right: 1rem; }
+.state-cell { display: flex; justify-content: center; align-items: center; min-height: 48px; }
+.force-hover.btn-primary { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
+.force-active.btn-primary { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
+.force-hover.btn-secondary, .force-hover.btn-icon { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
+.force-active.btn-secondary, .force-active.btn-icon { background: var(--color-background-primary); }
+.force-hover.btn-icon { transform: rotate(15deg); }
+.force-active.btn-icon { transform: rotate(0) scale(0.95); }
+.force-focus { box-shadow: var(--shadow-focus); }
+.force-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 
 
 /* ==========================================================================
