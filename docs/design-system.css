@@ -47,7 +47,10 @@ html {
 }
 
 body {
- font-size: var(--font-size-0); /* 14px for plugin interface */
+    font-size: var(--font-size-0); /* 14px for plugin interface */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 :root {
@@ -471,6 +474,7 @@ body {
     user-select: none;
     transition: var(--transition-fast);
     text-shadow: none !important;
+    box-shadow: none;
 }
 
 .btn .lucide {
@@ -485,13 +489,14 @@ body {
 
 /* --- SIZES --- */
 .btn-sm { font-size: 12px; height: var(--component-height-sm); padding: 0 12px; gap: 6px; }
-.btn-sm .lucide { width: 14px; height: 14px; stroke-width: var(--stroke-regular); }
+.btn-sm .lucide { width: var(--icon-xs); height: var(--icon-xs); } /* 12px */
 
 .btn-md { font-size: 14px; height: var(--component-height-md); padding: 0 16px; gap: 8px; }
-.btn-md .lucide { width: 16px; height: 16px; stroke-width: var(--stroke-regular); }
+.btn-md .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
 
 .btn-lg { font-size: 16px; height: var(--component-height-lg); padding: 0 20px; gap: 10px; }
-.btn-lg .lucide { width: 20px; height: 20px; stroke-width: var(--stroke-regular); }
+.btn-lg .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
+
 
 /* --- ICON-ONLY BUTTON --- */
 .btn-icon {
@@ -500,7 +505,6 @@ body {
     background: var(--color-background-secondary);
     color: var(--color-text-secondary);
     border: 1px solid var(--color-border-default);
-    /* Add transition for hover/active effects */
     transition: var(--transition-fast);
 }
 .btn-icon:hover:not(:disabled) {
@@ -517,9 +521,19 @@ body {
 .btn-icon.btn-lg { width: var(--component-height-lg); height: var(--component-height-lg); }
 
 /* Icon size overrides for icon-only buttons, using tokens */
-.btn-icon.btn-sm .lucide { width: var(--icon-sm); height: var(--icon-sm); }
-.btn-icon.btn-md .lucide { width: var(--icon-md); height: var(--icon-md); } 
-.btn-icon.btn-lg .lucide { width: var(--icon-lg); height: var(--icon-lg); } 
+.btn-icon.btn-sm .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
+.btn-icon.btn-md .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
+.btn-icon.btn-lg .lucide { width: var(--icon-lg); height: var(--icon-lg); } /* 24px */
+
+/* --- ICON STROKE WEIGHT DIFFERENTIATION --- */
+/* Default stroke for all buttons with text */
+.btn:not(.btn-icon) .lucide {
+    stroke-width: var(--stroke-regular);
+}
+/* Thinner stroke ONLY for icon-only buttons */
+.btn-icon .lucide {
+    stroke-width: var(--stroke-thin);
+}
 
 
 
@@ -3265,12 +3279,14 @@ main {
 
 /* @docs-only-start */
 .guide-footer {
- background: #0a0a0a;
- position: relative;
- padding: var(--size-8) var(--size-8);
- margin-top: var(--size-10);
- margin-left: 280px;
+    background: #0a0a0a;
+    position: relative;
+    padding: var(--size-8) var(--size-8);
+    margin-top: auto; /* <-- THIS IS THE KEY */
+    margin-left: 280px;
 }
+
+
 
 /* Thin branded divider line */
 .guide-footer::before {
@@ -3333,8 +3349,6 @@ main {
  gap: var(--size-4);
  padding-bottom: var(--border-size-2); 
 }
-
-
 
 .footer-cta svg { /* Changed from .lucide to svg for the inline logo */
  width: 15px;
@@ -3923,6 +3937,7 @@ body {
 /* Guide Layout */
 .guide-container {
  display: flex;
+ grid-template-columns: 280px 1fr;
  min-height: 100vh;
 }
 
@@ -3941,7 +3956,7 @@ body {
 
 .guide-content {
  margin-left: 280px;
- flex: 1;
+ flex-grow: 1; /* <-- CHANGE flex:1 to flex-grow: 1 */
  max-width: calc(100vw - 280px);
  width: 100%;
  box-sizing: border-box;
