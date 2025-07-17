@@ -1033,66 +1033,84 @@
     }
     
     function startTyping() {
-        const codeBlock = document.getElementById('codeBlock');
-        if (!codeBlock) return;
-        
-        const lines = codeBlock.querySelectorAll('.code-line');
-        let currentLine = 0;
-        
-        const typeLine = () => {
-            if (currentLine >= lines.length) {
-                // Add blinking cursor at the end
-                const lastLine = lines[lines.length - 1];
+    const codeBlock = document.getElementById('codeBlock');
+    if (!codeBlock) return;
+    
+    let isTyping = false;
+    let currentLineIndex = 0;
+    let currentCharIndex = 0;
+    
+    // Clear all lines first
+    const lines = codeBlock.querySelectorAll('.code-line');
+    lines.forEach(line => {
+        line.innerHTML = '';
+    });
+    
+    function typeNextLine() {
+        if (currentLineIndex >= lines.length) {
+            // Add cursor at the end
+            const lastLine = lines[lines.length - 1];
+            if (!lastLine.querySelector('.cursor')) {
                 lastLine.innerHTML += '<span class="cursor"></span>';
-                return;
             }
-            
-            const line = lines[currentLine];
-            const text = line.getAttribute('data-text');
-            line.innerHTML = '';
-            let charIndex = 0;
-            
-            const typeChar = () => {
-                if (charIndex < text.length) {
-                    // Parse HTML tags properly
-                    if (text[charIndex] === '<') {
-                        const tagEnd = text.indexOf('>', charIndex);
-                        if (tagEnd !== -1) {
-                            line.innerHTML += text.substring(charIndex, tagEnd + 1);
-                            charIndex = tagEnd + 1;
-                        } else {
-                            line.innerHTML += text[charIndex];
-                            charIndex++;
-                        }
-                    } else {
-                        line.innerHTML += text[charIndex];
-                        charIndex++;
-                    }
-                    setTimeout(typeChar, 30);
-                } else {
-                    currentLine++;
-                    setTimeout(typeLine, 200);
-                }
-            };
-            
-            typeChar();
-        };
-        
-        // Start typing when profile card is in viewport
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    typeLine();
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-        
-        const profileCard = document.querySelector('.profile-card');
-        if (profileCard) {
-            observer.observe(profileCard);
+            isTyping = false;
+            return;
         }
+        
+        const currentLine = lines[currentLineIndex];
+        const fullText = currentLine.getAttribute('data-text');
+        
+        // If empty line, just move to next
+        if (!fullText || fullText === '') {
+            currentLineIndex++;
+            currentCharIndex = 0;
+            setTimeout(() => typeNextLine(), 50);
+            return;
+        }
+        
+        typeNextChar(currentLine, fullText);
     }
+    
+    function typeNextChar(line, fullText) {
+        if (currentCharIndex >= fullText.length) {
+            // Move to next line
+            currentLineIndex++;
+            currentCharIndex = 0;
+            setTimeout(() => typeNextLine(), 50);
+            return;
+        }
+        
+        // Update line content using substring
+        line.innerHTML = fullText.substring(0, currentCharIndex + 1) + '<span class="cursor"></span>';
+currentCharIndex++;
+        
+        // Variable typing speed
+        let delay = 15;
+        if (fullText[currentCharIndex - 1] === ' ') {
+            delay = 10;
+        }
+        
+        setTimeout(() => typeNextChar(line, fullText), delay);
+    }
+    
+    // Start animation when profile card is in viewport
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isTyping) {
+                isTyping = true;
+                currentLineIndex = 0;
+                currentCharIndex = 0;
+                typeNextLine();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    
+    const profileCard = document.querySelector('.profile-card');
+    if (profileCard) {
+        observer.observe(profileCard);
+    }
+}
     
     // --- FINAL, CORRECT 'initTechHover' FUNCTION ---
     function initTechHover() {
