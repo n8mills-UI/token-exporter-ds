@@ -3074,6 +3074,8 @@ main {
     padding: var(--size-8) var(--size-8);
     margin-top: var(--size-10);
     margin-left: 280px;
+    width: calc(100% - 280px);
+    box-sizing: border-box;
 }
 
 /* Thin branded divider line */
