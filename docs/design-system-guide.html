@@ -189,53 +189,67 @@
             </div>
         </div>
 
-        <!-- Built With Section -->
-        <div class="tech-stack-grid">
-            <div class="section-header">
-                <h3 class="section-title"><i data-lucide="terminal"></i> Built With</h3>
-                <p class="section-subtitle">// AI-powered development stack</p>
+                <!-- NEW: 2-Column Grid Wrapper -->
+        <div class="content-grid-2col">
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                 <div class="section-header">
+                    <h3 class="section-title"><i data-lucide="help-circle"></i> FAQ</h3>
+                    <p class="section-subtitle">// Common questions answered</p>
+                </div>
+                <div class="faq-item"><div class="faq-question"><span>Why build this when other token exporters exist?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Most exporters are one-size-fits-all. This one speaks each platform's native language—Swift for iOS, XML for Android, and W3C-compliant CSS for web. It understands context.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>How does AI development actually work in practice?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>It's like pair programming with a team of specialists. I outline the goal, the AI suggests code, and I refine and test. What would take hours to research takes minutes. The 10x speed boost is real.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>What were the biggest technical challenges?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Figma's plugin security model was tricky; you can't load external CSS, so everything must be inlined. Also, handling deeply nested color aliases required robust recursive resolution logic.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Is this production-ready or just a portfolio piece?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>It's production-ready. The code is defensive, handling edge cases like malformed tokens and circular references, and it's performance-optimized with batching for large datasets.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Why use Open Props instead of custom tokens?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Starting from scratch is tempting but wasteful. Open Props is battle-tested, WCAG compliant out of the box, and saves months of work. I built on top of it rather than reinventing it.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>How long did this take to build?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Three weeks of focused development with AI assistance. Without AI, this would have been a 3-6 month project. AI turned research time into building time.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Can I fork this or contribute?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Absolutely. It's open source on GitHub. The codebase is documented, modular, and designed for extension. Want to add a new export format? The pattern is clear. Found a bug? PRs are welcome.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>What's the roadmap for future features?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Considering token transformations (e.g., px to rem), preset style mappings, and direct GitHub integration. Community feedback will drive priorities.</p></div></div>
             </div>
-            <div class="tech-grid">
-                <div class="tech-item" data-tech="claude"><i data-lucide="bot" class="lucide"></i>Claude AI</div>
-                <div class="tech-item" data-tech="github"><i data-lucide="github" class="lucide"></i>GitHub</div>
-                <div class="tech-item" data-tech="openprops"><i data-lucide="cuboid" class="lucide"></i>Open Props</div>
-                <div class="tech-item" data-tech="gemini"><i data-lucide="sparkles" class="lucide"></i>Gemini</div>
-                <div class="tech-item" data-tech="vscode"><i data-lucide="code" class="lucide"></i>VS Code</div>
-                <div class="tech-item" data-tech="figma"><i data-lucide="figma" class="lucide"></i>Figma</div>
-                <div class="tech-item" data-tech="nodejs"><i data-lucide="box" class="lucide"></i>Node.js</div>
-                <div class="tech-item" data-tech="manus"><i data-lucide="brain-circuit" class="lucide"></i>Manus AI</div>
-            </div>
-            <div class="tech-info-panel">
-                <div class="tech-info-content active" id="tech-info-default"><p class="tech-info-description">Hover over a tool to see how it contributed.</p></div>
-                <div class="tech-info-content" id="tech-info-claude"><div class="tech-info-title"><i data-lucide="bot"></i>Claude AI</div><p class="tech-info-description">Primary coding partner. Architected the system and wrote complex functions for alias resolution and name sanitization.</p></div>
-                <div class="tech-info-content" id="tech-info-github"><div class="tech-info-title"><i data-lucide="github"></i>GitHub</div><p class="tech-info-description">Version control and collaboration. Every commit tracked, providing easy rollback when experiments failed.</p></div>
-                <div class="tech-info-content" id="tech-info-openprops"><div class="tech-info-title"><i data-lucide="cuboid"></i>Open Props</div><p class="tech-info-description">435+ design tokens ready to use. Why reinvent spacing scales when they've been perfected?</p></div>
-                <div class="tech-info-content" id="tech-info-gemini"><div class="tech-info-title"><i data-lucide="sparkles"></i>Gemini</div><p class="tech-info-description">Provided a second opinion on tricky problems. A different AI model often leads to a better, more robust solution.</p></div>
-                <div class="tech-info-content" id="tech-info-vscode"><div class="tech-info-title"><i data-lucide="code"></i>VS Code</div><p class="tech-info-description">Where the magic happens. AI extensions make it feel like pair programming, but faster.</p></div>
-                <div class="tech-info-content" id="tech-info-figma"><div class="tech-info-title"><i data-lucide="figma"></i>Figma</div><p class="tech-info-description">The source of truth. The plugin uses the Figma API to export tokens exactly as designers intended.</p></div>
-                <div class="tech-info-content" id="tech-info-nodejs"><div class="tech-info-title"><i data-lucide="box"></i>Node.js</div><p class="tech-info-description">Used for the build process, running scripts like `npm run sync` to bundle CSS for the plugin.</p></div>
-                <div class="tech-info-content" id="tech-info-manus"><div class="tech-info-title"><i data-lucide="brain-circuit"></i>Manus AI</div><p class="tech-info-description">A specialized AI model that provided smart refactoring suggestions and caught inefficiencies I missed.</p></div>
-            </div>
-        </div>
 
-        <!-- FAQ Section -->
-        <div class="faq-section">
-             <div class="section-header">
-                <h3 class="section-title"><i data-lucide="help-circle"></i> FAQ</h3>
-                <p class="section-subtitle">// Common questions answered</p>
-            </div>
-            <div class="faq-item"><div class="faq-question"><span>Why build this when other token exporters exist?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Most exporters are one-size-fits-all. This one speaks each platform's native language—Swift for iOS, XML for Android, and W3C-compliant CSS for web. It understands context.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>How does AI development actually work in practice?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>It's like pair programming with a team of specialists. I outline the goal, the AI suggests code, and I refine and test. What would take hours to research takes minutes. The 10x speed boost is real.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>What were the biggest technical challenges?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Figma's plugin security model was tricky; you can't load external CSS, so everything must be inlined. Also, handling deeply nested color aliases required robust recursive resolution logic.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>Is this production-ready or just a portfolio piece?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>It's production-ready. The code is defensive, handling edge cases like malformed tokens and circular references, and it's performance-optimized with batching for large datasets.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>Why use Open Props instead of custom tokens?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Starting from scratch is tempting but wasteful. Open Props is battle-tested, WCAG compliant out of the box, and saves months of work. I built on top of it rather than reinventing it.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>How long did this take to build?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Three weeks of focused development with AI assistance. Without AI, this would have been a 3-6 month project. AI turned research time into building time.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>Can I fork this or contribute?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Absolutely. It's open source on GitHub. The codebase is documented, modular, and designed for extension. Want to add a new export format? The pattern is clear. Found a bug? PRs are welcome.</p></div></div>
-            <div class="faq-item"><div class="faq-question"><span>What's the roadmap for future features?</span><i data-lucide="plus" class="faq-toggle"></i></div><div class="faq-answer"><p>Considering token transformations (e.g., px to rem), preset style mappings, and direct GitHub integration. Community feedback will drive priorities.</p></div></div>
+            <!-- Built With Section -->
+<div class="tech-stack-grid">
+    <div class="section-header">
+        <h3 class="section-title"><i data-lucide="terminal"></i> Built With</h3>
+        <p class="section-subtitle">// AI-powered development stack</p>
+    </div>
+    <div class="tech-grid">
+        <div class="tech-item" data-tech="claude" data-url="https://www.anthropic.com/claude">
+            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Claude</title><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>
+            Claude AI
         </div>
+        <div class="tech-item" data-tech="github" data-url="https://github.com/n8mills-UI/Token-Exporter-v4"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><title>GitHub</title><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</div>
+        <div class="tech-item" data-tech="openprops" data-url="https://open-props.style/"><i data-lucide="cuboid"></i>Open Props</div>
+        <div class="tech-item" data-tech="gemini" data-url="https://gemini.google.com/">
+            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+            Gemini
+        </div>
+        <div class="tech-item" data-tech="vscode" data-url="https://code.visualstudio.com/">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><path d="M493.8,55.2L388.5,4.5c-12.3-5.9-26.8-3.4-36.4,6.2L150.3,194.8l-87.9-66.7c-8.2-6.3-19.7-5.7-27.2,1.2L7,154.9 c-9.3,8.4-9.3,23.1-0.1,31.5L83.2,256L6.9,325.6c-9.2,8.4-9.2,23.1,0.1,31.5l28.2,25.7c7.7,6.9,19.1,7.4,27.2,1.2l87.9-66.7 l201.8,184.1c9.5,9.6,24.1,12.1,36.3,6.2l105.4-50.7c11.1-5.3,18.1-16.5,18.1-28.8V84C512,71.7,504.9,60.5,493.8,55.2L493.8,55.2z M384.1,372.3L230.9,256l153.2-116.3V372.3z"/></g></svg>
+            VS Code
+        </div>
+        <div class="tech-item" data-tech="figma" data-url="https://www.figma.com/"><i data-lucide="figma"></i>Figma</div>
+        <div class="tech-item" data-tech="nodejs" data-url="https://nodejs.org/">
+            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Node.js</title><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg>
+            Node.js
+        </div>
+        <div class="tech-item" data-tech="manus" data-url="#">
+            <svg fill="currentColor" fill-rule="evenodd" height="1em" style="flex:none;line-height:1" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><title>Manus</title><path d="M8.047 1.163A.936.936 0 119.863.709c.063.256.132.508.2.76l.005.016c.158.58.315 1.16.416 1.771a.936.936 0 11-1.847.305c-.085-.517-.203-.949-.346-1.473v-.002c-.075-.274-.157-.573-.244-.923zM3.67 2.753a.936.936 0 00.428 1.252c.667.327 1.245.65 1.818 1.295a.936.936 0 001.4-1.242C6.5 3.138 5.66 2.687 4.922 2.325a.936.936 0 00-1.252.428z"></path><path clip-rule="evenodd" d="M15.672 21.284c-.17-.036-.356-.075-.546-.117-.7-.152-1.65-.365-2.097-.513l-.033-.011-.032-.012c-.198-.074-.534-.156-1.09-.283l-.103-.023c-.48-.11-1.07-.244-1.63-.413-.578-.176-1.294-.437-1.903-.862-.638-.446-1.364-1.232-1.404-2.412a5.024 5.024 0 01.009-.51 2.716 2.716 0 01-.65-1.24 2.632 2.632 0 01.03-1.275c.083-.317.21-.594.316-.8.036-.07.073-.14.11-.206-.35-.111-.747-.248-1.133-.412-.503-.215-1.218-.57-1.752-1.141a2.798 2.798 0 01-.71-1.327 2.55 2.55 0 01.226-1.68c.604-1.208 1.757-1.635 2.782-1.672.926-.033 1.912.226 2.795.536.804.282 1.955.807 2.933 1.264.322-.529.747-1.126 1.149-1.608l.08-.095.092-.084a3.43 3.43 0 012.06-.887 3.559 3.559 0 011.059.08l.036.008.023.007h.003l.002.001s.002 0-.477 1.786l.479-1.786.208.058.19.102c.964.516 1.238 1.406 1.31 1.876a2.9 2.9 0 01-.008.903l-.003.018v.005l-1.858-.37 1.857.371-.01.054-.3 1.19c-.058.292-.065.459-.062.547a.286.286 0 00.016.107v.001c.013.03.043.095.154.263.043.066.088.131.144.214l.058.084c.08.118.174.257.274.412.623.97.684 1.902.68 2.499v.026l.238.078.103.032.153.049c.076.024.173.056.267.09.11-.202.407-.636.945-.636.702 0 .99.987.99.987.275 1.838-.98 8.013-2.794 9.164-1.386.88-2.413-.427-3.176-2.437zM8.72 12.868c.118-.119.47-.37 1.136-.445a4.337 4.337 0 012.228.365c.623.276 1.053.908 1.233 1.667.088.371.104.731.066 1.025-.04.31-.128.465-.169.511-.05.058-.228.157-.721.053a3.417 3.417 0 01-.764-.266l-.006-.003a.936.936 0 00-.861 1.662h.001l.003.002.008.004.024.012a4.888 4.888 0 00.34.152c.215.086.52.194.866.267.615.13 1.75.23 2.52-.652.37-.424.548-.98.615-1.501a4.789 4.789 0 00-.1-1.697c-.268-1.128-.976-2.362-2.297-2.948a6.208 6.208 0 00-3.195-.513c-.619.07-1.211.242-1.69.504l-.02-.006h-.004c-1.183-.338-3.536-1.01-2.956-2.17.44-.88 1.643-.807 3.275-.234.663.232 1.584.647 2.453 1.051.27.125.534.25.784.367l.974.454c.693-.832.962-1.29 1.2-1.695.163-.278.312-.53.573-.862l.025-.032a9.902 9.902 0 01.146-.18.895.895 0 01.02-.017c.642-.567 1.389-.36 1.389-.36.427.228.318.806.318.806l-.296 1.178c-.284 1.386.03 1.845.547 2.6.09.133.188.275.29.433.412.643.392 1.26.377 1.765-.01.324-.019.602.09.809.224.425 1.06.69 1.61.862.132.042.247.078.333.11l.059.023c-.078.24-.148.489-.218.737-.313 1.103-.623 2.202-1.55 2.53-.632.225-1.263.214-1.71.156-.786-.17-1.716-.379-2.066-.495-.363-.135-.871-.25-1.424-.377-1.316-.3-2.883-.656-3.331-1.462a.975.975 0 01-.125-.447c-.026-.74.234-1.404.234-1.404s-.403.002-.685-.27a.853.853 0 01-.238-.431c-.03-.13-.042-.28-.025-.44.008 0 .012-.008.012-.028 0-.234.234-.702.702-1.17z"></path><path d="M14.077.604a.936.936 0 01.315 1.285c-.355.584-.561 1.181-.786 2.081a.936.936 0 11-1.816-.454c.243-.971.504-1.778 1.002-2.598a.936.936 0 011.285-.314z"></path></svg>
+            Manus AI
+        </div>
+    </div>
 
-   <!-- Developer Profile v2 -->
-<div class="profile-card">
+    <!-- This is the new, single info panel that will be dynamically updated -->
+    <div class="info-panel-a" id="info-panel">
+        <!-- Content will be injected here by JavaScript -->
+    </div>
+</div>
+
+        
+            </div> <!-- END: 2-Column Grid Wrapper -->
+
+            <!-- Developer Profile v2 -->
+            <div class="profile-card">
     <span class="version-label">Figma Plugin ASCII ART</span>
     
     <!-- Left side: ASCII Art -->
@@ -266,21 +280,34 @@
 
 
 ┌─[ SYSTEM ANALYSIS ]────────────────────────────────────────────────────────┐
+│                                                                            │
 │ [ UID: N8-MILLS ]...................................................[OK]   │
+│                                                                            │
 │ [ CLASS: UI/UX ARCHITECT ]..........................................[ACT]  │
+│                                                                            │
 │ [ SPECIALIZATION: DESIGN SYSTEMS & FIGMA TOOLING ]..................[INIT] │
+│                                                                            │
 │ [ AFFILIATION: BRIDGING DESIGN AND ENGINEERING ]....................[SYNC] │
+│                                                                            │
 │ [ EXPERIENCE: 20+ YEARS CRAFTING DIGITAL EXPERIENCES ]..............[LOAD] │
+│                                                                            │
 │ [ CURRENT FOCUS: AI-POWERED DESIGN WORKFLOWS ]......................[EXEC] │
+│                                                                            │
 └────────────────────────────────────────────────────────────────────────────┘
 
 
 ┌─[ CORE MODULES ]───────────────────────────────────────────────────────────┐
+│                                                                            │
 │  Design Systems Architecture ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%  │
+│                                                                            │
 │  Component Engineering ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%  │
+│                                                                            │
 │  Token Management Systems ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%  │
+│                                                                            │
 │  Figma Plugin Development ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%  │
+│                                                                            │
 │  AI Integration Protocols ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%  │
+│                                                                            │
 └────────────────────────────────────────────────────────────────────────────┘
         </div>
         <!-- Mobile Version (Compact) -->
@@ -337,9 +364,7 @@
             </div>
         </div>
     </div>
-</div>
-
-</div>
+         </div>
 
           <!-- Color System Section -->
             <section id="colors" class="content-section">
@@ -813,6 +838,11 @@
     </div>
 </footer>
 
+
+<a href="YOUR_GITHUB_REPO_URL" target="_blank" rel="noopener noreferrer" class="version-badge" title="View on GitHub">
+    v<span id="version"></span>
+</a>
+
 <script>
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -824,10 +854,18 @@
         animateCounters();
         initFAQAccordion();
         initTechHover();
+        startTyping();
+        
+        if (window.lucide) {
+            lucide.createIcons();
+        }
     });
 
+
+
+
+    
     // --- RENDER ICONS ---
-    // This is called after dependent functions to ensure icons in dynamic content are rendered.
     function renderAllIcons() {
         if (window.lucide) {
             try {
@@ -838,7 +876,7 @@
         }
     }
 
-    // --- NAVIGATION & INTERACTIVITY ---
+    // --- NAVIGATION & OTHER UI FUNCTIONS ---
     function initializeMobileMenu() {
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle-right');
         const menuCloseBtn = document.getElementById('menu-close-btn');
@@ -846,56 +884,41 @@
         const menuOverlay = document.getElementById('menu-overlay');
         const sidebar = document.getElementById('sidebar');
         const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
-
-        // Function to populate the mobile menu from the desktop sidebar
+        if (!mobileMenuToggle || !mobileMenu) return;
         const populateMobileMenu = () => {
             if (!sidebar || !mobileNavLinksContainer) return;
             const sidebarLinks = sidebar.querySelectorAll('.nav-links li');
-            mobileNavLinksContainer.innerHTML = ''; // Clear existing links
+            mobileNavLinksContainer.innerHTML = '';
             sidebarLinks.forEach(link => {
                 mobileNavLinksContainer.appendChild(link.cloneNode(true));
             });
-            renderAllIcons(); // Render icons inside the new links
+            renderAllIcons();
         };
-
         const openMenu = () => {
             if (mobileMenu) mobileMenu.classList.add('open');
             if (menuOverlay) menuOverlay.classList.add('open');
         };
-
         const closeMenu = () => {
             if (mobileMenu) mobileMenu.classList.remove('open');
             if (menuOverlay) menuOverlay.classList.remove('open');
         };
-        
-        // Attach event listeners
-        if (mobileMenuToggle) mobileMenuToggle.addEventListener('click', openMenu);
+        mobileMenuToggle.addEventListener('click', openMenu);
         if (menuCloseBtn) menuCloseBtn.addEventListener('click', closeMenu);
         if (menuOverlay) menuOverlay.addEventListener('click', closeMenu);
-        
-        // Close menu when a link is clicked
         if (mobileNavLinksContainer) {
             mobileNavLinksContainer.addEventListener('click', (e) => {
-                if (e.target.closest('a')) {
-                    closeMenu();
-                }
+                if (e.target.closest('a')) closeMenu();
             });
         }
-
-        // Initial population
         populateMobileMenu();
     }
-
     function initializeScrollHeader() {
         const header = document.getElementById('mobile-header');
         if (!header) return;
-
         let lastScrollY = window.scrollY;
         const headerHeight = parseFloat(getComputedStyle(header).height);
-
         window.addEventListener('scroll', () => {
             if (document.getElementById('mobile-menu')?.classList.contains('open')) return;
-            
             if (lastScrollY < window.scrollY && window.scrollY > headerHeight) {
                 header.classList.add('hidden');
             } else {
@@ -904,24 +927,17 @@
             lastScrollY = window.scrollY;
         }, { passive: true });
     }
-
     function initializeNavigation() {
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.content-section, .token-category, .component-section');
-
         const observer = new IntersectionObserver(entries => {
-            let visibleSections = entries
-                .filter(entry => entry.isIntersecting)
-                .map(entry => entry.target);
-
+            let visibleSections = entries.filter(entry => entry.isIntersecting).map(entry => entry.target);
             if (visibleSections.length > 0) {
                 visibleSections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
                 const activeId = visibleSections[0].getAttribute('id');
-
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     const linkHref = link.getAttribute('href');
-                    
                     if (linkHref === `#${activeId}`) {
                         link.classList.add('active');
                     } else if (linkHref === '#colors' && activeId.includes('colors')) {
@@ -930,10 +946,7 @@
                 });
             }
         }, { rootMargin: "-40% 0px -60% 0px" });
-
         sections.forEach(section => observer.observe(section));
-
-        // Smooth scroll for all nav links
         document.body.addEventListener('click', (e) => {
             const link = e.target.closest('a.nav-link');
             if (link) {
@@ -946,360 +959,91 @@
             }
         });
     }
+    function copyToken(tokenName) { /* ... implementation from your file ... */ }
+    function animateCounters() { /* ... implementation from your file ... */ }
+    function initFAQAccordion() { /* ... implementation from your file ... */ }
+    function initializeGuideLoader() { /* ... implementation from your file ... */ }
+    function demoGuideExport() { /* ... implementation from your file ... */ }
+    function startTyping() { /* ... implementation from your file ... */ }
+    
+    // --- FINAL, CORRECT 'initTechHover' FUNCTION ---
+    function initTechHover() {
+        const container = document.querySelector('.tech-stack-grid');
+        const techItems = Array.from(document.querySelectorAll('.tech-item[data-tech]'));
+        const infoPanel = document.getElementById('info-panel');
+        if (!container || !techItems.length || !infoPanel) return;
 
-    // --- OTHER UI FUNCTIONS (Copied from original file) ---
-    function copyToken(tokenName) {
-        navigator.clipboard.writeText(tokenName).then(() => {
-            const buttons = document.querySelectorAll(`.token-copy[onclick="copyToken('${tokenName}')"]`);
-            buttons.forEach(button => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i data-lucide="check"></i> Copied!';
-                button.disabled = true;
-                renderAllIcons();
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                }, 2000);
-            });
-        });
-    }
+        let carouselInterval = null;
+        let currentIndex = 0;
+        const descriptions = {
+            claude: "Primary coding partner. Architected the system and wrote complex functions for alias resolution and name sanitization.",
+            github: "Version control and collaboration. Every commit tracked, providing easy rollback when experiments failed.",
+            openprops: "435+ design tokens ready to use. Why reinvent spacing scales when they've been perfected?",
+            gemini: "Provided a second opinion on tricky problems. A different AI model often leads to a better, more robust solution.",
+            vscode: "Where the magic happens. AI extensions make it feel like pair programming, but faster.",
+            figma: "The source of truth. The plugin uses the Figma API to export tokens exactly as designers intended.",
+            nodejs: "Used for the build process, running scripts like `npm run sync` to bundle CSS for the plugin.",
+            manus: "A specialized AI model that provided smart refactoring suggestions and caught inefficiencies I missed."
+        };
 
-    function animateCounters() { /* ... implementation ... */ }
-    function initFAQAccordion() { /* ... implementation ... */ }
-    function initTechHover() { /* ... implementation ... */ }
-    function initializeGuideLoader() { /* ... implementation ... */ }
-    function demoGuideExport() { /* ... implementation ... */ }
+        const showInfo = (techItem) => {
+            if (!techItem) return;
+            const tech = techItem.dataset.tech;
+            const url = techItem.dataset.url || '#';
+            const name = techItem.textContent.trim();
+            const description = descriptions[tech] || "Description not available.";
+            const icon = techItem.querySelector('svg, .lucide');
 
-
-
-// --- OTHER UI FUNCTIONS (Copied from original file) ---
-function copyToken(tokenName) {
-    navigator.clipboard.writeText(tokenName).then(() => {
-        const buttons = document.querySelectorAll(`.token-copy[onclick="copyToken('${tokenName}')"]`);
-        buttons.forEach(button => {
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i data-lucide="check"></i> Copied!';
-            button.disabled = true;
-            renderAllIcons();
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.disabled = false;
-            }, 2000);
-        });
-    });
-}
-
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter');
-    if (!counters.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const target = parseInt(counter.dataset.target);
-                let current = 0;
-                const increment = target / 100;
-
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        counter.textContent = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                updateCounter();
-                observer.unobserve(counter);
+            infoPanel.innerHTML = `
+                <div class="title">
+                    ${icon ? icon.outerHTML : ''}
+                    <span>${name}</span>
+                </div>
+                <p class="description">${description}</p>
+                <a href="${url}" class="website-link" target="_blank" rel="noopener noreferrer">
+                    <span>Visit Website</span>
+                    <i data-lucide="arrow-up-right" style="width: 1em; height: 1em;"></i>
+                </a>
+            `;
+            if (window.lucide) {
+                lucide.createIcons();
             }
-        });
-    }, { threshold: 0.5 });
-
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
-}
-
-function initFAQAccordion() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    if (!faqItems.length) return;
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        if (question) {
-            question.addEventListener('click', () => {
-                const wasOpen = item.classList.contains('open');
-                faqItems.forEach(other => other.classList.remove('open'));
-                if (!wasOpen) {
-                    item.classList.add('open');
-                }
+            techItems.forEach(item => {
+                item.classList.toggle('active', item.dataset.tech === tech);
             });
-        }
-    });
-}
+        };
 
-function initTechHover() {
-    const techItems = document.querySelectorAll('.tech-item[data-tech]');
-    const infoPanel = document.querySelector('.tech-info-panel');
-    const defaultContent = document.getElementById('tech-info-default');
-    if (!techItems.length || !infoPanel || !defaultContent) return;
+        const startCarousel = () => {
+            if (carouselInterval) return;
+            carouselInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % techItems.length;
+                showInfo(techItems[currentIndex]);
+            }, 5000);
+        };
 
-    const showInfo = (tech) => {
-        document.querySelectorAll('.tech-info-content').forEach(content => {
-            content.classList.remove('active');
+        const stopCarousel = () => {
+            clearInterval(carouselInterval);
+            carouselInterval = null;
+        };
+
+        showInfo(techItems[0]);
+        startCarousel();
+        container.addEventListener('mouseenter', stopCarousel);
+        container.addEventListener('mouseleave', startCarousel);
+        techItems.forEach((item, index) => {
+            item.addEventListener('mouseenter', () => {
+                currentIndex = index;
+                showInfo(item);
+            });
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                showInfo(item);
+            });
         });
-        const targetContent = document.getElementById(`tech-info-${tech}`);
-        if (targetContent) {
-            targetContent.classList.add('active');
-        }
-        techItems.forEach(item => {
-            item.classList.toggle('active', item.dataset.tech === tech);
-        });
-    };
-
-    techItems.forEach(item => {
-        item.addEventListener('mouseenter', () => showInfo(item.dataset.tech));
-        item.addEventListener('click', () => showInfo(item.dataset.tech)); // For touch devices
-    });
-
-    infoPanel.parentElement.addEventListener('mouseleave', () => showInfo('default'));
-}
-
-function initializeGuideLoader() {
-    const guideIconGrid = document.getElementById('guideIconGrid');
-    if (!guideIconGrid) return;
-
-    const iconTypes = [
-        { icon: 'palette', color: 'var(--category-color-cyan)' },
-        { icon: 'type', color: 'var(--category-color-purple)' },
-        { icon: 'hash', color: 'var(--category-color-orange)' },
-        { icon: 'toggle-right', color: 'var(--category-color-pink)' }
-    ];
-
-    // Create icon grid
-    for (let i = 0; i < 100; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'te-icon-cell';
-        const iconType = iconTypes[Math.floor(Math.random() * iconTypes.length)];
-        
-        cell.innerHTML = `<i data-lucide="${iconType.icon}"></i>`;
-        cell.style.setProperty('--color', iconType.color);
-        cell.style.setProperty('--delay', `${Math.random() * 2}s`);
-        cell.style.setProperty('--x-start', `${(Math.random() - 0.5) * 200}px`);
-        cell.style.setProperty('--y-start', `${(Math.random() - 0.5) * 200}px`);
-        cell.style.setProperty('--x-end', `${(Math.random() - 0.5) * 300}px`);
-        cell.style.setProperty('--y-end', `${(Math.random() - 0.5) * 300}px`);
-        cell.style.setProperty('--scale', 0.5 + Math.random() * 0.5);
-        cell.style.setProperty('--blur', `${Math.random() * 4}px`);
-        
-        guideIconGrid.appendChild(cell);
     }
-    renderAllIcons();
-}
-
-function demoGuideExport() {
-    const loader = document.getElementById('guideProgressLoader');
-    const iconGrid = document.getElementById('guideIconGrid');
-    const glassStatus = document.getElementById('guideGlassStatus');
-    const progressPercent = document.getElementById('guideProgressPercent');
-    const progressFill = document.getElementById('guideProgressFill');
-    const statusLabel = document.getElementById('guideStatusLabel');
-    const celebration = document.getElementById('guideCelebration');
-    
-    if (!loader) return;
-
-    // Reset state
-    loader.classList.remove('te-celebrating');
-    iconGrid.classList.remove('fade-out');
-    celebration.innerHTML = '';
-    progressPercent.textContent = '0%';
-    progressFill.style.width = '0%';
-    statusLabel.textContent = 'Initializing export...';
-    
-    // Reinitialize icons if needed
-    if (iconGrid.children.length === 0) {
-        initializeGuideLoader();
-    }
-
-    // Simulate progress
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress > 100) progress = 100;
-        
-        progressPercent.textContent = `${Math.floor(progress)}%`;
-        progressFill.style.width = `${progress}%`;
-        
-        if (progress < 30) {
-            statusLabel.textContent = 'Analyzing tokens...';
-        } else if (progress < 60) {
-            statusLabel.textContent = 'Processing collections...';
-        } else if (progress < 90) {
-            statusLabel.textContent = 'Formatting output...';
-        } else {
-            statusLabel.textContent = 'Finalizing package...';
-        }
-        
-        if (progress >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-                // Trigger celebration
-                loader.classList.add('te-celebrating');
-                iconGrid.classList.add('fade-out');
-                
-                // Add success icon
-                const successIcon = document.createElement('div');
-                successIcon.className = 'te-success-icon';
-                successIcon.innerHTML = '<i data-lucide="check-circle"></i>';
-                celebration.appendChild(successIcon);
-                
-                // Add confetti
-                for (let i = 0; i < 20; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'te-confetti-burst';
-                    confetti.style.setProperty('--color', iconTypes[i % 4].color);
-                    confetti.style.setProperty('--burst-x', `${(Math.random() - 0.5) * 400}px`);
-                    confetti.style.setProperty('--burst-y', `${(Math.random() - 0.5) * 400}px`);
-                    confetti.style.animationDelay = `${i * 0.05}s`;
-                    celebration.appendChild(confetti);
-                }
-                
-                renderAllIcons();
-                
-                // Reset after celebration
-                setTimeout(() => {
-                    loader.classList.remove('te-celebrating');
-                    iconGrid.classList.remove('fade-out');
-                    celebration.innerHTML = '';
-                    progressPercent.textContent = '0%';
-                    progressFill.style.width = '0%';
-                    statusLabel.textContent = 'Ready to export';
-                }, 3000);
-            }, 300);
-        }
-    }, 100);
-    
-    // Define iconTypes for confetti colors
-    const iconTypes = [
-        { color: 'var(--category-color-cyan)' },
-        { color: 'var(--category-color-purple)' },
-        { color: 'var(--category-color-orange)' },
-        { color: 'var(--category-color-pink)' }
-    ];
-}
-
 </script>
 
-<a href="YOUR_GITHUB_REPO_URL" target="_blank" rel="noopener noreferrer" class="version-badge" title="View on GitHub">
-    v<span id="version"></span>
-</a><script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const version = getComputedStyle(document.documentElement).getPropertyValue('--system-version').replace(/['"]/g,'').trim();
-        if (version) {
-            document.getElementById('version').textContent = version;
-        }
-    });
 
-
-// --- ASCII Profile Typing Animation ---
-let isTyping = false;
-let currentLineIndex = 0;
-let currentCharIndex = 0;
-let typingTimeout = null;
-let cursor = null;
-
-function createCursor() {
-    const cursorEl = document.createElement('span');
-    cursorEl.className = 'cursor';
-    return cursorEl;
-}
-
-function removeCursor() {
-    if (cursor && cursor.parentNode) {
-        cursor.parentNode.removeChild(cursor);
-    }
-}
-
-function startTyping() {
-    if (isTyping) return;
-    
-    isTyping = true;
-    currentLineIndex = 0;
-    currentCharIndex = 0;
-    
-    const codeBlock = document.getElementById('codeBlock');
-    if (!codeBlock) {
-        isTyping = false;
-        return;
-    }
-    
-    const lines = codeBlock.querySelectorAll('.code-line');
-    lines.forEach(line => {
-        line.innerHTML = '';
-    });
-    
-    removeCursor();
-    cursor = createCursor();
-    typeNextLine();
-}
-
-function typeNextLine() {
-    const codeBlock = document.getElementById('codeBlock');
-    if (!codeBlock) return;
-    const lines = codeBlock.querySelectorAll('.code-line');
-    
-    if (currentLineIndex >= lines.length) {
-        isTyping = false;
-        // Place cursor at the end of the last line
-        if (lines.length > 0) {
-           lines[lines.length - 1].appendChild(cursor);
-        }
-        return;
-    }
-    
-    const currentLine = lines[currentLineIndex];
-    const fullText = currentLine.getAttribute('data-text');
-    
-    currentLine.appendChild(cursor);
-    
-    if (!fullText || fullText.trim() === '') {
-        currentLineIndex++;
-        currentCharIndex = 0;
-        setTimeout(() => typeNextLine(), 50);
-        return;
-    }
-    
-    typeNextChar(currentLine, fullText);
-}
-
-function typeNextChar(line, fullText) {
-    if (currentCharIndex >= fullText.length) {
-        currentLineIndex++;
-        currentCharIndex = 0;
-        setTimeout(() => typeNextLine(), 50 + Math.random() * 75);
-        return;
-    }
-    
-    removeCursor();
-    line.innerHTML = fullText.substring(0, currentCharIndex + 1);
-    line.appendChild(cursor);
-    
-    currentCharIndex++;
-    
-    let delay = 3 + Math.random() * 8;
-    typingTimeout = setTimeout(() => typeNextChar(line, fullText), delay);
-}
-
-// Add the function call to the main initialization event listener
-document.addEventListener('DOMContentLoaded', () => {
-    // Add a slight delay to ensure the page is fully rendered
-    setTimeout(() => startTyping(), 500); 
-});
-
-
-
-</script>
 
 </body>
 </html>
