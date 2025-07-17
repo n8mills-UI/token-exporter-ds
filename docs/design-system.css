@@ -1026,6 +1026,9 @@ sl-icon-button::part(base):hover {
 
 .faq-item.open .faq-toggle {
  transform: rotate(45deg);
+}
+
+.faq-item.open .faq-question {
  color: var(--brand-primary-lime);
 }
 
@@ -1918,12 +1921,13 @@ sl-icon-button::part(base):hover {
  align-items: center;
  justify-content: space-between;
  cursor: pointer;
- color: var(--brand-primary-lime);
+ color: var(--color-text-default);
  font-weight: var(--font-weight-6);
+ transition: color 0.3s var(--ease-3);
 }
 
 .faq-toggle {
- color: var(--color-text-muted);
+ color: var(--brand-primary-lime);
  transition: all 0.3s var(--ease-3);
  font-size: var(--font-size-2);
 }

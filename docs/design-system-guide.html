@@ -1033,31 +1033,65 @@
     }
     
     function startTyping() {
-        const codeBlocks = document.querySelectorAll('.typing-animation');
-        codeBlocks.forEach(block => {
-            const text = block.textContent;
-            block.textContent = '';
-            let index = 0;
+        const codeBlock = document.getElementById('codeBlock');
+        if (!codeBlock) return;
+        
+        const lines = codeBlock.querySelectorAll('.code-line');
+        let currentLine = 0;
+        
+        const typeLine = () => {
+            if (currentLine >= lines.length) {
+                // Add blinking cursor at the end
+                const lastLine = lines[lines.length - 1];
+                lastLine.innerHTML += '<span class="cursor"></span>';
+                return;
+            }
             
-            const type = () => {
-                if (index < text.length) {
-                    block.textContent += text[index];
-                    index++;
-                    setTimeout(type, 50);
+            const line = lines[currentLine];
+            const text = line.getAttribute('data-text');
+            line.innerHTML = '';
+            let charIndex = 0;
+            
+            const typeChar = () => {
+                if (charIndex < text.length) {
+                    // Parse HTML tags properly
+                    if (text[charIndex] === '<') {
+                        const tagEnd = text.indexOf('>', charIndex);
+                        if (tagEnd !== -1) {
+                            line.innerHTML += text.substring(charIndex, tagEnd + 1);
+                            charIndex = tagEnd + 1;
+                        } else {
+                            line.innerHTML += text[charIndex];
+                            charIndex++;
+                        }
+                    } else {
+                        line.innerHTML += text[charIndex];
+                        charIndex++;
+                    }
+                    setTimeout(typeChar, 30);
+                } else {
+                    currentLine++;
+                    setTimeout(typeLine, 200);
                 }
             };
             
-            // Start typing when in viewport
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        type();
-                        observer.unobserve(entry.target);
-                    }
-                });
+            typeChar();
+        };
+        
+        // Start typing when profile card is in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    typeLine();
+                    observer.unobserve(entry.target);
+                }
             });
-            observer.observe(block);
         });
+        
+        const profileCard = document.querySelector('.profile-card');
+        if (profileCard) {
+            observer.observe(profileCard);
+        }
     }
     
     // --- FINAL, CORRECT 'initTechHover' FUNCTION ---
