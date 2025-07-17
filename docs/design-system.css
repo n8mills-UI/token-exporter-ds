@@ -459,7 +459,7 @@ body {
 /*
  * Base .btn class
  * Establishes all shared properties for layout, typography, and interaction.
- * Defaults to `width: auto` to hug its content.
+ * Defaults to `width: 100%` for consistency in containers.
 */
 .btn {
     /* Core Layout & Sizing */
@@ -469,7 +469,7 @@ body {
     gap: var(--size-2);
     height: var(--component-height-md); /* Default: 32px */
     padding: 0 var(--size-3);
-    width: auto; /* Default width hugs content */
+    width: 100%; /* Default to full-width */
 
     /* Typography */
     font-family: var(--font-sans);
@@ -500,9 +500,9 @@ body {
     font-size: var(--font-size-1); /* 16px */
 }
 
-/* -- Width Utility -- */
-.btn-block {
-    width: 100%; /* Makes any button full-width */
+/* -- Width Modifiers -- */
+.btn.btn-inline {
+    width: auto; /* Overrides default to hug content */
 }
 
 /* -- Style Variants -- */
@@ -562,7 +562,7 @@ body {
 
 /* -- Icon-Only Button -- */
 .btn-icon-only {
-    /* Inherits base styles from .btn */
+    /* This modifier is intended to be used with the base .btn class */
     width: var(--component-height-md);
     height: var(--component-height-md);
     padding: 0;
@@ -3074,8 +3074,6 @@ main {
     padding: var(--size-8) var(--size-8);
     margin-top: var(--size-10);
     margin-left: 280px;
-    width: calc(100% - 280px);
-    box-sizing: border-box;
 }
 
 /* Thin branded divider line */
@@ -4496,7 +4494,6 @@ body {
     /* Guide Footer */
     .guide-footer {
         margin-left: 0;
-        width: 100%;
     }
 
     .footer-content {
