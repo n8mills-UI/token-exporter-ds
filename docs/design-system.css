@@ -485,13 +485,43 @@ body {
 
 /* --- SIZES --- */
 .btn-sm { font-size: 12px; height: var(--component-height-sm); padding: 0 12px; gap: 6px; }
-.btn-sm .lucide { width: 14px; height: 14px; }
+.btn-sm .lucide { width: 14px; height: 14px; stroke-width: var(--stroke-regular); }
 
 .btn-md { font-size: 14px; height: var(--component-height-md); padding: 0 16px; gap: 8px; }
-.btn-md .lucide { width: 16px; height: 16px; }
+.btn-md .lucide { width: 16px; height: 16px; stroke-width: var(--stroke-regular); }
 
-.btn-lg { font-size: 16px; height: var(--component-height-xl); padding: 0 20px; gap: 10px; }
-.btn-lg .lucide { width: 18px; height: 18px; }
+.btn-lg { font-size: 16px; height: var(--component-height-lg); padding: 0 20px; gap: 10px; }
+.btn-lg .lucide { width: 20px; height: 20px; stroke-width: var(--stroke-regular); }
+
+/* --- ICON-ONLY BUTTON --- */
+.btn-icon {
+    padding: 0;
+    border-radius: 50%;
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-default);
+    /* Add transition for hover/active effects */
+    transition: var(--transition-fast);
+}
+.btn-icon:hover:not(:disabled) {
+    border-color: var(--brand-primary-lime);
+    color: var(--brand-primary-lime);
+    transform: rotate(15deg);
+}
+.btn-icon:active:not(:disabled) {
+    transform: rotate(0) scale(0.95);
+}
+
+.btn-icon.btn-sm { width: var(--component-height-sm); height: var(--component-height-sm); }
+.btn-icon.btn-md { width: var(--component-height-md); height: var(--component-height-md); }
+.btn-icon.btn-lg { width: var(--component-height-lg); height: var(--component-height-lg); }
+
+/* Icon size overrides for icon-only buttons, using tokens */
+.btn-icon.btn-sm .lucide { width: var(--icon-sm); height: var(--icon-sm); }
+.btn-icon.btn-md .lucide { width: var(--icon-md); height: var(--icon-md); } 
+.btn-icon.btn-lg .lucide { width: var(--icon-lg); height: var(--icon-lg); } 
+
+
 
 /* --- VARIANTS & STATES --- */
 .btn-primary { background: var(--brand-gradient-lime); color: var(--color-text-on-brand); box-shadow: var(--shadow-brand); }
@@ -506,13 +536,6 @@ body {
 .btn-tertiary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.05); color: var(--brand-primary-lime); }
 .btn-tertiary:active:not(:disabled) { background: rgba(255, 255, 255, 0.1); }
 
-/* --- ICON-ONLY BUTTON --- */
-.btn-icon { padding: 0; border-radius: 50%; background: var(--color-background-secondary); color: var(--color-text-secondary); border: 1px solid var(--color-border-default); }
-.btn-icon.btn-sm { width: var(--component-height-sm); height: var(--component-height-sm); }
-.btn-icon.btn-md { width: var(--component-height-md); height: var(--component-height-md); }
-.btn-icon.btn-lg { width: var(--component-height-xl); height: var(--component-height-xl); }
-.btn-icon:hover:not(:disabled) { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); transform: rotate(15deg); }
-.btn-icon:active:not(:disabled) { transform: rotate(0) scale(0.95); }
 
 /* --- DISABLED STATE (Applies to all) --- */
 .btn:disabled {
