@@ -872,6 +872,7 @@ sl-icon-button::part(base):hover {
 .section-title {
  color: var(--color-text-default); 
  font-size: var(--font-size-3);
+ font-weight: var(--font-weight-6);
  margin-bottom: var(--size-2);
  display: flex;
  align-items: center;
@@ -880,8 +881,8 @@ sl-icon-button::part(base):hover {
 
 .section-title .lucide {
  color: var(--brand-primary-lime);
- width: var(--icon-lg);
- height: var(--icon-lg);
+ width: 1em;
+ height: 1em;
 }
 
 .section-subtitle {
@@ -1738,7 +1739,8 @@ sl-icon-button::part(base):hover {
  display: grid;
  grid-template-columns: repeat(4, 1fr);
  gap: var(--size-2);
- margin-top: var(--size-2);
+ margin-top: var(--size-3);
+ margin-bottom: var(--size-3);
 }
 
 
@@ -1773,8 +1775,20 @@ sl-icon-button::part(base):hover {
  fill: currentColor;
 }
 
+/* Keep Lucide icons as outlines in tech items */
+.tech-item .lucide {
+ fill: none !important;
+ stroke: currentColor;
+}
+
 .info-panel-a .title svg {
  fill: currentColor;
+}
+
+/* Specific fix for Lucide icons to remain outline */
+.info-panel-a .title .lucide {
+ fill: none !important;
+ stroke: currentColor;
 }
 
 /* Final "Built With" Info Panel (Concept A) */
@@ -1966,7 +1980,7 @@ sl-icon-button::part(base):hover {
 
 /* Section headers */
 .section-header {
- margin-bottom: var(--size-4);
+ margin-bottom: var(--size-3);
 }
 
 .section-title {
