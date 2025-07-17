@@ -854,17 +854,13 @@
         animateCounters();
         initFAQAccordion();
         initTechHover();
-        startTyping();
-        
+        initializeTypingObserver(); // This now sets up the initial animation trigger
+
         if (window.lucide) {
             lucide.createIcons();
         }
     });
 
-
-
-
-    
     // --- RENDER ICONS ---
     function renderAllIcons() {
         if (window.lucide) {
@@ -876,7 +872,7 @@
         }
     }
 
-    // --- NAVIGATION & OTHER UI FUNCTIONS ---
+    // --- NAVIGATION & OTHER UI FUNCTIONS (Unchanged from your file) ---
     function initializeMobileMenu() {
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle-right');
         const menuCloseBtn = document.getElementById('menu-close-btn');
@@ -992,7 +988,6 @@
                 }
             };
             
-            // Start animation when in viewport
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1032,87 +1027,85 @@
         console.log('Export demo triggered');
     }
     
-    function startTyping() {
+    // --- REFACTORED & FIXED TYPING ANIMATION ---
+
+    /**
+ * The main function to run the typing animation. It can be called
+ * directly to restart the animation (e.g., by the [RE-RUN] button).
+ */
+function startTyping() {
     const codeBlock = document.getElementById('codeBlock');
     if (!codeBlock) return;
-    
-    let isTyping = false;
-    let currentLineIndex = 0;
-    let currentCharIndex = 0;
-    
-    // Clear all lines first
-    const lines = codeBlock.querySelectorAll('.code-line');
+
+    // Clear any previous animation to allow re-running safely
+    if (window.typingTimeout) {
+        clearTimeout(window.typingTimeout);
+    }
+
+    const lines = Array.from(codeBlock.querySelectorAll('.code-line'));
+    const cursorHTML = '<span class="cursor"></span>';
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    // 1. Reset the terminal. Using &nbsp; preserves the line-height and prevents shifting.
     lines.forEach(line => {
-        line.innerHTML = '';
+        line.innerHTML = '&nbsp;';
     });
-    
-    function typeNextLine() {
-        if (currentLineIndex >= lines.length) {
-            // Add cursor at the end
+
+    function type() {
+        if (lineIndex >= lines.length) {
             const lastLine = lines[lines.length - 1];
-            if (!lastLine.querySelector('.cursor')) {
-                lastLine.innerHTML += '<span class="cursor"></span>';
+            if (lastLine) {
+                lastLine.innerHTML = lastLine.getAttribute('data-text') + cursorHTML;
             }
-            isTyping = false;
+            return; // Stop the recursion
+        }
+
+        const currentLine = lines[lineIndex];
+        const fullText = currentLine.getAttribute('data-text') || '';
+
+        if (charIndex >= fullText.length) {
+            // 2. When a line is done, ensure it gets its final content or an &nbsp; if it's blank.
+            currentLine.innerHTML = fullText || '&nbsp;';
+            lineIndex++;
+            charIndex = 0;
+            // Using the faster 50ms delay between lines
+            window.typingTimeout = setTimeout(type, 50);
             return;
         }
-        
-        const currentLine = lines[currentLineIndex];
-        const fullText = currentLine.getAttribute('data-text');
-        
-        // If empty line, just move to next
-        if (!fullText || fullText === '') {
-            currentLineIndex++;
-            currentCharIndex = 0;
-            setTimeout(() => typeNextLine(), 50);
-            return;
-        }
-        
-        typeNextChar(currentLine, fullText);
+
+        charIndex++;
+        const partialText = fullText.substring(0, charIndex);
+        currentLine.innerHTML = partialText + cursorHTML;
+
+        // Using the faster 5ms delay for each character
+        const delay = 10;
+        window.typingTimeout = setTimeout(type, delay);
     }
-    
-    function typeNextChar(line, fullText) {
-        if (currentCharIndex >= fullText.length) {
-            // Move to next line
-            currentLineIndex++;
-            currentCharIndex = 0;
-            setTimeout(() => typeNextLine(), 50);
-            return;
-        }
-        
-        // Update line content using substring
-        line.innerHTML = fullText.substring(0, currentCharIndex + 1) + '<span class="cursor"></span>';
-currentCharIndex++;
-        
-        // Variable typing speed
-        let delay = 15;
-        if (fullText[currentCharIndex - 1] === ' ') {
-            delay = 10;
-        }
-        
-        setTimeout(() => typeNextChar(line, fullText), delay);
-    }
-    
-    // Start animation when profile card is in viewport
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !isTyping) {
-                isTyping = true;
-                currentLineIndex = 0;
-                currentCharIndex = 0;
-                typeNextLine();
-                observer.unobserve(entry.target);
-            }
-        });
-    });
-    
-    const profileCard = document.querySelector('.profile-card');
-    if (profileCard) {
+
+    type(); // Kick off the animation
+}
+
+    /**
+     * Sets up an IntersectionObserver to trigger the typing animation
+     * automatically when the profile card scrolls into view.
+     */
+    function initializeTypingObserver() {
+        const profileCard = document.querySelector('.profile-card');
+        if (!profileCard) return;
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startTyping();
+                    obs.unobserve(entry.target); // Ensures the animation only triggers once on scroll
+                }
+            });
+        }, { threshold: 0.5 }); // Trigger when 50% of the card is visible
+
         observer.observe(profileCard);
     }
-}
     
-    // --- FINAL, CORRECT 'initTechHover' FUNCTION ---
     function initTechHover() {
         const container = document.querySelector('.tech-stack-grid');
         const techItems = Array.from(document.querySelectorAll('.tech-item[data-tech]'));
