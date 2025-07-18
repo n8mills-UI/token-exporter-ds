@@ -3860,21 +3860,33 @@ body {
 }
 
 /* Guide Layout */
-
+.guide-container {
+    display: flex;
+    min-height: 100vh;
+}
 
 .guide-sidebar {
-    grid-area: sidebar;
-    position: sticky;
-    top: 0;
-    height: 100vh; /* Make sidebar always full height */
+    width: 280px;
+    background: var(--color-background-secondary);
+    border-right: var(--border-size-1) solid var(--color-border-default);
+    position: fixed;
+    height: 100vh;
+    z-index: var(--layer-dropdown);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s var(--ease-3);
 }
 
-main.guide-content {
-    grid-area: main;
-}
-
-footer.guide-footer {
-    grid-area: footer;
+.guide-content {
+    margin-left: 280px;
+    flex: 1;
+    max-width: calc(100vw - 280px);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    min-width: 0;
 }
 
 
