@@ -3019,7 +3019,6 @@ select option {
  color: var(--brand-primary-lime);
 }
 
-
 .empty-state-icon .token-exporter-logo {
  width: var(--size-8);
  height: var(--size-8);
@@ -3034,12 +3033,16 @@ select option {
  margin-bottom: var(--size-1);
 }
 
+.empty-state-header {
+    text-align: center;
+}
+
 .empty-state-categories {
- display: inline-flex;
- gap: var(--size-4);
- justify-content: center;
- margin-bottom: var(--size-4);
- margin-top: var(--size-2);
+    display: flex; /* Use flex, not inline-flex */
+    gap: var(--size-4);
+    justify-content: center; /* This will now correctly center the items */
+    margin: var(--size-4) 0;
+    width: 100%; /* Ensure it spans the full width to center within */
 }
 
 .empty-state-category {
@@ -3920,9 +3923,7 @@ sl-input::part(input):focus-visible,
     text-transform: none;
 }
 
-.empty-state-header {
-    text-align: center;
-}
+
 
 /* ==========================================================================
    GUIDE LAYOUT SYSTEM (FINAL)
