@@ -452,32 +452,6 @@ body {
 }
 
 
-/* ==========================================================================
-   GUIDE LAYOUT SYSTEM (v9 - GRID)
-   ========================================================================== */
-
-
-
-/* 2. Assign elements to their grid areas */
-.guide-sidebar {
-    grid-area: sidebar;
-    position: sticky; /* Stick to top on scroll */
-    top: 0;
-    height: 100vh; /* Ensure it spans full viewport height */
-}
-
-.guide-content {
-    grid-area: main;
-    width: 100%; /* Take up full width of its grid area */
-}
-
-.guide-footer {
-    grid-area: footer;
-    width: 100%;
-    padding: var(--size-8); /* Add padding back */
-    background: #0a0a0a;   /* Add background back */
-}
-
 
 
 
@@ -3788,22 +3762,6 @@ sl-input::part(input):focus-visible,
    ========================================================================== */
 
 
-
-/* Assign page elements to their designated grid areas */
-.guide-sidebar {
-    grid-area: sidebar;
-    position: sticky; /* Keeps the sidebar visible on scroll */
-    top: 0;
-    height: 100vh;
-}
-
-main.guide-content {
-    grid-area: main;
-}
-
-footer.guide-footer {
-    grid-area: footer;
-}
 
 /* --- Mobile Header & Menu Styles --- */
 .mobile-header {
