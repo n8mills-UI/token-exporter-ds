@@ -562,15 +562,6 @@ body {
     filter: none !important;
 }
 
-/* --- DISABLED STATE (Applies to all) --- */
-.btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
-    transform: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-}
 
 /* ==========================================================================
    COMPONENT: GUIDELINE CARDS (NEW!)
@@ -3133,7 +3124,6 @@ select option {
 .btn.btn-sm.btn-inline .lucide {
  width: var(--icon-xs);
  height: var(--icon-xs);
- stroke-width: var(--stroke-thick);
 }
 
 .te-progress-track {
