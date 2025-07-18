@@ -14,15 +14,15 @@
                 </div>
 
                 <!-- Empty state (hidden by default) -->
-                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-state-header"> <!-- Top group -->
                     <div class="empty-state-icon"><i data-lucide="package"></i></div>
                     <div>
                         <div class="text-heading-lg empty-state-title">Let's build something!</div>
                         <div class="text-body-md empty-state-subtitle">Turn your colors, text styles, and spacing into code-ready tokens.</div>
                     </div>
-                    <button class="btn primary empty-state-action" style="width: auto;" aria-label="Navigate to create variables in Figma">
-                        Create variables <i data-lucide="arrow-right" style="margin-left: var(--size-2);"></i>
-                    </button>
+                    <button class="btn btn-primary btn-md empty-state-action btn-inline" aria-label="Navigate to create variables in Figma">
+    Create variables <i data-lucide="arrow-right"></i>
+</button>
                 </div>
 
                 <!-- Main UI (hidden by default) -->
@@ -130,30 +130,33 @@
             attachDynamicEventListeners();
         }
 
-        function updateTokenSummary() {
-            const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
-            const selectedCount = appState.mode === 'simple' ? totalTokens : appState.collections.reduce((count, col) => {
-                if (!appState.selectedCollections.has(col.id)) return count;
-                return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
-            }, 0);
 
-            const tokenTypesHTML = ['color', 'text', 'number', 'states'].map(type => {
-                const iconMap = { color: 'palette', text: 'type', number: 'hash', states: 'toggle-right' };
-                const count = appState.globalTokenCounts[type] || 0;
-                const isActive = appState.selectedTokenTypes.has(type);
-                return `
-                    <div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}" data-type="${type}">
-                        <i class="icon" data-lucide="${iconMap[type]}"></i>
-                        <div class="count">${count}</div>
-                        <div class="text-label label" style="color: var(--color-text-muted);">${type}</div>
-                    </div>`;
-            }).join('');
+function updateTokenSummary() {
+    const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
+    const selectedCount = appState.mode === 'simple' ? totalTokens : appState.collections.reduce((count, col) => {
+        if (!appState.selectedCollections.has(col.id)) return count;
+        return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
+    }, 0);
 
-            DOMElements.tokenSummaryCard.innerHTML = `
-                <div class="text-heading-xl token-count-total">${selectedCount}</div>
-                <div class="text-label token-label">Design Tokens Ready to Export</div>
-                <div class="token-breakdown">${tokenTypesHTML}</div>`;
-        }
+    const tokenLabelText = appState.mode === 'simple' ? 'Tokens Found' : 'Tokens Selected';
+
+    const tokenTypesHTML = ['color', 'text', 'number', 'states'].map(type => {
+        const iconMap = { color: 'palette', text: 'type', number: 'hash', states: 'toggle-right' };
+        const count = appState.globalTokenCounts[type] || 0;
+        const isActive = appState.selectedTokenTypes.has(type);
+        return `
+            <div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}" data-type="${type}">
+                <i class="icon" data-lucide="${iconMap[type]}"></i>
+                <div class="count">${count}</div>
+                <div class="text-label label" style="color: var(--color-text-muted);">${type}</div>
+            </div>`;
+    }).join('');
+
+    DOMElements.tokenSummaryCard.innerHTML = `
+        <div class="text-heading-xl token-count-total">${selectedCount}</div>
+        <div class="text-label token-label">${tokenLabelText}</div> 
+        <div class="token-breakdown">${tokenTypesHTML}</div>`;
+}
 
         function updateExportCard() {
             const selectedTokenCount = appState.mode === 'simple' 
