@@ -47,10 +47,7 @@ html {
 }
 
 body {
-    font-size: var(--font-size-0); /* 14px for plugin interface */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    font-size: var(--font-size-0);
 }
 
 :root {
@@ -453,6 +450,36 @@ body {
     width: auto;
     display: inline-flex;
 }
+
+
+/* ==========================================================================
+   GUIDE LAYOUT SYSTEM (v9 - GRID)
+   ========================================================================== */
+
+
+
+/* 2. Assign elements to their grid areas */
+.guide-sidebar {
+    grid-area: sidebar;
+    position: sticky; /* Stick to top on scroll */
+    top: 0;
+    height: 100vh; /* Ensure it spans full viewport height */
+}
+
+.guide-content {
+    grid-area: main;
+    width: 100%; /* Take up full width of its grid area */
+}
+
+.guide-footer {
+    grid-area: footer;
+    width: 100%;
+    padding: var(--size-8); /* Add padding back */
+    background: #0a0a0a;   /* Add background back */
+}
+
+
+
 
 /* ==========================================================================
    COMPONENT: UNIFIED BUTTON SYSTEM (V8)
@@ -1587,14 +1614,6 @@ sl-icon-button::part(base):hover {
  GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
  ========================================================================== */
 
-.guide-content {
- flex: 1;
- max-width: calc(100vw - 280px);
- width: 100%;
- box-sizing: border-box;
- overflow-wrap: break-word;
- word-wrap: break-word;
-}
 
 .content-section {
  margin-bottom: var(--size-10);
@@ -1845,7 +1864,7 @@ sl-icon-button::part(base):hover {
 }
 
 
-@media (max-width: 900px) {
+@media (width <= 900px) {
  .content-grid-2col {
  grid-template-columns: 1fr;
  }
@@ -2458,13 +2477,6 @@ select option {
  font-weight: var(--font-weight-5);
 }
 
-/* Plugin Layout */
-main { 
- display: flex; 
- flex-direction: column; 
- position: relative; 
- min-height: 100vh;
-}
 
 .content-wrapper { 
  padding: var(--size-3); 
@@ -3278,13 +3290,8 @@ main {
  ========================================================================== */
 
 /* @docs-only-start */
-.guide-footer {
-    background: #0a0a0a;
-    position: relative;
-    padding: var(--size-8) var(--size-8);
-    margin-top: auto; /* <-- THIS IS THE KEY */
-    margin-left: 280px;
-}
+
+
 
 
 
@@ -3777,146 +3784,64 @@ sl-input::part(input):focus-visible,
 
 
 /* ==========================================================================
- EXISTING GUIDE LAYOUT STYLES (PREVIOUSLY ADDED)
- ========================================================================== */
- 
-/* --- START: New Mobile Header & Menu Styles --- */
+   GUIDE LAYOUT SYSTEM (FINAL)
+   ========================================================================== */
+
+
+
+/* Assign page elements to their designated grid areas */
+.guide-sidebar {
+    grid-area: sidebar;
+    position: sticky; /* Keeps the sidebar visible on scroll */
+    top: 0;
+    height: 100vh;
+}
+
+main.guide-content {
+    grid-area: main;
+}
+
+footer.guide-footer {
+    grid-area: footer;
+}
+
+/* --- Mobile Header & Menu Styles --- */
 .mobile-header {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: var(--size-10);
- background: rgba(42, 42, 42, 0.6); 
- backdrop-filter: var(--blur-lg);
- -webkit-backdrop-filter: var(--blur-lg);
- border-bottom: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
- z-index: var(--layer-modal); /* FIX: Use token for z-index */
- display: none;
- align-items: center;
- justify-content: space-between;
- padding: 0 var(--size-4);
- transform: translateY(0);
- transition: transform var(--transition-medium);
- box-sizing: border-box;
-}
-
-
-.mobile-header.hidden {
- transform: translateY(-100%);
-}
-
-.header-brand {
- display: flex;
- align-items: center;
- gap: var(--size-3);
-}
-
-.mobile-header-logo {
- height: var(--size-7);
- width: var(--size-7);
- flex-shrink: 0;
-}
-
-.header-title {
- font-size: var(--font-size-4);
- font-weight: var(--font-weight-6);
- color: var(--color-text-default);
- line-height: 1.2;
-}
-
-.mobile-menu-toggle-right {
- background: transparent;
- border: none;
- color: var(--color-text-default);
- cursor: pointer;
- padding: var(--size-2);
- display: flex;
- align-items: center;
- justify-content: center;
- 
+    display: none; /* Hidden on desktop by default */
 }
 
 .mobile-menu {
- position: fixed;
- top: 0;
- right: 0;
- width: 280px;
- height: 100%;
- background: var(--color-backdrop);
- backdrop-filter: var(--blur-md);
- backdrop-filter: var(--blur-md);
- border-left: var(--border-size-1) solid var(--color-border-default);
- z-index: 101;
- transform: translateX(100%);
- transition: transform var(--transition-medium);
- overflow-y: auto;
- box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: var(--color-backdrop);
+    backdrop-filter: var(--blur-md);
+    border-left: var(--border-size-1) solid var(--color-border-default);
+    z-index: 101;
+    transform: translateX(100%);
+    transition: transform var(--transition-medium);
+    overflow-y: auto;
 }
 
 .mobile-menu.open {
- transform: translateX(0);
-}
-
-.menu-header {
- display: flex;
- justify-content: flex-end;
- align-items: center;
- height: var(--size-12);
- padding: 0 var(--size-6);
- border-bottom: var(--border-size-1) solid var(--color-border-default);
- flex-shrink: 0;
-}
-
-.menu-close-btn {
- background: transparent;
- border: none;
- color: var(--color-text-default);
- cursor: pointer;
- padding: var(--size-2);
- display: flex;
+    transform: translateX(0);
 }
 
 .menu-overlay {
- position: fixed;
- inset: 0;
- background: rgb(0,0,0,0.5);
- z-index: 99;
- opacity: 0;
- transition: opacity var(--transition-medium);
- pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: rgb(0,0,0,0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+    pointer-events: none;
 }
 
 .menu-overlay.open {
- opacity: 1;
- pointer-events: auto;
-}
-
-.mobile-nav-links {
- list-style: none;
- padding: var(--size-4);
- margin: 0;
- display: flex;
- flex-direction: column;
- gap: var(--size-2);
-}
-
-.mobile-nav-links a {
- display: flex;
- align-items: center;
- gap: var(--size-3);
- padding: var(--size-3);
- color: var(--color-text-secondary);
- text-decoration: none;
- border-radius: var(--radius-2);
- font-size: var(--font-size-1);
- transition: all 0.2s ease;
-}
-
-.mobile-nav-links a:hover,
-.mobile-nav-links a.active {
- background: var(--color-background-secondary);
- color: var(--brand-primary-lime);
+    opacity: 1;
+    pointer-events: auto;
 }
 
 
@@ -3935,35 +3860,23 @@ body {
 }
 
 /* Guide Layout */
-.guide-container {
- display: flex;
- grid-template-columns: 280px 1fr;
- min-height: 100vh;
-}
+
 
 .guide-sidebar {
- width: 280px;
- background: var(--color-background-secondary);
- border-right: var(--border-size-1) solid var(--color-border-default);
- position: fixed;
- height: 100vh;
- z-index: var(--layer-dropdown);
- display: flex;
- flex-direction: column;
- overflow-y: auto;
- transition: transform 0.3s var(--ease-3);
+    grid-area: sidebar;
+    position: sticky;
+    top: 0;
+    height: 100vh; /* Make sidebar always full height */
 }
 
-.guide-content {
- margin-left: 280px;
- flex-grow: 1; /* <-- CHANGE flex:1 to flex-grow: 1 */
- max-width: calc(100vw - 280px);
- width: 100%;
- box-sizing: border-box;
- overflow-wrap: break-word;
- word-wrap: break-word;
- min-width: 0;
+main.guide-content {
+    grid-area: main;
 }
+
+footer.guide-footer {
+    grid-area: footer;
+}
+
 
 /* Sidebar Header */
 .guide-header {
@@ -4628,60 +4541,56 @@ body {
 
 
 /* ==========================================================================
- CONSOLIDATED RESPONSIVE STYLES (CORRECTED)
- ========================================================================== */
+   RESPONSIVE LAYOUT
+   ========================================================================== */
 
-/*
-* All @media queries are centralized here for easier maintenance and debugging.
-* Styles are ordered from larger to smaller breakpoints.
-*/
+@media (width <= 768px) {
+    /* On mobile, change the grid to a single column layout */
+    body {
+        grid-template-columns: 1fr; /* Full width */
+        grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+    }
 
-/* --- Breakpoint: 900px --- */
-@media (width <= 900px) {
- /* Stacks multi-column component examples into a single column */
- .variants-grid,
- .export-flow-grid {
- grid-template-columns: 1fr;
- }
+    /* Hide the desktop sidebar and show the mobile header */
+    .guide-sidebar {
+        display: none;
+    }
+    .mobile-header {
+        display: flex;
+        grid-area: header;
+    }
+
+    /* Ensure content and footer take up full width */
+    .guide-content {
+        padding-top: var(--size-10);
+    }
+    .guide-footer {
+        padding: var(--size-6);
+    }
+
+    /* --- Mobile Grid Stacking for Components --- */
+    .variants-grid,
+    .export-flow-grid,
+    .color-grid,
+    .shadow-grid,
+    .radius-grid,
+    .tokens-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gray-scale-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .spacing-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }
 
-/* --- Breakpoint: 768px (Tablet & Mobile) --- */
-@media (width <= 768px) {
- /* Layout Adjustments */
- .guide-sidebar {
- transform: translateX(-100%);
- z-index: var(--layer-modal);
- }
-
- .guide-content {
- margin-left: 0;
- max-width: 100vw;
- width: 100%;
- padding: 0;
- padding-top: var(--size-10); /* Corrected to match header height */
- box-sizing: border-box;
- }
-
- /* Mobile Header Visibility */
- .mobile-header {
- display: flex;
- }
-
- /* Grid Stacking for various components */
- .color-grid,
- .shadow-grid,
- .radius-grid,
- .tokens-grid,{
- grid-template-columns: 1fr;
- }
-
- .gray-scale-grid {
- grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
- }
-
- .spacing-grid {
- grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
- }
 
  /* About Section */
  .about-section {
@@ -4720,6 +4629,12 @@ body {
  gap: var(--size-3);
  padding-bottom: 0;
  }
+
+ /* FAQ & Built With Sections - Force Stack on Mobile */
+ .content-grid-2col {
+ grid-template-columns: 1fr;
+ }
+ 
 }
 
 
