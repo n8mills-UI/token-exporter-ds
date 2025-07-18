@@ -4545,31 +4545,24 @@ footer.guide-footer {
    ========================================================================== */
 
 @media (width <= 768px) {
-    /* On mobile, change the grid to a single column layout */
-    body {
-        grid-template-columns: 1fr; /* Full width */
-        grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
-        grid-template-areas:
-            "header"
-            "main"
-            "footer";
+    /* Layout Adjustments */
+    .guide-sidebar {
+        transform: translateX(-100%);
+        z-index: var(--layer-modal);
     }
 
-    /* Hide the desktop sidebar and show the mobile header */
-    .guide-sidebar {
-        display: none;
+    .guide-content {
+        margin-left: 0;
+        max-width: 100vw;
+        width: 100%;
+        padding: 0;
+        padding-top: var(--size-10);
+        box-sizing: border-box;
     }
+
+    /* Mobile Header Visibility */
     .mobile-header {
         display: flex;
-        grid-area: header;
-    }
-
-    /* Ensure content and footer take up full width */
-    .guide-content {
-        padding-top: var(--size-10);
-    }
-    .guide-footer {
-        padding: var(--size-6);
     }
 
     /* --- Mobile Grid Stacking for Components --- */
@@ -4589,53 +4582,32 @@ footer.guide-footer {
     .spacing-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
-}
 
+    /* About Section */
+    .about-section {
+        margin-left: calc(-1 * var(--size-4));
+        margin-right: calc(-1 * var(--size-4));
+        padding: var(--size-6) var(--size-4);
+    }
 
- /* About Section */
- .about-section {
- margin-left: calc(-1 * var(--size-4));
- margin-right: calc(-1 * var(--size-4));
- padding: var(--size-6) var(--size-4);
- }
+    .about-content-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
 
- .about-content-grid {
- grid-template-columns: 1fr;
- text-align: center;
- }
+    .about-links {
+        justify-content: center;
+    }
 
- .about-links {
- justify-content: center;
- }
+    /* Guide Footer */
+    .guide-footer {
+        margin-left: 0;
+    }
 
- /* Guide Footer */
- .guide-footer {
- margin-left: 0;
- }
-
- .footer-content {
- flex-direction: column;
- gap: var(--size-4);
- text-align: center;
- align-items: center;
- }
-
- .footer-brand {
- align-items: center;
- }
-
- .footer-actions {
- flex-direction: column;
- gap: var(--size-3);
- padding-bottom: 0;
- }
-
- /* FAQ & Built With Sections - Force Stack on Mobile */
- .content-grid-2col {
- grid-template-columns: 1fr;
- }
- 
-}
+    .footer-content {
+        flex-direction: column;
+        gap: var(--size-4);
+        text-align: center;
 
 
 
