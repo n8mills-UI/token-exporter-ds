@@ -1187,7 +1187,7 @@ sl-icon-button::part(base):hover {
  max-width: 1200px;
  width: 100%;
  gap: var(--size-6);
- margin: var(--size-8) 0; /* Replaces margin on old .profile-card-ascii */
+ margin: var(--size-8) 0; 
 }
 
 .profile-card:hover {
@@ -1597,6 +1597,11 @@ sl-icon-button::part(base):hover {
 
 #overview {
  padding: 0; /* Ensures hero has no padding */
+}
+
+/* Creates a large gap above the Foundation section for clear separation */
+#colors.content-section {
+    margin-top: 8rem; 
 }
 
 
