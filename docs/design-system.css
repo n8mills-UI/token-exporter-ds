@@ -573,6 +573,118 @@ body {
 }
 
 /* ==========================================================================
+   COMPONENT: GUIDELINE CARDS (NEW!)
+   ========================================================================== */
+
+.guidelines-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--size-4);
+}
+
+.guideline-card {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-5);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4);
+    transition: all var(--transition-fast);
+}
+
+.guideline-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-interactive-focus);
+    box-shadow: var(--shadow-3);
+}
+
+.guideline-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+}
+
+.guideline-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.guideline-title {
+    font-size: var(--font-size-3);
+    color: var(--color-text-default);
+    margin: 0;
+}
+
+.guideline-description {
+    color: var(--color-text-secondary);
+    line-height: var(--font-lineheight-3);
+    margin: 0;
+    flex-grow: 1;
+}
+
+.guideline-footer {
+    border-top: 1px solid var(--color-border-default);
+    padding-top: var(--size-3);
+}
+
+.guideline-footer-title {
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
+    margin-bottom: var(--size-2);
+    text-transform: uppercase;
+    letter-spacing: var(--font-letterspacing-1);
+}
+
+.guideline-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+}
+
+.guideline-pill {
+    background: var(--color-background-tertiary);
+    color: var(--color-text-secondary);
+    padding: var(--size-2) var(--size-3); /* Larger padding */
+    border-radius: var(--radius-round); /* Changed to pill shape */
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-5);
+}
+
+/* Variant-specific styles */
+.guideline-card.primary .guideline-icon-wrapper {
+    background: var(--brand-gradient-lime);
+}
+.guideline-card.primary .guideline-icon-wrapper .lucide {
+    color: var(--brand-text-dark);
+}
+
+.guideline-card.secondary .guideline-icon-wrapper {
+    background: var(--color-background-tertiary);
+    border: 1px solid var(--color-border-default);
+}
+.guideline-card.secondary .guideline-icon-wrapper .lucide {
+    color: var(--color-text-secondary);
+}
+
+.guideline-card.tertiary .guideline-icon-wrapper {
+    background: transparent;
+    border: 1px dashed var(--color-border-default);
+}
+.guideline-card.tertiary .guideline-icon-wrapper .lucide {
+    color: var(--color-text-muted);
+}
+
+
+
+/* ==========================================================================
    BACKWARD COMPATIBILITY LAYER (V8 -> V4)
    ========================================================================== */
 /* This ensures old class names like ".btn.primary" inherit new styles. */
@@ -740,6 +852,10 @@ body {
  stroke-width: var(--stroke-regular); /* <-- Now uses token! */
  vertical-align: middle;
  color: inherit;
+}
+
+.icon-thin {
+    stroke-width: var(--stroke-thin) !important;
 }
 
 /* Fix specific problems */

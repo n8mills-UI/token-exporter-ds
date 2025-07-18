@@ -658,164 +658,164 @@
         </div>
     </div>
 
-                     <section id="buttons" class="section" style="margin-top: 2rem;">
-                <div class="component-header">
-                    <h2 class="text-heading-lg component-title"><i data-lucide="mouse-pointer-click"></i> Button Variants & States</h2>
-                    <p class="component-description">Our system provides four main button variants. Each variant is fully interactive, demonstrating its default, hover, and active states. The sizes are based on industry standards to ensure a robust and scalable system.</p>
-                </div>
-                
-                <div class="subsection">
-                    <div class="example-label">Primary</div>
-                    <div class="button-showcase">
-                        <button class="btn btn-primary btn-sm"><i data-lucide="package"></i> Small Button</button>
-                        <button class="btn btn-primary btn-md"><i data-lucide="package"></i> Medium Button</button>
-                        <button class="btn btn-primary btn-lg"><i data-lucide="package"></i> Large Button</button>
-                    </div>
-                </div>
-                
-                <div class="subsection">
-                    <div class="example-label">Secondary</div>
-                    <div class="button-showcase">
-                        <button class="btn btn-secondary btn-sm"><i data-lucide="sliders-horizontal"></i> Small Button</button>
-                        <button class="btn btn-secondary btn-md"><i data-lucide="sliders-horizontal"></i> Medium Button</button>
-                        <button class="btn btn-secondary btn-lg"><i data-lucide="sliders-horizontal"></i> Large Button</button>
-                    </div>
-                </div>
-    
-                <div class="subsection">
-                    <div class="example-label">Tertiary</div>
-                    <div class="button-showcase">
-                        <button class="btn btn-tertiary btn-sm">Learn More <i data-lucide="arrow-right"></i></button>
-                        <button class="btn btn-tertiary btn-md">Learn More <i data-lucide="arrow-right"></i></button>
-                        <button class="btn btn-tertiary btn-lg">Learn More <i data-lucide="arrow-right"></i></button>
-                    </div>
-                </div>
-    
-                <div class="subsection">
-                    <div class="example-label">Icon-Only</div>
-                    <div class="icon-only-showcase">
-                        <button class="btn btn-icon btn-sm" aria-label="Small Icon Button"><i data-lucide="github"></i></button>
-                        <button class="btn btn-icon btn-md" aria-label="Medium Icon Button"><i data-lucide="github"></i></button>
-                        <button class="btn btn-icon btn-lg" aria-label="Large Icon Button"><i data-lucide="github"></i></button>
-                    </div>
-                </div>
-            </section>
-    
-            <section class="section">
-                <div class="section-header">
-                     <h2 class="section-title"><i data-lucide="book-open"></i>Usage & Guidelines</h2>
-                     <p class="section-description">Best practices for implementing buttons to ensure a consistent and intuitive user experience.</p>
-                </div>
-                <div class="subsection">
-                     <div class="usage-guidelines" style="margin-top: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; background: transparent; border: none; padding: 0;">
-                        <div>
-                            <h4>Primary Buttons</h4>
-                            <ul>
-                                <li>Use for the single, most important action in a view.</li>
-                                <li>Limit to one primary button per container to maintain clear hierarchy.</li>
-                                <li>Examples: "Save", "Submit", "Confirm".</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4>Secondary Buttons</h4>
-                            <ul>
-                                <li>Use for secondary actions that don't compete with the primary one.</li>
-                                <li>Good for "Cancel", "Back", or alternative actions.</li>
-                                <li>Can be used multiple times in a view.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4>Tertiary Buttons</h4>
-                            <ul>
-                                <li>Use for low-emphasis actions that shouldn't distract.</li>
-                                <li>Ideal for "Learn More" or "View Details".</li>
-                                <li>Often used for non-critical, supplementary actions.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4>Icon-Only Buttons</h4>
-                            <ul>
-                                <li>Use for common, universally understood actions in tight spaces.</li>
-                                <li>Always include an `aria-label` for accessibility.</li>
-                                <li>Examples: Settings, Close, Social Media Links.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="subsection">
-                    <h3 class="subsection-title">Icon Placement: Prefix vs. Suffix</h3>
-                    <p class="section-description" style="max-width: none; margin-bottom: 1.5rem;">The position of an icon relative to its text communicates its function.</p>
-                    <div class="usage-guidelines" style="margin-top: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; background: transparent; border: none; padding: 0;">
-                        <div>
-                            <h4>Prefix Icons (Left)</h4>
-                            <ul>
-                                <li>Use for icons that represent the action itself.</li>
-                                <li>Examples: "Package Tokens", "Save", "Filters".</li>
-                                <li>The icon is decorative and supports the text label.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4>Suffix Icons (Right)</h4>
-                            <ul>
-                                <li>Use for icons that indicate navigation or continuation.</li>
-                                <li>Examples: "Learn More", "View Details", "Go to Settings".</li>
-                                <li>The icon implies moving forward or to another location.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title"><i data-lucide="layers"></i>State Comparison Matrix</h2>
-                    <p class="section-description">This matrix provides a static, at-a-glance reference for every button variant across all possible states.</p>
-                </div>
-                <div class="subsection">
-                    <div class="state-comparison-grid">
-                        <!-- Headers -->
-                        <div></div> 
-                        <div class="example-label">Default</div>
-                        <div class="example-label">Hover</div>
-                        <div class="example-label">Active</div>
-                        <div class="example-label">Focus</div>
-                        <div class="example-label">Disabled</div>
-                        
-                        <!-- Primary -->
-                        <div class="state-label">Primary</div>
-                        <div class="state-cell"><button class="btn btn-primary btn-md"><i data-lucide="package"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-primary btn-md force-hover"><i data-lucide="package"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-primary btn-md force-active"><i data-lucide="package"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-primary btn-md force-focus"><i data-lucide="package"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-primary btn-md" disabled><i data-lucide="package"></i></button></div>
-                        
-                        <!-- Secondary -->
-                        <div class="state-label">Secondary</div>
-                        <div class="state-cell"><button class="btn btn-secondary btn-md"><i data-lucide="settings"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-secondary btn-md force-hover"><i data-lucide="settings"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-secondary btn-md force-active"><i data-lucide="settings"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-secondary btn-md force-focus"><i data-lucide="settings"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-secondary btn-md" disabled><i data-lucide="settings"></i></button></div>
-                        
-                         <!-- Tertiary -->
-                        <div class="state-label">Tertiary</div>
-                        <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline">Learn More</button></div>
-                        <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-hover">Learn More</button></div>
-                        <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-active">Learn More</button></div>
-                        <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-focus">Learn More</button></div>
-                        <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline" disabled>Learn More</button></div>
+<!-- ==========================================================================
+     START: FINAL, SYSTEM-ACCURATE BUTTON COMPONENT SECTION
+     ========================================================================== -->
+<div id="buttons" class="component-section">
+    <div class="component-header">
+        <h2 class="text-heading-lg component-title"><i data-lucide="mouse-pointer-2"></i> Buttons</h2>
+        <p class="component-description">A comprehensive button system with multiple variants, sizes, and states. Built for flexibility and consistency across the interface.</p>
+    </div>
+    <div class="component-body">
 
-                        <!-- Icon Only -->
-                        <div class="state-label">Icon Only</div>
-                        <div class="state-cell"><button class="btn btn-icon btn-md"><i data-lucide="github"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-icon btn-md force-hover"><i data-lucide="github"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-icon btn-md force-active"><i data-lucide="github"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-icon btn-md force-focus"><i data-lucide="github"></i></button></div>
-                        <div class="state-cell"><button class="btn btn-icon btn-md" disabled><i data-lucide="github"></i></button></div>
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- BUTTON VARIANTS SHOWCASE    -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <h3 class="example-subheader">Button Variants</h3>
+        <p class="category-description" style="margin-bottom: var(--size-4);">Four core button types serve different hierarchical needs. Each variant is fully interactive with hover, active, and disabled states.</p>
 
-                    </div>
+        <div class="subsection">
+            <div class="example-wrapper">
+                <div class="example-label">Primary</div>
+                <div class="button-showcase">
+                    <button class="btn btn-primary btn-sm"><i data-lucide="package"></i> Small Button</button>
+                    <button class="btn btn-primary btn-md"><i data-lucide="package"></i> Medium Button</button>
+                    <button class="btn btn-primary btn-lg"><i data-lucide="package"></i> Large Button</button>
                 </div>
-            </section>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <div class="example-wrapper">
+                <div class="example-label">Secondary</div>
+                <div class="button-showcase">
+                    <button class="btn btn-secondary btn-sm"><i data-lucide="sliders-horizontal"></i> Small Button</button>
+                    <button class="btn btn-secondary btn-md"><i data-lucide="sliders-horizontal"></i> Medium Button</button>
+                    <button class="btn btn-secondary btn-lg"><i data-lucide="sliders-horizontal"></i> Large Button</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <div class="example-wrapper">
+                <div class="example-label">Tertiary</div>
+                <div class="button-showcase">
+                    <button class="btn btn-tertiary btn-sm">Learn More <i data-lucide="arrow-right"></i></button>
+                    <button class="btn btn-tertiary btn-md">Learn More <i data-lucide="arrow-right"></i></button>
+                    <button class="btn btn-tertiary btn-lg">Learn More <i data-lucide="arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <div class="example-wrapper">
+                <div class="example-label">Icon-Only</div>
+                <div class="icon-only-showcase">
+                    <button class="btn btn-icon btn-sm" aria-label="Small Icon Button"><i data-lucide="github"></i></button>
+                    <button class="btn btn-icon btn-md" aria-label="Medium Icon Button"><i data-lucide="github"></i></button>
+                    <button class="btn btn-icon btn-lg" aria-label="Large Icon Button"><i data-lucide="github"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- USAGE GUIDELINES            -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <h3 class="example-subheader" style="margin-top: var(--size-8);">Usage Guidelines</h3>
+        <p class="category-description" style="margin-bottom: var(--size-4);">Best practices for implementing buttons to ensure a consistent and intuitive user experience, presented using the system's `.compact-card` component.</p>
+        
+        <div class="compact-cards">
+            <div class="compact-card">
+                <h3><i data-lucide="star"></i> Primary Buttons</h3>
+                <p>Use for the single, most important action. Limit to one per container to maintain clear hierarchy (e.g., "Save", "Submit").</p>
+            </div>
+            <div class="compact-card">
+                <h3><i data-lucide="circle"></i> Secondary Buttons</h3>
+                <p>Use for secondary actions that don't compete with the primary one (e.g., "Cancel", "Back", or alternative actions).</p>
+            </div>
+            <div class="compact-card">
+                <h3><i data-lucide="arrow-right-circle"></i> Tertiary Buttons</h3>
+                <p>Use for low-emphasis, supplementary actions that shouldn't distract from the main flow (e.g., "Learn More").</p>
+            </div>
+            <div class="compact-card">
+                <h3><i data-lucide="github"></i> Icon-Only Buttons</h3>
+                <p>Use for common, universally understood actions in tight spaces. Always include an `aria-label` for accessibility.</p>
+            </div>
+        </div>
+
+        <h4 class="example-subheader" style="margin-top: var(--size-6);">Icon Placement</h4>
+        <div class="compact-cards" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+             <div class="compact-card">
+                <h3><i data-lucide="align-left"></i> Left Icons (Prefix)</h3>
+                <p>Use for icons that represent the action itself. The icon is decorative and supports the text label.</p>
+                <div class="flex flex-col gap-2" style="margin-top: var(--size-4);">
+                    <button class="btn btn-primary btn-sm btn-inline"><i data-lucide="save"></i> Save Document</button>
+                    <button class="btn btn-secondary btn-sm btn-inline"><i data-lucide="download"></i> Export Tokens</button>
+                    <button class="btn btn-tertiary btn-sm btn-inline"><i data-lucide="filter"></i> Filter Results</button>
+                </div>
+            </div>
+            <div class="compact-card">
+                <h3><i data-lucide="align-right"></i> Right Icons (Suffix)</h3>
+                <p>Use for icons that indicate navigation or continuation. The icon implies moving forward to another location.</p>
+                 <div class="flex flex-col gap-2" style="margin-top: var(--size-4);">
+                    <button class="btn btn-primary btn-sm btn-inline">Continue <i data-lucide="arrow-right"></i></button>
+                    <button class="btn btn-secondary btn-sm btn-inline">Learn More <i data-lucide="external-link"></i></button>
+                    <button class="btn btn-tertiary btn-sm btn-inline">View Details <i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- STATE COMPARISON MATRIX     -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <h3 class="example-subheader" style="margin-top: var(--size-8);">State Reference</h3>
+        <p class="category-description" style="margin-bottom: var(--size-4);">Interactive states provide visual feedback. Test all states during implementation.</p>
+
+        <div class="subsection">
+            <div class="state-comparison-grid">
+                <!-- Headers -->
+                <div></div> 
+                <div class="example-label">Default</div>
+                <div class="example-label">Hover</div>
+                <div class="example-label">Active</div>
+                <div class="example-label">Focus</div>
+                <div class="example-label">Disabled</div>
+                
+                <!-- Rows -->
+                <div class="state-label">Primary</div>
+                <div class="state-cell"><button class="btn btn-primary btn-md" aria-label="Primary Button Default"><i data-lucide="package"></i></button></div>
+                <div class="state-cell"><button class="btn btn-primary btn-md force-hover" aria-label="Primary Button Hover"><i data-lucide="package"></i></button></div>
+                <div class="state-cell"><button class="btn btn-primary btn-md force-active" aria-label="Primary Button Active"><i data-lucide="package"></i></button></div>
+                <div class="state-cell"><button class="btn btn-primary btn-md force-focus" aria-label="Primary Button Focus"><i data-lucide="package"></i></button></div>
+                <div class="state-cell"><button class="btn btn-primary btn-md" disabled aria-label="Primary Button Disabled"><i data-lucide="package"></i></button></div>
+                
+                <div class="state-label">Secondary</div>
+                <div class="state-cell"><button class="btn btn-secondary btn-md" aria-label="Secondary Button Default"><i data-lucide="settings"></i></button></div>
+                <div class="state-cell"><button class="btn btn-secondary btn-md force-hover" aria-label="Secondary Button Hover"><i data-lucide="settings"></i></button></div>
+                <div class="state-cell"><button class="btn btn-secondary btn-md force-active" aria-label="Secondary Button Active"><i data-lucide="settings"></i></button></div>
+                <div class="state-cell"><button class="btn btn-secondary btn-md force-focus" aria-label="Secondary Button Focus"><i data-lucide="settings"></i></button></div>
+                <div class="state-cell"><button class="btn btn-secondary btn-md" disabled aria-label="Secondary Button Disabled"><i data-lucide="settings"></i></button></div>
+                
+                <div class="state-label">Tertiary</div>
+                <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline">Learn More</button></div>
+                <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-hover">Learn More</button></div>
+                <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-active">Learn More</button></div>
+                <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-focus">Learn More</button></div>
+                <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline" disabled>Learn More</button></div>
+
+                <div class="state-label">Icon Only</div>
+                <div class="state-cell"><button class="btn btn-icon btn-md" aria-label="Icon Button Default"><i data-lucide="github"></i></button></div>
+                <div class="state-cell"><button class="btn btn-icon btn-md force-hover" aria-label="Icon Button Hover"><i data-lucide="github"></i></button></div>
+                <div class="state-cell"><button class="btn btn-icon btn-md force-active" aria-label="Icon Button Active"><i data-lucide="github"></i></button></div>
+                <div class="state-cell"><button class="btn btn-icon btn-md force-focus" aria-label="Icon Button Focus"><i data-lucide="github"></i></button></div>
+                <div class="state-cell"><button class="btn btn-icon btn-md" disabled aria-label="Icon Button Disabled"><i data-lucide="github"></i></button></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ==========================================================================
+     END: REWRITTEN BUTTON COMPONENT SECTION
+     ========================================================================== -->
 
 
 
