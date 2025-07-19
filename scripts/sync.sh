@@ -132,7 +132,6 @@ EOL
 
 # Now, append the script block from ui.template.html separately
 # This ensures it's added only once at the end of the body
-grep -A 10000 '<script>' "$UI_TEMPLATE" >> "$UI_OUTPUT" || true # Appends script block
 
 echo "       ✓ Base HTML created ($(wc -l < "$UI_OUTPUT") lines)"
 
