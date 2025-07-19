@@ -29,12 +29,12 @@
 */
 
 /* 1. Import Shoelace FIRST - Component library base styles */
-@import url("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css);
+@import url("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css");
 
 /* 2. Import Open Props SECOND - Our foundation overrides */
-@import url("https://unpkg.com/open-props/style);
-@import url("https://unpkg.com/open-props/normalize);
-@import url("https://unpkg.com/open-props/buttons);
+@import url("https://unpkg.com/open-props/style");
+@import url("https://unpkg.com/open-props/normalize");
+@import url("https://unpkg.com/open-props/buttons");
 
 /* 
 ==========================================================================
@@ -2625,7 +2625,6 @@ select option {
  background: var(--color-background-secondary);
  border-radius: var(--radius-3);
  padding: var(--size-3);
- margin-bottom: var(--size-2);
  box-shadow: var(--shadow-2);
  transition: box-shadow var(--animation-duration-2) var(--ease-3);
  animation: var(--animation-slide-in-up);
@@ -2636,7 +2635,7 @@ select option {
 /* Token Summary */
 .token-summary { 
  text-align: center; 
- padding: var(--size-4) var(--size-4) var(--size-3);
+ padding: var(--size-4) var(--size-3) var(--size-3);
 }
 
 .token-summary .token-count-total { 
@@ -2653,13 +2652,28 @@ select option {
 
 .token-breakdown {
  display: grid;
- grid-template-columns: repeat(4, 1fr); /* Always 4 columns */
- gap: var(--size-2);
+ grid-template-columns: repeat(4, minmax(0, 1fr));
+ gap: var(--size-1);
  border-top: var(--border-size-1) solid var(--gray-8);
  padding-top: var(--size-4);
- /* Force horizontal layout in plugin */
- min-width: 280px; /* Minimum width to prevent wrapping */
 }
+
+/* For very narrow plugin windows, make everything smaller but keep horizontal */
+@container (max-width: 320px) {
+ .token-breakdown {
+ gap: var(--size-1);
+ }
+ 
+ .token-type-stat {
+ padding: var(--size-1);
+ min-height: 50px;
+ }
+ 
+ .token-type-stat .count {
+ font-size: var(--font-size-1); /* Smaller numbers */
+ }
+}
+
 
 .token-type-stat {
  text-align: center;
@@ -2699,22 +2713,6 @@ select option {
  font-weight: var(--font-weight-6); 
  margin-bottom: var(--size-1);
  line-height: 1.8;
-}
-
-/* For very narrow plugin windows, make everything smaller but keep horizontal */
-@container (max-width: 320px) {
- .token-breakdown {
- gap: var(--size-1);
- }
- 
- .token-type-stat {
- padding: var(--size-1);
- min-height: 50px;
- }
- 
- .token-type-stat .count {
- font-size: var(--font-size-1); /* Smaller numbers */
- }
 }
 
 /* Token type colors */
@@ -3339,63 +3337,36 @@ select option {
  }
 }
 
-/* Token Summary Skeleton */
-.card.token-summary-skeleton {
- padding: var(--size-6) var(--size-4);
- text-align: center;
+/* ==========================================================================
+   SMART SKELETON LOADER (V3.1 - POLISHED)
+   ========================================================================== */
+
+.token-summary.is-loading .skeleton-pulse {
+    display: inline-block;
+    background-color: var(--gray-7);
+    color: transparent;
+    border-radius: var(--radius-round); /* Pill shape */
+    animation: skeleton-breathe 2.5s ease-in-out infinite;
+    user-select: none;
+    vertical-align: middle; /* Helps with alignment */
 }
 
-.skeleton-heading {
- width: 60%;
- height: var(--font-size-8);
- background: var(--gray-7);
- border-radius: var(--radius-2);
- margin: 0 auto var(--size-4);
- animation: skeleton-breathe 2.5s ease-in-out infinite;
+/* Styles for the large total number at the top */
+.token-summary.is-loading .token-count-total .skeleton-pulse {
+    width: 120px; /* Wider to represent a 3-digit number */
+    height: var(--font-size-6); /* Matches the text height */
 }
 
-.skeleton-subheading {
- width: 80%;
- height: var(--font-size-1);
- background: var(--gray-7);
- border-radius: var(--radius-1);
- margin: 0 auto var(--size-6);
- animation: skeleton-breathe 2.5s ease-in-out infinite;
+/* Styles for the smaller numbers in the breakdown */
+.token-summary.is-loading .token-breakdown .count.skeleton-pulse {
+    width: 40px;
+    height: var(--font-size-3); /* EXACT height of the real number */
+    margin-bottom: var(--size-1); /* EXACT margin of the real number */
+    line-height: 1.8;             /* EXACT line-height of the real number */
 }
 
-.skeleton-breakdown {
- display: grid;
- /* FIX: Enforce 4 columns to match the real component */
- grid-template-columns: repeat(4, 1fr);
- gap: var(--size-2);
- border-top: var(--border-size-1) solid var(--gray-8);
- padding-top: var(--size-4);
- justify-items: center;
-}
 
-.skeleton-stat {
- display: flex;
- flex-direction: column;
- align-items: center;
- gap: var(--size-2);
- padding: var(--size-2);
-}
 
-.skeleton-stat .skeleton-icon {
- width: var(--font-size-3);
- height: var(--font-size-3);
- background: var(--gray-7);
- border-radius: var(--radius-1);
- animation: skeleton-breathe 2.5s ease-in-out infinite;
-}
-
-.skeleton-stat .skeleton-text {
- width: 60px;
- height: var(--font-size-1);
- background: var(--gray-7);
- border-radius: var(--radius-1);
- animation: skeleton-breathe 2.5s ease-in-out infinite;
-}
 
 
 /* ==========================================================================
@@ -3475,16 +3446,6 @@ select option {
  height: 15px;
  flex-shrink: 0;
 }
-
-
-
-/*
-* The media queries for .token-breakdown were removed from here.
-* This ensures the component maintains its 4-column grid layout
-* even in the narrow Figma plugin viewport (<=400px), aligning
-* its behavior with the design system's primary intent.
-*/
-
 
  
 .state-group-header {
@@ -3900,11 +3861,15 @@ sl-input::part(input):focus-visible,
  justify-content: space-between; /* This pushes content to top and bottom */
 }
 
+
 .empty-state-categories {
-    display: inline-flex;
-    gap: var(--size-4);
-    justify-content: center;
-    margin: var(--size-4) 0; /* Adds some breathing room */
+    display: flex; /* Changed from inline-flex for consistency */
+    justify-content: center; /* This is the key change */
+    gap: var(--size-1); /* Increased gap for better spacing */
+    margin: var(--size-4) 0;
+    width: 100%;
+    padding: 0 var(--size-4);
+    box-sizing: border-box;
 }
 
 .empty-state-category {
@@ -4516,6 +4481,7 @@ body {
  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
  gap: var(--size-4);
  margin-bottom: var(--size-4);
+ align-items: stretch;
 }
 
 /* Pattern Section Styles */
@@ -4746,6 +4712,68 @@ body {
     }
 }
 
+
+/* ==========================================================================
+   SKELETON LOADER
+   ========================================================================== */
+
+.token-summary-skeleton {
+    padding: var(--size-6) var(--size-4);
+}
+
+.skeleton-heading {
+    width: 50%;
+    height: var(--font-size-7);
+    background-color: var(--gray-7);
+    border-radius: var(--radius-2);
+    margin: 0 auto var(--size-3);
+}
+
+.skeleton-subheading {
+    width: 70%;
+    height: var(--font-size-2);
+    background-color: var(--gray-7);
+    border-radius: var(--radius-1);
+    margin: 0 auto var(--size-6);
+}
+
+.skeleton-breakdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--size-2);
+    border-top: var(--border-size-1) solid var(--gray-8);
+    padding-top: var(--size-4);
+}
+
+.skeleton-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-2);
+}
+
+.skeleton-stat .skeleton-icon {
+    width: var(--size-6);
+    height: var(--size-6);
+    background-color: var(--gray-7);
+    border-radius: var(--radius-round); /* Circular shape */
+}
+
+.skeleton-stat .skeleton-text {
+    width: 80%;
+    height: var(--font-size-2);
+    background-color: var(--gray-7);
+    border-radius: var(--radius-1);
+}
+
+.skeleton-pulse {
+    animation: skeleton-breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-breathe {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
 
 /* ==========================================================================
  THEMING STRATEGY & FUTURE IMPLEMENTATIONS

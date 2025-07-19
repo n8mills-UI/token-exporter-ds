@@ -598,11 +598,35 @@
                         <div class="example-label">Loading State</div>
                         <div class="example-container">
 <!-- src/components/_skeleton-loader.html -->
-<!-- The initial loading state shown before the plugin UI loads. -->
-<div class="skeleton-container" id="skeleton-loader">
-    <div class="skeleton-item skeleton-pulse"></div>
-    <div class="skeleton-item skeleton-pulse small"></div>
-    <div class="skeleton-item skeleton-pulse small"></div>
+<div class="card token-summary is-loading" id="skeleton-loader">
+    <div class="text-heading-xl token-count-total"><span class="skeleton-pulse"></span></div>
+    <div class="text-label token-label">Tokens Loading...</div> <!-- Use a non-breaking space to maintain height -->
+    <div class="token-breakdown">
+        <!-- Color Stat -->
+        <div class="token-type-stat color">
+            <i class="icon" data-lucide="palette"></i>
+            <div class="count skeleton-pulse"></div>
+            <div class="text-label label">colors</div>
+        </div>
+        <!-- Text Stat -->
+        <div class="token-type-stat text">
+            <i class="icon" data-lucide="type"></i>
+            <div class="count skeleton-pulse"></div>
+            <div class="text-label label">text</div>
+        </div>
+        <!-- Number Stat -->
+        <div class="token-type-stat number">
+            <i class="icon" data-lucide="hash"></i>
+            <div class="count skeleton-pulse"></div>
+            <div class="text-label label">numbers</div>
+        </div>
+        <!-- States Stat -->
+        <div class="token-type-stat states">
+            <i class="icon" data-lucide="toggle-right"></i>
+            <div class="count skeleton-pulse"></div>
+            <div class="text-label label">states</div>
+        </div>
+    </div>
 </div>
                         </div>
                     </div>
@@ -638,7 +662,7 @@
                         <div class="example-container">
 <!-- src/components/_empty-state.html -->
 <!-- Single Source of Truth for the "Empty State" component. -->
-<div class="empty-state" id="empty-state" style="display: none;">
+<div class="empty-state" id="empty-state">
     <!-- Top Group -->
     <div class="flex flex-col items-center gap-3">
         <div class="empty-state-icon">
