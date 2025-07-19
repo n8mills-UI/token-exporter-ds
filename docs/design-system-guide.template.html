@@ -192,7 +192,62 @@
                 </div>
             </div>
 
-                    <!-- NEW: 2-Column Grid Wrapper -->
+
+<!-- Bridging the Gap Section -->
+<div class="content-section">
+    <div class="section-header">
+        <h3 class="section-title"><i data-lucide="link"></i> Bridging the Gap: From Figma to Code</h3>
+        <p class="section-subtitle">// A shared language for designers and developers</p>
+    </div>
+    <div class="component-section">
+        <div class="component-body">
+            <p class="section-description" style="margin-bottom: var(--size-6);">
+                A successful design system relies on a shared understanding between design and development. This table translates common Figma concepts into their direct code counterparts using the principles of <strong>Atomic Design</strong>. It provides a mental map that connects the visual design to the underlying CSS architecture.
+            </p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Atomic Level</th>
+                            <th>Figma Concept</th>
+                            <th>Code Implementation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Atoms</strong></td>
+                            <td><strong>Styles</strong> (Color, Text, Effects)</td>
+                            <td><strong>Foundation / Tokens:</strong> The raw, unchangeable values defined as CSS variables in the <code>:root</code> block (e.g., <code>--brand-primary-lime</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Atoms</strong></td>
+                            <td><strong>Auto Layout</strong> (Spacing, Alignment)</td>
+                            <td><strong>Utility Classes:</strong> Single-purpose classes that apply one token directly to an element (e.g., <code>.flex</code>, <code>.p-4</code>, <code>.text-center</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Molecules</strong></td>
+                            <td><strong>Simple Components</strong> (Button, Input)</td>
+                            <td><strong>Component Classes:</strong> A class that combines multiple styles to create a simple, reusable element (e.g., <code>.btn</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Organisms</strong></td>
+                            <td><strong>Complex Components / Sets</strong> (Token Card)</td>
+                            <td><strong>Component Block:</strong> A larger, distinct section of the UI composed of multiple simpler components (e.g., <code>.token-summary</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Templates</strong></td>
+                            <td><strong>Pages / Frames</strong> (The Plugin UI)</td>
+                            <td><strong>Layout Styles:</strong> The highest-level styles that arrange components on the screen (e.g., <code>.guide-container</code>, <code>.guide-sidebar</code>).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+           <!-- NEW: 2-Column Grid Wrapper -->
             <div class="content-grid-2col">
                 <!-- FAQ Section -->
                 <div class="faq-section">

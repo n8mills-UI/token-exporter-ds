@@ -6,27 +6,68 @@
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║    ███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗██║  ██║
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-                    Token Exporter Design System v4.0.7   |   Crafted with ❤️ by Nate Mills
+Token Exporter Design System   |   Crafted with ❤️ by Nate Mills
 ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 
-          ╔═══[ PLAYER SELECT ]══════════════════════════════════════════════════════════════════════════╗           
-          ║                                                                                              ║                                                                                             ║                                                                                              ║
-          ║        ███╗   ██╗ █████╗ ████████╗███████╗    ███╗   ███╗██╗██╗     ██╗     ███████╗         ║
-          ║        ████╗  ██║██╔══██╗╚══██╔══╝██╔════╝    ████╗ ████║██║██║     ██║     ██╔════╝         ║
-          ║        ██╔██╗ ██║███████║   ██║   █████╗      ██╔████╔██║██║██║     ██║     ███████╗         ║
-          ║        ██║╚██╗██║██╔══██║   ██║   ██╔══╝      ██║╚██╔╝██║██║██║     ██║     ╚════██║         ║
-          ║        ██║ ╚████║██║  ██║   ██║   ███████╗    ██║ ╚═╝ ██║██║███████╗███████╗███████║         ║
-          ║        ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚══════╝         ║
-          ║                                                                                              ║
-          ║        ┌──[ CREATOR STATS ]─────────────────────────────────────────────────────────┐        ║   
-          ║        │     LEVEL: SENIOR+   |    CLASS: FIGMA EXPERT   |  XP: █ █ █ █ █ █ █ MAX   │        ║                                      
-          ║        │   SENIOR UI DESIGNER | DESIGN SYSTEMS ARCHITECT | AI-ASSISTED DEVELOPMENT  │        ║
-          ║        └────────────────────────────────────────────────────────────────────────────┘        ║
-          ║                                                                                              ║
-          ║        [STATUS] ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ [WIZARD]        ║
-          ║                                                                                              ║
-          ╚══════════════════════════════════════════════════════════════════════════════════════════════╝
+╔═══[ PLAYER SELECT ]══════════════════════════════════════════════════════════════════════════╗           
+║                                                                                              ║                                                                                             ║                                                                                              ║
+║        ███╗   ██╗ █████╗ ████████╗███████╗    ███╗   ███╗██╗██╗     ██╗     ███████╗         ║
+║        ████╗  ██║██╔══██╗╚══██╔══╝██╔════╝    ████╗ ████║██║██║     ██║     ██╔════╝         ║
+║        ██╔██╗ ██║███████║   ██║   █████╗      ██╔████╔██║██║██║     ██║     ███████╗         ║
+║        ██║╚██╗██║██╔══██║   ██║   ██╔══╝      ██║╚██╔╝██║██║██║     ██║     ╚════██║         ║
+║        ██║ ╚████║██║  ██║   ██║   ███████╗    ██║ ╚═╝ ██║██║███████╗███████╗███████║         ║
+║        ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚══════╝         ║
+║                                                                                              ║
+║        ┌──[ CREATOR STATS ]─────────────────────────────────────────────────────────┐        ║   
+║        │     LEVEL: SENIOR+   |    CLASS: FIGMA EXPERT   |  XP: █ █ █ █ █ █ █ MAX   │        ║                                      
+║        │   SENIOR UI DESIGNER | DESIGN SYSTEMS ARCHITECT | AI-ASSISTED DEVELOPMENT  │        ║
+║        └────────────────────────────────────────────────────────────────────────────┘        ║
+║                                                                                              ║
+║        [STATUS] ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ [WIZARD]        ║
+║                                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════╝
+
+
+==================================================================================
+[SYSTEM LINK ESTABLISHED] : [DESIGN CONCEPTS] <===> [CODE CONCEPTS]
+==================================================================================
+
+This guide translates design terminology into its corresponding code implementation,
+providing a shared language for designers and developers. It follows the principles
+of Atomic Design.
+
+[ATOMIC DESIGN]  [FIGMA TERMINOLOGY]       [CODING TERMINOLOGY (CSS/HTML)]
+----------------------------------------------------------------------------------
+ATOMS             STYLES                     FOUNDATION / TOKENS
+                  (Color, Text, Grid)        The absolute source of truth for the
+                                             brand. Defined in the `:root` block
+                                             as CSS Custom Properties (Variables).
+                                             e.g., --brand-primary-lime
+
+ATOMS             AUTO LAYOUT                UTILITY CLASSES
+                  (Spacing, Alignment)       Single-purpose helper classes that apply
+                                             one specific style from the foundation.
+                                             e.g., .flex, .p-4, .text-center
+
+MOLECULES         COMPONENTS                 COMPONENTS (SIMPLE) / CLASSES
+                  (e.g., Button, Input)      A combination of foundational styles
+                                             and structure to create a simple,
+                                             reusable element defined by a class.
+                                             e.g., .btn
+
+ORGANISMS         COMPONENT SETS             COMPONENTS (COMPLEX) / CLASSES
+                  (e.g., Token Card,         A distinct section of the interface,
+                  Empty State)               composed of multiple simpler components.
+                                             e.g., .token-summary-card
+
+TEMPLATES         PAGES / FRAMES             LAYOUT STYLES
+                                             The highest-level structure that
+                                             arranges organisms and molecules on the
+                                             screen.
+                                             e.g., .guide-container, .guide-sidebar
+
 */
+
 
 /* 1. Import Shoelace FIRST - Component library base styles */
 @import url("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css");
@@ -1761,6 +1802,64 @@ sl-icon-button::part(base):hover {
  margin-top: var(--size-1);
 }
 
+/* --- Component: System Table (NEW) --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    background: var(--color-background-secondary);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--color-text-secondary);
+}
+
+.table th,
+.table td {
+    padding: var(--size-3) var(--size-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border-default);
+    line-height: var(--font-lineheight-3);
+}
+
+.table thead th {
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-6);
+    font-size: var(--font-size-1);
+    background-color: var(--color-background-tertiary);
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.table code {
+    background: var(--color-background-primary);
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-1);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
+}
+
+.link-brand {
+    color: var(--brand-primary-lime);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    font-weight: var(--font-weight-6);
+    transition: filter var(--transition-fast);
+}
+
+.link-brand:hover {
+    filter: brightness(1.1);
+}
+
 .token-exporter-logo {
  display: inline-block;
  width: 48px;
@@ -2632,6 +2731,14 @@ select option {
  contain: layout;
 }
 
+/* Token Summary Card - Height Fix */
+.token-summary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 194px; /* Enforces a consistent minimum height across all states */
+}
+
 /* Token Summary */
 .token-summary { 
  text-align: center; 
@@ -3338,46 +3445,41 @@ select option {
 }
 
 /* ==========================================================================
-   SMART SKELETON LOADER (V3.1 - POLISHED)
+   SMART SKELETON LOADER (V6 - PIXEL PERFECT FIX)
    ========================================================================== */
 
 .token-summary.is-loading .skeleton-pulse {
     display: inline-block;
     background-color: var(--gray-7);
-    color: transparent;
-    border-radius: var(--radius-round); /* Pill shape */
+    color: transparent !important;
+    border-radius: var(--radius-round);
     animation: skeleton-breathe 2.5s ease-in-out infinite;
     user-select: none;
-    vertical-align: middle; /* Helps with alignment */
+    vertical-align: middle;
 }
 
-/* Styles for the large total number at the top */
 .token-summary.is-loading .token-count-total .skeleton-pulse {
-    width: 120px; /* Wider to represent a 3-digit number */
-    height: var(--font-size-6); /* Matches the text height */
+    width: 120px;
+    height: var(--font-size-7);
+    margin-bottom: var(--size-1);
 }
 
 /* Styles for the smaller numbers in the breakdown */
-.token-summary.is-loading .token-breakdown .count.skeleton-pulse {
-    width: 40px;
-    height: var(--font-size-3); /* EXACT height of the real number */
-    margin-bottom: var(--size-1); /* EXACT margin of the real number */
-    line-height: 1.8;             /* EXACT line-height of the real number */
+.token-summary.is-loading .token-type-stat {
+    gap: 6px; /* Adds consistent spacing between icon, count, and label */
 }
 
-
-
-
+.token-summary.is-loading .token-breakdown .count.skeleton-pulse {
+    width: 40px;
+    height: calc(var(--font-size-3) * 1.8); /* Correctly matches the computed height of the text */
+    margin-bottom: 0; /* The new gap property now handles this spacing */
+}
 
 /* ==========================================================================
  Guide Footer
  ========================================================================== */
 
 /* @docs-only-start */
-
-
-
-
 
 /* Thin branded divider line */
 .guide-footer::before {
@@ -4404,7 +4506,7 @@ body {
  position: relative;
  display: flex;
  flex-direction: column;
- height: 100%; 
+ /* height: 100%; REMOVED - This was causing the issue */
 }
 
 .code-block {

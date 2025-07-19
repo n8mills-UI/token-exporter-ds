@@ -8,6 +8,7 @@
   },
   "scripts": {
     "sync": "bash scripts/sync.sh",
+    "lint:js": "eslint src/code.js",
     "dev": "npm run sync && echo 'Watching for changes...'",
     "build": "npm run sync",
     "clean": "rm -f src/ui.html.backup"
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme",
   "devDependencies": {
+    "eslint": "^9.31.0",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^38.0.0"
   }
