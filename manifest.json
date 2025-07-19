@@ -1,6 +1,6 @@
 {
   "name": "Token Exporter",
-  "id": "1521741753717588633",
+  "id": "1528272381626882492",
   "api": "1.0.0",
   "main": "src/code.js",
   "ui": "src/ui.html",

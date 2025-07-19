@@ -105,9 +105,7 @@ for output_file in "$UI_OUTPUT" "$GUIDE_OUTPUT"; do
         if [ -f "$partial_file" ]; then
             echo "       - Injecting partial '$partial_file' into '$output_file'"
             # Use awk for a robust, line-by-line replacement of the placeholder with the partial's content.
-            awk -v partial_content="$(cat "$partial_file")" -v p_holder="$placeholder" '
-            $0 == p_holder { print partial_content; next }
-            { print }' "$temp_build_file" > "$output_file"
+            sed "/$placeholder/r $partial_file" "$temp_build_file" | sed "/$placeholder/d" > "$output_file"
             mv "$output_file" "$temp_build_file"
         else
             # If a partial is not found, fail the build loudly and immediately.
