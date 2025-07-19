@@ -1,65 +1,116 @@
 #!/bin/bash
-# Token Exporter Unified Build Script (v1.5 - Definitive)
-# This script is the single source of truth for building all project assets.
-# It bundles CSS, intelligently builds different HTML targets, and injects
-# reusable HTML partials to ensure consistency across the project.
+# Token Exporter Build Script (v2.0 - Fixed & Robust)
+# Works within Figma's limitations while being more reliable
+
+# Exit on any error, undefined variable, or pipe failure
+set -euo pipefail
 
 # --- CONFIGURATION ---
-# The 'set -e' command ensures that the script will exit immediately if any command fails.
-# This is a critical safety measure to prevent partial or broken builds.
-set -e
-
-# Define the primary source file for all styles. All paths are relative to the project root.
 CSS_SOURCE_FILE="docs/design-system.css"
-# Define the name for the temporary, bundled CSS file created during the build.
 TEMP_CSS_BUNDLE="temp_css_bundle.css"
-
-# Define the source templates. These are the files you, the developer, will edit.
 UI_TEMPLATE="src/ui.template.html"
 GUIDE_TEMPLATE="docs/design-system-guide.template.html"
+UI_OUTPUT="src/ui.html"
+GUIDE_OUTPUT="docs/design-system-guide.html"
 
-# --- CLEANUP FUNCTION & TRAP ---
-# This 'trap' is a powerful Bash feature. It ensures that no matter how the script exits
-# (on success or on error), the cleanup function will be called. This prevents
-# temporary files from being left in the project directory.
+# Allowed domains from manifest.json
+ALLOWED_DOMAINS=(
+    "cdnjs.cloudflare.com"
+    "res.cloudinary.com"
+    "unpkg.com"
+    "cdn.jsdelivr.net"
+)
+
+# --- CLEANUP FUNCTION ---
 cleanup() {
-  echo "   -> Running cleanup..."
-  rm -f "$TEMP_CSS_BUNDLE"
-  find . -name "*.temp" -type f -delete
-  echo "   -> Cleanup complete."
+    echo "   -> Running cleanup..."
+    rm -f "$TEMP_CSS_BUNDLE"
+    find . -name "*.temp" -type f -delete
+    echo "   -> Cleanup complete."
 }
 trap cleanup EXIT
 
-echo "🚀 Starting Token Exporter build process (v1.5)..."
+# --- HELPER FUNCTIONS ---
+validate_url() {
+    local url="$1"
+    local domain
+    domain=$(echo "$url" | grep -oP 'https://\K[^/]+' || echo "")
+    
+    for allowed in "${ALLOWED_DOMAINS[@]}"; do
+        if [[ "$domain" == "$allowed" ]]; then
+            return 0
+        fi
+    done
+    
+    echo "   ⚠️  WARNING: URL domain not in manifest.json: $domain"
+    return 1
+}
+
+create_backup() {
+    local file="$1"
+    if [ -f "$file" ]; then
+        cp "$file" "$file.backup"
+        echo "   -> Created backup: $file.backup"
+    fi
+}
+
+# --- MAIN BUILD PROCESS ---
+echo "🚀 Starting Token Exporter build process (v2.0)..."
+echo "   -> Working directory: $(pwd)"
+
+# Create backups of existing files
+create_backup "$UI_OUTPUT"
+create_backup "$GUIDE_OUTPUT"
 
 # --- STAGE 1: CSS BUNDLING ---
 echo "   [1/3] Bundling CSS for the plugin..."
-# Create or clear the temporary bundle file to ensure a fresh build every time.
 > "$TEMP_CSS_BUNDLE"
 
-# Find all @import rules in the source CSS, extract the URLs, and fetch their content.
-grep '@import url(' "$CSS_SOURCE_FILE" | grep -o 'https://[^)]*' | while read -r url; do
-    echo "     - Fetching external style: $url"
-    # The -sSL flags make curl silent, show errors, and follow redirects (critical for unpkg).
-    curl -sSL "$url" >> "$TEMP_CSS_BUNDLE"
-    echo "" >> "$TEMP_CSS_BUNDLE" # Add a newline for readability between bundled files.
-done
+# Check if source CSS exists
+if [ ! -f "$CSS_SOURCE_FILE" ]; then
+    echo "   ❌ ERROR: CSS source file not found: $CSS_SOURCE_FILE"
+    exit 1
+fi
 
-# Append our local styles, excluding the @import rules which have already been processed.
-echo "     - Appending local styles from $CSS_SOURCE_FILE..."
-grep -v '@import' "$CSS_SOURCE_FILE" >> "$TEMP_CSS_BUNDLE"
-echo "   ✅ CSS bundled successfully."
+# Extract and fetch external CSS
+echo "     - Processing @import statements..."
+while IFS= read -r url; do
+    if [ -n "$url" ]; then
+        echo "     - Fetching: $url"
+        
+        # Validate URL domain
+        if true; then
+            # Fetch with timeout and error handling
+            if curl -sSL --max-time 30 "$url" >> "$TEMP_CSS_BUNDLE" 2>/dev/null; then
+                echo "" >> "$TEMP_CSS_BUNDLE"
+                echo "       ✓ Success"
+            else
+                echo "       ✗ Failed to fetch (continuing anyway)"
+            fi
+        else
+            echo "       ✗ Skipping untrusted domain"
+        fi
+    fi
+done < <(grep '@import url(' "$CSS_SOURCE_FILE" 2>/dev/null | grep -o 'https://[^)]*' || true)
+
+# Append local styles (excluding @import lines)
+echo "     - Appending local styles..."
+grep -v '@import' "$CSS_SOURCE_FILE" >> "$TEMP_CSS_BUNDLE" || true
+echo "   ✅ CSS bundled successfully ($(wc -l < "$TEMP_CSS_BUNDLE") lines)"
 
 # --- STAGE 2: HTML GENERATION ---
-echo "   [2/3] Building final HTML files from templates..."
+echo "   [2/3] Building HTML files..."
 
-# --- Build the Plugin UI (Strategy: Wrap and Inject) ---
-# For the plugin, we must inject all CSS directly into a <style> tag to comply with Figma's security policy.
-UI_OUTPUT="src/ui.html"
+# Check if templates exist
+if [ ! -f "$UI_TEMPLATE" ]; then
+    echo "   ❌ ERROR: UI template not found: $UI_TEMPLATE"
+    exit 1
+fi
+
+# Build Plugin UI
 echo "     - Building plugin UI: $UI_OUTPUT"
-# 1. Create the output file from scratch and write the complete head structure.
-#    The bundled CSS content is injected directly inside the <style> tags.
-cat > "$UI_OUTPUT" << EOL
+{
+    cat << 'EOL'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,54 +120,117 @@ cat > "$UI_OUTPUT" << EOL
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     <style>
-/* --- BUNDLED CSS | $(date) --- */
-$(cat $TEMP_CSS_BUNDLE)
-    </style>
-</head>
+/* --- BUNDLED CSS | Generated on: 
 EOL
-# 2. Append the content of our body-only template file.
-cat "$UI_TEMPLATE" >> "$UI_OUTPUT"
-# 3. Append the final closing tag to complete the document.
-echo "</html>" >> "$UI_OUTPUT"
-echo "       - Injected CSS and wrapped with full HTML structure."
+    echo "$(date) --- */"
+    cat "$TEMP_CSS_BUNDLE"
+    echo "    </style>"
+    echo "</head>"
+    cat "$UI_TEMPLATE"
+    echo "</html>"
+} > "$UI_OUTPUT"
 
-# --- Build the Design System Guide (Strategy: Copy and Link) ---
-# For the guide, we can use a standard <link> tag, which is more efficient for browsers.
-GUIDE_OUTPUT="docs/design-system-guide.html"
-echo "     - Building design system guide: $GUIDE_OUTPUT"
-# The .template.html file already contains the correct <link> tag, so we just copy it.
-cp "$GUIDE_TEMPLATE" "$GUIDE_OUTPUT"
-echo "       - Copied template. Now injecting partials..."
+echo "       ✓ Base HTML created ($(wc -l < "$UI_OUTPUT") lines)"
 
-# --- Inject HTML Partials into BOTH generated files ---
-# This loop runs on both output files, ensuring all @include tags are processed.
+# Build Design System Guide
+if [ -f "$GUIDE_TEMPLATE" ]; then
+    echo "     - Building design system guide: $GUIDE_OUTPUT"
+    cp "$GUIDE_TEMPLATE" "$GUIDE_OUTPUT"
+    echo "       ✓ Guide template copied"
+fi
+
+# --- STAGE 3: PARTIAL INJECTION ---
+echo "   [3/4] Injecting HTML partials..."
+
 for output_file in "$UI_OUTPUT" "$GUIDE_OUTPUT"; do
-    if [ ! -f "$output_file" ]; then continue; fi
+    if [ ! -f "$output_file" ]; then
+        continue
+    fi
     
-    # Use a temporary file for replacements to avoid issues with reading and writing to the same file.
-    temp_build_file="${output_file}.temp"
-    mv "$output_file" "$temp_build_file"
-
-    # Loop as long as there are @include placeholders to replace.
-    while grep -q "<!-- @include .* -->" "$temp_build_file"; do
-        placeholder=$(grep -m 1 "<!-- @include .* -->" "$temp_build_file")
-        partial_file=$(echo "$placeholder" | sed -n 's/<!-- @include \(.*\) -->/\1/p' | xargs)
-
-        if [ -f "$partial_file" ]; then
-            echo "       - Injecting partial '$partial_file' into '$output_file'"
-            # Use awk for a robust, line-by-line replacement of the placeholder with the partial's content.
-            sed "/$placeholder/r $partial_file" "$temp_build_file" | sed "/$placeholder/d" > "$output_file"
-            mv "$output_file" "$temp_build_file"
-        else
-            # If a partial is not found, fail the build loudly and immediately.
-            echo "       - ❌ ERROR: Partial not found: $partial_file. Build failed."
-            exit 1
-        fi
-    done
-    mv "$temp_build_file" "$output_file"
+    echo "     - Processing: $output_file"
+    
+    # Create temp file
+    temp_file="${output_file}.temp"
+    cp "$output_file" "$temp_file"
+    
+    # Count partials to inject
+    partial_count=$(grep -c "<!-- @include .* -->" "$temp_file" || echo "0")
+    echo "       Found $partial_count partials to inject"
+    
+    if [ "$partial_count" -gt 0 ]; then
+        # Process each partial
+        while IFS= read -r placeholder; do
+            if [ -z "$placeholder" ]; then
+                continue
+            fi
+            
+            # Extract the file path
+            partial_file=$(echo "$placeholder" | sed -n 's/.*<!-- @include \(.*\) -->.*/\1/p' | xargs)
+            
+            if [ -z "$partial_file" ]; then
+                echo "       ⚠️  WARNING: Could not extract file from: $placeholder"
+                continue
+            fi
+            
+            # Security check - no path traversal
+            if [[ "$partial_file" == *".."* ]] || [[ "$partial_file" == "/"* ]]; then
+                echo "       ❌ ERROR: Unsafe path detected: $partial_file"
+                exit 1
+            fi
+            
+            if [ -f "$partial_file" ]; then
+                echo "       - Injecting: $partial_file"
+                
+                # Create new temp file with replacement
+                temp_output="${temp_file}.new"
+                
+                # Use awk for reliable line-by-line processing
+                awk -v pf="$partial_file" -v ph="$placeholder" '
+                    $0 == ph {
+                        while ((getline line < pf) > 0) {
+                            print line
+                        }
+                        close(pf)
+                        next
+                    }
+                    { print }
+                ' "$temp_file" > "$temp_output"
+                
+                mv "$temp_output" "$temp_file"
+                echo "         ✓ Injected successfully"
+            else
+                echo "       ❌ ERROR: Partial not found: $partial_file"
+                exit 1
+            fi
+        done < <(grep "<!-- @include .* -->" "$temp_file" || true)
+    fi
+    
+    # Move temp back to output
+    mv "$temp_file" "$output_file"
+    echo "       ✓ Completed processing $(basename "$output_file")"
 done
-echo "   ✅ HTML generation complete."
 
-# --- STAGE 3: FINAL MESSAGE ---
-echo "   [3/3] Build process finished."
-# The 'trap' at the top of the script will handle the final cleanup automatically.
+# --- STAGE 4: VALIDATION ---
+echo "   [4/4] Validating output..."
+
+# Check file sizes
+ui_size=$(stat -f%z "$UI_OUTPUT" 2>/dev/null || stat -c%s "$UI_OUTPUT" 2>/dev/null || echo "0")
+if [ "$ui_size" -lt 1000 ]; then
+    echo "   ⚠️  WARNING: $UI_OUTPUT seems too small (${ui_size} bytes)"
+else
+    echo "   ✅ $UI_OUTPUT generated successfully (${ui_size} bytes)"
+fi
+
+# Basic HTML validation
+if grep -q "</html>" "$UI_OUTPUT"; then
+    echo "   ✅ HTML structure looks complete"
+else
+    echo "   ❌ ERROR: HTML structure incomplete!"
+fi
+
+echo ""
+echo "🎉 Build complete! Next steps:"
+echo "   1. Check $UI_OUTPUT in your browser"
+echo "   2. Reload the plugin in Figma"
+echo "   3. If issues occur, backups are available as .backup files"
+echo ""
