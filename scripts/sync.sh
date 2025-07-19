@@ -126,8 +126,7 @@ EOL
     cat "$TEMP_CSS_BUNDLE"
     echo "    </style>"
     echo "</head>"
-    # Extract only the HTML body content from ui.template.html, excluding the script block
-    sed '/<script>/,$d' "$UI_TEMPLATE" # This removes everything from <script> tag to end
+    cat "$UI_TEMPLATE"
     echo "</html>"
 } > "$UI_OUTPUT"
 
