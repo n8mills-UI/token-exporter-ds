@@ -100,7 +100,7 @@ for output_file in "$UI_OUTPUT" "$GUIDE_OUTPUT"; do
     # Loop as long as there are @include placeholders to replace.
     while grep -q "<!-- @include .* -->" "$temp_build_file"; do
         placeholder=$(grep -m 1 "<!-- @include .* -->" "$temp_build_file")
-        partial_file=$(echo "$placeholder" | sed -n 's/<!-- @include \(.*\) -->/\1/p')
+        partial_file=$(echo "$placeholder" | sed -n 's/<!-- @include \(.*\) -->/\1/p' | xargs)
 
         if [ -f "$partial_file" ]; then
             echo "       - Injecting partial '$partial_file' into '$output_file'"
