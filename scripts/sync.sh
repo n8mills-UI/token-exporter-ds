@@ -126,9 +126,14 @@ EOL
     cat "$TEMP_CSS_BUNDLE"
     echo "    </style>"
     echo "</head>"
-    cat "$UI_TEMPLATE"
+    # Extract only the HTML body content from ui.template.html, excluding the script block
+    sed '/<script>/,$d' "$UI_TEMPLATE" # This removes everything from <script> tag to end
     echo "</html>"
 } > "$UI_OUTPUT"
+
+# Now, append the script block from ui.template.html separately
+# This ensures it's added only once at the end of the body
+grep -A 10000 '<script>' "$UI_TEMPLATE" >> "$UI_OUTPUT" || true # Appends script block
 
 echo "       ✓ Base HTML created ($(wc -l < "$UI_OUTPUT") lines)"
 

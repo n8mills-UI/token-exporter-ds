@@ -1,13 +1,16 @@
 # .gitignore
 
-# macOS system files
+# OS specific files
 .DS_Store
+Thumbs.db
 
 # Node.js dependencies
 node_modules/
 
 # Backup files
+*.bak
 *.backup
+*.broken
 
 # Sandbox and experimental directories
 _sandbox/
