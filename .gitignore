@@ -1,6 +1,26 @@
+# .gitignore
+
+# macOS system files
 .DS_Store
-integrated-project-roadmap.md
-*.backup
-_sandbox/
+
+# Node.js dependencies
 node_modules/
 
+# Backup files
+*.backup
+
+# Sandbox and experimental directories
+_sandbox/
+
+# Project-specific files to ignore
+integrated-project-roadmap.md
+
+# --- NEW RULES FOR OUR BUILD PROCESS ---
+
+# Ignore all generated HTML files. We only want to track the .template.html source files.
+src/ui.html
+docs/design-system-guide.html
+
+# Ignore temporary build files created by our script
+temp_css_bundle.css
+*.temp
