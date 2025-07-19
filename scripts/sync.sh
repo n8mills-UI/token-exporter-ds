@@ -91,7 +91,7 @@ while IFS= read -r url; do
             echo "       ✗ Skipping untrusted domain"
         fi
     fi
-done < <(grep '@import url(' "$CSS_SOURCE_FILE" 2>/dev/null | grep -o 'https://[^)]*' || true)
+done < <(grep '@import url(' "$CSS_SOURCE_FILE" 2>/dev/null | grep -o 'https://[^")]*' || true)
 
 # Append local styles (excluding @import lines)
 echo "     - Appending local styles..."
