@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "sync": "./scripts/sync-css.sh",
+    "sync": "bash scripts/sync.sh",
     "dev": "npm run sync && echo 'Watching for changes...'",
     "build": "npm run sync",
     "clean": "rm -f src/ui.html.backup"

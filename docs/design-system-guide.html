@@ -610,70 +610,31 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Progress Flow -->
-                <div class="example-wrapper">
-                    <div class="example-label flex-between-center">
-    <span>Progress & Success Flow</span>
-                        <button class="btn secondary btn-sm btn-inline" onclick="demoGuideExport()">
-                            <i data-lucide="play"></i>
-                            <span>Play Demo</span>
-                        </button>
-                    </div>
-                    <div class="example-container">
-                        <div class="te-progress-loader" id="guideProgressLoader">
-                            <div class="te-icon-grid" id="guideIconGrid"></div>
-                            <div class="te-celebration" id="guideCelebration"></div>
-                            <div class="te-glass-status" id="guideGlassStatus">
-                                <p class="te-progress-percent" id="guideProgressPercent">0%</p>
-                                <div class="te-progress-track">
-                                    <div class="te-progress-fill" id="guideProgressFill"></div>
-                                </div>
-                                <p class="te-status-label" id="guideStatusLabel">Ready to export</p>
-                            </div>
+                        <!-- Card 4: Progress Flow -->
+                    <div class="example-wrapper">
+                        <div class="example-label flex-between-center">
+                            <span>Progress & Success Flow</span>
+                            <button class="btn secondary btn-sm btn-inline" onclick="demoGuideExport()">
+                                <i data-lucide="play"></i>
+                                <span>Play Demo</span>
+                            </button>
+                        </div>
+                        <div class="example-container">
+                            <!-- ... content of progress loader ... -->
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 5: Empty State -->
-                    <div class="empty-state">
-                        <div class="empty-state-header"> <!-- Top group -->
-                            <div class="empty-state-icon">
-                                <div class="token-exporter-logo large">
-                                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo_refactor)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo_refactor)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo_refactor" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo_refactor"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
-                                </div>
-                            </div>
-                            <div class="text-heading-lg empty-state-title">Let's build something!</div>
-                            <div class="text-body-md empty-state-subtitle">Start by creating Figma variables.</div>
-                        </div>
-                        
-                        <div class="empty-state-categories"> <!-- Middle group (new) -->
-                            <div class="empty-state-category">
-                                <i data-lucide="palette" class="category-icon-cyan"></i>
-                                <span class="text-label">Color</span>
-                            </div>
-                            <div class="empty-state-category">
-                                <i data-lucide="type" class="category-icon-purple"></i>
-                                <span class="text-label">Text</span>
-                            </div>
-                            <div class="empty-state-category">
-                                <i data-lucide="hash" class="category-icon-orange"></i>
-                                <span class="text-label">Number</span>
-                            </div>
-                            <div class="empty-state-category">
-                                <i data-lucide="toggle-right" class="category-icon-pink"></i>
-                                <span class="text-label">States</span>
-                            </div>
-                        </div>
-
-                        <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn btn-primary btn-md btn-inline" target="_blank" rel="noopener noreferrer">
-    Learn How <i data-lucide="arrow-up-right"></i>
-</a>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- Card 5: Empty State (Now using a partial) -->
+        <div class="example-wrapper">
+            <div class="example-label">Empty State</div>
+            <div class="example-container">
+                <!-- @include src/components/_empty-state.html -->
+        </div> <!-- This closes the example-container for the Empty State -->
+                </div> <!-- This closes the example-wrapper for the Empty State -->
+            </div> <!-- This closes the variants-grid -->
+            </div> <!-- END: component-body -->
+        </div> <!-- END: component-section#token-card -->
+          
 
     
 
@@ -869,8 +830,8 @@
         <div class="component-body">
             <div class="example-wrapper">
                 <div class="example-label">Live Example</div>
-                <div class="example-container example-container-tall">
-                    <div class="about-modal show is-example">
+                <div class="example-container">
+                    <div class="collection-list list-style-none">
                         <div class="about-content">
                             <button class="about-close"> <i data-lucide="x"></i> </button>
                             <div class="about-avatar"></div>
