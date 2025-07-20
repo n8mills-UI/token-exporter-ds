@@ -2010,13 +2010,12 @@ sl-icon-button::part(base):hover {
     display: inline-flex;
     align-items: center;
     gap: var(--size-1);
-    padding: var(--size-2) var(--size-3); 
+    padding: var(--size-1) var(--size-1); 
     border-radius: var(--radius-2);
     font-family: var(--font-mono);
     font-size: var(--font-size-0);
     font-weight: var(--font-weight-5);
     line-height: 1.2;
-    text-transform: uppercase;
     letter-spacing: var(--font-letterspacing-1);
     border: 1px solid transparent; /* Base border */
 }
@@ -2070,25 +2069,25 @@ sl-icon-button::part(base):hover {
 
 /* --- Size Variants --- */
 .badge.small {
-    padding: var(--size-1) var(--size-2); 
+    padding: var(--size-1) var(--size-1);
     font-size: var(--font-size-00);
     gap: calc(var(--size-1) / 2);
 }
 
 .badge.small .lucide {
-    width: 10px; 
-    height: 10px;
+    width: var(--icon-xs); 
+    height: var(--icon-xs);
 }
 
 .badge.large {
-    padding: var(--size-3) var(--size-4);/
+    padding: var(--size-1) var(--size-1);
     font-size: var(--font-size-1);
     gap: var(--size-2);
 }
 
 .badge.large .lucide {
-    width: 16px;
-    height: 16px;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
 }
 
 
@@ -2508,13 +2507,7 @@ sl-icon-button::part(base):hover {
  padding: 0 var(--size-3) var(--size-3) var(--size-3);
 }
 
-
-
-
-
 /* Branded Figma CTA */
-
-
 .figma-pill {
  display: inline-flex;
  align-items: center;
