@@ -533,293 +533,393 @@ body {
    COMPONENT: UNIFIED BUTTON SYSTEM (V8)
    ========================================================================== */
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    text-decoration: none;
-    line-height: 1;
-    white-space: nowrap;
-    border-radius: var(--radius-2);
-    border: 1px solid transparent;
-    cursor: pointer;
-    user-select: none;
-    transition: var(--transition-fast);
-    text-shadow: none !important;
-    box-shadow: none;
-}
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-family: var(--font-sans);
+        font-weight: 600;
+        text-decoration: none;
+        line-height: 1;
+        white-space: nowrap;
+        border-radius: var(--radius-2);
+        border: 1px solid transparent;
+        cursor: pointer;
+        user-select: none;
+        transition: var(--transition-fast);
+        text-shadow: none !important;
+        box-shadow: none;
+    }
 
-.btn .lucide {
-    text-shadow: none !important;
-    stroke-width: var(--stroke-regular);
-}
+    .btn .lucide {
+        text-shadow: none !important;
+        stroke-width: var(--stroke-regular);
+    }
 
-.btn:focus-visible {
-    outline: none;
-    box-shadow: var(--focus-ring);
-}
+    .btn:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+    }
 
-/* --- SIZES --- */
-.btn-sm { font-size: var(--font-size-0); height: var(--component-height-sm); padding: 0 var(--size-3); gap: var(--size-1); }
-.btn-sm .lucide { width: var(--icon-xs); height: var(--icon-xs); } /* 12px */
+    /* --- SIZES --- */
+    .btn-sm { font-size: var(--font-size-0); height: var(--component-height-sm); padding: 0 var(--size-3); gap: var(--size-1); }
+    .btn-sm .lucide { width: var(--icon-xs); height: var(--icon-xs); } /* 12px */
 
-.btn-md { font-size: var(--font-size-1); height: var(--component-height-md); padding: 0 var(--size-4); gap: var(--size-2); }
-.btn-md .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
+    .btn-md { font-size: var(--font-size-1); height: var(--component-height-md); padding: 0 var(--size-4); gap: var(--size-2); }
+    .btn-md .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
 
-.btn-lg { font-size: var(--font-size-2); height: var(--component-height-lg); padding: 0 var(--size-5); gap: var(--size-2); }
-.btn-lg .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
-
-
-/* --- ICON-ONLY BUTTON --- */
-.btn-icon {
-    padding: 0;
-    border-radius: 50%;
-    background: var(--color-background-secondary);
-    color: var(--color-text-secondary);
-    border: 1px solid var(--color-border-default);
-    transition: var(--transition-fast);
-}
-.btn-icon:hover:not(:disabled) {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-    transform: rotate(15deg);
-}
-.btn-icon:active:not(:disabled) {
-    transform: rotate(0) scale(0.95);
-}
-
-.btn-icon.btn-sm { width: var(--component-height-sm); height: var(--component-height-sm); }
-.btn-icon.btn-md { width: var(--component-height-md); height: var(--component-height-md); }
-.btn-icon.btn-lg { width: var(--component-height-lg); height: var(--component-height-lg); }
-
-/* Icon size overrides for icon-only buttons, using tokens */
-.btn-icon.btn-sm .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
-.btn-icon.btn-md .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
-.btn-icon.btn-lg .lucide { width: var(--icon-lg); height: var(--icon-lg); } /* 24px */
-
-/* --- ICON STROKE WEIGHT DIFFERENTIATION --- */
-/* Default stroke for all buttons with text */
-.btn:not(.btn-icon) .lucide {
-    stroke-width: var(--stroke-regular);
-}
-/* Thinner stroke ONLY for icon-only buttons */
-.btn-icon .lucide {
-    stroke-width: var(--stroke-thin);
-}
+    .btn-lg { font-size: var(--font-size-2); height: var(--component-height-lg); padding: 0 var(--size-5); gap: var(--size-2); }
+    .btn-lg .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
 
 
+    /* --- ICON-ONLY BUTTON --- */
+    .btn-icon {
+        padding: 0;
+        border-radius: 50%;
+        background: var(--color-background-secondary);
+        color: var(--color-text-secondary);
+        border: 1px solid var(--color-border-default);
+        transition: var(--transition-fast);
+    }
+    .btn-icon:hover:not(:disabled) {
+        border-color: var(--brand-primary-lime);
+        color: var(--brand-primary-lime);
+        transform: rotate(15deg);
+    }
+    .btn-icon:active:not(:disabled) {
+        transform: rotate(0) scale(0.95);
+    }
 
-/* --- VARIANTS & STATES --- */
-.btn-primary { background: var(--brand-gradient-lime); color: var(--color-text-on-brand); box-shadow: var(--shadow-brand); }
-.btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
-.btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
+    .btn-icon.btn-sm { width: var(--component-height-sm); height: var(--component-height-sm); }
+    .btn-icon.btn-md { width: var(--component-height-md); height: var(--component-height-md); }
+    .btn-icon.btn-lg { width: var(--component-height-lg); height: var(--component-height-lg); }
 
-.btn-secondary { background: var(--color-background-secondary); color: var(--color-text-default); border-color: var(--color-border-default); }
-.btn-secondary:hover:not(:disabled) { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
-.btn-secondary:active:not(:disabled) { background: var(--color-background-primary); }
+    /* Icon size overrides for icon-only buttons, using tokens */
+    .btn-icon.btn-sm .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
+    .btn-icon.btn-md .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
+    .btn-icon.btn-lg .lucide { width: var(--icon-lg); height: var(--icon-lg); } /* 24px */
 
-.btn-tertiary { background: transparent; color: var(--color-text-secondary); }
-.btn-tertiary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.05); color: var(--brand-primary-lime); }
-.btn-tertiary:active:not(:disabled) { background: rgba(255, 255, 255, 0.1); }
-
-
-/* --- DISABLED STATE (Applies to all) --- */
-.btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
-    transform: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-}
-
-
-/* ==========================================================================
-   COMPONENT: GUIDELINE CARDS (NEW!)
-   ========================================================================== */
-
-.guidelines-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--size-4);
-}
-
-.guideline-card {
-    background: var(--color-background-secondary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-3);
-    padding: var(--size-5);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-4);
-    transition: all var(--transition-fast);
-}
-
-.guideline-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-border-interactive-focus);
-    box-shadow: var(--shadow-3);
-}
-
-.guideline-card-header {
-    display: flex;
-    align-items: center;
-    gap: var(--size-3);
-}
-
-.guideline-icon-wrapper {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.guideline-title {
-    font-size: var(--font-size-3);
-    color: var(--color-text-default);
-    margin: 0;
-}
-
-.guideline-description {
-    color: var(--color-text-secondary);
-    line-height: var(--font-lineheight-3);
-    margin: 0;
-    flex-grow: 1;
-}
-
-.guideline-footer {
-    border-top: 1px solid var(--color-border-default);
-    padding-top: var(--size-3);
-}
-
-.guideline-footer-title {
-    font-size: var(--font-size-0);
-    color: var(--color-text-muted);
-    margin-bottom: var(--size-2);
-    text-transform: uppercase;
-    letter-spacing: var(--font-letterspacing-1);
-}
-
-.guideline-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--size-2);
-}
-
-.guideline-pill {
-    background: var(--color-background-tertiary);
-    color: var(--color-text-secondary);
-    padding: var(--size-2) var(--size-3); /* Larger padding */
-    border-radius: var(--radius-round); /* Changed to pill shape */
-    font-size: var(--font-size-0);
-    font-weight: var(--font-weight-5);
-}
-
-/* Variant-specific styles */
-.guideline-card.primary .guideline-icon-wrapper {
-    background: var(--brand-gradient-lime);
-}
-.guideline-card.primary .guideline-icon-wrapper .lucide {
-    color: var(--brand-text-dark);
-}
-
-.guideline-card.secondary .guideline-icon-wrapper {
-    background: var(--color-background-tertiary);
-    border: 1px solid var(--color-border-default);
-}
-.guideline-card.secondary .guideline-icon-wrapper .lucide {
-    color: var(--color-text-secondary);
-}
-
-.guideline-card.tertiary .guideline-icon-wrapper {
-    background: transparent;
-    border: 1px dashed var(--color-border-default);
-}
-.guideline-card.tertiary .guideline-icon-wrapper .lucide {
-    color: var(--color-text-muted);
-}
+    /* --- ICON STROKE WEIGHT DIFFERENTIATION --- */
+    /* Default stroke for all buttons with text */
+    .btn:not(.btn-icon) .lucide {
+        stroke-width: var(--stroke-regular);
+    }
+    /* Thinner stroke ONLY for icon-only buttons */
+    .btn-icon .lucide {
+        stroke-width: var(--stroke-thin);
+    }
 
 
 
-/* ==========================================================================
-   BACKWARD COMPATIBILITY LAYER (V8 -> V4)
-   ========================================================================== */
-/* This ensures old class names like ".btn.primary" inherit new styles. */
+    /* --- VARIANTS & STATES --- */
+    .btn-primary { background: var(--brand-gradient-lime); color: var(--color-text-on-brand); box-shadow: var(--shadow-brand); }
+    .btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
+    .btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
 
-.btn.primary {
-    /* Maps to .btn-primary */
-    background: var(--brand-gradient-lime);
-    color: var(--color-text-on-brand);
-    box-shadow: var(--shadow-brand);
-}
-.btn.primary:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-brand-hover);
-    filter: brightness(1.05);
-}
-.btn.primary:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: var(--shadow-brand);
-    filter: brightness(0.95);
-}
+    .btn-secondary { background: var(--color-background-secondary); color: var(--color-text-default); border-color: var(--color-border-default); }
+    .btn-secondary:hover:not(:disabled) { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
+    .btn-secondary:active:not(:disabled) { background: var(--color-background-primary); }
 
-.btn.secondary {
-    /* Maps to .btn-secondary */
-    background: var(--color-background-secondary);
-    color: var(--color-text-default);
-    border-color: var(--color-border-default);
-}
-.btn.secondary:hover:not(:disabled) {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-}
-.btn.secondary:active:not(:disabled) {
-    background: var(--color-background-primary);
-}
+    .btn-tertiary { 
+        background: transparent; 
+        color: var(--color-text-secondary); 
+    }
+    
+    .btn-tertiary:hover:not(:disabled) { 
+        background: rgba(255, 255, 255, 0.05); 
+        color: var(--brand-primary-lime); 
+    }
 
-.btn.btn-icon-only {
-    /* Maps to .btn-icon */
-    padding: 0;
-    border-radius: 50%;
-    background: var(--color-background-secondary);
-    color: var(--color-text-secondary);
-    border: 1px solid var(--color-border-default);
-    width: var(--component-height-md); /* Default to medium size */
-    height: var(--component-height-md);
-}
-.btn.btn-icon-only:hover:not(:disabled) {
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-    transform: rotate(15deg);
-}
-.btn.btn-icon-only:active:not(:disabled) {
-    transform: rotate(0) scale(0.95);
-}
+    .btn-tertiary:active:not(:disabled) { 
+        background: rgba(255, 255, 255, 0.1); 
+    }
+
+
+    /* --- DISABLED STATE (Applies to all) --- */
+    .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        pointer-events: none;
+        transform: none !important;
+        box-shadow: none !important;
+        filter: none !important;
+    }
+
+
+    /* ==========================================================================
+    COMPONENT: GUIDELINE CARDS (NEW!)
+    ========================================================================== */
+
+    .guidelines-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--size-4);
+    }
+
+    .guideline-card {
+        background: var(--color-background-secondary);
+        border: 1px solid var(--color-border-default);
+        border-radius: var(--radius-3);
+        padding: var(--size-5);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: var(--size-4);
+        transition: all var(--transition-fast);
+    }
+
+    .guideline-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--color-border-interactive-focus);
+        box-shadow: var(--shadow-3);
+    }
+
+    .guideline-card-header {
+        display: flex;
+        align-items: center;
+        gap: var(--size-3);
+    }
+
+    .guideline-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .guideline-title {
+        font-size: var(--font-size-3);
+        color: var(--color-text-default);
+        margin: 0;
+    }
+
+    .guideline-description {
+        color: var(--color-text-secondary);
+        line-height: var(--font-lineheight-3);
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    .guideline-footer {
+        border-top: 1px solid var(--color-border-default);
+        padding-top: var(--size-3);
+    }
+
+    .guideline-footer-title {
+        font-size: var(--font-size-0);
+        color: var(--color-text-muted);
+        margin-bottom: var(--size-2);
+        text-transform: uppercase;
+        letter-spacing: var(--font-letterspacing-1);
+    }
+
+    .guideline-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--size-2);
+    }
+
+    .guideline-pill {
+        background: var(--color-background-tertiary);
+        color: var(--color-text-secondary);
+        padding: var(--size-2) var(--size-3); /* Larger padding */
+        border-radius: var(--radius-round); /* Changed to pill shape */
+        font-size: var(--font-size-0);
+        font-weight: var(--font-weight-5);
+    }
+
+    /* Variant-specific styles */
+    .guideline-card.primary .guideline-icon-wrapper {
+        background: var(--brand-gradient-lime);
+    }
+
+    .guideline-card.primary .guideline-icon-wrapper .lucide {
+        color: var(--brand-text-dark);
+    }
+
+    .guideline-card.secondary .guideline-icon-wrapper {
+        background: var(--color-background-tertiary);
+        border: 1px solid var(--color-border-default);
+    }
+
+    .guideline-card.secondary .guideline-icon-wrapper .lucide {
+        color: var(--color-text-secondary);
+    }
+
+    .guideline-card.tertiary .guideline-icon-wrapper {
+        background: transparent;
+        border: 1px dashed var(--color-border-default);
+    }
+
+    .guideline-card.tertiary .guideline-icon-wrapper .lucide {
+        color: var(--color-text-muted);
+    }
+
+
+
+    /* ==========================================================================
+    BACKWARD COMPATIBILITY LAYER (V8 -> V4)
+    ========================================================================== */
+    /* This ensures old class names like ".btn.primary" inherit new styles. */
+
+    .btn.primary {
+        /* Maps to .btn-primary */
+        background: var(--brand-gradient-lime);
+        color: var(--color-text-on-brand);
+        box-shadow: var(--shadow-brand);
+    }
+    .btn.primary:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-brand-hover);
+        filter: brightness(1.05);
+    }
+    .btn.primary:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: var(--shadow-brand);
+        filter: brightness(0.95);
+    }
+
+    .btn.secondary {
+        /* Maps to .btn-secondary */
+        background: var(--color-background-secondary);
+        color: var(--color-text-default);
+        border-color: var(--color-border-default);
+    }
+    .btn.secondary:hover:not(:disabled) {
+        border-color: var(--brand-primary-lime);
+        color: var(--brand-primary-lime);
+    }
+    .btn.secondary:active:not(:disabled) {
+        background: var(--color-background-primary);
+    }
+
+    .btn.btn-icon-only {
+        /* Maps to .btn-icon */
+        padding: 0;
+        border-radius: 50%;
+        background: var(--color-background-secondary);
+        color: var(--color-text-secondary);
+        border: 1px solid var(--color-border-default);
+        width: var(--component-height-md); /* Default to medium size */
+        height: var(--component-height-md);
+    }
+    .btn.btn-icon-only:hover:not(:disabled) {
+        border-color: var(--brand-primary-lime);
+        color: var(--brand-primary-lime);
+        transform: rotate(15deg);
+    }
+    .btn.btn-icon-only:active:not(:disabled) {
+        transform: rotate(0) scale(0.95);
+    }
 
 
 /* --- V8 BUTTON DOCUMENTATION STYLES --- */
-.guide-container .section { margin-bottom: 4rem; }
-.guide-container .section-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border-default); }
-.guide-container .section-title { font-size: 1.75rem; font-weight: 700; color: var(--color-text-default); display: flex; align-items: center; gap: 0.75rem; }
-.guide-container .section-description { margin-top: 0.5rem; color: var(--color-text-secondary); max-width: 65ch; }
-.subsection { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-.subsection-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text-default); }
-.button-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); align-items: center; gap: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: 8px; }
-.icon-only-showcase { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: 8px; }
-.usage-guidelines { background: rgba(210, 255, 55, 0.05); border: 1px solid rgba(210, 255, 55, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; }
-.usage-guidelines h4 { color: var(--brand-primary-lime); margin-bottom: 0.75rem; }
-.usage-guidelines ul { list-style: none; padding: 0; }
-.usage-guidelines li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; color: var(--color-text-secondary); }
-.usage-guidelines li:before { content: '→'; position: absolute; left: 0; color: var(--brand-primary-lime); }
+.guide-container .section {
+    margin-bottom: 4rem;
+}
 
+.guide-container .section-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border-default);
+}
+
+.guide-container .section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-default);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.guide-container .section-description {
+    margin-top: 0.5rem;
+    color: var(--color-text-secondary);
+    max-width: 65ch;
+}
+
+.subsection {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.subsection-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-default);
+}
+
+/* Button showcase - using grid for consistent sizing */
+.button-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: var(--color-background-primary);
+    border-radius: 8px;
+}
+
+/* Badge showcase - using flex for inline display */
+.badge-showcase {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.icon-only-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: var(--color-background-primary);
+    border-radius: 8px;
+}
+
+.usage-guidelines {
+    background: rgba(210, 255, 55, 0.05);
+    border: 1px solid rgba(210, 255, 55, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.usage-guidelines h4 {
+    color: var(--brand-primary-lime);
+    margin-bottom: 0.75rem;
+}
+
+.usage-guidelines ul {
+    list-style: none;
+    padding: 0;
+}
+
+.usage-guidelines li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+.usage-guidelines li:before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary-lime);
+}
 
 /* STATE COMPARISON MATRIX */
 .state-comparison-grid { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 1rem; align-items: center; }
@@ -1834,9 +1934,10 @@ sl-icon-button::part(base):hover {
     color: var(--color-text-default);
     font-weight: var(--font-weight-6);
     font-size: var(--font-size-3);
-    background-color: var(--color-background-tertiary);
+    background-color: transparent; /* Remove dark background */
     vertical-align: middle;
     white-space: nowrap;
+    line-height: 1.2;
 }
 
 .table thead th .lucide {
