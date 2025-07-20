@@ -96,6 +96,7 @@
                 <ul class="nav-links">
                     <li><a href="#token-card" class="nav-link"><i data-lucide="pie-chart"></i> Token Card</a></li>
                     <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
+                    <li><a href="#badges"><i data-lucide="tag"></i> Badges</a></li>
                     <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
                     <li><a href="#collection-items" class="nav-link"><i data-lucide="list"></i> Collections</a></li>
                     <li><a href="#modals" class="nav-link"><i data-lucide="app-window"></i> Modals</a></li>
@@ -306,7 +307,7 @@
 
     <!-- Developer Profile v2 -->
     <div class="profile-card">
-        <span class="version-label">Figma Plugin ASCII ART</span>
+        <span class="badge brand absolute">Figma Plugin ASCII ART</span>
         
         <!-- Left side: ASCII Art -->
         <div class="ascii-container">
@@ -920,6 +921,96 @@
          END: REWRITTEN BUTTON COMPONENT SECTION
          ========================================================================== -->
 
+    <!-- ==========================================================================
+         BADGES SECTION
+         ========================================================================== -->
+    
+    <!-- Badges Component Section -->
+    <div id="badges" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="tag"></i> Badges</h2>
+            <p class="component-description">Small, inline labels for categorization and status indication. Perfect for highlighting code elements, states, or categories.</p>
+        </div>
+        <div class="component-body">
+            
+            <h3 class="example-subheader">Badge Variants</h3>
+            <p class="category-description" style="margin-bottom: var(--size-4);">Badges come in multiple variants to serve different semantic purposes across the interface.</p>
+            
+            <!-- Brand Badges -->
+            <div class="subsection">
+                <div class="example-wrapper">
+                    <div class="example-label">Brand</div>
+                    <div class="badge-showcase">
+                        <span class="badge brand">:root</span>
+                        <span class="badge brand">--brand-primary-lime</span>
+                        <span class="badge brand">.btn-primary</span>
+                        <span class="badge brand">.token-card</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Brand Inverted -->
+            <div class="subsection">
+                <div class="example-wrapper">
+                    <div class="example-label">Brand Inverted</div>
+                    <div class="badge-showcase">
+                        <span class="badge brand-inverted">NEW</span>
+                        <span class="badge brand-inverted">FEATURED</span>
+                        <span class="badge brand-inverted">PRO</span>
+                        <span class="badge brand-inverted">FIGMA PLUGIN</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Neutral Badges -->
+            <div class="subsection">
+                <div class="example-wrapper">
+                    <div class="example-label">Neutral</div>
+                    <div class="badge-showcase">
+                        <span class="badge neutral">DEFAULT</span>
+                        <span class="badge neutral">v4.0.8</span>
+                        <span class="badge neutral">ARCHIVED</span>
+                        <span class="badge neutral">FIGMA PLUGIN</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category Color Badges -->
+            <div class="subsection">
+                <div class="example-wrapper">
+                    <div class="example-label">Category Colors</div>
+                    <div class="badge-showcase">
+                        <span class="badge cyan"><i data-lucide="type" style="width: 14px; height: 14px;"></i> Typography</span>
+                        <span class="badge purple"><i data-lucide="move" style="width: 14px; height: 14px;"></i> Spacing</span>
+                        <span class="badge orange"><i data-lucide="package" style="width: 14px; height: 14px;"></i> Components</span>
+                        <span class="badge pink"><i data-lucide="palette" style="width: 14px; height: 14px;"></i> Colors</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Usage Examples -->
+            <div class="subsection">
+                <h3 class="example-subheader">Usage Examples</h3>
+                <div class="example-wrapper">
+                    <div class="example-label">In Context</div>
+                    <div class="example-container" style="padding: var(--size-4);">
+                        <p style="margin-bottom: var(--size-3); color: var(--color-text-secondary);">
+                            Apply the <span class="badge brand">.badge</span> class with a variant modifier like <span class="badge brand">.brand</span> or <span class="badge neutral">.neutral</span>.
+                        </p>
+                        <p style="margin-bottom: var(--size-3); color: var(--color-text-secondary);">
+                            Category badges like <span class="badge cyan">cyan</span>, <span class="badge purple">purple</span>, <span class="badge orange">orange</span>, and <span class="badge pink">pink</span> automatically style icons with their category color while keeping text white.
+                        </p>
+                        <div class="code-block">
+                            <code>&lt;span class="badge brand"&gt;:root&lt;/span&gt;
+&lt;span class="badge neutral"&gt;v4.0.8&lt;/span&gt;
+&lt;span class="badge cyan"&gt;&lt;i data-lucide="type"&gt;&lt;/i&gt; Typography&lt;/span&gt;</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
 
 

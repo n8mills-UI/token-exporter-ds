@@ -1835,8 +1835,8 @@ sl-icon-button::part(base):hover {
     font-weight: var(--font-weight-6);
     font-size: var(--font-size-3);
     background-color: var(--color-background-tertiary);
-    vertical-align: middle; /* Ensures vertical alignment */
-    white-space: nowrap; /* Prevents text from wrapping */
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 .table thead th .lucide {
@@ -1844,6 +1844,11 @@ sl-icon-button::part(base):hover {
     margin-right: var(--size-2); /* Creates space between icon and text */
     vertical-align: middle; /* Aligns icon with the text */
     stroke-width: var(--stroke-regular); /* Ensures consistent icon weight */
+}
+
+/* Remove hover states from non-interactive table rows */
+.table tbody tr:hover {
+    background-color: transparent !important;
 }
 
 .table strong {
@@ -1915,11 +1920,26 @@ sl-icon-button::part(base):hover {
     border: 1px solid transparent; /* Base border */
 }
 
-/* --- Variants --- */
+/* Position variant for absolute positioning */
+.badge.absolute {
+    position: absolute;
+    top: var(--size-4);
+    left: var(--size-4);
+    z-index: var(--layer-card);
+}
+
+/* --- Color Variants --- */
 .badge.brand {
     background-color: var(--brand-primary-lime-alpha-10);
     color: var(--brand-primary-lime);
     border-color: var(--brand-primary-lime-alpha-20);
+}
+
+/* Brand inverted - lime background with dark text */
+.badge.brand-inverted {
+    background-color: var(--brand-primary-lime);
+    color: var(--gray-9);
+    border-color: var(--brand-primary-lime);
 }
 
 .badge.neutral {
@@ -1946,6 +1966,29 @@ sl-icon-button::part(base):hover {
 .badge.purple .lucide { color: var(--category-color-purple); }
 .badge.orange .lucide { color: var(--category-color-orange); }
 .badge.pink .lucide { color: var(--category-color-pink); }
+
+/* --- Size Variants --- */
+.badge.small {
+    padding: 0 var(--size-1);
+    font-size: var(--font-size-00);
+    gap: calc(var(--size-1) / 2);
+}
+
+.badge.small .lucide {
+    width: 12px;
+    height: 12px;
+}
+
+.badge.large {
+    padding: var(--size-2) var(--size-3);
+    font-size: var(--font-size-1);
+    gap: var(--size-2);
+}
+
+.badge.large .lucide {
+    width: 16px;
+    height: 16px;
+}
 
 
 /* Portfolio-specific enhancements */
