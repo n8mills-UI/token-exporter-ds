@@ -8,7 +8,7 @@
   "scripts": {
     "sync": "bash scripts/sync.sh",
     "lint:js": "ESLINT_USE_FLAT_CONFIG=false eslint src/code.js",
-    "dev": "nodemon",
+    "dev": "nodemon --watch scripts/ --watch docs/ --watch src/ --ext \"sh,html,css\" --ignore src/ui.html --ignore docs/design-system-guide.html --exec \"npm run sync\"",
     "build": "npm run sync",
     "clean": "rm -f src/ui.html.backup"
   },
