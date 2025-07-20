@@ -99,7 +99,7 @@ body {
  --system-updated: "2025-01-11";
  --system-stage: "production";
  
- /* =========================
+/* =========================
  BRAND COLORS
  ========================= */
  --brand-primary-lime: #D2FF37;
@@ -110,6 +110,10 @@ body {
  /* RGB values for opacity mixing */
  --brand-primary-lime-rgb: 210, 255, 55;
  --brand-secondary-yellow-rgb: 238, 255, 0;
+
+ /* Alpha Variants */
+ --brand-primary-lime-alpha-10: rgb(var(--brand-primary-lime-rgb), 0.1);
+ --brand-primary-lime-alpha-20: rgb(var(--brand-primary-lime-rgb), 0.2);
  
  /* =========================
  TOKEN CATEGORY COLORS
@@ -118,6 +122,18 @@ body {
  --category-color-purple: #B48CFF;
  --category-color-orange: #FFB86C;
  --category-color-pink: #FF74BC;
+
+ /* RGB values for opacity mixing (NEW) */
+ --category-color-cyan-rgb: 0, 209, 255;
+ --category-color-purple-rgb: 180, 140, 255;
+ --category-color-orange-rgb: 255, 184, 108;
+ --category-color-pink-rgb: 255, 116, 188;
+
+ /* Alpha Variants (NEW) */
+ --category-color-cyan-alpha-10: rgb(var(--category-color-cyan-rgb), 0.1);
+ --category-color-purple-alpha-10: rgb(var(--category-color-purple-rgb), 0.1);
+ --category-color-orange-alpha-10: rgb(var(--category-color-orange-rgb), 0.1);
+ --category-color-pink-alpha-10: rgb(var(--category-color-pink-rgb), 0.1);
  
  /* =========================
  GRAYSCALE PALETTE
@@ -792,7 +808,7 @@ body {
 /* --- V8 BUTTON DOCUMENTATION STYLES --- */
 .guide-container .section { margin-bottom: 4rem; }
 .guide-container .section-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border-default); }
-.guide-container .section-title { font-size: 1.75rem; font-weight: 700; color: var(--brand-primary-lime); display: flex; align-items: center; gap: 0.75rem; }
+.guide-container .section-title { font-size: 1.75rem; font-weight: 700; color: var(--color-text-default); display: flex; align-items: center; gap: 0.75rem; }
 .guide-container .section-description { margin-top: 0.5rem; color: var(--color-text-secondary); max-width: 65ch; }
 .subsection { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
 .subsection-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text-default); }
@@ -804,20 +820,6 @@ body {
 .usage-guidelines li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; color: var(--color-text-secondary); }
 .usage-guidelines li:before { content: '→'; position: absolute; left: 0; color: var(--brand-primary-lime); }
 
-/* --- V8 BUTTON DOCUMENTATION STYLES --- */
-.guide-container .section { margin-bottom: 4rem; }
-.guide-container .section-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border-default); }
-.guide-container .section-title { font-size: 1.75rem; font-weight: 700; color: var(--brand-primary-lime); display: flex; align-items: center; gap: 0.75rem; }
-.guide-container .section-description { margin-top: 0.5rem; color: var(--color-text-secondary); max-width: 65ch; }
-.subsection { background: var(--color-background-secondary); border: 1px solid var(--color-border-default); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-.subsection-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text-default); }
-.button-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); align-items: center; gap: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: 8px; }
-.icon-only-showcase { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: 8px; }
-.usage-guidelines { background: rgba(210, 255, 55, 0.05); border: 1px solid rgba(210, 255, 55, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; }
-.usage-guidelines h4 { color: var(--brand-primary-lime); margin-bottom: 0.75rem; }
-.usage-guidelines ul { list-style: none; padding: 0; }
-.usage-guidelines li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; color: var(--color-text-secondary); }
-.usage-guidelines li:before { content: '→'; position: absolute; left: 0; color: var(--brand-primary-lime); }
 
 /* STATE COMPARISON MATRIX */
 .state-comparison-grid { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 1rem; align-items: center; }
@@ -1816,6 +1818,7 @@ sl-icon-button::part(base):hover {
     width: 100%;
     border-collapse: collapse;
     color: var(--color-text-secondary);
+    table-layout: auto;
 }
 
 .table th,
@@ -1824,13 +1827,27 @@ sl-icon-button::part(base):hover {
     text-align: left;
     border-bottom: 1px solid var(--color-border-default);
     line-height: var(--font-lineheight-3);
+    font-size: var(--font-size-1);
 }
 
 .table thead th {
     color: var(--color-text-default);
     font-weight: var(--font-weight-6);
-    font-size: var(--font-size-1);
+    font-size: var(--font-size-3);
     background-color: var(--color-background-tertiary);
+    vertical-align: middle; /* Ensures vertical alignment */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.table thead th .lucide {
+    color: var(--brand-primary-lime);
+    margin-right: var(--size-2); /* Creates space between icon and text */
+    vertical-align: middle; /* Aligns icon with the text */
+    stroke-width: var(--stroke-regular); /* Ensures consistent icon weight */
+}
+
+.table strong {
+    color: var(--color-text-default); /* Make bold text white */
 }
 
 .table tbody tr:last-child th,
@@ -1880,6 +1897,56 @@ sl-icon-button::part(base):hover {
  width: 80px;
  height: 80px;
 }
+
+
+/* --- Component: Badge (NEW) --- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-1);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-5);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: var(--font-letterspacing-1);
+    border: 1px solid transparent; /* Base border */
+}
+
+/* --- Variants --- */
+.badge.brand {
+    background-color: var(--brand-primary-lime-alpha-10);
+    color: var(--brand-primary-lime);
+    border-color: var(--brand-primary-lime-alpha-20);
+}
+
+.badge.neutral {
+    background-color: var(--color-background-tertiary);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border-default);
+}
+
+/* Category variants with white text and colored icon */
+.badge.cyan,
+.badge.purple,
+.badge.orange,
+.badge.pink {
+    color: var(--color-text-default); /* Set text/number to white */
+}
+
+.badge.cyan { background-color: var(--category-color-cyan-alpha-10); }
+.badge.purple { background-color: var(--category-color-purple-alpha-10); }
+.badge.orange { background-color: var(--category-color-orange-alpha-10); }
+.badge.pink { background-color: var(--category-color-pink-alpha-10); }
+
+/* Target only the icon within the badge to be colored */
+.badge.cyan .lucide { color: var(--category-color-cyan); }
+.badge.purple .lucide { color: var(--category-color-purple); }
+.badge.orange .lucide { color: var(--category-color-orange); }
+.badge.pink .lucide { color: var(--category-color-pink); }
+
 
 /* Portfolio-specific enhancements */
 :root {
@@ -2267,6 +2334,7 @@ sl-icon-button::part(base):hover {
  color: var(--color-text-default);
  font-weight: var(--font-weight-6);
  transition: color 0.3s var(--ease-3);
+ font-size: var(--font-size-1); /* Increased font size */
 }
 
 .faq-toggle {

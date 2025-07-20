@@ -194,54 +194,52 @@
 
 
 <!-- Bridging the Gap Section -->
-<div class="content-section">
-    <div class="section-header">
-        <h3 class="section-title"><i data-lucide="link"></i> Bridging the Gap: From Figma to Code</h3>
-        <p class="section-subtitle">// A shared language for designers and developers</p>
-    </div>
-    <div class="component-section">
-        <div class="component-body">
-            <p class="section-description" style="margin-bottom: var(--size-6);">
-                A successful design system relies on a shared understanding between design and development. This table translates common Figma concepts into their direct code counterparts using the principles of <a href="https://atomicdesign.bradfrost.com/" target="_blank" rel="noopener noreferrer" class="link-brand">Atomic Design</a>. It provides a mental map that connects the visual design to the underlying CSS architecture.
-            </p>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Atomic Level</th>
-                            <th>Figma Concept</th>
-                            <th>Code Implementation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Atoms</strong></td>
-                            <td><strong>Styles</strong> (Color, Text, Effects)</td>
-                            <td><strong>Foundation / Tokens:</strong> The raw, unchangeable values defined as CSS variables in the <code>:root</code> block (e.g., <code>--brand-primary-lime</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Atoms</strong></td>
-                            <td><strong>Auto Layout</strong> (Spacing, Alignment)</td>
-                            <td><strong>Utility Classes:</strong> Single-purpose classes that apply one token directly to an element (e.g., <code>.flex</code>, <code>.p-4</code>, <code>.text-center</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Molecules</strong></td>
-                            <td><strong>Simple Components</strong> (Button, Input)</td>
-                            <td><strong>Component Classes:</strong> A class that combines multiple styles to create a simple, reusable element (e.g., <code>.btn</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Organisms</strong></td>
-                            <td><strong>Complex Components / Sets</strong> (Token Card)</td>
-                            <td><strong>Component Block:</strong> A larger, distinct section of the UI composed of multiple simpler components (e.g., <code>.token-summary</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Templates</strong></td>
-                            <td><strong>Pages / Frames</strong> (The Plugin UI)</td>
-                            <td><strong>Layout Styles:</strong> The highest-level styles that arrange components on the screen (e.g., <code>.guide-container</code>, <code>.guide-sidebar</code>).</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<div class="section-header">
+    <h3 class="section-title"><i data-lucide="link"></i> Bridging the Gap: From Figma to Code</h3>
+    <p class="section-subtitle">// A shared language for designers and developers</p>
+</div>
+<div class="component-section">
+    <div class="component-body">
+        <p style="margin-bottom: var(--size-6); color: var(--color-text-secondary); max-width: 80ch; line-height: var(--font-lineheight-4);">
+            A successful design system relies on a shared understanding between design and development. This table translates common Figma concepts into their direct code counterparts using the principles of <a href="https://atomicdesign.bradfrost.com/" target="_blank" rel="noopener noreferrer" class="link-brand">Atomic Design</a>. It provides a mental map that connects the visual design to the underlying CSS architecture.
+        </p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><i data-lucide="atom"></i> Atomic</th>
+                        <th><i data-lucide="figma"></i> Figma</th>
+                        <th><i data-lucide="code-2"></i> Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Atoms</strong></td>
+                        <td><strong>Styles</strong> (Color, Text, Effects)</td>
+                        <td><strong>Foundation / Tokens:</strong> The raw, unchangeable values defined as CSS variables in the <span class="badge brand">:root</span> block (e.g., <span class="badge brand">--brand-primary-lime</span>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Atoms</strong></td>
+                        <td><strong>Auto Layout</strong> (Spacing, Alignment)</td>
+                        <td><strong>Utility Classes:</strong> Single-purpose classes that apply one token directly to an element (e.g., <span class="badge brand">.flex</span>, <span class="badge brand">.p-4</span>, <span class="badge brand">.text-center</span>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Molecules</strong></td>
+                        <td><strong>Simple Components</strong> (Button, Input)</td>
+                        <td><strong>Component Classes:</strong> A class that combines multiple styles to create a simple, reusable element (e.g., <span class="badge brand">.btn</span>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Organisms</strong></td>
+                        <td><strong>Complex Components / Sets</strong> (Token Card)</td>
+                        <td><strong>Component Block:</strong> A larger, distinct section of the UI composed of multiple simpler components (e.g., <span class="badge brand">.token-summary</span>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Templates</strong></td>
+                        <td><strong>Pages / Frames</strong> (The Plugin UI)</td>
+                        <td><strong>Layout Styles:</strong> The highest-level styles that arrange components on the screen (e.g., <span class="badge brand">.guide-container</span>, <span class="badge brand">.guide-sidebar</span>).</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -304,10 +302,10 @@
     </div>
 
             
-                </div> <!-- END: 2-Column Grid Wrapper -->
+    </div> <!-- END: 2-Column Grid Wrapper -->
 
-                <!-- Developer Profile v2 -->
-                <div class="profile-card">
+    <!-- Developer Profile v2 -->
+    <div class="profile-card">
         <span class="version-label">Figma Plugin ASCII ART</span>
         
         <!-- Left side: ASCII Art -->
@@ -603,56 +601,54 @@
             <p class="section-description">The building blocks of the interface. A collection of reusable components built with design tokens.</p>
         </div>
 
-        <!-- REFACTORED: Token Card Section -->
-        <div id="token-card" class="component-section">
-            <div class="component-header">
-                <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Card</h2>
-                <p class="component-description">The central dashboard component that displays the total count of design tokens. It transforms to show different states like loading, success, or an empty state if no tokens are found.</p>
+      <!-- REFACTORED: Token Card Section -->
+<div id="token-card" class="component-section">
+    <div class="component-header">
+        <h2 class="text-heading-lg component-title"><i data-lucide="pie-chart"></i> Token Card</h2>
+        <p class="component-description">The central dashboard component that displays the total count of design tokens. It transforms to show different states like loading, success, or an empty state if no tokens are found.</p>
+    </div>
+    <div class="component-body">
+        <h3 class="example-subheader">Component States & Examples</h3>
+        <p class="category-description" style="margin-bottom: var(--size-4);">This component adapts to various contexts. Below are its primary states, from default view to the interactive progress flow.</p>
+        
+        <div class="variants-grid">
+            <!-- Card 1: Default State -->
+            <div class="example-wrapper">
+                <div class="example-label">Default State</div>
+                <div class="example-container">
+                    <!-- @include src/components/_token-card-default.html -->
+                </div>
             </div>
-            <div class="component-body">
-                <h3 class="example-subheader">Component States & Examples</h3>
-                <p class="category-description" style="margin-bottom: var(--size-4);">This component adapts to various contexts. Below are its primary states, from default view to the interactive progress flow.</p>
-                
-                <div class="variants-grid">
-                    <!-- Card 1: Default State -->
-                    <div class="example-wrapper">
-                        <div class="example-label">Default State</div>
-                        <div class="example-container">
-                            <!-- @include src/components/_token-card-default.html -->
-                        </div>
-                    </div>
 
-                    <!-- Card 2: Advanced Mode -->
-                    <div class="example-wrapper">
-                        <div class="example-label">Advanced Mode</div>
-                        <div class="example-container">
-                            <!-- @include src/components/_token-card-advanced.html -->
-                        </div>
-                    </div>
+            <!-- Card 2: Advanced Mode -->
+            <div class="example-wrapper">
+                <div class="example-label">Advanced Mode</div>
+                <div class="example-container">
+                    <!-- @include src/components/_token-card-advanced.html -->
+                </div>
+            </div>
 
-                    <!-- Card 3: Loading Skeleton -->
-                    <div class="example-wrapper">
-                        <div class="example-label">Loading State</div>
-                        <div class="example-container">
-                            <!-- @include src/components/_skeleton-loader.html -->
-                        </div>
-                    </div>
+            <!-- Card 3: Loading Skeleton -->
+            <div class="example-wrapper">
+                <div class="example-label">Loading State</div>
+                <div class="example-container">
+                    <!-- @include src/components/_skeleton-loader.html -->
+                </div>
+            </div>
 
-                    <!-- Card 4: Progress Flow -->
-                    <!-- @include src/components/_progress-flow-demo.html -->
+            <!-- Card 4: Progress Flow -->
+            <!-- @include src/components/_progress-flow-demo.html -->
 
-                    <!-- Card 5: Empty State (Now using a partial) -->
-                    <div class="example-wrapper">
-                        <div class="example-label">Empty State</div>
-                        <div class="example-container">
-                            <!-- @include src/components/_empty-state.html -->
-                        </div>
-                    </div>
-                </div> <!-- This closes the variants-grid -->
-            </div> <!-- END: component-body -->
-        </div> <!-- END: component-section#token-card -->
-              
-
+            <!-- Card 5: Empty State (Now using a partial) -->
+            <div class="example-wrapper">
+                <div class="example-label">Empty State</div>
+                <div class="example-container">
+                    <!-- @include src/components/_empty-state.html -->
+                </div>
+            </div>
+        </div> <!-- This closes the variants-grid -->
+    </div> <!-- This closes the component-body -->
+</div> <!-- This closes the component-section#token-card -->
         
 
         <!-- ==========================================================================
