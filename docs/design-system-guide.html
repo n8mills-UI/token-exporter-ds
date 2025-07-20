@@ -955,7 +955,7 @@
                 </div>
             </div>
             
-            <!-- Color Variants Grid -->
+                        <!-- Color Variants Grid -->
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Color Variants</div>
@@ -981,28 +981,28 @@
                             </div>
                             <button class="token-copy" onclick="copyToClipboard('badge neutral')">Copy</button>
                         </div>
-                        <!-- Category Colors -->
+                     <!-- Category Colors -->
                         <div class="token-item">
                             <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge cyan"><i data-lucide="type" style="width: 14px; height: 14px;"></i> CYAN</span>
+                                <span class="badge cyan"><i data-lucide="palette"></i> CYAN</span>
                             </div>
                             <button class="token-copy" onclick="copyToClipboard('badge cyan')">Copy</button>
                         </div>
                         <div class="token-item">
                             <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge purple"><i data-lucide="move" style="width: 14px; height: 14px;"></i> PURPLE</span>
+                                <span class="badge purple"><i data-lucide="type"></i> PURPLE</span>
                             </div>
                             <button class="token-copy" onclick="copyToClipboard('badge purple')">Copy</button>
                         </div>
                         <div class="token-item">
                             <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge orange"><i data-lucide="package" style="width: 14px; height: 14px;"></i> ORANGE</span>
+                                <span class="badge orange"><i data-lucide="hash"></i> ORANGE</span>
                             </div>
                             <button class="token-copy" onclick="copyToClipboard('badge orange')">Copy</button>
                         </div>
                         <div class="token-item">
                             <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge pink"><i data-lucide="palette" style="width: 14px; height: 14px;"></i> PINK</span>
+                                <span class="badge pink"><i data-lucide="toggle-right"></i> PINK</span>
                             </div>
                             <button class="token-copy" onclick="copyToClipboard('badge pink')">Copy</button>
                         </div>
@@ -1035,7 +1035,31 @@
                     <div class="example-label">Live Example</div>
                     <div class="example-container">
                         <div class="collection-list list-style-none">
-    <div class="collection-item selected"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Brand Colors</div><div class="collection-pills"><div class="collection-pill color"><i class="icon" data-lucide="palette"></i> <span>24</span></div><div class="collection-pill text"><i class="icon" data-lucide="type"></i> <span>8</span></div></div></div><div class="text-caption collection-count">32 tokens</div></div><div class="collection-item"><div class="collection-checkbox"></div><div class="collection-info"><div class="text-body-lg collection-name">Typography Scale</div><div class="collection-pills"><div class="collection-pill text"><i class="icon" data-lucide="type"></i> <span>16</span></div><div class="collection-pill number"><i class="icon" data-lucide="hash"></i> <span>12</span></div></div></div><div class="text-caption collection-count">28 tokens</div></div></div>
+<!-- src/components/_collection-item-example.html -->
+<!-- This is a STATIC example for the guide. The plugin uses the _collection-item.html template dynamically. -->
+<div class="collection-item selected" data-collection-id="1">
+    <div class="collection-checkbox"></div>
+    <div class="collection-info">
+        <div class="text-body-lg collection-name">Brand Colors</div>
+        <div class="collection-pills">
+            <span class="badge small cyan"><i data-lucide="palette"></i> 24</span>
+            <span class="badge small purple"><i data-lucide="type"></i> 8</span>
+        </div>
+    </div>
+    <div class="text-caption collection-count">32 tokens</div>
+</div>
+<div class="collection-item" data-collection-id="2">
+    <div class="collection-checkbox"></div>
+    <div class="collection-info">
+        <div class="text-body-lg collection-name">Typography Scale</div>
+        <div class="collection-pills">
+            <span class="badge small purple"><i data-lucide="type"></i> 16</span>
+            <span class="badge small orange"><i data-lucide="hash"></i> 12</span>
+        </div>
+    </div>
+    <div class="text-caption collection-count">28 tokens</div>
+</div>
+                        </div>
                     </div>
                 </div>
             </div>

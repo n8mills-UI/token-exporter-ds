@@ -137,6 +137,9 @@ function updateTokenSummary() {
                 </button>`;
         }
 
+                // This will hold the HTML content of our new partial.
+        let collectionItemTemplate = '';
+
         function updateCollectionsCard() {
             if (appState.mode !== 'advanced') {
                 DOMElements.collectionsCard.style.display = 'none';
@@ -144,24 +147,27 @@ function updateTokenSummary() {
             }
             DOMElements.collectionsCard.style.display = 'block';
 
+            // If the template hasn't been loaded, don't try to render.
+            if (!collectionItemTemplate) return;
+
             const filteredCollections = appState.collections.filter(c => c.name.toLowerCase().includes(appState.searchTerm || ''));
             const collectionItemsHTML = filteredCollections.map(c => {
                 const isSelected = appState.selectedCollections.has(c.id);
+                
                 const pillsHTML = Object.entries(c.counts).map(([type, count]) => {
                     if (count === 0) return '';
                     const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
-                    return `<div class="collection-pill ${type} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i data-lucide="${iconMap[type]}"></i> <span>${count}</span></div>`;
+                    const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
+                    return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i data-lucide="${iconMap[type]}"></i> ${count}</span>`;
                 }).join('');
 
-                return `
-                    <div class="collection-item ${isSelected ? 'selected' : ''}" data-collection-id="${c.id}">
-                        <div class="collection-checkbox"></div>
-                        <div class="collection-info">
-                            <div class="text-body-lg collection-name">${c.name}</div>
-                            <div class="collection-pills">${pillsHTML}</div>
-                        </div>
-                        <div class="text-caption collection-count">${c.totalVariables} tokens</div>
-                    </div>`;
+                // Use the template to build the HTML
+                return collectionItemTemplate
+                    .replace('%%SELECTED_CLASS%%', isSelected ? 'selected' : '')
+                    .replace('%%COLLECTION_ID%%', c.id)
+                    .replace('%%COLLECTION_NAME%%', c.name)
+                    .replace('%%PILLS_HTML%%', pillsHTML)
+                    .replace('%%TOKEN_COUNT%%', c.totalVariables);
             }).join('');
 
             const searchInputHTML = appState.collections.length > 5 ? `
@@ -418,8 +424,17 @@ function updateTokenSummary() {
 
         // --- INITIALIZATION ---
         function initialize() {
+            // Fetch the component template first
+            fetch('https://n8mills-ui.github.io/token-exporter-ds/src/components/_collection-item.html')
+                .then(response => response.text())
+                .then(html => {
+                    collectionItemTemplate = html;
+                    // Now that the template is loaded, get the collections
+                    parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                })
+                .catch(error => console.error('Failed to fetch collection item template:', error));
+
             attachEventListeners();
-            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
         }
 
         window.onmessage = (event) => {

@@ -732,15 +732,6 @@ body {
         gap: var(--size-2);
     }
 
-    .guideline-pill {
-        background: var(--color-background-tertiary);
-        color: var(--color-text-secondary);
-        padding: var(--size-2) var(--size-3); /* Larger padding */
-        border-radius: var(--radius-round); /* Changed to pill shape */
-        font-size: var(--font-size-0);
-        font-weight: var(--font-weight-5);
-    }
-
     /* Variant-specific styles */
     .guideline-card.primary .guideline-icon-wrapper {
         background: var(--brand-gradient-lime);
@@ -1469,21 +1460,6 @@ sl-icon-button::part(base):hover {
  border-color: var(--brand-primary-lime);
  box-shadow: 0 0 40px rgb(var(--brand-primary-lime-rgb), 0.3);
  transform: translateY(-2px);
-}
-
-.profile-card .version-label {
- position: absolute;
- top: var(--size-4);
- left: var(--size-4);
- background: #333;
- color: var(--brand-primary-lime);
- padding: var(--size-1) var(--size-3);
- border-radius: var(--radius-1);
- font-family: var(--font-mono);
- font-size: var(--font-size-00);
- text-transform: uppercase;
- letter-spacing: var(--font-letterspacing-2);
- z-index: var(--layer-card);
 }
 
 .profile-card .ascii-container {
@@ -3231,39 +3207,9 @@ select option {
  margin-top: var(--size-1);
 }
 
-.collection-pill {
- display: inline-flex;
- align-items: center;
- gap: var(--size-1);
- padding: var(--size-1);
- border-radius: var(--radius-1);
- font-size: var(--font-size-00);
- font-weight: var(--font-weight-5);
- transition: opacity var(--animation-duration-2) var(--ease-3);
-}
-
-.collection-pill.color {
- background: rgb(0, 209, 255, 0.1);
- color: var(--category-color-cyan);
-}
-
-.collection-pill.text {
- background: rgb(180, 140, 255, 0.1);
- color: var(--category-color-purple);
-}
-
-.collection-pill.number {
- background: rgb(255, 184, 108, 0.1);
- color: var(--category-color-orange);
-}
-
-.collection-pill.states {
- background: rgb(255, 116, 188, 0.1);
- color: var(--category-color-pink);
-}
-
-.collection-pill.disabled {
- opacity: 0.5;
+/* CONTEXTUAL OVERRIDE: Badges within collection items must use the sans font to match their container. */
+.collection-item .badge {
+    font-family: var(--font-sans);
 }
 
 /* Progress & Success States */
