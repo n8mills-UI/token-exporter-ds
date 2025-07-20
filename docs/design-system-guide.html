@@ -198,7 +198,7 @@
 <div class="component-section">
     <div class="component-body">
         <div class="section-header">
-            <h3 class="section-title"><i data-lucide="link"></i> Bridging the Gap: From Figma to Code</h3>
+            <h3 class="section-title"><i data-lucide="link"></i> Bridging the Gap: Figma to Code</h3>
             <p class="section-subtitle">// A shared language for designers and developers</p>
         </div>
         <p style="margin-bottom: var(--size-6); color: var(--color-text-secondary); max-width: 80ch; line-height: var(--font-lineheight-4);">
@@ -933,9 +933,7 @@
         </div>
         <div class="component-body">
             
-            <h3 class="example-subheader">Badge Variants</h3>
-            <p class="category-description" style="margin-bottom: var(--size-4);">Badges support multiple color variants and optional icons. All variants are available in three sizes.</p>
-            
+           
             <!-- Size Showcase First -->
             <div class="subsection">
                 <div class="example-wrapper">
@@ -1006,33 +1004,31 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Usage -->
+       
+
+          <!-- Usage Examples -->
             <div class="subsection">
-                <h3 class="example-subheader">Usage</h3>
+                <h3 class="example-subheader">Usage Examples</h3>
                 <div class="example-wrapper">
+                
                     <div class="example-container" style="padding: var(--size-4);">
+                        <p style="margin-bottom: var(--size-3); color: var(--color-text-secondary);">
+                            Apply the <span class="badge brand">.badge</span> class with a variant modifier like <span class="badge brand">.brand</span> or <span class="badge neutral">.neutral</span>.
+                        </p>
+                        <p style="margin-bottom: var(--size-3); color: var(--color-text-secondary);">
+                            Category badges like <span class="badge cyan">cyan</span>, <span class="badge purple">purple</span>, <span class="badge orange">orange</span>, and <span class="badge pink">pink</span> automatically style icons with their category color while keeping text white.
+                        </p>
                         <div class="code-block">
-                            <code><!-- Basic badge -->
-&lt;span class="badge brand"&gt;LABEL&lt;/span&gt;
-
-<!-- With icon -->
-&lt;span class="badge brand"&gt;
-  &lt;i data-lucide="icon-name"&gt;&lt;/i&gt; LABEL
-&lt;/span&gt;
-
-<!-- Size variants -->
-&lt;span class="badge brand small"&gt;SMALL&lt;/span&gt;
-&lt;span class="badge brand large"&gt;LARGE&lt;/span&gt;
-
-<!-- Position modifier -->
-&lt;span class="badge brand absolute"&gt;POSITIONED&lt;/span&gt;</code>
+                            <span class="badge brand">:root</span>
+                            <span class="badge neutral">v4.0.8</span>
+                            <span class="badge cyan"><i data-lucide="type"></i> Typography</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-
+            
+        </div>
+    </div>
 
         <div id="forms" class="component-section">
             <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="file-text"></i> Forms</h2><p class="component-description">Form elements including the format selector dropdown with custom styling.</p></div>

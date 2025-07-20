@@ -1445,7 +1445,7 @@ sl-icon-button::part(base):hover {
  background: var(--gray-9);
  border: var(--border-size-2) solid var(--gray-6);
  border-radius: var(--radius-3);
- padding: var(--size-8);
+ padding: var(--size-9) var(--size-6) var(--size-6) var(--size-1);
  position: relative;
  overflow: hidden;
  transition: all 0.3s ease;
@@ -2010,8 +2010,8 @@ sl-icon-button::part(base):hover {
     display: inline-flex;
     align-items: center;
     gap: var(--size-1);
-    padding: var(--size-1) var(--size-2);
-    border-radius: var(--radius-1);
+    padding: var(--size-2) var(--size-3); 
+    border-radius: var(--radius-2);
     font-family: var(--font-mono);
     font-size: var(--font-size-0);
     font-weight: var(--font-weight-5);
@@ -2070,18 +2070,18 @@ sl-icon-button::part(base):hover {
 
 /* --- Size Variants --- */
 .badge.small {
-    padding: 0 var(--size-1);
+    padding: var(--size-1) var(--size-2); 
     font-size: var(--font-size-00);
     gap: calc(var(--size-1) / 2);
 }
 
 .badge.small .lucide {
-    width: 12px;
-    height: 12px;
+    width: 10px; 
+    height: 10px;
 }
 
 .badge.large {
-    padding: var(--size-2) var(--size-3);
+    padding: var(--size-3) var(--size-4);/
     font-size: var(--font-size-1);
     gap: var(--size-2);
 }
@@ -4499,7 +4499,8 @@ body {
 
 .category-description, .component-description {
  color: var(--color-text-secondary);
- margin: 0;
+ font-size: var(--font-size-1); 
+ margin: 0 0 var(--size-2) 0; 
 }
 
 .tokens-grid {
