@@ -7,7 +7,7 @@
   },
   "scripts": {
     "sync": "bash scripts/sync.sh",
-    "lint:js": "ESLINT_USE_FLAT_CONFIG=false eslint src/code.js",
+    "lint:js": "eslint src/code.js",
     "dev": "nodemon",
     "build": "npm run sync",
     "clean": "rm -f src/ui.html.backup"
