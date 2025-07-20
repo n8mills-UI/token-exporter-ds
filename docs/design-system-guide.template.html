@@ -1030,7 +1030,13 @@
             initializeTypingObserver(); // This now sets up the initial animation trigger
 
             if (window.lucide) {
-                lucide.createIcons();
+                lucide.createIcons({
+                    attrs: {
+                        'width': null,
+                        'height': null,
+                        'class': 'lucide'
+                    }
+                });
             }
         });
 
@@ -1038,7 +1044,13 @@
         function renderAllIcons() {
             if (window.lucide) {
                 try {
-                    lucide.createIcons();
+                    lucide.createIcons({
+                        attrs: {
+                            'width': null,
+                            'height': null,
+                            'class': 'lucide'
+                        }
+                    });
                 } catch (error) {
                     console.error("Lucide icon rendering failed:", error);
                 }
@@ -1423,7 +1435,13 @@
                     </a>
                 `;
                 if (window.lucide) {
-                    lucide.createIcons();
+                    lucide.createIcons({
+                        attrs: {
+                            'width': null,
+                            'height': null,
+                            'class': 'lucide'
+                        }
+                    });
                 }
                 techItems.forEach(item => {
                     item.classList.toggle('active', item.dataset.tech === tech);

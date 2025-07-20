@@ -69,7 +69,15 @@
         };
         const renderIcons = () => {
             try {
-                if (window.lucide) window.lucide.createIcons();
+                if (window.lucide) {
+    lucide.createIcons({
+        attrs: {
+            'width': null,
+            'height': null,
+            'class': 'lucide'
+        }
+    });
+}
             } catch (error) {
                 console.error("Lucide icon rendering failed:", error);
             }

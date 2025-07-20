@@ -3207,11 +3207,6 @@ select option {
  margin-top: var(--size-1);
 }
 
-/* CONTEXTUAL OVERRIDE: Badges within collection items must use the sans font to match their container. */
-.collection-item .badge {
-    font-family: var(--font-sans);
-}
-
 /* Progress & Success States */
 .progress-overlay {
  position: fixed;
