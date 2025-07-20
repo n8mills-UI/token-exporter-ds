@@ -934,83 +934,103 @@
         <div class="component-body">
             
             <h3 class="example-subheader">Badge Variants</h3>
-            <p class="category-description" style="margin-bottom: var(--size-4);">Badges come in multiple variants to serve different semantic purposes across the interface.</p>
+            <p class="category-description" style="margin-bottom: var(--size-4);">Badges support multiple color variants and optional icons. All variants are available in three sizes.</p>
             
-            <!-- Brand Badges -->
+            <!-- Size Showcase First -->
             <div class="subsection">
                 <div class="example-wrapper">
-                    <div class="example-label">Brand</div>
+                    <div class="example-label">Sizes</div>
                     <div class="badge-showcase">
-                        <span class="badge brand">:root</span>
-                        <span class="badge brand">--brand-primary-lime</span>
-                        <span class="badge brand">.btn-primary</span>
-                        <span class="badge brand">.token-card</span>
+                        <span class="badge brand small">SMALL</span>
+                        <span class="badge brand">MEDIUM</span>
+                        <span class="badge brand large">LARGE</span>
+                        <span style="margin-left: var(--size-4);"></span>
+                        <span class="badge brand small"><i data-lucide="zap" style="width: 12px; height: 12px;"></i> WITH ICON</span>
+                        <span class="badge brand"><i data-lucide="zap" style="width: 14px; height: 14px;"></i> WITH ICON</span>
+                        <span class="badge brand large"><i data-lucide="zap" style="width: 16px; height: 16px;"></i> WITH ICON</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Brand Inverted -->
+            <!-- Color Variants Grid -->
             <div class="subsection">
                 <div class="example-wrapper">
-                    <div class="example-label">Brand Inverted</div>
-                    <div class="badge-showcase">
-                        <span class="badge brand-inverted">NEW</span>
-                        <span class="badge brand-inverted">FEATURED</span>
-                        <span class="badge brand-inverted">PRO</span>
-                        <span class="badge brand-inverted">FIGMA PLUGIN</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Neutral Badges -->
-            <div class="subsection">
-                <div class="example-wrapper">
-                    <div class="example-label">Neutral</div>
-                    <div class="badge-showcase">
-                        <span class="badge neutral">DEFAULT</span>
-                        <span class="badge neutral">v4.0.8</span>
-                        <span class="badge neutral">ARCHIVED</span>
-                        <span class="badge neutral">FIGMA PLUGIN</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Category Color Badges -->
-            <div class="subsection">
-                <div class="example-wrapper">
-                    <div class="example-label">Category Colors</div>
-                    <div class="badge-showcase">
-                        <span class="badge cyan"><i data-lucide="type" style="width: 14px; height: 14px;"></i> Typography</span>
-                        <span class="badge purple"><i data-lucide="move" style="width: 14px; height: 14px;"></i> Spacing</span>
-                        <span class="badge orange"><i data-lucide="package" style="width: 14px; height: 14px;"></i> Components</span>
-                        <span class="badge pink"><i data-lucide="palette" style="width: 14px; height: 14px;"></i> Colors</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Usage Examples -->
-            <div class="subsection">
-                <h3 class="example-subheader">Usage Examples</h3>
-                <div class="example-wrapper">
-                    <div class="example-label">In Context</div>
-                    <div class="example-container" style="padding: var(--size-4);">
-                        <p style="margin-bottom: var(--size-3); color: var(--color-text-secondary);">
-                            Apply the <span class="badge brand">.badge</span> class with a variant modifier like <span class="badge brand">.brand</span> or <span class="badge neutral">.neutral</span>.
-                        </p>
-                        <p style="margin-bottom: var(--size-3); color: var(--color-text-secondary);">
-                            Category badges like <span class="badge cyan">cyan</span>, <span class="badge purple">purple</span>, <span class="badge orange">orange</span>, and <span class="badge pink">pink</span> automatically style icons with their category color while keeping text white.
-                        </p>
-                        <div class="code-block">
-                            <code>&lt;span class="badge brand"&gt;:root&lt;/span&gt;
-&lt;span class="badge neutral"&gt;v4.0.8&lt;/span&gt;
-&lt;span class="badge cyan"&gt;&lt;i data-lucide="type"&gt;&lt;/i&gt; Typography&lt;/span&gt;</code>
+                    <div class="example-label">Color Variants</div>
+                    <div class="tokens-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <!-- Brand -->
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge brand">BRAND</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge brand')">Copy</button>
+                        </div>
+                        <!-- Brand Inverted -->
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge brand-inverted">INVERTED</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge brand-inverted')">Copy</button>
+                        </div>
+                        <!-- Neutral -->
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge neutral">NEUTRAL</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge neutral')">Copy</button>
+                        </div>
+                        <!-- Category Colors -->
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge cyan"><i data-lucide="type" style="width: 14px; height: 14px;"></i> CYAN</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge cyan')">Copy</button>
+                        </div>
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge purple"><i data-lucide="move" style="width: 14px; height: 14px;"></i> PURPLE</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge purple')">Copy</button>
+                        </div>
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge orange"><i data-lucide="package" style="width: 14px; height: 14px;"></i> ORANGE</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge orange')">Copy</button>
+                        </div>
+                        <div class="token-item">
+                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
+                                <span class="badge pink"><i data-lucide="palette" style="width: 14px; height: 14px;"></i> PINK</span>
+                            </div>
+                            <button class="token-copy" onclick="copyToClipboard('badge pink')">Copy</button>
                         </div>
                     </div>
                 </div>
             </div>
             
-        </div>
-    </div>
+            <!-- Usage -->
+            <div class="subsection">
+                <h3 class="example-subheader">Usage</h3>
+                <div class="example-wrapper">
+                    <div class="example-container" style="padding: var(--size-4);">
+                        <div class="code-block">
+                            <code><!-- Basic badge -->
+&lt;span class="badge brand"&gt;LABEL&lt;/span&gt;
+
+<!-- With icon -->
+&lt;span class="badge brand"&gt;
+  &lt;i data-lucide="icon-name"&gt;&lt;/i&gt; LABEL
+&lt;/span&gt;
+
+<!-- Size variants -->
+&lt;span class="badge brand small"&gt;SMALL&lt;/span&gt;
+&lt;span class="badge brand large"&gt;LARGE&lt;/span&gt;
+
+<!-- Position modifier -->
+&lt;span class="badge brand absolute"&gt;POSITIONED&lt;/span&gt;</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
