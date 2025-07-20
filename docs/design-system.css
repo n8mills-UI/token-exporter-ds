@@ -1878,9 +1878,9 @@ sl-icon-button::part(base):hover {
 .example-wrapper {
  display: flex;
  flex-direction: column;
- gap: var(--size-3);
+ gap: var(--size-1);
  margin-bottom: var(--size-4);
- height: 100%; /* ADDED: Allows wrapper to fill the grid cell height */
+ height: 100%;
 }
 
 .example-container {
@@ -1901,6 +1901,12 @@ sl-icon-button::part(base):hover {
  text-transform: uppercase;
  letter-spacing: var(--font-letterspacing-2);
  padding-left: var(--size-1);
+}
+
+/* Button below card in example wrapper */
+.example-wrapper > .btn {
+ align-self: stretch;
+ margin-top: var(--size-1);
 }
 
 /* Fallback for existing structure without wrapper */
@@ -4102,21 +4108,6 @@ sl-input::part(input):focus-visible,
  gap: var(--size-3);
 }
 
-/* -- Mobile Header & Menu Polish -- */
-.mobile-header .mobile-menu-toggle-right .lucide {
- width: var(--icon-lg); /* 24px - Increase hamburger size */
- height: var(--icon-lg);
-}
-
-.mobile-menu .menu-header {
- height: var(--size-10); /* Match the main mobile header height */
-}
-
-.mobile-menu .menu-close-btn .lucide {
- width: var(--icon-lg); /* 24px - Increase close icon size */
- height: var(--icon-lg);
-}
-
 /* ==========================================================================
  FINAL HERO SECTION POLISH
  ========================================================================== */
@@ -4222,13 +4213,76 @@ sl-input::part(input):focus-visible,
     right: 0;
     width: 280px;
     height: 100%;
-    background: var(--color-backdrop);
-    backdrop-filter: var(--blur-md);
+    background: rgba(var(--color-backdrop-rgb), 0.95);
+    backdrop-filter: var(--blur-lg);
+    -webkit-backdrop-filter: var(--blur-lg);
     border-left: var(--border-size-1) solid var(--color-border-default);
-    z-index: 101;
+    z-index: var(--layer-modal);
     transform: translateX(100%);
     transition: transform var(--transition-medium);
     overflow-y: auto;
+}
+
+.mobile-menu .menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: var(--size-10);
+    padding: 0 var(--size-4);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+}
+
+.menu-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-default);
+    cursor: pointer;
+    padding: var(--size-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-close-btn .lucide {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+    stroke-width: var(--stroke-regular);
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: var(--size-4);
+    margin: 0;
+}
+
+.mobile-nav-links li {
+    margin-bottom: var(--size-1);
+}
+
+.mobile-nav-links a {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-2) var(--size-3);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-2);
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.mobile-nav-links a:hover {
+    background: var(--color-background-tertiary);
+    color: var(--brand-primary-lime);
+}
+
+.mobile-nav-links a.active {
+    color: var(--brand-primary-lime);
+    background: rgba(var(--brand-primary-lime-rgb), 0.1);
+}
+
+.mobile-nav-links .lucide {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
 }
 
 .mobile-menu.open {
@@ -4238,8 +4292,8 @@ sl-input::part(input):focus-visible,
 .menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgb(0,0,0,0.5);
-    z-index: 99;
+    background: rgba(var(--color-backdrop-rgb), 0.5);
+    z-index: calc(var(--layer-modal) - 1);
     opacity: 0;
     transition: opacity var(--transition-medium);
     pointer-events: none;
@@ -4973,9 +5027,72 @@ body {
         box-sizing: border-box;
     }
 
-    /* Mobile Header Visibility */
+    /* Show mobile header on mobile */
     .mobile-header {
         display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--size-10);
+        background: rgba(var(--color-backdrop-rgb), 0.8);
+        backdrop-filter: var(--blur-lg);
+        -webkit-backdrop-filter: var(--blur-lg);
+        border-bottom: var(--border-size-1) solid rgba(var(--brand-primary-lime-rgb), 0.1);
+        z-index: var(--layer-modal);
+        padding: 0 var(--size-4);
+        align-items: center;
+        justify-content: space-between;
+        transition: transform var(--transition-fast);
+    }
+    
+    @supports not (backdrop-filter: blur(1px)) {
+        .mobile-header {
+            background: rgba(var(--color-backdrop-rgb), 0.95);
+        }
+    }
+    
+    .mobile-header.hidden {
+        transform: translateY(-100%);
+    }
+
+    .header-brand {
+        display: flex;
+        align-items: center;
+        gap: var(--size-2);
+    }
+
+    .mobile-header-logo {
+        width: var(--size-8);
+        height: var(--size-8);
+    }
+
+    .mobile-header-logo svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .header-title {
+        font-size: var(--font-size-2);
+        font-weight: var(--font-weight-6);
+        color: var(--color-text-default);
+    }
+
+    .mobile-menu-toggle-right {
+        background: transparent;
+        border: none;
+        color: var(--color-text-default);
+        cursor: pointer;
+        padding: var(--size-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-menu-toggle-right .lucide {
+        width: var(--icon-lg);
+        height: var(--icon-lg);
+        stroke-width: var(--stroke-regular);
     }
 
     /* --- Mobile Grid Stacking for Components --- */
