@@ -396,6 +396,14 @@ body {
  .bg-color-border-interactive-focus { background-color: var(--color-border-interactive-focus); }
  .bg-brand-gradient-lime { background: var(--brand-gradient-lime); }
 
+ /* Alpha Background Utilities */
+ .bg-brand-primary-lime-alpha-10 { background-color: var(--brand-primary-lime-alpha-10); }
+ .bg-brand-primary-lime-alpha-20 { background-color: var(--brand-primary-lime-alpha-20); }
+ .bg-category-cyan-alpha-10 { background-color: var(--category-color-cyan-alpha-10); }
+ .bg-category-purple-alpha-10 { background-color: var(--category-color-purple-alpha-10); }
+ .bg-category-orange-alpha-10 { background-color: var(--category-color-orange-alpha-10); }
+ .bg-category-pink-alpha-10 { background-color: var(--category-color-pink-alpha-10); }
+
  /* Text Color Utilities */
  .text-brand-primary-lime { color: var(--brand-primary-lime); }
  .text-color-default { color: var(--color-text-default); }
@@ -4618,6 +4626,36 @@ body {
 .token-preview {
  margin-bottom: var(--size-3);
  min-height: 60px;
+}
+
+.alpha-preview {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    border: var(--border-size-1) solid var(--color-border-default);
+}
+
+.alpha-preview-color {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.checkerboard {
+    background-image: repeating-conic-gradient(
+        var(--gray-8) 0% 25%, 
+        var(--gray-7) 25% 50%
+    );
+    background-size: 16px 16px;
+    background-repeat: repeat; /* This is the critical fix */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
 }
 
 .color-preview {
