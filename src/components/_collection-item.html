@@ -1,9 +1,24 @@
 <!-- src/components/_collection-item.html -->
-<div class="collection-item %%SELECTED_CLASS%%" data-collection-id="%%COLLECTION_ID%%">
+<!-- This is the single source of truth for the collection item component's structure. -->
+<div class="collection-item selected">
     <div class="collection-checkbox"></div>
     <div class="collection-info">
-        <div class="text-body-lg collection-name">%%COLLECTION_NAME%%</div>
-        <div class="collection-pills">%%PILLS_HTML%%</div>
+        <div class="text-body-lg collection-name">Brand Colors</div>
+        <div class="collection-pills">
+            <span class="badge small cyan"><i data-lucide="palette"></i> 24</span>
+            <span class="badge small purple"><i data-lucide="type"></i> 8</span>
+        </div>
     </div>
-    <div class="text-caption collection-count">%%TOKEN_COUNT%% tokens</div>
+    <div class="text-caption collection-count">32 tokens</div>
+</div>
+<div class="collection-item">
+    <div class="collection-checkbox"></div>
+    <div class="collection-info">
+        <div class="text-body-lg collection-name">Typography Scale</div>
+        <div class="collection-pills">
+            <span class="badge small purple"><i data-lucide="type"></i> 16</span>
+            <span class="badge small orange"><i data-lucide="hash"></i> 12</span>
+        </div>
+    </div>
+    <div class="text-caption collection-count">28 tokens</div>
 </div>

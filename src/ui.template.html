@@ -147,9 +147,6 @@ function updateTokenSummary() {
             }
             DOMElements.collectionsCard.style.display = 'block';
 
-            // If the template hasn't been loaded, don't try to render.
-            if (!collectionItemTemplate) return;
-
             const filteredCollections = appState.collections.filter(c => c.name.toLowerCase().includes(appState.searchTerm || ''));
             const collectionItemsHTML = filteredCollections.map(c => {
                 const isSelected = appState.selectedCollections.has(c.id);
@@ -161,13 +158,16 @@ function updateTokenSummary() {
                     return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i data-lucide="${iconMap[type]}"></i> ${count}</span>`;
                 }).join('');
 
-                // Use the template to build the HTML
-                return collectionItemTemplate
-                    .replace('%%SELECTED_CLASS%%', isSelected ? 'selected' : '')
-                    .replace('%%COLLECTION_ID%%', c.id)
-                    .replace('%%COLLECTION_NAME%%', c.name)
-                    .replace('%%PILLS_HTML%%', pillsHTML)
-                    .replace('%%TOKEN_COUNT%%', c.totalVariables);
+                // Manually build the HTML here, ensuring it matches the static guide example.
+                return `
+                    <div class="collection-item ${isSelected ? 'selected' : ''}" data-collection-id="${c.id}">
+                        <div class="collection-checkbox"></div>
+                        <div class="collection-info">
+                            <div class="text-body-lg collection-name">${c.name}</div>
+                            <div class="collection-pills">${pillsHTML}</div>
+                        </div>
+                        <div class="text-caption collection-count">${c.totalVariables} tokens</div>
+                    </div>`;
             }).join('');
 
             const searchInputHTML = appState.collections.length > 5 ? `

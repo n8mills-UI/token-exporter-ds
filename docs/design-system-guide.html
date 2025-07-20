@@ -1028,16 +1028,16 @@
             </div>
         </div>
 
-        <div id="collection-items" class="component-section">
+                <div id="collection-items" class="component-section">
             <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="list"></i> Collection Items</h2><p class="component-description">Individual collection list items with custom checkboxes, info, and token type pills.</p></div>
             <div class="component-body">
                 <div class="example-wrapper">
                     <div class="example-label">Live Example</div>
                     <div class="example-container">
                         <div class="collection-list list-style-none">
-<!-- src/components/_collection-item-example.html -->
-<!-- This is a STATIC example for the guide. The plugin uses the _collection-item.html template dynamically. -->
-<div class="collection-item selected" data-collection-id="1">
+<!-- src/components/_collection-item.html -->
+<!-- This is the single source of truth for the collection item component's structure. -->
+<div class="collection-item selected">
     <div class="collection-checkbox"></div>
     <div class="collection-info">
         <div class="text-body-lg collection-name">Brand Colors</div>
@@ -1048,7 +1048,7 @@
     </div>
     <div class="text-caption collection-count">32 tokens</div>
 </div>
-<div class="collection-item" data-collection-id="2">
+<div class="collection-item">
     <div class="collection-checkbox"></div>
     <div class="collection-info">
         <div class="text-body-lg collection-name">Typography Scale</div>
