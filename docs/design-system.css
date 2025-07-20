@@ -1880,6 +1880,7 @@ sl-icon-button::part(base):hover {
  flex-direction: column;
  gap: var(--size-3);
  margin-bottom: var(--size-4);
+ height: 100%; /* ADDED: Allows wrapper to fill the grid cell height */
 }
 
 .example-container {
@@ -1888,6 +1889,9 @@ sl-icon-button::part(base):hover {
  border-radius: var(--radius-2);
  padding: var(--size-4);
  position: relative;
+ display: flex;
+ flex-direction: column;
+ flex-grow: 1; /* ADDED: Allows the container to fill vertical space */
 }
 
 .example-label {
