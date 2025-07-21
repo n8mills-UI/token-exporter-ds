@@ -5283,133 +5283,123 @@ body {
         }
     }
 
-    /* Additional mobile optimizations for portfolio section */
+   /* Mobile optimization for portfolio section */
 @media (max-width: 768px) {
-    /* Portfolio Hero Mobile Adjustments */
-   .portfolio-hero {
+    /* Hero section adjustments */
+    .portfolio-hero {
     padding: var(--size-6) var(--size-4);
-    min-height: 100vh; 
-    padding-bottom: var(--size-12); 
+    min-height: 85vh; /* Reduced so stats show on screen */
+    padding-bottom: var(--size-10);
+    display: flex;
+    align-items: center;
 }
+    /* Ensure hero content uses full height */
+    .hero-content-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
     
-    /* Hero content mobile optimization */
+    /* Text hierarchy improvements using existing tokens */
     .hero-main-title {
-        font-size: var(--font-size-7);
+        font-size: var(--font-size-7); /* Down from calc formula */
     }
     
     .hero-tagline {
-        font-size: var(--font-size-3); 
+        font-size: var(--font-size-3); /* Maintains medium size */
+        color: var(--color-text-secondary); /* Use semantic color */
         padding: 0 var(--size-2);
     }
     
     .hero-description {
-        padding: 0 var(--size-2); 
+        font-size: var(--font-size-0); /* Smaller for hierarchy */
+        color: var(--color-text-muted); /* Use semantic muted color */
+        padding: 0 var(--size-2);
     }
     
-    /* Hero footer mobile spacing fix */
     .hero-footer {
-        margin-top: auto; /* Pushes to bottom */
-        padding-bottom: var(--size-8);
-        gap: var(--size-2); /* Tighter grouping */
+    margin-top: var(--size-6); /* Fixed spacing instead of auto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4); /* Even spacing between elements */
+}
+
+/* Ensure social icons are centered */
+.social-links {
+    display: flex;
+    gap: var(--size-4);
+    margin: var(--size-4) 0; /* Equal margin top/bottom */
+}
+    
+    /* CTA button grouping */
+    .figma-cta {
+        margin: var(--size-2) 0;
     }
     
-    /* Social links more compact on mobile */
-    .social-links {
-        gap: var(--size-4); 
-    }
-    
-    /* Portfolio content wrapper mobile optimization */
+    /* Portfolio content wrapper */
     .portfolio-content {
-        padding: 0 var(--size-4); 
+        padding: 0 var(--size-4);
     }
     
-    /* Intro group mobile adjustments */
+    /* Intro group - maintains overlap effect */
     .intro-group {
-        margin-top: calc(-1 * var(--size-8));
-        gap: var(--size-2);
-        margin-bottom: var(--size-4);
+    margin-top: calc(-1 * var(--size-8)); /* Increased to pull stats up more */
+    gap: var(--size-2);
     }
     
-    /* Impact stats */
+    /* Impact stats - force 2x2 grid */
     .impact-stats {
-        grid-template-columns: repeat(2, 1fr); 
-        gap: var(--size-2); 
-        padding: var(--size-3); 
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--size-2);
+        padding: var(--size-3);
     }
     
-    /* Stat items more compact on mobile */
+    /* Stat items */
     .stat-item {
-        padding: var(--size-2); 
+        padding: var(--size-2);
     }
     
     .stat-number {
-        font-size: var(--font-size-7); 
-    }
-    
-    .stat-suffix {
-        font-size: var(--font-size-1); 
+        font-size: var(--font-size-6); /* Keep readable */
     }
     
     .stat-label {
-        font-size: var(--font-size-1); 
+        font-size: var(--font-size-1); /* Readable size */
     }
     
-    /* Compact cards mobile optimization */
-    .compact-cards {
-        gap: var(--size-2); 
-        margin-bottom: var(--size-4); 
-    }
-    
+    /* Compact cards */
     .compact-card {
-        padding: var(--size-3); 
+        padding: var(--size-3);
     }
     
     .compact-card h3 {
-        font-size: var(--font-size-2);
-        gap: var(--size-1); 
+        gap: var(--size-1);
     }
     
     .compact-card h3 i {
-        width: var(--icon-md); 
+        width: var(--icon-md);
         height: var(--icon-md);
-    }
-    
-    /* Button adjustments for mobile */
-    .btn-md {
-        padding: var(--size-2) var(--size-3); 
-        font-size: var(--font-size-1); 
-    }
-    
-    .btn-icon.btn-md {
-        width: var(--size-9); 
-        height: var(--size-9);
     }
 }
 
-/* Even smaller screens (phones in portrait) */
+/* Very small screens */
 @media (max-width: 480px) {
-    /* Ultra-compact stats for very small screens */
-    .impact-stats {
-        gap: var(--size-1); 
-        padding: var(--size-2); 
+    .portfolio-hero {
+        padding: var(--size-5) var(--size-3);
     }
     
-    .stat-item {
-        padding: var(--size-1);
+    .impact-stats {
+        gap: var(--size-1);
+        padding: var(--size-2);
     }
     
     .stat-number {
-        font-size: var(--font-size-4); 
+        font-size: var(--font-size-5);
     }
     
-    /* Stack compact cards on very small screens */
     .compact-cards {
-        grid-template-columns: 1fr; 
-    }
-    
-    /* Further reduce hero padding */
-    .portfolio-hero {
-        padding: var(--size-5) var(--size-3);
+        grid-template-columns: 1fr;
     }
 }
 
