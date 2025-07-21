@@ -936,6 +936,65 @@ body {
 .force-focus { box-shadow: var(--focus-ring); }
 .force-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; transform: none !important; box-shadow: none !important; filter: none !important; }
 
+/* --- Component: Badge (v4 - Corrected Selectors) --- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-5);
+    line-height: 1.2;
+    border: 1px solid transparent;
+}
+
+/* Color Variants */
+.badge.cyan { background-color: var(--category-color-cyan-alpha-10); color: var(--color-text-default); }
+.badge.cyan i { color: var(--category-color-cyan); }
+
+.badge.purple { background-color: var(--category-color-purple-alpha-10); color: var(--color-text-default); }
+.badge.purple i { color: var(--category-color-purple); }
+
+.badge.orange { background-color: var(--category-color-orange-alpha-10); color: var(--color-text-default); }
+.badge.orange i { color: var(--category-color-orange); }
+
+/* Size Variants */
+.badge.small {
+    padding: var(--size-1) var(--size-1);
+    font-size: var(--font-size-00);
+    gap: calc(var(--size-1) / 2);
+}
+
+.badge.large {
+    padding: var(--size-2) var(--size-3);
+    font-size: var(--font-size-1);
+}
+
+/* Icon Container Base + Sizing */
+.badge i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-sm); /* Default/Medium size */
+    height: var(--icon-sm);
+}
+
+.badge.small i {
+    width: var(--icon-xs); /* Small override */
+    height: var(--icon-xs);
+}
+
+.badge.large i {
+    width: var(--icon-md); /* Large override */
+    height: var(--icon-md);
+}
+
+.badge i .lucide {
+    width: 100%;
+    height: 100%;
+}
 
 /* ==========================================================================
  COMPONENT DOCUMENTATION SYSTEM
@@ -2068,9 +2127,19 @@ sl-icon-button::part(base):hover {
     gap: calc(var(--size-1) / 2);
 }
 
-.badge.small .lucide {
-    width: var(--icon-xs); 
-    height: var(--icon-xs);
+.badge.small .lucide,
+.badge.small .icon {
+    width: var(--icon-xs) !important; 
+    height: var(--icon-xs) !important;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+/* Default badge (medium) icons */
+.badge .lucide,
+.badge .icon {
+    width: var(--icon-sm) !important;
+    height: var(--icon-sm) !important;
+    flex-shrink: 0;
 }
 
 .badge.large {
@@ -2079,9 +2148,16 @@ sl-icon-button::part(base):hover {
     gap: var(--size-2);
 }
 
-.badge.large .lucide {
-    width: var(--icon-sm);
-    height: var(--icon-sm);
+.badge.large .lucide,
+.badge.large .icon {
+    width: var(--icon-md) !important;
+    height: var(--icon-md) !important;
+    flex-shrink: 0;
+}
+
+.badge i .lucide {
+    width: 100%;
+    height: 100%;
 }
 
 /*

@@ -160,11 +160,11 @@ function updateTokenSummary() {
                 const isSelected = appState.selectedCollections.has(c.id);
                 
                 const pillsHTML = Object.entries(c.counts).map(([type, count]) => {
-                    if (count === 0) return '';
-                    const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
-                    const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
-                    return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i data-lucide="${iconMap[type]}"></i> ${count}</span>`;
-                }).join('');
+    if (count === 0) return '';
+    const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
+    const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
+    return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i class="icon" data-lucide="${iconMap[type]}"></i> ${count}</span>`;
+}).join('');
 
                 // Manually build the HTML here, ensuring it matches the static guide example.
                 return `

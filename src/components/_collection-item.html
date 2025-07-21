@@ -1,24 +1,41 @@
 <!-- src/components/_collection-item.html -->
 <!-- This is the single source of truth for the collection item component's structure. -->
+<!-- Example 1: Selected collection with all 4 token types -->
 <div class="collection-item selected">
+    <div class="collection-checkbox"></div>
+    <div class="collection-info">
+        <div class="text-body-lg collection-name">Complete Design System</div>
+        <div class="collection-pills">
+            <span class="badge small cyan"><i class="icon" data-lucide="palette"></i> 24</span>
+            <span class="badge small purple"><i class="icon" data-lucide="type"></i> 16</span>
+            <span class="badge small orange"><i class="icon" data-lucide="hash"></i> 12</span>
+            <span class="badge small pink"><i class="icon" data-lucide="toggle-right"></i> 8</span>
+        </div>
+    </div>
+    <div class="text-caption collection-count">60 tokens</div>
+</div>
+<!-- Example 2: Unselected collection with partial token types -->
+<div class="collection-item">
     <div class="collection-checkbox"></div>
     <div class="collection-info">
         <div class="text-body-lg collection-name">Brand Colors</div>
         <div class="collection-pills">
-            <span class="badge small cyan"><i class="icon" data-lucide="palette"></i> 24</span>
-            <span class="badge small purple"><i data-lucide="type"></i> 8</span>
+            <span class="badge small cyan"><i class="icon" data-lucide="palette"></i> 32</span>
+            <span class="badge small pink"><i class="icon" data-lucide="toggle-right"></i> 4</span>
         </div>
     </div>
-    <div class="text-caption collection-count">32 tokens</div>
+    <div class="text-caption collection-count">36 tokens</div>
 </div>
+<!-- Example 3: Another collection showing different combinations -->
 <div class="collection-item">
     <div class="collection-checkbox"></div>
     <div class="collection-info">
-        <div class="text-body-lg collection-name">Typography Scale</div>
+        <div class="text-body-lg collection-name">Typography System</div>
         <div class="collection-pills">
-            <span class="badge small purple"><i data-lucide="type"></i> 16</span>
-            <span class="badge small orange"><i data-lucide="hash"></i> 12</span>
+            <span class="badge small purple"><i class="icon" data-lucide="type"></i> 18</span>
+            <span class="badge small orange"><i class="icon" data-lucide="hash"></i> 14</span>
+            <span class="badge small pink disabled"><i class="icon" data-lucide="toggle-right"></i> 0</span>
         </div>
     </div>
-    <div class="text-caption collection-count">28 tokens</div>
+    <div class="text-caption collection-count">32 tokens</div>
 </div>
