@@ -1,0 +1,34 @@
+<!--
+Component: Export Card (Stateful)
+Purpose: Handles both Quick Export and Advanced Filtering states.
+Toggles the global appState.mode and communicates with the Token Summary card.
+-->
+<div class="card export-section is-compact" id="export-card-container">
+    <!-- STATE 1: QUICK EXPORT VIEW (Default) -->
+    <div id="quick-export-view">
+        <h3 class="text-label section-title"><i data-lucide="send"></i> Quick Export</h3>
+        <div class="format-select-wrapper" style="margin-top: var(--size-3);">
+            <select class="format-select" id="format-select">
+                <option value="css" selected>CSS Variables</option>
+                <option value="swift">Swift (iOS)</option>
+                <option value="android">Android XML</option>
+                <option value="flutter">Flutter</option>
+                <option value="w3c">JSON (W3C)</option>
+                <option value="tailwind">Tailwind Config</option>
+            </select>
+        </div>
+        <button class="btn primary btn-sm" id="export-btn">
+            <i data-lucide="rocket"></i>
+            <span>Package Tokens</span>
+        </button>
+        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);">
+            <i data-lucide="sliders-horizontal"></i>
+            <span>Filters</span>
+        </button>
+    </div>
+
+    <!-- STATE 2: ADVANCED FILTERING VIEW (Hidden by default) -->
+    <div id="advanced-filter-view" class="state-hidden">
+        <!-- The collection list will be dynamically injected here by JavaScript -->
+    </div>
+</div>

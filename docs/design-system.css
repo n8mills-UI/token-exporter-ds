@@ -110,6 +110,8 @@ body {
  /* RGB values for opacity mixing */
  --brand-primary-lime-rgb: 210, 255, 55;
  --brand-secondary-yellow-rgb: 238, 255, 0;
+ --gray-7-rgb: 58, 58, 58;
+ --gray-8-rgb: 42, 42, 42;
 
  /* Alpha Variants */
  --brand-primary-lime-alpha-10: rgb(var(--brand-primary-lime-rgb), 0.1);
@@ -163,7 +165,7 @@ body {
  --color-background-primary: var(--gray-9);
  --color-background-secondary: var(--gray-8);
  --color-background-tertiary: var(--gray-7);
- --color-background-disabled: #333;
+ --color-background-disabled: var(--gray-7);
  --color-border-default: var(--gray-6);
  --color-border-interactive-focus: var(--brand-primary-lime);
  --color-backdrop-rgb: 0, 0, 0; /* Black for dark theme */
@@ -223,7 +225,12 @@ body {
  --opacity-80: 0.8;
  --opacity-90: 0.9;
  --opacity-100: 1;
- 
+
+ /* Glass morphism opacities */
+--opacity-glass-10: 0.1;
+--opacity-glass-60: 0.6;
+--opacity-overlay-80: 0.8;
+
  /* Semantic opacity */
  --opacity-disabled: var(--opacity-60);
  --opacity-hover: var(--opacity-80);
@@ -238,6 +245,7 @@ body {
  --component-height-md: var(--size-8); /* 32px */
  --component-height-lg: var(--size-9); /* 36px */
  --component-height-xl: var(--size-10); /* 40px */
+ 
  
  /* =========================
  ICON SIZES (NEW!)
@@ -464,8 +472,6 @@ body {
  /* Font Family Utilities */
  .font-sans { font-family: var(--font-sans); }
  .font-mono { font-family: var(--font-mono); }
-
- /* END CORRECTION */
 
  /* Flexbox & Grid Utilities */
  .flex { display: flex; }
@@ -1566,7 +1572,7 @@ sl-icon-button::part(base):hover {
 
 .profile-card .code-container {
  width: 100%;
- background: rgba(0, 0, 0, 0.5);
+ background: rgba(0, 0, 0, var(--opacity-50));
  border: var(--border-size-1) solid var(--gray-7);
  border-radius: var(--radius-3);
  padding: var(--size-5);
@@ -2295,7 +2301,7 @@ sl-icon-button::part(base):hover {
  padding: var(--size-4);
  
  /* Glassmorphism styles */
- background: rgba(42, 42, 42, 0.1); /* Based on --gray-8 with 60% opacity */
+ background: rgba(var(--gray-8-rgb), var(--opacity-glass-10)); /* Based on --gray-8 with 60% opacity */
  backdrop-filter: var(--blur-lg);
  -webkit-backdrop-filter: var(--blur-lg); /* Safari support */
  border-radius: var(--radius-3);
@@ -2998,11 +3004,10 @@ select option {
 
 .content-wrapper { 
  padding: var(--size-3); 
- flex-grow: 1; 
- overflow-y: auto; 
+ overflow-y: hidden;
  animation: var(--animation-fade-in);
- display: flex; /* ADDED: This is the critical fix */
- flex-direction: column; /* ADDED: Stacks children vertically */
+ display: flex;
+ flex-direction: column;
 }
 
 /* Scrollbar styling */
@@ -3049,7 +3054,26 @@ select option {
  contain: layout;
 }
 
-/* Token Summary Card - Height Fix */
+/* Card Component Modifier for tighter spacing */
+.card.is-compact {
+    padding: var(--size-4);
+}
+
+.card.is-compact .section-title {
+    margin-bottom: var(--size-2);
+}
+
+.card.is-compact .subtitle {
+    margin-bottom: var(--size-3);
+}
+
+#main-ui {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3); /* Uses your design token for consistent spacing */
+}
+
+/* Token Summary Card */
 .token-summary {
     display: flex;
     flex-direction: column;
@@ -3186,7 +3210,8 @@ select option {
 
 .format-select {
  width: 100%; 
- padding: var(--size-3) var(--size-8) var(--size-3) var(--size-4);
+ padding: var(--size-2) var(--size-8) var(--size-2) var(--size-3); /* Tighter padding */
+ height: var(--component-height-md); /* Token-based height */
  background: var(--color-background-tertiary); 
  border: var(--border-size-1) solid var(--color-border-default); 
  border-radius: var(--radius-2);
@@ -3500,7 +3525,7 @@ select option {
  text-align: center;
  position: relative;
  z-index: var(--layer-card); /* FIX: This ensures the panel is on top */
- background: rgba(42, 42, 42, 0.6);
+ background: rgba(var(--gray-8-rgb), var(--opacity-glass-60));
  backdrop-filter: var(--blur-xl);
  -webkit-backdrop-filter: var(--blur-xl);
  
@@ -3546,7 +3571,7 @@ select option {
 .te-progress-track {
  width: 200px;
  height: 12px;
- background: rgba(58, 58, 58, 0.8);
+ background: rgba(var(--gray-7-rgb), var(--opacity-overlay-80));
  border-radius: var(--radius-round);
  overflow: hidden;
  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -3785,8 +3810,7 @@ select option {
  align-items: flex-end; /* Bottom align everything */
  justify-content: space-between;
  gap: var(--size-8);
- margin-left: var(--size-6); /* Reset to match mobile padding */
- padding-right: var(--size-6); /* Match content padding */
+ padding: 0 var(--size-6); /* Use padding for consistent spacing */
 }
 
 /* Enhanced brand column */
@@ -3861,125 +3885,6 @@ select option {
  font-size: var(--font-size-1);
  font-weight: var(--font-weight-6);
  margin-bottom: var(--size-2);
-}
-
-/* About Modal */
-.about-modal {
- position: fixed;
- inset: 0;
- background-color: rgb(0, 0, 0, 0.85);
- backdrop-filter: blur(10px);
- backdrop-filter: blur(10px);
- z-index: var(--layer-notification);
- display: flex;
- align-items: center;
- justify-content: center;
- padding: var(--size-4);
- opacity: 0;
- visibility: hidden;
- transition: opacity var(--animation-duration-3) var(--ease-3),
- visibility var(--animation-duration-3) var(--ease-3);
-}
-
-.about-modal.show {
- opacity: 1;
- visibility: visible;
-}
-
-/* Modifier for displaying the modal within an example container */
-.about-modal.is-example {
-    position: absolute;
-    z-index: var(--layer-base);
-}
-
-.about-content {
- background: var(--color-background-secondary);
- border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-4);
- padding: var(--size-4);
- max-width: 280px;
- width: 90%;
- text-align: center;
- position: relative;
- display: flex;
- flex-direction: column;
- gap: var(--size-4);
-}
-
-.about-content h2 {
- font-size: var(--font-size-3);
-}
-
-.about-close {
- position: absolute;
- top: var(--size-2);
- right: var(--size-2);
- background: transparent;
- border: none;
- color: var(--color-text-secondary);
- font-size: var(--font-size-2);
- cursor: pointer;
- padding: var(--size-2);
- border-radius: var(--radius-1);
- transition: background var(--animation-duration-2) var(--ease-3);
- display: flex;
- align-items: center;
- justify-content: center;
- width: var(--size-8);
- height: var(--size-8);
-}
-
-.about-close:hover {
- background: var(--color-background-tertiary);
-}
-
-/* @docs-only-start */
-.about-avatar {
- width: var(--size-16);
- height: var(--size-16);
- border-radius: var(--radius-round);
- margin: 0 auto;
- background-size: cover;
- background-position: center;
- border: var(--stroke-thick) solid var(--brand-primary-lime);
- background-color: var(--gray-7);
- background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
-}
-
-/* @docs-only-end */
-
-/* @plugin-only-start */
-.about-avatar {
- width: var(--size-12);
- height: var(--size-12);
- border-radius: var(--radius-round);
- margin: 0 auto;
- background-size: cover;
- background-position: center;
- border: var(--stroke-thick) solid var(--brand-primary-lime); 
- background-color: var(--gray-7);
- background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
-}
-
-/* @plugin-only-end */
-
-.about-header {
- display: flex;
- flex-direction: column;
- gap: var(--size-1);
- padding-bottom: var(--size-3);
- margin-bottom: var(--size-3);
- border-bottom: var(--border-size-1) solid var(--color-border-default);
-}
-
-.about-tagline {
- color: var(--color-text-muted);
- font-size: var(--font-size-00);
-}
-
-.about-tagline .heart {
- color: var(--category-color-pink);
- animation: heartbeat 1.5s ease-in-out infinite;
 }
 
 /* Advanced toggle */
@@ -4660,6 +4565,7 @@ body {
  transition: all var(--animation-duration-2) var(--ease-3);
  display: flex;
  flex-direction: column;
+ min-height: 140px; /* TODO: Replace with --component-height-xl */
 }
 
 .token-item:hover {
@@ -4742,6 +4648,7 @@ body {
  border-radius: var(--radius-1);
  font-size: var(--font-size-00);
  font-family: var(--font-mono);
+ display: none; 
 }
 
 .text-preview {
@@ -4999,63 +4906,6 @@ body {
  font-size: var(--font-size-0);
 }
 
-.about-container {
- max-width: 1200px;
- margin: 0 auto;
-}
-
-.about-content-grid {
- display: grid;
- grid-template-columns: auto 1fr;
- gap: var(--size-8);
- align-items: center;
-}
-
-.about-avatar {
- width: calc(var(--size-16) * 1.5);
- height: calc(var(--size-16) * 1.5);
- border-radius: var(--radius-round);
- background-size: cover;
- background-position: center;
- border: var(--border-size-3) solid var(--brand-primary-lime);
- background-color: var(--gray-7);
-}
-
-.about-info-column h3 {
- margin-bottom: var(--size-2);
-}
-
-.about-title {
- color: var(--color-text-secondary);
- margin-bottom: var(--size-3);
-}
-
-.about-description {
- color: var(--color-text-secondary);
- max-width: 60ch;
- line-height: var(--font-lineheight-3);
- margin-bottom: var(--size-4);
-}
-
-.about-links {
- display: flex;
- gap: var(--size-4);
-}
-
-.about-link {
- color: var(--color-text-secondary);
- transition: all var(--animation-duration-2) var(--ease-3);
-}
-
-.about-link .lucide {
- width: 24px;
- height: 24px;
-}
-
-.about-link:hover {
- color: var(--brand-primary-lime);
- transform: translateY(-2px);
-}
 
 .heart {
  color: var(--category-color-pink);
@@ -5098,6 +4948,114 @@ body {
  font-size: var(--font-size-1);
  font-weight: var(--font-weight-6);
  margin-bottom: var(--size-2);
+}
+
+/* ==========================================================================
+   COMPONENT: ABOUT MODAL (V2 - REFACTORED)
+   ========================================================================== */
+
+.about-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(var(--color-backdrop-rgb), var(--opacity-backdrop));
+    backdrop-filter: var(--blur-lg);
+    z-index: var(--layer-notification);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-medium), visibility var(--transition-medium);
+}
+
+.about-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.about-modal.is-example {
+    position: absolute;
+    z-index: var(--layer-base);
+}
+
+.about-content {
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-3); /* CORRECTED: Standard radius */
+    padding: var(--size-6); /* Increased padding */
+    max-width: 280px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3); /* Consistent gap */
+}
+
+.about-close {
+    position: absolute;
+    top: var(--size-3);
+    right: var(--size-3);
+}
+
+.about-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+    padding-bottom: var(--size-3);
+    margin-bottom: var(--size-2);
+    border-bottom: 1px solid var(--color-border-default);
+}
+
+/* Wrapper for the hover-swap effect */
+.about-title-wrapper {
+    position: relative;
+    height: 24px; /* Fixed height to prevent layout shift */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-title-static,
+.about-title-hover {
+    position: absolute;
+    margin: 0;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.about-title-hover {
+    opacity: 0;
+    transform: translateY(5px);
+    color: var(--brand-primary-lime);
+}
+
+.about-header:hover .about-title-static {
+    opacity: 0;
+    transform: translateY(-5px);
+}
+
+.about-header:hover .about-title-hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.wizard-emoji {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.about-description {
+    color: var(--color-text-secondary);
+    line-height: var(--font-lineheight-3);
+    margin: 0;
+}
+
+.about-links {
+    display: flex;
+    justify-content: center; /* FIX: Centers icons */
+    gap: var(--size-3);
+    margin-top: var(--size-2);
 }
 
 /* New grid layout for the export flow demo */
@@ -5238,9 +5196,16 @@ body {
 
     .footer-content {
         flex-direction: column;
+        align-items: center;
         gap: var(--size-4);
         text-align: center;
     }
+
+        /* Remove copy buttons on mobile - TEMPORARY FIX */
+    .token-copy {
+        display: none;
+    }
+
 }
 
     /* --- Responsive Table ("Card" Layout on Mobile) --- */

@@ -1,19 +1,31 @@
-<!-- src/components/_about-modal.html -->
+<!--
+Component: About Modal (v2 - Refactored)
+Purpose: Displays creator info and social links. Rebuilt with standard components.
+-->
 <div class="about-modal" id="about-modal">
     <div class="about-content">
-        <button class="about-close" aria-label="Close about modal"> <i data-lucide="x"></i> </button>
-        <div class="about-avatar"></div>
+        <button class="btn btn-icon btn-sm about-close" aria-label="Close about modal">
+            <i data-lucide="x"></i>
+        </button>
+        
         <div class="about-header">
-            <h2 class="text-heading-md">NATE MILLS</h2>
-            <div class="text-body-lg about-title">Senior UI Designer</div>
+            <h2 class="text-heading-md">Nate Mills</h2>
+            <div class="about-title-wrapper">
+                <p class="text-body-lg about-title-static">Senior UI Designer & System Architect</p>
+                <p class="text-body-lg about-title-hover">Senior UI Wizard <span class="wizard-emoji">🧙✨</span></p>
+            </div>
         </div>
-        <p class="text-body-md about-description"> Building accessible design systems that scale, with 20 years of industry experience. </p>
+
+        <p class="text-body-md about-description">
+            Building accessible design systems that scale, with 20 years of industry experience.
+        </p>
+
         <div class="about-links">
-            <a href="#" class="about-link" data-url="https://natemills.me" title="Portfolio"><i data-lucide="briefcase"></i></a>
-            <a href="#" class="about-link" data-url="https://www.linkedin.com/in/millsdesign/" title="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="#" class="about-link" data-url="https://www.figma.com/@mills" title="Figma"><i data-lucide="figma"></i></a>
-            <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email"><i data-lucide="mail"></i></a>
+            <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-sm" title="GitHub"><i data-lucide="github"></i></a>
+            <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-sm" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://www.figma.com/@mills" target="_blank" class="btn btn-icon btn-sm" title="Figma"><i data-lucide="figma"></i></a>
+            <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Portfolio"><i data-lucide="briefcase"></i></a>
+            <a href="mailto:nate@natemills.me" class="btn btn-icon btn-sm" title="Email"><i data-lucide="mail"></i></a>
         </div>
-        <div class="text-label about-tagline"> MADE WITH <span class="heart">❤️</span> FOR THE DESIGN COMMUNITY </div>
     </div>
 </div>

@@ -1,3 +1,5 @@
+<!-- This script will be fetched and inlined by the build process -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
 <body>
     <main>
         <!-- This is the main content wrapper -->
@@ -14,15 +16,10 @@
                     <div class="card token-summary" id="token-summary-card">
                         <!-- Token Summary will be injected here by the script -->
                     </div>
-                    <div class="card export-section" id="export-card">
-                        <!-- Export options will be injected here by the script -->
-                    </div>
-                    <div class="card collections-section" id="collections-card" style="display: none;">
-                        <!-- Collection list will be injected here by the script -->
-                    </div>
-                    <div class="advanced-toggle" id="advanced-toggle-container">
-                        <!-- Mode toggle will be injected here by the script -->
-                    </div>
+                    
+                    <!-- The new, stateful export card -->
+                    <!-- @include src/components/_forms-example.html -->
+
                 </div>
             </div>
 
@@ -50,9 +47,11 @@
             emptyState: document.getElementById('empty-state'),
             mainUI: document.getElementById('main-ui'),
             tokenSummaryCard: document.getElementById('token-summary-card'),
-            exportCard: document.getElementById('export-card'),
-            collectionsCard: document.getElementById('collections-card'),
-            advancedToggleContainer: document.getElementById('advanced-toggle-container'),
+            // New stateful elements
+            exportCardContainer: document.getElementById('export-card-container'),
+            quickExportView: document.getElementById('quick-export-view'),
+            advancedFilterView: document.getElementById('advanced-filter-view'),
+            // Modals and overlays
             aboutModal: document.getElementById('about-modal'),
             progressOverlay: document.getElementById('progress-overlay'),
             aboutLink: document.getElementById('about-link'),
@@ -87,9 +86,7 @@
         function updateUI() {
             DOMElements.mainUI.classList.toggle('advanced-mode', appState.mode === 'advanced');
             updateTokenSummary();
-            updateExportCard();
-            updateCollectionsCard();
-            updateToggleContainer();
+            updateExportAndCollections(); // Use the new unified function
             renderIcons();
             attachDynamicEventListeners();
         }
@@ -122,79 +119,57 @@ function updateTokenSummary() {
         <div class="token-breakdown">${tokenTypesHTML}</div>`;
 }
 
-        function updateExportCard() {
-            const selectedTokenCount = appState.mode === 'simple' 
-                ? Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0)
-                : appState.collections.reduce((count, col) => {
+                function updateExportAndCollections() {
+            const isAdvanced = appState.mode === 'advanced';
+            
+            // Toggle visibility of the two views
+            DOMElements.quickExportView.classList.toggle('state-hidden', isAdvanced);
+            DOMElements.advancedFilterView.classList.toggle('state-hidden', !isAdvanced);
+
+            if (isAdvanced) {
+                // Build and inject the advanced view content
+                const collectionItemsHTML = appState.collections.map(c => {
+                    const isSelected = appState.selectedCollections.has(c.id);
+                    const pillsHTML = Object.entries(c.counts).map(([type, count]) => {
+                        if (count === 0) return '';
+                        const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
+                        const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
+                        return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i class="icon" data-lucide="${iconMap[type]}"></i> ${count}</span>`;
+                    }).join('');
+
+                    return `
+                        <div class="collection-item ${isSelected ? 'selected' : ''}" data-collection-id="${c.id}">
+                            <div class="collection-checkbox"></div>
+                            <div class="collection-info">
+                                <div class="text-body-lg collection-name">${c.name}</div>
+                                <div class="collection-badge-group">${pillsHTML}</div>
+                            </div>
+                            <div class="text-caption collection-count">${c.totalVariables} tokens</div>
+                        </div>`;
+                }).join('');
+
+                DOMElements.advancedFilterView.innerHTML = `
+                    <h3 class="text-label section-title"><i data-lucide="sliders-horizontal"></i> Advanced Filtering</h3>
+                    <div class="collection-list" style="margin-top: var(--size-3);">${collectionItemsHTML}</div>
+                    <button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);">
+                        <i data-lucide="arrow-left"></i>
+                        <span>Back to Quick Export</span>
+                    </button>
+                `;
+            }
+            
+            // Always update the export button in the quick export view
+            const selectedTokenCount = isAdvanced 
+                ? appState.collections.reduce((count, col) => {
                     if (!appState.selectedCollections.has(col.id)) return count;
                     return count + Object.entries(col.counts).reduce((subCount, [type, num]) => appState.selectedTokenTypes.has(type) ? subCount + num : subCount, 0);
-                }, 0);
+                }, 0)
+                : Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
 
-            const optionsHTML = ['all', 'css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'].map(f =>
-                `<option value="${f}" ${appState.selectedFormat === f ? 'selected' : ''}>${f === 'all' ? 'All Formats' : {css: 'CSS Variables', swift: 'Swift (iOS)', android: 'Android XML', flutter: 'Flutter', w3c: 'JSON (W3C)', tailwind: 'Tailwind Config'}[f]}</option>`
-            ).join('');
-
-            DOMElements.exportCard.innerHTML = `
-                <h3 class="text-label section-title"><i data-lucide="rocket"></i> ${appState.mode === 'simple' ? 'Quick Export' : 'Export Options'}</h3>
-                <p class="text-body-md subtitle">Export your tokens in your preferred format</p>
-                <div class="format-select-wrapper">
-                    <select class="format-select" id="format-select">${optionsHTML}</select>
-                </div>
-                <button class="btn primary" id="export-btn" ${selectedTokenCount === 0 ? 'disabled' : ''}>
-                    <i data-lucide="package-check"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}
-                </button>`;
-        }
-
-                // This will hold the HTML content of our new partial.
-        let collectionItemTemplate = '';
-
-        function updateCollectionsCard() {
-            if (appState.mode !== 'advanced') {
-                DOMElements.collectionsCard.style.display = 'none';
-                return;
-            }
-            DOMElements.collectionsCard.style.display = 'block';
-
-            const filteredCollections = appState.collections.filter(c => c.name.toLowerCase().includes(appState.searchTerm || ''));
-            const collectionItemsHTML = filteredCollections.map(c => {
-                const isSelected = appState.selectedCollections.has(c.id);
-                
-                const pillsHTML = Object.entries(c.counts).map(([type, count]) => {
-    if (count === 0) return '';
-    const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
-    const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
-    return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i class="icon" data-lucide="${iconMap[type]}"></i> ${count}</span>`;
-}).join('');
-
-                // Manually build the HTML here, ensuring it matches the static guide example.
-                return `
-                    <div class="collection-item ${isSelected ? 'selected' : ''}" data-collection-id="${c.id}">
-                        <div class="collection-checkbox"></div>
-                        <div class="collection-info">
-                            <div class="text-body-lg collection-name">${c.name}</div>
-                            <div class="collection-badge-group">${pillsHTML}</div>
-                        </div>
-                        <div class="text-caption collection-count">${c.totalVariables} tokens</div>
-                    </div>`;
-            }).join('');
-
-            const searchInputHTML = appState.collections.length > 5 ? `
-                <div class="search-wrapper">
-                    <i data-lucide="search" class="lucide-search"></i>
-                    <input type="text" class="search-input" placeholder="Search collections..." id="collection-search" value="${appState.searchTerm || ''}">
-                </div>` : '';
-
-            DOMElements.collectionsCard.innerHTML = `
-                <h3 class="text-label section-title"><i data-lucide="layers"></i> Select Collections</h3>
-                ${searchInputHTML}
-                <div class="collection-list">${collectionItemsHTML}</div>`;
-        }
-
-        function updateToggleContainer() {
-            if (appState.mode === 'simple') {
-                DOMElements.advancedToggleContainer.innerHTML = `<button class="btn tertiary" id="toggle-advanced">Customize Your Export <i data-lucide="arrow-right"></i></button>`;
-            } else {
-                DOMElements.advancedToggleContainer.innerHTML = `<button class="btn secondary" id="toggle-simple"><i data-lucide="arrow-left"></i> Back to Simple Export</button>`;
+            const exportBtn = document.getElementById('export-btn');
+            if (exportBtn) {
+                exportBtn.disabled = selectedTokenCount === 0;
+                exportBtn.innerHTML = `<i data-lucide="rocket"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}`;
             }
         }
 
@@ -229,59 +204,48 @@ function updateTokenSummary() {
             }
         }
 
-        function attachDynamicEventListeners() {
+               function attachDynamicEventListeners() {
             const exportBtn = document.getElementById('export-btn');
-            if (exportBtn) {
-                exportBtn.addEventListener('click', handleExport);
-            }
-            const toggleAdvanced = document.getElementById('toggle-advanced');
-            if (toggleAdvanced) {
-                toggleAdvanced.addEventListener('click', e => {
-                    e.preventDefault();
-                    appState.mode = 'advanced';
-                    updateUI();
-                });
-            }
-            const toggleSimple = document.getElementById('toggle-simple');
-            if (toggleSimple) {
-                toggleSimple.addEventListener('click', () => {
-                    appState.mode = 'simple';
-                    updateUI();
-                });
-            }
+            if (exportBtn) exportBtn.onclick = handleExport;
+
+            const toggleAdvanced = document.getElementById('toggle-advanced-mode');
+            if (toggleAdvanced) toggleAdvanced.onclick = () => {
+                appState.mode = 'advanced';
+                updateUI();
+            };
+
+            const toggleSimple = document.getElementById('toggle-simple-mode');
+            if (toggleSimple) toggleSimple.onclick = () => {
+                appState.mode = 'simple';
+                updateUI();
+            };
+
             document.querySelectorAll('.collection-item').forEach(item => {
-                item.addEventListener('click', () => {
+                item.onclick = () => {
                     const id = item.dataset.collectionId;
                     if (appState.mode === 'advanced') {
                         appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
                         updateUI();
                     }
-                });
+                };
             });
+
             if (appState.mode === 'advanced') {
                 document.querySelectorAll('.token-type-stat:not(.disabled)').forEach(stat => {
-                    stat.addEventListener('click', () => {
+                    stat.onclick = () => {
                         const type = stat.dataset.type;
                         appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
                         updateUI();
-                    });
+                    };
                 });
             }
-            const formatSelect = document.getElementById('format-select');
-            if (formatSelect) {
-                formatSelect.addEventListener('change', e => {
-                    appState.selectedFormat = e.target.value;
-                });
-            }
-            const collectionSearch = document.getElementById('collection-search');
-            if (collectionSearch) {
-                collectionSearch.addEventListener('input', e => {
-                    appState.searchTerm = e.target.value;
-                    debouncedUpdate();
-                });
-            }
-        }
 
+            const formatSelect = document.getElementById('format-select');
+            if (formatSelect) formatSelect.onchange = e => {
+                appState.selectedFormat = e.target.value;
+            };
+        }
+        
         // --- EXPORT & PROGRESS ---
         function handleExport() {
             const collectionIds = appState.mode === 'simple' ? appState.collections.map(c => c.id) : Array.from(appState.selectedCollections);
@@ -432,26 +396,18 @@ function updateTokenSummary() {
 
         // --- INITIALIZATION ---
         function initialize() {
-            // --- START: NEW INITIAL STATE LOGIC ---
-            // Explicitly set the correct initial UI state before doing anything else.
+            // Explicitly set the correct initial UI state.
             if (DOMElements.skeletonLoader) DOMElements.skeletonLoader.style.display = 'block';
             if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
             if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
-            // --- END: NEW INITIAL STATE LOGIC ---
 
-            // Render icons for the initially visible skeleton loader
+            // Render icons for the skeleton loader.
             renderIcons(); 
 
-            // Fetch the component template first
-            fetch('https://n8mills-ui.github.io/token-exporter-ds/src/components/_collection-item.html')
-                .then(response => response.text())
-                .then(html => {
-                    collectionItemTemplate = html;
-                    // Now that the template is loaded, get the collections
-                    parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
-                })
-                .catch(error => console.error('Failed to fetch collection item template:', error));
+            // Immediately ask the main plugin for the variable collections.
+            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
 
+            // Attach all static event listeners.
             attachEventListeners();
         }
 
@@ -463,9 +419,13 @@ function updateTokenSummary() {
                     DOMElements.skeletonLoader.style.display = 'none';
                     appState.collections = msg.collections || [];
                     if (appState.collections.length === 0) {
-                        if (DOMElements.emptyStateWrapper) DOMElements.emptyStateWrapper.classList.remove('state-hidden');
+                        // If no collections, show the empty state and hide the main UI
+                        DOMElements.emptyState.style.display = 'flex';
+                        DOMElements.mainUI.style.display = 'none';
                     } else {
-                        if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'block';
+                        // If collections exist, show the main UI and hide the empty state
+                        DOMElements.emptyState.style.display = 'none';
+                        DOMElements.mainUI.style.display = 'block';
                         appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
                         appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
                         appState.selectedCollections = new Set(appState.collections.map(c => c.id));
@@ -485,6 +445,20 @@ function updateTokenSummary() {
                     break;
             }
         };
+
+        // --- Responsive Height Observer ---
+        const resizeObserver = new ResizeObserver(entries => {
+            const entry = entries[0];
+            // Add a 16px buffer to the height to prevent scrollbars from flashing
+            const height = entry.contentRect.height + 16; 
+            parent.postMessage({ pluginMessage: { type: 'resize', width: 340, height: Math.round(height) } }, '*');
+        });
+
+        // Observe the main content wrapper for size changes
+        const contentWrapper = document.getElementById('content-wrapper');
+        if (contentWrapper) {
+            resizeObserver.observe(contentWrapper);
+        }
 
         document.addEventListener('DOMContentLoaded', initialize);
     </script>

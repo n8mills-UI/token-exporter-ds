@@ -927,9 +927,9 @@
          END: REWRITTEN BUTTON COMPONENT SECTION
          ========================================================================== -->
 
-    <!-- ==========================================================================
-         BADGES SECTION
-         ========================================================================== -->
+<!-- ==========================================================================
+     BADGES SECTION
+     ========================================================================== -->
     
     <!-- Badges Component Section -->
     <div id="badges" class="component-section">
@@ -1023,21 +1023,67 @@
         </div>
     </div>
 
-        <div id="forms" class="component-section">
-            <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="file-text"></i> Forms</h2><p class="component-description">Form elements including the format selector dropdown with custom styling.</p></div>
-            <div class="component-body">
+        <!-- Forms Component Section -->
+    <div id="forms" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="file-text"></i> Forms</h2>
+            <p class="component-description">Styled form elements for user input, including select dropdowns and search fields.</p>
+        </div>
+        <div class="component-body">
+            <h3 class="example-subheader">Select Dropdown</h3>
+            <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
                     <div class="example-label">Live Example</div>
                     <div class="example-container">
-                        <div class="card export-section"><h3 class="text-label section-title"><i data-lucide="send"></i> Quick Export</h3><p class="text-body-md subtitle">Export all your tokens in your preferred format</p><div class="format-select-wrapper"><select class="format-select"><option value="all">All Formats</option><option value="css" selected>CSS Variables</option><option value="swift">Swift (iOS)</option></select></div><button class="btn primary"><i data-lucide="rocket"></i> Package Tokens</button></div>
+<!--
+Component: Export Card (Stateful)
+Purpose: Handles both Quick Export and Advanced Filtering states.
+Toggles the global appState.mode and communicates with the Token Summary card.
+-->
+<div class="card export-section is-compact" id="export-card-container">
+    <!-- STATE 1: QUICK EXPORT VIEW (Default) -->
+    <div id="quick-export-view">
+        <h3 class="text-label section-title"><i data-lucide="send"></i> Quick Export</h3>
+        <div class="format-select-wrapper" style="margin-top: var(--size-3);">
+            <select class="format-select" id="format-select">
+                <option value="css" selected>CSS Variables</option>
+                <option value="swift">Swift (iOS)</option>
+                <option value="android">Android XML</option>
+                <option value="flutter">Flutter</option>
+                <option value="w3c">JSON (W3C)</option>
+                <option value="tailwind">Tailwind Config</option>
+            </select>
+        </div>
+        <button class="btn primary btn-sm" id="export-btn">
+            <i data-lucide="rocket"></i>
+            <span>Package Tokens</span>
+        </button>
+        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);">
+            <i data-lucide="sliders-horizontal"></i>
+            <span>Filters</span>
+        </button>
+    </div>
+
+    <!-- STATE 2: ADVANCED FILTERING VIEW (Hidden by default) -->
+    <div id="advanced-filter-view" class="state-hidden">
+        <!-- The collection list will be dynamically injected here by JavaScript -->
+    </div>
+</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-                <div id="collection-items" class="component-section">
-            <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="list"></i> Collection Items</h2><p class="component-description">Individual collection list items with custom checkboxes, info, and token type pills.</p></div>
-            <div class="component-body">
+                <!-- Collection Items Component Section -->
+    <div id="collection-items" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="list"></i> Collection Items</h2>
+            <p class="component-description">Used in the "Advanced Filtering" mode, these items display token collections with their respective token counts and allow for selection.</p>
+        </div>
+        <div class="component-body">
+            <h3 class="example-subheader">States & Variants</h3>
+            <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
                     <div class="example-label">Live Example</div>
                     <div class="example-container">
@@ -1088,36 +1134,63 @@
                 </div>
             </div>
         </div>
+    </div>
         
-        <div id="modals" class="component-section">
-            <div class="component-header"><h2 class="text-heading-lg component-title"><i data-lucide="app-window"></i> Modals</h2><p class="component-description">The modal component used for the "About" section in the plugin, featuring a blurred backdrop.</p></div>
-            <div class="component-body">
+        <!-- Modals Component Section -->
+    <div id="modals" class="component-section">
+        <div class="component-header">
+            <h2 class="text-heading-lg component-title"><i data-lucide="app-window"></i> Modals</h2>
+            <p class="component-description">Used for focused tasks or information, such as the "About" screen in the plugin. Features a blurred backdrop effect.</p>
+        </div>
+        <div class="component-body">
+            <h3 class="example-subheader">About Modal</h3>
+            <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
                     <div class="example-label">Live Example</div>
-                    <div class="example-container">
-<!-- src/components/_about-modal.html -->
+                    <div class="example-container example-container-tall">
+                        <!-- This button will trigger the modal -->
+                        <button class="btn btn-secondary btn-md" id="show-modal-btn">
+                            <i data-lucide="eye"></i>
+                            <span>Show About Modal</span>
+                        </button>
+
+                        <!-- The modal partial is included here -->
+<!--
+Component: About Modal (v2 - Refactored)
+Purpose: Displays creator info and social links. Rebuilt with standard components.
+-->
 <div class="about-modal" id="about-modal">
     <div class="about-content">
-        <button class="about-close" aria-label="Close about modal"> <i data-lucide="x"></i> </button>
-        <div class="about-avatar"></div>
+        <button class="btn btn-icon btn-sm about-close" aria-label="Close about modal">
+            <i data-lucide="x"></i>
+        </button>
+        
         <div class="about-header">
-            <h2 class="text-heading-md">NATE MILLS</h2>
-            <div class="text-body-lg about-title">Senior UI Designer</div>
+            <h2 class="text-heading-md">Nate Mills</h2>
+            <div class="about-title-wrapper">
+                <p class="text-body-lg about-title-static">Senior UI Designer & System Architect</p>
+                <p class="text-body-lg about-title-hover">Senior UI Wizard <span class="wizard-emoji">🧙✨</span></p>
+            </div>
         </div>
-        <p class="text-body-md about-description"> Building accessible design systems that scale, with 20 years of industry experience. </p>
+
+        <p class="text-body-md about-description">
+            Building accessible design systems that scale, with 20 years of industry experience.
+        </p>
+
         <div class="about-links">
-            <a href="#" class="about-link" data-url="https://natemills.me" title="Portfolio"><i data-lucide="briefcase"></i></a>
-            <a href="#" class="about-link" data-url="https://www.linkedin.com/in/millsdesign/" title="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="#" class="about-link" data-url="https://www.figma.com/@mills" title="Figma"><i data-lucide="figma"></i></a>
-            <a href="#" class="about-link" data-url="mailto:nate@natemills.me" title="Email"><i data-lucide="mail"></i></a>
+            <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-sm" title="GitHub"><i data-lucide="github"></i></a>
+            <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-sm" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://www.figma.com/@mills" target="_blank" class="btn btn-icon btn-sm" title="Figma"><i data-lucide="figma"></i></a>
+            <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Portfolio"><i data-lucide="briefcase"></i></a>
+            <a href="mailto:nate@natemills.me" class="btn btn-icon btn-sm" title="Email"><i data-lucide="mail"></i></a>
         </div>
-        <div class="text-label about-tagline"> MADE WITH <span class="heart">❤️</span> FOR THE DESIGN COMMUNITY </div>
     </div>
 </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </section>
 
 
@@ -1191,7 +1264,8 @@
             animateCounters();
             initFAQAccordion();
             initTechHover();
-            initializeTypingObserver(); // This now sets up the initial animation trigger
+            initializeTypingObserver();
+            initGuideModal();
 
             if (window.lucide) {
                 lucide.createIcons({
@@ -1376,8 +1450,6 @@
             console.log('Export demo triggered');
         }
         
-        <!-- ✅ REPLACE IT WITH THIS SINGLE, COMPLETE BLOCK -->
-
         function demoGuideExport() {
             const loader = document.getElementById('guideProgressLoader');
             if (!loader || loader.classList.contains('is-animating')) return;
@@ -1480,13 +1552,6 @@
             setTimeout(resetGuideDemo, 7300);
         }
 
-
-        // --- REFACTORED & FIXED TYPING ANIMATION ---
-
-        /**
-     * The main function to run the typing animation. It can be called
-     * directly to restart the animation (e.g., by the [RE-RUN] button).
-     */
     function startTyping() {
         const codeBlock = document.getElementById('codeBlock');
         if (!codeBlock) return;
@@ -1540,10 +1605,6 @@
         type(); // Kick off the animation
     }
 
-        /**
-         * Sets up an IntersectionObserver to trigger the typing animation
-         * automatically when the profile card scrolls into view.
-         */
         function initializeTypingObserver() {
             const profileCard = document.querySelector('.profile-card');
             if (!profileCard) return;
@@ -1640,6 +1701,36 @@
                 });
             });
         }
+    
+        function initGuideModal() {
+            const showButton = document.getElementById('show-modal-btn');
+            const modal = document.getElementById('about-modal');
+
+            if (!showButton || !modal) return;
+
+            modal.classList.add('is-example');
+
+            const showModal = () => {
+                modal.classList.add('show');
+                showButton.style.display = 'none';
+            };
+            const hideModal = () => {
+                modal.classList.remove('show');
+                showButton.style.display = 'inline-flex';
+            };
+
+            // Show the modal by default
+            showModal();
+
+            showButton.addEventListener('click', showModal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.closest('.about-close')) {
+                    hideModal();
+                }
+            });
+        }
+
     </script>
 
 
