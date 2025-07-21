@@ -1903,17 +1903,24 @@ sl-icon-button::part(base):hover {
 }
 
 /* ==========================================================================
- GUIDE-SPECIFIC & PORTFOLIO STYLES (v5)
+ GUIDE-SPECIFIC & PORTFOLIO STYLES
  ========================================================================== */
 
-
-.content-section {
- margin-bottom: var(--size-10);
- scroll-margin-top: var(--size-6);
+/* Overview section handles its own padding via .portfolio-content */
+#overview {
+ padding: 0 !important;
 }
 
-#overview {
- padding: 0; /* Ensures hero has no padding */
+/* Remove padding from sections that contain their own wrapper */
+#overview + .content-section {
+ padding: 0 var(--size-6);
+}
+
+/* Ensure child elements don't double-pad */
+.content-section .token-category,
+.content-section .component-section {
+ margin-left: 0;
+ margin-right: 0;
 }
 
 /* Creates a large gap above the Foundation section for clear separation */
@@ -5323,14 +5330,14 @@ body {
     flex-direction: column;
     align-items: center;
     gap: var(--size-4); /* Even spacing between elements */
-}
+    }
 
-/* Ensure social icons are centered */
-.social-links {
-    display: flex;
-    gap: var(--size-4);
-    margin: var(--size-4) 0; /* Equal margin top/bottom */
-}
+    /* Ensure social icons are centered */
+    .social-links {
+        display: flex;
+        gap: var(--size-4);
+        margin: var(--size-4) 0; /* Equal margin top/bottom */
+    }
     
     /* CTA button grouping */
     .figma-cta {
