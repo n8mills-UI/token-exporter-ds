@@ -1219,10 +1219,9 @@ sl-icon-button::part(base):hover {
 
 /* New wrapper for consistent padding and spacing */
 .portfolio-content {
- max-width: var(--content-xl); /* 1280px, from your tokens */
+ max-width: var(--content-xl); 
  margin-left: auto;
  margin-right: auto;
- padding: 0 var(--size-6);
  margin-top: var(--size-0);
 }
 
@@ -1503,7 +1502,7 @@ sl-icon-button::part(base):hover {
  background: var(--gray-9);
  border: var(--border-size-2) solid var(--gray-6);
  border-radius: var(--radius-3);
- padding: var(--size-9) var(--size-6) var(--size-6) var(--size-1);
+ padding: var(--size-9) var(--size-6) var(--size-6) var(--size-6);
  position: relative;
  overflow: hidden;
  transition: all 0.3s ease;
@@ -1674,7 +1673,7 @@ sl-icon-button::part(base):hover {
 
  .profile-card .ascii-art-mobile {
  display: block;
- font-size: 1.7vw; 
+ font-size: clamp(6px, 1.7vw, 10px); 
  line-height: 1.15;
  }
 
@@ -1902,7 +1901,6 @@ sl-icon-button::part(base):hover {
 .content-section {
  margin-bottom: var(--size-10);
  scroll-margin-top: var(--size-6);
- padding: 0 var(--size-6);
 }
 
 #overview {
@@ -1993,11 +1991,20 @@ sl-icon-button::part(base):hover {
     line-height: 1.2;
 }
 
+/* ADDED: New rule to control column widths */
+.table thead th:nth-child(1),
+.table thead th:nth-child(2) {
+    width: 1%; /* Force columns to be only as wide as their content */
+}
+
 .table thead th .lucide {
     color: var(--brand-primary-lime);
-    margin-right: var(--size-2); /* Creates space between icon and text */
+    margin-right: var(--size-2); /* Space between icon and text */
     vertical-align: middle; /* Aligns icon with the text */
     stroke-width: var(--stroke-regular); /* Ensures consistent icon weight */
+    width: var(--icon-sm); /* ADDED: Fixes responsive shrinking */
+    height: var(--icon-sm); /* ADDED: Fixes responsive shrinking */
+    flex-shrink: 0; /* ADDED: Prevents the icon from being squished */
 }
 
 /* Remove hover states from non-interactive table rows */
@@ -2366,7 +2373,7 @@ sl-icon-button::part(base):hover {
 }
 
 
-@media (width <= 900px) {
+@media (width <= 1024px) {
  .content-grid-2col {
  grid-template-columns: 1fr;
  }
@@ -4394,6 +4401,7 @@ body {
     overflow-wrap: break-word;
     word-wrap: break-word;
     min-width: 0;
+    padding: 0 var(--size-6); /* ADDED: Consistent horizontal padding */
 }
 
 
