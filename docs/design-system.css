@@ -2129,16 +2129,16 @@ sl-icon-button::part(base):hover {
 
 .badge.small .lucide,
 .badge.small .icon {
-    width: var(--icon-xs) !important; 
-    height: var(--icon-xs) !important;
-    flex-shrink: 0; /* Prevent icon from shrinking */
+    width: 1em !important;  /* Match text height */
+    height: 1em !important; /* Match text height */
+    flex-shrink: 0;
 }
 
-/* Default badge (medium) icons */
+/* Default badge (medium) */
 .badge .lucide,
 .badge .icon {
-    width: var(--icon-sm) !important;
-    height: var(--icon-sm) !important;
+    width: 1em !important;  /* Match text height */
+    height: 1em !important; /* Match text height */
     flex-shrink: 0;
 }
 
@@ -2150,8 +2150,8 @@ sl-icon-button::part(base):hover {
 
 .badge.large .lucide,
 .badge.large .icon {
-    width: var(--icon-md) !important;
-    height: var(--icon-md) !important;
+    width: 1em !important;  /* Match text height */
+    height: 1em !important; /* Match text height */
     flex-shrink: 0;
 }
 
@@ -3219,18 +3219,17 @@ select option {
 }
 
 .collection-item {
- padding: var(--size-2);
- background: var(--color-background-secondary);
- border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-2);
- cursor: default;
- transition: background var(--animation-duration-2) var(--ease-3),
- border-color var(--animation-duration-2) var(--ease-3);
- display: flex;
- align-items: center;
- gap: var(--size-3);
- position: relative;
- min-height: 48px;
+    padding: var(--size-2) var(--size-3);
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    cursor: default;
+    transition: all var(--animation-duration-2) var(--ease-3);
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+    position: relative;
+    min-height: 40px;
 }
 
 .advanced-mode .collection-item {
@@ -3276,24 +3275,27 @@ select option {
 }
 
 .collection-info {
- flex-grow: 1;
- min-width: 0;
- display: flex;
- flex-direction: column;
- justify-content: center;
+    flex-grow: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px; /* Very tight gap */
 }
 
 .collection-name {
- font-weight: var(--font-weight-5);
- margin-bottom: var(--size-1);
- overflow: hidden;
- text-overflow: ellipsis;
- white-space: nowrap;
+    font-weight: var(--font-weight-5);
+    font-size: var(--font-size-1); /* Smaller text */
+    line-height: 1.2; /* Tighter line height */
+    margin: 0;
 }
 
 .collection-count {
- color: var(--color-text-secondary);
- flex-shrink: 0;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+    margin-right: var(--size-1); /* Small buffer from edge */
+    font-size: var(--font-size-0); /* Slightly bigger */
+    font-weight: var(--font-weight-5);
 }
 
 .collection-pills {
