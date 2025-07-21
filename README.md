@@ -133,9 +133,9 @@ token-exporter-ds/
 
 ### 📝 File Details
 
-- **`design-system.css`** (~40KB): Edit all styles here. Hosted on GitHub, served via jsDelivr CDN.
-- **`docs/design-system-guide.html`** (~50KB): Documentation site. Links to external CSS.
-- **`src/ui.html`** (~15KB): Plugin interface. Uses inline CSS due to Figma's security restrictions.
+- **`design-system.css`**: Edit all styles here. Hosted on GitHub, served via jsDelivr CDN.
+- **`docs/design-system-guide.html`**: Documentation site. Links to external CSS.
+- **`src/ui.html`**: Plugin interface. Uses inline CSS due to Figma's security restrictions.
 - **`manifest.json`**: Defines allowed domains for the plugin (cdnjs, jsdelivr, etc.)
 
 
