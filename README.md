@@ -23,7 +23,11 @@ This project was created by **Nate Mills**, a UI Designer with 20 years of exper
 [![See My Portfolio](https://img.shields.io/badge/See_My_Portfolio-e8ff0c?style=for-the-badge&logoColor=black)](https://natemills.me)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/millsdesign/)
 
+<br>
+
 ---
+
+<br>
 
 ## 📖 Table of Contents
 
@@ -37,13 +41,21 @@ This project was created by **Nate Mills**, a UI Designer with 20 years of exper
 8.  [💬 Support](#-support)
 9.  [📜 License](#-license)
 
+<br>
+
 ---
+
+<br>
 
 ## 🎯 The Problem It Solves
 
 Manual token exporting from Figma is slow, error-prone, and creates a disconnect between design and development. Existing tools often lack the flexibility to export for multiple platforms natively. This plugin solves that problem by providing a fast, automated, and multi-format export pipeline.
 
+<br>
+
 ---
+
+<br>
 
 ## ✨ Key Features
 
@@ -65,7 +77,11 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 -   **Context-Aware Unit Handling**
     Appends `px` to numeric values except for unitless types like `line-height`.
 
+<br>
+
 ---
+
+<br>
 
 ## ⚙️ How It Works
 
@@ -75,7 +91,11 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 4.  **Choose Formats**: Select one or more export formats from the dropdown.
 5.  **Generate Tokens**: Click "Export Tokens" and download the results.
 
+<br>
+
 ---
+
+<br>
 
 ## 🛠️ Development Workflow
 
@@ -100,7 +120,11 @@ This project uses a fully automated, component-based architecture. A single buil
 -   **Figma CSP Restrictions**: The Figma plugin environment blocks external CSS `@import` rules. Our build script solves this by automatically fetching and bundling all remote stylesheets into the final `ui.html`.
 -   **Source vs. Output**: **Never edit `.html` files directly.** They are generated build artifacts. Only edit `.template.html` and component partial files.
 
+<br>
+
 ---
+
+<br>
 
 ## 📂 Project Structure
 
@@ -133,16 +157,16 @@ token-exporter-ds/
 
 ### 📝 File Details
 
-- **`design-system.css`** (~40KB): Edit all styles here. Hosted on GitHub, served via jsDelivr CDN.
-- **`docs/design-system-guide.html`** (~50KB): Documentation site. Links to external CSS.
-- **`src/ui.html`** (~15KB): Plugin interface. Uses inline CSS due to Figma's security restrictions.
+- **`design-system.css`**: Edit all styles here. Hosted on GitHub, served via jsDelivr CDN.
+- **`docs/design-system-guide.html`**: Documentation site. Links to external CSS.
+- **`src/ui.html`**: Plugin interface. Uses inline CSS due to Figma's security restrictions.
 - **`manifest.json`**: Defines allowed domains for the plugin (cdnjs, jsdelivr, etc.)
-
 
 <br>
 
-
 ---
+
+<br>
 
 ## 🍴 Running Your Own Fork
 
@@ -159,7 +183,11 @@ token-exporter-ds/
     -   Reload the plugin in Figma to test.
 
 
+<br>
+
 ---
+
+<br>
 
 ## 🤝 Contributing
 
@@ -172,7 +200,11 @@ Contributions are welcome! Please follow these guidelines:
 
 For major changes, please open an issue first to discuss what you would like to change.
 
+<br>
+
 ---
+
+<br>
 
 ## 💬 Support
 
@@ -180,19 +212,17 @@ For major changes, please open an issue first to discuss what you would like to 
 -   **Plugin Support**: [Figma Community](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
 -   **Portfolio**: [natemills.me](https://natemills.me)
 
+<br>
+
 ---
+
+<br>
 
 ## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
 
-<br>
-
----
-
-<br>
 
 
 
