@@ -1918,9 +1918,10 @@ sl-icon-button::part(base):hover {
 
 /* Ensure child elements don't double-pad */
 .content-section .token-category,
-.content-section .component-section {
- margin-left: 0;
- margin-right: 0;
+.content-section .component-section:not(:has(.table-responsive)) {
+    margin-left: calc(-1 * var(--size-6));
+    margin-right: calc(-1 * var(--size-6));
+    width: calc(100% + var(--size-6) * 2);
 }
 
 /* Creates a large gap above the Foundation section for clear separation */
@@ -1974,6 +1975,7 @@ sl-icon-button::part(base):hover {
 /* --- Component: System Table (NEW) --- */
 .table-responsive {
     width: 100%;
+    margin: 0 auto;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border: 1px solid var(--color-border-default);
@@ -5243,10 +5245,12 @@ body {
 
     /* --- Responsive Table ("Card" Layout on Mobile) --- */
     @media (width <= 768px) {
-        .table-responsive {
-            border: none;
-            background: transparent;
-        }
+         .table-responsive {
+        width: 100%;
+        margin: 0 auto;
+        border: none;
+        background: transparent;
+    }
 
         .table thead {
             display: none;
@@ -5262,10 +5266,6 @@ body {
             border: 1px solid var(--color-border-default);
             border-radius: var(--radius-2);
             overflow: hidden;
-        }
-
-        .table tr:hover {
-            background-color: transparent !important;
         }
 
         .table td {
