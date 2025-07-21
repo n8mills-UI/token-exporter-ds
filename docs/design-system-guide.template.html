@@ -215,29 +215,29 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Atoms</strong></td>
-                        <td><strong>Styles</strong> (Color, Text, Effects)</td>
-                        <td><strong>Foundation / Tokens:</strong> The raw, unchangeable values defined as CSS variables in the <span class="badge brand">:root</span> block (e.g., <span class="badge brand">--brand-primary-lime</span>).</td>
+                        <td data-label="Atomic"><strong>Atoms</strong></td>
+                        <td data-label="Figma"><strong>Styles</strong> (Color, Text, Effects)</td>
+                        <td data-label="Code"><strong>Foundation / Tokens:</strong> The raw, unchangeable values defined as CSS variables in the <span class="badge brand">:root</span> block (e.g., <span class="badge brand">--brand-primary-lime</span>).</td>
                     </tr>
                     <tr>
-                        <td><strong>Atoms</strong></td>
-                        <td><strong>Auto Layout</strong> (Spacing, Alignment)</td>
-                        <td><strong>Utility Classes:</strong> Single-purpose classes that apply one token directly to an element (e.g., <span class="badge brand">.flex</span>, <span class="badge brand">.p-4</span>, <span class="badge brand">.text-center</span>).</td>
+                        <td data-label="Atomic"><strong>Atoms</strong></td>
+                        <td data-label="Figma"><strong>Auto Layout</strong> (Spacing, Alignment)</td>
+                        <td data-label="Code"><strong>Utility Classes:</strong> Single-purpose classes that apply one token directly to an element (e.g., <span class="badge brand">.flex</span>, <span class="badge brand">.p-4</span>, <span class="badge brand">.text-center</span>).</td>
                     </tr>
                     <tr>
-                        <td><strong>Molecules</strong></td>
-                        <td><strong>Simple Components</strong> (Button, Input)</td>
-                        <td><strong>Component Classes:</strong> A class that combines multiple styles to create a simple, reusable element (e.g., <span class="badge brand">.btn</span>).</td>
+                        <td data-label="Atomic"><strong>Molecules</strong></td>
+                        <td data-label="Figma"><strong>Simple Components</strong> (Button, Input)</td>
+                        <td data-label="Code"><strong>Component Classes:</strong> A class that combines multiple styles to create a simple, reusable element (e.g., <span class="badge brand">.btn</span>).</td>
                     </tr>
                     <tr>
-                        <td><strong>Organisms</strong></td>
-                        <td><strong>Complex Components / Sets</strong> (Token Card)</td>
-                        <td><strong>Component Block:</strong> A larger, distinct section of the UI composed of multiple simpler components (e.g., <span class="badge brand">.token-summary</span>).</td>
+                        <td data-label="Atomic"><strong>Organisms</strong></td>
+                        <td data-label="Figma"><strong>Complex Components / Sets</strong> (Token Card)</td>
+                        <td data-label="Code"><strong>Component Block:</strong> A larger, distinct section of the UI composed of multiple simpler components (e.g., <span class="badge brand">.token-summary</span>).</td>
                     </tr>
                     <tr>
-                        <td><strong>Templates</strong></td>
-                        <td><strong>Pages / Frames</strong> (The Plugin UI)</td>
-                        <td><strong>Layout Styles:</strong> The highest-level styles that arrange components on the screen (e.g., <span class="badge brand">.guide-container</span>, <span class="badge brand">.guide-sidebar</span>).</td>
+                        <td data-label="Atomic"><strong>Templates</strong></td>
+                        <td data-label="Figma"><strong>Pages / Frames</strong> (The Plugin UI)</td>
+                        <td data-label="Code"><strong>Layout Styles:</strong> The highest-level styles that arrange components on the screen (e.g., <span class="badge brand">.guide-container</span>, <span class="badge brand">.guide-sidebar</span>).</td>
                     </tr>
                 </tbody>
             </table>
@@ -246,7 +246,7 @@
 </div>
 
 
-           <!-- NEW: 2-Column Grid Wrapper -->
+    <!-- NEW: 2-Column Grid Wrapper -->
             <div class="content-grid-2col">
                 <!-- FAQ Section -->
                 <div class="faq-section">
@@ -730,21 +730,27 @@
                 <div class="example-wrapper">
                     <div class="example-label">Sizes</div>
                     <div class="badge-showcase">
-                        <span class="badge brand small">SMALL</span>
-                        <span class="badge brand">MEDIUM</span>
-                        <span class="badge brand large">LARGE</span>
-                        <span style="margin-left: var(--size-4);"></span>
-                        <span class="badge brand small"><i data-lucide="zap"></i> WITH ICON</span>
-                        <span class="badge brand"><i data-lucide="zap"></i> WITH ICON</span>
-                        <span class="badge brand large"><i data-lucide="zap"></i> WITH ICON</span>
+                        <!-- Group 1: Plain Badges -->
+                        <div class="badge-group">
+                            <span class="badge brand small">SMALL</span>
+                            <span class="badge brand">MEDIUM</span>
+                            <span class="badge brand large">LARGE</span>
+                        </div>
+                        <!-- Group 2: Badges with Icons -->
+                        <div class="badge-group">
+                            <span class="badge brand small"><i data-lucide="zap"></i> WITH ICON</span>
+                            <span class="badge brand"><i data-lucide="zap"></i> WITH ICON</span>
+                            <span class="badge brand large"><i data-lucide="zap"></i> WITH ICON</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
-                        <!-- Color Variants Grid -->
+            <!-- Color Variants Grid -->
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Color Variants</div>
+                    <!-- This content is now correctly padded by the parent .subsection -->
                     <div class="tokens-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
                         <!-- Brand -->
                         <div class="token-item">

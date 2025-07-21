@@ -872,10 +872,18 @@ body {
 /* Badge showcase - using flex for inline display */
 .badge-showcase {
     display: flex;
-    gap: var(--size-2);
+    gap: var(--size-6); /* Increased gap for better vertical spacing on wrap */
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-start;
+}
+
+/* ADDED: New rule for the badge groups */
+.badge-group {
+    display: inline-flex;
+    flex-wrap: wrap; /* Allow badges inside the group to wrap if needed */
+    gap: var(--size-2);
+    align-items: center;
 }
 
 .icon-only-showcase {
@@ -1219,9 +1227,10 @@ sl-icon-button::part(base):hover {
 
 /* New wrapper for consistent padding and spacing */
 .portfolio-content {
- max-width: var(--content-xl); 
+ max-width: var(--content-xl); /* 1280px, from your tokens */
  margin-left: auto;
  margin-right: auto;
+ padding: 0 var(--size-6); /* RESTORED: This puts padding back on the overview content */
  margin-top: var(--size-0);
 }
 
@@ -1992,9 +2001,8 @@ sl-icon-button::part(base):hover {
 }
 
 /* ADDED: New rule to control column widths */
-.table thead th:nth-child(1),
-.table thead th:nth-child(2) {
-    width: 1%; /* Force columns to be only as wide as their content */
+.table thead th:nth-child(1) {
+    width: 1%; /* Force the first column to be only as wide as its content */
 }
 
 .table thead th .lucide {
@@ -2014,11 +2022,6 @@ sl-icon-button::part(base):hover {
 
 .table strong {
     color: var(--color-text-default); /* Make bold text white */
-}
-
-.table tbody tr:last-child th,
-.table tbody tr:last-child td {
-    border-bottom: 0;
 }
 
 .table code {
@@ -2574,13 +2577,15 @@ sl-icon-button::part(base):hover {
  color: var(--color-text-default);
  font-weight: var(--font-weight-6);
  transition: color 0.3s var(--ease-3);
- font-size: var(--font-size-1); /* Increased font size */
+ font-size: var(--font-size-1);
+ gap: var(--size-4); 
 }
 
-.faq-toggle {
+.faq-question .lucide {
  color: var(--brand-primary-lime);
  transition: all 0.3s var(--ease-3);
  font-size: var(--font-size-2);
+ flex-shrink: 0; 
 }
 
 .faq-item.open .faq-toggle {
@@ -2987,6 +2992,8 @@ select option {
  flex-grow: 1; 
  overflow-y: auto; 
  animation: var(--animation-fade-in);
+ display: flex; /* ADDED: This is the critical fix */
+ flex-direction: column; /* ADDED: Stacks children vertically */
 }
 
 /* Scrollbar styling */
@@ -3305,7 +3312,7 @@ select option {
     font-weight: var(--font-weight-5);
 }
 
-.collection-pills {
+.collection-badge-group {
  display: flex;
  gap: var(--size-1);
  flex-wrap: wrap;
@@ -4401,7 +4408,7 @@ body {
     overflow-wrap: break-word;
     word-wrap: break-word;
     min-width: 0;
-    padding: 0 var(--size-6); /* ADDED: Consistent horizontal padding */
+    /* REMOVED: Padding will be handled by child elements now */
 }
 
 
@@ -4514,6 +4521,7 @@ body {
 
 #overview {
  padding: 0; /* Ensures hero has no padding */
+ overflow: hidden; /* ADDED: Prevents full-bleed pseudo-elements from causing a scrollbar */
 }
 
 .section-header {
@@ -5226,68 +5234,54 @@ body {
     }
 }
 
+            /* --- Responsive Table ("Card" Layout on Mobile) --- */
+    @media (width <= 768px) {
+        .table-responsive {
+            border: none;
+            background: transparent;
+        }
 
-/* ==========================================================================
-   SKELETON LOADER
-   ========================================================================== */
+        .table thead {
+            display: none;
+        }
 
-.token-summary-skeleton {
-    padding: var(--size-6) var(--size-4);
-}
+        .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+        }
 
-.skeleton-heading {
-    width: 50%;
-    height: var(--font-size-7);
-    background-color: var(--gray-7);
-    border-radius: var(--radius-2);
-    margin: 0 auto var(--size-3);
-}
+        .table tr {
+            margin-bottom: var(--size-4);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-2);
+            overflow: hidden;
+        }
 
-.skeleton-subheading {
-    width: 70%;
-    height: var(--font-size-2);
-    background-color: var(--gray-7);
-    border-radius: var(--radius-1);
-    margin: 0 auto var(--size-6);
-}
+        .table tr:hover {
+            background-color: transparent !important;
+        }
 
-.skeleton-breakdown {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--size-2);
-    border-top: var(--border-size-1) solid var(--gray-8);
-    padding-top: var(--size-4);
-}
+        .table td {
+            text-align: right;
+            position: relative;
+            padding-left: 35%;
+            border-bottom: 1px solid var(--color-border-default);
+        }
+        
+        .table td:last-child {
+            border-bottom: none;
+        }
 
-.skeleton-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--size-2);
-}
-
-.skeleton-stat .skeleton-icon {
-    width: var(--size-6);
-    height: var(--size-6);
-    background-color: var(--gray-7);
-    border-radius: var(--radius-round); /* Circular shape */
-}
-
-.skeleton-stat .skeleton-text {
-    width: 80%;
-    height: var(--font-size-2);
-    background-color: var(--gray-7);
-    border-radius: var(--radius-1);
-}
-
-.skeleton-pulse {
-    animation: skeleton-breathe 2.5s ease-in-out infinite;
-}
-
-@keyframes skeleton-breathe {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-}
+        .table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: var(--size-3);
+            width: calc(35% - var(--size-4));
+            text-align: left;
+            font-weight: var(--font-weight-6);
+            color: var(--brand-primary-lime);
+        }
+    }
 
 /* ==========================================================================
  THEMING STRATEGY & FUTURE IMPLEMENTATIONS

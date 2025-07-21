@@ -172,7 +172,7 @@ function updateTokenSummary() {
                         <div class="collection-checkbox"></div>
                         <div class="collection-info">
                             <div class="text-body-lg collection-name">${c.name}</div>
-                            <div class="collection-pills">${pillsHTML}</div>
+                            <div class="collection-badge-group">${pillsHTML}</div>
                         </div>
                         <div class="text-caption collection-count">${c.totalVariables} tokens</div>
                     </div>`;
@@ -432,6 +432,16 @@ function updateTokenSummary() {
 
         // --- INITIALIZATION ---
         function initialize() {
+            // --- START: NEW INITIAL STATE LOGIC ---
+            // Explicitly set the correct initial UI state before doing anything else.
+            if (DOMElements.skeletonLoader) DOMElements.skeletonLoader.style.display = 'block';
+            if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
+            if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
+            // --- END: NEW INITIAL STATE LOGIC ---
+
+            // Render icons for the initially visible skeleton loader
+            renderIcons(); 
+
             // Fetch the component template first
             fetch('https://n8mills-ui.github.io/token-exporter-ds/src/components/_collection-item.html')
                 .then(response => response.text())
@@ -453,7 +463,7 @@ function updateTokenSummary() {
                     DOMElements.skeletonLoader.style.display = 'none';
                     appState.collections = msg.collections || [];
                     if (appState.collections.length === 0) {
-                        if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'flex';
+                        if (DOMElements.emptyStateWrapper) DOMElements.emptyStateWrapper.classList.remove('state-hidden');
                     } else {
                         if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'block';
                         appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
