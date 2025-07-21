@@ -2261,7 +2261,7 @@ sl-icon-button::part(base):hover {
 
 /* CTA Button container */
 .figma-cta {
- margin: var(--size-4) 0;
+ margin: var(--size-2) 0;
 }
 
 /* Attribution text */
@@ -2303,7 +2303,7 @@ sl-icon-button::part(base):hover {
 }
 
 .stat-number {
- font-size: var(--font-size-6);
+ font-size: var(--font-size-8);
  font-weight: var(--font-weight-8);
  background: var(--brand-gradient-lime);
  background-clip: text;
@@ -4182,7 +4182,7 @@ sl-input::part(input):focus-visible,
  align-items: center;
  justify-content: center;
  text-align: center;
- isolation: isolate; /* Add this line */
+ isolation: isolate; 
 }
 
 /* FIX: Restores radial gradients and pattern */
@@ -4190,7 +4190,7 @@ sl-input::part(input):focus-visible,
  content: '';
  position: absolute;
  inset: 0;
- z-index: -1; /* This will now work as intended */
+ z-index: -1; 
  background: 
  /* Color glows */
  radial-gradient(circle at 20% 50%, rgb(210, 255, 55, 0.08) 0%, transparent 40%),
@@ -5234,7 +5234,7 @@ body {
     }
 }
 
-            /* --- Responsive Table ("Card" Layout on Mobile) --- */
+    /* --- Responsive Table ("Card" Layout on Mobile) --- */
     @media (width <= 768px) {
         .table-responsive {
             border: none;
@@ -5282,6 +5282,136 @@ body {
             color: var(--brand-primary-lime);
         }
     }
+
+    /* Additional mobile optimizations for portfolio section */
+@media (max-width: 768px) {
+    /* Portfolio Hero Mobile Adjustments */
+   .portfolio-hero {
+    padding: var(--size-6) var(--size-4);
+    min-height: 100vh; 
+    padding-bottom: var(--size-12); 
+}
+    
+    /* Hero content mobile optimization */
+    .hero-main-title {
+        font-size: var(--font-size-7);
+    }
+    
+    .hero-tagline {
+        font-size: var(--font-size-3); 
+        padding: 0 var(--size-2);
+    }
+    
+    .hero-description {
+        padding: 0 var(--size-2); 
+    }
+    
+    /* Hero footer mobile spacing fix */
+    .hero-footer {
+        margin-top: auto; /* Pushes to bottom */
+        padding-bottom: var(--size-8);
+        gap: var(--size-2); /* Tighter grouping */
+    }
+    
+    /* Social links more compact on mobile */
+    .social-links {
+        gap: var(--size-4); 
+    }
+    
+    /* Portfolio content wrapper mobile optimization */
+    .portfolio-content {
+        padding: 0 var(--size-4); 
+    }
+    
+    /* Intro group mobile adjustments */
+    .intro-group {
+        margin-top: calc(-1 * var(--size-8));
+        gap: var(--size-2);
+        margin-bottom: var(--size-4);
+    }
+    
+    /* Impact stats */
+    .impact-stats {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: var(--size-2); 
+        padding: var(--size-3); 
+    }
+    
+    /* Stat items more compact on mobile */
+    .stat-item {
+        padding: var(--size-2); 
+    }
+    
+    .stat-number {
+        font-size: var(--font-size-7); 
+    }
+    
+    .stat-suffix {
+        font-size: var(--font-size-1); 
+    }
+    
+    .stat-label {
+        font-size: var(--font-size-1); 
+    }
+    
+    /* Compact cards mobile optimization */
+    .compact-cards {
+        gap: var(--size-2); 
+        margin-bottom: var(--size-4); 
+    }
+    
+    .compact-card {
+        padding: var(--size-3); 
+    }
+    
+    .compact-card h3 {
+        font-size: var(--font-size-2);
+        gap: var(--size-1); 
+    }
+    
+    .compact-card h3 i {
+        width: var(--icon-md); 
+        height: var(--icon-md);
+    }
+    
+    /* Button adjustments for mobile */
+    .btn-md {
+        padding: var(--size-2) var(--size-3); 
+        font-size: var(--font-size-1); 
+    }
+    
+    .btn-icon.btn-md {
+        width: var(--size-9); 
+        height: var(--size-9);
+    }
+}
+
+/* Even smaller screens (phones in portrait) */
+@media (max-width: 480px) {
+    /* Ultra-compact stats for very small screens */
+    .impact-stats {
+        gap: var(--size-1); 
+        padding: var(--size-2); 
+    }
+    
+    .stat-item {
+        padding: var(--size-1);
+    }
+    
+    .stat-number {
+        font-size: var(--font-size-4); 
+    }
+    
+    /* Stack compact cards on very small screens */
+    .compact-cards {
+        grid-template-columns: 1fr; 
+    }
+    
+    /* Further reduce hero padding */
+    .portfolio-hero {
+        padding: var(--size-5) var(--size-3);
+    }
+}
 
 /* ==========================================================================
  THEMING STRATEGY & FUTURE IMPLEMENTATIONS
