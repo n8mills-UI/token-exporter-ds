@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Layout Framework - Documentation Structure</title>
+    
+    <!-- Load the main design system -->
+    <link rel="stylesheet" href="design-system.css">
+    
+    <!-- Load guide layout styling -->
+    <link rel="stylesheet" href="guide-layout.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Accessibility Checker -->
+    <script src="../scripts/accessibility-checker.js"></script>
+</head>
+<body>
+    <div class="showcase-container">
+        <!-- Showcase Header -->
+        <div class="showcase-header">
+            <div class="showcase-nav">
+                <h1>Guide Layout Framework</h1>
+                <p>Your blueprint for consistent, beautiful design system documentation</p>
+            </div>
+            <div class="a11y-controls">
+                <button class="btn btn-secondary btn-sm" onclick="runAccessibilityCheck()">
+                    <i data-lucide="eye"></i>
+                    <span>Check Accessibility</span>
+                </button>
+                <button class="btn btn-tertiary btn-sm" onclick="highlightViolations()">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Highlight Issues</span>
+                </button>
+                <button class="btn btn-tertiary btn-sm" onclick="clearHighlights()">
+                    <i data-lucide="x"></i>
+                    <span>Clear</span>
+                </button>
+                <button class="btn btn-tertiary btn-sm" onclick="testDesignTokens()">
+                    <i data-lucide="palette"></i>
+                    <span>Test Token Combinations</span>
+                </button>
+            </div>
+            <div id="a11y-status" class="a11y-status" style="display: none;"></div>
+        </div>
+
+        <!-- Framework Navigation -->
+        <div class="section-wrapper">
+            <div class="section-label">FRAMEWORK NAVIGATION</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Learning Path: Foundation → Advanced</h3>
+                <div class="variants-grid">
+                    <div class="example-wrapper nav-card">
+                        <div class="example-label">📚 FOUNDATION (1-3)</div>
+                        <ul>
+                            <li>1. Container Classes</li>
+                            <li>2. Typography Classes</li>
+                            <li>3. Grid Layout Classes</li>
+                        </ul>
+                        <p class="category-description">Start here! Master the building blocks that everything uses.</p>
+                    </div>
+                    <div class="example-wrapper nav-card">
+                        <div class="example-label">📦 BASIC (4-6)</div>
+                        <ul>
+                            <li>4. Simple Content Pattern</li>
+                            <li>5. Code Examples Pattern</li>
+                            <li>6. Status Indicators Pattern</li>
+                        </ul>
+                        <p class="category-description">Combine building blocks into simple, reusable patterns.</p>
+                    </div>
+                    <div class="example-wrapper nav-card">
+                        <div class="example-label">🏗️ COMPLEX (7-10)</div>
+                        <ul>
+                            <li>7. Main Section Pattern</li>
+                            <li>8. Code Examples Pattern</li>
+                            <li>9. Interactive Component Pattern</li>
+                            <li>10. Do/Don't Comparison Pattern</li>
+                        </ul>
+                        <p class="category-description">Full-featured templates for comprehensive documentation.</p>
+                    </div>
+                    <div class="example-wrapper nav-card">
+                        <div class="example-label">⚡ ADVANCED (11-12)</div>
+                        <ul>
+                            <li>11. Specialized Patterns</li>
+                            <li>12. Template Usage Rules</li>
+                        </ul>
+                        <p class="category-description">Professional patterns and enforcement guidelines.</p>
+                    </div>
+                </div>
+                
+                <h4 class="example-label">Quick Reference</h4>
+                <p class="category-description">
+                    <strong>New to the framework?</strong> Start with sections 1-3 to understand the basics.<br>
+                    <strong>Need a quick pattern?</strong> Jump to sections 4-6 for common templates.<br>
+                    <strong>Building complex docs?</strong> Use sections 7-10 for comprehensive coverage.<br>
+                    <strong>Advanced needs?</strong> Check sections 11-12 for specialized patterns.
+                </p>
+            </div>
+        </div>
+
+        <!-- =========================
+             📚 SECTION 1: FOUNDATION (Building Blocks)
+             Learn the fundamental CSS classes that everything builds on
+             ========================= -->
+
+        <!-- Container Classes Reference - THE FOUNDATION -->
+        <div class="section-wrapper">
+            <div class="section-label">1. FOUNDATION - Container Classes</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="box"></i>
+                        Container Building Blocks
+                    </h2>
+                    <p class="component-description">
+                        These are the foundational CSS classes that every documentation section uses. Master these first.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">Required Container Classes</h3>
+                    <div class="token-reference-list">
+                        <div class="token-reference-item">
+                            <code>.section-wrapper</code>
+                            <span><strong>REQUIRED:</strong> Outer container with border and background for every section</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.section-label</code>
+                            <span><strong>REQUIRED:</strong> Top identifier bar (like "1. FOUNDATION - Container Classes")</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.component-body</code>
+                            <span><strong>SIMPLE CONTENT:</strong> Main content area with padding</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.component-section</code>
+                            <span><strong>COMPLEX CONTENT:</strong> Full section with separate header + body</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.component-header</code>
+                            <span><strong>SECTION HEADERS:</strong> Title and description area</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.example-wrapper</code>
+                            <span><strong>EXAMPLES:</strong> Individual example containers within grids</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="example-subheader">How Containers Nest</h3>
+                    <p class="category-description">
+                        Understanding the hierarchy: <code>.section-wrapper</code> → <code>.section-label</code> + (<code>.component-body</code> OR <code>.component-section</code>)
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography Classes - Building Block 2 -->
+        <div class="section-wrapper">
+            <div class="section-label">2. FOUNDATION - Typography Classes</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="type"></i>
+                        Typography Building Blocks
+                    </h2>
+                    <p class="component-description">
+                        Master these text classes for consistent hierarchy. These combine with containers to create documentation sections.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">Essential Typography Classes</h3>
+                    <div class="token-reference-list">
+                        <div class="token-reference-item">
+                            <code>.component-title</code>
+                            <span><strong>H2 LEVEL:</strong> Main section titles with icons (like this section's title above)</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.component-description</code>
+                            <span><strong>SUBTITLES:</strong> Explanation text under component titles (see above)</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.example-subheader</code>
+                            <span><strong>H3 LEVEL:</strong> Major subsections (like "Essential Typography Classes")</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.example-label</code>
+                            <span><strong>H4 LEVEL:</strong> Example labels and minor headings</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.category-description</code>
+                            <span><strong>BODY TEXT:</strong> Context and guidance paragraphs</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="example-subheader">Typography in Action</h3>
+                    <div class="example-wrapper">
+                        <div class="example-label">Live Examples</div>
+                        <h2 class="text-heading-lg component-title">
+                            <i data-lucide="type"></i>
+                            Component Title (.component-title)
+                        </h2>
+                        <p class="component-description">Component description text (.component-description)</p>
+                        <h3 class="example-subheader">Example Subheader (.example-subheader)</h3>
+                        <h4 class="example-label">Example Label (.example-label)</h4>
+                        <p class="category-description">Category description text (.category-description) for explanations and context.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Layout Building Blocks -->
+        <div class="section-wrapper">
+            <div class="section-label">3. FOUNDATION - Grid Layout Classes</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="grid-3x3"></i>
+                        Layout Grid Building Blocks
+                    </h2>
+                    <p class="component-description">
+                        These grid classes organize content within your containers. Learn these to create structured layouts.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">Essential Grid Classes</h3>
+                    <div class="token-reference-list">
+                        <div class="token-reference-item">
+                            <code>.variants-grid</code>
+                            <span><strong>MAIN GRID:</strong> Auto-fit columns, 320px minimum. For component variants and examples.</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.example-wrapper</code>
+                            <span><strong>GRID ITEMS:</strong> Individual containers within grids. Has padding and hover states.</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.example-label</code>
+                            <span><strong>ITEM LABELS:</strong> Title for each grid item (H4 level heading)</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.token-grid</code>
+                            <span><strong>TOKEN GRID:</strong> Specialized grid for design token references</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.token-reference-list</code>
+                            <span><strong>LIST LAYOUT:</strong> Structured list for API/class references (like this list)</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="example-subheader">Grid Examples</h3>
+                    <div class="variants-grid">
+                        <div class="example-wrapper">
+                            <div class="example-label">Grid Item 1</div>
+                            <p>This is .example-wrapper within .variants-grid. Notice the consistent padding and styling.</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Grid Item 2</div>
+                            <p>Items automatically adjust to grid size. Minimum 320px width, responsive columns.</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Grid Item 3</div>
+                            <p>Perfect for showing component variants, examples, or any grouped content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================
+             📦 SECTION 2: BASIC TEMPLATES (Simple Patterns)
+             Combine building blocks into simple, reusable patterns
+             ========================= -->
+
+        <!-- Simple Content Structure -->
+        <div class="section-wrapper">
+            <div class="section-label">4. BASIC - Simple Content Pattern</div>
+            <div class="component-body">
+                <h3 class="example-subheader">When to Use Simple Content</h3>
+                <p class="category-description">
+                    Use this pattern (.section-wrapper + .section-label + .component-body) for straightforward content that doesn't need a complex header.
+                </p>
+                
+                <h3 class="example-subheader">Perfect For:</h3>
+                <ul>
+                    <li>Token references and technical lists</li>
+                    <li>Guidelines and usage instructions</li>
+                    <li>Supporting content and subsections</li>
+                    <li>Quick reference materials</li>
+                </ul>
+                
+                <h4 class="example-label">Structure Pattern</h4>
+                <p class="category-description">
+                    This very section demonstrates the simple pattern: containers + typography + optional grids. 
+                    Notice how it uses .component-body directly without .component-section/.component-header.
+                </p>
+            </div>
+        </div>
+
+        <!-- Code Examples Pattern -->
+        <div class="section-wrapper">
+            <div class="section-label">5. BASIC - Code Examples Pattern</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Code Block Structure</h3>
+                <p class="category-description">
+                    Standard pattern for code examples with copy-to-clipboard functionality. Perfect for API examples and implementation guides.
+                </p>
+                
+                <div class="example-wrapper">
+                    <div class="example-label">HTML Example</div>
+                    <div class="code-block">
+                        <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+                            <i data-lucide="copy"></i>
+                        </button>
+                        <pre><code>&lt;button class="btn btn-primary"&gt;
+    Primary Button
+&lt;/button&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-wrapper">
+                    <div class="example-label">CSS Example</div>
+                    <div class="code-block">
+                        <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+                            <i data-lucide="copy"></i>
+                        </button>
+                        <pre><code>.btn {
+    padding: var(--size-2) var(--size-4);
+    border-radius: var(--radius-1);
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Indicators -->
+        <div class="section-wrapper">
+            <div class="section-label">6. BASIC - Status Indicators Pattern</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Status Feedback Classes</h3>
+                <p class="category-description">
+                    Visual feedback elements for accessibility validation, test results, and user notifications.
+                </p>
+                
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Success State</div>
+                        <div class="a11y-status pass">
+                            <strong>Pass State</strong> - Green background for successful validation
+                        </div>
+                    </div>
+                    <div class="example-wrapper">
+                        <div class="example-label">Error State</div>
+                        <div class="a11y-status fail">
+                            <strong>Fail State</strong> - Red background for validation failures
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 class="example-label">Usage</h4>
+                <p class="category-description">
+                    Use .a11y-status class with .pass or .fail modifiers for accessibility feedback and validation results.
+                </p>
+            </div>
+        </div>
+
+        <!-- =========================
+             🏗️ SECTION 3: COMPLEX TEMPLATES (Full Sections)
+             Combine everything into comprehensive documentation sections
+             ========================= -->
+
+        <!-- Main Section Structure - The Complex Pattern -->
+        <div class="section-wrapper">
+            <div class="section-label">7. COMPLEX - Main Section Pattern</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="layout"></i>
+                        Full Component Section Template
+                    </h2>
+                    <p class="component-description">
+                        This is the complete template for major component documentation. Notice the structure: section-wrapper → section-label → component-section → component-header + component-body.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">When to Use the Complex Pattern</h3>
+                    <p class="category-description">
+                        Use this full structure (.component-section with separate .component-header and .component-body) for comprehensive component documentation that needs:
+                    </p>
+                    <ul>
+                        <li>Prominent title with icon</li>
+                        <li>Detailed description or overview</li>
+                        <li>Multiple subsections of content</li>
+                        <li>Professional presentation</li>
+                    </ul>
+                    
+                    <h3 class="example-subheader">Perfect For:</h3>
+                    <div class="variants-grid">
+                        <div class="example-wrapper">
+                            <div class="example-label">Component Documentation</div>
+                            <p>Buttons, Forms, Navigation, Modals - any UI component that needs comprehensive coverage.</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">System Documentation</div>
+                            <p>Typography systems, color palettes, spacing scales - foundational design system elements.</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Feature Explanations</div>
+                            <p>Advanced patterns, interactive demos, or complex functionality that needs detailed explanation.</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="example-label">Meta Note</h4>
+                    <p class="category-description">
+                        This very section demonstrates the complex pattern - it has a header with icon and description, then a body with multiple subsections!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Examples Template -->
+        <div class="section-wrapper">
+            <div class="section-label">8. COMPLEX - Code Examples Pattern</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Code Block Structure</h3>
+                <p class="category-description">
+                    Standard pattern for displaying code examples with proper syntax highlighting and copy functionality.
+                </p>
+                
+                <div class="example-wrapper">
+                    <div class="example-label">HTML Example</div>
+                    <div class="code-block">
+                        <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+                            <i data-lucide="copy"></i>
+                        </button>
+                        <pre><code>&lt;button class="btn btn-primary"&gt;
+    Primary Button
+&lt;/button&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-wrapper">
+                    <div class="example-label">CSS Example</div>
+                    <div class="code-block">
+                        <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+                            <i data-lucide="copy"></i>
+                        </button>
+                        <pre><code>.btn {
+    padding: var(--size-2) var(--size-4);
+    border-radius: var(--radius-1);
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Component Template -->
+        <div class="section-wrapper">
+            <div class="section-label">9. COMPLEX - Interactive Component Pattern</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="play"></i>
+                        Live Interactive Demos
+                    </h2>
+                    <p class="component-description">
+                        Complex template for components with live interactions, multiple states, or interactive functionality. Perfect for buttons, forms, and dynamic components.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">Component States Demo</h3>
+                    <div class="variants-grid">
+                        <div class="example-wrapper">
+                            <div class="example-label">Default State</div>
+                            <button class="btn btn-primary">Interactive Button</button>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Hover State</div>
+                            <button class="btn btn-primary force-hover">Hover Button</button>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Disabled State</div>
+                            <button class="btn btn-primary" disabled>Disabled Button</button>
+                        </div>
+                    </div>
+                    
+                    <h4 class="example-label">Usage</h4>
+                    <p class="category-description">
+                        This pattern combines the complex section structure with interactive examples in a variants-grid. Use for comprehensive component documentation with live demos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Template -->
+        <div class="section-wrapper">
+            <div class="section-label">10. COMPLEX - Do/Don't Comparison Pattern</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Best Practices Comparison</h3>
+                <p class="category-description">
+                    Use this pattern to show correct vs incorrect usage. Great for usage guidelines and best practices documentation.
+                </p>
+                
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">✅ Do - Correct Usage</div>
+                        <button class="btn btn-primary">
+                            <i data-lucide="check"></i>
+                            Clear Action
+                        </button>
+                        <p class="category-description">Use clear, action-oriented button text with appropriate icons.</p>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">❌ Don't - Avoid This</div>
+                        <button class="btn btn-primary">Click Here</button>
+                        <p class="category-description">Avoid generic button text that doesn't describe the action.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================
+             ⚡ SECTION 4: ADVANCED (Specialized)
+             Professional patterns for comprehensive documentation
+             ========================= -->
+
+        <!-- Advanced Documentation Patterns -->
+        <div class="section-wrapper">
+            <div class="section-label">11. ADVANCED - Specialized Patterns</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="layers"></i>
+                        Advanced Template Patterns
+                    </h2>
+                    <p class="component-description">
+                        Specialized patterns for comprehensive component documentation including APIs, guidelines, and relationships.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">Properties Table Pattern</h3>
+                    <div class="example-wrapper">
+                        <div class="example-label">Component API Documentation</div>
+                        <table class="properties-table" role="table" aria-label="Component properties documentation">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Property</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Default</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><code>size</code></th>
+                                    <td><code>string</code></td>
+                                    <td><code>'md'</code></td>
+                                    <td>Controls button size: <code>'sm' | 'md' | 'lg'</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><code>variant</code></th>
+                                    <td><code>string</code></td>
+                                    <td><code>'primary'</code></td>
+                                    <td>Visual style variant</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><code>disabled</code></th>
+                                    <td><code>boolean</code></td>
+                                    <td><code>false</code></td>
+                                    <td>Disables user interaction</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="category-description">Use this pattern for documenting component props, design token values, or any structured data.</p>
+                    </div>
+                    
+                    <h3 class="example-subheader">Usage Guidelines Pattern</h3>
+                    <div class="variants-grid">
+                        <div class="example-wrapper usage-guideline">
+                            <div class="example-label">✅ When to Use</div>
+                            <ul>
+                                <li>Primary actions that advance user through flow</li>
+                                <li>Form submissions and confirmations</li>
+                                <li>Call-to-action buttons in marketing contexts</li>
+                            </ul>
+                        </div>
+                        <div class="example-wrapper usage-guideline">
+                            <div class="example-label">❌ When NOT to Use</div>
+                            <ul>
+                                <li>Navigation between equal-level pages</li>
+                                <li>Destructive actions without confirmation</li>
+                                <li>Secondary or tertiary actions in forms</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3 class="example-subheader">Component Anatomy Pattern</h3>
+                    <div class="example-wrapper">
+                        <div class="example-label">Visual Component Breakdown</div>
+                        <div class="anatomy-diagram">
+                            <div class="anatomy-item">
+                                <div class="anatomy-sample">
+                                    <button class="btn btn-primary">
+                                        <i data-lucide="download"></i>
+                                        Download File
+                                    </button>
+                                </div>
+                                <div class="anatomy-labels">
+                                    <div class="anatomy-callout" style="--callout-position: 1">
+                                        <span class="callout-number">1</span>
+                                        <span class="callout-text">Icon (optional)</span>
+                                    </div>
+                                    <div class="anatomy-callout" style="--callout-position: 2">
+                                        <span class="callout-number">2</span>
+                                        <span class="callout-text">Button text</span>
+                                    </div>
+                                    <div class="anatomy-callout" style="--callout-position: 3">
+                                        <span class="callout-number">3</span>
+                                        <span class="callout-text">Container padding</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="category-description">Use this pattern to visually explain component structure and element relationships.</p>
+                    </div>
+
+                    <h3 class="example-subheader">Related Components Pattern</h3>
+                    <div class="example-wrapper">
+                        <div class="example-label">Component Relationships</div>
+                        <div class="related-components">
+                            <div class="related-item">
+                                <strong>Icon Button</strong>
+                                <p>For actions with only icons</p>
+                            </div>
+                            <div class="related-item">
+                                <strong>Link Button</strong>
+                                <p>For navigation actions</p>
+                            </div>
+                            <div class="related-item">
+                                <strong>Button Group</strong>
+                                <p>For related button clusters</p>
+                            </div>
+                        </div>
+                        <p class="category-description">Use this pattern to show component alternatives and relationships.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Template Usage Rules (MANDATORY) -->
+        <div class="section-wrapper">
+            <div class="section-label">12. ADVANCED - Template Usage Rules</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="alert-circle"></i>
+                        Template Enforcement Rules
+                    </h2>
+                    <p class="component-description">
+Every design system documentation page must use these template patterns for consistency.
+                    </p>
+                </div>
+                <div class="component-body">
+                    <h3 class="example-subheader">Required Template Structure</h3>
+                    <div class="token-reference-list">
+                        <div class="token-reference-item">
+                            <code>.section-wrapper</code>
+                            <span>REQUIRED - Outer container for every documentation section</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.section-label</code>
+                            <span>REQUIRED - Must identify section type (Components, Tokens, etc.)</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.component-section OR .component-body</code>
+                            <span>REQUIRED - Use component-section for major components, component-body for simple content</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.example-wrapper</code>
+                            <span>REQUIRED - For all interactive examples and code samples</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>.variants-grid</code>
+                            <span>REQUIRED - When showing multiple component states or examples</span>
+                        </div>
+                    </div>
+
+                    <h3 class="example-subheader">Template Selection Guide</h3>
+                    <div class="variants-grid">
+                        <div class="example-wrapper">
+                            <div class="example-label">Major Component Documentation</div>
+                            <p><strong>Use:</strong> .component-section with .component-header + .component-body</p>
+                            <p><strong>For:</strong> Buttons, Forms, Navigation, Complex Components</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Simple Content Sections</div>
+                            <p><strong>Use:</strong> .component-body directly</p>
+                            <p><strong>For:</strong> Token references, Guidelines, Simple lists</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Interactive Demonstrations</div>
+                            <p><strong>Use:</strong> Interactive Component Pattern</p>
+                            <p><strong>For:</strong> Live demos, Playground areas, State showcases</p>
+                        </div>
+                        <div class="example-wrapper">
+                            <div class="example-label">Code Examples</div>
+                            <p><strong>Use:</strong> Code Examples Pattern</p>
+                            <p><strong>For:</strong> HTML/CSS snippets, Implementation guides</p>
+                        </div>
+                    </div>
+
+                    <h3 class="example-subheader">Quality Checklist</h3>
+                    <p class="category-description">
+                        Before publishing any design system documentation, verify:
+                    </p>
+                    <div class="token-reference-list">
+                        <div class="token-reference-item">
+                            <code>✅ Structure</code>
+                            <span>All required wrapper classes are present</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>✅ Labels</code>
+                            <span>Section labels clearly identify content type</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>✅ Hierarchy</code>
+                            <span>Proper heading structure (H2 for titles, H3 for subsections)</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>✅ Examples</code>
+                            <span>All examples use .example-wrapper with .example-label</span>
+                        </div>
+                        <div class="token-reference-item">
+                            <code>✅ Descriptions</code>
+                            <span>Category descriptions use .category-description class</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let a11yReport = null;
+
+        // Initialize icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+
+        function runAccessibilityCheck() {
+            console.log('🔍 Running comprehensive accessibility check...');
+            a11yReport = window.a11yChecker.generateReport();
+            
+            const statusEl = document.getElementById('a11y-status');
+            statusEl.style.display = 'block';
+            
+            if (a11yReport.summary.totalViolations === 0) {
+                statusEl.className = 'a11y-status pass';
+                statusEl.innerHTML = `✅ <strong>Accessibility Check Passed</strong><br>No WCAG AA contrast violations found in ${new Date().toLocaleTimeString()}`;
+            } else {
+                statusEl.className = 'a11y-status fail';
+                statusEl.innerHTML = `⚠️ <strong>${a11yReport.summary.totalViolations} Accessibility Issues Found</strong><br>Review console for details. Last checked: ${new Date().toLocaleTimeString()}`;
+            }
+            
+            console.log(a11yReport);
+            return a11yReport;
+        }
+
+        function highlightViolations() {
+            const count = window.a11yChecker.highlightViolations();
+            console.log(`🚨 Highlighted ${count} violations`);
+        }
+
+        function clearHighlights() {
+            window.a11yChecker.clearHighlights();
+            console.log('✅ Cleared highlights');
+        }
+
+        function testDesignTokens() {
+            const results = window.a11yChecker.testDesignTokens();
+            console.log('🎨 Design token accessibility test results:');
+            console.table(results);
+            
+            const failing = results.filter(r => !r.passes);
+            if (failing.length > 0) {
+                console.warn(`❌ ${failing.length} token combinations fail WCAG AA:`);
+                failing.forEach(combo => {
+                    console.warn(`${combo.name}: ${combo.contrastRatio} (needs ${combo.requiredRatio})`);
+                });
+            } else {
+                console.log('✅ All token combinations pass WCAG AA!');
+            }
+            
+            return results;
+        }
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.querySelector('code');
+            const text = code.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show success state
+                button.classList.add('copied');
+                const icon = button.querySelector('i');
+                icon.setAttribute('data-lucide', 'check');
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    icon.setAttribute('data-lucide', 'copy');
+                    if (window.lucide) {
+                        lucide.createIcons();
+                    }
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy code:', err);
+                // Fallback for older browsers
+                button.setAttribute('title', 'Copy not supported in this browser');
+            });
+        }
+
+        // Navigation enhancements
+        function scrollToSection(sectionNumber) {
+            const allSectionLabels = document.querySelectorAll('.section-label');
+            const targetLabel = Array.from(allSectionLabels).find(label => 
+                label.textContent.trim().startsWith(sectionNumber + '.')
+            );
+            if (targetLabel) {
+                const section = targetLabel.closest('.section-wrapper');
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Make navigation cards clickable
+        document.addEventListener('DOMContentLoaded', () => {
+            const navCards = document.querySelectorAll('.variants-grid .example-wrapper');
+            navCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', (e) => {
+                    const label = card.querySelector('.example-label').textContent;
+                    if (label.includes('FOUNDATION')) {
+                        scrollToSection('1');
+                    } else if (label.includes('BASIC')) {
+                        scrollToSection('4');
+                    } else if (label.includes('COMPLEX')) {
+                        scrollToSection('7');
+                    } else if (label.includes('ADVANCED')) {
+                        scrollToSection('11');
+                    }
+                });
+            });
+        });
+
+        // Auto-run accessibility check on load
+        setTimeout(runAccessibilityCheck, 1000);
+    </script>
+</body>
+</html>

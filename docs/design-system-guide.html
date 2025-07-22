@@ -229,7 +229,7 @@ if (document.readyState === 'loading') {
 
         
         <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
-        <link rel="stylesheet" href="design-system.css">    
+        <link rel="stylesheet" href="design-system.css">
     </head>
 
 
@@ -985,7 +985,7 @@ if (document.readyState === 'loading') {
         <div id="icons" class="component-section">
             <div class="component-header">
                 <h2 class="text-heading-lg component-title">
-                    <i data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                    <i data-lucide="palette"></i>
                     Icon System
                 </h2>
                 <p class="component-description">
@@ -2202,7 +2202,19 @@ Purpose: Displays creator info and social links. Rebuilt with standard component
                 if (!techItem) return;
                 const tech = techItem.dataset.tech;
                 const url = techItem.dataset.url || '#';
-                const name = techItem.textContent.trim();
+                
+                // Get clean name by extracting just the text nodes, avoiding SVG titles
+                const nameMap = {
+                    claude: "Claude AI",
+                    github: "GitHub", 
+                    openprops: "Open Props",
+                    gemini: "Gemini",
+                    vscode: "VS Code",
+                    figma: "Figma",
+                    nodejs: "Node.js",
+                    manus: "Manus AI"
+                };
+                const name = nameMap[tech] || techItem.textContent.trim();
                 const description = descriptions[tech] || "Description not available.";
                 const icon = techItem.querySelector('svg, .lucide');
 
