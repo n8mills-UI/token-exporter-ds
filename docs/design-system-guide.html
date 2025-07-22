@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Token Exporter - Design System Guide</title>
         
-        <!-- Enhanced Icon System -->
+        <!-- Consolidated Icon System -->
 <!-- 
 ===================================================================
 DESIGN SYSTEM ICON LIBRARY
@@ -102,6 +102,8 @@ window.PluginIcons = {
     
     'arrow-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
     
+    'external-link': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>`,
+    
     // Missing Lucide Icons for Design System Guide
     menu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>`,
     
@@ -150,7 +152,10 @@ window.PluginIcons = {
     
     briefcase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
     
-    send: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`
+    send: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`,
+    
+    // Additional icons from _plugin-icons.html (consolidated)
+    briefcase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`
 };
 
 /* =================================================================
@@ -214,83 +219,6 @@ window.createIcon = function(iconName, options = {}) {
 // Auto-render on load (backwards compatible)
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => window.renderPluginIcons());
-} else {
-    window.renderPluginIcons();
-}
-</script>
-        
-        <!-- Plugin Icons -->
-<!-- Plugin Icon System - SVG Icons for Token Exporter -->
-<script>
-// Plugin Icon System - Clean SVG implementation
-window.PluginIcons = {
-    // Token type icons
-    palette: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/><circle cx="12" cy="6" r="1"/><circle cx="6.5" cy="10.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="7.5" cy="15.5" r="1"/></svg>`,
-    
-    type: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`,
-    
-    hash: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>`,
-    
-    'toggle-right': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="6" ry="6"/><circle cx="16" cy="12" r="2"/></svg>`,
-    
-    // Action icons
-    rocket: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
-    
-    'sliders-horizontal': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>`,
-    
-    // Status icons
-    'check-circle': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`,
-    
-    'alert-triangle': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="m12 17 .01 0"/></svg>`,
-    
-    x: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg>`,
-    
-    // Navigation icons
-    'arrow-left': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
-    
-    'arrow-right': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
-    
-    // Social/External icons
-    figma: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg>`,
-    
-    github: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`,
-    
-    linkedin: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>`,
-    
-    mail: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>`,
-    
-    briefcase: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-    
-    send: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`,
-    
-    // Missing icons from design system guide
-    image: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`,
-    
-    book: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>`,
-    
-    code: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    
-    maximize: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>`,
-    
-    'pen-tool': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
-    
-    settings: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`
-};
-
-// Icon rendering function
-window.renderPluginIcons = function() {
-    const iconElements = document.querySelectorAll('[data-icon]');
-    iconElements.forEach(element => {
-        const iconName = element.getAttribute('data-icon');
-        if (window.PluginIcons[iconName]) {
-            element.innerHTML = window.PluginIcons[iconName];
-        }
-    });
-};
-
-// Auto-render on load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', window.renderPluginIcons);
 } else {
     window.renderPluginIcons();
 }
@@ -599,86 +527,107 @@ if (document.readyState === 'loading') {
         <!-- Developer Profile v2 -->
 <!-- src/components/_profile-card.html -->
 <div class="profile-card">
-    <span class="badge brand absolute">Figma Plugin</span>
+    <span class="badge brand absolute">Figma Plugin ASCII ART</span>
     
-    <!-- Left side: Simple Text -->
+    <!-- Left side: ASCII Art -->
     <div class="ascii-container">
         <!-- Desktop Version -->
         <div class="ascii-art">
-TOKEN EXPORTER
+████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗     ███████╗██╗  ██╗██████╗  
+╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║     ██╔════╝╚██╗██╔╝██╔══██╗
+   ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║     █████╗   ╚███╔╝ ██████╔╝
+   ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║     ██╔══╝   ██╔██╗ ██╔═══╝ 
+   ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║     ███████╗██╔╝ ██╗██║       ██╗
+   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝     ╚══════╝╚═╝  ╚═╝╚═╝       ╚═╝
 
 ==============================================================================
 
-[STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER v4.0.8] : [ARCHITECT: NATE MILLS]
+[STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER] : [ARCHITECT: NATE MILLS]
 
 ==============================================================================
 
 
 
-NATE MILLS
+███╗   ██╗ █████╗ ████████╗███████╗     ███╗   ███╗██╗██╗     ██╗     ███████╗
+████╗  ██║██╔══██╗╚══██╔══╝██╔════╝     ████╗ ████║██║██║     ██║     ██╔════╝
+██╔██╗ ██║███████║   ██║   █████╗       ██╔████╔██║██║██║     ██║     ███████╗
+██║╚██╗██║██╔══██║   ██║   ██╔══╝       ██║╚██╔╝██║██║██║     ██║     ╚════██║
+██║ ╚████║██║  ██║   ██║   ███████╗     ██║ ╚═╝ ██║██║███████╗███████╗███████║
+╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚══════╝     ╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
 
 
-┌─[ SYSTEM ANALYSIS ]────────────────────────────────────────────────────────┐
+
+┌─[ PURPOSE & MISSION ]──────────────────────────────────────────────────────┐
 │                                                                            │
-│ [ UID: N8-MILLS ]...................................................[OK]   │
+│ Building bridges between design and development through Token Exporter—    │
+│ a plugin that transforms Figma variables into production-ready code for    │
+│ 6 platforms: CSS, Swift, Android, Flutter, JSON, and Tailwind.             │
 │                                                                            │
-│ [ CLASS: UI/UX ARCHITECT ]..........................................[ACT]  │
+│ 20+ years crafting scalable design systems that empower teams to ship      │
+│ consistent, accessible experiences faster.                                 │
 │                                                                            │
-│ [ SPECIALIZATION: DESIGN SYSTEMS & FIGMA TOOLING ]..................[INIT] │
-│                                                                            │
-│ [ AFFILIATION: BRIDGING DESIGN AND ENGINEERING ]....................[SYNC] │
-│                                                                            │
-│ [ TOOLS: FIGMA API, DESIGN TOKENS, CSS CUSTOM PROPERTIES ]...........[LOAD] │
-│                                                                            │
-│ [ ACHIEVEMENTS: AUTOMATED WORKFLOW, ENHANCED PRODUCTIVITY ]...........[WIN]  │
+│ One click. Six platforms. Zero inconsistencies.                            │
 │                                                                            │
 └────────────────────────────────────────────────────────────────────────────┘
 
 
-────────────────────────────────────────────────────────────────────────
-[MISSION]: SEAMLESSLY TRANSFORM FIGMA DESIGN TOKENS INTO PRODUCTION CODE
-────────────────────────────────────────────────────────────────────────
-
-TOKEN EXPORTER
-
+┌─[ ACTIVE PROJECTS ]────────────────────────────────────────────────────────┐
+│                                                                            │
+│  Token Exporter Plugin ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ACTIVE   │
+│  Design System Architecture ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ONGOING   │
+│  Multi-Platform Token Generation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ COMPLETE   │
+│  Developer Experience Tools ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ EVOLVING   │
+│  AI-Enhanced Design Workflows ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ RESEARCH     │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
         </div>
-        
-        <!-- Mobile Version -->
-        <div class="ascii-mobile">
-TOKEN EXP
-
-==============
-
-NATE MILLS
-UI/UX ARCH
-
-==============
-
-FIGMA EXPERT
-DESIGN SYS
+        <!-- Mobile Version (Compact) -->
+        <div class="ascii-art-mobile">
+████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗     ███████╗██╗  ██╗██████╗  
+╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║     ██╔════╝╚██╗██╔╝██╔══██╗
+   ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║     █████╗   ╚███╔╝ ██████╔╝
+   ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║     ██╔══╝   ██╔██╗ ██╔═══╝ 
+   ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║     ███████╗██╔╝ ██╗██║       ██╗
+   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝     ╚══════╝╚═╝  ╚═╝╚═╝       ╚═╝
+==============================================================================
+[STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER] : [ARCHITECT: NATE MILLS]
+==============================================================================
         </div>
     </div>
     
-    <!-- Right side: Content area -->
-    <div class="content-area">
-        <div class="creator-badge">
-            <span class="label">Created by</span>
-            <span class="name">Nate Mills</span>
-            <span class="role">Senior UI Designer & Design Systems Architect</span>
-        </div>
-        
-        <div class="features-list">
-            <div class="feature">
-                <span class="icon">🎯</span>
-                <span class="text">Export tokens to multiple formats</span>
+    <!-- Right side: Code Terminal -->
+    <div class="code-section">
+        <div class="code-container">
+            <div class="terminal-header">
+                <div class="terminal-title auto-glitch" data-text="creator_profile.exe">creator_profile.exe</div>
+                <div class="terminal-status">
+                    <div class="status-dot"></div>
+                    <span style="color: #666; font-size: 12px;">CONNECTED</span>
+                </div>
             </div>
-            <div class="feature">
-                <span class="icon">⚡</span>
-                <span class="text">Optimized for production workflows</span>
+            <div class="code-block" id="codeBlock">
+                <div class="code-line" data-text='<span class="prompt"></span><span class="comment">// Initializing creator profile...</span>'></div>
+                <div class="code-line" data-text='<span class="comment">// Loading design system architect...</span>'></div>
+                <div class="code-line" data-text=''></div>
+                <div class="code-line" data-text='<span class="keyword">const</span> <span class="variable">creator</span> = {'></div>
+                <div class="code-line" data-text='    <span class="variable">name</span>: <span class="string">"Nate Mills"</span>,'></div>
+                <div class="code-line" data-text='    <span class="variable">role</span>: <span class="string">"Design Systems Architect"</span>,'></div>
+                <div class="code-line" data-text='    <span class="variable">mission</span>: <span class="string">"Bridging design and development"</span>,'></div>
+                <div class="code-line" data-text='    <span class="variable">philosophy</span>: <span class="string">"Design is code. Code is design."</span>,'></div>
+                <div class="code-line" data-text='    '></div>
+                <div class="code-line" data-text='    <span class="variable">projects</span>: {'></div>
+                <div class="code-line" data-text='        <span class="variable">tokenExporter</span>: <span class="string">"Multi-platform design token generator"</span>,'></div>
+                <div class="code-line" data-text='        <span class="variable">designSystem</span>: <span class="string">"Scalable component architecture"</span>'></div>
+                <div class="code-line" data-text='    },'></div>
+                <div class="code-line" data-text='    '></div>
+                <div class="code-line" data-text='    <span class="variable">platforms</span>: [<span class="string">"CSS"</span>, <span class="string">"Swift"</span>, <span class="string">"Android"</span>, <span class="string">"Flutter"</span>, <span class="string">"JSON"</span>, <span class="string">"Tailwind"</span>]'></div>
+                <div class="code-line" data-text='};'></div>
+                <div class="code-line" data-text=''></div>
+                <div class="code-line" data-text='<span class="comment">// Ready to transform your design tokens</span>'></div>
+                <div class="code-line" data-text='<span class="variable">creator</span>.<span class="function">initializePlugin</span>();'></div>
             </div>
-            <div class="feature">
-                <span class="icon">🔄</span>
-                <span class="text">Seamless design-to-code bridge</span>
+            <div class="control-panel">
+                <button class="btn secondary btn-sm btn-inline glitch-button" data-text="[RE-RUN]" onclick="startTyping()">[RE-RUN]</button>
             </div>
         </div>
     </div>
@@ -986,39 +935,41 @@ DESIGN SYS
 <!-- Single Source of Truth for the "Empty State" component. -->
 <div class="empty-state" id="empty-state">
     <!-- Top Group -->
-    <div class="flex flex-col items-center gap-3">
+    <div class="flex flex-col items-center gap-2">
         <div class="empty-state-icon">
             <div class="token-exporter-logo large">
                 <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo_refactor)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo_refactor)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo_refactor" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo_refactor"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
             </div>
         </div>
-        <div class="text-heading-lg empty-state-title">Let's build something!</div>
-        <div class="text-body-md empty-state-subtitle">Create a variable collection in Figma to get started.</div>
+        <div class="flex flex-col items-center gap-2">
+            <div class="text-heading-lg empty-state-title">Let's build something!</div>
+            <div class="text-body-md empty-state-subtitle">Create a variable collection in Figma to get started.</div>
+        </div>
     </div>
 
     <!-- Middle Group -->
     <div class="empty-state-categories">
         <div class="empty-state-category">
-            <i data-icon="palette" class="category-icon-cyan"></i>
+            <i data-icon="palette" class="icon icon--lg category-icon-cyan"></i>
             <span class="text-label">Color</span>
         </div>
         <div class="empty-state-category">
-            <i data-icon="type" class="category-icon-purple"></i>
+            <i data-icon="type" class="icon icon--lg category-icon-purple"></i>
             <span class="text-label">Text</span>
         </div>
         <div class="empty-state-category">
-            <i data-icon="hash" class="category-icon-orange"></i>
+            <i data-icon="hash" class="icon icon--lg category-icon-orange"></i>
             <span class="text-label">Number</span>
         </div>
         <div class="empty-state-category">
-            <i data-icon="toggle-right" class="category-icon-pink"></i>
+            <i data-icon="toggle-right" class="icon icon--lg category-icon-pink"></i>
             <span class="text-label">States</span>
         </div>
     </div>
 
     <!-- Bottom Button -->
-    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn btn-primary btn-md btn-inline" target="_blank" rel="noopener noreferrer">
-        Learn How <i data-icon="arrow-right"></i>
+    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn btn-primary btn-md btn-inline" target="_blank" rel="noopener noreferrer" aria-label="Learn about Variables in Figma">
+        Learn about Variables <i data-icon="external-link" class="icon"></i>
     </a>
 </div>
                 </div>
@@ -1464,9 +1415,9 @@ DESIGN SYS
                     <h3><i data-lucide="align-right"></i> Right Icons (Suffix)</h3>
                     <p>Use for icons that indicate navigation or continuation. The icon implies moving forward to another location.</p>
                      <div class="flex flex-col gap-2" style="margin-top: var(--size-4);">
-                        <button class="btn btn-primary btn-sm btn-inline">Continue <i data-lucide="arrow-right"></i></button>
-                        <button class="btn btn-secondary btn-sm btn-inline">Learn More <i data-lucide="external-link"></i></button>
-                        <button class="btn btn-tertiary btn-sm btn-inline">View Details <i data-lucide="chevron-right"></i></button>
+                        <button class="btn btn-primary btn-sm btn-inline">Continue <i data-icon="arrow-right" class="icon"></i></button>
+                        <button class="btn btn-secondary btn-sm btn-inline">Learn More <i data-icon="external-link" class="icon"></i></button>
+                        <button class="btn btn-tertiary btn-sm btn-inline">View Details <i data-icon="chevron-right" class="icon"></i></button>
                     </div>
                 </div>
             </div>
@@ -1641,7 +1592,8 @@ Toggles the global appState.mode and communicates with the Token Summary card.
     <div id="quick-export-view">
         <h3 class="text-label section-title"><i data-icon="send"></i> Quick Export</h3>
         <div class="format-select-wrapper" style="margin-top: var(--size-3);">
-            <select class="format-select" id="format-select">
+            <label for="format-select" class="sr-only">Export format</label>
+            <select class="format-select" id="format-select" aria-label="Export format">
                 <option value="css" selected>CSS Variables</option>
                 <option value="swift">Swift (iOS)</option>
                 <option value="android">Android XML</option>
@@ -1650,11 +1602,11 @@ Toggles the global appState.mode and communicates with the Token Summary card.
                 <option value="tailwind">Tailwind Config</option>
             </select>
         </div>
-        <button class="btn primary btn-sm" id="export-btn">
+        <button class="btn primary btn-sm" id="export-btn" aria-label="Export design tokens">
             <i data-icon="rocket"></i>
             <span>Package Tokens</span>
         </button>
-        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);">
+        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);" aria-label="Show advanced filter options">
             <i data-icon="sliders-horizontal"></i>
             <span>Filters</span>
         </button>

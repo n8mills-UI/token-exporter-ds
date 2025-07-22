@@ -392,6 +392,19 @@ body {
  * modern utility-first frameworks like Tailwind CSS.
  */
 
+ /* Accessibility Utilities */
+ .sr-only {
+     position: absolute;
+     width: 1px;
+     height: 1px;
+     padding: 0;
+     margin: -1px;
+     overflow: hidden;
+     clip: rect(0, 0, 0, 0);
+     white-space: nowrap;
+     border: 0;
+ }
+
  /* Background Color Utilities */
  .bg-brand-primary-lime { background-color: var(--brand-primary-lime); }
  .bg-brand-secondary-yellow { background-color: var(--brand-secondary-yellow); }
@@ -3455,7 +3468,7 @@ select option {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-evenly;
     height: 100%;
     min-height: 360px;
     box-sizing: border-box;
@@ -3498,11 +3511,11 @@ select option {
 
 .empty-state-categories {
     display: flex;
-    justify-content: space-between; 
+    justify-content: center;
+    gap: var(--size-4);
     margin: var(--size-4) 0;
     width: 100%;
-    padding: 0 var(--size-4); 
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .empty-state-category {
@@ -3519,8 +3532,6 @@ select option {
 .category-icon-purple,
 .category-icon-orange,
 .category-icon-pink {
- width: var(--size-6);
- height: var(--size-6); 
  margin-bottom: var(--size-1);
 }
 
@@ -3964,7 +3975,6 @@ select option {
  line-height: 1.4;
  margin: var(--size-3) 0 0;
  padding: var(--size-3);
- border-top: var(--border-size-1) solid var(--color-border-default); 
  margin-top: auto;
 }
 
@@ -4185,9 +4195,7 @@ select option {
     min-width: 60px;
 }
 
-.empty-state-category .lucide {
-    width: var(--icon-lg); /* 32px - Bolder icons */
-    height: var(--icon-lg);
+.empty-state-category .icon {
     stroke-width: var(--icon-stroke-regular);
 }
 
@@ -4195,6 +4203,7 @@ select option {
     color: var(--color-text-muted);
     font-size: var(--font-size-0);
     text-transform: none;
+    text-align: center;
 }
 
 

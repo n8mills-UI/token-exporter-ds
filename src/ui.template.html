@@ -1,7 +1,5 @@
-<!-- Enhanced Icon System -->
+<!-- Consolidated Icon System -->
 <!-- @include src/components/icons/_icon-system.html -->
-<!-- Plugin Icons -->
-<!-- @include src/components/_plugin-icons.html -->
 <body>
     <main>
         <!-- This is the main content wrapper -->
@@ -135,7 +133,7 @@ function updateTokenSummary() {
 
                     return `
                         <div class="collection-item ${isSelected ? 'selected' : ''}" data-collection-id="${c.id}">
-                            <div class="collection-checkbox"></div>
+                            <div class="collection-checkbox" role="checkbox" aria-checked="${isSelected}" tabindex="0" aria-label="Select ${c.name} collection"></div>
                             <div class="collection-info">
                                 <div class="text-body-lg collection-name">${c.name}</div>
                                 <div class="collection-badge-group">${pillsHTML}</div>
@@ -147,7 +145,7 @@ function updateTokenSummary() {
                 DOMElements.advancedFilterView.innerHTML = `
                     <h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Advanced Filtering</h3>
                     <div class="collection-list" style="margin-top: var(--size-3);">${collectionItemsHTML}</div>
-                    <button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);">
+                    <button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">
                         <i data-icon="arrow-left"></i>
                         <span>Back to Quick Export</span>
                     </button>
@@ -264,7 +262,7 @@ function updateTokenSummary() {
                         <div class="te-progress-track">
                             <div class="te-progress-fill" id="pluginProgressFill"></div>
                         </div>
-                        <p class="te-status-label" id="pluginStatusLabel">Warming up</p>
+                        <p class="te-status-label" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Warming up</p>
                     </div>
                 </div>`;
             initializePluginLoader();
@@ -322,10 +320,10 @@ function updateTokenSummary() {
         function showErrorState(message) {
             DOMElements.tokenSummaryCard.innerHTML = `
                 <div class="progress-container" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">
-                    <i data-icon="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 40px; height: 40px; animation: none; margin-bottom: var(--size-2);"></i>
+                    <i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: none; margin-bottom: var(--size-2);"></i>
                     <h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>
                     <p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">${message}</p>
-                    <button class="btn secondary btn-inline" id="close-error-btn">Try Again</button>
+                    <button class="btn secondary btn-inline" id="close-error-btn" aria-label="Close error and try again">Try Again</button>
                 </div>`;
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');

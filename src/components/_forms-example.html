@@ -8,7 +8,8 @@ Toggles the global appState.mode and communicates with the Token Summary card.
     <div id="quick-export-view">
         <h3 class="text-label section-title"><i data-icon="send"></i> Quick Export</h3>
         <div class="format-select-wrapper" style="margin-top: var(--size-3);">
-            <select class="format-select" id="format-select">
+            <label for="format-select" class="sr-only">Export format</label>
+            <select class="format-select" id="format-select" aria-label="Export format">
                 <option value="css" selected>CSS Variables</option>
                 <option value="swift">Swift (iOS)</option>
                 <option value="android">Android XML</option>
@@ -17,11 +18,11 @@ Toggles the global appState.mode and communicates with the Token Summary card.
                 <option value="tailwind">Tailwind Config</option>
             </select>
         </div>
-        <button class="btn primary btn-sm" id="export-btn">
+        <button class="btn primary btn-sm" id="export-btn" aria-label="Export design tokens">
             <i data-icon="rocket"></i>
             <span>Package Tokens</span>
         </button>
-        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);">
+        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);" aria-label="Show advanced filter options">
             <i data-icon="sliders-horizontal"></i>
             <span>Filters</span>
         </button>
