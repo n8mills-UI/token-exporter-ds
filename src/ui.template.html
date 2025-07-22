@@ -1,5 +1,7 @@
-<!-- This script will be fetched and inlined by the build process -->
-<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+<!-- Enhanced Icon System -->
+<!-- @include src/components/icons/_icon-system.html -->
+<!-- Plugin Icons -->
+<!-- @include src/components/_plugin-icons.html -->
 <body>
     <main>
         <!-- This is the main content wrapper -->
@@ -68,17 +70,11 @@
         };
         const renderIcons = () => {
             try {
-                if (window.lucide) {
-    lucide.createIcons({
-        attrs: {
-            'width': null,
-            'height': null,
-            'class': 'lucide'
-        }
-    });
-}
+                if (window.renderPluginIcons) {
+                    window.renderPluginIcons();
+                }
             } catch (error) {
-                console.error("Lucide icon rendering failed:", error);
+                console.error("Plugin icon rendering failed:", error);
             }
         };
 
@@ -107,7 +103,7 @@ function updateTokenSummary() {
         const isActive = appState.selectedTokenTypes.has(type);
         return `
             <div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}" data-type="${type}">
-                <i class="icon" data-lucide="${iconMap[type]}"></i>
+                <i class="icon" data-icon="${iconMap[type]}"></i>
                 <div class="count">${count}</div>
                 <div class="text-label label" style="color: var(--color-text-muted);">${type}</div>
             </div>`;
@@ -134,7 +130,7 @@ function updateTokenSummary() {
                         if (count === 0) return '';
                         const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
                         const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
-                        return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i class="icon" data-lucide="${iconMap[type]}"></i> ${count}</span>`;
+                        return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i class="icon" data-icon="${iconMap[type]}"></i> ${count}</span>`;
                     }).join('');
 
                     return `
@@ -149,10 +145,10 @@ function updateTokenSummary() {
                 }).join('');
 
                 DOMElements.advancedFilterView.innerHTML = `
-                    <h3 class="text-label section-title"><i data-lucide="sliders-horizontal"></i> Advanced Filtering</h3>
+                    <h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Advanced Filtering</h3>
                     <div class="collection-list" style="margin-top: var(--size-3);">${collectionItemsHTML}</div>
                     <button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);">
-                        <i data-lucide="arrow-left"></i>
+                        <i data-icon="arrow-left"></i>
                         <span>Back to Quick Export</span>
                     </button>
                 `;
@@ -169,7 +165,7 @@ function updateTokenSummary() {
             const exportBtn = document.getElementById('export-btn');
             if (exportBtn) {
                 exportBtn.disabled = selectedTokenCount === 0;
-                exportBtn.innerHTML = `<i data-lucide="rocket"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}`;
+                exportBtn.innerHTML = `<i data-icon="rocket"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}`;
             }
         }
 
@@ -309,7 +305,7 @@ function updateTokenSummary() {
             if(celebrationContainer) {
                 const successIcon = document.createElement('div');
                 successIcon.className = 'te-success-icon';
-                successIcon.innerHTML = '<i data-lucide="check-circle"></i>';
+                successIcon.innerHTML = '<i data-icon="check-circle"></i>';
                 celebrationContainer.appendChild(successIcon);
             }
             
@@ -326,7 +322,7 @@ function updateTokenSummary() {
         function showErrorState(message) {
             DOMElements.tokenSummaryCard.innerHTML = `
                 <div class="progress-container" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">
-                    <i data-lucide="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 40px; height: 40px; animation: none; margin-bottom: var(--size-2);"></i>
+                    <i data-icon="alert-triangle" class="success-icon" style="color:var(--color-text-error); width: 40px; height: 40px; animation: none; margin-bottom: var(--size-2);"></i>
                     <h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>
                     <p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">${message}</p>
                     <button class="btn secondary btn-inline" id="close-error-btn">Try Again</button>
@@ -374,7 +370,7 @@ function updateTokenSummary() {
                 
                 const category = tokenTypes[i % tokenTypes.length];
                 const icon = document.createElement('i');
-                icon.setAttribute('data-lucide', category.icon);
+                icon.setAttribute('data-icon', category.icon);
                 cell.appendChild(icon);
                 cell.style.setProperty('--color', `var(${category.color})`);
                 

@@ -69,10 +69,7 @@ TEMPLATES         PAGES / FRAMES             LAYOUT STYLES
 */
 
 
-/* 1. Import Shoelace FIRST - Component library base styles */
-@import url("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/dark.css");
-
-/* 2. Import Open Props SECOND - Our foundation overrides */
+/* 1. Import Open Props - Our foundation design tokens */
 @import url("https://unpkg.com/open-props/style");
 @import url("https://unpkg.com/open-props/normalize");
 @import url("https://unpkg.com/open-props/buttons");
@@ -248,13 +245,87 @@ body {
  
  
  /* =========================
- ICON SIZES (NEW!)
+ ICON DESIGN TOKENS (SOURCE OF TRUTH)
  ========================= */
+
+ /* Icon sizing tokens */
  --icon-xs: var(--size-3); /* 12px */
  --icon-sm: var(--size-4); /* 16px */
  --icon-md: var(--size-5); /* 20px */
  --icon-lg: var(--size-6); /* 24px */
  --icon-xl: var(--size-8); /* 32px */
+
+ /* Icon stroke weight tokens */
+ --icon-stroke-thin: 1.5;
+ --icon-stroke-regular: 2;
+ --icon-stroke-bold: 2.5;
+ 
+ /* Icon SVG definitions as custom properties (source of truth) */
+ --icon-svg-palette: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/><circle cx='12' cy='6' r='1.5'/><circle cx='7.5' cy='10.5' r='1.5'/><circle cx='16.5' cy='10.5' r='1.5'/><circle cx='9' cy='15.5' r='1.5'/></svg>");
+ --icon-svg-type: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 7 4 4 20 4 20 7'/><line x1='9' y1='20' x2='15' y2='20'/><line x1='12' y1='4' x2='12' y2='20'/></svg>");
+ --icon-svg-hash: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='4' y1='9' x2='20' y2='9'/><line x1='4' y1='15' x2='20' y2='15'/><line x1='10' y1='3' x2='8' y2='21'/><line x1='16' y1='3' x2='14' y2='21'/></svg>");
+ --icon-svg-toggle-right: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='12' x='2' y='6' rx='6' ry='6'/><circle cx='16' cy='12' r='2'/></svg>");
+
+/* =========================
+ ICON BASE CLASSES (RESPONSIVE & ACCESSIBLE)
+ ========================= */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-md); /* Default size */
+    height: var(--icon-md);
+    flex-shrink: 0;
+}
+
+.icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentcolor;
+    stroke-width: var(--icon-stroke-regular);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+/* Icon size variants */
+.icon--xs {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+}
+
+.icon--sm {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+}
+
+.icon--md {
+    width: var(--icon-md);
+    height: var(--icon-md);
+} /* default */
+
+.icon--lg {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+}
+
+.icon--xl {
+    width: var(--icon-xl);
+    height: var(--icon-xl);
+}
+
+/* Icon stroke variants */
+.icon--thin svg {
+    stroke-width: var(--icon-stroke-thin);
+}
+
+.icon--regular svg {
+    stroke-width: var(--icon-stroke-regular);
+} /* default */
+
+.icon--bold svg {
+    stroke-width: var(--icon-stroke-bold);
+}
  
  /* =========================
  CONTENT WIDTHS (NEW!)
@@ -287,71 +358,18 @@ body {
  --focus-ring: 0 0 0 3px rgb(var(--brand-primary-lime-rgb), 0.2);
  --focus-ring-error: 0 0 0 3px rgb(var(--red-6-rgb, 255, 0, 0), 0.2);
  
- /* =========================
- SHOELACE THEME MAPPINGS
- ========================= */
-
- /* Primary Color Mapping */
- --sl-color-primary-50: #f7ffd4;
- --sl-color-primary-100: #f0ffaa;
- --sl-color-primary-200: #e8ff81;
- --sl-color-primary-300: #e1ff57;
- --sl-color-primary-400: #daff2e;
- --sl-color-primary-500: var(--brand-secondary-yellow);
- --sl-color-primary-600: var(--brand-primary-lime);
- --sl-color-primary-700: #a3cc00;
- --sl-color-primary-800: #7a9900;
- --sl-color-primary-900: #526600;
- --sl-color-primary-950: #293300;
  
- /* Neutral Color Mapping */
- --sl-color-neutral-0: var(--gray-0);
- --sl-color-neutral-50: var(--gray-1);
- --sl-color-neutral-100: var(--gray-2);
- --sl-color-neutral-200: var(--gray-3);
- --sl-color-neutral-300: var(--gray-4);
- --sl-color-neutral-400: var(--gray-5);
- --sl-color-neutral-500: var(--gray-6);
- --sl-color-neutral-600: var(--gray-7);
- --sl-color-neutral-700: var(--gray-8);
- --sl-color-neutral-800: var(--gray-9);
- --sl-color-neutral-900: #0a0a0a;
- --sl-color-neutral-950: #000;
  
- /* Shoelace Typography */
- --sl-font-sans: var(--font-sans);
- --sl-font-mono: var(--font-mono);
- --sl-font-weight-normal: var(--font-weight-4);
- --sl-font-weight-semibold: var(--font-weight-6);
- --sl-font-weight-bold: var(--font-weight-7);
  
- /* Shoelace Spacing */
- --sl-spacing-small: var(--size-2);
- --sl-spacing-medium: var(--size-4);
- --sl-spacing-large: var(--size-6);
  
- /* Shoelace Borders */
- --sl-border-radius-small: var(--radius-1);
- --sl-border-radius-medium: var(--radius-2);
- --sl-border-radius-large: var(--radius-3);
- --sl-border-radius-x-large: var(--radius-4);
+ 
  
  /* Stroke weights */
  --stroke-thin: var(--border-size-1); /* 1px */
  --stroke-regular: var(--border-size-2); /* 2px */
  --stroke-thick: var(--border-size-3); /* 3px */
  
- /* Shoelace Shadows */
- --sl-shadow-x-small: var(--shadow-2);
- --sl-shadow-small: var(--shadow-3);
- --sl-shadow-medium: var(--shadow-4);
- --sl-shadow-large: var(--shadow-5);
  
- /* Shoelace Transitions */
- --sl-transition-x-slow: var(--animation-duration-4);
- --sl-transition-slow: var(--animation-duration-3);
- --sl-transition-medium: var(--animation-duration-2);
- --sl-transition-fast: var(--animation-duration-1);
 
  /* ARCHITECTURAL SUGGESTION: New tokens for consistency */
  --shadow-brand: 0 4px 15px rgb(var(--brand-primary-lime-rgb), 0.15);
@@ -441,7 +459,11 @@ body {
  /* Spacing Utilities (Margin & Padding) */
  .m-0 { margin: 0; }
  .m-auto { margin: auto; }
- .mx-auto { margin-left: auto; margin-right: auto; }
+
+ .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+ }
 
  .mb-2 { margin-bottom: var(--size-2); }
  .mb-3 { margin-bottom: var(--size-3); }
@@ -455,8 +477,15 @@ body {
  .p-4 { padding: var(--size-4); }
  .p-6 { padding: var(--size-6); }
 
- .py-2 { padding-top: var(--size-2); padding-bottom: var(--size-2); }
- .px-4 { padding-left: var(--size-4); padding-right: var(--size-4); }
+ .py-2 {
+    padding-top: var(--size-2);
+    padding-bottom: var(--size-2);
+ }
+
+ .px-4 {
+    padding-left: var(--size-4);
+    padding-right: var(--size-4);
+ }
 
  /* Border-Radius Utilities */
  .rounded-1 { border-radius: var(--radius-1); }
@@ -541,10 +570,8 @@ body {
 
 
 
-
-
 /* ==========================================================================
-   COMPONENT: UNIFIED BUTTON SYSTEM (V8)
+   COMPONENT: UNIFIED BUTTON SYSTEM
    ========================================================================== */
 
     .btn {
@@ -568,7 +595,7 @@ body {
 
     .btn .lucide {
         text-shadow: none !important;
-        stroke-width: var(--stroke-regular);
+        stroke-width: var(--icon-stroke-regular);
     }
 
     .btn:focus-visible {
@@ -577,14 +604,44 @@ body {
     }
 
     /* --- SIZES --- */
-    .btn-sm { font-size: var(--font-size-0); height: var(--component-height-sm); padding: 0 var(--size-3); gap: var(--size-1); }
-    .btn-sm .lucide { width: var(--icon-xs); height: var(--icon-xs); } /* 12px */
+    .btn-sm {
+        font-size: var(--font-size-0);
+        height: var(--component-height-sm);
+        padding: 0 var(--size-3);
+        gap: var(--size-1);
+    }
 
-    .btn-md { font-size: var(--font-size-1); height: var(--component-height-md); padding: 0 var(--size-4); gap: var(--size-2); }
-    .btn-md .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
+    .btn-sm .lucide,
+    .btn-sm .icon {
+        width: var(--icon-xs);
+        height: var(--icon-xs);
+    } /* 12px */
 
-    .btn-lg { font-size: var(--font-size-2); height: var(--component-height-lg); padding: 0 var(--size-5); gap: var(--size-2); }
-    .btn-lg .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
+    .btn-md {
+        font-size: var(--font-size-1);
+        height: var(--component-height-md);
+        padding: 0 var(--size-4);
+        gap: var(--size-2);
+    }
+
+    .btn-md .lucide,
+    .btn-md .icon {
+        width: var(--icon-sm);
+        height: var(--icon-sm);
+    } /* 16px */
+
+    .btn-lg {
+        font-size: var(--font-size-2);
+        height: var(--component-height-lg);
+        padding: 0 var(--size-5);
+        gap: var(--size-3);
+    }
+
+    .btn-lg .lucide,
+    .btn-lg .icon {
+        width: var(--icon-md);
+        height: var(--icon-md);
+    } /* 20px */
 
 
     /* --- ICON-ONLY BUTTON --- */
@@ -596,44 +653,111 @@ body {
         border: 1px solid var(--color-border-default);
         transition: var(--transition-fast);
     }
+
     .btn-icon:hover:not(:disabled) {
         border-color: var(--brand-primary-lime);
         color: var(--brand-primary-lime);
         transform: rotate(15deg);
     }
+
     .btn-icon:active:not(:disabled) {
         transform: rotate(0) scale(0.95);
     }
 
-    .btn-icon.btn-sm { width: var(--component-height-sm); height: var(--component-height-sm); }
-    .btn-icon.btn-md { width: var(--component-height-md); height: var(--component-height-md); }
-    .btn-icon.btn-lg { width: var(--component-height-lg); height: var(--component-height-lg); }
+    .btn-icon.btn-sm {
+        width: var(--component-height-sm);
+        height: var(--component-height-sm);
+    }
+
+    .btn-icon.btn-md {
+        width: var(--component-height-md);
+        height: var(--component-height-md);
+    }
+
+    .btn-icon.btn-lg {
+        width: var(--component-height-lg);
+        height: var(--component-height-lg);
+    }
 
     /* Icon size overrides for icon-only buttons, using tokens */
-    .btn-icon.btn-sm .lucide { width: var(--icon-sm); height: var(--icon-sm); } /* 16px */
-    .btn-icon.btn-md .lucide { width: var(--icon-md); height: var(--icon-md); } /* 20px */
-    .btn-icon.btn-lg .lucide { width: var(--icon-lg); height: var(--icon-lg); } /* 24px */
+    .btn-icon.btn-sm .lucide,
+    .btn-icon.btn-sm .icon {
+        width: var(--icon-sm);
+        height: var(--icon-sm);
+    } /* 16px */
+    .btn-icon.btn-md .lucide,
+    .btn-icon.btn-md .icon {
+        width: var(--icon-md);
+        height: var(--icon-md);
+    } /* 20px */
+    .btn-icon.btn-lg .lucide,
+    .btn-icon.btn-lg .icon {
+        width: var(--icon-lg);
+        height: var(--icon-lg);
+    } /* 24px */
 
     /* --- ICON STROKE WEIGHT DIFFERENTIATION --- */
+
     /* Default stroke for all buttons with text */
-    .btn:not(.btn-icon) .lucide {
-        stroke-width: var(--stroke-regular);
+    .btn:not(.btn-icon) .lucide,
+    .btn:not(.btn-icon) .icon svg {
+        stroke-width: var(--icon-stroke-regular);
     }
+
     /* Thinner stroke ONLY for icon-only buttons */
-    .btn-icon .lucide {
-        stroke-width: var(--stroke-thin);
+    .btn-icon .lucide,
+    .btn-icon .icon svg {
+        stroke-width: var(--icon-stroke-thin);
+    }
+
+    /* Remove any unwanted shadows from icons in buttons (Shoelace override) */
+    .btn .icon,
+    .btn .lucide,
+    .btn svg,
+    .btn i {
+        box-shadow: none !important;
+        filter: none !important;
+        text-shadow: none !important;
+    }
+    
+    /* Specifically target any drop-shadow filters on button icons */
+    .btn .icon svg,
+    .btn .lucide svg,
+    .btn svg {
+        filter: none !important;
     }
 
 
 
     /* --- VARIANTS & STATES --- */
-    .btn-primary { background: var(--brand-gradient-lime); color: var(--color-text-on-brand); box-shadow: var(--shadow-brand); }
-    .btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
-    .btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
+    .btn-primary {
+        background: var(--brand-gradient-lime);
+        color: var(--color-text-on-brand);
+        box-shadow: var(--shadow-brand);
+    }
+    .btn-primary:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-brand-hover);
+        filter: brightness(1.05);
+    }
+    .btn-primary:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: var(--shadow-brand);
+        filter: brightness(0.95);
+    }
 
-    .btn-secondary { background: var(--color-background-secondary); color: var(--color-text-default); border-color: var(--color-border-default); }
-    .btn-secondary:hover:not(:disabled) { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
-    .btn-secondary:active:not(:disabled) { background: var(--color-background-primary); }
+    .btn-secondary {
+        background: var(--color-background-secondary);
+        color: var(--color-text-default);
+        border-color: var(--color-border-default);
+    }
+    .btn-secondary:hover:not(:disabled) {
+        border-color: var(--brand-primary-lime);
+        color: var(--brand-primary-lime);
+    }
+    .btn-secondary:active:not(:disabled) {
+        background: var(--color-background-primary);
+    }
 
     .btn-tertiary { 
         background: transparent; 
@@ -641,12 +765,12 @@ body {
     }
     
     .btn-tertiary:hover:not(:disabled) { 
-        background: rgba(255, 255, 255, 0.05); 
+        background: rgb(255, 255, 255, 0.05); 
         color: var(--brand-primary-lime); 
     }
 
     .btn-tertiary:active:not(:disabled) { 
-        background: rgba(255, 255, 255, 0.1); 
+        background: rgb(255, 255, 255, 0.1); 
     }
 
 
@@ -770,6 +894,7 @@ body {
     /* ==========================================================================
     BACKWARD COMPATIBILITY LAYER (V8 -> V4)
     ========================================================================== */
+
     /* This ensures old class names like ".btn.primary" inherit new styles. */
 
     .btn.primary {
@@ -778,11 +903,13 @@ body {
         color: var(--color-text-on-brand);
         box-shadow: var(--shadow-brand);
     }
+
     .btn.primary:hover:not(:disabled) {
         transform: translateY(-1px);
         box-shadow: var(--shadow-brand-hover);
         filter: brightness(1.05);
     }
+
     .btn.primary:active:not(:disabled) {
         transform: translateY(0);
         box-shadow: var(--shadow-brand);
@@ -795,10 +922,12 @@ body {
         color: var(--color-text-default);
         border-color: var(--color-border-default);
     }
+
     .btn.secondary:hover:not(:disabled) {
         border-color: var(--brand-primary-lime);
         color: var(--brand-primary-lime);
     }
+
     .btn.secondary:active:not(:disabled) {
         background: var(--color-background-primary);
     }
@@ -813,11 +942,13 @@ body {
         width: var(--component-height-md); /* Default to medium size */
         height: var(--component-height-md);
     }
+
     .btn.btn-icon-only:hover:not(:disabled) {
         border-color: var(--brand-primary-lime);
         color: var(--brand-primary-lime);
         transform: rotate(15deg);
     }
+
     .btn.btn-icon-only:active:not(:disabled) {
         transform: rotate(0) scale(0.95);
     }
@@ -903,8 +1034,8 @@ body {
 }
 
 .usage-guidelines {
-    background: rgba(210, 255, 55, 0.05);
-    border: 1px solid rgba(210, 255, 55, 0.2);
+    background: rgb(210, 255, 55, 0.05);
+    border: 1px solid rgb(210, 255, 55, 0.2);
     border-radius: 8px;
     padding: 1.5rem;
     margin-top: 1.5rem;
@@ -927,7 +1058,7 @@ body {
     color: var(--color-text-secondary);
 }
 
-.usage-guidelines li:before {
+.usage-guidelines li::before {
     content: '→';
     position: absolute;
     left: 0;
@@ -943,8 +1074,8 @@ body {
 .force-active.btn-primary { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
 .force-hover.btn-secondary, .force-hover.btn-icon { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
 .force-active.btn-secondary { background: var(--color-background-primary); }
-.force-hover.btn-tertiary { background: rgba(255, 255, 255, 0.05); color: var(--brand-primary-lime); }
-.force-active.btn-tertiary { background: rgba(255, 255, 255, 0.1); }
+.force-hover.btn-tertiary { background: rgb(255, 255, 255, 0.05); color: var(--brand-primary-lime); }
+.force-active.btn-tertiary { background: rgb(255, 255, 255, 0.1); }
 .force-hover.btn-icon { transform: rotate(15deg); }
 .force-active.btn-icon { transform: rotate(0) scale(0.95); }
 .force-focus { box-shadow: var(--focus-ring); }
@@ -1072,139 +1203,48 @@ body {
 .lucide {
  width: 1em;
  height: 1em;
- stroke-width: var(--stroke-regular); /* <-- Now uses token! */
+ stroke-width: var(--icon-stroke-regular); /* Updated to use icon token */
  vertical-align: middle;
  color: inherit;
 }
 
 .icon-thin {
-    stroke-width: var(--stroke-thin) !important;
+    stroke-width: var(--icon-stroke-thin) !important;
 }
 
 /* Fix specific problems */
 .nav-links .lucide {
- stroke-width: var(--stroke-thin);
+ stroke-width: var(--icon-stroke-thin);
 }
 
 .success-icon,
 .empty-state-icon .lucide {
- stroke-width: var(--stroke-regular);
+ stroke-width: var(--icon-stroke-regular);
 }
-
-/* ==========================================================================
- SHOELACE COMPONENT THEME (REFACTORED)
- This block themes Shoelace components using the design system's tokens.
- ========================================================================== */
 
 :root {
  /* Map Design Tokens to Shoelace Theme Properties */
 
- /* Primary Color Mapping */
- --sl-color-primary-50: #f7ffd4;
- --sl-color-primary-100: #f0ffaa;
- --sl-color-primary-200: #e8ff81;
- --sl-color-primary-300: #e1ff57;
- --sl-color-primary-400: #daff2e;
- --sl-color-primary-500: var(--brand-secondary-yellow);
- --sl-color-primary-600: var(--brand-primary-lime); /* Main brand color */
- --sl-color-primary-700: #a3cc00;
- --sl-color-primary-800: #7a9900;
- --sl-color-primary-900: #526600;
- --sl-color-primary-950: #293300;
  
  /* Neutral (Gray) Color Mapping */
- --sl-color-neutral-0: var(--gray-9); /* Surface color */
- --sl-color-neutral-50: var(--gray-8);
- --sl-color-neutral-100: var(--gray-7);
- --sl-color-neutral-200: var(--gray-6);
- --sl-color-neutral-300: var(--gray-5);
- --sl-color-neutral-400: var(--gray-4);
- --sl-color-neutral-500: var(--gray-3);
- --sl-color-neutral-600: var(--gray-2);
- --sl-color-neutral-700: var(--gray-1);
- --sl-color-neutral-800: var(--gray-0); /* Text color */
- --sl-color-neutral-900: #000;
- --sl-color-neutral-950: #000;
 
  /* Typography Mapping */
- --sl-font-sans: var(--font-sans);
- --sl-font-mono: var(--font-mono);
- --sl-font-weight-semibold: var(--font-weight-6);
- --sl-font-weight-bold: var(--font-weight-7);
 
  /* Spacing & Radius Mapping */
- --sl-spacing-small: var(--size-2);
- --sl-spacing-medium: var(--size-3);
- --sl-spacing-large: var(--size-4);
- --sl-border-radius-medium: var(--radius-2);
- --sl-border-radius-large: var(--radius-3);
- --sl-border-radius-circle: var(--radius-round); /* Fix for circle buttons */
  
  /* Input Mapping */
- --sl-input-background-color: var(--color-background-secondary);
- --sl-input-border-color: var(--color-border-default);
- --sl-input-color: var(--color-text-default);
- --sl-input-background-color-hover: var(--color-background-tertiary);
 }
 
 /* --- Component-Specific Theming --- */
 
-/* sl-button */
-sl-button::part(base) {
-    /* Inherit core properties from .btn */
-    font-family: var(--font-sans);
-    font-weight: 600;
-    border-radius: 6px;
-    transition: var(--transition-fast);
-}
 
-sl-button[variant="primary"]::part(base) {
-    /* Style to match .btn-primary */
-    background: var(--brand-gradient-lime);
-    color: var(--color-text-on-brand);
-    border-color: transparent;
-    box-shadow: var(--shadow-brand);
-}
 
-sl-button[variant="primary"]::part(base):hover {
-    /* Style to match .btn-primary:hover */
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-brand-hover);
-    filter: brightness(1.05);
-}
 
-sl-button[variant="default"]::part(base) {
-    /* Style to match .btn-secondary */
-    background-color: var(--color-background-secondary);
-    color: var(--color-text-default);
-    border-color: var(--color-border-default);
-}
 
-sl-button[variant="default"]::part(base):hover {
-    /* Style to match .btn-secondary:hover */
-    border-color: var(--brand-primary-lime);
-    color: var(--brand-primary-lime);
-}
 
-sl-button[variant="text"]::part(base) {
-    /* Style to match .btn-tertiary */
-    color: var(--color-text-secondary);
-}
 
-sl-button[variant="text"]::part(base):hover {
-    /* Style to match .btn-tertiary:hover */
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--brand-primary-lime);
-}
 
-/* sl-icon-button */
-sl-icon-button::part(base) {
- color: var(--color-text-secondary);
-}
 
-sl-icon-button::part(base):hover {
- color: var(--brand-primary-lime);
-}
 
 
 
@@ -1244,15 +1284,12 @@ sl-icon-button::part(base):hover {
  display: flex;
  flex-direction: column;
  gap: var(--size-3); /* Sets space between stats and cards */
- margin-top: calc(-1 * var(--size-10)); /* Pulls the group up */
+ margin: calc(-1 * var(--size-10)) auto var(--size-6) auto; /* Pulls the group up */
  position: relative;
  z-index: var(--layer-card);
  
  /* Centering styles */
- max-width: 1200px;
- margin-left: auto;
- margin-right: auto;
- margin-bottom: var(--size-6); /* Space below this group */
+ max-width: 1200px; /* Space below this group */
 }
 
 /* Impact stats */
@@ -1275,7 +1312,7 @@ sl-icon-button::part(base):hover {
  font-size: var(--font-size-6);
  font-weight: var(--font-weight-8);
  background: var(--brand-gradient-lime);
- -webkit-background-clip: text;
+ background-clip: text;
  -webkit-text-fill-color: transparent;
  background-clip: text;
  line-height: 1;
@@ -1411,7 +1448,6 @@ sl-icon-button::part(base):hover {
 }
 
 .tech-info-content {
- display: none;
  opacity: 0;
  transition: opacity 0.3s var(--ease-3);
  display: flex;
@@ -1449,7 +1485,7 @@ sl-icon-button::part(base):hover {
 
 .tech-item.active {
  border-color: var(--brand-primary-lime);
- background: rgba(210, 255, 55, 0.05);
+ background: rgb(210, 255, 55, 0.05);
 }
 
 /* FAQ Section */
@@ -1549,7 +1585,7 @@ sl-icon-button::part(base):hover {
 .profile-card .ascii-art, .profile-card .ascii-art-mobile {
  white-space: pre;
  color: var(--brand-primary-lime);
- text-shadow: 0 0 10px rgba(var(--brand-primary-lime-rgb), 0.5);
+ text-shadow: 0 0 10px rgb(var(--brand-primary-lime-rgb), 0.5);
  animation: subtle-glow 3s ease-in-out infinite;
  text-align: left;
  font-family: 'Courier New', monospace;
@@ -1572,7 +1608,7 @@ sl-icon-button::part(base):hover {
 
 .profile-card .code-container {
  width: 100%;
- background: rgba(0, 0, 0, var(--opacity-50));
+ background: rgb(0, 0, 0, var(--opacity-50));
  border: var(--border-size-1) solid var(--gray-7);
  border-radius: var(--radius-3);
  padding: var(--size-5);
@@ -1624,6 +1660,7 @@ sl-icon-button::part(base):hover {
 
 .profile-card .code-line {
  position: relative;
+
  /* Set a fixed height that matches the line-height */
  height: 25px;
  line-height: 25px; 
@@ -1646,6 +1683,7 @@ sl-icon-button::part(base):hover {
  background: var(--brand-primary-lime);
  animation: cursor-blink 1s step-end infinite;
  margin-left: 2px;
+
  /* The vertical-align, position, and top properties are no longer needed */
 }
 
@@ -1666,7 +1704,7 @@ sl-icon-button::part(base):hover {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
  .profile-card {
  flex-direction: column;
  gap: var(--size-3);
@@ -1696,6 +1734,7 @@ sl-icon-button::part(base):hover {
  text-align: left;
  }
 }
+
 /* @docs-only-end */
 
 
@@ -1752,7 +1791,6 @@ sl-icon-button::part(base):hover {
  width: 100%;
  height: var(--size-6);
  appearance: none;
- appearance: none;
  background: transparent;
 }
 
@@ -1764,7 +1802,6 @@ sl-icon-button::part(base):hover {
 }
 
 .playground-controls input[type="range"]::-webkit-slider-thumb {
- appearance: none;
  appearance: none;
  width: var(--size-4);
  height: var(--size-4);
@@ -2024,7 +2061,7 @@ sl-icon-button::part(base):hover {
     color: var(--brand-primary-lime);
     margin-right: var(--size-2); /* Space between icon and text */
     vertical-align: middle; /* Aligns icon with the text */
-    stroke-width: var(--stroke-regular); /* Ensures consistent icon weight */
+    stroke-width: var(--icon-stroke-regular); /* Ensures consistent icon weight */
     width: var(--icon-sm); /* ADDED: Fixes responsive shrinking */
     height: var(--icon-sm); /* ADDED: Fixes responsive shrinking */
     flex-shrink: 0; /* ADDED: Prevents the icon from being squished */
@@ -2201,7 +2238,8 @@ sl-icon-button::part(base):hover {
     height: var(--icon-xs);
 }
 
-.badge .icon .lucide {
+.badge .icon .lucide,
+.badge .icon svg {
     width: 100%;
     height: 100%;
 }
@@ -2301,11 +2339,11 @@ sl-icon-button::part(base):hover {
  padding: var(--size-4);
  
  /* Glassmorphism styles */
- background: rgba(var(--gray-8-rgb), var(--opacity-glass-10)); /* Based on --gray-8 with 60% opacity */
+ background: rgb(var(--gray-8-rgb), var(--opacity-glass-10)); /* Based on --gray-8 with 60% opacity */
  backdrop-filter: var(--blur-lg);
- -webkit-backdrop-filter: var(--blur-lg); /* Safari support */
+ backdrop-filter: var(--blur-lg); /* Safari support */
  border-radius: var(--radius-3);
- border: var(--border-size-1) solid rgba(255, 255, 255, 0.1); /* Subtle edge highlight */
+ border: var(--border-size-1) solid rgb(255, 255, 255, 0.1); /* Subtle edge highlight */
 }
 
 .stat-item {
@@ -2321,7 +2359,6 @@ sl-icon-button::part(base):hover {
  font-size: var(--font-size-8);
  font-weight: var(--font-weight-8);
  background: var(--brand-gradient-lime);
- background-clip: text;
  -webkit-text-fill-color: transparent;
  background-clip: text;
  line-height: 1;
@@ -2443,23 +2480,23 @@ sl-icon-button::part(base):hover {
  width: var(--icon-lg);
  height: var(--icon-lg);
  color: var(--color-text-default) !important;
- fill: currentColor;
+ fill: currentcolor;
 }
 
 /* Keep Lucide icons as outlines in tech items */
 .tech-item .lucide {
  fill: none !important;
- stroke: currentColor;
+ stroke: currentcolor;
 }
 
 .info-panel-a .title svg {
- fill: currentColor;
+ fill: currentcolor;
 }
 
 /* Specific fix for Lucide icons to remain outline */
 .info-panel-a .title .lucide {
  fill: none !important;
- stroke: currentColor;
+ stroke: currentcolor;
 }
 
 /* Final "Built With" Info Panel (Concept A) */
@@ -3021,6 +3058,7 @@ select option {
 .content-wrapper::-webkit-scrollbar-thumb:hover { background-color: var(--gray-5); }
 
 /* ADDED: New rules for global scrollbar styling */
+
 /* For Webkit browsers like Chrome, Safari, Edge */
 ::-webkit-scrollbar {
  width: 12px;
@@ -3138,6 +3176,7 @@ select option {
  flex-direction: column;
  align-items: center;
  justify-content: center;
+
  /* Prevent individual stats from growing too large */
  max-width: 80px;
 }
@@ -3525,25 +3564,23 @@ select option {
  text-align: center;
  position: relative;
  z-index: var(--layer-card); /* FIX: This ensures the panel is on top */
- background: rgba(var(--gray-8-rgb), var(--opacity-glass-60));
+ background: rgb(var(--gray-8-rgb), var(--opacity-glass-60));
  backdrop-filter: var(--blur-xl);
- -webkit-backdrop-filter: var(--blur-xl);
+ backdrop-filter: var(--blur-xl);
  
  @supports not (backdrop-filter: blur(1px)) {
- background: rgba(42, 42, 42, 0.95);
+ background: rgb(42, 42, 42, 0.95);
  }
  
  border-radius: var(--radius-3); /* FIX: Reduced radius from previous step */
- border: var(--border-size-1) solid rgba(255, 255, 255, 0.1);
- box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
- 
+ border: var(--border-size-1) solid rgb(255, 255, 255, 0.1);
+ box-shadow: 0 8px 32px rgb(0, 0, 0, 0.3), inset 0 1px 0 rgb(255, 255, 255, 0.1);
  padding: var(--size-3);
  display: flex;
  flex-direction: column;
  gap: var(--size-2);
  align-items: center;
  min-width: 240px;
- 
  transform: scale(0.9);
  transition: all var(--transition-fast);
  will-change: transform, opacity;
@@ -3555,7 +3592,7 @@ select option {
  font-size: var(--font-size-4);
  color: var(--color-text-default);
  margin: 0;
- text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+ text-shadow: 0 2px 4px rgb(0, 0, 0, 0.5);
 }
 
 /* Button refinement rules are correct */
@@ -3571,10 +3608,10 @@ select option {
 .te-progress-track {
  width: 200px;
  height: 12px;
- background: rgba(var(--gray-7-rgb), var(--opacity-overlay-80));
+ background: rgb(var(--gray-7-rgb), var(--opacity-overlay-80));
  border-radius: var(--radius-round);
  overflow: hidden;
- box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+ box-shadow: inset 0 2px 4px rgb(0, 0, 0, 0.3);
 }
 
 .te-progress-fill {
@@ -3584,7 +3621,7 @@ select option {
  border-radius: var(--radius-round);
  position: relative;
  overflow: hidden;
- box-shadow: 0 0 10px rgba(210, 255, 55, 0.5);
+ box-shadow: 0 0 10px rgb(210, 255, 55, 0.5);
  will-change: width;
  transition: width 0.2s ease-out;
 }
@@ -3596,7 +3633,7 @@ select option {
  background: linear-gradient(
  90deg,
  transparent 0%,
- rgba(255, 255, 255, 0.4) 50%,
+ rgb(255, 255, 255, 0.4) 50%,
  transparent 100%
  );
  animation: te-shimmer 1.5s infinite;
@@ -3613,7 +3650,7 @@ select option {
  font-weight: var(--font-weight-6);
  color: var(--color-text-default);
  margin: 0;
- text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+ text-shadow: 0 2px 4px rgb(0, 0, 0, 0.5);
 }
 
 /* Icon grid */
@@ -3648,7 +3685,7 @@ select option {
 .te-icon-cell .lucide {
  width: 100%;
  height: 100%;
- stroke-width: var(--stroke-regular);
+ stroke-width: var(--icon-stroke-regular);
 }
 
 @keyframes te-vortex-swirl {
@@ -3656,10 +3693,12 @@ select option {
  transform: translate(var(--x-start), var(--y-start)) scale(0);
  opacity: 0;
  }
+
  50% {
  transform: translate(0, 0) scale(var(--scale, 1));
  opacity: 1;
  }
+
  100% {
  transform: translate(var(--x-end), var(--y-end)) scale(0);
  opacity: 0;
@@ -3688,7 +3727,7 @@ select option {
 .te-success-icon .lucide {
  width: 160px;
  height: 160px;
- stroke-width: var(--stroke-thin);
+ stroke-width: var(--icon-stroke-thin);
 }
 
 @keyframes te-success-pop {
@@ -3696,10 +3735,12 @@ select option {
  transform: translate(-50%, -50%) scale(0) rotate(-180deg);
  opacity: 0;
  }
+
  50% {
  transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
  opacity: 1;
  }
+
  100% {
  transform: translate(-50%, -50%) scale(1) rotate(0deg);
  opacity: 1;
@@ -3973,20 +4014,6 @@ select option {
 .format-select:focus-visible,
 .search-input:focus-visible,
 .about-close:focus-visible,
-sl-select::part(combobox):focus-visible,
-sl-input::part(input):focus-visible,
-.high-contrast-focus:focus-visible,
-.footer-social-link:focus-visible,
-.token-copy:focus-visible,
-.social-link:focus-visible,
-.faq-question:focus-visible,
-.tech-item:focus-visible,
-.mobile-menu-toggle-right:focus-visible,
-.menu-close-btn:focus-visible,
-.mobile-nav-links a:focus-visible {
- outline: none;
- box-shadow: var(--focus-ring);
-}
 .footer-cta:focus-visible {
  outline: none;
  box-shadow: var(--focus-ring);
@@ -4160,7 +4187,7 @@ sl-input::part(input):focus-visible,
 .empty-state-category .lucide {
     width: var(--icon-lg); /* 32px - Bolder icons */
     height: var(--icon-lg);
-    stroke-width: var(--stroke-regular);
+    stroke-width: var(--icon-stroke-regular);
 }
 
 .empty-state-category .text-label {
@@ -4188,9 +4215,9 @@ sl-input::part(input):focus-visible,
     right: 0;
     width: 280px;
     height: 100%;
-    background: rgba(var(--color-backdrop-rgb), 0.95);
+    background: rgb(var(--color-backdrop-rgb), 0.95);
     backdrop-filter: var(--blur-lg);
-    -webkit-backdrop-filter: var(--blur-lg);
+    backdrop-filter: var(--blur-lg);
     border-left: var(--border-size-1) solid var(--color-border-default);
     z-index: var(--layer-modal);
     transform: translateX(100%);
@@ -4221,7 +4248,7 @@ sl-input::part(input):focus-visible,
 .menu-close-btn .lucide {
     width: var(--icon-lg);
     height: var(--icon-lg);
-    stroke-width: var(--stroke-regular);
+    stroke-width: var(--icon-stroke-regular);
 }
 
 .mobile-nav-links {
@@ -4252,7 +4279,7 @@ sl-input::part(input):focus-visible,
 
 .mobile-nav-links a.active {
     color: var(--brand-primary-lime);
-    background: rgba(var(--brand-primary-lime-rgb), 0.1);
+    background: rgb(var(--brand-primary-lime-rgb), 0.1);
 }
 
 .mobile-nav-links .lucide {
@@ -4267,7 +4294,7 @@ sl-input::part(input):focus-visible,
 .menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(var(--color-backdrop-rgb), 0.5);
+    background: rgb(var(--color-backdrop-rgb), 0.5);
     z-index: calc(var(--layer-modal) - 1);
     opacity: 0;
     transition: opacity var(--transition-medium);
@@ -4322,6 +4349,7 @@ body {
     overflow-wrap: break-word;
     word-wrap: break-word;
     min-width: 0;
+
     /* REMOVED: Padding will be handled by child elements now */
 }
 
@@ -4415,7 +4443,7 @@ body {
 .nav-links .lucide {
  width: 16px;
  height: 16px;
- stroke-width: var(--stroke-regular);
+ stroke-width: var(--icon-stroke-regular);
 }
 
 /* Sidebar Footer */
@@ -4473,7 +4501,7 @@ body {
  color: var(--brand-primary-lime);
  width: 1em;
  height: 1em;
- stroke-width: var(--stroke-regular);
+ stroke-width: var(--icon-stroke-regular);
 }
 
 .section-description {
@@ -4510,7 +4538,7 @@ body {
  color: var(--brand-primary-lime);
  width: 1em;
  height: 1em;
- stroke-width: var(--stroke-regular);
+ stroke-width: var(--icon-stroke-regular);
  margin-right: var(--size-1);
 }
 
@@ -4521,6 +4549,7 @@ body {
  margin-top: var(--size-6);
  font-size: var(--font-size-2);
 }
+
 .example-subheader:first-of-type {
  margin-top: 0;
 }
@@ -4779,6 +4808,7 @@ body {
  position: relative;
  display: flex;
  flex-direction: column;
+
  /* height: 100%; REMOVED - This was causing the issue */
 }
 
@@ -4957,7 +4987,7 @@ body {
 .about-modal {
     position: fixed;
     inset: 0;
-    background-color: rgba(var(--color-backdrop-rgb), var(--opacity-backdrop));
+    background-color: rgb(var(--color-backdrop-rgb), var(--opacity-backdrop));
     backdrop-filter: var(--blur-lg);
     z-index: var(--layer-notification);
     display: flex;
@@ -5095,10 +5125,10 @@ body {
         left: 0;
         right: 0;
         height: var(--size-10);
-        background: rgba(var(--color-backdrop-rgb), 0.8);
+        background: rgb(var(--color-backdrop-rgb), 0.8);
         backdrop-filter: var(--blur-lg);
-        -webkit-backdrop-filter: var(--blur-lg);
-        border-bottom: var(--border-size-1) solid rgba(var(--brand-primary-lime-rgb), 0.1);
+        backdrop-filter: var(--blur-lg);
+        border-bottom: var(--border-size-1) solid rgb(var(--brand-primary-lime-rgb), 0.1);
         z-index: var(--layer-modal);
         padding: 0 var(--size-4);
         align-items: center;
@@ -5108,7 +5138,7 @@ body {
     
     @supports not (backdrop-filter: blur(1px)) {
         .mobile-header {
-            background: rgba(var(--color-backdrop-rgb), 0.95);
+            background: rgb(var(--color-backdrop-rgb), 0.95);
         }
     }
     
@@ -5152,7 +5182,7 @@ body {
     .mobile-menu-toggle-right .lucide {
         width: var(--icon-lg);
         height: var(--icon-lg);
-        stroke-width: var(--stroke-regular);
+        stroke-width: var(--icon-stroke-regular);
     }
 
     /* --- Mobile Grid Stacking for Components --- */
@@ -5256,7 +5286,7 @@ body {
     }
 
    /* Mobile optimization for portfolio section */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     /* Hero section adjustments */
     .portfolio-hero {
     padding: var(--size-6) var(--size-4);
@@ -5265,6 +5295,7 @@ body {
     display: flex;
     align-items: center;
 }
+
     /* Ensure hero content uses full height */
     .hero-content-wrapper {
         height: 100%;
@@ -5356,7 +5387,7 @@ body {
 }
 
 /* Very small screens */
-@media (max-width: 480px) {
+@media (width <= 480px) {
     .portfolio-hero {
         padding: var(--size-5) var(--size-3);
     }
@@ -5402,6 +5433,122 @@ body {
  --color-backdrop-rgb: 255, 255, 255;
 }
 */
+
+/* =================================================================
+   ICON DOCUMENTATION STYLES
+   ================================================================= */
+
+/* Icon showcase grid - responsive layout */
+.icon-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-3);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-2);
+    background: var(--color-background-subtle);
+    transition: all 0.2s ease;
+}
+
+.icon-showcase:hover {
+    background: var(--color-background-default);
+    border-color: var(--color-border-default);
+}
+
+.icon-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-1);
+    background: var(--color-background-default);
+}
+
+.icon-meta {
+    text-align: center;
+}
+
+.icon-name {
+    font-weight: 600;
+    color: var(--color-text-default);
+}
+
+.icon-usage {
+    color: var(--color-text-muted);
+}
+
+/* Icon size demonstration */
+.icon-size-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-2);
+    border-radius: var(--radius-1);
+    transition: all 0.2s ease;
+}
+
+.icon-size-demo:hover {
+    background: var(--color-background-subtle);
+}
+
+.size-label {
+    font-weight: 500;
+    margin-top: var(--size-1);
+}
+
+/* Code examples in guidelines */
+.code-examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    margin-top: var(--size-2);
+}
+
+.code-example {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+}
+
+.code-example code {
+    padding: var(--size-2);
+    background: var(--color-background-code);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-1);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-1);
+    overflow-x: auto;
+}
+
+/* Responsive design for icon documentation */
+@media (width <= 768px) {
+    .example-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--size-2);
+    }
+    
+    .icon-showcase {
+        padding: var(--size-2);
+    }
+    
+    .icon-display {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (width <= 480px) {
+    .example-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .icon-size-demo {
+        padding: var(--size-1);
+    }
+}
 
 
 

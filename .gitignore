@@ -2,6 +2,8 @@
 
 # OS specific files
 .DS_Store
+.DS_Store?
+**/.DS_Store
 Thumbs.db
 
 # Node.js dependencies
@@ -10,6 +12,7 @@ node_modules/
 # Backup files
 *.bak
 *.backup
+*.backup.*
 *.broken
 
 # Sandbox and experimental directories
