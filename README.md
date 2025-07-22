@@ -267,7 +267,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
    ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║     ███████╗██╔╝ ██╗██║       ██╗
    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝     ╚══════╝╚═╝  ╚═╝╚═╝       ╚═╝
 ==============================================================================
-[STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER v4.0.8] : [ARCHITECT: NATE MILLS]
+   [STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER] : [ARCHITECT: NATE MILLS]
 ==============================================================================
 
 ███╗   ██╗ █████╗ ████████╗███████╗     ███╗   ███╗██╗██╗     ██╗     ███████╗
