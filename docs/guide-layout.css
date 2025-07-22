@@ -64,12 +64,230 @@ body {
     background: var(--color-background-tertiary);
     padding: var(--size-3) var(--size-4);
     border-bottom: var(--border-size-1) solid var(--color-border-default);
-    font-size: var(--font-size-0);
-    font-weight: var(--font-weight-6);
-    color: var(--color-text-secondary);
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-7);
+    color: var(--color-text-default);
     text-transform: uppercase;
     letter-spacing: var(--font-letterspacing-2);
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
 }
+
+/* =========================
+   TEMPLATE PADDING CONSISTENCY
+   Ensures all template sections have proper spacing
+   ========================= */
+
+.component-header {
+    padding: var(--size-4) !important;
+}
+
+.component-body {
+    padding: var(--size-4) !important;
+}
+
+.example-wrapper {
+    padding: var(--size-4);
+    background: var(--color-background-secondary);
+    border-radius: var(--radius-2);
+    border: var(--border-size-1) solid var(--color-border-default);
+}
+
+.example-wrapper:hover {
+    background: var(--color-background-tertiary);
+    transition: background-color 0.2s var(--ease-2);
+}
+
+/* Status indicators spacing */
+.a11y-status {
+    margin: var(--size-3) 0;
+    padding: var(--size-3);
+    border-radius: var(--radius-2);
+}
+
+/* Typography spacing within component-body */
+.component-body h3:first-child {
+    margin-top: 0;
+}
+
+.component-body > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Code examples styling */
+.code-block {
+    position: relative;
+    margin: var(--size-2) 0 0 0;
+}
+
+.example-wrapper pre {
+    margin: 0;
+    padding: var(--size-3);
+    background: var(--color-background-tertiary);
+    border-radius: var(--radius-1);
+    border: var(--border-size-1) solid var(--color-border-default);
+}
+
+.example-wrapper code {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    color: var(--color-text-default);
+}
+
+.copy-button {
+    position: absolute;
+    top: var(--size-2);
+    right: var(--size-2);
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-1);
+    padding: var(--size-1);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-2);
+    z-index: 1;
+}
+
+.copy-button:hover {
+    background: var(--color-background-secondary);
+}
+
+.code-block:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button i {
+    width: var(--size-3);
+    height: var(--size-3);
+}
+
+.copy-button.copied {
+    background: var(--brand-primary-lime-alpha-10);
+    border-color: var(--brand-primary-lime);
+}
+
+/* =========================
+   ADVANCED PATTERN STYLING
+   ========================= */
+
+/* Properties table */
+.properties-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--size-2) 0 0 0;
+    font-size: var(--font-size-0);
+}
+
+.properties-table th {
+    background: var(--color-background-tertiary);
+    padding: var(--size-2) var(--size-3);
+    text-align: left;
+    font-weight: var(--font-weight-6);
+    border-bottom: var(--border-size-2) solid var(--color-border-default);
+}
+
+.properties-table td {
+    padding: var(--size-2) var(--size-3);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    vertical-align: top;
+}
+
+.properties-table code {
+    background: var(--color-background-tertiary);
+    padding: var(--size-1);
+    border-radius: var(--radius-1);
+    font-size: var(--font-size-00);
+}
+
+/* Usage guidelines */
+.usage-guideline ul {
+    margin: var(--size-2) 0 0 0;
+    padding-left: var(--size-4);
+}
+
+.usage-guideline li {
+    margin-bottom: var(--size-1);
+    line-height: var(--font-lineheight-3);
+}
+
+/* Component anatomy diagram */
+.anatomy-diagram {
+    margin: var(--size-2) 0 0 0;
+    padding: var(--size-4);
+    background: var(--color-background-tertiary);
+    border-radius: var(--radius-2);
+}
+
+.anatomy-item {
+    display: flex;
+    gap: var(--size-6);
+    align-items: flex-start;
+}
+
+.anatomy-sample {
+    flex-shrink: 0;
+}
+
+.anatomy-labels {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.anatomy-callout {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    font-size: var(--font-size-0);
+}
+
+.callout-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-5);
+    height: var(--size-5);
+    background: var(--brand-primary-lime);
+    color: var(--color-text-inverse);
+    border-radius: 50%;
+    font-weight: var(--font-weight-6);
+    font-size: var(--font-size-00);
+    flex-shrink: 0;
+}
+
+.callout-text {
+    color: var(--color-text-default);
+}
+
+/* Related components */
+.related-components {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--size-3);
+    margin: var(--size-2) 0 0 0;
+}
+
+.related-item {
+    padding: var(--size-3);
+    background: var(--color-background-tertiary);
+    border-radius: var(--radius-2);
+    border: var(--border-size-1) solid var(--color-border-default);
+}
+
+.related-item strong {
+    display: block;
+    margin-bottom: var(--size-1);
+    color: var(--color-text-default);
+}
+
+.related-item p {
+    margin: 0;
+    font-size: var(--font-size-0);
+    color: var(--color-text-secondary);
+    line-height: var(--font-lineheight-3);
+}
+
 
 .token-grid {
     display: grid;
@@ -94,6 +312,56 @@ body {
 .token-value {
     color: var(--color-text-default);
     font-weight: var(--font-weight-5);
+}
+
+/* =========================
+   NAVIGATION ENHANCEMENTS
+   ========================= */
+
+/* Clickable navigation cards */
+.variants-grid .example-wrapper.nav-card {
+    cursor: pointer;
+    transition: all 0.2s var(--ease-2);
+    position: relative;
+    overflow: hidden;
+}
+
+.variants-grid .example-wrapper.nav-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 var(--size-2) var(--size-4) rgba(0,0,0,0.1);
+    background: var(--color-background-primary);
+    border-color: var(--brand-primary-lime);
+}
+
+.variants-grid .example-wrapper.nav-card::after {
+    content: '→';
+    position: absolute;
+    top: var(--size-3);
+    right: var(--size-3);
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-2);
+    color: var(--brand-primary-lime);
+    font-weight: bold;
+}
+
+.variants-grid .example-wrapper.nav-card:hover::after {
+    opacity: 1;
+}
+
+/* Smooth scroll styling for active section */
+.section-wrapper.highlight {
+    animation: highlightSection 0.6s var(--ease-2);
+}
+
+@keyframes highlightSection {
+    0% {
+        background: var(--brand-primary-lime-alpha-10);
+        border-color: var(--brand-primary-lime);
+    }
+    100% {
+        background: var(--color-background-primary);
+        border-color: var(--color-border-default);
+    }
 }
 
 /* =========================
@@ -145,6 +413,7 @@ body {
     color: rgb(153, 27, 27);
 }
 
+
 /* =========================
    RESPONSIVE DESIGN
    ========================= */
@@ -166,6 +435,7 @@ body {
         grid-template-columns: 1fr;
         padding: var(--size-3);
     }
+    
 }
 
 /* ==========================================================================
