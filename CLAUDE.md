@@ -248,6 +248,16 @@ if (memInfo) {
 4. Reload plugin in Figma (no need to reinstall)  
 5. Test with small token collection first
 
+**Script Testing Before Commits:**
+When adding or modifying npm scripts in `package.json`:
+1. **Test critical scripts manually** before committing:
+   - `npm start` - Verify universal entry point works
+   - `npm run sync` - Ensure build process completes
+   - `npm run format` - Check CSS auto-fix functionality
+2. **Update README.md** to reflect any script changes
+3. **Document new scripts** with clear descriptions of their purpose
+4. **Avoid "unsafe" naming** - use descriptive names like `sync:skip-checks`
+
 **Figma Compatibility Checker:**
 - **Purpose:** Validates code for Figma plugin environment issues before testing
 - **Usage:** `npm run figma-check` or `npm run figma-check path/to/file.js`

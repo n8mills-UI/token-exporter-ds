@@ -735,11 +735,13 @@ body {
         color: var(--color-text-on-brand);
         box-shadow: var(--shadow-brand);
     }
+
     .btn-primary:hover:not(:disabled) {
         transform: translateY(-1px);
         box-shadow: var(--shadow-brand-hover);
         filter: brightness(1.05);
     }
+
     .btn-primary:active:not(:disabled) {
         transform: translateY(0);
         box-shadow: var(--shadow-brand);
@@ -751,10 +753,12 @@ body {
         color: var(--color-text-default);
         border-color: var(--color-border-default);
     }
+
     .btn-secondary:hover:not(:disabled) {
         border-color: var(--brand-primary-lime);
         color: var(--brand-primary-lime);
     }
+
     .btn-secondary:active:not(:disabled) {
         background: var(--color-background-primary);
     }
@@ -1312,7 +1316,6 @@ body {
  font-size: var(--font-size-6);
  font-weight: var(--font-weight-8);
  background: var(--brand-gradient-lime);
- background-clip: text;
  -webkit-text-fill-color: transparent;
  background-clip: text;
  line-height: 1;
@@ -2340,7 +2343,6 @@ body {
  
  /* Glassmorphism styles */
  background: rgb(var(--gray-8-rgb), var(--opacity-glass-10)); /* Based on --gray-8 with 60% opacity */
- backdrop-filter: var(--blur-lg);
  backdrop-filter: var(--blur-lg); /* Safari support */
  border-radius: var(--radius-3);
  border: var(--border-size-1) solid rgb(255, 255, 255, 0.1); /* Subtle edge highlight */
@@ -3566,7 +3568,6 @@ select option {
  z-index: var(--layer-card); /* FIX: This ensures the panel is on top */
  background: rgb(var(--gray-8-rgb), var(--opacity-glass-60));
  backdrop-filter: var(--blur-xl);
- backdrop-filter: var(--blur-xl);
  
  @supports not (backdrop-filter: blur(1px)) {
  background: rgb(42, 42, 42, 0.95);
@@ -4216,7 +4217,6 @@ select option {
     width: 280px;
     height: 100%;
     background: rgb(var(--color-backdrop-rgb), 0.95);
-    backdrop-filter: var(--blur-lg);
     backdrop-filter: var(--blur-lg);
     border-left: var(--border-size-1) solid var(--color-border-default);
     z-index: var(--layer-modal);
@@ -5126,7 +5126,6 @@ body {
         right: 0;
         height: var(--size-10);
         background: rgb(var(--color-backdrop-rgb), 0.8);
-        backdrop-filter: var(--blur-lg);
         backdrop-filter: var(--blur-lg);
         border-bottom: var(--border-size-1) solid rgb(var(--brand-primary-lime-rgb), 0.1);
         z-index: var(--layer-modal);

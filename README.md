@@ -204,12 +204,14 @@ token-exporter-ds/
 
 ### Available Scripts
 
+-   `npm start` - Universal entry point (runs dev mode)
 -   `npm run sync` - Main build command with automatic compatibility checking
 -   `npm run dev` - Watch mode that auto-rebuilds when source files change  
 -   `npm run figma-check` - Validate code for Figma plugin compatibility
 -   `npm run test` - Run compatibility check and JavaScript linting
 -   `npm run lint:js` - Lint JavaScript files using ESLint
--   `npm run unsafe-sync` - Build without compatibility checking (not recommended)
+-   `npm run format` - Auto-fix CSS formatting issues with stylelint
+-   `npm run sync:skip-checks` - Build without compatibility checking (not recommended)
 -   `npm run clean` - Remove backup files
 
 
