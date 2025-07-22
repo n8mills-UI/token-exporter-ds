@@ -1,0 +1,173 @@
+/* ==========================================================================
+   GUIDE LAYOUT
+   Styling specifically for the guide layout demo page
+   
+   Companion to: guide-layout.html
+   Version: 1.0.0
+   ========================================================================== */
+
+/* Showcase-specific overrides */
+body {
+    margin: 0;
+    padding: var(--size-4);
+    background: var(--color-background-secondary);
+}
+
+.showcase-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.showcase-header {
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    margin-bottom: var(--size-6);
+    overflow: hidden;
+}
+
+.showcase-nav {
+    background: var(--color-background-tertiary);
+    padding: var(--size-4);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+}
+
+.showcase-nav h1 {
+    margin: 0 0 var(--size-2) 0;
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+}
+
+.showcase-nav p {
+    margin: 0;
+    font-size: var(--font-size-1);
+    color: var(--color-text-secondary);
+}
+
+.a11y-controls {
+    padding: var(--size-4);
+    display: flex;
+    gap: var(--size-3);
+    flex-wrap: wrap;
+}
+
+.section-wrapper {
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    margin-bottom: var(--size-6);
+    overflow: hidden;
+}
+
+.section-label {
+    background: var(--color-background-tertiary);
+    padding: var(--size-3) var(--size-4);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: var(--font-letterspacing-2);
+}
+
+.token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--size-4);
+    padding: var(--size-4);
+}
+
+.token-item {
+    padding: var(--size-3);
+    background: var(--color-background-secondary);
+    border-radius: var(--radius-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+}
+
+.token-name {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--size-1);
+}
+
+.token-value {
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-5);
+}
+
+/* =========================
+   ACCESSIBILITY FEATURES
+   ========================= */
+
+/* Accessibility violation highlighting */
+[data-a11y-violation] {
+    position: relative;
+}
+
+[data-a11y-violation]::after {
+    content: attr(data-a11y-violation);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ff0000;
+    color: white;
+    padding: var(--size-1) var(--size-2);
+    font-size: var(--font-size-0);
+    border-radius: var(--radius-1);
+    white-space: nowrap;
+    z-index: var(--layer-5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+[data-a11y-violation]:hover::after {
+    opacity: 1;
+}
+
+.a11y-status {
+    padding: var(--size-3);
+    margin-bottom: var(--size-4);
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-0);
+}
+
+.a11y-status.pass {
+    background: rgba(34, 197, 94, 0.1);
+    border: var(--border-size-1) solid rgba(34, 197, 94, 0.3);
+    color: rgb(21, 128, 61);
+}
+
+.a11y-status.fail {
+    background: rgba(239, 68, 68, 0.1);
+    border: var(--border-size-1) solid rgba(239, 68, 68, 0.3);
+    color: rgb(153, 27, 27);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+@media (width <= 768px) {
+    body {
+        padding: var(--size-3);
+    }
+    
+    .showcase-container {
+        max-width: none;
+    }
+    
+    .a11y-controls {
+        flex-direction: column;
+    }
+    
+    .token-grid {
+        grid-template-columns: 1fr;
+        padding: var(--size-3);
+    }
+}
+
+/* ==========================================================================
+   END: GUIDE LAYOUT STYLING v1.0.0
+   ========================================================================== */

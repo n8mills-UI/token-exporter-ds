@@ -1070,10 +1070,21 @@ body {
 }
 
 /* STATE COMPARISON MATRIX */
-.state-comparison-grid { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 1rem; align-items: center; }
+.state-comparison-grid {
+    display: grid;
+    grid-template-columns: 120px repeat(5, 1fr);
+    gap: 1rem;
+    align-items: center;
+}
 .state-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); text-align: center; padding: 0.5rem; background: var(--color-background-primary); border-radius: 4px; }
 .state-label { font-size: 0.875rem; color: var(--color-text-secondary); text-align: right; padding-right: 1rem; }
-.state-cell { display: flex; justify-content: center; align-items: center; min-height: 48px; }
+
+.state-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+}
 .force-hover.btn-primary { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
 .force-active.btn-primary { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
 .force-hover.btn-secondary, .force-hover.btn-icon { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
@@ -1738,6 +1749,254 @@ body {
  }
 }
 
+/* ========================================================================== 
+   Profile Card Enhancements - Glow & Glitch Effects
+   ========================================================================== */
+
+/* No glow effects for now - clean ASCII art */
+.profile-card .ascii-art {
+ text-shadow: none;
+ animation: none;
+}
+
+.profile-card .ascii-art-mobile {
+ text-shadow: none;
+ animation: none;
+}
+
+@keyframes subtle-pulse {
+ 0%, 100% { 
+  text-shadow: 
+   0 0 5px currentcolor,
+   0 0 10px currentcolor,
+   0 0 20px currentcolor;
+ }
+
+ 50% { 
+  text-shadow: 
+   0 0 8px currentcolor,
+   0 0 15px currentcolor,
+   0 0 30px currentcolor;
+ }
+}
+
+/* Remove system status indicator glows for cleaner look */
+.profile-card .ascii-art [OK],
+.profile-card .ascii-art [ACT],
+.profile-card .ascii-art [INIT],
+.profile-card .ascii-art [SYNC],
+.profile-card .ascii-art [LOAD],
+.profile-card .ascii-art [EXEC] {
+ color: var(--terminal-green, var(--brand-primary-lime));
+ text-shadow: none;
+}
+
+/* Progress Bar Enhancement */
+.profile-card .ascii-art:contains("━") {
+ position: relative;
+}
+
+/* Terminal Title Glitch Effect - Auto-playing every 8 seconds */
+.profile-card .terminal-title {
+ position: relative;
+ transition: all 0.3s ease;
+ cursor: pointer;
+}
+
+.profile-card .terminal-title.auto-glitch {
+ animation: glitch-sequence 8s infinite;
+}
+
+@keyframes glitch-sequence {
+ 0%, 87.5% { transform: translate(0); }
+ 87.6%, 88.0% { transform: translate(-1px, 1px); }
+ 88.1%, 88.5% { transform: translate(1px, -1px); }
+ 88.6%, 89.0% { transform: translate(-1px, -1px); }
+ 89.1%, 89.5% { transform: translate(1px, 1px); }
+ 89.6%, 100% { transform: translate(0); }
+}
+
+.profile-card .terminal-title:hover {
+ animation: glitch 0.3s infinite;
+}
+
+.profile-card .terminal-title::before,
+.profile-card .terminal-title::after {
+ content: attr(data-text);
+ position: absolute;
+ top: 0;
+ left: 0;
+ opacity: 0;
+ pointer-events: none;
+}
+
+.profile-card .terminal-title:hover::before {
+ animation: glitch-1 0.3s infinite;
+ color: var(--neon-cyan, #0FF);
+ opacity: 0.8;
+}
+
+.profile-card .terminal-title:hover::after {
+ animation: glitch-2 0.3s infinite;
+ color: var(--neon-pink, #FF10F0);
+ opacity: 0.8;
+}
+
+@keyframes glitch {
+ 0%, 100% { transform: translate(0); }
+ 20% { transform: translate(-1px, 1px); }
+ 40% { transform: translate(1px, -1px); }
+ 60% { transform: translate(-1px, -1px); }
+ 80% { transform: translate(1px, 1px); }
+}
+
+@keyframes glitch-1 {
+ 0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+ 25% { clip-path: inset(0 0 50% 0); transform: translate(-2px, 2px); }
+ 50% { clip-path: inset(50% 0 0 0); transform: translate(2px, -2px); }
+ 75% { clip-path: inset(0 0 0 0); transform: translate(-2px, -2px); }
+}
+
+@keyframes glitch-2 {
+ 0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+ 25% { clip-path: inset(50% 0 0 0); transform: translate(2px, 2px); }
+ 50% { clip-path: inset(0 0 50% 0); transform: translate(-2px, -2px); }
+ 75% { clip-path: inset(0 0 0 0); transform: translate(2px, -2px); }
+}
+
+/* Creator Name Glitch Effect */
+.profile-card .creator-badge .name {
+ position: relative;
+ transition: all 0.3s ease;
+ cursor: pointer;
+ color: var(--brand-primary-lime);
+}
+
+.profile-card .creator-badge .name:hover {
+ animation: glitch 0.3s infinite;
+}
+
+.profile-card .creator-badge .name::before,
+.profile-card .creator-badge .name::after {
+ content: attr(data-text);
+ position: absolute;
+ top: 0;
+ left: 0;
+ opacity: 0;
+ pointer-events: none;
+}
+
+.profile-card .creator-badge .name:hover::before {
+ animation: glitch-1 0.3s infinite;
+ color: var(--neon-cyan, #0FF);
+ opacity: 0.8;
+}
+
+.profile-card .creator-badge .name:hover::after {
+ animation: glitch-2 0.3s infinite;
+ color: var(--neon-pink, #FF10F0);
+ opacity: 0.8;
+}
+
+/* Enhanced Status Dot Animation - Brand Green */
+.profile-card .status-dot {
+ background: var(--brand-primary-lime) !important;
+ box-shadow: 
+  0 0 5px var(--brand-primary-lime),
+  0 0 10px var(--brand-primary-lime);
+ animation: status-pulse 2s infinite;
+}
+
+@keyframes status-pulse {
+ 0%, 100% { 
+  opacity: 1; 
+  transform: scale(1);
+  box-shadow: 
+   0 0 5px currentcolor,
+   0 0 10px currentcolor;
+ }
+
+ 50% { 
+  opacity: 0.7; 
+  transform: scale(1.2);
+  box-shadow: 
+   0 0 8px currentcolor,
+   0 0 15px currentcolor,
+   0 0 20px currentcolor;
+ }
+}
+
+/* Code Section Line Height and Wrapping Fixes */
+.profile-card .code-line {
+ line-height: 1.4;
+ margin-bottom: 2px;
+ word-wrap: break-word;
+ overflow-wrap: break-word;
+}
+
+.profile-card .code-block {
+ line-height: 1.4;
+ font-size: 0.85rem;
+}
+
+/* Improve spacing consistency */
+.profile-card .code-container {
+ padding: var(--size-3);
+ gap: var(--size-2);
+}
+
+.profile-card .control-panel {
+ margin-top: var(--size-3);
+ padding-top: var(--size-2);
+}
+
+/* Profile Card Responsive Fixes */
+@media (max-width: 1200px) {
+ .profile-card .code-container {
+  max-width: 100%;
+  overflow-x: auto;
+ }
+ 
+ .profile-card .code-block {
+  min-width: 0;
+  word-wrap: break-word;
+ }
+ 
+ .profile-card .terminal-header .terminal-title {
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ }
+}
+
+@media (max-width: 900px) {
+ .profile-card {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+ }
+ 
+ .profile-card .ascii-art {
+  display: none;
+ }
+ 
+ .profile-card .ascii-art-mobile {
+  display: block;
+  font-size: 0.6rem;
+ }
+ 
+ .profile-card .code-section {
+  min-height: auto;
+ }
+}
+
+/* Custom Properties for Effects */
+:root {
+ --terminal-green: #00FF41;
+ --neon-cyan: #0FF;
+ --neon-pink: #FF10F0;
+}
+
 /* @docs-only-end */
 
 
@@ -2174,9 +2433,6 @@ body {
     color: var(--color-text-default); /* Set text/number to white */
 }
 
-.badge.cyan { background-color: var(--category-color-cyan-alpha-10); }
-.badge.purple { background-color: var(--category-color-purple-alpha-10); }
-.badge.orange { background-color: var(--category-color-orange-alpha-10); }
 .badge.pink { background-color: var(--category-color-pink-alpha-10); }
 
 /* Target only the icon within the badge to be colored */
@@ -2247,10 +2503,6 @@ body {
     height: 100%;
 }
 
-/* Portfolio-specific enhancements */
-:root {
- --portfolio-gradient-dark: linear-gradient(180deg, #0a0a0a 0%, var(--gray-9) 100%);
-}
 
 
 @keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
@@ -5552,7 +5804,335 @@ body {
 
 
 /* ==========================================================================
- END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.6
+   GUIDE LAYOUT SPECIFICATION
+   Layout standards and visual consistency rules for the Design System Guide
+   
+   Purpose: Ensures consistent layout, typography, and spacing across all
+   documentation sections while maintaining separation from component styles.
+   ========================================================================== */
+
+/* =========================
+   GUIDE LAYOUT TOKENS
+   ========================= */
+:root {
+    /* Layout Spacing */
+    --guide-section-padding: var(--size-6);
+    --guide-section-padding-mobile: var(--size-4);
+    --guide-header-gap: var(--size-3);
+    --guide-content-gap: var(--size-4);
+    --guide-subsection-gap: var(--size-6);
+    
+    /* Icon Standards */
+    --guide-icon-size: var(--icon-lg);           /* 24px - consistent header icons */
+    --guide-icon-size-mobile: var(--icon-md);    /* 20px - mobile optimization */
+    
+    /* Typography Scale */
+    --guide-section-title-size: var(--font-size-5);    /* 1.5rem - main sections */
+    --guide-section-title-size-mobile: var(--font-size-4); /* 1.25rem - mobile */
+    --guide-subsection-title-size: var(--font-size-2);     /* 1rem - subsections */
+    --guide-description-size: var(--font-size-1);          /* 0.875rem - descriptions */
+    
+    /* Grid Standards */
+    --guide-grid-min-width: 320px;              /* Minimum card width */
+    --guide-grid-gap: var(--size-4);            /* Standard grid gap */
+    --guide-grid-gap-small: var(--size-3);      /* Condensed grid gap */
+}
+
+/* =========================
+   SECTION STRUCTURE
+   ========================= */
+
+/* Main Section Container */
+.component-section,
+.content-section {
+    margin-bottom: var(--guide-content-gap);
+    position: relative;
+}
+
+/* Section Header Container */
+.component-header,
+.section-header {
+    padding: var(--guide-section-padding);
+    background: var(--color-background-tertiary);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
+    margin-bottom: var(--guide-content-gap);
+}
+
+/* Section Body Container */
+.component-body {
+    padding: 0 var(--guide-section-padding);
+}
+
+/* =========================
+   TYPOGRAPHY HIERARCHY
+   ========================= */
+
+/* Main Section Titles */
+.component-title,
+.main-section-title {
+    font-size: var(--guide-section-title-size);
+    font-weight: var(--font-weight-6);
+    line-height: var(--font-lineheight-2);
+    color: var(--color-text-default);
+    display: flex;
+    align-items: center;
+    gap: var(--guide-header-gap);
+    margin-bottom: var(--size-2);
+}
+
+/* Subsection Titles */
+.example-subheader {
+    font-size: var(--guide-subsection-title-size);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+    margin: var(--guide-subsection-gap) 0 var(--guide-content-gap) 0;
+}
+
+/* Descriptions */
+.component-description,
+.section-description,
+.category-description {
+    font-size: var(--guide-description-size);
+    color: var(--color-text-secondary);
+    line-height: var(--font-lineheight-3);
+    margin-bottom: var(--guide-content-gap);
+    max-width: 65ch; /* Optimal reading line length */
+}
+
+/* =========================
+   STANDARDIZED ICONS
+   ========================= */
+
+/* Header Icons - Consistent Sizing */
+.component-title [data-lucide],
+.main-section-title [data-lucide],
+.component-title .icon,
+.main-section-title .icon {
+    width: var(--guide-icon-size);
+    height: var(--guide-icon-size);
+    color: var(--brand-primary-lime);
+    flex-shrink: 0;
+    stroke-width: var(--icon-stroke-regular);
+}
+
+/* Remove any inline styles that override the standard */
+.component-title [style*="color"],
+.main-section-title [style*="color"] {
+    color: var(--brand-primary-lime) !important;
+}
+
+/* Subsection Icons */
+.example-subheader .icon,
+.example-subheader [data-lucide] {
+    width: var(--icon-md);
+    height: var(--icon-md);
+    color: var(--brand-primary-lime);
+    margin-right: var(--size-2);
+}
+
+/* =========================
+   LAYOUT PATTERNS
+   ========================= */
+
+/* Standard Content Sections */
+.subsection {
+    margin-bottom: var(--guide-subsection-gap);
+}
+
+/* Grid Layouts */
+.variants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--guide-grid-min-width), 1fr));
+    gap: var(--guide-grid-gap);
+    margin-bottom: var(--guide-subsection-gap);
+    align-items: stretch;
+}
+
+/* Compact Grid (for smaller items) */
+.compact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--guide-grid-gap-small);
+    margin-bottom: var(--guide-subsection-gap);
+}
+
+/* Example Wrappers */
+.example-wrapper {
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    padding: var(--size-4);
+    transition: all var(--animation-duration-2) var(--ease-3);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.example-wrapper:hover {
+    border-color: var(--brand-primary-lime);
+}
+
+/* =========================
+   CONTENT ORGANIZATION
+   ========================= */
+
+/* Token Reference Lists */
+.token-reference-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.token-reference-item {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+    padding: var(--size-2);
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-1);
+    transition: all 0.2s var(--ease-3);
+}
+
+.token-reference-item:hover {
+    border-color: var(--brand-primary-lime);
+    background: rgba(210, 255, 55, 0.05);
+}
+
+.token-reference-item code {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    color: var(--brand-primary-lime);
+    background: transparent;
+    border: none;
+    padding: 0;
+    min-width: 120px;
+}
+
+.token-reference-item span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-0);
+    flex: 1;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+/* Tablet and Mobile */
+@media (width <= 768px) {
+    :root {
+        --guide-section-padding: var(--guide-section-padding-mobile);
+        --guide-icon-size: var(--guide-icon-size-mobile);
+        --guide-section-title-size: var(--guide-section-title-size-mobile);
+        --guide-header-gap: var(--size-2);
+        --guide-grid-gap: var(--size-3);
+    }
+    
+    .component-header,
+    .section-header {
+        padding: var(--guide-section-padding-mobile);
+    }
+    
+    .component-body {
+        padding: 0 var(--guide-section-padding-mobile);
+    }
+    
+    .variants-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .compact-cards {
+        grid-template-columns: 1fr;
+        gap: var(--size-2);
+    }
+    
+    .component-description,
+    .section-description,
+    .category-description {
+        max-width: none; /* Remove line length constraint on mobile */
+    }
+}
+
+/* Small Mobile */
+@media (width <= 480px) {
+    :root {
+        --guide-section-padding: var(--size-3);
+        --guide-content-gap: var(--size-3);
+        --guide-subsection-gap: var(--size-4);
+    }
+    
+    .example-wrapper {
+        padding: var(--size-3);
+    }
+    
+    .token-reference-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--size-1);
+    }
+    
+    .token-reference-item code {
+        min-width: unset;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY
+   ========================= */
+
+/* Focus States for Interactive Elements */
+.example-wrapper:focus-within,
+.token-reference-item:focus-within {
+    outline: 2px solid var(--brand-primary-lime);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .component-title [data-lucide],
+    .main-section-title [data-lucide] {
+        stroke-width: var(--icon-stroke-bold);
+    }
+    
+    .example-wrapper:hover,
+    .token-reference-item:hover {
+        border-width: 2px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .example-wrapper,
+    .token-reference-item {
+        transition: none;
+    }
+}
+
+/* =========================
+   UTILITY CLASSES
+   ========================= */
+
+/* Force consistent icon treatment */
+.guide-icon-standard {
+    width: var(--guide-icon-size) !important;
+    height: var(--guide-icon-size) !important;
+    color: var(--brand-primary-lime) !important;
+}
+
+/* Spacing utilities for edge cases */
+.guide-spacing-none { margin-bottom: 0; }
+.guide-spacing-sm { margin-bottom: var(--size-2); }
+.guide-spacing-md { margin-bottom: var(--size-4); }
+.guide-spacing-lg { margin-bottom: var(--size-6); }
+
+/* Grid column overrides */
+.guide-grid-single { grid-template-columns: 1fr !important; }
+.guide-grid-two { grid-template-columns: repeat(2, 1fr) !important; }
+.guide-grid-three { grid-template-columns: repeat(3, 1fr) !important; }
+
+/* ==========================================================================
+ END OF TOKEN EXPORTER DESIGN SYSTEM v4.0.7
  
  "Code complete, system whole,
  From tokens to components bright,

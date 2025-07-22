@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Layout - System Truth Source</title>
+    
+    <!-- Load the main design system -->
+    <link rel="stylesheet" href="design-system.css">
+    
+    <!-- Load guide layout styling -->
+    <link rel="stylesheet" href="guide-layout.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Accessibility Checker -->
+    <script src="../scripts/accessibility-checker.js"></script>
+</head>
+<body>
+    <div class="showcase-container">
+        <!-- Showcase Header -->
+        <div class="showcase-header">
+            <div class="showcase-nav">
+                <h1>Guide Layout</h1>
+                <p>System truth source for all layout standards, components, and accessibility validation</p>
+            </div>
+            <div class="a11y-controls">
+                <button class="btn btn-secondary btn-sm" onclick="runAccessibilityCheck()">
+                    <i data-lucide="eye"></i>
+                    <span>Check Accessibility</span>
+                </button>
+                <button class="btn btn-tertiary btn-sm" onclick="highlightViolations()">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Highlight Issues</span>
+                </button>
+                <button class="btn btn-tertiary btn-sm" onclick="clearHighlights()">
+                    <i data-lucide="x"></i>
+                    <span>Clear</span>
+                </button>
+                <button class="btn btn-tertiary btn-sm" onclick="testDesignTokens()">
+                    <i data-lucide="palette"></i>
+                    <span>Test Token Combinations</span>
+                </button>
+            </div>
+            <div id="a11y-status" class="a11y-status" style="display: none;"></div>
+        </div>
+
+        <!-- Layout Tokens Reference -->
+        <div class="section-wrapper">
+            <div class="section-label">Layout Design Tokens</div>
+            <div class="token-grid">
+                <div class="token-item">
+                    <div class="token-name">Section Padding</div>
+                    <div class="token-value">--guide-section-padding: var(--size-6)</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-name">Icon Size</div>
+                    <div class="token-value">--guide-icon-size: var(--icon-lg)</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-name">Title Size</div>
+                    <div class="token-value">--guide-section-title-size: var(--font-size-5)</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-name">Content Gap</div>
+                    <div class="token-value">--guide-content-gap: var(--size-4)</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-name">Grid Gap</div>
+                    <div class="token-value">--guide-grid-gap: var(--size-4)</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-name">Grid Min Width</div>
+                    <div class="token-value">--guide-grid-min-width: 320px</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Headers (All Variants) -->
+        <div class="section-wrapper">
+            <div class="section-label">Section Headers - System Defined</div>
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="pie-chart"></i>
+                        Token Card Section
+                    </h2>
+                    <p class="component-description">
+                        Standard section header using component-title class with data-lucide icon system and proper spacing tokens.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="palette"></i>
+                        Icon System Section
+                    </h2>
+                    <p class="component-description">
+                        Demonstrates consistent icon sizing (24px) and lime brand color application.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="component-section">
+                <div class="component-header">
+                    <h2 class="text-heading-lg component-title">
+                        <i data-lucide="mouse-pointer-2"></i>
+                        Button System Section
+                    </h2>
+                    <p class="component-description">
+                        All section headers follow identical structure and token usage.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subsection Headers -->
+        <div class="section-wrapper">
+            <div class="section-label">Subsection Headers</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Primary Subsection</h3>
+                <p class="category-description">
+                    Subsection headers use example-subheader class with proper spacing and hierarchy.
+                </p>
+                
+                <h3 class="example-subheader">Secondary Subsection</h3>
+                <p class="category-description">
+                    Consistent spacing between subsections maintains visual rhythm.
+                </p>
+            </div>
+        </div>
+
+        <!-- Badge System (All Variants) -->
+        <div class="section-wrapper">
+            <div class="section-label">Badge System - All Defined Variants</div>
+            <div class="component-body">
+                <!-- Size Variants -->
+                <h3 class="example-subheader">Size Variants</h3>
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Small Badges</div>
+                        <div style="display: flex; gap: var(--size-2); flex-wrap: wrap; align-items: center;">
+                            <span class="badge small">DEFAULT</span>
+                            <span class="badge brand small">BRAND</span>
+                            <span class="badge cyan small">CYAN</span>
+                            <span class="badge purple small">PURPLE</span>
+                            <span class="badge orange small">ORANGE</span>
+                            <span class="badge pink small">PINK</span>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">Medium Badges (Default)</div>
+                        <div style="display: flex; gap: var(--size-2); flex-wrap: wrap; align-items: center;">
+                            <span class="badge">DEFAULT</span>
+                            <span class="badge brand">BRAND</span>
+                            <span class="badge cyan">CYAN</span>
+                            <span class="badge purple">PURPLE</span>
+                            <span class="badge orange">ORANGE</span>
+                            <span class="badge pink">PINK</span>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">Large Badges</div>
+                        <div style="display: flex; gap: var(--size-2); flex-wrap: wrap; align-items: center;">
+                            <span class="badge large">DEFAULT</span>
+                            <span class="badge brand large">BRAND</span>
+                            <span class="badge cyan large">CYAN</span>
+                            <span class="badge purple large">PURPLE</span>
+                            <span class="badge orange large">ORANGE</span>
+                            <span class="badge pink large">PINK</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Icon Badges -->
+                <h3 class="example-subheader">Icon Badges</h3>
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Small with Icons</div>
+                        <div style="display: flex; gap: var(--size-2); flex-wrap: wrap; align-items: center;">
+                            <span class="badge brand small"><i data-lucide="zap"></i> SMALL</span>
+                            <span class="badge cyan small"><i data-lucide="database"></i> DATA</span>
+                            <span class="badge purple small"><i data-lucide="type"></i> TEXT</span>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">Medium with Icons</div>
+                        <div style="display: flex; gap: var(--size-2); flex-wrap: wrap; align-items: center;">
+                            <span class="badge brand"><i data-lucide="zap"></i> MEDIUM</span>
+                            <span class="badge cyan"><i data-lucide="database"></i> DATA</span>
+                            <span class="badge purple"><i data-lucide="type"></i> TEXT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disabled States -->
+                <h3 class="example-subheader">Disabled States</h3>
+                <div class="example-wrapper">
+                    <div class="example-label">Disabled Badges</div>
+                    <div style="display: flex; gap: var(--size-2); flex-wrap: wrap; align-items: center;">
+                        <span class="badge disabled">DISABLED</span>
+                        <span class="badge brand disabled">BRAND DISABLED</span>
+                        <span class="badge small disabled"><i data-lucide="x"></i> DISABLED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Layout Patterns -->
+        <div class="section-wrapper">
+            <div class="section-label">Grid Layout Patterns</div>
+            <div class="component-body">
+                <h3 class="example-subheader">Variants Grid (320px minimum)</h3>
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Grid Item 1</div>
+                        <p>Standard variants grid with 320px minimum width and guide-grid-gap spacing.</p>
+                    </div>
+                    <div class="example-wrapper">
+                        <div class="example-label">Grid Item 2</div>
+                        <p>Auto-fit responsive behavior maintains consistency.</p>
+                    </div>
+                    <div class="example-wrapper">
+                        <div class="example-label">Grid Item 3</div>
+                        <p>All items stretch to equal height automatically.</p>
+                    </div>
+                </div>
+                
+                <h3 class="example-subheader">Compact Cards (280px minimum)</h3>
+                <div class="compact-cards">
+                    <div class="example-wrapper">
+                        <div class="example-label">Compact 1</div>
+                        <p>Tighter grid for smaller content items.</p>
+                    </div>
+                    <div class="example-wrapper">
+                        <div class="example-label">Compact 2</div>
+                        <p>Reduced minimum width and gap spacing.</p>
+                    </div>
+                    <div class="example-wrapper">
+                        <div class="example-label">Compact 3</div>
+                        <p>Ideal for token references and smaller components.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button System (Complete) -->
+        <div class="section-wrapper">
+            <div class="section-label">Button System - All Variants & States</div>
+            <div class="component-body">
+                <!-- Primary Buttons -->
+                <h3 class="example-subheader">Primary Buttons</h3>
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Sizes</div>
+                        <div style="display: flex; flex-direction: column; gap: var(--size-2); align-items: flex-start;">
+                            <button class="btn btn-primary btn-sm">Small Primary</button>
+                            <button class="btn btn-primary btn-md">Medium Primary</button>
+                            <button class="btn btn-primary btn-lg">Large Primary</button>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">States</div>
+                        <div style="display: flex; flex-direction: column; gap: var(--size-2); align-items: flex-start;">
+                            <button class="btn btn-primary btn-md">Default</button>
+                            <button class="btn btn-primary btn-md force-hover">Hover</button>
+                            <button class="btn btn-primary btn-md force-active">Active</button>
+                            <button class="btn btn-primary btn-md" disabled>Disabled</button>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">With Icons</div>
+                        <div style="display: flex; flex-direction: column; gap: var(--size-2); align-items: flex-start;">
+                            <button class="btn btn-primary btn-md"><i data-lucide="download"></i> Download</button>
+                            <button class="btn btn-primary btn-md">Continue <i data-lucide="arrow-right"></i></button>
+                            <button class="btn btn-icon btn-md" aria-label="Primary Icon"><i data-lucide="heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Buttons -->
+                <h3 class="example-subheader">Secondary Buttons</h3>
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Sizes</div>
+                        <div style="display: flex; flex-direction: column; gap: var(--size-2); align-items: flex-start;">
+                            <button class="btn btn-secondary btn-sm">Small Secondary</button>
+                            <button class="btn btn-secondary btn-md">Medium Secondary</button>
+                            <button class="btn btn-secondary btn-lg">Large Secondary</button>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">States</div>
+                        <div style="display: flex; flex-direction: column; gap: var(--size-2); align-items: flex-start;">
+                            <button class="btn btn-secondary btn-md">Default</button>
+                            <button class="btn btn-secondary btn-md force-hover">Hover</button>
+                            <button class="btn btn-secondary btn-md force-active">Active</button>
+                            <button class="btn btn-secondary btn-md" disabled>Disabled</button>
+                        </div>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">With Icons</div>
+                        <div style="display: flex; flex-direction: column; gap: var(--size-2); align-items: flex-start;">
+                            <button class="btn btn-secondary btn-md"><i data-lucide="settings"></i> Settings</button>
+                            <button class="btn btn-secondary btn-md">Learn More <i data-lucide="external-link"></i></button>
+                            <button class="btn btn-icon btn-md" aria-label="Secondary Icon"><i data-lucide="github"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tertiary Buttons -->
+                <h3 class="example-subheader">Tertiary Buttons</h3>
+                <div class="example-wrapper">
+                    <div class="example-label">All Variants</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: var(--size-3); align-items: center;">
+                        <button class="btn btn-tertiary btn-sm">Small</button>
+                        <button class="btn btn-tertiary btn-md">Medium</button>
+                        <button class="btn btn-tertiary btn-lg">Large</button>
+                        <button class="btn btn-tertiary btn-md" disabled>Disabled</button>
+                        <button class="btn btn-tertiary btn-md"><i data-lucide="info"></i> With Icon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Token Reference Lists -->
+        <div class="section-wrapper">
+            <div class="section-label">Token Reference Lists</div>
+            <div class="component-body">
+                <div class="token-reference-list">
+                    <div class="token-reference-item">
+                        <code>--brand-primary-lime</code>
+                        <span>Primary brand color (#D2FF37)</span>
+                    </div>
+                    <div class="token-reference-item">
+                        <code>--color-text-default</code>
+                        <span>Primary text color (#1E1E1E)</span>
+                    </div>
+                    <div class="token-reference-item">
+                        <code>--color-text-secondary</code>
+                        <span>Secondary text color (#666666)</span>
+                    </div>
+                    <div class="token-reference-item">
+                        <code>--color-background-primary</code>
+                        <span>Primary background (#FFFFFF)</span>
+                    </div>
+                    <div class="token-reference-item">
+                        <code>--icon-lg</code>
+                        <span>Large icon size (24px)</span>
+                    </div>
+                    <div class="token-reference-item">
+                        <code>--font-size-5</code>
+                        <span>Section title size (2rem)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Elements -->
+        <div class="section-wrapper">
+            <div class="section-label">Form Elements</div>
+            <div class="component-body">
+                <div class="variants-grid">
+                    <div class="example-wrapper">
+                        <div class="example-label">Select Dropdowns</div>
+                        <select class="select">
+                            <option>Choose option...</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                    
+                    <div class="example-wrapper">
+                        <div class="example-label">Search Fields</div>
+                        <input type="text" class="input" placeholder="Search tokens...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let a11yReport = null;
+
+        // Initialize icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+
+        function runAccessibilityCheck() {
+            console.log('🔍 Running comprehensive accessibility check...');
+            a11yReport = window.a11yChecker.generateReport();
+            
+            const statusEl = document.getElementById('a11y-status');
+            statusEl.style.display = 'block';
+            
+            if (a11yReport.summary.totalViolations === 0) {
+                statusEl.className = 'a11y-status pass';
+                statusEl.innerHTML = `✅ <strong>Accessibility Check Passed</strong><br>No WCAG AA contrast violations found in ${new Date().toLocaleTimeString()}`;
+            } else {
+                statusEl.className = 'a11y-status fail';
+                statusEl.innerHTML = `⚠️ <strong>${a11yReport.summary.totalViolations} Accessibility Issues Found</strong><br>Review console for details. Last checked: ${new Date().toLocaleTimeString()}`;
+            }
+            
+            console.log(a11yReport);
+            return a11yReport;
+        }
+
+        function highlightViolations() {
+            const count = window.a11yChecker.highlightViolations();
+            console.log(`🚨 Highlighted ${count} violations`);
+        }
+
+        function clearHighlights() {
+            window.a11yChecker.clearHighlights();
+            console.log('✅ Cleared highlights');
+        }
+
+        function testDesignTokens() {
+            const results = window.a11yChecker.testDesignTokens();
+            console.log('🎨 Design token accessibility test results:');
+            console.table(results);
+            
+            const failing = results.filter(r => !r.passes);
+            if (failing.length > 0) {
+                console.warn(`❌ ${failing.length} token combinations fail WCAG AA:`);
+                failing.forEach(combo => {
+                    console.warn(`${combo.name}: ${combo.contrastRatio} (needs ${combo.requiredRatio})`);
+                });
+            } else {
+                console.log('✅ All token combinations pass WCAG AA!');
+            }
+            
+            return results;
+        }
+
+        // Auto-run accessibility check on load
+        setTimeout(runAccessibilityCheck, 1000);
+    </script>
+</body>
+</html>
