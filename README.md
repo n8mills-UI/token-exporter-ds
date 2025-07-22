@@ -68,8 +68,8 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
     -   **JSON** (W3C Design Token Standard)
     -   **Tailwind CSS** (Theme Configuration)
 
--   **Accessible to All Users**
-    Full screen reader support and keyboard navigation built-in.
+-   **Accessibility Features**
+    ARIA labels, semantic HTML, keyboard navigation, and screen reader support for key interactions.
 
 -   **Intelligent Alias Resolution**
     Resolves deeply nested aliases to final values and avoids infinite loops.
@@ -224,15 +224,16 @@ token-exporter-ds/
 
 ### Available Scripts
 
--   `npm start` - Universal entry point (runs dev mode)
--   `npm run sync` - Main build command with automatic compatibility checking
+-   `npm start` - Alias for `npm run dev` (watch mode)
+-   `npm run sync` - Main build command (includes figma-check validation)
 -   `npm run dev` - Watch mode that auto-rebuilds when source files change  
--   `npm run figma-check` - Validate code for Figma plugin compatibility
--   `npm run test` - Run compatibility check and JavaScript linting
--   `npm run lint:js` - Lint JavaScript files using ESLint
+-   `npm run build` - Alias for `npm run sync`
+-   `npm run figma-check` - Validate code for Figma plugin compatibility issues
+-   `npm run test` - Run figma-check and JavaScript linting together
+-   `npm run lint:js` - Lint JavaScript files using ESLint (uses legacy flat config)
 -   `npm run format` - Auto-fix CSS formatting issues with stylelint
 -   `npm run sync:skip-checks` - Build without compatibility checking (not recommended)
--   `npm run clean` - Remove backup files
+-   `npm run clean` - Remove backup files (ui.html.backup)
 
 
 <br>
