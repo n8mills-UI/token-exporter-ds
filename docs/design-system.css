@@ -976,19 +976,26 @@ body {
     margin-bottom: 4rem;
 }
 
+.main-section-title {
+    font-size: 3rem; /* Increased font size */
+    font-weight: 800;
+    color: var(--color-text-default);
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Increased gap */
+}
+
+.main-section-title .lucide {
+    width: 2.5rem; /* Increased icon size */
+    height: 2.5rem;
+}
+
 .guide-container .section-header {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--color-border-default);
-}
-
-.guide-container .section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--color-text-default);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    padding-left: 0; /* Removed horizontal padding */
+    padding-right: 0; /* Removed horizontal padding */
 }
 
 .guide-container .section-description {
