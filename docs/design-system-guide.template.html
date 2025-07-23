@@ -89,6 +89,7 @@
                     <li><a href="#shadows" class="nav-link"><i data-lucide="layers"></i> Shadows</a></li>
                     <li><a href="#border-radius" class="nav-link"><i data-lucide="square"></i> Border & Radius</a></li>
                     <li><a href="#animations" class="nav-link"><i data-lucide="play-circle"></i> Motion</a></li>
+                    <li><a href="#icons" class="nav-link"><i data-lucide="image"></i> Icons</a></li>
                 </ul>
             </div>
             
@@ -97,7 +98,6 @@
                 <h3 class="nav-section-title">Components</h3>
                 <ul class="nav-links">
                     <li><a href="#token-card" class="nav-link"><i data-lucide="pie-chart"></i> Token Card</a></li>
-                    <li><a href="#icons" class="nav-link"><i data-lucide="image"></i> Icon System</a></li>
                     <li><a href="#buttons" class="nav-link"><i data-lucide="mouse-pointer-2"></i> Buttons</a></li>
                     <li><a href="#badges"><i data-lucide="tag"></i> Badges</a></li>
                     <li><a href="#forms" class="nav-link"><i data-lucide="file-text"></i> Forms</a></li>
@@ -114,34 +114,51 @@
     <section id="overview" class="content-section" style="padding: 0;">
         <!-- HERO SECTION -->
         <div class="portfolio-hero">
+            <!-- Animation background -->
+            <div class="hero-animation-canvas" id="hero-animation-canvas"></div>
             <div class="hero-content-wrapper">
                 <div class="m-0 z-1 relative">
-                    <!-- Logo component -->
-                    <div class="hero-logo">
-                        <div class="token-exporter-logo xl">
-                            <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_hero_logo)">
-                                    <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_hero_logo)"/>
-                                    <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                                    <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                                    <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                                </g>
-                                <defs>
-                                    <linearGradient id="paint0_linear_hero_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                        <stop stop-color="#D2FF37"/>
-                                        <stop offset="1" stop-color="#EEFF00"/>
-                                    </linearGradient>
-                                    <clipPath id="clip0_hero_logo">
-                                        <rect width="355" height="355" rx="58" fill="white"/>
-                                    </clipPath>
-                                </defs>
-                            </svg>
+                    <!-- GROUP A: Introduction Block (Top) -->
+                    <div class="hero-intro-group">
+                        <!-- Logo component -->
+                        <div class="hero-logo">
+                            <div class="token-exporter-logo xl">
+                                <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_hero_logo)">
+                                        <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_hero_logo)"/>
+                                        <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                        <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                                        <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                    </g>
+                                    <defs>
+                                        <linearGradient id="paint0_linear_hero_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#D2FF37"/>
+                                            <stop offset="1" stop-color="#EEFF00"/>
+                                        </linearGradient>
+                                        <clipPath id="clip0_hero_logo">
+                                            <rect width="355" height="355" rx="58" fill="white"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                        <h1 class="guide-main-title text-size-8 mb-3">Token Exporter</h1>
+                        <p class="hero-tagline">Figma variables to production-ready code</p>
+                        <p class="hero-description">Built on Open Props foundation with 435+ tokens</p>
+                    </div>
+
+                    <!-- GROUP B: Call-to-Action Block (Middle) -->
+                    <div class="hero-cta-group">
+                        <div class="figma-cta">
+                            <a href="https://www.figma.com/community/plugin/1521741753717588633" target="_blank" class="btn btn-primary btn-md btn-inline">
+                                <i data-lucide="figma"></i>
+                                <span>Get the Plugin</span>
+                            </a>
                         </div>
                     </div>
-                    <h1 class="guide-main-title text-size-8 mb-3">Token Exporter</h1>
-                    <p class="hero-tagline">Figma variables to production-ready code</p>
-                    <p class="hero-description">Built on Open Props foundation with 435+ tokens</p>
-                    <div class="hero-footer">
+
+                    <!-- GROUP C: Footer Block (Bottom) -->
+                    <div class="hero-footer-group">
                         <div class="social-links">
                             <a href="https://github.com/n8mills-UI" class="btn btn-icon btn-md" title="GitHub" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i></a>
                             <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i data-lucide="linkedin"></i></a>
@@ -149,12 +166,6 @@
                             <a href="https://www.figma.com/@mills" class="btn btn-icon btn-md" title="Figma" target="_blank" rel="noopener noreferrer"><i data-lucide="figma"></i></a>
                             <a href="mailto:nate@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-lucide="mail"></i></a>
                         </div>
-                         <div class="figma-cta">
-                <a href="https://www.figma.com/community/plugin/1521741753717588633" target="_blank" class="btn btn-primary btn-md btn-inline">
-                    <i data-lucide="figma"></i>
-                    <span>Get the Plugin</span>
-                </a>
-            </div>
                         <p>Created with <span class="heart">❤️</span> by Nate Mills</p>
                     </div>
                 </div>
@@ -164,34 +175,45 @@
         <!-- MAIN PORTFOLIO CONTENT WRAPPER -->
         <div class="portfolio-content">
 
-            <!-- Intro Group (Stats & Cards) -->
-            <div class="intro-group">
-                <div class="impact-stats">
+            <!-- Enhanced Stats & Project Overview -->
+            <div class="stats-and-overview-container" id="stats-container">
+                <div class="stats-container-glass">
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="435">0</span><span class="stat-suffix">+</span></div>
-                        <div class="stat-label">Open Props tokens</div>
+                        <i class="stat-icon"><i data-lucide="package"></i></i>
+                        <div class="stat-number"><span class="stat-value" data-target="6">0</span></div>
+                        <div class="stat-label">Export Formats</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="6">0</span></div>
-                        <div class="stat-label">Export formats</div>
+                        <i class="stat-icon"><i data-lucide="atom"></i></i>
+                        <div class="stat-number"><span class="stat-value" data-target="435">0</span><span class="stat-suffix">+</span></div>
+                        <div class="stat-label">Design Tokens</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="7">0</span></div>
-                        <div class="stat-label">AI tools integrated</div>
+                        <i class="stat-icon"><i data-lucide="zap"></i></i>
+                        <div class="stat-number"><span class="stat-value" data-target="100">0</span><span class="stat-suffix">%</span></div>
+                        <div class="stat-label">Automated</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="380">0</span><span class="stat-suffix">px</span></div>
-                        <div class="stat-label">Optimized UI width</div>
+                        <i class="stat-icon"><i data-lucide="clock"></i></i>
+                        <div class="stat-number"><span class="stat-value" data-target="10">0</span><span class="stat-suffix">×</span></div>
+                        <div class="stat-label">Faster Export</div>
                     </div>
                 </div>
-                <div class="compact-cards">
-                    <div class="compact-card">
-                        <h3><i data-lucide="alert-circle"></i> The Challenge</h3>
-                        <p>Manual token export is slow and error-prone. Existing tools lack flexibility for modern frameworks and create a disconnect between design and development.</p>
+                <div class="challenge-solution-grid">
+                    <div class="enhanced-card challenge-card">
+                        <i data-lucide="alert-triangle" class="card-icon-large"></i>
+                        <h3 class="card-title">The Challenge</h3>
+                        <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
                     </div>
-                    <div class="compact-card">
-                        <h3><i data-lucide="lightbulb"></i> The Solution</h3>
-                        <p>A zero-config plugin that automates token exports into 6 native formats, built on a solid Open Props foundation and developed with AI for maximum efficiency.</p>
+                    <div class="enhanced-card solution-card">
+                        <i data-lucide="lightbulb" class="card-icon-large"></i>
+                        <h3 class="card-title">The Solution</h3>
+                        <p class="card-content">Automated multi-format export with intelligent alias resolution and platform-native naming conventions.</p>
+                    </div>
+                    <div class="enhanced-card impact-card">
+                        <i data-lucide="trending-up" class="card-icon-large"></i>
+                        <h3 class="card-title">The Impact</h3>
+                        <p class="card-content">10x faster token export, zero manual errors, and a seamless design-to-code workflow.</p>
                     </div>
                 </div>
             </div>
@@ -440,8 +462,15 @@
 
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="move-horizontal"></i>
+                            Spacing
+                        </h2>
+                        <p class="section-description">Open Props spacing scale used for consistent layouts throughout the interface.</p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Spacing</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Scale Tokens</h2><p class="category-description">Core spacing values for padding, margins, and gaps.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
@@ -455,8 +484,15 @@
 
                 <!-- Shadows Section -->
                 <section id="shadows" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="layers"></i>
+                            Shadows
+                        </h2>
+                        <p class="section-description">Open Props shadow tokens for creating depth and elevation.</p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="copy"></i> Shadows</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="copy"></i> Elevation Tokens</h2><p class="category-description">Shadow values for creating visual hierarchy and depth.</p></div>
                         <div class="tokens-grid shadow-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
@@ -467,8 +503,15 @@
 
                 <!-- Border Radius Section -->
                 <section id="border-radius" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="square"></i>
+                            Border & Radius
+                        </h2>
+                        <p class="section-description">Open Props radius tokens for consistent corner rounding.</p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Radius</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Radius Tokens</h2><p class="category-description">Corner radius values for UI components and containers.</p></div>
                         <div class="tokens-grid radius-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview rounded-1"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview rounded-2"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
@@ -487,6 +530,340 @@
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div><button class="token-copy" onclick="copyToken('--ease-3')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div><button class="token-copy" onclick="copyToken('--ease-spring-3')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--animation-duration-2</div><div class="token-value">150ms</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard duration</div></div></div><button class="token-copy" onclick="copyToken('--animation-duration-2')">Copy</button></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Icons Section -->
+                <section id="icons" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="image"></i>
+                            Icons
+                        </h2>
+                        <p class="section-description">Industry-standard icon system with responsive sizing, design tokens, and optimized SVGs. All icons follow accessibility best practices and support multiple rendering methods.</p>
+                    </div>
+                    
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <!-- TOKEN TYPE ICONS SHOWCASE   -->
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title"><i data-lucide="image"></i> Token Type Icons</h2>
+                            <p class="category-description">Core icons representing the four variable categories from Figma. Each icon uses its corresponding category color.</p>
+                        </div>
+                        <div class="tokens-grid">
+                            <div class="token-icons-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-4);">
+                                <div class="token-icon-card">
+                                    <div class="token-icon-display">
+                                        <i class="icon icon--xl" data-icon="palette" style="color: var(--category-color-cyan);"></i>
+                                    </div>
+                                    <div class="token-icon-meta">
+                                        <div class="text-body-sm token-name">palette</div>
+                                        <div class="text-caption token-category">Color Variables</div>
+                                        <code class="text-caption token-value">var(--category-color-cyan)</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="token-icon-card">
+                                    <div class="token-icon-display">
+                                        <i class="icon icon--xl" data-icon="type" style="color: var(--category-color-purple);"></i>
+                                    </div>
+                                    <div class="token-icon-meta">
+                                        <div class="text-body-sm token-name">type</div>
+                                        <div class="text-caption token-category">Text Variables</div>
+                                        <code class="text-caption token-value">var(--category-color-purple)</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="token-icon-card">
+                                    <div class="token-icon-display">
+                                        <i class="icon icon--xl" data-icon="hash" style="color: var(--category-color-orange);"></i>
+                                    </div>
+                                    <div class="token-icon-meta">
+                                        <div class="text-body-sm token-name">hash</div>
+                                        <div class="text-caption token-category">Number Variables</div>
+                                        <code class="text-caption token-value">var(--category-color-orange)</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="token-icon-card">
+                                    <div class="token-icon-display">
+                                        <i class="icon icon--xl" data-icon="toggle-right" style="color: var(--category-color-pink);"></i>
+                                    </div>
+                                    <div class="token-icon-meta">
+                                        <div class="text-body-sm token-name">toggle-right</div>
+                                        <div class="text-caption token-category">Boolean Variables</div>
+                                        <code class="text-caption token-value">var(--category-color-pink)</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <!-- RESPONSIVE ICON SIZING      -->
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title"><i data-lucide="maximize"></i> Responsive Sizing</h2>
+                            <p class="category-description">Icons use design system tokens for consistent sizing across all components. Stroke weight automatically scales for optimal visual balance.</p>
+                        </div>
+                        <div class="tokens-grid">
+                            <div class="icon-sizing-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--size-4); align-items: end; text-align: center;">
+                                <div class="icon-size-showcase">
+                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="icon icon--xs" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="icon-size-meta">
+                                        <div class="text-body-sm">XS</div>
+                                        <code class="text-caption">12px</code>
+                                        <div class="text-caption token-reference">--icon-xs</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="icon-size-showcase">
+                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="icon icon--sm" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="icon-size-meta">
+                                        <div class="text-body-sm">SM</div>
+                                        <code class="text-caption">16px</code>
+                                        <div class="text-caption token-reference">--icon-sm</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="icon-size-showcase">
+                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="icon icon--md" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="icon-size-meta">
+                                        <div class="text-body-sm">MD</div>
+                                        <code class="text-caption">20px</code>
+                                        <div class="text-caption token-reference">--icon-md</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="icon-size-showcase">
+                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="icon icon--lg" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="icon-size-meta">
+                                        <div class="text-body-sm">LG</div>
+                                        <code class="text-caption">24px</code>
+                                        <div class="text-caption token-reference">--icon-lg</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="icon-size-showcase">
+                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="icon icon--xl icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="icon-size-meta">
+                                        <div class="text-body-sm">XL</div>
+                                        <code class="text-caption">32px</code>
+                                        <div class="text-caption token-reference">--icon-xl</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <!-- ICON CATEGORIES             -->
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title"><i data-lucide="grid-3x3"></i> Icon Categories</h2>
+                            <p class="category-description">All icons used in the plugin, organized by function. Icons use semantic naming and are optimized for clarity at all sizes.</p>
+                        </div>
+                        
+                        <div class="tokens-grid">
+                            <div class="example-label">UI Actions</div>
+                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="rocket" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">rocket</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="sliders-horizontal" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">sliders-horizontal</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="send" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">send</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="settings" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">settings</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tokens-grid">
+                            <div class="example-label">Navigation</div>
+                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="arrow-left" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">arrow-left</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="arrow-right" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">arrow-right</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="x" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">x</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="maximize" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">maximize</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tokens-grid">
+                            <div class="example-label">Status &amp; Feedback</div>
+                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="check-circle" style="color: var(--color-status-success);"></i>
+                                    <code class="text-caption">check-circle</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="alert-triangle" style="color: var(--category-color-orange);"></i>
+                                    <code class="text-caption">alert-triangle</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tokens-grid">
+                            <div class="example-label">External &amp; Social</div>
+                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="figma" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">figma</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="github" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">github</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="linkedin" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">linkedin</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="mail" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">mail</code>
+                                </div>
+                                <div class="icon-category-item">
+                                    <i class="icon icon--lg" data-icon="briefcase" style="color: var(--color-text-default);"></i>
+                                    <code class="text-caption">briefcase</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <!-- DESIGN TOKENS REFERENCE     -->
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title"><i data-lucide="hash"></i> Design Tokens</h2>
+                            <p class="category-description">Complete token reference for the icon system. All values are defined as CSS custom properties.</p>
+                        </div>
+                        
+                        <div class="compact-cards">
+                            <div class="compact-card">
+                                <h3><i data-icon="maximize"></i> Size Tokens</h3>
+                                <div class="token-reference-list">
+                                    <div class="token-reference-item">
+                                        <code>--icon-xs</code>
+                                        <span>12px</span>
+                                        <i class="icon icon--xs" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="token-reference-item">
+                                        <code>--icon-sm</code>
+                                        <span>16px</span>
+                                        <i class="icon icon--sm" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="token-reference-item">
+                                        <code>--icon-md</code>
+                                        <span>20px (default)</span>
+                                        <i class="icon icon--md" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="token-reference-item">
+                                        <code>--icon-lg</code>
+                                        <span>24px</span>
+                                        <i class="icon icon--lg" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="token-reference-item">
+                                        <code>--icon-xl</code>
+                                        <span>32px</span>
+                                        <i class="icon icon--xl icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="compact-card">
+                                <h3><i data-icon="pen-tool"></i> Stroke Weight Tokens</h3>
+                                <div class="token-reference-list">
+                                    <div class="token-reference-item">
+                                        <code>--icon-stroke-thin</code>
+                                        <span>1.5</span>
+                                        <i class="icon icon--lg icon--thin" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="token-reference-item">
+                                        <code>--icon-stroke-regular</code>
+                                        <span>2 (default)</span>
+                                        <i class="icon icon--lg icon--regular" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                    <div class="token-reference-item">
+                                        <code>--icon-stroke-bold</code>
+                                        <span>2.5</span>
+                                        <i class="icon icon--lg icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <!-- ACCESSIBILITY GUIDELINES    -->
+                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title"><i data-lucide="check-circle"></i> Accessibility Guidelines</h2>
+                            <p class="category-description">Ensure icons are accessible and maintain sufficient contrast across all themes and contexts.</p>
+                        </div>
+                        
+                        <div class="compact-cards">
+                            <div class="compact-card">
+                                <h3><i data-icon="check-circle"></i> Best Practices</h3>
+                                <ul>
+                                    <li>Use <code>currentColor</code> for theme-aware coloring</li>
+                                    <li>Provide <code>aria-label</code> for icon-only buttons</li>
+                                    <li>Maintain minimum 3:1 contrast ratio</li>
+                                    <li>Test with screen readers and keyboard navigation</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="compact-card">
+                                <h3><i data-icon="alert-triangle"></i> Avoid These Combinations</h3>
+                                <div class="accessibility-warnings">
+                                    <div class="warning-example">
+                                        <div class="warning-visual" style="background: var(--brand-primary-lime); padding: var(--size-2); border-radius: var(--radius-2);">
+                                            <i class="icon icon--md" data-icon="x" style="color: white;"></i>
+                                        </div>
+                                        <div class="warning-text">
+                                            <div class="text-caption">White on brand lime</div>
+                                            <div class="text-caption" style="color: var(--color-text-error);">Fails contrast (1.8:1)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-caption" style="margin-top: var(--size-2);">
+                                    Use <code>var(--color-text-on-brand)</code> for proper contrast on brand backgrounds.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -554,344 +931,6 @@
         </div> <!-- This closes the variants-grid -->
     </div> <!-- This closes the component-body -->
 </div> <!-- This closes the component-section#token-card -->
-        
-
-        <!-- ==========================================================================
-         ICON SYSTEM DOCUMENTATION
-         ========================================================================== -->
-        <div id="icons" class="component-section">
-            <div class="component-header">
-                <h2 class="text-heading-lg component-title">
-                    <i data-lucide="palette"></i>
-                    Icon System
-                </h2>
-                <p class="component-description">
-                    Industry-standard icon system with responsive sizing, design tokens, and optimized SVGs. 
-                    All icons follow accessibility best practices and support multiple rendering methods.
-                </p>
-            </div>
-            
-            <div class="component-body">
-                
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <!-- TOKEN TYPE ICONS SHOWCASE   -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <h3 class="example-subheader">Token Type Icons</h3>
-                <p class="category-description" style="margin-bottom: var(--size-4);">Core icons representing the four variable categories from Figma. Each icon uses its corresponding category color.</p>
-
-                <div class="subsection">
-                    <div class="example-wrapper">
-                        <div class="token-icons-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-4);">
-                            <div class="token-icon-card">
-                                <div class="token-icon-display">
-                                    <i class="icon icon--xl" data-icon="palette" style="color: var(--category-color-cyan);"></i>
-                                </div>
-                                <div class="token-icon-meta">
-                                    <div class="text-body-sm token-name">palette</div>
-                                    <div class="text-caption token-category">Color Variables</div>
-                                    <code class="text-caption token-value">var(--category-color-cyan)</code>
-                                </div>
-                            </div>
-                            
-                            <div class="token-icon-card">
-                                <div class="token-icon-display">
-                                    <i class="icon icon--xl" data-icon="type" style="color: var(--category-color-purple);"></i>
-                                </div>
-                                <div class="token-icon-meta">
-                                    <div class="text-body-sm token-name">type</div>
-                                    <div class="text-caption token-category">Text Variables</div>
-                                    <code class="text-caption token-value">var(--category-color-purple)</code>
-                                </div>
-                            </div>
-                            
-                            <div class="token-icon-card">
-                                <div class="token-icon-display">
-                                    <i class="icon icon--xl" data-icon="hash" style="color: var(--category-color-orange);"></i>
-                                </div>
-                                <div class="token-icon-meta">
-                                    <div class="text-body-sm token-name">hash</div>
-                                    <div class="text-caption token-category">Number Variables</div>
-                                    <code class="text-caption token-value">var(--category-color-orange)</code>
-                                </div>
-                            </div>
-                            
-                            <div class="token-icon-card">
-                                <div class="token-icon-display">
-                                    <i class="icon icon--xl" data-icon="toggle-right" style="color: var(--category-color-pink);"></i>
-                                </div>
-                                <div class="token-icon-meta">
-                                    <div class="text-body-sm token-name">toggle-right</div>
-                                    <div class="text-caption token-category">Boolean Variables</div>
-                                    <code class="text-caption token-value">var(--category-color-pink)</code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <!-- RESPONSIVE ICON SIZING      -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <h3 class="example-subheader">Responsive Sizing</h3>
-                <p class="category-description" style="margin-bottom: var(--size-4);">Icons use design system tokens for consistent sizing across all components. Stroke weight automatically scales for optimal visual balance.</p>
-
-                <div class="subsection">
-                    <div class="example-wrapper">
-                        <div class="icon-sizing-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--size-4); align-items: end; text-align: center;">
-                            <div class="icon-size-showcase">
-                                <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="icon icon--xs" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                </div>
-                                <div class="icon-size-meta">
-                                    <div class="text-body-sm">XS</div>
-                                    <code class="text-caption">12px</code>
-                                    <div class="text-caption token-reference">--icon-xs</div>
-                                </div>
-                            </div>
-                            
-                            <div class="icon-size-showcase">
-                                <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="icon icon--sm" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                </div>
-                                <div class="icon-size-meta">
-                                    <div class="text-body-sm">SM</div>
-                                    <code class="text-caption">16px</code>
-                                    <div class="text-caption token-reference">--icon-sm</div>
-                                </div>
-                            </div>
-                            
-                            <div class="icon-size-showcase">
-                                <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="icon icon--md" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                </div>
-                                <div class="icon-size-meta">
-                                    <div class="text-body-sm">MD</div>
-                                    <code class="text-caption">20px</code>
-                                    <div class="text-caption token-reference">--icon-md</div>
-                                </div>
-                            </div>
-                            
-                            <div class="icon-size-showcase">
-                                <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="icon icon--lg" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                </div>
-                                <div class="icon-size-meta">
-                                    <div class="text-body-sm">LG</div>
-                                    <code class="text-caption">24px</code>
-                                    <div class="text-caption token-reference">--icon-lg</div>
-                                </div>
-                            </div>
-                            
-                            <div class="icon-size-showcase">
-                                <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="icon icon--xl icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                </div>
-                                <div class="icon-size-meta">
-                                    <div class="text-body-sm">XL</div>
-                                    <code class="text-caption">32px</code>
-                                    <div class="text-caption token-reference">--icon-xl</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <!-- ICON CATEGORIES             -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <h3 class="example-subheader">Icon Categories</h3>
-                <p class="category-description" style="margin-bottom: var(--size-4);">All icons used in the plugin, organized by function. Icons use semantic naming and are optimized for clarity at all sizes.</p>
-
-                <div class="subsection">
-                    <div class="example-wrapper">
-                        <div class="example-label">UI Actions</div>
-                        <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="rocket" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">rocket</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="sliders-horizontal" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">sliders-horizontal</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="send" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">send</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="settings" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">settings</code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="subsection">
-                    <div class="example-wrapper">
-                        <div class="example-label">Navigation</div>
-                        <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="arrow-left" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">arrow-left</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="arrow-right" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">arrow-right</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="x" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">x</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="maximize" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">maximize</code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="subsection">
-                    <div class="example-wrapper">
-                        <div class="example-label">Status &amp; Feedback</div>
-                        <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="check-circle" style="color: var(--color-status-success);"></i>
-                                <code class="text-caption">check-circle</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="alert-triangle" style="color: var(--category-color-orange);"></i>
-                                <code class="text-caption">alert-triangle</code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="subsection">
-                    <div class="example-wrapper">
-                        <div class="example-label">External &amp; Social</div>
-                        <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="figma" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">figma</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="github" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">github</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="linkedin" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">linkedin</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="mail" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">mail</code>
-                            </div>
-                            <div class="icon-category-item">
-                                <i class="icon icon--lg" data-icon="briefcase" style="color: var(--color-text-default);"></i>
-                                <code class="text-caption">briefcase</code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <!-- DESIGN TOKENS REFERENCE     -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <h3 class="example-subheader" style="margin-top: var(--size-8);">Design Tokens</h3>
-                <p class="category-description" style="margin-bottom: var(--size-4);">Complete token reference for the icon system. All values are defined as CSS custom properties.</p>
-
-                <div class="compact-cards">
-                    <div class="compact-card">
-                        <h3><i data-icon="maximize"></i> Size Tokens</h3>
-                        <div class="token-reference-list">
-                            <div class="token-reference-item">
-                                <code>--icon-xs</code>
-                                <span>12px</span>
-                                <i class="icon icon--xs" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                            <div class="token-reference-item">
-                                <code>--icon-sm</code>
-                                <span>16px</span>
-                                <i class="icon icon--sm" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                            <div class="token-reference-item">
-                                <code>--icon-md</code>
-                                <span>20px (default)</span>
-                                <i class="icon icon--md" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                            <div class="token-reference-item">
-                                <code>--icon-lg</code>
-                                <span>24px</span>
-                                <i class="icon icon--lg" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                            <div class="token-reference-item">
-                                <code>--icon-xl</code>
-                                <span>32px</span>
-                                <i class="icon icon--xl icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="compact-card">
-                        <h3><i data-icon="pen-tool"></i> Stroke Weight Tokens</h3>
-                        <div class="token-reference-list">
-                            <div class="token-reference-item">
-                                <code>--icon-stroke-thin</code>
-                                <span>1.5</span>
-                                <i class="icon icon--lg icon--thin" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                            <div class="token-reference-item">
-                                <code>--icon-stroke-regular</code>
-                                <span>2 (default)</span>
-                                <i class="icon icon--lg icon--regular" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                            <div class="token-reference-item">
-                                <code>--icon-stroke-bold</code>
-                                <span>2.5</span>
-                                <i class="icon icon--lg icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <!-- ACCESSIBILITY GUIDELINES    -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <h3 class="example-subheader" style="margin-top: var(--size-8);">Accessibility Guidelines</h3>
-                <p class="category-description" style="margin-bottom: var(--size-4);">Ensure icons are accessible and maintain sufficient contrast across all themes and contexts.</p>
-
-                <div class="compact-cards">
-                    <div class="compact-card">
-                        <h3><i data-icon="check-circle"></i> Best Practices</h3>
-                        <ul>
-                            <li>Use <code>currentColor</code> for theme-aware coloring</li>
-                            <li>Provide <code>aria-label</code> for icon-only buttons</li>
-                            <li>Maintain minimum 3:1 contrast ratio</li>
-                            <li>Test with screen readers and keyboard navigation</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="compact-card">
-                        <h3><i data-icon="alert-triangle"></i> Avoid These Combinations</h3>
-                        <div class="accessibility-warnings">
-                            <div class="warning-example">
-                                <div class="warning-visual" style="background: var(--brand-primary-lime); padding: var(--size-2); border-radius: var(--radius-2);">
-                                    <i class="icon icon--md" data-icon="x" style="color: white;"></i>
-                                </div>
-                                <div class="warning-text">
-                                    <div class="text-caption">White on brand lime</div>
-                                    <div class="text-caption" style="color: var(--color-text-error);">Fails contrast (1.8:1)</div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-caption" style="margin-top: var(--size-2);">
-                            Use <code>var(--color-text-on-brand)</code> for proper contrast on brand backgrounds.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- ==========================================================================
          START: FINAL, CORRECTED, SYSTEM-ACCURATE BUTTON COMPONENT SECTION
          ========================================================================== -->
@@ -1154,10 +1193,9 @@
             <p class="component-description">Styled form elements for user input, including select dropdowns and search fields.</p>
         </div>
         <div class="component-body">
-            <h3 class="example-subheader">Select Dropdown</h3>
             <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
-                    <div class="example-label">Live Example</div>
+                    <div class="example-label">Select Dropdown - Live Example</div>
                     <div class="example-container">
                         <!-- @include src/components/_forms-example.html -->
                     </div>
@@ -1173,14 +1211,11 @@
             <p class="component-description">Used in the "Advanced Filtering" mode, these items display token collections with their respective token counts and allow for selection.</p>
         </div>
         <div class="component-body">
-            <h3 class="example-subheader">States & Variants</h3>
             <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
-                    <div class="example-label">Live Example</div>
+                    <div class="example-label">Collection Item - Live Example</div>
                     <div class="example-container">
-                        <div class="collection-list list-style-none">
-                            <!-- @include src/components/_collection-item.html -->
-                        </div>
+                        <!-- @include src/components/_collection-item.html -->
                     </div>
                 </div>
             </div>
@@ -1194,10 +1229,9 @@
             <p class="component-description">Used for focused tasks or information, such as the "About" screen in the plugin. Features a blurred backdrop effect.</p>
         </div>
         <div class="component-body">
-            <h3 class="example-subheader">About Modal</h3>
             <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
-                    <div class="example-label">Live Example</div>
+                    <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-tall">
                         <!-- This button will trigger the modal -->
                         <button class="btn btn-secondary btn-md" id="show-modal-btn">
@@ -1425,18 +1459,23 @@
         }
         
         function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
+            // Handle both old .counter and new .stat-value elements
+            const counters = document.querySelectorAll('.counter, .stat-value');
+            
             counters.forEach(counter => {
                 const target = parseInt(counter.getAttribute('data-target'));
-                const duration = 2000;
-                const increment = target / (duration / 16);
+                const isStatValue = counter.classList.contains('stat-value');
+                
+                // Enhanced animation with slower speed for small numbers (stat-value elements)
+                const speed = isStatValue && target <= 10 ? 100 : 200;
                 let current = 0;
                 
                 const updateCounter = () => {
-                    current += increment;
+                    const increment = target / speed;
                     if (current < target) {
-                        counter.textContent = Math.floor(current);
-                        requestAnimationFrame(updateCounter);
+                        current += increment;
+                        counter.textContent = Math.ceil(current);
+                        setTimeout(updateCounter, 10);
                     } else {
                         counter.textContent = target;
                     }
@@ -1449,7 +1488,8 @@
                             observer.unobserve(entry.target);
                         }
                     });
-                });
+                }, { threshold: 0.5 });
+                
                 observer.observe(counter);
             });
         }
@@ -1772,6 +1812,90 @@
                     hideModal();
                 }
             });
+        }
+
+        // Hero Animation - Floating Token Icons
+        function initHeroAnimation() {
+            const container = document.getElementById('hero-animation-canvas');
+            if (!container) return;
+
+            const iconCount = 30; // Reduced from 60 for better performance
+            const tokenTypes = [
+                { icon: 'palette', color: 'var(--category-color-cyan)' },
+                { icon: 'type', color: 'var(--category-color-purple)' },
+                { icon: 'hash', color: 'var(--category-color-orange)' },
+                { icon: 'toggle-right', color: 'var(--category-color-pink)' },
+                { icon: 'layers', color: 'var(--brand-primary-lime)' }
+            ];
+            const sizeTokens = ['--icon-xs', '--icon-sm', '--icon-md', '--icon-lg', '--icon-xl'];
+            const animationClasses = ['rise', 'bubble', 'parallax'];
+
+            // Animation duration constants from CSS (matching design tokens)
+            const durations = {
+                rise: { min: 25, range: 15 },
+                bubble: { min: 20, range: 15 },
+                parallax: { min: 20, range: 10 },
+                parallaxSlow: { min: 35, range: 10 }
+            };
+
+            for(let i = 0; i < iconCount; i++) {
+                const iconWrapper = document.createElement('div');
+                
+                // Randomize selections instead of sequential
+                const category = tokenTypes[Math.floor(Math.random() * tokenTypes.length)];
+                const sizeVar = sizeTokens[Math.floor(Math.random() * sizeTokens.length)];
+                const animationClass = animationClasses[Math.floor(Math.random() * animationClasses.length)];
+
+                iconWrapper.className = 'icon-float ' + animationClass;
+                iconWrapper.style.color = category.color;
+                iconWrapper.style.fontSize = 'var(' + sizeVar + ')';
+                iconWrapper.style.left = Math.random() * 100 + '%';
+
+                // Set durations and effects based on type
+                // Cap delays at 3 seconds max for quicker visibility
+                const maxDelay = 3;
+                
+                if (animationClass === 'rise') {
+                    const duration = durations.rise.min + Math.random() * durations.rise.range;
+                    iconWrapper.style.animationDuration = duration + 's';
+                    iconWrapper.style.animationDelay = Math.random() * maxDelay + 's';
+                } else if (animationClass === 'bubble') {
+                    const duration = durations.bubble.min + Math.random() * durations.bubble.range;
+                    iconWrapper.style.animationDuration = duration + 's';
+                    iconWrapper.style.animationDelay = Math.random() * maxDelay + 's';
+                } else if (animationClass === 'parallax') {
+                    let duration;
+                    // Apply blur to smaller icons for depth effect
+                    if (sizeVar === '--icon-xs' || sizeVar === '--icon-sm') {
+                        duration = durations.parallaxSlow.min + Math.random() * durations.parallaxSlow.range;
+                        // Use CSS calc for blur values
+                        const blurAmount = 1 + Math.random() * 1; // 1-2px range
+                        iconWrapper.style.filter = 'blur(' + blurAmount + 'px)';
+                        iconWrapper.style.opacity = 'var(--animation-opacity-dim)';
+                    } else {
+                        duration = durations.parallax.min + Math.random() * durations.parallax.range;
+                    }
+                    iconWrapper.style.animationDuration = duration + 's';
+                    iconWrapper.style.animationDelay = Math.random() * maxDelay + 's';
+                }
+
+                const icon = document.createElement('i');
+                icon.setAttribute('data-lucide', category.icon);
+                iconWrapper.appendChild(icon);
+                container.appendChild(iconWrapper);
+            }
+            
+            // Refresh Lucide icons for the new elements
+            if (window.lucide && window.lucide.createIcons) {
+                window.lucide.createIcons();
+            }
+        }
+
+        // Initialize hero animation on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initHeroAnimation);
+        } else {
+            initHeroAnimation();
         }
 
     </script>
