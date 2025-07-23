@@ -131,18 +131,14 @@ Our build process includes automatic compatibility validation to prevent Figma p
     -   Template literals and other modern syntax incompatible with Figma's environment
 -   **Safety First**: Build process stops if compatibility issues are found, preventing broken deployments
 
-### ♿ Accessibility Testing
+### ♿ Accessibility Features
 
-The design system includes built-in accessibility validation:
+The design system is built with accessibility in mind:
 
--   **Guide Layout Page**: Open `docs/guide-layout.html` to view the system truth source with integrated accessibility testing
--   **WCAG AA Compliance**: Automatically checks color contrast ratios for text and background combinations
--   **Interactive Testing**: Use the built-in buttons to check accessibility, highlight violations, and test design token combinations
--   **Console Helpers**: The accessibility checker provides console commands:
-    -   `checkA11y()` - Run accessibility scan and get detailed report
-    -   `highlightA11y()` - Visually highlight accessibility violations
-    -   `clearA11y()` - Clear violation highlights
-    -   `testTokens()` - Test all design token color combinations
+-   **WCAG AA Compliance**: All color combinations and text contrasts meet accessibility standards
+-   **Semantic HTML**: Proper heading hierarchy and semantic markup throughout
+-   **Keyboard Navigation**: Full keyboard support for all interactive elements
+-   **Screen Reader Support**: ARIA labels and live regions for dynamic content
 
 
 
@@ -174,8 +170,7 @@ token-exporter-ds/
 │
 ├── scripts/
 │ ├── sync.sh # The master build script
-│ ├── figma-compat-check.js # Figma compatibility validator
-│ └── fix-template-literals.js # Template literal fixer
+│ └── figma-compat-check.js # Figma compatibility validator
 │ 
 ├── _sandbox/ # Personal testing files (ignored by git)
 ├── .gitignore
@@ -219,7 +214,6 @@ token-exporter-ds/
 -   `npm run test` - Run figma-check and JavaScript linting together
 -   `npm run lint:js` - Lint JavaScript files using ESLint (uses legacy flat config)
 -   `npm run format` - Auto-fix CSS formatting issues with stylelint
--   `npm run sync:skip-checks` - Build without compatibility checking (not recommended)
 -   `npm run clean` - Remove backup files (ui.html.backup)
 
 

@@ -762,8 +762,15 @@ if (document.readyState === 'loading') {
 
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="move-horizontal"></i>
+                            Spacing
+                        </h2>
+                        <p class="section-description">Open Props spacing scale used for consistent layouts throughout the interface.</p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Spacing</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Scale Tokens</h2><p class="category-description">Core spacing values for padding, margins, and gaps.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
@@ -777,8 +784,15 @@ if (document.readyState === 'loading') {
 
                 <!-- Shadows Section -->
                 <section id="shadows" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="layers"></i>
+                            Shadows
+                        </h2>
+                        <p class="section-description">Open Props shadow tokens for creating depth and elevation.</p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="copy"></i> Shadows</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="copy"></i> Elevation Tokens</h2><p class="category-description">Shadow values for creating visual hierarchy and depth.</p></div>
                         <div class="tokens-grid shadow-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
@@ -789,8 +803,15 @@ if (document.readyState === 'loading') {
 
                 <!-- Border Radius Section -->
                 <section id="border-radius" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="square"></i>
+                            Border & Radius
+                        </h2>
+                        <p class="section-description">Open Props radius tokens for consistent corner rounding.</p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Radius</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Radius Tokens</h2><p class="category-description">Corner radius values for UI components and containers.</p></div>
                         <div class="tokens-grid radius-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview rounded-1"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview rounded-2"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
@@ -1577,10 +1598,9 @@ if (document.readyState === 'loading') {
             <p class="component-description">Styled form elements for user input, including select dropdowns and search fields.</p>
         </div>
         <div class="component-body">
-            <h3 class="example-subheader">Select Dropdown</h3>
             <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
-                    <div class="example-label">Live Example</div>
+                    <div class="example-label">Select Dropdown - Live Example</div>
                     <div class="example-container">
 <!--
 Component: Export Card (Stateful)
@@ -1630,12 +1650,10 @@ Toggles the global appState.mode and communicates with the Token Summary card.
             <p class="component-description">Used in the "Advanced Filtering" mode, these items display token collections with their respective token counts and allow for selection.</p>
         </div>
         <div class="component-body">
-            <h3 class="example-subheader">States & Variants</h3>
             <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
-                    <div class="example-label">Live Example</div>
+                    <div class="example-label">Collection Item - Live Example</div>
                     <div class="example-container">
-                        <div class="collection-list list-style-none">
 <!-- src/components/_collection-item.html -->
 <!-- This is the single source of truth for the collection item component's structure. -->
 <!-- Example 1: Selected collection with all 4 token types -->
@@ -1677,7 +1695,6 @@ Toggles the global appState.mode and communicates with the Token Summary card.
     </div>
     <div class="text-caption collection-count">32 tokens</div>
 </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1691,10 +1708,9 @@ Toggles the global appState.mode and communicates with the Token Summary card.
             <p class="component-description">Used for focused tasks or information, such as the "About" screen in the plugin. Features a blurred backdrop effect.</p>
         </div>
         <div class="component-body">
-            <h3 class="example-subheader">About Modal</h3>
             <div class="variants-grid" style="grid-template-columns: 1fr;">
                 <div class="example-wrapper">
-                    <div class="example-label">Live Example</div>
+                    <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-tall">
                         <!-- This button will trigger the modal -->
                         <button class="btn btn-secondary btn-md" id="show-modal-btn">

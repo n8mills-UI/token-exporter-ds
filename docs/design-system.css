@@ -2294,6 +2294,7 @@ body {
 .table-responsive {
     width: 100%;
     margin: 0 auto;
+    margin-bottom: var(--size-4); /* Add bottom padding to prevent touching container edge */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border: 1px solid var(--color-border-default);
@@ -2345,6 +2346,26 @@ body {
 /* Remove hover states from non-interactive table rows */
 .table tbody tr:hover {
     background-color: transparent !important;
+}
+
+/* Icon Category Grid - Vertical Alignment */
+.icon-category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-2);
+    padding: var(--size-3);
+    text-align: center;
+}
+
+.icon-category-item .icon {
+    margin-bottom: var(--size-1);
+}
+
+.icon-category-item code {
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
 }
 
 .table strong {
@@ -2703,9 +2724,7 @@ body {
 
 /* Built With Section */
 .tech-stack-grid {
- background: var(--gray-9);
- border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-3);
+ background: transparent; /* Remove background to blend with parent */
  padding: var(--size-6);
  margin-bottom: var(--size-6);
 }
@@ -2870,8 +2889,7 @@ body {
 }
 
 .faq-section {
- background: var(--color-background-secondary);
- border-radius: var(--radius-3);
+ background: transparent; /* Remove background to blend with parent */
  padding: var(--size-6);
 }
 
@@ -5865,6 +5883,20 @@ body {
     background: var(--color-background-tertiary);
     border-bottom: var(--border-size-1) solid var(--color-border-default);
     margin-bottom: var(--guide-content-gap);
+}
+
+/* Main Section Headers (Foundation & Components) Override */
+.main-section-title {
+    font-size: var(--font-size-5) !important; /* Larger than subsections */
+}
+
+.content-section > .section-header {
+    background: transparent !important; /* Remove background for main sections */
+    border-bottom: var(--border-size-2) solid var(--color-border-default) !important; /* Thicker dividing line */
+    padding-bottom: var(--size-4) !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 /* Section Body Container */
