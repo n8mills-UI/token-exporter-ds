@@ -4166,70 +4166,75 @@ select option {
 /* @docs-only-start */
 
 /* Thin branded divider line */
-.guide-footer::before {
- content: '';
- position: absolute;
- top: 0;
- left: 0;
- right: 0;
- height: var(--border-size-1); 
- background: var(--brand-gradient-lime);
- opacity: var(--opacity-80); 
+.guide-footer {
+    background: var(--color-background-secondary);
+    padding: var(--size-6);
+    border-top: 1px solid var(--color-border-default);
+    margin-top: var(--size-8);
 }
 
 .footer-content {
- max-width: 1200px;
- margin: 0 auto;
- display: flex;
- align-items: flex-end; /* Bottom align everything */
- justify-content: space-between;
- gap: var(--size-8);
- padding: 0 var(--size-6); /* Use padding for consistent spacing */
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--size-6);
 }
 
-/* Enhanced brand column */
 .footer-brand {
- display: flex;
- flex-direction: column;
- gap: var(--size-2);
- align-items: flex-start;
+    display: flex;
+    align-items: center;
+    gap: var(--size-4);
 }
 
 .footer-logo {
- width: 48px;
- height: 48px;
- margin-bottom: var(--size-1);
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
 }
 
 .footer-title {
- font-size: var(--font-size-4);
- font-weight: var(--font-weight-6);
- color: var(--color-text-default);
- line-height: 1;
+    font-size: var(--font-size-4);
+    font-weight: 600;
+    color: var(--color-text-default);
+    margin: 0;
 }
 
 .footer-tagline {
- color: var(--color-text-muted);
- font-size: var(--font-size-1);
- line-height: 1.4;
+    font-size: var(--font-size-1);
+    color: var(--color-text-secondary);
+    margin-top: var(--size-1);
 }
 
-.footer-tagline .heart {
- color: var(--category-color-pink);
+.footer-social-links {
+    display: flex;
+    gap: var(--size-3);
 }
 
-/* Right side actions - properly aligned */
-.footer-actions {
- display: flex;
- align-items: center;
- gap: var(--size-4);
- padding-bottom: var(--border-size-2); 
+.figma-cta .btn {
+    min-width: 200px;
 }
 
-.footer-cta svg { /* Changed from .lucide to svg for the inline logo */
- width: 15px;
- height: 15px;
- flex-shrink: 0;
+.heart {
+    color: var(--pink-5);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-brand {
+        flex-direction: column;
+        gap: var(--size-2);
+        margin-bottom: var(--size-4);
+    }
+
+    .figma-cta {
+        margin-bottom: var(--size-4);
+    }
 }
 
  
