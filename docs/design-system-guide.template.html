@@ -32,7 +32,11 @@
             <span class="header-title">Token Exporter</span>
         </div>
         <button class="mobile-menu-toggle-right" id="mobile-menu-toggle-right" aria-label="Toggle navigation">
-            <i data-lucide="menu"></i>
+            <span class="hamburger-icon">
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+                <span class="line line-3"></span>
+            </span>
         </button>
     </header>
     <!-- END: New Mobile Header -->
@@ -41,8 +45,12 @@
     <div class="menu-overlay" id="menu-overlay"></div>
     <nav class="mobile-menu" id="mobile-menu">
         <div class="menu-header">
-             <button class="menu-close-btn" id="menu-close-btn" aria-label="Close navigation">
-                <i data-lucide="x"></i>
+             <button class="mobile-menu-toggle-right" id="menu-close-btn" aria-label="Close navigation">
+                <span class="hamburger-icon">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                </span>
             </button>
         </div>
         <!-- The navigation links will be dynamically populated by the existing sidebar script -->
@@ -185,17 +193,17 @@
                     </div>
                     <div class="stat-item">
                         <i class="stat-icon"><i data-lucide="atom"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="435">0</span><span class="stat-suffix">+</span></div>
+                        <div class="stat-number"><span class="stat-value" data-target="435">0</span><span class="stat-suffix stat-suffix--plus">+</span></div>
                         <div class="stat-label">Design Tokens</div>
                     </div>
                     <div class="stat-item">
                         <i class="stat-icon"><i data-lucide="zap"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="100">0</span><span class="stat-suffix">%</span></div>
+                        <div class="stat-number"><span class="stat-value" data-target="100">0</span><span class="stat-suffix stat-suffix--percent">%</span></div>
                         <div class="stat-label">Automated</div>
                     </div>
                     <div class="stat-item">
                         <i class="stat-icon"><i data-lucide="clock"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="10">0</span><span class="stat-suffix">×</span></div>
+                        <div class="stat-number"><span class="stat-value" data-target="10">0</span><span class="stat-suffix stat-suffix--times">×</span></div>
                         <div class="stat-label">Faster Export</div>
                     </div>
                 </div>

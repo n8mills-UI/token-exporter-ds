@@ -1340,7 +1340,7 @@ body {
 
 .stat-item {
  text-align: center;
- padding: var(--size-3);
+ padding: var(--size-1) var(--size-3) var(--size-5) var(--size-3); /* Reduced top/side padding, increased bottom */
 }
 
 .stat-number {
@@ -1358,7 +1358,8 @@ body {
  font-size: var(--font-size-2);
  font-weight: var(--font-weight-5);
  vertical-align: super;
- opacity: 0.7;
+ opacity: 1;
+ margin-left: 2px;
 }
 
 .stat-label {
@@ -1366,6 +1367,9 @@ body {
  color: var(--color-text-secondary);
  line-height: 1.2;
  text-align: center;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
 }
 
 /* Compact cards */
@@ -2550,7 +2554,7 @@ body {
 @keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
 
 
-/* Content wrapper - Positioned at ~35% from top, responsive */
+/* Content wrapper - Positioned higher up, responsive */
 .hero-content-wrapper {
  position: relative;
  z-index: 1;
@@ -2562,7 +2566,7 @@ body {
  flex-direction: column;
  justify-content: flex-start;
  align-items: center;
- padding: 20vh 0 0 0; /* Use viewport height for responsive positioning */
+ padding: 8vh 0 0 0; /* Moved up from 15vh for tighter layout */
 }
 
 /* Hero logo with animation */
@@ -2648,7 +2652,7 @@ body {
 /* Attribution text */
 .hero-footer p {
  color: var(--color-text-muted);
- font-size: var(--font-size-0);
+ font-size: var(--font-size-000); /* DECREASED - Created with ❤️ by Nate Mills text */
  margin: 0;
 }
 
@@ -2675,7 +2679,7 @@ body {
 
 .stat-item {
  text-align: center;
- padding: var(--size-3);
+ padding: var(--size-1) var(--size-3) var(--size-5) var(--size-3);
  display: flex;
  flex-direction: column;
  align-items: center;
@@ -2697,7 +2701,8 @@ body {
  font-size: var(--font-size-2);
  font-weight: var(--font-weight-5);
  vertical-align: super;
- opacity: 0.7;
+ opacity: 1;
+ margin-left: 2px;
 }
 
 .stat-label {
@@ -2705,6 +2710,9 @@ body {
  color: var(--color-text-secondary);
  line-height: 1.2;
  text-align: center;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
 }
 
 /* Compact cards */
@@ -3495,7 +3503,7 @@ select option {
  transition: background var(--animation-duration-2) var(--ease-3),
  border-color var(--animation-duration-2) var(--ease-3);
  cursor: default;
- padding: var(--size-2);
+ padding: var(--size-1);
  border-radius: var(--radius-2);
  background: var(--surface-2);
  border: var(--border-size-1) solid transparent;
@@ -4393,6 +4401,16 @@ select option {
  }
 }
 
+/* Specific alignment for stat suffix symbols */
+.stat-suffix--plus {
+ vertical-align: middle; /* Center align the + symbol */
+}
+
+.stat-suffix--percent,
+.stat-suffix--times {
+ vertical-align: baseline; /* Bottom align the % and × symbols */
+}
+
 /* ==========================================================================
  HERO, FOOTER & MOBILE LAYOUT (REFACTORED)
  ========================================================================== */
@@ -4441,8 +4459,8 @@ select option {
 /* FINAL HERO SECTION POLISH */
 .portfolio-hero {
  position: relative;
- padding: var(--size-8) var(--size-6);
- min-height: 95vh;
+ padding: var(--size-6) var(--size-6) var(--size-8);
+ min-height: 100vh;
  display: flex;
  align-items: flex-start;
  justify-content: center;
@@ -4456,7 +4474,8 @@ select option {
  content: '';
  position: absolute;
  inset: 0;
- z-index: -1; 
+ z-index: -1;
+ min-height: 100vh; /* Ensure pattern fills full viewport height */ 
  background: 
  /* Color glows */
  radial-gradient(circle at 20% 50%, rgb(210, 255, 55, 0.08) 0%, transparent 40%),
@@ -4557,21 +4576,54 @@ select option {
     border-bottom: var(--border-size-1) solid var(--color-border-default);
 }
 
-.menu-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--color-text-default);
-    cursor: pointer;
-    padding: var(--size-2);
+/* Animated Hamburger Icon */
+.hamburger-icon {
+    width: 20px;
+    height: 16px;
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.menu-close-btn .lucide {
-    width: var(--icon-lg);
-    height: var(--icon-lg);
-    stroke-width: var(--icon-stroke-regular);
+.hamburger-icon .line {
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 1px;
+    transition: all 0.3s var(--ease-3);
+    transform-origin: center;
+}
+
+/* Animated state when menu is open - applies to both header and close buttons */
+.mobile-menu.open .hamburger-icon .line-1,
+.mobile-menu.open ~ header .hamburger-icon .line-1 {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu.open .hamburger-icon .line-2,
+.mobile-menu.open ~ header .hamburger-icon .line-2 {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.mobile-menu.open .hamburger-icon .line-3,
+.mobile-menu.open ~ header .hamburger-icon .line-3 {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Alternative selector for when menu is open - header is sibling */
+body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-1 {
+    transform: translateY(7px) rotate(45deg);
+}
+
+body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-2 {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-3 {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 .mobile-nav-links {
@@ -5424,7 +5476,7 @@ body {
    RESPONSIVE LAYOUT
    ========================================================================== */
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
     /* Layout Adjustments */
     .guide-sidebar {
         transform: translateX(-100%);
@@ -5574,7 +5626,7 @@ body {
 }
 
     /* --- Responsive Table ("Card" Layout on Mobile) --- */
-    @media (width <= 768px) {
+    @media (width <= 1024px) {
          .table-responsive {
         width: 100%;
         margin: 0 auto;
@@ -5621,15 +5673,33 @@ body {
     }
 
    /* Mobile optimization for portfolio section */
-@media (width <= 768px) {
+@media (width <= 1024px) {
     /* Hero section adjustments */
     .portfolio-hero {
-    padding: var(--size-6) var(--size-4);
-    min-height: 85vh; /* Reduced so stats show on screen */
-    padding-bottom: var(--size-10);
+    padding: var(--size-4) var(--size-3);
+    min-height: 100vh; /* Keep full viewport height on mobile */
+    padding-bottom: var(--size-6);
+    margin-bottom: var(--size-6); /* Reduced from size-8 to bring stats closer */
     display: flex;
     align-items: flex-start;
 }
+    
+    /* Ensure pattern background fills properly on mobile */
+    .portfolio-hero::before {
+        min-height: 100vh;
+        background: 
+        /* Adjusted mobile gradients - more prominent for smaller screens */
+        radial-gradient(circle at 20% 30%, rgb(210, 255, 55, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgb(238, 255, 0, 0.06) 0%, transparent 50%),
+        /* Slightly denser pattern for mobile */
+        repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgb(210, 255, 55, 0.03) 8px,
+        rgb(210, 255, 55, 0.03) 16px
+        );
+    }
 
     /* Responsive positioning on mobile - less aggressive padding */
     .hero-content-wrapper {
@@ -5638,7 +5708,7 @@ body {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        padding: 15vh 0 0 0; /* Reduced viewport height for mobile */
+        padding: var(--size-6) 0 0 0; /* Reduced from size-8 to match desktop tighter spacing */
     }
     
     /* Mobile group spacing adjustments */
@@ -5656,13 +5726,13 @@ body {
     }
     
     .hero-tagline {
-        font-size: var(--font-size-3); /* Maintains medium size */
+        font-size: var(--font-size-3); /* Keep normal size */
         color: var(--color-text-secondary); /* Use semantic color */
         padding: 0 var(--size-2);
     }
     
     .hero-description {
-        font-size: var(--font-size-0); /* Smaller for hierarchy */
+        font-size: var(--font-size-1); /* Increased by one size from font-size-0 */
         color: var(--color-text-muted); /* Use semantic muted color */
         padding: 0 var(--size-2);
     }
@@ -5674,6 +5744,10 @@ body {
         flex-direction: column;
         align-items: center;
         gap: var(--size-4); /* Even spacing between elements */
+    }
+    
+    .hero-footer p {
+        font-size: var(--font-size-000); /* DECREASED - Created with ❤️ by Nate Mills text */
     }
 
     /* Ensure social icons are centered */
@@ -5708,7 +5782,7 @@ body {
     
     /* Stat items */
     .stat-item {
-        padding: var(--size-2);
+        padding: var(--size-1) var(--size-3) var(--size-5) var(--size-3);
     }
     
     .stat-number {
@@ -5717,6 +5791,9 @@ body {
     
     .stat-label {
         font-size: var(--font-size-1); /* Readable size */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     /* Compact cards */
@@ -5845,12 +5922,30 @@ body {
 /* Very small screens */
 @media (width <= 480px) {
     .portfolio-hero {
-        padding: var(--size-5) var(--size-3);
+        padding: var(--size-3) var(--size-2);
+        min-height: 100vh; /* Ensure full height on very small screens too */
+    }
+    
+    /* More intense pattern for very small screens */
+    .portfolio-hero::before {
+        min-height: 100vh;
+        background: 
+        /* More visible gradients for tiny screens */
+        radial-gradient(circle at 25% 25%, rgb(210, 255, 55, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 75% 75%, rgb(238, 255, 0, 0.08) 0%, transparent 60%),
+        /* Denser pattern for better visibility */
+        repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 6px,
+        rgb(210, 255, 55, 0.04) 6px,
+        rgb(210, 255, 55, 0.04) 12px
+        );
     }
     
     /* Conservative positioning on small screens to prevent cutoff */
     .hero-content-wrapper {
-        padding: 10vh 0 0 0; /* Minimal viewport padding for small screens */
+        padding: var(--size-4) 0 0 0; /* Further reduced for small screens to match tighter layout */
     }
     
     .hero-cta-group {
@@ -5859,6 +5954,15 @@ body {
     
     .hero-footer-group {
         gap: var(--size-2);
+    }
+    
+    /* Further font size adjustments for very small screens */
+    .hero-description {
+        font-size: var(--font-size-0); /* Built on Open Props - back to normal on very small screens */
+    }
+    
+    .hero-footer p {
+        font-size: var(--font-size-000); /* DECREASED - Created with ❤️ by Nate Mills - keep tiny */
     }
     
     .impact-stats {
@@ -5993,7 +6097,7 @@ body {
 }
 
 /* Responsive design for icon documentation */
-@media (width <= 768px) {
+@media (width <= 1024px) {
     .example-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: var(--size-2);
@@ -6266,7 +6370,7 @@ body {
    ========================= */
 
 /* Tablet and Mobile */
-@media (width <= 768px) {
+@media (width <= 1024px) {
     :root {
         --guide-section-padding: var(--guide-section-padding-mobile);
         --guide-icon-size: var(--guide-icon-size-mobile);
@@ -6400,7 +6504,7 @@ body {
     gap: var(--size-6);
     max-width: 1200px;
     margin: auto;
-    margin-top: calc(-1 * var(--size-12));
+    margin-top: -25vh; /* Increased overlap to make stats visible on hero section */
     margin-bottom: var(--size-8);
 }
 
@@ -6410,7 +6514,7 @@ body {
     backdrop-filter: var(--blur-xl);
     border: 1px solid rgba(210, 255, 55, 0.2);
     border-radius: var(--radius-3);
-    padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6);
+    padding: 4px var(--size-6) 8px var(--size-6); /* Reduced top padding for visual balance */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--size-4);
@@ -6425,6 +6529,7 @@ body {
 /* Individual Stat Items */
 .stat-item {
     text-align: center;
+    padding: var(--size-1) var(--size-3) var(--size-5) var(--size-3); /* Reduced top/side padding, increased bottom */
 }
 
 .stat-icon {
@@ -6452,8 +6557,19 @@ body {
 .stat-suffix {
     font-size: 1.5rem;
     font-weight: var(--font-weight-6);
-    vertical-align: super;
+    vertical-align: super; /* Default alignment, overridden by specific classes */
     margin-left: 2px;
+    opacity: 1;
+}
+
+/* Specific alignment for stat suffix symbols - must come after general .stat-suffix */
+.stat-suffix--plus {
+    vertical-align: middle; /* Center align the + symbol */
+}
+
+.stat-suffix--percent,
+.stat-suffix--times {
+    vertical-align: baseline; /* Bottom align the % and × symbols */
 }
 
 .stat-label {
@@ -6461,6 +6577,9 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Challenge/Solution/Impact Grid */
@@ -6550,7 +6669,7 @@ body {
 }
 
 /* Responsive Design - Stats and Cards */
-@media (width <= 768px) {
+@media (width <= 1024px) {
     .stats-container-glass {
         grid-template-columns: repeat(2, 1fr);
     }

@@ -147,9 +147,20 @@ echo "   [4/4] Assembling final files..."
 } > "$UI_OUTPUT"
 echo "   ✅ Assembled plugin UI: $UI_OUTPUT"
 
-# Assemble design-system-guide.html (just move the processed file)
-mv "$GUIDE_OUTPUT.temp" "$GUIDE_OUTPUT"
-echo "   ✅ Assembled design system guide: $GUIDE_OUTPUT"
+# Assemble design-system-guide.html (with inlined CSS)
+{
+    # Process line by line, replacing CSS link with inline styles
+    while IFS= read -r line; do
+        if [[ "$line" =~ \<link.*stylesheet.*href=\"design-system\.css\"\> ]]; then
+            echo "        <style>"
+            cat "$CSS_SOURCE_FILE"
+            echo "        </style>"
+        else
+            echo "$line"
+        fi
+    done < "$GUIDE_OUTPUT.temp"
+} > "$GUIDE_OUTPUT"
+echo "   ✅ Assembled design system guide with inlined CSS: $GUIDE_OUTPUT"
 
 echo ""
 echo "🎉 Build complete!"
