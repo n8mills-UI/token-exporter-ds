@@ -5854,8 +5854,8 @@ body {
     --guide-icon-size-mobile: var(--icon-md);    /* 20px - mobile optimization */
     
     /* Typography Scale */
-    --guide-section-title-size: var(--font-size-5);    /* 1.5rem - main sections */
-    --guide-section-title-size-mobile: var(--font-size-4); /* 1.25rem - mobile */
+    --guide-section-title-size: var(--font-size-6);    /* 2.5rem - main sections */
+    --guide-section-title-size-mobile: var(--font-size-5); /* 2rem - mobile */
     --guide-subsection-title-size: var(--font-size-2);     /* 1rem - subsections */
     --guide-description-size: var(--font-size-1);          /* 0.875rem - descriptions */
     
@@ -5887,16 +5887,14 @@ body {
 
 /* Main Section Headers (Foundation & Components) Override */
 .main-section-title {
-    font-size: var(--font-size-5) !important; /* Larger than subsections */
+    font-size: var(--font-size-6) !important; /* Significantly larger than subsections */
 }
 
 .content-section > .section-header {
     background: transparent !important; /* Remove background for main sections */
     border-bottom: var(--border-size-2) solid var(--color-border-default) !important; /* Thicker dividing line */
-    padding-bottom: var(--size-4) !important;
-    padding-top: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding: 0 0 var(--size-4) 0 !important; /* Full-width alignment with bottom padding only */
+    margin-bottom: var(--guide-content-gap);
 }
 
 /* Section Body Container */
@@ -5946,11 +5944,19 @@ body {
 
 /* Header Icons - Consistent Sizing */
 .component-title [data-lucide],
-.main-section-title [data-lucide],
-.component-title .icon,
-.main-section-title .icon {
+.component-title .icon {
     width: var(--guide-icon-size);
     height: var(--guide-icon-size);
+    color: var(--brand-primary-lime);
+    flex-shrink: 0;
+    stroke-width: var(--icon-stroke-regular);
+}
+
+/* Main Section Title Icons - Larger for hierarchy */
+.main-section-title [data-lucide],
+.main-section-title .icon {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
     color: var(--brand-primary-lime);
     flex-shrink: 0;
     stroke-width: var(--icon-stroke-regular);
@@ -6068,6 +6074,18 @@ body {
         --guide-section-title-size: var(--guide-section-title-size-mobile);
         --guide-header-gap: var(--size-2);
         --guide-grid-gap: var(--size-3);
+    }
+    
+    /* Override main section title font size for mobile */
+    .main-section-title {
+        font-size: var(--font-size-5) !important; /* Mobile: 2rem - still larger than subsections */
+    }
+    
+    /* Mobile main section icons scale down appropriately */
+    .main-section-title [data-lucide],
+    .main-section-title .icon {
+        width: var(--icon-md);
+        height: var(--icon-md);
     }
     
     .component-header,
