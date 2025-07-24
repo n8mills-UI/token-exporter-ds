@@ -70,7 +70,7 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
     -   **Tailwind CSS** (Theme Configuration)
 
 -   **Accessibility Features**
-    ARIA labels, semantic HTML, keyboard navigation, and screen reader support for key interactions.
+    ARIA labels, semantic HTML, keyboard navigation, screen reader support, and `prefers-reduced-motion` support for users with vestibular disorders.
 
 -   **Intelligent Alias Resolution**
     Resolves deeply nested aliases to final values and avoids infinite loops.
@@ -80,6 +80,9 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 
 -   **Context-Aware Unit Handling**
     Appends `px` to numeric values except for unitless types like `line-height`.
+
+-   **Performance Optimizations**
+    Intersection Observer API for efficient animations, comprehensive performance monitoring, and responsive design optimized for all device sizes.
 
 <br>
 
@@ -142,107 +145,14 @@ This project uses a fully automated, component-based architecture. A single buil
     -   Refresh the **generated** `docs/design-system-guide.html` in your browser for a pixel-perfect preview.
     -   Reload the plugin in Figma for final verification.
 
-### 🔍 Figma Compatibility Checking
+### 🔍 Quality Assurance
 
-Our build process includes automatic compatibility validation to prevent Figma plugin errors:
+The project includes automated validation to maintain code quality and design system consistency:
 
--   **Automatic Validation**: `npm run sync` now runs `figma-check` first to catch compatibility issues
--   **Manual Check**: Run `npm run figma-check` independently to validate specific files
--   **Common Issues Detected**: 
-    -   Optional chaining syntax (`?.`) that causes "Unexpected token" errors
-    -   Catch blocks without parameters that aren't supported
-    -   Template literals and other modern syntax incompatible with Figma's environment
--   **Safety First**: Build process stops if compatibility issues are found, preventing broken deployments
-
-### 🔍 Automated System Validation
-
-To ensure the integrity and consistency of the design system, this project includes automated validation scripts that maintain code quality and design token consistency.
-
-#### Token Reference Validation
-Validates that all CSS `var()` references point to defined tokens:
-
-```bash
-npm run validate:tokens
-```
-
-**Features:**
-- Scans all CSS custom property definitions in `:root` blocks
-- Finds all `var(--token)` references throughout the CSS
-- Validates that every referenced token is properly defined
-- Dynamically fetches latest Open Props tokens from unpkg
-- Provides detailed error reporting with line numbers and context
-
-#### Duplicate Value Analysis
-Identifies hardcoded values that could be replaced with existing design tokens:
-
-```bash
-npm run analyze:duplicates
-```
-
-**Features:**
-- Analyzes CSS for hardcoded colors, sizes, and other values
-- Compares against existing design tokens
-- Suggests opportunities to improve consistency
-- Helps maintain design system integrity over time
-
-#### Intelligent CSS Architecture Linting
-Enforces design system hierarchy and token-driven architecture:
-
-```bash
-npm run lint:css
-```
-
-**Features:**
-- **Architectural Awareness**: Distinguishes between primitives (`:root` blocks) and semantic/component layers
-- **Two-Layer Validation**: Raw values are legitimate in `:root` definitions but flagged elsewhere
-- **Smart Filtering**: Ignores legitimate hardcoded values (media queries, gradients, transforms)
-- **Focused Analysis**: Prioritizes spacing and layout violations for maximum impact
-- **Contextual Reporting**: Groups violations by type with clear recommendations
-
-#### Documentation Completeness Auditing
-Ensures semantic components are properly documented:
-
-```bash
-npm run audit:docs
-```
-
-**Features:**
-- **Intelligent Component Detection**: Focuses on semantic components while filtering utility classes
-- **Documentation Mapping**: Compares CSS components against HTML documentation sections
-- **Semantic Matching**: Uses smart mapping (e.g., `.btn` → `id="buttons"`) for accuracy
-- **Dual Reporting**: Identifies both undocumented components and stale documentation
-- **Actionable Output**: Provides specific recommendations for maintaining documentation
-
-#### Advanced Architectural Analysis
-Provides sophisticated design system architectural guidance:
-
-```bash
-npm run audit:arch
-```
-
-**Features:**
-- **Composite Value Analysis**: Identifies opportunities for semantic token combinations (e.g., `border: 1px solid #444`)
-- **Contextual Property Awareness**: Understands CSS property context for intelligent suggestions
-- **Frequency Analysis**: Recommends new tokens for repeated value combinations (3+ occurrences)
-- **Ambiguity Resolution**: Lists all possible token replacements with contextual guidance
-- **JSON Output**: Structured recommendations for programmatic processing
-- **Design System Strategy**: Acts as an architectural advisor, not just a pattern matcher
-
-#### When to Use These Tools
-- **Pre-commit Hook**: Run before committing changes to catch errors early
-- **CI/CD Pipeline**: Include in your build process to enforce system integrity
-- **After Refactoring**: Verify token references after major CSS changes
-- **Regular Maintenance**: Periodically check for orphaned references and inconsistencies
-- **Code Reviews**: Use to identify opportunities for token consolidation
-
-**Benefits:**
-- Prevents typos in token names
-- Catches references to removed tokens
-- Identifies missing token definitions
-- Eliminates runtime CSS errors
-- Improves design system consistency
-- Reduces maintenance overhead
-- Enforces architectural boundaries between primitive and semantic layers
+- **Figma Compatibility**: Validates plugin code before deployment
+- **Token Validation**: Ensures all CSS `var()` references are defined
+- **Architecture Linting**: Enforces design system hierarchy
+- **Documentation Audit**: Keeps components and docs in sync
 
 ### ♿ Accessibility Features
 
@@ -252,7 +162,7 @@ The design system is built with accessibility in mind:
 -   **Semantic HTML**: Proper heading hierarchy and semantic markup throughout
 -   **Keyboard Navigation**: Full keyboard support for all interactive elements
 -   **Screen Reader Support**: ARIA labels and live regions for dynamic content
-
+-   **Motion Sensitivity**: `prefers-reduced-motion` media query support to respect users with vestibular disorders by disabling animations when requested
 
 
 <br>
@@ -284,13 +194,15 @@ token-exporter-ds/
 ├── scripts/
 │ ├── build/
 │ │ └── sync.sh # The master build script
-│ └── audits/
-│     ├── architectural-advisor.js # Advanced design system architectural analysis
-│     ├── audit-documentation.py # Documentation completeness audit
-│     ├── analyze-duplicates.js # Token duplication analysis (basic)
-│     ├── figma-compat-check.js # Figma compatibility validator
-│     ├── lint-css.py # CSS architecture linting
-│     └── validate-tokens.js # CSS token reference validator
+│ ├── audits/
+│ │   ├── architectural-advisor.js # Advanced design system architectural analysis
+│ │   ├── audit-documentation.py # Documentation completeness audit
+│ │   ├── analyze-duplicates.js # Token duplication analysis (basic)
+│ │   ├── figma-compat-check.js # Figma compatibility validator
+│ │   ├── lint-css.py # CSS architecture linting
+│ │   └── validate-tokens.js # CSS token reference validator
+│ └── workflows/
+│     └── qa-orchestrator.js # QA workflow management system
 │ 
 ├── _sandbox/ # Personal testing files (ignored by git)
 ├── .gitignore
@@ -324,29 +236,13 @@ token-exporter-ds/
     -   Run `npm run sync` to build your changes.
     -   Reload the plugin in Figma to test.
 
-### Available Scripts
+### Essential Commands
 
-**Build & Development:**
--   `npm start` - Alias for `npm run dev` (watch mode)
--   `npm run sync` - Main build command (includes figma-check validation)
--   `npm run dev` - Watch mode that auto-rebuilds when source files change  
--   `npm run build` - Alias for `npm run sync`
-
-**Quality Assurance:**
--   `npm run test` - Run figma-check, JavaScript linting, and CSS architecture validation
--   `npm run figma-check` - Validate code for Figma plugin compatibility issues
--   `npm run lint:js` - Lint JavaScript files using ESLint (uses legacy flat config)
--   `npm run lint:css` - Validate CSS architecture and token usage
-
-**Design System Analysis:**
--   `npm run audit:arch` - **Advanced architectural analysis** - Provides high-level design system recommendations, identifies composite token opportunities, and resolves token ambiguities
--   `npm run audit:docs` - Audit documentation completeness for semantic components
--   `npm run analyze:duplicates` - Basic token duplication analysis (hygiene tool)
--   `npm run validate:tokens` - Verify all CSS token references are properly defined
-
-**Utilities:**
--   `npm run format` - Auto-fix CSS formatting issues with stylelint
--   `npm run clean` - Remove backup files (ui.html.backup)
+```bash
+npm run sync     # Build the project
+npm run dev      # Watch mode for development
+npm test         # Run quality checks
+```
 
 
 <br>
@@ -387,6 +283,8 @@ For major changes, please open an issue first to discuss what you would like to 
 ## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
 
 
 

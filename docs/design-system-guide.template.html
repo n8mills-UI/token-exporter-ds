@@ -984,48 +984,46 @@
             <p class="component-description">Small, inline labels for categorization and status indication. Perfect for highlighting code elements, states, or categories.</p>
         </div>
         <div class="component-body">
-            
-           
-            <!-- Size Showcase First -->
-            <div class="subsection">
+            <div class="variants-grid" style="grid-template-columns: 1fr;">
+                
+                <!-- Sizes Container -->
                 <div class="example-wrapper">
                     <div class="example-label">Sizes</div>
-                    <div class="badge-showcase">
-                        <!-- Group 1: Plain Badges -->
-                        <div class="badge-group">
-                            <span class="badge brand small">SMALL</span>
-                            <span class="badge brand">MEDIUM</span>
-                            <span class="badge brand large">LARGE</span>
-                        </div>
-                        <!-- Group 2: Badges with Icons -->
-                        <div class="badge-group">
-                            <span class="badge brand small"><i data-lucide="zap"></i> WITH ICON</span>
-                            <span class="badge brand"><i data-lucide="zap"></i> WITH ICON</span>
-                            <span class="badge brand large"><i data-lucide="zap"></i> WITH ICON</span>
+                    <div class="example-container">
+                        <div class="badge-showcase">
+                            <!-- Group 1: Plain Badges -->
+                            <div class="badge-group">
+                                <span class="badge brand small">SMALL</span>
+                                <span class="badge brand">MEDIUM</span>
+                                <span class="badge brand large">LARGE</span>
+                            </div>
+                            <!-- Group 2: Badges with Icons -->
+                            <div class="badge-group">
+                                <span class="badge brand small"><i data-lucide="zap"></i> WITH ICON</span>
+                                <span class="badge brand"><i data-lucide="zap"></i> WITH ICON</span>
+                                <span class="badge brand large"><i data-lucide="zap"></i> WITH ICON</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Color Variants Grid -->
-            <div class="subsection">
+                
+                <!-- Color Variants Container -->
                 <div class="example-wrapper">
                     <div class="example-label">Color Variants</div>
-                    <div class="badge-showcase">
-                        <span class="badge brand">BRAND</span>
-                        <span class="badge brand-inverted">INVERTED</span>
-                        <span class="badge neutral">NEUTRAL</span>
-                        <span class="badge cyan"><i data-lucide="palette"></i> CYAN</span>
-                        <span class="badge purple"><i data-lucide="type"></i> PURPLE</span>
-                        <span class="badge orange"><i data-lucide="hash"></i> ORANGE</span>
-                        <span class="badge pink"><i data-lucide="toggle-right"></i> PINK</span>
+                    <div class="example-container">
+                        <div class="badge-showcase">
+                            <span class="badge brand">BRAND</span>
+                            <span class="badge brand-inverted">INVERTED</span>
+                            <span class="badge neutral">NEUTRAL</span>
+                            <span class="badge cyan"><i data-lucide="palette"></i> CYAN</span>
+                            <span class="badge purple"><i data-lucide="type"></i> PURPLE</span>
+                            <span class="badge orange"><i data-lucide="hash"></i> ORANGE</span>
+                            <span class="badge pink"><i data-lucide="toggle-right"></i> PINK</span>
+                        </div>
                     </div>
                 </div>
+                
             </div>
-       
-
-          
-            
         </div>
     </div>
 
@@ -1102,6 +1100,261 @@
     </a>
 
     <script>
+        // --- PERFORMANCE-OPTIMIZED VORTEX ANIMATION WITH METRICS ---
+        let vortexInitialized = false;
+        let vortexObserver = null;
+        
+        // Performance monitoring system
+        const PerformanceMonitor = {
+            metrics: {
+                frameCount: 0,
+                lastFrameTime: 0,
+                fps: 0,
+                averageFps: 0,
+                frameHistory: [],
+                animationStartTime: 0,
+                totalAnimationTime: 0,
+                memoryUsage: 0,
+                intersectionEvents: 0,
+                animationStateChanges: 0
+            },
+            
+            startMonitoring() {
+                this.metrics.animationStartTime = performance.now();
+                this.frameLoop();
+                
+                // Memory monitoring every 2 seconds
+                this.memoryInterval = setInterval(() => {
+                    if (performance.memory) {
+                        this.metrics.memoryUsage = Math.round(performance.memory.usedJSHeapSize / 1024 / 1024 * 100) / 100;
+                    }
+                }, 2000);
+            },
+            
+            frameLoop() {
+                const now = performance.now();
+                this.metrics.frameCount++;
+                
+                if (this.metrics.lastFrameTime) {
+                    const delta = now - this.metrics.lastFrameTime;
+                    this.metrics.fps = Math.round(1000 / delta);
+                    
+                    // Keep rolling average of last 60 frames
+                    this.metrics.frameHistory.push(this.metrics.fps);
+                    if (this.metrics.frameHistory.length > 60) {
+                        this.metrics.frameHistory.shift();
+                    }
+                    
+                    this.metrics.averageFps = Math.round(
+                        this.metrics.frameHistory.reduce((a, b) => a + b, 0) / this.metrics.frameHistory.length
+                    );
+                }
+                
+                this.metrics.lastFrameTime = now;
+                this.metrics.totalAnimationTime = now - this.metrics.animationStartTime;
+                
+                // Continue monitoring while animation is active
+                const grid = document.querySelector('.te-icon-grid');
+                if (grid && grid.style.animationPlayState !== 'paused') {
+                    requestAnimationFrame(() => this.frameLoop());
+                }
+            },
+            
+            logEvent(eventType, details = {}) {
+                if (eventType === 'intersection') {
+                    this.metrics.intersectionEvents++;
+                } else if (eventType === 'state-change') {
+                    this.metrics.animationStateChanges++;
+                }
+                
+                console.log(`🎯 Vortex ${eventType}:`, {
+                    ...details,
+                    timestamp: performance.now(),
+                    currentFps: this.metrics.fps,
+                    averageFps: this.metrics.averageFps,
+                    memoryMB: this.metrics.memoryUsage,
+                    totalEvents: this.metrics.intersectionEvents + this.metrics.animationStateChanges
+                });
+            },
+            
+            getMetricsSummary() {
+                return {
+                    performance: {
+                        currentFPS: this.metrics.fps,
+                        averageFPS: this.metrics.averageFps,
+                        totalFrames: this.metrics.frameCount,
+                        animationUptime: Math.round(this.metrics.totalAnimationTime / 1000 * 100) / 100
+                    },
+                    resources: {
+                        memoryUsageMB: this.metrics.memoryUsage,
+                        intersectionEvents: this.metrics.intersectionEvents,
+                        stateChanges: this.metrics.animationStateChanges
+                    },
+                    health: {
+                        fpsStable: this.metrics.averageFps >= 55,
+                        memoryHealthy: this.metrics.memoryUsage < 100,
+                        eventCount: this.metrics.intersectionEvents + this.metrics.animationStateChanges
+                    }
+                };
+            },
+            
+            stopMonitoring() {
+                if (this.memoryInterval) {
+                    clearInterval(this.memoryInterval);
+                }
+                
+                const summary = this.getMetricsSummary();
+                console.log('🏁 Vortex Performance Summary:', summary);
+                
+                // Warn if performance issues detected
+                if (!summary.health.fpsStable) {
+                    console.warn('⚠️ Low FPS detected - consider reducing animation complexity');
+                }
+                if (!summary.health.memoryHealthy) {
+                    console.warn('⚠️ High memory usage detected - monitor for memory leaks');
+                }
+                
+                return summary;
+            }
+        };
+        
+        function generateVortexIcons() {
+            const startTime = performance.now();
+            const grid = document.querySelector('.te-icon-grid');
+            if (!grid || vortexInitialized) return;
+            
+            grid.innerHTML = '';
+            const tokenTypes = [
+                { icon: 'palette', color: '--category-color-cyan' },
+                { icon: 'type', color: '--category-color-purple' },
+                { icon: 'hash', color: '--category-color-orange' },
+                { icon: 'toggle-right', color: '--category-color-pink' }
+            ];
+            
+            for (let i = 0; i < 40; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('te-icon-cell');
+                const category = tokenTypes[i % tokenTypes.length];
+                const icon = document.createElement('i');
+                icon.setAttribute('data-icon', category.icon);
+                cell.appendChild(icon);
+                cell.style.setProperty('--color', `var(${category.color})`);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 120 + Math.random() * 40;
+                cell.style.setProperty('--x-start', `${Math.cos(angle) * radius}px`);
+                cell.style.setProperty('--y-start', `${Math.sin(angle) * radius}px`);
+                cell.style.setProperty('--x-end', `${Math.cos(angle + Math.PI) * radius}px`);
+                cell.style.setProperty('--y-end', `${Math.sin(angle + Math.PI) * radius}px`);
+                cell.style.setProperty('--delay', `${Math.random() * 1.5}s`);
+                cell.style.setProperty('--scale', 0.6 + Math.random() * 0.5);
+                cell.style.setProperty('--blur', Math.random() > 0.3 ? '0px' : '2px');
+                
+                grid.appendChild(cell);
+            }
+            
+            vortexInitialized = true;
+            const initTime = performance.now() - startTime;
+            
+            PerformanceMonitor.logEvent('vortex-initialized', {
+                iconCount: 40,
+                initializationTime: Math.round(initTime * 100) / 100,
+                gridElement: !!grid
+            });
+            
+            // Start performance monitoring when animation begins
+            PerformanceMonitor.startMonitoring();
+        }
+
+        /**
+         * Initialize Intersection Observer for performance-optimized vortex animation
+         * Only runs animation when the About modal is visible in viewport
+         */
+        function initializeVortexObserver() {
+            // Skip if reduced motion is preferred
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            const aboutModal = document.getElementById('about-modal');
+            if (!aboutModal) return;
+
+            // Create observer for About modal visibility
+            vortexObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Modal is visible, initialize vortex if needed
+                        generateVortexIcons();
+                        const grid = document.querySelector('.te-icon-grid');
+                        if (grid) {
+                            grid.style.animationPlayState = 'running';
+                        }
+                        
+                        PerformanceMonitor.logEvent('intersection', {
+                            visible: true,
+                            intersectionRatio: entry.intersectionRatio,
+                            boundingRect: {
+                                width: Math.round(entry.boundingClientRect.width),
+                                height: Math.round(entry.boundingClientRect.height)
+                            }
+                        });
+                    } else {
+                        // Modal not visible, pause animation to save CPU
+                        const grid = document.querySelector('.te-icon-grid');
+                        if (grid) {
+                            grid.style.animationPlayState = 'paused';
+                        }
+                        
+                        PerformanceMonitor.logEvent('intersection', {
+                            visible: false,
+                            performanceSummary: PerformanceMonitor.getMetricsSummary()
+                        });
+                    }
+                });
+            }, {
+                rootMargin: '50px', // Start animation 50px before modal enters viewport
+                threshold: 0.1 // Trigger when 10% of modal is visible
+            });
+
+            // Start observing the modal
+            vortexObserver.observe(aboutModal);
+
+            // Also observe modal state changes
+            const modalStateObserver = new MutationObserver((mutations) => {
+                mutations.forEach(mutation => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const modal = mutation.target;
+                        const grid = document.querySelector('.te-icon-grid');
+                        const isShowing = modal.classList.contains('show');
+                        
+                        if (isShowing && grid) {
+                            // Modal is shown, resume animation
+                            grid.style.animationPlayState = 'running';
+                            generateVortexIcons(); // Ensure icons exist
+                            
+                            PerformanceMonitor.logEvent('state-change', {
+                                modalState: 'shown',
+                                animationState: 'running',
+                                vortexInitialized: vortexInitialized
+                            });
+                        } else if (grid) {
+                            // Modal is hidden, pause animation and get performance summary
+                            grid.style.animationPlayState = 'paused';
+                            const summary = PerformanceMonitor.stopMonitoring();
+                            
+                            PerformanceMonitor.logEvent('state-change', {
+                                modalState: 'hidden',
+                                animationState: 'paused',
+                                sessionSummary: summary
+                            });
+                        }
+                    }
+                });
+            });
+
+            modalStateObserver.observe(aboutModal, { attributes: true });
+        }
+
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize all functionalities once the DOM is ready
@@ -1114,6 +1367,9 @@
             initTechHover();
             initializeTypingObserver();
             initGuideModal();
+            
+            // Initialize performance-optimized vortex animation
+            initializeVortexObserver();
 
             if (window.lucide) {
                 lucide.createIcons({
@@ -1439,7 +1695,7 @@
             return tempDiv.textContent || tempDiv.innerText || '';
         }
 
-        // Helper function to create partial HTML based on character position
+        // Helper function to create partial HTML that preserves syntax highlighting during typing
         function createPartialHTML(htmlString, targetLength) {
             if (!htmlString) return '';
             
@@ -1451,8 +1707,56 @@
                 return htmlString; // Return full HTML if we've reached the end
             }
             
-            // For partial text, we'll show plain text during typing, then full HTML when complete
-            return plainText.substring(0, targetLength);
+            // Create a partial version that preserves HTML structure
+            let charCount = 0;
+            let result = '';
+            let inTag = false;
+            let currentTag = '';
+            
+            for (let i = 0; i < htmlString.length; i++) {
+                const char = htmlString[i];
+                
+                if (char === '<') {
+                    inTag = true;
+                    currentTag = char;
+                } else if (char === '>' && inTag) {
+                    inTag = false;
+                    currentTag += char;
+                    result += currentTag;
+                    currentTag = '';
+                } else if (inTag) {
+                    currentTag += char;
+                } else {
+                    if (charCount < targetLength) {
+                        result += char;
+                        charCount++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            
+            // Close any open tags to maintain valid HTML
+            const openTags = [];
+            const tagRegex = /<(\/?)([\w-]+)[^>]*>/g;
+            let match;
+            while ((match = tagRegex.exec(result)) !== null) {
+                if (!match[1]) { // Opening tag
+                    openTags.push(match[2]);
+                } else { // Closing tag
+                    const tagIndex = openTags.lastIndexOf(match[2]);
+                    if (tagIndex !== -1) {
+                        openTags.splice(tagIndex, 1);
+                    }
+                }
+            }
+            
+            // Close remaining open tags in reverse order
+            for (let i = openTags.length - 1; i >= 0; i--) {
+                result += `</${openTags[i]}>`;
+            }
+            
+            return result;
         }
 
         // Reset the terminal
@@ -1485,9 +1789,9 @@
 
             charIndex++;
             
-            // Show plain text during typing animation
-            const partialText = plainText.substring(0, charIndex);
-            currentLine.innerHTML = partialText + cursorHTML;
+            // Show partial HTML with syntax highlighting during typing animation
+            const partialHTML = createPartialHTML(fullHTML, charIndex);
+            currentLine.innerHTML = partialHTML + cursorHTML;
 
             // Fast typing speed for 5-second completion
             const delay = 15;

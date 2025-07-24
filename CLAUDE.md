@@ -13,12 +13,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run dev` - Watch mode that auto-rebuilds when source files change
 - `npm run build` - Alias for `npm run sync`
 
-### Code Quality
+### Quality Assurance Workflows
+The project includes organized QA workflows for efficient code quality management:
+
+**Quick Development Checks (~10 seconds):**
+- `npm run qa:quick` - Essential checks for fast feedback during development
+- `npm test` - Alias for `qa:quick` (figma-check + lint:js + lint:css)
+
+**Comprehensive Analysis (~60 seconds):**
+- `npm run qa:full` - Complete audit sweep with all quality scripts
+- Includes token validation, documentation audit, architecture analysis, and duplicate detection
+
+**CI/CD Pipeline:**
+- `npm run qa:ci` - Production-ready validation with detailed reporting and proper exit codes
+- Distinguishes between critical failures (block deployment) and warnings (log only)
+
+**Manual Testing:**
+- `npm run qa:test` - Opens all HTML test files for browser-based validation
+- Includes responsive, performance, accessibility, and animation tests
+
+### Individual Quality Scripts
 - `npm run lint:js` - Lint JavaScript files using ESLint (note: uses legacy flat config)
 - `npm run lint:css` - Validate CSS architecture and token usage with intelligent linting **[ARCHITECTURAL]**
 - `npm run audit:docs` - Audit documentation completeness for semantic components **[QUALITY]**
 - `npm run figma-check` - Check for Figma plugin compatibility issues **[CRITICAL - Run before testing in Figma]**
-- `npm test` - Run figma-check, JavaScript linting, and CSS architecture validation
+- `npm run validate:tokens` - Validate design token consistency and references
+- `npm run audit:arch` - Analyze architecture patterns and recommendations
+- `npm run analyze:duplicates` - Detect code duplication and optimization opportunities
 - ESLint config includes Figma-specific globals (`figma`, `__html__`)
 - Stylelint is configured for CSS linting (extends `stylelint-config-standard`)
 
