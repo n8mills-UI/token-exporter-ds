@@ -77,7 +77,6 @@ Industry-standard icon system following best practices:
    ================================================================= */
 window.PluginIcons = {
     // Optimized SVG strings (removed hardcoded dimensions)
-    palette: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/><circle cx="12" cy="6" r="1.5"/><circle cx="7.5" cy="10.5" r="1.5"/><circle cx="16.5" cy="10.5" r="1.5"/><circle cx="9" cy="15.5" r="1.5"/></svg>`,
     
     type: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`,
     
@@ -516,7 +515,6 @@ body {
  --icon-stroke-bold: 2.5;
  
  /* Icon SVG definitions as custom properties (source of truth) */
- --icon-svg-palette: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/><circle cx='12' cy='6' r='1.5'/><circle cx='7.5' cy='10.5' r='1.5'/><circle cx='16.5' cy='10.5' r='1.5'/><circle cx='9' cy='15.5' r='1.5'/></svg>");
  --icon-svg-type: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 7 4 4 20 4 20 7'/><line x1='9' y1='20' x2='15' y2='20'/><line x1='12' y1='4' x2='12' y2='20'/></svg>");
  --icon-svg-hash: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='4' y1='9' x2='20' y2='9'/><line x1='4' y1='15' x2='20' y2='15'/><line x1='10' y1='3' x2='8' y2='21'/><line x1='16' y1='3' x2='14' y2='21'/></svg>");
  --icon-svg-toggle-right: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='12' x='2' y='6' rx='6' ry='6'/><circle cx='16' cy='12' r='2'/></svg>");
@@ -1163,68 +1161,6 @@ body {
 
 
 
-    /* ==========================================================================
-    BACKWARD COMPATIBILITY LAYER (V8 -> V4)
-    ========================================================================== */
-
-    /* This ensures old class names like ".btn.primary" inherit new styles. */
-
-    .btn.primary {
-        /* Maps to .btn-primary */
-        background: var(--brand-gradient-lime);
-        color: var(--color-text-on-brand);
-        box-shadow: var(--shadow-brand);
-    }
-
-    .btn.primary:hover:not(:disabled) {
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-brand-hover);
-        filter: brightness(1.05);
-    }
-
-    .btn.primary:active:not(:disabled) {
-        transform: translateY(0);
-        box-shadow: var(--shadow-brand);
-        filter: brightness(0.95);
-    }
-
-    .btn.secondary {
-        /* Maps to .btn-secondary */
-        background: var(--color-background-secondary);
-        color: var(--color-text-default);
-        border-color: var(--color-border-default);
-    }
-
-    .btn.secondary:hover:not(:disabled) {
-        border-color: var(--brand-primary-lime);
-        color: var(--brand-primary-lime);
-    }
-
-    .btn.secondary:active:not(:disabled) {
-        background: var(--color-background-primary);
-    }
-
-    .btn.btn-icon-only {
-        /* Maps to .btn-icon */
-        padding: 0;
-        border-radius: 50%;
-        background: var(--color-background-secondary);
-        color: var(--color-text-secondary);
-        border: 1px solid var(--color-border-default);
-        width: var(--component-height-md); /* Default to medium size */
-        height: var(--component-height-md);
-    }
-
-    .btn.btn-icon-only:hover:not(:disabled) {
-        border-color: var(--brand-primary-lime);
-        color: var(--brand-primary-lime);
-        transform: rotate(15deg);
-    }
-
-    .btn.btn-icon-only:active:not(:disabled) {
-        transform: rotate(0) scale(0.95);
-    }
-
 
 /* --- V8 BUTTON DOCUMENTATION STYLES --- */
 .guide-container .section {
@@ -1232,17 +1168,17 @@ body {
 }
 
 .main-section-title {
-    font-size: 3rem; /* Increased font size */
+    font-size: var(--font-size-8); /* 3.5rem for increased visual hierarchy */
     font-weight: 800;
     color: var(--color-text-default);
     display: flex;
     align-items: center;
-    gap: 1rem; /* Increased gap */
+    gap: 1rem;
 }
 
 .main-section-title .lucide {
-    width: 2.5rem; /* Increased icon size */
-    height: 2.5rem;
+    width: var(--icon-lg); /* Use design token for larger icon */
+    height: var(--icon-lg);
 }
 
 .guide-container .section-header {
@@ -1260,10 +1196,6 @@ body {
 }
 
 .subsection {
-    background: var(--color-background-secondary);
-    border: 1px solid var(--color-border-default);
-    border-radius: 12px;
-    padding: 2rem;
     margin-bottom: 2rem;
 }
 
@@ -1345,11 +1277,58 @@ body {
 }
 
 /* STATE COMPARISON MATRIX */
+.state-comparison-container {
+    background: var(--color-background-secondary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-6);
+    margin-bottom: var(--guide-subsection-gap);
+}
+
 .state-comparison-grid {
     display: grid;
     grid-template-columns: 120px repeat(5, 1fr);
     gap: 1rem;
     align-items: center;
+}
+
+/* Desktop grid visibility */
+.desktop-grid {
+    display: grid;
+}
+
+.mobile-grid {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    /* Hide desktop grid on mobile */
+    .desktop-grid {
+        display: none;
+    }
+    
+    /* Show mobile grids */
+    .mobile-grid {
+        display: grid;
+    }
+    
+    /* First mobile grid: Default + Hover (3 columns) */
+    .mobile-grid-1 {
+        grid-template-columns: 80px repeat(2, auto);
+        margin-bottom: var(--size-4);
+    }
+    
+    /* Second mobile grid: Active + Focus (3 columns) */
+    .mobile-grid-2 {
+        grid-template-columns: 80px repeat(2, auto);
+    }
+}
+
+/* State divider for mobile grids */
+.state-divider {
+    border-color: var(--color-border-default);
+    margin: var(--size-4) 0;
+    border-top: none;
 }
 .state-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); text-align: center; padding: 0.5rem; background: var(--color-background-primary); border-radius: 4px; }
 .state-label { font-size: 0.875rem; color: var(--color-text-secondary); text-align: right; padding-right: 1rem; }
@@ -1566,7 +1545,7 @@ body {
  max-width: var(--content-xl); /* 1280px, from your tokens */
  margin-left: auto;
  margin-right: auto;
- padding: 0 var(--size-6); /* RESTORED: This puts padding back on the overview content */
+ padding: 0 var(--size-6);
  margin-top: var(--size-0);
 }
 
@@ -1574,9 +1553,12 @@ body {
  display: flex;
  flex-direction: column;
  gap: var(--size-3); /* Sets space between stats and cards */
- margin: calc(-1 * var(--size-10)) auto var(--size-6) auto; /* Pulls the group up */
+ margin: 0 auto var(--size-6) auto;
  position: relative;
  z-index: var(--layer-card);
+ 
+ /* ABSOLUTE HARD STOP: Push stats below hero section completely */
+ margin-top: calc(100vh + var(--size-8)); /* Full viewport height PLUS extra buffer */
  
  /* Centering styles */
  max-width: 1200px; /* Space below this group */
@@ -1622,9 +1604,12 @@ body {
  color: var(--color-text-secondary);
  line-height: 1.2;
  text-align: center;
- white-space: nowrap;
- overflow: hidden;
- text-overflow: ellipsis;
+ /* FLEXIBLE TEXT: Allow wrapping to prevent overflow */
+ white-space: normal;
+ word-break: break-word;
+ hyphens: auto;
+ max-width: 100%;
+ padding: 0 var(--size-1);
 }
 
 /* Compact cards */
@@ -2501,12 +2486,11 @@ body {
  padding: 0 var(--size-6);
 }
 
-/* Ensure child elements don't double-pad */
+/* Content section children now handle their own horizontal spacing */
 .content-section .token-category,
 .content-section .component-section:not(:has(.table-responsive)) {
-    margin-left: calc(-1 * var(--size-6));
-    margin-right: calc(-1 * var(--size-6));
-    width: calc(100% + var(--size-6) * 2);
+    margin-left: var(--size-6);
+    margin-right: var(--size-6);
 }
 
 /* Creates a large gap above the Foundation section for clear separation */
@@ -2531,6 +2515,7 @@ body {
  border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-2);
  padding: var(--size-4);
+ transition: all var(--animation-duration-2) var(--ease-3);
  position: relative;
  display: flex;
  flex-direction: column;
@@ -2965,9 +2950,12 @@ body {
  color: var(--color-text-secondary);
  line-height: 1.2;
  text-align: center;
- white-space: nowrap;
- overflow: hidden;
- text-overflow: ellipsis;
+ /* FLEXIBLE TEXT: Allow wrapping to prevent overflow */
+ white-space: normal;
+ word-break: break-word;
+ hyphens: auto;
+ max-width: 100%;
+ padding: 0 var(--size-1);
 }
 
 /* Compact cards */
@@ -3827,6 +3815,11 @@ select option {
  gap: var(--size-2);
 }
 
+.section-title [data-icon="send"] {
+ width: 1.2em;
+ height: 1.2em;
+}
+
 .subtitle { 
  color: var(--color-text-muted); 
  margin-bottom: var(--size-4);
@@ -4444,8 +4437,8 @@ select option {
 }
 
 .footer-logo {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
 }
 
@@ -5092,8 +5085,7 @@ body {
 .content-section {
  margin-bottom: var(--size-10);
  scroll-margin-top: var(--size-6);
- padding: 0 var(--size-6);
-
+ /* Removed horizontal padding - child elements handle their own padding */
 }
 
 #overview {
@@ -5180,7 +5172,7 @@ body {
 .example-subheader {
  color: var(--color-text-default);
  font-weight: var(--font-weight-6);
- margin-bottom: var(--size-4);
+ margin-bottom: var(--size-3);
  margin-top: var(--size-6);
  font-size: var(--font-size-2);
 }
@@ -5192,7 +5184,7 @@ body {
 .category-description, .component-description {
  color: var(--color-text-secondary);
  font-size: var(--font-size-1); 
- margin: 0 0 var(--size-2) 0; 
+ margin: 0 0 var(--size-3) 0; 
 }
 
 .tokens-grid {
@@ -6014,7 +6006,6 @@ body {
     .social-links {
         display: flex;
         gap: var(--size-4);
-        margin: 0; /* Remove margin since handled by group containers */
     }
     
     /* CTA button grouping */
@@ -6027,9 +6018,10 @@ body {
         padding: 0 var(--size-4);
     }
     
-    /* Intro group - maintains overlap effect */
+    /* Intro group - prevent hero overlap on mobile */
     .intro-group {
-    margin-top: calc(-1 * var(--size-8)); /* Increased to pull stats up more */
+    /* ABSOLUTE HARD STOP: Always start after hero viewport */
+    margin-top: calc(100vh + var(--size-4)) !important; /* Full viewport + buffer on mobile */
     gap: var(--size-2);
     }
     
@@ -6050,10 +6042,10 @@ body {
     }
     
     .stat-label {
-        font-size: var(--font-size-1); /* Readable size */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: var(--font-size-0); /* Smaller on mobile to fit better */
+        /* Text can wrap on mobile */
+        white-space: normal;
+        padding: 0 var(--size-1);
     }
     
     /* Compact cards */
@@ -6186,6 +6178,11 @@ body {
         min-height: 100vh; /* Ensure full height on very small screens too */
     }
     
+    /* Very small screen stats positioning */
+    .stats-and-overview-container {
+        margin-top: calc(-1 * var(--size-4)); /* Minimal pullup on tiny screens */
+    }
+    
     /* More intense pattern for very small screens */
     .portfolio-hero::before {
         min-height: 100vh;
@@ -6234,6 +6231,11 @@ body {
         font-size: var(--font-size-5);
     }
     
+    .stat-label {
+        font-size: var(--font-size-00); /* Even smaller on tiny screens */
+        line-height: 1.1;
+    }
+    
     .compact-cards {
         grid-template-columns: 1fr;
     }
@@ -6266,6 +6268,234 @@ body {
  --color-backdrop-rgb: 255, 255, 255;
 }
 */
+
+/* =================================================================
+   ENHANCED FOOTER STYLES
+   ================================================================= */
+
+/* Override default guide footer styles */
+#about.guide-footer {
+    margin-top: var(--size-15);
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+/* Base Footer Styles */
+/* Enhanced Footer - Option 3: Gradient Enhanced Design */
+.footer-desktop,
+.footer-mobile {
+    width: 100%;
+    position: relative;
+    background: 
+        /* Enhanced gradients */
+        radial-gradient(circle at 15% 30%, rgba(210, 255, 55, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(238, 255, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(210, 255, 55, 0.06) 0%, transparent 60%),
+        /* Base gradient */
+        linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%);
+    /* Glass morphism effect */
+    backdrop-filter: blur(20px);
+    margin-top: var(--size-12); /* Large gap from last content section */
+    margin-bottom: 0; /* Flush with viewport bottom */
+}
+
+.footer-desktop::before,
+.footer-mobile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(210, 255, 55, 0.8) 20%, 
+        rgba(238, 255, 0, 0.6) 50%, 
+        rgba(210, 255, 55, 0.8) 80%,
+        transparent 100%);
+}
+
+/* Desktop Footer */
+.footer-desktop {
+    display: block;
+    padding: var(--size-10) var(--size-6) var(--size-11) var(--size-6); /* Reduced bottom padding by 30% */
+}
+
+.footer-desktop .main-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.footer-desktop .brand-group {
+    display: flex;
+    align-items: center;
+    gap: var(--size-3);
+}
+
+.footer-desktop .text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--size-1);
+}
+
+.footer-desktop .sub-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: var(--size-6);
+    padding-top: var(--size-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Mobile Footer */
+.footer-mobile {
+    display: none;
+    padding: var(--size-10) var(--size-6) var(--size-11) var(--size-6); /* Reduced bottom padding by 30% */
+}
+
+.footer-mobile .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-mobile .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-mobile .primary-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-2);
+}
+
+.footer-mobile .brand-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-1);
+}
+
+.footer-mobile .btn-primary {
+    margin-top: var(--size-6);
+    margin-bottom: var(--size-6);
+}
+
+.footer-mobile .info-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4);
+    padding-top: var(--size-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Use the existing token-exporter-logo component in footer */
+.footer-desktop .token-exporter-logo,
+.footer-mobile .token-exporter-logo {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.footer-title {
+    font-size: var(--font-size-5); /* Match logo height */
+    font-weight: var(--font-weight-700);
+    line-height: 1.1;
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.footer-tagline {
+    font-size: var(--font-size-3); /* One size smaller than title (font-size-4) */
+    color: var(--brand-primary-lime);
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+    font-weight: var(--font-weight-500);
+}
+
+.footer-attribution {
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.social-links {
+    display: flex;
+    gap: var(--size-3);
+    align-items: center;
+}
+
+
+/* Fix button sizing in footer */
+.footer-desktop .btn,
+.footer-mobile .btn {
+    width: auto;
+}
+
+/* Small icon buttons with glass morphism */
+.footer-desktop .btn-icon,
+.footer-mobile .btn-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.footer-desktop .btn-icon:hover,
+.footer-mobile .btn-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(210, 255, 55, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-desktop {
+        display: none;
+    }
+    
+    .footer-mobile {
+        display: block;
+    }
+    
+    /* Mobile layout fixes - center logo and button vertically */
+    .footer-mobile .primary-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--size-4);
+        text-align: center;
+    }
+    
+    .footer-mobile .brand-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--size-2);
+    }
+    
+    .footer-mobile .info-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--size-4);
+        text-align: center;
+        margin-top: var(--size-6);
+    }
+}
 
 /* =================================================================
    ICON DOCUMENTATION STYLES
@@ -6399,7 +6629,7 @@ body {
 :root {
     /* Layout Spacing */
     --guide-section-padding: var(--size-6);
-    --guide-section-padding-mobile: var(--size-4);
+    --guide-section-padding-mobile: var(--size-3);
     --guide-header-gap: var(--size-3);
     --guide-content-gap: var(--size-4);
     --guide-subsection-gap: var(--size-6);
@@ -6487,7 +6717,7 @@ body {
     font-size: var(--guide-subsection-title-size);
     font-weight: var(--font-weight-6);
     color: var(--color-text-default);
-    margin: var(--guide-subsection-gap) 0 var(--guide-content-gap) 0;
+    margin: var(--guide-subsection-gap) 0 var(--size-3) 0;
 }
 
 /* Descriptions */
@@ -6497,7 +6727,7 @@ body {
     font-size: var(--guide-description-size);
     color: var(--color-text-secondary);
     line-height: var(--font-lineheight-3);
-    margin-bottom: var(--guide-content-gap);
+    margin-bottom: var(--size-3);
     max-width: 65ch; /* Optimal reading line length */
 }
 
@@ -6568,17 +6798,12 @@ body {
 
 /* Example Wrappers */
 .example-wrapper {
-    background: var(--color-background-primary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    padding: var(--size-4);
-    transition: all var(--animation-duration-2) var(--ease-3);
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-.example-wrapper:hover {
+.example-container:hover {
     border-color: var(--brand-primary-lime);
 }
 
@@ -6684,7 +6909,7 @@ body {
         --guide-subsection-gap: var(--size-4);
     }
     
-    .example-wrapper {
+    .example-container {
         padding: var(--size-3);
     }
     
@@ -6704,7 +6929,7 @@ body {
    ========================= */
 
 /* Focus States for Interactive Elements */
-.example-wrapper:focus-within,
+.example-container:focus-within,
 .token-reference-item:focus-within {
     outline: 2px solid var(--brand-primary-lime);
     outline-offset: 2px;
@@ -6717,7 +6942,7 @@ body {
         stroke-width: var(--icon-stroke-bold);
     }
     
-    .example-wrapper:hover,
+    .example-container:hover,
     .token-reference-item:hover {
         border-width: 2px;
     }
@@ -6725,7 +6950,7 @@ body {
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-    .example-wrapper,
+    .example-container,
     .token-reference-item {
         transition: none;
     }
@@ -6764,8 +6989,11 @@ body {
     gap: var(--size-6);
     max-width: 1200px;
     margin: auto;
-    margin-top: -25vh; /* Increased overlap to make stats visible on hero section */
+    /* PEEKING EFFECT: Pull stats up to peek from bottom of hero */
+    margin-top: calc(-1 * var(--size-8)); /* Pull up by footer height to create peek */
     margin-bottom: var(--size-8);
+    position: relative;
+    z-index: 1; /* Below mobile header */
 }
 
 /* Glass Morphism Stats Container */
@@ -6774,9 +7002,10 @@ body {
     backdrop-filter: var(--blur-xl);
     border: 1px solid rgba(210, 255, 55, 0.2);
     border-radius: var(--radius-3);
-    padding: 4px var(--size-6) 8px var(--size-6); /* Reduced top padding for visual balance */
+    padding: 4px var(--size-6) 8px var(--size-6);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* RESPONSIVE GRID: Automatically adapts from 4 cols to 2 to 1 */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: var(--size-4);
     transition: all var(--animation-duration-3) var(--ease-3);
 }
@@ -6837,6 +7066,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text-secondary);
+    /* SINGLE LINE: Stats labels must never wrap */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -6930,15 +7160,31 @@ body {
 
 /* Responsive Design - Stats and Cards */
 @media (width <= 1024px) {
-    .stats-container-glass {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    /* Remove rigid responsive rules - auto-fit handles this */
 }
 
-@media (width <= 640px) {
+@media (width <= 768px) {
     .challenge-solution-grid {
         grid-template-columns: 1fr;
         gap: var(--size-4);
+    }
+    
+    /* Mobile stats positioning - enhanced peeking effect */
+    .stats-and-overview-container {
+        margin-top: calc(-1 * var(--size-8)); /* Increased pullup for better peeking effect */
+    }
+    
+    /* Mobile stats grid - optimized for compact single-line labels */
+    .stats-container-glass {
+        gap: var(--size-1); /* Further reduced for maximum space efficiency */
+        padding: 4px var(--size-3) 8px var(--size-3); /* Tighter horizontal padding */
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Reduced minimum width for better mobile fit */
+    }
+    
+    /* Mobile stat labels - optimized for single-line display */
+    .stat-label {
+        font-size: var(--font-size-0); /* Smaller font: 0.75rem */
+        letter-spacing: 0.05em; /* Reduced letter spacing for more compact text */
     }
 }
 
@@ -7512,15 +7758,8 @@ body {
 
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
-                    <div class="section-header">
-                        <h2 class="text-heading-xl main-section-title">
-                            <i data-lucide="move-horizontal"></i>
-                            Spacing
-                        </h2>
-                        <p class="section-description">Open Props spacing scale used for consistent layouts throughout the interface.</p>
-                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Scale Tokens</h2><p class="category-description">Core spacing values for padding, margins, and gaps.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="move-horizontal"></i> Spacing</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
@@ -7534,15 +7773,8 @@ body {
 
                 <!-- Shadows Section -->
                 <section id="shadows" class="content-section">
-                    <div class="section-header">
-                        <h2 class="text-heading-xl main-section-title">
-                            <i data-lucide="layers"></i>
-                            Shadows
-                        </h2>
-                        <p class="section-description">Open Props shadow tokens for creating depth and elevation.</p>
-                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="copy"></i> Elevation Tokens</h2><p class="category-description">Shadow values for creating visual hierarchy and depth.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="layers"></i> Shadows</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
                         <div class="tokens-grid shadow-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
@@ -7553,15 +7785,8 @@ body {
 
                 <!-- Border Radius Section -->
                 <section id="border-radius" class="content-section">
-                    <div class="section-header">
-                        <h2 class="text-heading-xl main-section-title">
-                            <i data-lucide="square"></i>
-                            Border & Radius
-                        </h2>
-                        <p class="section-description">Open Props radius tokens for consistent corner rounding.</p>
-                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Radius Tokens</h2><p class="category-description">Corner radius values for UI components and containers.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="square"></i> Border & Radius</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
                         <div class="tokens-grid radius-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview rounded-1"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview rounded-2"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
@@ -7603,51 +7828,10 @@ body {
                             <p class="category-description">Core icons representing the four variable categories from Figma. Each icon uses its corresponding category color.</p>
                         </div>
                         <div class="tokens-grid">
-                            <div class="token-icons-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--size-4);">
-                                <div class="token-icon-card">
-                                    <div class="token-icon-display">
-                                        <i class="icon icon--xl" data-icon="palette" style="color: var(--category-color-cyan);"></i>
-                                    </div>
-                                    <div class="token-icon-meta">
-                                        <div class="text-body-sm token-name">palette</div>
-                                        <div class="text-caption token-category">Color Variables</div>
-                                        <code class="text-caption token-value">var(--category-color-cyan)</code>
-                                    </div>
-                                </div>
-                                
-                                <div class="token-icon-card">
-                                    <div class="token-icon-display">
-                                        <i class="icon icon--xl" data-icon="type" style="color: var(--category-color-purple);"></i>
-                                    </div>
-                                    <div class="token-icon-meta">
-                                        <div class="text-body-sm token-name">type</div>
-                                        <div class="text-caption token-category">Text Variables</div>
-                                        <code class="text-caption token-value">var(--category-color-purple)</code>
-                                    </div>
-                                </div>
-                                
-                                <div class="token-icon-card">
-                                    <div class="token-icon-display">
-                                        <i class="icon icon--xl" data-icon="hash" style="color: var(--category-color-orange);"></i>
-                                    </div>
-                                    <div class="token-icon-meta">
-                                        <div class="text-body-sm token-name">hash</div>
-                                        <div class="text-caption token-category">Number Variables</div>
-                                        <code class="text-caption token-value">var(--category-color-orange)</code>
-                                    </div>
-                                </div>
-                                
-                                <div class="token-icon-card">
-                                    <div class="token-icon-display">
-                                        <i class="icon icon--xl" data-icon="toggle-right" style="color: var(--category-color-pink);"></i>
-                                    </div>
-                                    <div class="token-icon-meta">
-                                        <div class="text-body-sm token-name">toggle-right</div>
-                                        <div class="text-caption token-category">Boolean Variables</div>
-                                        <code class="text-caption token-value">var(--category-color-pink)</code>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">palette</div><div class="token-value">Color Variables</div><div class="token-preview"><i class="icon icon--xl" data-lucide="palette" style="color: var(--category-color-cyan);"></i></div></div><button class="token-copy" onclick="copyToken('palette')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">type</div><div class="token-value">Text Variables</div><div class="token-preview"><i class="icon icon--xl" data-icon="type" style="color: var(--category-color-purple);"></i></div></div><button class="token-copy" onclick="copyToken('type')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">hash</div><div class="token-value">Number Variables</div><div class="token-preview"><i class="icon icon--xl" data-icon="hash" style="color: var(--category-color-orange);"></i></div></div><button class="token-copy" onclick="copyToken('hash')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">toggle-right</div><div class="token-value">Boolean Variables</div><div class="token-preview"><i class="icon icon--xl" data-icon="toggle-right" style="color: var(--category-color-pink);"></i></div></div><button class="token-copy" onclick="copyToken('toggle-right')">Copy</button></div>
                         </div>
                     </div>
                     
@@ -7660,156 +7844,11 @@ body {
                             <p class="category-description">Icons use design system tokens for consistent sizing across all components. Stroke weight automatically scales for optimal visual balance.</p>
                         </div>
                         <div class="tokens-grid">
-                            <div class="icon-sizing-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--size-4); align-items: end; text-align: center;">
-                                <div class="icon-size-showcase">
-                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="icon icon--xs" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="icon-size-meta">
-                                        <div class="text-body-sm">XS</div>
-                                        <code class="text-caption">12px</code>
-                                        <div class="text-caption token-reference">--icon-xs</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="icon-size-showcase">
-                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="icon icon--sm" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="icon-size-meta">
-                                        <div class="text-body-sm">SM</div>
-                                        <code class="text-caption">16px</code>
-                                        <div class="text-caption token-reference">--icon-sm</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="icon-size-showcase">
-                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="icon icon--md" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="icon-size-meta">
-                                        <div class="text-body-sm">MD</div>
-                                        <code class="text-caption">20px</code>
-                                        <div class="text-caption token-reference">--icon-md</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="icon-size-showcase">
-                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="icon icon--lg" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="icon-size-meta">
-                                        <div class="text-body-sm">LG</div>
-                                        <code class="text-caption">24px</code>
-                                        <div class="text-caption token-reference">--icon-lg</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="icon-size-showcase">
-                                    <div class="icon-size-display" style="height: 48px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="icon icon--xl icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="icon-size-meta">
-                                        <div class="text-body-sm">XL</div>
-                                        <code class="text-caption">32px</code>
-                                        <div class="text-caption token-reference">--icon-xl</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                    <!-- ICON CATEGORIES             -->
-                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                    <div class="token-category">
-                        <div class="category-header">
-                            <h2 class="text-heading-lg category-title"><i data-lucide="grid-3x3"></i> Icon Categories</h2>
-                            <p class="category-description">All icons used in the plugin, organized by function. Icons use semantic naming and are optimized for clarity at all sizes.</p>
-                        </div>
-                        
-                        <div class="tokens-grid">
-                            <div class="example-label">UI Actions</div>
-                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="rocket" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">rocket</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="sliders-horizontal" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">sliders-horizontal</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="send" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">send</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="settings" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">settings</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tokens-grid">
-                            <div class="example-label">Navigation</div>
-                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="arrow-left" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">arrow-left</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="arrow-right" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">arrow-right</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="x" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">x</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="maximize" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">maximize</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tokens-grid">
-                            <div class="example-label">Status &amp; Feedback</div>
-                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="check-circle" style="color: var(--color-status-success);"></i>
-                                    <code class="text-caption">check-circle</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="alert-triangle" style="color: var(--category-color-orange);"></i>
-                                    <code class="text-caption">alert-triangle</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tokens-grid">
-                            <div class="example-label">External &amp; Social</div>
-                            <div class="icon-category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--size-3);">
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="figma" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">figma</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="github" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">github</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="linkedin" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">linkedin</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="mail" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">mail</code>
-                                </div>
-                                <div class="icon-category-item">
-                                    <i class="icon icon--lg" data-icon="briefcase" style="color: var(--color-text-default);"></i>
-                                    <code class="text-caption">briefcase</code>
-                                </div>
-                            </div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-xs</div><div class="token-value">12px</div><div class="token-preview"><i class="icon icon--xs" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-xs')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-sm</div><div class="token-value">16px</div><div class="token-preview"><i class="icon icon--sm" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-sm')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-md</div><div class="token-value">20px</div><div class="token-preview"><i class="icon icon--md" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-md')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-lg</div><div class="token-value">24px</div><div class="token-preview"><i class="icon icon--lg" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-lg')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-xl</div><div class="token-value">32px</div><div class="token-preview"><i class="icon icon--xl" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-xl')">Copy</button></div>
                         </div>
                     </div>
                     
@@ -7822,98 +7861,15 @@ body {
                             <p class="category-description">Complete token reference for the icon system. All values are defined as CSS custom properties.</p>
                         </div>
                         
-                        <div class="compact-cards">
-                            <div class="compact-card">
-                                <h3><i data-icon="maximize"></i> Size Tokens</h3>
-                                <div class="token-reference-list">
-                                    <div class="token-reference-item">
-                                        <code>--icon-xs</code>
-                                        <span>12px</span>
-                                        <i class="icon icon--xs" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="token-reference-item">
-                                        <code>--icon-sm</code>
-                                        <span>16px</span>
-                                        <i class="icon icon--sm" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="token-reference-item">
-                                        <code>--icon-md</code>
-                                        <span>20px (default)</span>
-                                        <i class="icon icon--md" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="token-reference-item">
-                                        <code>--icon-lg</code>
-                                        <span>24px</span>
-                                        <i class="icon icon--lg" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="token-reference-item">
-                                        <code>--icon-xl</code>
-                                        <span>32px</span>
-                                        <i class="icon icon--xl icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="compact-card">
-                                <h3><i data-icon="pen-tool"></i> Stroke Weight Tokens</h3>
-                                <div class="token-reference-list">
-                                    <div class="token-reference-item">
-                                        <code>--icon-stroke-thin</code>
-                                        <span>1.5</span>
-                                        <i class="icon icon--lg icon--thin" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="token-reference-item">
-                                        <code>--icon-stroke-regular</code>
-                                        <span>2 (default)</span>
-                                        <i class="icon icon--lg icon--regular" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                    <div class="token-reference-item">
-                                        <code>--icon-stroke-bold</code>
-                                        <span>2.5</span>
-                                        <i class="icon icon--lg icon--bold" data-icon="palette" style="color: var(--brand-primary-lime);"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                    <!-- ACCESSIBILITY GUIDELINES    -->
-                    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                    <div class="token-category">
-                        <div class="category-header">
-                            <h2 class="text-heading-lg category-title"><i data-lucide="check-circle"></i> Accessibility Guidelines</h2>
-                            <p class="category-description">Ensure icons are accessible and maintain sufficient contrast across all themes and contexts.</p>
-                        </div>
-                        
-                        <div class="compact-cards">
-                            <div class="compact-card">
-                                <h3><i data-icon="check-circle"></i> Best Practices</h3>
-                                <ul>
-                                    <li>Use <code>currentColor</code> for theme-aware coloring</li>
-                                    <li>Provide <code>aria-label</code> for icon-only buttons</li>
-                                    <li>Maintain minimum 3:1 contrast ratio</li>
-                                    <li>Test with screen readers and keyboard navigation</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="compact-card">
-                                <h3><i data-icon="alert-triangle"></i> Avoid These Combinations</h3>
-                                <div class="accessibility-warnings">
-                                    <div class="warning-example">
-                                        <div class="warning-visual" style="background: var(--brand-primary-lime); padding: var(--size-2); border-radius: var(--radius-2);">
-                                            <i class="icon icon--md" data-icon="x" style="color: white;"></i>
-                                        </div>
-                                        <div class="warning-text">
-                                            <div class="text-caption">White on brand lime</div>
-                                            <div class="text-caption" style="color: var(--color-text-error);">Fails contrast (1.8:1)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="text-caption" style="margin-top: var(--size-2);">
-                                    Use <code>var(--color-text-on-brand)</code> for proper contrast on brand backgrounds.
-                                </p>
-                            </div>
+                        <div class="tokens-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-xs</div><div class="token-value">12px</div><div class="token-preview"><i class="icon icon--xs" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-xs')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-sm</div><div class="token-value">16px</div><div class="token-preview"><i class="icon icon--sm" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-sm')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-md</div><div class="token-value">20px (default)</div><div class="token-preview"><i class="icon icon--md" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-md')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-lg</div><div class="token-value">24px</div><div class="token-preview"><i class="icon icon--lg" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-lg')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-xl</div><div class="token-value">32px</div><div class="token-preview"><i class="icon icon--xl" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-xl')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-stroke-thin</div><div class="token-value">1.5</div><div class="token-preview"><i class="icon icon--lg icon--thin" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-stroke-thin')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-stroke-regular</div><div class="token-value">2 (default)</div><div class="token-preview"><i class="icon icon--lg" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-stroke-regular')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--icon-stroke-bold</div><div class="token-value">2.5</div><div class="token-preview"><i class="icon icon--lg icon--bold" data-lucide="palette" style="color: var(--brand-primary-lime);"></i></div></div><button class="token-copy" onclick="copyToken('--icon-stroke-bold')">Copy</button></div>
                         </div>
                     </div>
                 </section>
@@ -7943,7 +7899,7 @@ body {
     <div class="text-heading-xl token-count-total">247</div>
     <div class="text-label token-label">Tokens Found</div>
     <div class="token-breakdown">
-        <div class="token-type-stat color active"><i class="icon" data-icon="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div>
+        <div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div>
         <div class="token-type-stat text active"><i class="icon" data-icon="type"></i><div class="count">42</div><div class="text-label label">text</div></div>
         <div class="token-type-stat number active"><i class="icon" data-icon="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div>
         <div class="token-type-stat states"><i class="icon" data-icon="toggle-right"></i><div class="count">18</div><div class="text-label label">states</div></div>
@@ -7961,7 +7917,7 @@ body {
     <div class="text-heading-xl token-count-total">131</div>
     <div class="text-label token-label">Tokens Selected</div>
     <div class="token-breakdown">
-        <div class="token-type-stat color active"><i class="icon" data-icon="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div>
+        <div class="token-type-stat color active"><i class="icon" data-lucide="palette"></i><div class="count">89</div><div class="text-label label">colors</div></div>
         <div class="token-type-stat text active"><i class="icon" data-icon="type"></i><div class="count">42</div><div class="text-label label">text</div></div>
         <div class="token-type-stat number"><i class="icon" data-icon="hash"></i><div class="count">98</div><div class="text-label label">numbers</div></div>
         <div class="token-type-stat states disabled"><i class="icon" data-icon="toggle-right"></i><div class="count">0</div><div class="text-label label">states</div></div>
@@ -7981,7 +7937,7 @@ body {
     <div class="token-breakdown">
         <!-- Color Stat -->
         <div class="token-type-stat color">
-            <i class="icon" data-icon="palette"></i>
+            <i class="icon" data-lucide="palette"></i>
             <div class="count skeleton-pulse"></div>
             <div class="text-label label">colors</div>
         </div>
@@ -8025,7 +7981,7 @@ body {
     </div>
 </div>
                 </div>
-                <button class="btn secondary btn-md" onclick="demoGuideExport()">
+                <button class="btn btn-secondary btn-md" onclick="demoGuideExport()">
                     <i data-lucide="play"></i>
                     <span>Play Demo</span>
                 </button>
@@ -8055,7 +8011,7 @@ body {
     <!-- Middle Group -->
     <div class="empty-state-categories">
         <div class="empty-state-category">
-            <i data-icon="palette" class="icon icon--lg category-icon-cyan"></i>
+            <i data-lucide="palette" class="icon icon--lg category-icon-cyan"></i>
             <span class="text-label">Color</span>
         </div>
         <div class="empty-state-category">
@@ -8196,7 +8152,9 @@ body {
             <p class="category-description" style="margin-bottom: var(--size-4);">Interactive states provide visual feedback. Test all states during implementation.</p>
 
             <div class="subsection">
-                <div class="state-comparison-grid">
+                <div class="state-comparison-container">
+                    <!-- Desktop: Full grid with all states -->
+                    <div class="state-comparison-grid desktop-grid">
                     <!-- Headers -->
                     <div></div> 
                     <div class="example-label">Default</div>
@@ -8221,18 +8179,71 @@ body {
                     <div class="state-cell"><button class="btn btn-secondary btn-md" disabled aria-label="Secondary Button Disabled"><i data-lucide="settings"></i></button></div>
                     
                     <div class="state-label">Tertiary</div>
-                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline">Learn More</button></div>
-                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-hover">Learn More</button></div>
-                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-active">Learn More</button></div>
-                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-focus">Learn More</button></div>
-                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline" disabled>Learn More</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline">Details</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-hover">Details</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-active">Details</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-focus">Details</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline" disabled>Details</button></div>
 
-                    <div class="state-label">Icon Only</div>
+                    <div class="state-label">Icon</div>
                     <div class="state-cell"><button class="btn btn-icon btn-md" aria-label="Icon Button Default"><i data-lucide="github"></i></button></div>
                     <div class="state-cell"><button class="btn btn-icon btn-md force-hover" aria-label="Icon Button Hover"><i data-lucide="github"></i></button></div>
                     <div class="state-cell"><button class="btn btn-icon btn-md force-active" aria-label="Icon Button Active"><i data-lucide="github"></i></button></div>
                     <div class="state-cell"><button class="btn btn-icon btn-md force-focus" aria-label="Icon Button Focus"><i data-lucide="github"></i></button></div>
                     <div class="state-cell"><button class="btn btn-icon btn-md" disabled aria-label="Icon Button Disabled"><i data-lucide="github"></i></button></div>
+                    </div>
+
+                    <!-- Mobile: First grid with Default and Hover -->
+                    <div class="state-comparison-grid mobile-grid mobile-grid-1">
+                    <!-- Headers -->
+                    <div></div> 
+                    <div class="example-label">Default</div>
+                    <div class="example-label">Hover</div>
+                    
+                    <!-- Rows -->
+                    <div class="state-label">Primary</div>
+                    <div class="state-cell"><button class="btn btn-primary btn-md" aria-label="Primary Button Default"><i data-lucide="package"></i></button></div>
+                    <div class="state-cell"><button class="btn btn-primary btn-md force-hover" aria-label="Primary Button Hover"><i data-lucide="package"></i></button></div>
+                    
+                    <div class="state-label">Secondary</div>
+                    <div class="state-cell"><button class="btn btn-secondary btn-md" aria-label="Secondary Button Default"><i data-lucide="settings"></i></button></div>
+                    <div class="state-cell"><button class="btn btn-secondary btn-md force-hover" aria-label="Secondary Button Hover"><i data-lucide="settings"></i></button></div>
+                    
+                    <div class="state-label">Tertiary</div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline">Details</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-hover">Details</button></div>
+
+                    <div class="state-label">Icon</div>
+                    <div class="state-cell"><button class="btn btn-icon btn-md" aria-label="Icon Button Default"><i data-lucide="github"></i></button></div>
+                    <div class="state-cell"><button class="btn btn-icon btn-md force-hover" aria-label="Icon Button Hover"><i data-lucide="github"></i></button></div>
+                    </div>
+
+                    <hr class="state-divider">
+
+                    <!-- Mobile: Second grid with Active and Focus -->
+                    <div class="state-comparison-grid mobile-grid mobile-grid-2">
+                    <!-- Headers -->
+                    <div></div> 
+                    <div class="example-label">Active</div>
+                    <div class="example-label">Focus</div>
+                    
+                    <!-- Rows -->
+                    <div class="state-label">Primary</div>
+                    <div class="state-cell"><button class="btn btn-primary btn-md force-active" aria-label="Primary Button Active"><i data-lucide="package"></i></button></div>
+                    <div class="state-cell"><button class="btn btn-primary btn-md force-focus" aria-label="Primary Button Focus"><i data-lucide="package"></i></button></div>
+                    
+                    <div class="state-label">Secondary</div>
+                    <div class="state-cell"><button class="btn btn-secondary btn-md force-active" aria-label="Secondary Button Active"><i data-lucide="settings"></i></button></div>
+                    <div class="state-cell"><button class="btn btn-secondary btn-md force-focus" aria-label="Secondary Button Focus"><i data-lucide="settings"></i></button></div>
+                    
+                    <div class="state-label">Tertiary</div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-active">Details</button></div>
+                    <div class="state-cell"><button class="btn btn-tertiary btn-md btn-inline force-focus">Details</button></div>
+
+                    <div class="state-label">Icon</div>
+                    <div class="state-cell"><button class="btn btn-icon btn-md force-active" aria-label="Icon Button Active"><i data-lucide="github"></i></button></div>
+                    <div class="state-cell"><button class="btn btn-icon btn-md force-focus" aria-label="Icon Button Focus"><i data-lucide="github"></i></button></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -8279,54 +8290,14 @@ body {
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Color Variants</div>
-                    <!-- This content is now correctly padded by the parent .subsection -->
-                    <div class="tokens-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
-                        <!-- Brand -->
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge brand">BRAND</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge brand')">Copy</button>
-                        </div>
-                        <!-- Brand Inverted -->
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge brand-inverted">INVERTED</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge brand-inverted')">Copy</button>
-                        </div>
-                        <!-- Neutral -->
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge neutral">NEUTRAL</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge neutral')">Copy</button>
-                        </div>
-                     <!-- Category Colors -->
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge cyan"><i data-lucide="palette"></i> CYAN</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge cyan')">Copy</button>
-                        </div>
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge purple"><i data-lucide="type"></i> PURPLE</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge purple')">Copy</button>
-                        </div>
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge orange"><i data-lucide="hash"></i> ORANGE</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge orange')">Copy</button>
-                        </div>
-                        <div class="token-item">
-                            <div class="badge-preview" style="text-align: center; padding: var(--size-4);">
-                                <span class="badge pink"><i data-lucide="toggle-right"></i> PINK</span>
-                            </div>
-                            <button class="token-copy" onclick="copyToClipboard('badge pink')">Copy</button>
-                        </div>
+                    <div class="badge-showcase">
+                        <span class="badge brand">BRAND</span>
+                        <span class="badge brand-inverted">INVERTED</span>
+                        <span class="badge neutral">NEUTRAL</span>
+                        <span class="badge cyan"><i data-lucide="palette"></i> CYAN</span>
+                        <span class="badge purple"><i data-lucide="type"></i> PURPLE</span>
+                        <span class="badge orange"><i data-lucide="hash"></i> ORANGE</span>
+                        <span class="badge pink"><i data-lucide="toggle-right"></i> PINK</span>
                     </div>
                 </div>
             </div>
@@ -8368,11 +8339,11 @@ Toggles the global appState.mode and communicates with the Token Summary card.
                 <option value="tailwind">Tailwind Config</option>
             </select>
         </div>
-        <button class="btn primary btn-sm" id="export-btn" aria-label="Export design tokens">
+        <button class="btn btn-primary btn-sm" id="export-btn" aria-label="Export design tokens">
             <i data-icon="rocket"></i>
             <span>Package Tokens</span>
         </button>
-        <button class="btn secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);" aria-label="Show advanced filter options">
+        <button class="btn btn-secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);" aria-label="Show advanced filter options">
             <i data-icon="sliders-horizontal"></i>
             <span>Filters</span>
         </button>
@@ -8402,13 +8373,14 @@ Toggles the global appState.mode and communicates with the Token Summary card.
                     <div class="example-container">
 <!-- src/components/_collection-item.html -->
 <!-- This is the single source of truth for the collection item component's structure. -->
+<div class="collection-list">
 <!-- Example 1: Selected collection with all 4 token types -->
 <div class="collection-item selected">
     <div class="collection-checkbox"></div>
     <div class="collection-info">
         <div class="text-body-lg collection-name">Complete Design System</div>
         <div class="collection-pills">
-            <span class="badge small cyan"><i class="icon" data-icon="palette"></i> 24</span>
+            <span class="badge small cyan"><i data-lucide="palette"></i> 24</span>
             <span class="badge small purple"><i class="icon" data-icon="type"></i> 16</span>
             <span class="badge small orange"><i class="icon" data-icon="hash"></i> 12</span>
             <span class="badge small pink"><i class="icon" data-icon="toggle-right"></i> 8</span>
@@ -8422,7 +8394,7 @@ Toggles the global appState.mode and communicates with the Token Summary card.
     <div class="collection-info">
         <div class="text-body-lg collection-name">Brand Colors</div>
         <div class="collection-pills">
-            <span class="badge small cyan"><i class="icon" data-icon="palette"></i> 32</span>
+            <span class="badge small cyan"><i data-lucide="palette"></i> 32</span>
             <span class="badge small pink"><i class="icon" data-icon="toggle-right"></i> 4</span>
         </div>
     </div>
@@ -8440,6 +8412,7 @@ Toggles the global appState.mode and communicates with the Token Summary card.
         </div>
     </div>
     <div class="text-caption collection-count">32 tokens</div>
+</div>
 </div>
                     </div>
                 </div>
@@ -8503,60 +8476,59 @@ Purpose: Displays creator info and social links. Rebuilt with standard component
     </div>
     </section>
 
+        </div> <!-- END: guide-container -->
 
-            <!-- Guide Footer Section -->
-    <footer id="about" class="guide-footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip_footer_logo)">
-                            <path d="M0 0H355V355H0V0Z" fill="url(#paint_footer_linear)"/>
-                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                        </g>
-                        <defs>
-                            <linearGradient id="paint_footer_linear" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#D2FF37"/>
-                                <stop offset="1" stop-color="#EEFF00"/>
-                            </linearGradient>
-                            <clipPath id="clip_footer_logo">
-                                <rect width="355" height="355" rx="58" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </div>
+    <!-- Guide Footer Section -->
+<!-- src/components/_footer-enhanced.html -->
+<footer class="footer-desktop">
+    <div class="main-bar">
+        <div class="brand-group">
+            <div class="token-exporter-logo">
+                <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_footer_desktop_logo)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_footer_desktop_logo)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_footer_desktop_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_footer_desktop_logo"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
+            </div>
+            <div class="text-group">
                 <h3 class="footer-title">Token Exporter</h3>
-                <p class="footer-tagline">Created with <span class="heart">❤️</span> by Nate Mills</p>
-            </div>
-            
-          <div class="figma-cta">
-                <a href="https://www.figma.com/community/plugin/1521741753717588633" target="_blank" class="btn btn-primary btn-md btn-inline">
-                    <i data-lucide="figma"></i>
-                    <span>Get the Plugin</span>
-                </a>
-            </div>
-
-            <div class="footer-social-links">
-                <a href="https://github.com/n8mills-UI" class="btn btn-icon btn-md" title="GitHub" target="_blank" rel="noopener noreferrer">
-                    <i data-lucide="github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn" target="_blank" rel="noopener noreferrer">
-                    <i data-lucide="linkedin"></i>
-                </a>
-                <a href="https://www.figma.com/@mills" class="btn btn-icon btn-md" title="Figma" target="_blank" rel="noopener noreferrer">
-                    <i data-lucide="figma"></i>
-                </a>
-                <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio" target="_blank" rel="noopener noreferrer">
-                    <i data-lucide="briefcase"></i>
-                </a>
-                <a href="mailto:nate@natemills.me" class="btn btn-icon btn-md" title="Email">
-                    <i data-lucide="mail"></i>
-                </a>
+                <p class="footer-tagline">Variables to production-ready code.</p>
             </div>
         </div>
-    </footer>
+        <a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter" class="btn btn-primary btn-md"><i data-icon="figma"></i> Get the Plugin</a>
+    </div>
+    <div class="sub-bar">
+         <p class="footer-attribution">Created with <span class="heart">❤️</span> by Nate Mills for the design community</p>
+         <div class="social-links">
+            <a href="https://github.com/n8mills-UI/token-exporter-ds" class="btn btn-icon btn-md" title="GitHub"><i data-icon="github"></i></a>
+            <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn"><i data-icon="linkedin"></i></a>
+            <a href="https://www.figma.com/@n8mills" class="btn btn-icon btn-md" title="Figma"><i data-icon="figma"></i></a>
+            <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio"><i data-icon="briefcase"></i></a>
+            <a href="mailto:hello@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-icon="mail"></i></a>
+        </div>
+    </div>
+</footer>
+
+<footer class="footer-mobile">
+    <div class="footer-content">
+        <div class="primary-actions">
+            <div class="brand-group">
+                <div class="token-exporter-logo">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_footer_mobile_logo)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_footer_mobile_logo)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_footer_mobile_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_footer_mobile_logo"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
+                </div>
+                <h3 class="footer-title">Token Exporter</h3>
+                <p class="footer-tagline">Variables to production-ready code.</p>
+            </div>
+            <a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter" class="btn btn-primary btn-md"><i data-icon="figma"></i> Get the Plugin</a>
+        </div>
+        <div class="info-group">
+            <div class="social-links">
+                <a href="https://github.com/n8mills-UI/token-exporter-ds" class="btn btn-icon btn-md" title="GitHub"><i data-icon="github"></i></a>
+                <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn"><i data-icon="linkedin"></i></a>
+                <a href="https://www.figma.com/@n8mills" class="btn btn-icon btn-md" title="Figma"><i data-icon="figma"></i></a>
+                <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio"><i data-icon="briefcase"></i></a>
+                <a href="mailto:hello@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-icon="mail"></i></a>
+            </div>
+            <p class="footer-attribution">Created with <span class="heart">❤️</span> by Nate Mills for the design community</p>
+        </div>
+    </div>
+</footer>
 
 
     <a href="YOUR_GITHUB_REPO_URL" target="_blank" rel="noopener noreferrer" class="version-badge" title="View on GitHub">
@@ -9107,8 +9079,8 @@ Purpose: Displays creator info and social links. Rebuilt with standard component
                 iconWrapper.style.left = Math.random() * 100 + '%';
 
                 // Set durations and effects based on type
-                // Cap delays at 3 seconds max for quicker visibility
-                const maxDelay = 3;
+                // Match maxDelay to longest animation duration for continuous streaming
+                const maxDelay = 45;
                 
                 if (animationClass === 'rise') {
                     const duration = durations.rise.min + Math.random() * durations.rise.range;
