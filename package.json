@@ -7,13 +7,14 @@
   },
   "scripts": {
     "start": "npm run dev",
-    "sync": "npm run figma-check && bash scripts/sync.sh",
+    "sync": "npm run figma-check && bash scripts/build/sync.sh",
     "lint:js": "ESLINT_USE_FLAT_CONFIG=false eslint src/code.js",
-    "lint:css": "python3 scripts/lint-css.py docs/design-system.css",
-    "audit:docs": "python3 scripts/audit-documentation.py docs/design-system.css docs/design-system-guide.html",
-    "figma-check": "node scripts/figma-compat-check.js",
-    "validate:tokens": "node scripts/validate-tokens.js",
-    "analyze:duplicates": "node scripts/analyze-duplicates.js",
+    "lint:css": "python3 scripts/audits/lint-css.py docs/design-system.css",
+    "audit:docs": "python3 scripts/audits/audit-documentation.py docs/design-system.css docs/design-system-guide.html",
+    "audit:arch": "node scripts/audits/architectural-advisor.js",
+    "figma-check": "node scripts/audits/figma-compat-check.js",
+    "validate:tokens": "node scripts/audits/validate-tokens.js",
+    "analyze:duplicates": "node scripts/audits/analyze-duplicates.js",
     "test": "npm run figma-check && npm run lint:js && npm run lint:css",
     "dev": "nodemon --watch scripts/ --watch docs/ --watch src/ --ext \"sh,html,css\" --ignore src/ui.html --ignore docs/design-system-guide.html --exec \"npm run sync\"",
     "build": "npm run sync",
@@ -45,18 +46,18 @@
   },
   "lint-staged": {
     "docs/design-system.css": [
-      "python3 scripts/lint-css.py",
-      "bash scripts/lint-staged-audit-warn.sh"
+      "python3 scripts/audits/lint-css.py",
+      "bash scripts/audits/lint-staged-audit-warn.sh"
     ],
     "src/code.js": [
-      "node scripts/figma-compat-check.js",
+      "node scripts/audits/figma-compat-check.js",
       "npm run lint:js"
     ],
     "docs/design-system-guide.template.html": [
-      "bash scripts/lint-staged-audit-warn.sh"
+      "bash scripts/audits/lint-staged-audit-warn.sh"
     ],
     "src/components/_*.html": [
-      "bash scripts/lint-staged-audit-warn.sh"
+      "bash scripts/audits/lint-staged-audit-warn.sh"
     ]
   }
 }

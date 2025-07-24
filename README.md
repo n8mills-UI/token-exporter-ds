@@ -34,12 +34,13 @@ This project was created by **Nate Mills**, a UI Designer with 20 years of exper
 1.  [🎯 The Problem It Solves](#-the-problem-it-solves)
 2.  [✨ Key Features](#-key-features)
 3.  [⚙️ How It Works](#️-how-it-works)
-4.  [🛠️ Development Workflow](#️-development-workflow)
-5.  [📂 Project Structure](#-project-structure)
-6.  [🍴 Running Your Own Fork](#-running-your-own-fork)
-7.  [🤝 Contributing](#-contributing)
-8.  [💬 Support](#-support)
-9.  [📜 License](#-license)
+4.  [🏗️ Architectural Overview](#️-architectural-overview)
+5.  [🛠️ Development Workflow](#️-development-workflow)
+6.  [📂 Project Structure](#-project-structure)
+7.  [🍴 Running Your Own Fork](#-running-your-own-fork)
+8.  [🤝 Contributing](#-contributing)
+9.  [💬 Support](#-support)
+10. [📜 License](#-license)
 
 <br>
 
@@ -93,6 +94,28 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 3.  **Filter & Select**: Choose which token types and collections you want to export.
 4.  **Choose Formats**: Select one or more export formats from the dropdown.
 5.  **Generate Tokens**: Click "Export Tokens" and download the results.
+
+<br>
+
+---
+
+<br>
+
+## 🏗️ Architectural Overview
+
+This project is organized into four distinct conceptual parts:
+
+*   **1. The Core Product (The "What"):** The final, compiled assets delivered to the user.
+    *   `design-system.css`, `ui.html`, `design-system-guide.html`
+
+*   **2. The Source Code (The "Blueprint"):** The modular, human-readable source files where we work.
+    *   `design-system.css`, `src/components/`, `*.template.html`
+
+*   **3. The Build System (The "Factory"):** The automation that turns the blueprint into the final product.
+    *   `scripts/build/sync.sh`
+
+*   **4. The Quality Assurance System (The "Automated Inspection"):** A suite of specialized scripts that automatically enforce system health, consistency, and best practices.
+    *   `scripts/audits/*`
 
 <br>
 
@@ -190,6 +213,21 @@ npm run audit:docs
 - **Dual Reporting**: Identifies both undocumented components and stale documentation
 - **Actionable Output**: Provides specific recommendations for maintaining documentation
 
+#### Advanced Architectural Analysis
+Provides sophisticated design system architectural guidance:
+
+```bash
+npm run audit:arch
+```
+
+**Features:**
+- **Composite Value Analysis**: Identifies opportunities for semantic token combinations (e.g., `border: 1px solid #444`)
+- **Contextual Property Awareness**: Understands CSS property context for intelligent suggestions
+- **Frequency Analysis**: Recommends new tokens for repeated value combinations (3+ occurrences)
+- **Ambiguity Resolution**: Lists all possible token replacements with contextual guidance
+- **JSON Output**: Structured recommendations for programmatic processing
+- **Design System Strategy**: Acts as an architectural advisor, not just a pattern matcher
+
 #### When to Use These Tools
 - **Pre-commit Hook**: Run before committing changes to catch errors early
 - **CI/CD Pipeline**: Include in your build process to enforce system integrity
@@ -244,9 +282,15 @@ token-exporter-ds/
 │ └── code.js # ✅ EDIT THIS - Plugin logic.
 │
 ├── scripts/
-│ ├── sync.sh # The master build script
-│ ├── figma-compat-check.js # Figma compatibility validator
-│ └── validate-tokens.js # CSS token reference validator
+│ ├── build/
+│ │ └── sync.sh # The master build script
+│ └── audits/
+│     ├── architectural-advisor.js # Advanced design system architectural analysis
+│     ├── audit-documentation.py # Documentation completeness audit
+│     ├── analyze-duplicates.js # Token duplication analysis (basic)
+│     ├── figma-compat-check.js # Figma compatibility validator
+│     ├── lint-css.py # CSS architecture linting
+│     └── validate-tokens.js # CSS token reference validator
 │ 
 ├── _sandbox/ # Personal testing files (ignored by git)
 ├── .gitignore
@@ -282,15 +326,25 @@ token-exporter-ds/
 
 ### Available Scripts
 
+**Build & Development:**
 -   `npm start` - Alias for `npm run dev` (watch mode)
 -   `npm run sync` - Main build command (includes figma-check validation)
 -   `npm run dev` - Watch mode that auto-rebuilds when source files change  
 -   `npm run build` - Alias for `npm run sync`
--   `npm run figma-check` - Validate code for Figma plugin compatibility issues
+
+**Quality Assurance:**
 -   `npm run test` - Run figma-check, JavaScript linting, and CSS architecture validation
+-   `npm run figma-check` - Validate code for Figma plugin compatibility issues
 -   `npm run lint:js` - Lint JavaScript files using ESLint (uses legacy flat config)
 -   `npm run lint:css` - Validate CSS architecture and token usage
+
+**Design System Analysis:**
+-   `npm run audit:arch` - **Advanced architectural analysis** - Provides high-level design system recommendations, identifies composite token opportunities, and resolves token ambiguities
 -   `npm run audit:docs` - Audit documentation completeness for semantic components
+-   `npm run analyze:duplicates` - Basic token duplication analysis (hygiene tool)
+-   `npm run validate:tokens` - Verify all CSS token references are properly defined
+
+**Utilities:**
 -   `npm run format` - Auto-fix CSS formatting issues with stylelint
 -   `npm run clean` - Remove backup files (ui.html.backup)
 
