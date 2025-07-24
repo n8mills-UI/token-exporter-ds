@@ -1430,43 +1430,71 @@
         let lineIndex = 0;
         let charIndex = 0;
 
-        // 1. Reset the terminal. Using &nbsp; preserves the line-height and prevents shifting.
+        // Helper function to extract plain text from HTML for typing animation
+        function extractPlainText(htmlString) {
+            if (!htmlString) return '';
+            // Create a temporary div to parse HTML and extract text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlString;
+            return tempDiv.textContent || tempDiv.innerText || '';
+        }
+
+        // Helper function to create partial HTML based on character position
+        function createPartialHTML(htmlString, targetLength) {
+            if (!htmlString) return '';
+            
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlString;
+            const plainText = tempDiv.textContent || tempDiv.innerText || '';
+            
+            if (targetLength >= plainText.length) {
+                return htmlString; // Return full HTML if we've reached the end
+            }
+            
+            // For partial text, we'll show plain text during typing, then full HTML when complete
+            return plainText.substring(0, targetLength);
+        }
+
+        // Reset the terminal
         lines.forEach(line => {
-            line.innerHTML = '&nbsp;';
+            line.innerHTML = '';
         });
 
         function type() {
             if (lineIndex >= lines.length) {
                 const lastLine = lines[lines.length - 1];
                 if (lastLine) {
-                    lastLine.innerHTML = lastLine.getAttribute('data-text') + cursorHTML;
+                    const finalHTML = lastLine.getAttribute('data-text') || '';
+                    lastLine.innerHTML = finalHTML + cursorHTML;
                 }
-                return; // Stop the recursion
+                return;
             }
 
             const currentLine = lines[lineIndex];
-            const fullText = currentLine.getAttribute('data-text') || '';
+            const fullHTML = currentLine.getAttribute('data-text') || '';
+            const plainText = extractPlainText(fullHTML);
 
-            if (charIndex >= fullText.length) {
-                // 2. When a line is done, ensure it gets its final content or an &nbsp; if it's blank.
-                currentLine.innerHTML = fullText || '&nbsp;';
+            if (charIndex >= plainText.length) {
+                // Line is complete - set final HTML content with syntax highlighting
+                currentLine.innerHTML = fullHTML;
                 lineIndex++;
                 charIndex = 0;
-                // Using the faster 50ms delay between lines
                 window.typingTimeout = setTimeout(type, 50);
                 return;
             }
 
             charIndex++;
-            const partialText = fullText.substring(0, charIndex);
+            
+            // Show plain text during typing animation
+            const partialText = plainText.substring(0, charIndex);
             currentLine.innerHTML = partialText + cursorHTML;
 
-            // Using the faster 5ms delay for each character
-            const delay = 10;
+            // Fast typing speed for 5-second completion
+            const delay = 15;
             window.typingTimeout = setTimeout(type, delay);
         }
 
-        type(); // Kick off the animation
+        type();
     }
 
         function initializeTypingObserver() {

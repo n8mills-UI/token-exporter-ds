@@ -301,3 +301,45 @@ When adding or modifying npm scripts in `package.json`:
 - All errors include timestamps and operation context
 - Check both browser console and Figma console for different error types
 - Use `console.error()` with structured error objects for better debugging
+
+## Critical CSS Limitations & Common Mistakes
+
+### **NEVER: CSS Variables in Media Queries**
+**❌ THIS DOES NOT WORK:**
+```css
+:root { --breakpoint-lg: 1024px; }
+@media (width <= var(--breakpoint-lg)) { /* BROKEN - CSS spec doesn't support this */ }
+```
+
+**✅ CORRECT APPROACH:**
+```css
+@media (width <= 1024px) { /* Use hardcoded pixels in media queries */ }
+```
+
+**Why:** CSS variables cannot be used in media query declarations. This is a fundamental CSS specification limitation, not a browser support issue.
+
+**Prevention:** The `analyze-duplicates` script validates against this mistake.
+
+### **Token Architecture Rules**
+1. **Primitives (in `:root`)** - Must use hardcoded values (source of truth)
+2. **Semantic tokens** - Should reference primitives via `var()`
+3. **Components** - Should only consume tokens, never hardcoded values
+4. **Media queries** - Exception: must use hardcoded pixels (CSS limitation)
+
+### **Design System Validation**
+- Run `npm run analyze:duplicates` to check for token violations
+- Script automatically skips `:root` blocks (primitives should stay hardcoded)
+- Script flags hardcoded values in components that should use tokens
+- Script validates media query token usage and warns about unsupported patterns
+
+## Learning Capture Process
+
+When encountering recurring issues or making the same mistake twice:
+
+1. **Document the issue** using `scripts/audits/learning-capture-template.md`
+2. **File in** `docs/learning-captures/[issue-name].md`
+3. **Implement prevention** through documentation, automation, or process changes
+4. **Validate prevention** works before considering the issue resolved
+
+**Existing captures:**
+- `css-variables-media-queries.md` - Why CSS variables don't work in media queries

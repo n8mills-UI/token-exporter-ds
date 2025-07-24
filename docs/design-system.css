@@ -183,11 +183,19 @@ body {
  ========================= */
 
  /* Icon sizing tokens */
+ --icon-2xs: var(--size-2); /* 8px - for tiny indicators */
  --icon-xs: var(--size-3); /* 12px */
  --icon-sm: var(--size-4); /* 16px */
  --icon-md: var(--size-5); /* 20px */
  --icon-lg: var(--size-6); /* 24px */
  --icon-xl: var(--size-8); /* 32px */
+ --icon-xxl: var(--size-9); /* 48px - for large decorative icons */
+ --icon-3xl: var(--size-12); /* 64px - for large decorative icons */
+ --icon-4xl: var(--size-15); /* 80px - for hero sections */
+ --icon-5xl: 160px; /* 160px - for success states/large illustrations */
+ 
+ /* Custom typography tokens for edge cases */
+ --font-size-0-5: 0.85rem; /* Between --font-size-0 (0.75rem) and --font-size-1 (1rem) */
 
  /* Icon stroke weight tokens */
  --icon-stroke-thin: 1.5;
@@ -220,8 +228,8 @@ body {
  /* =========================
  STROKE WEIGHTS
  ========================= */
- --stroke-thin: var(--border-size-1); /* 1px */
- --stroke-regular: var(--border-size-2); /* 2px */
+ --stroke-thin: var(--border-size-1); /* Thin stroke weight */
+ --stroke-regular: var(--border-size-2); /* Regular stroke weight */
  --stroke-thick: var(--border-size-3); /* 3px */
  
  /* =========================
@@ -843,8 +851,8 @@ body {
 
     .guidelines-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: var(--size-4);
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-xl), 1fr));
+        gap: var(--card-gap-standard);
     }
 
     .guideline-card {
@@ -950,8 +958,7 @@ body {
 }
 
 .main-section-title {
-    font-size: var(--font-size-8); /* 3.5rem for increased visual hierarchy */
-    font-weight: var(--font-weight-8);
+    /* Typography inherited from .text-heading-xl class */
     color: var(--color-text-default);
     display: flex;
     align-items: center;
@@ -991,9 +998,9 @@ body {
 /* Button showcase - using grid for consistent sizing */
 .button-showcase {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
     align-items: center;
-    gap: var(--size-5);
+    gap: var(--card-gap-standard);
     padding: var(--size-3);
     background: var(--color-background-primary);
     border-radius: var(--radius-2);
@@ -1265,7 +1272,7 @@ body {
 
 /* New wrapper for consistent padding and spacing */
 .portfolio-content {
- max-width: var(--content-xl); /* 1280px, from your tokens */
+ max-width: var(--content-xl); /* Uses content-xl token */
  margin-left: auto;
  margin-right: auto;
  padding: 0 var(--size-6);
@@ -1290,7 +1297,7 @@ body {
 /* Impact stats */
 .impact-stats {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
  gap: var(--size-3);
  padding: var(--size-4);
  background: var(--color-background-secondary);
@@ -1370,7 +1377,7 @@ body {
 
 .section-title {
  color: var(--color-text-default); 
- font-size: var(--font-size-3);
+ font-size: var(--font-size-4);
  font-weight: var(--font-weight-6);
  margin-bottom: var(--size-2);
  display: flex;
@@ -1577,12 +1584,13 @@ body {
 .profile-card .ascii-container {
  flex: 0 0 auto;
  display: flex;
- align-items: left;
+ align-items: flex-start;
  justify-content: left;
  z-index: 1;
  padding-right: var(--size-6);
  border-right: var(--border-size-1) solid var(--gray-7);
  min-width: 400px;
+ height: 100%;
 }
 
 .profile-card .ascii-art, .profile-card .ascii-art-mobile {
@@ -1607,6 +1615,7 @@ body {
  flex: 1;
  display: flex;
  z-index: 1;
+ height: 100%;
 }
 
 .profile-card .code-container {
@@ -1616,7 +1625,7 @@ body {
  border-radius: var(--radius-3);
  padding: var(--size-5);
  position: relative;
- height: fit-content;
+ height: 100%;
  display: flex;
  flex-direction: column;
 }
@@ -1654,23 +1663,29 @@ body {
 .profile-card .code-block {
  font-family: var(--font-mono);
  font-size: var(--font-size-0);
- line-height: 1.4;
+ line-height: 1.2;
  position: relative;
- min-height: 300px;
  flex: 1;
  white-space: pre-wrap;
  word-break: break-all;
  overflow-wrap: break-word;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
 }
 
 .profile-card .code-line {
  position: relative;
+ line-height: 1.2; 
+ display: block;
+ margin: 0;
+ padding: 0;
+}
 
- /* Fixed height removed to allow proper text wrapping */
- line-height: 1.4; 
- display: flex;
- align-items: flex-start;
- min-height: auto;
+/* Reduce spacing for empty lines */
+.profile-card .code-line:empty {
+ line-height: 0.8;
+ min-height: 0.8em;
 }
 
 .profile-card .comment { color: var(--gray-5); font-style: italic; }
@@ -1823,13 +1838,13 @@ body {
 
 .profile-card .terminal-title:hover::before {
  animation: glitch-1 0.3s infinite;
- color: var(--neon-cyan, #0FF);
+ color: var(--neon-cyan);
  opacity: 0.8;
 }
 
 .profile-card .terminal-title:hover::after {
  animation: glitch-2 0.3s infinite;
- color: var(--neon-pink, #FF10F0);
+ color: var(--neon-pink);
  opacity: 0.8;
 }
 
@@ -1879,13 +1894,13 @@ body {
 
 .profile-card .creator-badge .name:hover::before {
  animation: glitch-1 0.3s infinite;
- color: var(--neon-cyan, #0FF);
+ color: var(--neon-cyan);
  opacity: 0.8;
 }
 
 .profile-card .creator-badge .name:hover::after {
  animation: glitch-2 0.3s infinite;
- color: var(--neon-pink, #FF10F0);
+ color: var(--neon-pink);
  opacity: 0.8;
 }
 
@@ -1933,8 +1948,12 @@ body {
 }
 
 .profile-card .control-panel {
- margin-top: var(--size-4);
- padding-top: var(--size-2);
+ margin-top: var(--size-1);
+ padding-top: 0;
+}
+
+.profile-card .control-panel .btn-sm {
+ padding: 0 var(--size-2);
 }
 
 /* Profile Card Responsive Fixes */
@@ -1950,7 +1969,7 @@ body {
  }
  
  .profile-card .terminal-header .terminal-title {
-  font-size: 0.85rem;
+  font-size: var(--font-size-0-5); /* 0.85rem */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2016,7 +2035,7 @@ body {
  padding: var(--size-4);
  border-bottom: var(--border-size-1) solid var(--color-border-default);
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
  gap: var(--size-4);
 }
 
@@ -2218,7 +2237,7 @@ body {
 
 /* Creates a large gap above the Foundation section for clear separation */
 #colors.content-section {
-    margin-top: var(--size-8); 
+    margin-top: var(--size-6); 
 }
 
 
@@ -2269,12 +2288,14 @@ body {
 .table-responsive {
     width: 100%;
     margin: 0 auto;
-    margin-bottom: var(--size-6); /* Match container padding for consistent spacing */
+    margin-bottom: var(--size-6);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3);
     background: var(--color-background-secondary);
+    /* Enhanced shadow for better depth */
+    box-shadow: var(--shadow-1);
 }
 
 .table {
@@ -2296,31 +2317,59 @@ body {
 .table thead th {
     color: var(--color-text-default);
     font-weight: var(--font-weight-6);
-    font-size: var(--font-size-3);
-    background-color: transparent; /* Remove dark background */
+    font-size: var(--font-size-2); /* Smaller for better hierarchy */
+    background-color: var(--color-background-primary); /* Subtle background */
     vertical-align: middle;
     white-space: nowrap;
-    line-height: 1.2;
+    line-height: var(--font-lineheight-2);
+    position: sticky;
+    top: 0;
+    z-index: var(--layer-2);
 }
 
-/* ADDED: New rule to control column widths */
+/* Column width optimization for better balance */
 .table thead th:nth-child(1) {
-    width: 1%; /* Force the first column to be only as wide as its content */
+    width: 15%; /* More balanced first column width */
+}
+
+.table thead th:nth-child(2) {
+    width: 25%; /* Consistent middle column */
+}
+
+.table thead th:nth-child(3) {
+    width: 60%; /* Main content column */
 }
 
 .table thead th .lucide {
     color: var(--brand-primary-lime);
-    margin-right: var(--size-2); /* Space between icon and text */
-    vertical-align: middle; /* Aligns icon with the text */
-    stroke-width: var(--icon-stroke-regular); /* Ensures consistent icon weight */
-    width: var(--icon-sm); /* ADDED: Fixes responsive shrinking */
-    height: var(--icon-sm); /* ADDED: Fixes responsive shrinking */
-    flex-shrink: 0; /* ADDED: Prevents the icon from being squished */
+    margin-right: var(--size-2);
+    vertical-align: middle;
+    stroke-width: var(--icon-stroke-regular);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    flex-shrink: 0;
 }
 
-/* Remove hover states from non-interactive table rows */
+/* Enhanced header icon container */
+.table thead th span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+    font-weight: var(--font-weight-6);
+}
+
+/* Subtle row hover state for better readability */
+.table tbody tr {
+    transition: background-color var(--animation-duration-2) var(--ease-3);
+}
+
 .table tbody tr:hover {
-    background-color: transparent !important;
+    background-color: var(--color-background-primary);
+}
+
+/* Zebra striping for better readability */
+.table tbody tr:nth-child(even) {
+    background-color: rgba(var(--brand-primary-lime-rgb), 0.02);
 }
 
 /* Icon Category Grid - Vertical Alignment */
@@ -2371,8 +2420,8 @@ body {
 
 .token-exporter-logo {
  display: inline-block;
- width: 48px;
- height: 48px;
+ width: var(--icon-xxl);
+ height: var(--icon-xxl);
 }
 
 .token-exporter-logo svg {
@@ -2381,13 +2430,13 @@ body {
 }
 
 .token-exporter-logo.large {
- width: 64px;
- height: 64px;
+ width: var(--icon-3xl);
+ height: var(--icon-3xl);
 }
 
 .token-exporter-logo.xl {
- width: 80px;
- height: 80px;
+ width: var(--icon-xxl);
+ height: var(--icon-xxl);
 }
 
 
@@ -2409,7 +2458,7 @@ body {
 /* Position variant for absolute positioning */
 .badge.absolute {
     position: absolute;
-    top: var(--size-4);
+    top: var(--size-6);
     left: var(--size-4);
     z-index: var(--layer-card);
 }
@@ -2534,7 +2583,7 @@ body {
 
 /* Hero logo with animation */
 .hero-logo {
- margin-bottom: var(--size-3);
+ margin-bottom: var(--size-2);
  animation: gentle-float 3s ease-in-out infinite;
 }
 
@@ -2629,7 +2678,7 @@ body {
 /* Impact stats */
 .impact-stats {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
  gap: var(--size-3);
  padding: var(--size-4);
  
@@ -2994,7 +3043,7 @@ body {
 
 .section-title {
  color: var(--color-text-default);
- font-size: var(--font-size-3);
+ font-size: var(--font-size-4);
  margin-bottom: var(--size-2);
  display: flex;
  align-items: center;
@@ -3099,8 +3148,8 @@ body {
 
 .community-links {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
- gap: var(--size-4);
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-md), 1fr));
+ gap: var(--card-gap-standard);
  max-width: 800px;
  margin: 0 auto;
 }
@@ -3298,7 +3347,13 @@ select option {
  color: var(--color-text-default);
 }
 
-/* Typography (preserved for backward compatibility) */
+/* Typography Scale - Systematic Hierarchy */
+.text-heading-xxl { 
+ font-size: var(--font-size-8);
+ font-weight: var(--font-weight-8); 
+ line-height: var(--font-lineheight-1);
+}
+
 .text-heading-xl { 
  font-size: var(--font-size-7);
  font-weight: var(--font-weight-7); 
@@ -3306,12 +3361,18 @@ select option {
 }
 
 .text-heading-lg { 
- font-size: var(--font-size-5);
+ font-size: var(--font-size-6);
  font-weight: var(--font-weight-6); 
  line-height: var(--font-lineheight-2);
 }
 
 .text-heading-md { 
+ font-size: var(--font-size-4);
+ font-weight: var(--font-weight-6); 
+ line-height: var(--font-lineheight-2);
+}
+
+.text-heading-sm { 
  font-size: var(--font-size-3);
  font-weight: var(--font-weight-6); 
  line-height: var(--font-lineheight-3);
@@ -3373,7 +3434,7 @@ select option {
 
 ::-webkit-scrollbar-thumb {
  background-color: var(--gray-7); /* Subtle thumb color */
- border-radius: 20px;
+ border-radius: var(--radius-4); /* 20px equivalent */
  border: 3px solid var(--color-background-primary); /* Creates padding around thumb */
 }
 
@@ -3387,7 +3448,7 @@ select option {
 .card {
  background: var(--color-background-secondary);
  border-radius: var(--radius-3);
- padding: var(--size-3);
+ padding: var(--card-padding-sm);
  box-shadow: var(--shadow-2);
  transition: box-shadow var(--animation-duration-2) var(--ease-3);
  animation: var(--animation-slide-in-up);
@@ -3720,7 +3781,7 @@ select option {
  border-radius: var(--radius-3);
  padding: var(--size-4);
  text-align: center;
- max-width: 280px;
+ max-width: var(--guide-sidebar-width);
  width: 90%;
  animation: var(--animation-scale-up);
 }
@@ -4030,8 +4091,8 @@ select option {
 }
 
 .te-success-icon .lucide {
- width: 160px;
- height: 160px;
+ width: var(--icon-5xl);
+ height: var(--icon-5xl);
  stroke-width: var(--icon-stroke-thin);
 }
 
@@ -4122,7 +4183,7 @@ select option {
 
 /* Styles for the smaller numbers in the breakdown */
 .token-summary.is-loading .token-type-stat {
-    gap: 6px; /* Adds consistent spacing between icon, count, and label */
+    gap: var(--size-2); /* 8px - slightly larger but more consistent */
 }
 
 .token-summary.is-loading .token-breakdown .count.skeleton-pulse {
@@ -4555,12 +4616,10 @@ select option {
 
 /* Animated Hamburger Icon */
 .hamburger-icon {
-    width: 20px;
-    height: 16px;
+    width: var(--icon-md);
+    height: var(--icon-md);
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: block;
 }
 
 .hamburger-icon .line {
@@ -4570,37 +4629,59 @@ select option {
     border-radius: var(--border-size-1);
     transition: all 0.3s var(--ease-3);
     transform-origin: center;
+    position: absolute;
+    left: 0;
+}
+
+/* Position lines with precise spacing */
+.hamburger-icon .line-1 {
+    top: 0;
+}
+
+.hamburger-icon .line-2 {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hamburger-icon .line-3 {
+    bottom: 0;
 }
 
 /* Animated state when menu is open - applies to both header and close buttons */
 .mobile-menu.open .hamburger-icon .line-1,
 .mobile-menu.open ~ header .hamburger-icon .line-1 {
-    transform: translateY(7px) rotate(45deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
 }
 
 .mobile-menu.open .hamburger-icon .line-2,
 .mobile-menu.open ~ header .hamburger-icon .line-2 {
     opacity: 0;
-    transform: scaleX(0);
+    transform: translateY(-50%) scaleX(0);
 }
 
 .mobile-menu.open .hamburger-icon .line-3,
 .mobile-menu.open ~ header .hamburger-icon .line-3 {
-    transform: translateY(-7px) rotate(-45deg);
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
 }
 
 /* Alternative selector for when menu is open - header is sibling */
 body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-1 {
-    transform: translateY(7px) rotate(45deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
 }
 
 body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-2 {
     opacity: 0;
-    transform: scaleX(0);
+    transform: translateY(-50%) scaleX(0);
 }
 
 body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-3 {
-    transform: translateY(-7px) rotate(-45deg);
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
 }
 
 .mobile-nav-links {
@@ -4717,8 +4798,8 @@ body {
 }
 
 .guide-logo {
- width: 48px;
- height: 48px;
+ width: var(--icon-xxl);
+ height: var(--icon-xxl);
  flex-shrink: 0;
 }
 
@@ -4793,8 +4874,8 @@ body {
 }
 
 .nav-links .lucide {
- width: 16px;
- height: 16px;
+ width: var(--icon-sm);
+ height: var(--icon-sm);
  stroke-width: var(--icon-stroke-regular);
 }
 
@@ -4923,7 +5004,7 @@ body {
 }
 
 .gray-scale-grid {
- grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-xs), 1fr));
 }
 
 .text-grid, .animation-grid {
@@ -4931,11 +5012,11 @@ body {
 }
 
 .spacing-grid {
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
 }
 
 .font-grid {
- grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-xl), 1fr));
 }
 
 .token-item {
@@ -5363,7 +5444,7 @@ body {
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3); /* CORRECTED: Standard radius */
     padding: var(--size-6); /* Increased padding */
-    max-width: 280px;
+    max-width: var(--guide-sidebar-width);
     width: 100%;
     text-align: center;
     position: relative;
@@ -5557,11 +5638,11 @@ body {
     }
 
     .gray-scale-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-mobile-xs), 1fr));
     }
 
     .spacing-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-xs), 1fr));
     }
 
     /* About Section */
@@ -6252,8 +6333,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: var(--icon-xxl);
+    height: var(--icon-xxl);
     border-radius: var(--radius-1);
     background: var(--color-background-default);
 }
@@ -6380,6 +6461,27 @@ body {
     --guide-grid-min-width: 320px;              /* Minimum card width */
     --guide-grid-gap: var(--size-4);            /* Standard grid gap */
     --guide-grid-gap-small: var(--size-3);      /* Condensed grid gap */
+    
+    /* Card layout tokens for unified grid systems */
+    --card-min-width-xs: 150px;                         /* Extra small - color swatches */
+    --card-min-width-sm: var(--guide-sidebar-width);    /* 200px - compact cards */
+    --card-min-width-md: 250px;                         /* Medium cards */
+    --card-min-width-lg: var(--guide-grid-min-width);   /* 320px - large cards */
+    --card-min-width-xl: 300px;                         /* Extra large cards */
+    --card-min-width-enhanced: 280px;                   /* Enhanced glass cards */
+    --card-gap-standard: var(--guide-grid-gap);         /* var(--size-4) */
+    --card-gap-compact: var(--guide-grid-gap-small);    /* var(--size-3) */
+    --card-gap-mobile: var(--size-2);                   /* Mobile spacing */
+    
+    /* Mobile card width overrides */
+    --card-min-width-mobile-xs: 120px;                  /* Mobile extra small */
+    --card-min-width-mobile-sm: 150px;                  /* Mobile small */
+    
+    /* Card padding tokens for consistent sizing */
+    --card-padding-sm: var(--size-3);                   /* Small cards: 12px */
+    --card-padding-md: var(--size-4);                   /* Medium cards: 16px */
+    --card-padding-lg: var(--size-5);                   /* Large cards: 20px */
+    --card-padding-xl: var(--size-6);                   /* Enhanced cards: 24px */
 }
 
 /* =========================
@@ -6412,7 +6514,7 @@ body {
 
 /* Main Section Headers (Foundation & Components) Override */
 .main-section-title {
-    font-size: var(--font-size-6) !important; /* Significantly larger than subsections */
+    /* Typography from .text-heading-xl class */
 }
 
 .content-section > .section-header {
@@ -6422,9 +6524,20 @@ body {
     margin-bottom: var(--guide-content-gap);
 }
 
-/* Section Body Container - padding rule removed to fix layout bug */
+/* Section Body Container - provides fallback padding for sections without inner containers */
 .component-body {
-    /* Padding moved to .tokens-grid and content containers directly */
+    padding: 0 var(--guide-section-padding) var(--guide-content-gap) var(--guide-section-padding);
+}
+
+/* Remove bottom padding from component-body when it contains elements that provide their own padding, but keep horizontal padding for table-responsive */
+.component-body:has(.tokens-grid),
+.component-body:has(.example-container),
+.component-body:has(.variants-grid) {
+    padding: 0;
+}
+
+.component-body:has(.table-responsive) {
+    padding: 0 var(--guide-section-padding) var(--guide-content-gap) var(--guide-section-padding);
 }
 
 /* =========================
@@ -6434,9 +6547,7 @@ body {
 /* Main Section Titles */
 .component-title,
 .main-section-title {
-    font-size: var(--guide-section-title-size);
-    font-weight: var(--font-weight-6);
-    line-height: var(--font-lineheight-2);
+    /* Typography from .text-heading-xl class */
     color: var(--color-text-default);
     display: flex;
     align-items: center;
@@ -6518,6 +6629,7 @@ body {
     gap: var(--guide-grid-gap);
     margin-bottom: var(--guide-subsection-gap);
     align-items: stretch;
+    padding: 0 var(--guide-section-padding);
 }
 
 /* Compact Grid (for smaller items) */
@@ -6596,9 +6708,9 @@ body {
         --guide-grid-gap: var(--size-3);
     }
     
-    /* Override main section title font size for mobile */
+    /* Main sections use responsive typography from classes */
     .main-section-title {
-        font-size: var(--font-size-5) !important; /* Mobile: 2rem - still larger than subsections */
+        /* Typography from .text-heading-xl (responsive) */
     }
     
     /* Mobile main section icons scale down appropriately */
@@ -6614,11 +6726,19 @@ body {
     }
     
     .component-body {
-        /* Padding rule removed - handled by content containers directly */
+        padding: 0 var(--guide-section-padding-mobile) var(--guide-content-gap) var(--guide-section-padding-mobile);
+    }
+
+    /* Remove padding from component-body when it contains elements that provide their own padding */
+    .component-body:has(.tokens-grid),
+    .component-body:has(.example-container),
+    .component-body:has(.variants-grid) {
+        padding: 0;
     }
     
     .variants-grid {
         grid-template-columns: 1fr;
+        padding: 0 var(--guide-section-padding-mobile);
     }
     
     .compact-cards {
@@ -6738,9 +6858,9 @@ body {
     padding: 4px var(--size-6) 8px var(--size-6);
     display: grid;
 
-    /* RESPONSIVE GRID: Automatically adapts from 4 cols to 2 to 1 */
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--size-4);
+    /* DESKTOP: Force 4 columns to keep stats in single row */
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--card-gap-standard);
     transition: all var(--animation-duration-3) var(--ease-3);
 }
 
@@ -6752,11 +6872,11 @@ body {
 /* Individual Stat Items */
 .stat-item {
     text-align: center;
-    padding: var(--size-1) var(--size-3) var(--size-5) var(--size-3); /* Reduced top/side padding, increased bottom */
+    padding: var(--size-1) var(--card-padding-sm) var(--size-5) var(--card-padding-sm); /* Reduced top/side padding, increased bottom */
 }
 
 .stat-icon {
-    font-size: 2.5rem;
+    font-size: var(--font-size-6); /* 2.5rem */
     color: var(--brand-primary-lime);
     margin-bottom: var(--size-3);
     display: block;
@@ -6767,7 +6887,7 @@ body {
 }
 
 .stat-number {
-    font-size: 3rem;
+    font-size: var(--font-size-7); /* 3rem */
     font-weight: var(--font-weight-8);
     line-height: 1;
     margin-bottom: var(--size-2);
@@ -6778,7 +6898,7 @@ body {
 }
 
 .stat-suffix {
-    font-size: 1.5rem;
+    font-size: var(--font-size-4); /* 1.5rem */
     font-weight: var(--font-weight-6);
     vertical-align: super; /* Default alignment, overridden by specific classes */
     margin-left: var(--border-size-2);
@@ -6810,8 +6930,9 @@ body {
 /* Challenge/Solution/Impact Grid */
 .challenge-solution-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--size-6);
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-enhanced), 1fr));
+    gap: var(--card-gap-standard);
+    margin-bottom: var(--size-6);
 }
 
 /* Enhanced Cards with Glass Effect */
@@ -6820,7 +6941,7 @@ body {
     background: rgb(42, 42, 42, 0.4);
     backdrop-filter: var(--blur-xl);
     border-radius: var(--radius-3);
-    padding: var(--size-6);
+    padding: var(--card-padding-xl);
     transition: all var(--animation-duration-3) var(--ease-3);
     overflow: hidden;
 }
@@ -6867,10 +6988,12 @@ body {
 
 /* Card Content */
 .card-icon-large {
-    font-size: 3rem;
+    width: var(--icon-lg);
+    height: var(--icon-lg); 
     margin-bottom: var(--size-4);
     display: block;
     opacity: 0.8;
+    stroke-width: var(--icon-stroke-thin);
 }
 
 .challenge-card .card-icon-large {
@@ -6904,7 +7027,7 @@ body {
 @media (width <= 768px) {
     .challenge-solution-grid {
         grid-template-columns: 1fr;
-        gap: var(--size-4);
+        gap: var(--card-gap-mobile);
     }
     
     /* Mobile stats positioning - enhanced peeking effect */
@@ -6912,11 +7035,11 @@ body {
         margin-top: calc(-1 * var(--size-8)); /* Increased pullup for better peeking effect */
     }
     
-    /* Mobile stats grid - optimized for compact single-line labels */
+    /* Mobile stats grid - 2x2 layout for mobile */
     .stats-container-glass {
-        gap: var(--size-1); /* Further reduced for maximum space efficiency */
+        gap: var(--card-gap-mobile); /* Consistent mobile card spacing */
         padding: 4px var(--size-3) 8px var(--size-3); /* Tighter horizontal padding */
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Reduced minimum width for better mobile fit */
+        grid-template-columns: repeat(2, 1fr); /* 2x2 grid on mobile */
     }
     
     /* Mobile stat labels - optimized for single-line display */
