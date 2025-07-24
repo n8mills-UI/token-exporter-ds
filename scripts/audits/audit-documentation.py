@@ -41,6 +41,17 @@ def extract_semantic_components(css_content):
     filtered_components = []
     
     for component in components:
+        # Components to ignore - foundational/architectural components that don't need individual docs
+        ignored_components = [
+            'card',  # Base class for token-summary/summary cards (already documented)
+            'progress-container',  # Foundational element for progress loader (covered under progress)
+            'table',  # Part of design system, no separate docs needed
+            'table-responsive'  # Wrapper for table responsiveness
+        ]
+        
+        if component in ignored_components:
+            continue  # Skip ignored components
+            
         # Keep base components (no hyphens or single modifier)
         parts = component.split('-')
         base = parts[0]
@@ -59,14 +70,13 @@ def extract_semantic_components(css_content):
             'card-showcase',
             # Badge variants
             'badge-showcase', 'badge-group',
-            # Table variants
-            'table-responsive',
+            # Table variants (none needed - base table is sufficient)
             # Modal variants (if any exist)
             'modal-dialog', 'modal-content',
             # Form variants
             'form-group', 'form-control',
             # Progress variants
-            'progress-bar', 'progress-container'
+            'progress-bar'
         ]
         
         if component in important_variants:
