@@ -9,12 +9,17 @@
     "start": "npm run dev",
     "sync": "npm run figma-check && bash scripts/sync.sh",
     "lint:js": "ESLINT_USE_FLAT_CONFIG=false eslint src/code.js",
+    "lint:css": "python3 scripts/lint-css.py docs/design-system.css",
+    "audit:docs": "python3 scripts/audit-documentation.py docs/design-system.css docs/design-system-guide.html",
     "figma-check": "node scripts/figma-compat-check.js",
-    "test": "npm run figma-check && npm run lint:js",
+    "validate:tokens": "node scripts/validate-tokens.js",
+    "analyze:duplicates": "node scripts/analyze-duplicates.js",
+    "test": "npm run figma-check && npm run lint:js && npm run lint:css",
     "dev": "nodemon --watch scripts/ --watch docs/ --watch src/ --ext \"sh,html,css\" --ignore src/ui.html --ignore docs/design-system-guide.html --exec \"npm run sync\"",
     "build": "npm run sync",
     "format": "stylelint docs/design-system.css --fix",
-    "clean": "rm -f src/ui.html.backup"
+    "clean": "rm -f src/ui.html.backup",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -29,8 +34,29 @@
   "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme",
   "devDependencies": {
     "eslint": "^9.31.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "nodemon": "^3.1.10",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^38.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.11.0"
+  },
+  "lint-staged": {
+    "docs/design-system.css": [
+      "python3 scripts/lint-css.py",
+      "bash scripts/lint-staged-audit-warn.sh"
+    ],
+    "src/code.js": [
+      "node scripts/figma-compat-check.js",
+      "npm run lint:js"
+    ],
+    "docs/design-system-guide.template.html": [
+      "bash scripts/lint-staged-audit-warn.sh"
+    ],
+    "src/components/_*.html": [
+      "bash scripts/lint-staged-audit-warn.sh"
+    ]
   }
 }

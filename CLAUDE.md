@@ -15,10 +15,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Code Quality
 - `npm run lint:js` - Lint JavaScript files using ESLint (note: uses legacy flat config)
+- `npm run lint:css` - Validate CSS architecture and token usage with intelligent linting **[ARCHITECTURAL]**
+- `npm run audit:docs` - Audit documentation completeness for semantic components **[QUALITY]**
 - `npm run figma-check` - Check for Figma plugin compatibility issues **[CRITICAL - Run before testing in Figma]**
-- `npm test` - Run both linting and Figma compatibility checks
+- `npm test` - Run figma-check, JavaScript linting, and CSS architecture validation
 - ESLint config includes Figma-specific globals (`figma`, `__html__`)
 - Stylelint is configured for CSS linting (extends `stylelint-config-standard`)
+
+### Design System Architecture
+The CSS follows a **strict two-layer hierarchy**:
+
+**Layer 1: Primitives (`:root` blocks)**
+- Raw values are **legitimate and required** - these define the source of truth
+- Examples: `--brand-primary-lime: #D2FF37;` ✅
+- Only place where "magic numbers" are permitted
+
+**Layer 2: Semantic/Components (outside `:root`)**
+- Must **only consume** primitives via `var()` - raw values are violations
+- Examples: `padding: var(--size-3);` ✅, `padding: 1rem;` ❌
+- The `lint:css` script enforces this architectural rule
+
+### Documentation Audit System
+The project includes automated documentation completeness auditing:
+
+**Component Detection:**
+- Uses intelligent parsing to identify semantic components (`.btn`, `.card`, etc.)
+- Filters out utility classes and implementation details to focus on documentable components
+- Targets only components that warrant individual documentation sections
+
+**Audit Process:**
+- Compares CSS semantic components against HTML documentation sections
+- Reports undocumented components that lack corresponding HTML sections
+- Identifies potentially stale documentation sections without CSS components
+- Uses semantic mapping (e.g., `.btn` → `id="buttons"`) for intelligent matching
+
+**Integration:**
+- `npm run audit:docs` - Run documentation audit independently
+- Future: Will be integrated into pre-commit hooks for automated enforcement
 
 ### Cleanup
 - `npm run clean` - Remove backup files

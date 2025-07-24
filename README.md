@@ -131,6 +131,81 @@ Our build process includes automatic compatibility validation to prevent Figma p
     -   Template literals and other modern syntax incompatible with Figma's environment
 -   **Safety First**: Build process stops if compatibility issues are found, preventing broken deployments
 
+### 🔍 Automated System Validation
+
+To ensure the integrity and consistency of the design system, this project includes automated validation scripts that maintain code quality and design token consistency.
+
+#### Token Reference Validation
+Validates that all CSS `var()` references point to defined tokens:
+
+```bash
+npm run validate:tokens
+```
+
+**Features:**
+- Scans all CSS custom property definitions in `:root` blocks
+- Finds all `var(--token)` references throughout the CSS
+- Validates that every referenced token is properly defined
+- Dynamically fetches latest Open Props tokens from unpkg
+- Provides detailed error reporting with line numbers and context
+
+#### Duplicate Value Analysis
+Identifies hardcoded values that could be replaced with existing design tokens:
+
+```bash
+npm run analyze:duplicates
+```
+
+**Features:**
+- Analyzes CSS for hardcoded colors, sizes, and other values
+- Compares against existing design tokens
+- Suggests opportunities to improve consistency
+- Helps maintain design system integrity over time
+
+#### Intelligent CSS Architecture Linting
+Enforces design system hierarchy and token-driven architecture:
+
+```bash
+npm run lint:css
+```
+
+**Features:**
+- **Architectural Awareness**: Distinguishes between primitives (`:root` blocks) and semantic/component layers
+- **Two-Layer Validation**: Raw values are legitimate in `:root` definitions but flagged elsewhere
+- **Smart Filtering**: Ignores legitimate hardcoded values (media queries, gradients, transforms)
+- **Focused Analysis**: Prioritizes spacing and layout violations for maximum impact
+- **Contextual Reporting**: Groups violations by type with clear recommendations
+
+#### Documentation Completeness Auditing
+Ensures semantic components are properly documented:
+
+```bash
+npm run audit:docs
+```
+
+**Features:**
+- **Intelligent Component Detection**: Focuses on semantic components while filtering utility classes
+- **Documentation Mapping**: Compares CSS components against HTML documentation sections
+- **Semantic Matching**: Uses smart mapping (e.g., `.btn` → `id="buttons"`) for accuracy
+- **Dual Reporting**: Identifies both undocumented components and stale documentation
+- **Actionable Output**: Provides specific recommendations for maintaining documentation
+
+#### When to Use These Tools
+- **Pre-commit Hook**: Run before committing changes to catch errors early
+- **CI/CD Pipeline**: Include in your build process to enforce system integrity
+- **After Refactoring**: Verify token references after major CSS changes
+- **Regular Maintenance**: Periodically check for orphaned references and inconsistencies
+- **Code Reviews**: Use to identify opportunities for token consolidation
+
+**Benefits:**
+- Prevents typos in token names
+- Catches references to removed tokens
+- Identifies missing token definitions
+- Eliminates runtime CSS errors
+- Improves design system consistency
+- Reduces maintenance overhead
+- Enforces architectural boundaries between primitive and semantic layers
+
 ### ♿ Accessibility Features
 
 The design system is built with accessibility in mind:
@@ -170,7 +245,8 @@ token-exporter-ds/
 │
 ├── scripts/
 │ ├── sync.sh # The master build script
-│ └── figma-compat-check.js # Figma compatibility validator
+│ ├── figma-compat-check.js # Figma compatibility validator
+│ └── validate-tokens.js # CSS token reference validator
 │ 
 ├── _sandbox/ # Personal testing files (ignored by git)
 ├── .gitignore
@@ -211,8 +287,10 @@ token-exporter-ds/
 -   `npm run dev` - Watch mode that auto-rebuilds when source files change  
 -   `npm run build` - Alias for `npm run sync`
 -   `npm run figma-check` - Validate code for Figma plugin compatibility issues
--   `npm run test` - Run figma-check and JavaScript linting together
+-   `npm run test` - Run figma-check, JavaScript linting, and CSS architecture validation
 -   `npm run lint:js` - Lint JavaScript files using ESLint (uses legacy flat config)
+-   `npm run lint:css` - Validate CSS architecture and token usage
+-   `npm run audit:docs` - Audit documentation completeness for semantic components
 -   `npm run format` - Auto-fix CSS formatting issues with stylelint
 -   `npm run clean` - Remove backup files (ui.html.backup)
 

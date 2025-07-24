@@ -290,6 +290,7 @@ This guide translates design terminology into its corresponding code implementat
 providing a shared language for designers and developers. It follows the principles
 of Atomic Design.
 
+
 [ATOMIC DESIGN]  [FIGMA TERMINOLOGY]       [CODING TERMINOLOGY (CSS/HTML)]
 ----------------------------------------------------------------------------------
 ATOMS             STYLES                     FOUNDATION / TOKENS
@@ -350,46 +351,24 @@ body {
  --system-updated: "2025-01-11";
  --system-stage: "production";
  
-/* =========================
- BRAND COLORS
+ /* ╔══════════════════════════════════════════════════════════════════╗
+    ║                    1. PRIMITIVE TOKENS                           ║
+    ║           Raw values - The foundation of our system              ║
+    ╚══════════════════════════════════════════════════════════════════╝ */
+
+ /* =========================
+ BRAND PALETTE
  ========================= */
  --brand-primary-lime: #D2FF37;
  --brand-secondary-yellow: #EF0;
  --brand-text-dark: #1E1E1E;
- --brand-gradient-lime: linear-gradient(180deg, var(--brand-primary-lime) 0%, var(--brand-secondary-yellow) 100%);
  
  /* RGB values for opacity mixing */
  --brand-primary-lime-rgb: 210, 255, 55;
  --brand-secondary-yellow-rgb: 238, 255, 0;
- --gray-7-rgb: 58, 58, 58;
- --gray-8-rgb: 42, 42, 42;
-
- /* Alpha Variants */
- --brand-primary-lime-alpha-10: rgb(var(--brand-primary-lime-rgb), 0.1);
- --brand-primary-lime-alpha-20: rgb(var(--brand-primary-lime-rgb), 0.2);
  
  /* =========================
- TOKEN CATEGORY COLORS
- ========================= */
- --category-color-cyan: #00D1FF;
- --category-color-purple: #B48CFF;
- --category-color-orange: #FFB86C;
- --category-color-pink: #FF74BC;
-
- /* RGB values for opacity mixing (NEW) */
- --category-color-cyan-rgb: 0, 209, 255;
- --category-color-purple-rgb: 180, 140, 255;
- --category-color-orange-rgb: 255, 184, 108;
- --category-color-pink-rgb: 255, 116, 188;
-
- /* Alpha Variants (NEW) */
- --category-color-cyan-alpha-10: rgb(var(--category-color-cyan-rgb), 0.1);
- --category-color-purple-alpha-10: rgb(var(--category-color-purple-rgb), 0.1);
- --category-color-orange-alpha-10: rgb(var(--category-color-orange-rgb), 0.1);
- --category-color-pink-alpha-10: rgb(var(--category-color-pink-rgb), 0.1);
- 
- /* =========================
- GRAYSCALE PALETTE
+ NEUTRAL PALETTE
  ========================= */
  --gray-0: #fff;
  --gray-1: #f0f0f0;
@@ -401,36 +380,30 @@ body {
  --gray-7: #3a3a3a;
  --gray-8: #2a2a2a;
  --gray-9: #1e1e1e;
+
+ /* RGB values for opacity mixing */
+ --gray-0-rgb: 255, 255, 255;
+ --gray-7-rgb: 58, 58, 58;
+ --gray-8-rgb: 42, 42, 42;
  
  /* =========================
- SEMANTIC COLORS
+ FUNCTIONAL PALETTE
  ========================= */
- --color-text-default: var(--gray-0);
- --color-text-secondary: var(--gray-2);
- --color-text-muted: var(--gray-3);
- --color-text-on-brand: var(--brand-text-dark);
- --color-text-error: var(--red-6);
- --color-status-success: var(--brand-primary-lime);
- --color-status-warning: var(--category-color-orange); /* Optional, for future use */
- --color-status-error: var(--color-text-muted); /* For "not applicable" state */
- --color-background-primary: var(--gray-9);
- --color-background-secondary: var(--gray-8);
- --color-background-tertiary: var(--gray-7);
- --color-background-disabled: var(--gray-7);
- --color-border-default: var(--gray-6);
- --color-border-interactive-focus: var(--brand-primary-lime);
- --color-backdrop-rgb: 0, 0, 0; /* Black for dark theme */
- --color-backdrop: rgb(var(--color-backdrop-rgb), var(--opacity-backdrop));
+ /* Category colors for token types */
+ --category-color-cyan: #00D1FF;
+ --category-color-purple: #B48CFF;
+ --category-color-orange: #FFB86C;
+ --category-color-pink: #FF74BC;
 
- 
+ /* Error colors */
+ --red-6: #ff5252;
+ --red-6-rgb: 255, 82, 82;
 
- /* =========================
- SURFACE COLORS
- ========================= */
- --surface-1: var(--gray-9);
- --surface-2: var(--gray-8);
- --surface-3: var(--gray-7);
- --surface-4: var(--gray-6);
+ /* RGB values for opacity mixing */
+ --category-color-cyan-rgb: 0, 209, 255;
+ --category-color-purple-rgb: 180, 140, 255;
+ --category-color-orange-rgb: 255, 184, 108;
+ --category-color-pink-rgb: 255, 116, 188;
  
  /* =========================
  TYPOGRAPHY
@@ -439,32 +412,7 @@ body {
  --font-mono: 'Monaco', 'Menlo', monospace;
  
  /* =========================
- Z-INDEX LAYERS (NEW!)
- ========================= */
- --layer-base: var(--layer-1); /* 1 - Base elements */
- --layer-card: var(--layer-2); /* 2 - Cards, elevated surfaces */
- --layer-dropdown: var(--layer-3); /* 3 - Dropdowns, tooltips */
- --layer-modal: var(--layer-4); /* 4 - Modals, dialogs */
- --layer-notification: var(--layer-5); /* 5 - Toasts, alerts */
- 
- /* =========================
- SEMANTIC SPACING (NEW!)
- ========================= */
- --spacing-xs: var(--size-1); /* 4px - Inline elements */
- --spacing-sm: var(--size-2); /* 8px - Tight spacing */
- --spacing-md: var(--size-4); /* 16px - Default spacing */
- --spacing-lg: var(--size-6); /* 24px - Section spacing */
- --spacing-xl: var(--size-8); /* 32px - Large sections */
- --spacing-2xl: var(--size-10); /* 40px - Major sections */
- 
- /* Component-specific spacing */
- --spacing-card: var(--size-3);
- --spacing-section: var(--size-10);
- --spacing-input: var(--size-2) var(--size-3);
- --spacing-button: var(--size-2) var(--size-3);
- 
- /* =========================
- OPACITY SCALE (NEW!)
+ OPACITY SCALE
  ========================= */
  --opacity-0: 0;
  --opacity-5: 0.05;
@@ -478,30 +426,14 @@ body {
  --opacity-100: 1;
 
  /* Glass morphism opacities */
---opacity-glass-10: 0.1;
---opacity-glass-60: 0.6;
---opacity-overlay-80: 0.8;
-
- /* Semantic opacity */
- --opacity-disabled: var(--opacity-60);
- --opacity-hover: var(--opacity-80);
+ --opacity-glass-10: 0.1;
+ --opacity-glass-60: 0.6;
+ --opacity-overlay-80: 0.8;
  --opacity-backdrop: 0.85;
- --opacity-overlay: var(--opacity-10);
  
  /* =========================
- COMPONENT SIZES (NEW!)
+ ICON DESIGN TOKENS
  ========================= */
- --component-height-xs: var(--size-6); /* 24px */
- --component-height-sm: var(--size-7); /* 28px */
- --component-height-md: var(--size-8); /* 32px */
- --component-height-lg: var(--size-9); /* 36px */
- --component-height-xl: var(--size-10); /* 40px */
- 
- 
- /* =========================
- ICON DESIGN TOKENS (SOURCE OF TRUTH)
- ========================= */
-
  /* Icon sizing tokens */
  --icon-xs: var(--size-3); /* 12px */
  --icon-sm: var(--size-4); /* 16px */
@@ -518,6 +450,159 @@ body {
  --icon-svg-type: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 7 4 4 20 4 20 7'/><line x1='9' y1='20' x2='15' y2='20'/><line x1='12' y1='4' x2='12' y2='20'/></svg>");
  --icon-svg-hash: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='4' y1='9' x2='20' y2='9'/><line x1='4' y1='15' x2='20' y2='15'/><line x1='10' y1='3' x2='8' y2='21'/><line x1='16' y1='3' x2='14' y2='21'/></svg>");
  --icon-svg-toggle-right: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='12' x='2' y='6' rx='6' ry='6'/><circle cx='16' cy='12' r='2'/></svg>");
+ 
+ /* =========================
+ CONTENT WIDTHS
+ ========================= */
+ --content-xs: 320px;
+ --content-sm: 640px;
+ --content-md: 768px;
+ --content-lg: 1024px;
+ --content-xl: 1280px;
+ --content-prose: 65ch;
+ 
+ /* =========================
+ BLUR VALUES
+ ========================= */
+ --blur-sm: blur(4px);
+ --blur-md: blur(8px);
+ --blur-lg: blur(16px);
+ --blur-xl: blur(24px);
+ 
+ /* =========================
+ STROKE WEIGHTS
+ ========================= */
+ --stroke-thin: var(--border-size-1); /* 1px */
+ --stroke-regular: var(--border-size-2); /* 2px */
+ --stroke-thick: var(--border-size-3); /* 3px */
+ 
+ /* =========================
+ MISC PRIMITIVES
+ ========================= */
+ --color-backdrop-rgb: 0, 0, 0; /* Black for dark theme */
+ --scale-sm: 1.05;
+
+ /* ╔══════════════════════════════════════════════════════════════════╗
+    ║                   2. SEMANTIC TOKENS (ALIASES)                   ║
+    ║          Contextual usage of primitives - The "how" & "when"     ║
+    ╚══════════════════════════════════════════════════════════════════╝ */
+
+ /* =========================
+ SURFACE & BORDER COLORS
+ ========================= */
+ --surface-1: var(--gray-9);
+ --surface-2: var(--gray-8);
+ --surface-3: var(--gray-7);
+ --surface-4: var(--gray-6);
+ 
+ --color-background-primary: var(--gray-9);
+ --color-background-secondary: var(--gray-8);
+ --color-background-tertiary: var(--gray-7);
+ --color-background-disabled: var(--gray-7);
+ --color-background-code: var(--gray-8);
+ --color-background-default: var(--gray-9); /* Same as primary */
+ --color-background-subtle: var(--gray-8); /* Same as secondary */
+ --color-backdrop: rgb(var(--color-backdrop-rgb), var(--opacity-backdrop));
+ 
+ --color-border-default: var(--gray-6);
+ --color-border-subtle: var(--gray-7);
+ --color-border-interactive-focus: var(--brand-primary-lime);
+ 
+ /* =========================
+ TEXT & CONTENT COLORS
+ ========================= */
+ --color-text-default: var(--gray-0);
+ --color-text-secondary: var(--gray-2);
+ --color-text-muted: var(--gray-3);
+ --color-text-on-brand: var(--brand-text-dark);
+ --color-text-error: var(--red-6);
+ 
+ /* =========================
+ INTERACTIVE & STATUS COLORS
+ ========================= */
+ --color-status-success: var(--brand-primary-lime);
+ --color-status-warning: var(--category-color-orange); /* Optional, for future use */
+ --color-status-error: var(--color-text-muted); /* For "not applicable" state */
+
+/* Interactive surface states */
+--surface-hover: rgba(var(--gray-0-rgb, 255, 255, 255), 0.05);
+--surface-active: rgba(var(--gray-0-rgb, 255, 255, 255), 0.1);
+ 
+ /* =========================
+ SEMANTIC SPACING
+ ========================= */
+ --spacing-xs: var(--size-1); /* 4px - Inline elements */
+ --spacing-sm: var(--size-2); /* 8px - Tight spacing */
+ --spacing-md: var(--size-4); /* 16px - Default spacing */
+ --spacing-lg: var(--size-6); /* 24px - Section spacing */
+ --spacing-xl: var(--size-8); /* 32px - Large sections */
+ --spacing-2xl: var(--size-10); /* 40px - Major sections */
+ 
+ /* Component-specific spacing */
+ --spacing-card: var(--size-3);
+ --spacing-section: var(--size-10);
+ --spacing-input: var(--size-2) var(--size-3);
+ --spacing-button: var(--size-2) var(--size-3);
+ 
+ /* =========================
+ COMPONENT SIZES
+ ========================= */
+ --component-height-xs: var(--size-6); /* 24px */
+ --component-height-sm: var(--size-7); /* 28px */
+ --component-height-md: var(--size-8); /* 32px */
+ --component-height-lg: var(--size-9); /* 36px */
+ --component-height-xl: var(--size-10); /* 40px */
+ 
+ /* =========================
+ Z-INDEX LAYERS
+ ========================= */
+ --layer-base: var(--layer-1); /* 1 - Base elements */
+ --layer-card: var(--layer-2); /* 2 - Cards, elevated surfaces */
+ --layer-dropdown: var(--layer-3); /* 3 - Dropdowns, tooltips */
+ --layer-modal: var(--layer-4); /* 4 - Modals, dialogs */
+ --layer-notification: var(--layer-5); /* 5 - Toasts, alerts */
+ 
+ /* =========================
+ SEMANTIC OPACITY
+ ========================= */
+ --opacity-disabled: var(--opacity-60);
+ --opacity-hover: var(--opacity-80);
+ --opacity-overlay: var(--opacity-10);
+ 
+ /* =========================
+ ALPHA VARIANTS
+ ========================= */
+ --brand-primary-lime-alpha-10: rgb(var(--brand-primary-lime-rgb), 0.1);
+ --brand-primary-lime-alpha-20: rgb(var(--brand-primary-lime-rgb), 0.2);
+ --category-color-cyan-alpha-10: rgb(var(--category-color-cyan-rgb), 0.1);
+ --category-color-purple-alpha-10: rgb(var(--category-color-purple-rgb), 0.1);
+ --category-color-orange-alpha-10: rgb(var(--category-color-orange-rgb), 0.1);
+ --category-color-pink-alpha-10: rgb(var(--category-color-pink-rgb), 0.1);
+ 
+ /* =========================
+ GRADIENTS
+ ========================= */
+ --brand-gradient-lime: linear-gradient(180deg, var(--brand-primary-lime) 0%, var(--brand-secondary-yellow) 100%);
+ 
+ /* =========================
+ TRANSITIONS
+ ========================= */
+ --transition-fast: all var(--animation-duration-2) var(--ease-3);
+ --transition-medium: all var(--animation-duration-3) var(--ease-3);
+ --transition-slow: all var(--animation-duration-4) var(--ease-3);
+ 
+ /* =========================
+ FOCUS STATES
+ ========================= */
+ --focus-ring: 0 0 0 3px rgb(var(--brand-primary-lime-rgb), 0.2);
+ --focus-ring-error: 0 0 0 3px rgb(var(--red-6-rgb), 0.2);
+ 
+ /* =========================
+ SHADOWS
+ ========================= */
+ --shadow-brand: 0 4px 15px rgb(var(--brand-primary-lime-rgb), 0.15);
+ --shadow-brand-hover: 0 6px 20px rgb(var(--brand-primary-lime-rgb), 0.25);
+}
 
 /* =========================
  ICON BASE CLASSES (RESPONSIVE & ACCESSIBLE)
@@ -579,56 +664,6 @@ body {
 .icon--bold svg {
     stroke-width: var(--icon-stroke-bold);
 }
- 
- /* =========================
- CONTENT WIDTHS (NEW!)
- ========================= */
- --content-xs: 320px;
- --content-sm: 640px;
- --content-md: 768px;
- --content-lg: 1024px;
- --content-xl: 1280px;
- --content-prose: 65ch;
- 
- /* =========================
- BLUR VALUES (NEW!)
- ========================= */
- --blur-sm: blur(4px);
- --blur-md: blur(8px);
- --blur-lg: blur(16px);
- --blur-xl: blur(24px);
- 
- /* =========================
- TRANSITIONS (NEW!)
- ========================= */
- --transition-fast: all var(--animation-duration-2) var(--ease-3);
- --transition-medium: all var(--animation-duration-3) var(--ease-3);
- --transition-slow: all var(--animation-duration-4) var(--ease-3);
- 
- /* =========================
- FOCUS STATES (NEW!)
- ========================= */
- --focus-ring: 0 0 0 3px rgb(var(--brand-primary-lime-rgb), 0.2);
- --focus-ring-error: 0 0 0 3px rgb(var(--red-6-rgb, 255, 0, 0), 0.2);
- 
- 
- 
- 
- 
- 
- 
- /* Stroke weights */
- --stroke-thin: var(--border-size-1); /* 1px */
- --stroke-regular: var(--border-size-2); /* 2px */
- --stroke-thick: var(--border-size-3); /* 3px */
- 
- 
-
- /* ARCHITECTURAL SUGGESTION: New tokens for consistency */
- --shadow-brand: 0 4px 15px rgb(var(--brand-primary-lime-rgb), 0.15);
- --shadow-brand-hover: 0 6px 20px rgb(var(--brand-primary-lime-rgb), 0.25);
- --scale-sm: 1.05;
-}
 
 /* ==========================================================================
  UTILITY CLASSES - Foundation 
@@ -648,10 +683,10 @@ body {
  /* Accessibility Utilities */
  .sr-only {
      position: absolute;
-     width: 1px;
-     height: 1px;
+     width: var(--border-size-1);
+     height: var(--border-size-1);
      padding: 0;
-     margin: -1px;
+     margin: calc(-1 * var(--border-size-1));
      overflow: hidden;
      clip: rect(0, 0, 0, 0);
      white-space: nowrap;
@@ -851,7 +886,7 @@ body {
         line-height: 1;
         white-space: nowrap;
         border-radius: var(--radius-2);
-        border: 1px solid transparent;
+        border: var(--border-size-1) solid transparent;
         cursor: pointer;
         user-select: none;
         transition: var(--transition-fast);
@@ -916,7 +951,7 @@ body {
         border-radius: 50%;
         background: var(--color-background-secondary);
         color: var(--color-text-secondary);
-        border: 1px solid var(--color-border-default);
+        border: var(--border-size-1) solid var(--color-border-default);
         transition: var(--transition-fast);
     }
 
@@ -1003,7 +1038,7 @@ body {
     }
 
     .btn-primary:hover:not(:disabled) {
-        transform: translateY(-1px);
+        transform: translateY(calc(-1 * var(--border-size-1)));
         box-shadow: var(--shadow-brand-hover);
         filter: brightness(1.05);
     }
@@ -1035,12 +1070,12 @@ body {
     }
     
     .btn-tertiary:hover:not(:disabled) { 
-        background: rgb(255, 255, 255, 0.05); 
+        background: var(--surface-hover); 
         color: var(--brand-primary-lime); 
     }
 
     .btn-tertiary:active:not(:disabled) { 
-        background: rgb(255, 255, 255, 0.1); 
+        background: var(--surface-active); 
     }
 
 
@@ -1067,7 +1102,7 @@ body {
 
     .guideline-card {
         background: var(--color-background-secondary);
-        border: 1px solid var(--color-border-default);
+        border: var(--border-size-1) solid var(--color-border-default);
         border-radius: var(--radius-3);
         padding: var(--size-5);
         position: relative;
@@ -1079,7 +1114,7 @@ body {
     }
 
     .guideline-card:hover {
-        transform: translateY(-2px);
+        transform: translateY(calc(-1 * var(--border-size-2)));
         border-color: var(--color-border-interactive-focus);
         box-shadow: var(--shadow-3);
     }
@@ -1114,7 +1149,7 @@ body {
     }
 
     .guideline-footer {
-        border-top: 1px solid var(--color-border-default);
+        border-top: var(--border-size-1) solid var(--color-border-default);
         padding-top: var(--size-3);
     }
 
@@ -1143,7 +1178,7 @@ body {
 
     .guideline-card.secondary .guideline-icon-wrapper {
         background: var(--color-background-tertiary);
-        border: 1px solid var(--color-border-default);
+        border: var(--border-size-1) solid var(--color-border-default);
     }
 
     .guideline-card.secondary .guideline-icon-wrapper .lucide {
@@ -1152,7 +1187,7 @@ body {
 
     .guideline-card.tertiary .guideline-icon-wrapper {
         background: transparent;
-        border: 1px dashed var(--color-border-default);
+        border: var(--border-size-1) dashed var(--color-border-default);
     }
 
     .guideline-card.tertiary .guideline-icon-wrapper .lucide {
@@ -1164,16 +1199,16 @@ body {
 
 /* --- V8 BUTTON DOCUMENTATION STYLES --- */
 .guide-container .section {
-    margin-bottom: 4rem;
+    margin-bottom: var(--size-9);
 }
 
 .main-section-title {
     font-size: var(--font-size-8); /* 3.5rem for increased visual hierarchy */
-    font-weight: 800;
+    font-weight: var(--font-weight-8);
     color: var(--color-text-default);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--size-3);
 }
 
 .main-section-title .lucide {
@@ -1182,27 +1217,27 @@ body {
 }
 
 .guide-container .section-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--color-border-default);
+    margin-bottom: var(--size-7);
+    padding-bottom: var(--size-3);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
     padding-left: 0; /* Removed horizontal padding */
     padding-right: 0; /* Removed horizontal padding */
 }
 
 .guide-container .section-description {
-    margin-top: 0.5rem;
+    margin-top: var(--size-2);
     color: var(--color-text-secondary);
     max-width: 65ch;
 }
 
 .subsection {
-    margin-bottom: 2rem;
+    margin-bottom: var(--size-7);
 }
 
 .subsection-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-5);
     color: var(--color-text-default);
 }
 
@@ -1211,10 +1246,10 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     align-items: center;
-    gap: 1.5rem;
-    padding: 1rem;
+    gap: var(--size-5);
+    padding: var(--size-3);
     background: var(--color-background-primary);
-    border-radius: 8px;
+    border-radius: var(--radius-2);
 }
 
 /* Badge showcase - using flex for inline display */
@@ -1238,23 +1273,23 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem;
-    padding: 1rem;
+    gap: var(--size-5);
+    padding: var(--size-3);
     background: var(--color-background-primary);
-    border-radius: 8px;
+    border-radius: var(--radius-2);
 }
 
 .usage-guidelines {
-    background: rgb(210, 255, 55, 0.05);
-    border: 1px solid rgb(210, 255, 55, 0.2);
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-top: 1.5rem;
+    background: var(--brand-primary-lime-alpha-10);
+    border: var(--border-size-1) solid var(--brand-primary-lime-alpha-20);
+    border-radius: var(--radius-2);
+    padding: var(--size-5);
+    margin-top: var(--size-5);
 }
 
 .usage-guidelines h4 {
     color: var(--brand-primary-lime);
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--size-2);
 }
 
 .usage-guidelines ul {
@@ -1264,8 +1299,8 @@ body {
 
 .usage-guidelines li {
     position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 0.5rem;
+    padding-left: var(--size-5);
+    margin-bottom: var(--size-2);
     color: var(--color-text-secondary);
 }
 
@@ -1288,7 +1323,7 @@ body {
 .state-comparison-grid {
     display: grid;
     grid-template-columns: 120px repeat(5, 1fr);
-    gap: 1rem;
+    gap: var(--size-3);
     align-items: center;
 }
 
@@ -1330,8 +1365,8 @@ body {
     margin: var(--size-4) 0;
     border-top: none;
 }
-.state-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); text-align: center; padding: 0.5rem; background: var(--color-background-primary); border-radius: 4px; }
-.state-label { font-size: 0.875rem; color: var(--color-text-secondary); text-align: right; padding-right: 1rem; }
+.state-header { font-size: var(--font-size-0); text-transform: uppercase; letter-spacing: var(--font-letterspacing-1); color: var(--color-text-muted); text-align: center; padding: var(--size-2); background: var(--color-background-primary); border-radius: var(--radius-1); }
+.state-label { font-size: var(--font-size-1); color: var(--color-text-secondary); text-align: right; padding-right: var(--size-3); }
 
 .state-cell {
     display: flex;
@@ -1339,76 +1374,17 @@ body {
     align-items: center;
     min-height: 48px;
 }
-.force-hover.btn-primary { transform: translateY(-1px); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
+.force-hover.btn-primary { transform: translateY(calc(-1 * var(--border-size-1))); box-shadow: var(--shadow-brand-hover); filter: brightness(1.05); }
 .force-active.btn-primary { transform: translateY(0); box-shadow: var(--shadow-brand); filter: brightness(0.95); }
 .force-hover.btn-secondary, .force-hover.btn-icon { border-color: var(--brand-primary-lime); color: var(--brand-primary-lime); }
 .force-active.btn-secondary { background: var(--color-background-primary); }
-.force-hover.btn-tertiary { background: rgb(255, 255, 255, 0.05); color: var(--brand-primary-lime); }
-.force-active.btn-tertiary { background: rgb(255, 255, 255, 0.1); }
+.force-hover.btn-tertiary { background: var(--surface-hover); color: var(--brand-primary-lime); }
+.force-active.btn-tertiary { background: var(--surface-active); }
 .force-hover.btn-icon { transform: rotate(15deg); }
 .force-active.btn-icon { transform: rotate(0) scale(0.95); }
 .force-focus { box-shadow: var(--focus-ring); }
 .force-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; transform: none !important; box-shadow: none !important; filter: none !important; }
 
-/* --- Component: Badge (v4 - Corrected Selectors) --- */
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-1);
-    padding: var(--size-1) var(--size-2);
-    border-radius: var(--radius-2);
-    font-family: var(--font-mono);
-    font-size: var(--font-size-0);
-    font-weight: var(--font-weight-5);
-    line-height: 1.2;
-    border: 1px solid transparent;
-}
-
-/* Color Variants */
-.badge.cyan { background-color: var(--category-color-cyan-alpha-10); color: var(--color-text-default); }
-.badge.cyan i { color: var(--category-color-cyan); }
-
-.badge.purple { background-color: var(--category-color-purple-alpha-10); color: var(--color-text-default); }
-.badge.purple i { color: var(--category-color-purple); }
-
-.badge.orange { background-color: var(--category-color-orange-alpha-10); color: var(--color-text-default); }
-.badge.orange i { color: var(--category-color-orange); }
-
-/* Size Variants */
-.badge.small {
-    padding: var(--size-1) var(--size-1);
-    font-size: var(--font-size-00);
-    gap: calc(var(--size-1) / 2);
-}
-
-.badge.large {
-    padding: var(--size-2) var(--size-3);
-    font-size: var(--font-size-1);
-}
-
-/* Icon Container Base + Sizing */
-.badge i {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--icon-sm); /* Default/Medium size */
-    height: var(--icon-sm);
-}
-
-.badge.small i {
-    width: var(--icon-xs); /* Small override */
-    height: var(--icon-xs);
-}
-
-.badge.large i {
-    width: var(--icon-md); /* Large override */
-    height: var(--icon-md);
-}
-
-.badge i .lucide {
-    width: 100%;
-    height: 100%;
-}
 
 /* ==========================================================================
  COMPONENT DOCUMENTATION SYSTEM
@@ -1455,10 +1431,10 @@ body {
 /* Screen reader only text */
 .sr-only {
  position: absolute;
- width: 1px;
- height: 1px;
+ width: var(--border-size-1);
+ height: var(--border-size-1);
  padding: 0;
- margin: -1px;
+ margin: calc(-1 * var(--border-size-1));
  overflow: hidden;
  clip: rect(0, 0, 0, 0);
  white-space: nowrap;
@@ -1596,7 +1572,7 @@ body {
  font-weight: var(--font-weight-5);
  vertical-align: super;
  opacity: 1;
- margin-left: 2px;
+ margin-left: var(--border-size-2);
 }
 
 .stat-label {
@@ -1775,7 +1751,7 @@ body {
 }
 
 .faq-item {
- border-bottom: 1px solid var(--color-border-default);
+ border-bottom: var(--border-size-1) solid var(--color-border-default);
  margin-bottom: var(--size-2);
 }
 
@@ -1847,7 +1823,7 @@ body {
 .profile-card:hover {
  border-color: var(--brand-primary-lime);
  box-shadow: 0 0 40px rgb(var(--brand-primary-lime-rgb), 0.3);
- transform: translateY(-2px);
+ transform: translateY(calc(-1 * var(--border-size-2)));
 }
 
 .profile-card .ascii-container {
@@ -1857,7 +1833,7 @@ body {
  justify-content: left;
  z-index: 1;
  padding-right: var(--size-6);
- border-right: 1px solid var(--gray-7);
+ border-right: var(--border-size-1) solid var(--gray-7);
  min-width: 400px;
 }
 
@@ -1871,7 +1847,7 @@ body {
 }
 
 .profile-card .ascii-art {
- font-size: 10px;
+ font-size: clamp(8px, 2.2vw, 10px);
  line-height: 1.4;
 }
 
@@ -1901,9 +1877,8 @@ body {
  display: flex;
  align-items: center;
  justify-content: space-between;
- margin-bottom: var(--size-4);
+ margin-bottom: 0;
  padding-bottom: var(--size-2);
- border-bottom: 1px solid var(--gray-7);
 }
 
 .profile-card .terminal-title {
@@ -1931,20 +1906,22 @@ body {
 .profile-card .code-block {
  font-family: var(--font-mono);
  font-size: var(--font-size-0);
- line-height: 1.8;
+ line-height: 1.4;
  position: relative;
  min-height: 300px;
  flex: 1;
+ white-space: pre-wrap;
+ word-break: break-all;
+ overflow-wrap: break-word;
 }
 
 .profile-card .code-line {
  position: relative;
-
- /* Set a fixed height that matches the line-height */
- height: 25px;
- line-height: 25px; 
+ /* Fixed height removed to allow proper text wrapping */
+ line-height: 1.4; 
  display: flex;
- align-items: center;
+ align-items: flex-start;
+ min-height: auto;
 }
 
 .profile-card .comment { color: var(--gray-5); font-style: italic; }
@@ -1961,7 +1938,7 @@ body {
  height: 18px; /* Slightly adjusted for better centering */
  background: var(--brand-primary-lime);
  animation: cursor-blink 1s step-end infinite;
- margin-left: 2px;
+ margin-left: var(--border-size-2);
 
  /* The vertical-align, position, and top properties are no longer needed */
 }
@@ -2074,10 +2051,10 @@ body {
 
 @keyframes glitch-sequence {
  0%, 87.5% { transform: translate(0); }
- 87.6%, 88.0% { transform: translate(-1px, 1px); }
- 88.1%, 88.5% { transform: translate(1px, -1px); }
- 88.6%, 89.0% { transform: translate(-1px, -1px); }
- 89.1%, 89.5% { transform: translate(1px, 1px); }
+ 87.6%, 88.0% { transform: translate(calc(-1 * var(--border-size-1)), var(--border-size-1)); }
+ 88.1%, 88.5% { transform: translate(var(--border-size-1), calc(-1 * var(--border-size-1))); }
+ 88.6%, 89.0% { transform: translate(calc(-1 * var(--border-size-1)), calc(-1 * var(--border-size-1))); }
+ 89.1%, 89.5% { transform: translate(var(--border-size-1), var(--border-size-1)); }
  89.6%, 100% { transform: translate(0); }
 }
 
@@ -2109,24 +2086,24 @@ body {
 
 @keyframes glitch {
  0%, 100% { transform: translate(0); }
- 20% { transform: translate(-1px, 1px); }
- 40% { transform: translate(1px, -1px); }
- 60% { transform: translate(-1px, -1px); }
- 80% { transform: translate(1px, 1px); }
+ 20% { transform: translate(calc(-1 * var(--border-size-1)), var(--border-size-1)); }
+ 40% { transform: translate(var(--border-size-1), calc(-1 * var(--border-size-1))); }
+ 60% { transform: translate(calc(-1 * var(--border-size-1)), calc(-1 * var(--border-size-1))); }
+ 80% { transform: translate(var(--border-size-1), var(--border-size-1)); }
 }
 
 @keyframes glitch-1 {
  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
- 25% { clip-path: inset(0 0 50% 0); transform: translate(-2px, 2px); }
- 50% { clip-path: inset(50% 0 0 0); transform: translate(2px, -2px); }
- 75% { clip-path: inset(0 0 0 0); transform: translate(-2px, -2px); }
+ 25% { clip-path: inset(0 0 50% 0); transform: translate(calc(-1 * var(--border-size-2)), var(--border-size-2)); }
+ 50% { clip-path: inset(50% 0 0 0); transform: translate(var(--border-size-2), calc(-1 * var(--border-size-2))); }
+ 75% { clip-path: inset(0 0 0 0); transform: translate(calc(-1 * var(--border-size-2)), calc(-1 * var(--border-size-2))); }
 }
 
 @keyframes glitch-2 {
  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
- 25% { clip-path: inset(50% 0 0 0); transform: translate(2px, 2px); }
- 50% { clip-path: inset(0 0 50% 0); transform: translate(-2px, -2px); }
- 75% { clip-path: inset(0 0 0 0); transform: translate(2px, -2px); }
+ 25% { clip-path: inset(50% 0 0 0); transform: translate(var(--border-size-2), var(--border-size-2)); }
+ 50% { clip-path: inset(0 0 50% 0); transform: translate(calc(-1 * var(--border-size-2)), calc(-1 * var(--border-size-2))); }
+ 75% { clip-path: inset(0 0 0 0); transform: translate(var(--border-size-2), calc(-1 * var(--border-size-2))); }
 }
 
 /* Creator Name Glitch Effect */
@@ -2191,17 +2168,13 @@ body {
  }
 }
 
-/* Code Section Line Height and Wrapping Fixes */
+/* Code Section Line Height and Wrapping Fixes - Updated with responsive approach */
 .profile-card .code-line {
- line-height: 1.4;
- margin-bottom: 2px;
- word-wrap: break-word;
- overflow-wrap: break-word;
+ /* Styles moved to main .code-line rule above for consistency */
 }
 
 .profile-card .code-block {
- line-height: 1.4;
- font-size: 0.85rem;
+ /* Styles moved to main .code-block rule above for consistency */
 }
 
 /* Improve spacing consistency */
@@ -2211,7 +2184,7 @@ body {
 }
 
 .profile-card .control-panel {
- margin-top: var(--size-3);
+ margin-top: var(--size-4);
  padding-top: var(--size-2);
 }
 
@@ -2238,7 +2211,7 @@ body {
 @media (max-width: 900px) {
  .profile-card {
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: var(--size-3);
  }
  
  .profile-card .ascii-art {
@@ -2247,7 +2220,7 @@ body {
  
  .profile-card .ascii-art-mobile {
   display: block;
-  font-size: 0.6rem;
+  /* Font-size handled by clamp() in main rule above */
  }
  
  .profile-card .code-section {
@@ -2376,7 +2349,7 @@ body {
 }
 
 .interactive-element:hover {
- transform: translateY(-2px);
+ transform: translateY(calc(-1 * var(--border-size-2)));
 }
 
 .interactive-element:active {
@@ -2405,7 +2378,7 @@ body {
  bottom: 0;
  left: 0;
  width: 100%;
- height: 2px;
+ height: var(--border-size-2);
  background: var(--brand-primary-lime);
  transform: translateX(-100%);
  transition: transform var(--animation-duration-3) var(--ease-3);
@@ -2495,7 +2468,7 @@ body {
 
 /* Creates a large gap above the Foundation section for clear separation */
 #colors.content-section {
-    margin-top: 8rem; 
+    margin-top: var(--size-8); 
 }
 
 
@@ -2549,7 +2522,7 @@ body {
     margin-bottom: var(--size-6); /* Match container padding for consistent spacing */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--color-border-default);
+    border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3);
     background: var(--color-background-secondary);
 }
@@ -2565,7 +2538,7 @@ body {
 .table td {
     padding: var(--size-3) var(--size-4);
     text-align: left;
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
     line-height: var(--font-lineheight-3);
     font-size: var(--font-size-1);
 }
@@ -2636,8 +2609,8 @@ body {
 .link-brand {
     color: var(--brand-primary-lime);
     text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-decoration-thickness: var(--border-size-1);
+    text-underline-offset: var(--border-size-2);
     font-weight: var(--font-weight-6);
     transition: filter var(--transition-fast);
 }
@@ -2680,7 +2653,7 @@ body {
     font-weight: var(--font-weight-5);
     line-height: 1.2;
     letter-spacing: var(--font-letterspacing-1);
-    border: 1px solid transparent; /* Base border */
+    border: var(--border-size-1) solid transparent; /* Base border */
 }
 
 /* Position variant for absolute positioning */
@@ -2942,7 +2915,7 @@ body {
  font-weight: var(--font-weight-5);
  vertical-align: super;
  opacity: 1;
- margin-left: 2px;
+ margin-left: var(--border-size-2);
 }
 
 .stat-label {
@@ -3080,7 +3053,7 @@ body {
 /* Final "Built With" Info Panel (Concept A) */
 .info-panel-a {
  background: var(--color-background-tertiary);
- border: 1px solid var(--color-border-default);
+ border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-2);
  padding: var(--size-6);
  flex-grow: 1;
@@ -3258,7 +3231,7 @@ body {
 
 .figma-pill:hover {
  filter: brightness(1.1);
- transform: translateY(-2px);
+ transform: translateY(calc(-1 * var(--border-size-2)));
  box-shadow: 0 6px 20px rgb(210, 255, 55, 0.25);
 }
 
@@ -3509,7 +3482,7 @@ body {
  .card {
  break-inside: avoid;
  box-shadow: none;
- border: var(--border-size-1) solid #ccc;
+ border: var(--border-size-1) solid var(--gray-2);
  }
 }
 
@@ -3725,7 +3698,7 @@ select option {
 }
 
 /* For very narrow plugin windows, make everything smaller but keep horizontal */
-@container (max-width: 320px) {
+@container (max-width: var(--guide-grid-min-width)) {
  .token-breakdown {
  gap: var(--size-1);
  }
@@ -3892,7 +3865,7 @@ select option {
 .collection-item {
     padding: var(--size-2) var(--size-3);
     background: var(--color-background-secondary);
-    border: 1px solid var(--color-border-default);
+    border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-2);
     cursor: default;
     transition: all var(--animation-duration-2) var(--ease-3);
@@ -3951,7 +3924,7 @@ select option {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 2px; /* Very tight gap */
+    gap: var(--border-size-2); /* Very tight gap */
 }
 
 .collection-name {
@@ -3980,7 +3953,7 @@ select option {
 .progress-overlay {
  position: fixed;
  inset: 0;
- background: rgb(0, 0, 0, 0.8);
+ background: var(--color-backdrop);
  display: flex;
  flex-direction: column;
  justify-content: center;
@@ -4134,7 +4107,7 @@ select option {
  gap: var(--size-4);
  width: 100%;
  max-width: 400px;
- height: 320px;
+ height: var(--guide-grid-min-width);
  margin: 0 auto;
  position: relative;
  justify-content: center;
@@ -4149,13 +4122,13 @@ select option {
  background: rgb(var(--gray-8-rgb), var(--opacity-glass-60));
  backdrop-filter: var(--blur-xl);
  
- @supports not (backdrop-filter: blur(1px)) {
+ @supports not (backdrop-filter: blur(var(--border-size-1))) {
  background: rgb(42, 42, 42, 0.95);
  }
  
  border-radius: var(--radius-3); /* FIX: Reduced radius from previous step */
  border: var(--border-size-1) solid rgb(255, 255, 255, 0.1);
- box-shadow: 0 8px 32px rgb(0, 0, 0, 0.3), inset 0 1px 0 rgb(255, 255, 255, 0.1);
+ box-shadow: 0 8px 32px rgb(0, 0, 0, 0.3), inset 0 var(--border-size-1) 0 rgb(255, 255, 255, 0.1);
  padding: var(--size-3);
  display: flex;
  flex-direction: column;
@@ -4173,7 +4146,7 @@ select option {
  font-size: var(--font-size-4);
  color: var(--color-text-default);
  margin: 0;
- text-shadow: 0 2px 4px rgb(0, 0, 0, 0.5);
+ text-shadow: 0 var(--border-size-2) var(--size-1) rgb(0, 0, 0, 0.5);
 }
 
 /* Button refinement rules are correct */
@@ -4192,7 +4165,7 @@ select option {
  background: rgb(var(--gray-7-rgb), var(--opacity-overlay-80));
  border-radius: var(--radius-round);
  overflow: hidden;
- box-shadow: inset 0 2px 4px rgb(0, 0, 0, 0.3);
+ box-shadow: inset 0 var(--border-size-2) var(--size-1) rgb(0, 0, 0, 0.3);
 }
 
 .te-progress-fill {
@@ -4231,7 +4204,7 @@ select option {
  font-weight: var(--font-weight-6);
  color: var(--color-text-default);
  margin: 0;
- text-shadow: 0 2px 4px rgb(0, 0, 0, 0.5);
+ text-shadow: 0 var(--border-size-2) var(--size-1) rgb(0, 0, 0, 0.5);
 }
 
 /* Icon grid */
@@ -4361,7 +4334,7 @@ select option {
 .empty-state-action:hover {
  background: rgb(210, 255, 55, 0.1);
  border-color: var(--brand-primary-lime);
- transform: translateY(-1px);
+ transform: translateY(calc(-1 * var(--border-size-1)));
 }
 
 @keyframes skeleton-breathe {
@@ -4417,7 +4390,7 @@ select option {
 .guide-footer {
     background: var(--color-background-secondary);
     padding: var(--size-6);
-    border-top: 1px solid var(--color-border-default);
+    border-top: var(--border-size-1) solid var(--color-border-default);
     margin-top: var(--size-8);
 }
 
@@ -4540,7 +4513,7 @@ select option {
 }
 
 .advanced-filters:hover i {
- transform: translateX(2px);
+ transform: translateX(var(--border-size-2));
 }
 
 /* Footer */
@@ -4758,7 +4731,7 @@ select option {
  display: flex;
  flex-direction: column;
  align-items: center;
- min-height: 320px; /* Increased height to comfortably fit new elements */
+ min-height: var(--guide-grid-min-width); /* Increased height to comfortably fit new elements */
  justify-content: space-between; /* This pushes content to top and bottom */
 }
 
@@ -4841,9 +4814,9 @@ select option {
 
 .hamburger-icon .line {
     width: 100%;
-    height: 2px;
+    height: var(--border-size-2);
     background-color: currentColor;
-    border-radius: 1px;
+    border-radius: var(--border-size-1);
     transition: all 0.3s var(--ease-3);
     transform-origin: center;
 }
@@ -4969,7 +4942,7 @@ body {
 }
 
 .guide-content {
-    margin-left: 280px;
+    margin-left: var(--size-content-1);
     flex: 1;
     max-width: calc(100vw - 280px);
     width: 100%;
@@ -5060,7 +5033,7 @@ body {
 .nav-links a.active::before {
  content: '';
  position: absolute;
- left: -16px;
+ left: calc(-1 * var(--size-4));
  top: 50%;
  transform: translateY(-50%);
  height: 60%;
@@ -5364,13 +5337,10 @@ body {
 }
 
 /* Component Library Styles */
-.component-body {
- padding: var(--size-6);
-}
 
 /* Progress overlay styles for guide examples */
 .progress-overlay {
- background: rgb(0, 0, 0, 0.8);
+ background: var(--color-backdrop);
  backdrop-filter: blur(4px);
 }
 
@@ -5380,7 +5350,7 @@ body {
  border-radius: var(--radius-3);
  padding: var(--size-6);
  text-align: center;
- max-width: 320px;
+ max-width: var(--guide-grid-min-width);
  width: 90%;
 }
 
@@ -5424,7 +5394,7 @@ body {
 }
 
 .advanced-filters:hover .lucide {
- transform: translateX(2px);
+ transform: translateX(var(--border-size-2));
 }
 
 .example-container {
@@ -5510,7 +5480,7 @@ body {
 
 .variants-grid {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--guide-grid-min-width), 1fr));
  gap: var(--size-4);
  margin-bottom: var(--size-4);
  align-items: stretch;
@@ -5638,7 +5608,7 @@ body {
 
 .about-content {
     background: var(--color-background-secondary);
-    border: 1px solid var(--color-border-default);
+    border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3); /* CORRECTED: Standard radius */
     padding: var(--size-6); /* Increased padding */
     max-width: 280px;
@@ -5662,7 +5632,7 @@ body {
     gap: var(--size-1);
     padding-bottom: var(--size-3);
     margin-bottom: var(--size-2);
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: var(--border-size-1) solid var(--color-border-default);
 }
 
 /* Wrapper for the hover-swap effect */
@@ -5754,7 +5724,7 @@ body {
         height: var(--size-10);
         background: rgb(var(--color-backdrop-rgb), 0.8);
         backdrop-filter: var(--blur-lg);
-        border-bottom: 1px solid var(--brand-primary-lime);
+        border-bottom: var(--border-size-1) solid var(--brand-primary-lime);
         z-index: var(--layer-modal);
         padding: 0 var(--size-4);
         align-items: center;
@@ -5762,7 +5732,7 @@ body {
         transition: transform var(--transition-fast);
     }
     
-    @supports not (backdrop-filter: blur(1px)) {
+    @supports not (backdrop-filter: blur(var(--border-size-1))) {
         .mobile-header {
             background: rgb(var(--color-backdrop-rgb), 0.95);
         }
@@ -5897,7 +5867,7 @@ body {
 
         .table tr {
             margin-bottom: var(--size-4);
-            border: 1px solid var(--color-border-default);
+            border: var(--border-size-1) solid var(--color-border-default);
             border-radius: var(--radius-2);
             overflow: hidden;
         }
@@ -5906,7 +5876,7 @@ body {
             text-align: right;
             position: relative;
             padding-left: 35%;
-            border-bottom: 1px solid var(--color-border-default);
+            border-bottom: var(--border-size-1) solid var(--color-border-default);
         }
         
         .table td:last-child {
@@ -6349,7 +6319,7 @@ body {
     margin: 0 auto;
     margin-bottom: var(--size-6);
     padding-top: var(--size-4);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: var(--border-size-1) solid rgba(255, 255, 255, 0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6398,7 +6368,7 @@ body {
     align-items: center;
     gap: var(--size-4);
     padding-top: var(--size-4);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: var(--border-size-1) solid rgba(255, 255, 255, 0.15);
 }
 
 /* Use the existing token-exporter-logo component in footer */
@@ -6415,7 +6385,7 @@ body {
     line-height: 1.1;
     color: white;
     margin: 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 var(--border-size-2) var(--size-1) rgba(0, 0, 0, 0.3);
 }
 
 .footer-tagline {
@@ -6450,7 +6420,7 @@ body {
 .footer-desktop .btn-icon,
 .footer-mobile .btn-icon {
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: var(--border-size-1) solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
 }
 
@@ -6458,7 +6428,7 @@ body {
 .footer-mobile .btn-icon:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(210, 255, 55, 0.4);
-    transform: translateY(-1px);
+    transform: translateY(calc(-1 * var(--border-size-1)));
 }
 
 /* Responsive */
@@ -6508,7 +6478,7 @@ body {
     align-items: center;
     gap: var(--size-2);
     padding: var(--size-3);
-    border: 1px solid var(--color-border-subtle);
+    border: var(--border-size-1) solid var(--color-border-subtle);
     border-radius: var(--radius-2);
     background: var(--color-background-subtle);
     transition: all 0.2s ease;
@@ -6579,7 +6549,7 @@ body {
 .code-example code {
     padding: var(--size-2);
     background: var(--color-background-code);
-    border: 1px solid var(--color-border-subtle);
+    border: var(--border-size-1) solid var(--color-border-subtle);
     border-radius: var(--radius-1);
     font-family: var(--font-mono);
     font-size: var(--font-size-1);
@@ -6690,9 +6660,9 @@ body {
     margin-bottom: var(--guide-content-gap);
 }
 
-/* Section Body Container */
+/* Section Body Container - padding rule removed to fix layout bug */
 .component-body {
-    padding: 0 var(--guide-section-padding);
+    /* Padding moved to .tokens-grid and content containers directly */
 }
 
 /* =========================
@@ -6882,7 +6852,7 @@ body {
     }
     
     .component-body {
-        padding: 0 var(--guide-section-padding-mobile);
+        /* Padding rule removed - handled by content containers directly */
     }
     
     .variants-grid {
@@ -6931,8 +6901,8 @@ body {
 /* Focus States for Interactive Elements */
 .example-container:focus-within,
 .token-reference-item:focus-within {
-    outline: 2px solid var(--brand-primary-lime);
-    outline-offset: 2px;
+    outline: var(--border-size-2) solid var(--brand-primary-lime);
+    outline-offset: var(--border-size-2);
 }
 
 /* High Contrast Mode Support */
@@ -6944,7 +6914,7 @@ body {
     
     .example-container:hover,
     .token-reference-item:hover {
-        border-width: 2px;
+        border-width: var(--border-size-2);
     }
 }
 
@@ -7000,7 +6970,7 @@ body {
 .stats-container-glass {
     background: rgba(42, 42, 42, 0.4);
     backdrop-filter: var(--blur-xl);
-    border: 1px solid rgba(210, 255, 55, 0.2);
+    border: var(--border-size-1) solid rgba(210, 255, 55, 0.2);
     border-radius: var(--radius-3);
     padding: 4px var(--size-6) 8px var(--size-6);
     display: grid;
@@ -7047,7 +7017,7 @@ body {
     font-size: 1.5rem;
     font-weight: var(--font-weight-6);
     vertical-align: super; /* Default alignment, overridden by specific classes */
-    margin-left: 2px;
+    margin-left: var(--border-size-2);
     opacity: 1;
 }
 
@@ -7114,17 +7084,17 @@ body {
 /* Card Variants */
 .challenge-card {
     --gradient: linear-gradient(90deg, var(--category-color-pink), var(--category-color-purple));
-    border: 1px solid rgba(255, 116, 188, 0.2);
+    border: var(--border-size-1) solid rgba(255, 116, 188, 0.2);
 }
 
 .solution-card {
     --gradient: var(--brand-gradient-lime);
-    border: 1px solid rgba(210, 255, 55, 0.2);
+    border: var(--border-size-1) solid rgba(210, 255, 55, 0.2);
 }
 
 .impact-card {
     --gradient: linear-gradient(90deg, var(--category-color-cyan), var(--category-color-orange));
-    border: 1px solid rgba(0, 209, 255, 0.2);
+    border: var(--border-size-1) solid rgba(0, 209, 255, 0.2);
 }
 
 /* Card Content */
@@ -7623,39 +7593,38 @@ body {
                 <div class="code-line" data-text='<span class="variable">creator</span>.<span class="function">initializePlugin</span>();'></div>
             </div>
             <div class="control-panel">
-                <button class="btn secondary btn-sm btn-inline glitch-button" data-text="[RE-RUN]" onclick="startTyping()">[RE-RUN]</button>
+                <button class="btn btn-secondary btn-sm btn-inline glitch-button" data-text="[RE-RUN]" onclick="startTyping()">[RE-RUN]</button>
             </div>
         </div>
     </div>
 </div>
 
-              <!-- Color System Section -->
+              <!-- Foundation Section -->
                 <section id="colors" class="content-section">
                     <div class="section-header">
                         <h2 class="text-heading-xl main-section-title">
-                            <i data-lucide="component"></i>
+                            <i data-lucide="palette"></i>
                             Foundation
                         </h2>
                         <p class="section-description">
-                            A purposeful palette. From foundational brand colors to semantic tokens that power a consistent UI.
+                            Raw color values - the foundational palette that serves as building blocks for all semantic color decisions.
                         </p>
                     </div>
 
+
                     <div id="brand-colors" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Brand Colors</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="droplet"></i> Brand Palette</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
                         <div class="tokens-grid color-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime</div><div class="token-value">#D2FF37</div><div class="token-preview"><div class="color-preview bg-brand-primary-lime" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-secondary-yellow</div><div class="token-value">#EEFF00</div><div class="token-preview"><div class="color-preview bg-brand-secondary-yellow" data-hex="#EEFF00"></div></div></div><button class="token-copy" onclick="copyToken('--brand-secondary-yellow')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-text-dark</div><div class="token-value">#1E1E1E</div><div class="token-preview"><div class="color-preview bg-brand-text-dark" data-hex="#1E1E1E"></div></div></div><button class="token-copy" onclick="copyToken('--brand-text-dark')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-gradient-lime</div><div class="token-value">linear-gradient(180deg, #D2FF37 0%, #EEFF00 100%)</div><div class="token-preview"><div class="gradient-preview bg-brand-gradient-lime"></div></div></div><button class="token-copy" onclick="copyToken('--brand-gradient-lime')">Copy</button></div>
-                            <!-- Alpha Variants -->
-                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-10</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-10')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-20</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.2)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-20"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-20')">Copy</button></div>
+                            <!-- Alpha variants moved to dedicated category below -->
                         </div>
                     </div>
 
                     <div id="gray-scale" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Gray Scale (Primitives)</h2><p class="category-description">The full grayscale palette that underpins the UI's surfaces and text colors.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Neutral Palette</h2><p class="category-description">The complete grayscale foundation from pure white to deep charcoal - the backbone of all interface colors.</p></div>
                         <div class="tokens-grid gray-scale-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--gray-0</div><div class="token-value">#ffffff</div><div class="token-preview"><div class="color-preview bg-gray-0" data-hex="#ffffff"></div></div></div><button class="token-copy" onclick="copyToken('--gray-0')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--gray-1</div><div class="token-value">#f0f0f0</div><div class="token-preview"><div class="color-preview bg-gray-1" data-hex="#f0f0f0"></div></div></div><button class="token-copy" onclick="copyToken('--gray-1')">Copy</button></div>
@@ -7670,49 +7639,124 @@ body {
                         </div>
                     </div>
 
-                    <div id="semantic-colors" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Semantic Colors</h2><p class="category-description">Purpose-driven color tokens that map to specific UI contexts for consistency across components.</p></div>
-                        <div class="tokens-grid color-grid">
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-default</div><div class="token-value">var(--gray-0)</div><div class="token-preview"><div class="text-preview"><div class="text-color-default">Default text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-default')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-secondary</div><div class="token-value">var(--gray-2)</div><div class="token-preview"><div class="text-preview"><div class="text-color-secondary">Secondary text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-secondary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-muted</div><div class="token-value">var(--gray-3)</div><div class="token-preview"><div class="text-preview"><div class="text-color-muted">Muted text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-muted')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-on-brand</div><div class="token-value">var(--brand-text-dark)</div><div class="token-preview"><div class="text-preview bg-brand-primary-lime"><div class="text-color-on-brand">Text on brand color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-on-brand')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-error</div><div class="token-value">var(--red-6)</div><div class="token-preview"><div class="text-preview"><div class="text-color-error">Error text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-error')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-primary</div><div class="token-value">var(--gray-9)</div><div class="token-preview"><div class="color-preview bg-color-background-primary" data-hex="#1e1e1e"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-primary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-secondary</div><div class="token-value">var(--gray-8)</div><div class="token-preview"><div class="color-preview bg-color-background-secondary" data-hex="#2a2a2a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-secondary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-tertiary</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-background-tertiary" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-tertiary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-disabled</div><div class="token-value">#333333</div><div class="token-preview"><div class="color-preview bg-color-background-disabled" data-hex="#333333"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-disabled')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-default</div><div class="token-value">var(--gray-6)</div><div class="token-preview"><div class="color-preview bg-color-border-default" data-hex="#444444"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-default')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-interactive-focus</div><div class="token-value">var(--brand-primary-lime)</div><div class="token-preview"><div class="color-preview bg-color-border-interactive-focus" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-interactive-focus')">Copy</button></div>
-                        </div>
-                    </div>
 
                     <div id="category-colors" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Category Colors</h2><p class="category-description">Distinctive colors assigned to each token type for visual categorization.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="tag"></i> Functional Palette</h2><p class="category-description">Specialized colors for categorization, status indication, and error states throughout the interface.</p></div>
                         <div class="tokens-grid color-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-cyan</div><div class="token-value">#00D1FF</div><div class="token-preview"><div class="color-preview bg-category-cyan" data-hex="#00D1FF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-cyan')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-purple</div><div class="token-value">#B48CFF</div><div class="token-preview"><div class="color-preview bg-category-purple" data-hex="#B48CFF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-purple')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-orange</div><div class="token-value">#FFB86C</div><div class="token-preview"><div class="color-preview bg-category-orange" data-hex="#FFB86C"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-orange')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-pink</div><div class="token-value">#FF74BC</div><div class="token-preview"><div class="color-preview bg-category-pink" data-hex="#FF74BC"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-pink')">Copy</button></div>
-                            <!-- Alpha Variants -->
+                            <div class="token-item"><div class="token-info"><div class="token-name">--red-6</div><div class="token-value">#FFDEE2</div><div class="token-preview"><div class="color-preview" style="background-color: #FFDEE2;" data-hex="#FFDEE2"></div></div></div><button class="token-copy" onclick="copyToken('--red-6')">Copy</button></div>
+                            <!-- Alpha variants moved to dedicated category below -->
+                        </div>
+                    </div>
+
+                    <!-- Alpha Variants Category -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="droplets"></i> Alpha Variants
+                            </h2>
+                            <p class="category-description">
+                                Transparent versions of functional and brand colors for subtle overlays and backgrounds.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-10</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-10')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-20</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.2)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-20"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-20')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-cyan-alpha-10</div><div class="token-value">rgb(var(--category-color-cyan-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-cyan-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-cyan-alpha-10')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-purple-alpha-10</div><div class="token-value">rgb(var(--category-color-purple-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-purple-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-purple-alpha-10')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-orange-alpha-10</div><div class="token-value">rgb(var(--category-color-orange-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-orange-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-orange-alpha-10')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-pink-alpha-10</div><div class="token-value">rgb(var(--category-color-pink-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-pink-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-pink-alpha-10')">Copy</button></div>
                         </div>
                     </div>
-                </section>
 
+                    <!-- Semantic Colors - moved from separate section -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="puzzle"></i> Semantic Colors
+                            </h2>
+                            <p class="category-description">
+                                Contextual color tokens that bridge raw values with purpose - defining exactly how and when each color should be used across the interface.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Text Colors Subsection -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="type"></i> Text & Content Colors
+                            </h2>
+                            <p class="category-description">
+                                Color tokens for text hierarchy, readability, and content presentation across different contexts.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-default</div><div class="token-value">var(--gray-0)</div><div class="token-preview"><div class="text-preview"><div class="text-color-default">Default text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-default')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-secondary</div><div class="token-value">var(--gray-2)</div><div class="token-preview"><div class="text-preview"><div class="text-color-secondary">Secondary text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-secondary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-muted</div><div class="token-value">var(--gray-3)</div><div class="token-preview"><div class="text-preview"><div class="text-color-muted">Muted text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-muted')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-on-brand</div><div class="token-value">var(--brand-text-dark)</div><div class="token-preview"><div class="text-preview bg-brand-primary-lime"><div class="text-color-on-brand">Text on brand color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-on-brand')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-error</div><div class="token-value">var(--red-6)</div><div class="token-preview"><div class="text-preview"><div class="text-color-error">Error text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-error')">Copy</button></div>
+                        </div>
+                    </div>
+
+                    <!-- Surface & Background Colors Subsection -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="layers"></i> Surface & Background Colors
+                            </h2>
+                            <p class="category-description">
+                                Background and surface color tokens that create depth hierarchy and define interface layers.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-primary</div><div class="token-value">var(--gray-9)</div><div class="token-preview"><div class="color-preview bg-color-background-primary" data-hex="#1e1e1e"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-primary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-secondary</div><div class="token-value">var(--gray-8)</div><div class="token-preview"><div class="color-preview bg-color-background-secondary" data-hex="#2a2a2a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-secondary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-tertiary</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-background-tertiary" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-tertiary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-disabled</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-background-disabled" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-disabled')">Copy</button></div>
+                        </div>
+                    </div>
+
+                    <!-- Border & Interactive Colors Subsection -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="square"></i> Border & Interactive Colors
+                            </h2>
+                            <p class="category-description">
+                                Color tokens for borders, focus states, and interactive element boundaries.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-default</div><div class="token-value">var(--gray-6)</div><div class="token-preview"><div class="color-preview bg-color-border-default" data-hex="#444444"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-default')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-subtle</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-border-subtle" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-subtle')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-interactive-focus</div><div class="token-value">var(--brand-primary-lime)</div><div class="token-preview"><div class="color-preview bg-color-border-interactive-focus" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-interactive-focus')">Copy</button></div>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- Typography Section -->
                 <section id="typography" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="type"></i>
+                            Typography Primitives
+                        </h2>
+                        <p class="section-description">
+                            Foundational type scale and font definitions - the typographic building blocks that establish hierarchy and readability.
+                        </p>
+                    </div>
         <div class="token-category">
             <div class="category-header">
                 <h2 class="text-heading-lg category-title">
                     <i data-lucide="align-left"></i> Type Scale
                 </h2>
                 <p class="category-description">
-                    Complete typography scale using Open Props font sizing. All sizes are defined in our CSS.
+                    Raw type sizes from Open Props, providing the foundation for all text hierarchy in the interface.
                 </p>
             </div>
             <div class="tokens-grid text-grid">
@@ -7758,8 +7802,17 @@ body {
 
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="move-horizontal"></i>
+                            Spacing Primitives
+                        </h2>
+                        <p class="section-description">
+                            Core spacing values from Open Props - the fundamental measurements that create rhythm and consistency across all layouts.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="move-horizontal"></i> Spacing</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Size Scale</h2><p class="category-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
@@ -7773,8 +7826,17 @@ body {
 
                 <!-- Shadows Section -->
                 <section id="shadows" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="layers"></i>
+                            Shadow Primitives
+                        </h2>
+                        <p class="section-description">
+                            Core elevation values from Open Props - foundational shadows that create depth and visual hierarchy.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="layers"></i> Shadows</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="mountain"></i> Elevation Scale</h2><p class="category-description">Raw shadow values that define depth layers throughout the interface.</p></div>
                         <div class="tokens-grid shadow-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
@@ -7785,8 +7847,17 @@ body {
 
                 <!-- Border Radius Section -->
                 <section id="border-radius" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="corner-up-right"></i>
+                            Radius Primitives
+                        </h2>
+                        <p class="section-description">
+                            Fundamental border radius values from Open Props - the raw measurements for corner rounding across all interface elements.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="square"></i> Border & Radius</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="square"></i> Corner Scale</h2><p class="category-description">Base radius values that create consistent corner treatments throughout the interface.</p></div>
                         <div class="tokens-grid radius-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview rounded-1"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview rounded-2"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
@@ -7799,8 +7870,17 @@ body {
 
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="zap"></i>
+                            Motion Primitives
+                        </h2>
+                        <p class="section-description">
+                            Core animation values from Open Props - timing, easing, and duration foundations for all interface motion.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="film"></i> Motion</h2><p class="category-description">Open Props animation and easing tokens for smooth motion design.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="film"></i> Animation Foundation</h2><p class="category-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
                         <div class="tokens-grid animation-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div><button class="token-copy" onclick="copyToken('--ease-3')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div><button class="token-copy" onclick="copyToken('--ease-spring-3')">Copy</button></div>

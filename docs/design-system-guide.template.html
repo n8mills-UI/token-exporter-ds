@@ -341,33 +341,32 @@
         <!-- Developer Profile v2 -->
     <!-- @include src/components/_profile-card.html -->
 
-              <!-- Color System Section -->
+              <!-- Foundation Section -->
                 <section id="colors" class="content-section">
                     <div class="section-header">
                         <h2 class="text-heading-xl main-section-title">
-                            <i data-lucide="component"></i>
+                            <i data-lucide="palette"></i>
                             Foundation
                         </h2>
                         <p class="section-description">
-                            A purposeful palette. From foundational brand colors to semantic tokens that power a consistent UI.
+                            Raw color values - the foundational palette that serves as building blocks for all semantic color decisions.
                         </p>
                     </div>
 
+
                     <div id="brand-colors" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Brand Colors</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="droplet"></i> Brand Palette</h2><p class="category-description">Core brand identity colors that define the visual personality of the Token Exporter plugin.</p></div>
                         <div class="tokens-grid color-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime</div><div class="token-value">#D2FF37</div><div class="token-preview"><div class="color-preview bg-brand-primary-lime" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-secondary-yellow</div><div class="token-value">#EEFF00</div><div class="token-preview"><div class="color-preview bg-brand-secondary-yellow" data-hex="#EEFF00"></div></div></div><button class="token-copy" onclick="copyToken('--brand-secondary-yellow')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-text-dark</div><div class="token-value">#1E1E1E</div><div class="token-preview"><div class="color-preview bg-brand-text-dark" data-hex="#1E1E1E"></div></div></div><button class="token-copy" onclick="copyToken('--brand-text-dark')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--brand-gradient-lime</div><div class="token-value">linear-gradient(180deg, #D2FF37 0%, #EEFF00 100%)</div><div class="token-preview"><div class="gradient-preview bg-brand-gradient-lime"></div></div></div><button class="token-copy" onclick="copyToken('--brand-gradient-lime')">Copy</button></div>
-                            <!-- Alpha Variants -->
-                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-10</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-10')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-20</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.2)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-20"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-20')">Copy</button></div>
+                            <!-- Alpha variants moved to dedicated category below -->
                         </div>
                     </div>
 
                     <div id="gray-scale" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Gray Scale (Primitives)</h2><p class="category-description">The full grayscale palette that underpins the UI's surfaces and text colors.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="circle"></i> Neutral Palette</h2><p class="category-description">The complete grayscale foundation from pure white to deep charcoal - the backbone of all interface colors.</p></div>
                         <div class="tokens-grid gray-scale-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--gray-0</div><div class="token-value">#ffffff</div><div class="token-preview"><div class="color-preview bg-gray-0" data-hex="#ffffff"></div></div></div><button class="token-copy" onclick="copyToken('--gray-0')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--gray-1</div><div class="token-value">#f0f0f0</div><div class="token-preview"><div class="color-preview bg-gray-1" data-hex="#f0f0f0"></div></div></div><button class="token-copy" onclick="copyToken('--gray-1')">Copy</button></div>
@@ -382,49 +381,124 @@
                         </div>
                     </div>
 
-                    <div id="semantic-colors" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Semantic Colors</h2><p class="category-description">Purpose-driven color tokens that map to specific UI contexts for consistency across components.</p></div>
-                        <div class="tokens-grid color-grid">
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-default</div><div class="token-value">var(--gray-0)</div><div class="token-preview"><div class="text-preview"><div class="text-color-default">Default text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-default')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-secondary</div><div class="token-value">var(--gray-2)</div><div class="token-preview"><div class="text-preview"><div class="text-color-secondary">Secondary text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-secondary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-muted</div><div class="token-value">var(--gray-3)</div><div class="token-preview"><div class="text-preview"><div class="text-color-muted">Muted text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-muted')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-on-brand</div><div class="token-value">var(--brand-text-dark)</div><div class="token-preview"><div class="text-preview bg-brand-primary-lime"><div class="text-color-on-brand">Text on brand color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-on-brand')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-error</div><div class="token-value">var(--red-6)</div><div class="token-preview"><div class="text-preview"><div class="text-color-error">Error text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-error')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-primary</div><div class="token-value">var(--gray-9)</div><div class="token-preview"><div class="color-preview bg-color-background-primary" data-hex="#1e1e1e"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-primary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-secondary</div><div class="token-value">var(--gray-8)</div><div class="token-preview"><div class="color-preview bg-color-background-secondary" data-hex="#2a2a2a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-secondary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-tertiary</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-background-tertiary" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-tertiary')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-disabled</div><div class="token-value">#333333</div><div class="token-preview"><div class="color-preview bg-color-background-disabled" data-hex="#333333"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-disabled')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-default</div><div class="token-value">var(--gray-6)</div><div class="token-preview"><div class="color-preview bg-color-border-default" data-hex="#444444"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-default')">Copy</button></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-interactive-focus</div><div class="token-value">var(--brand-primary-lime)</div><div class="token-preview"><div class="color-preview bg-color-border-interactive-focus" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-interactive-focus')">Copy</button></div>
-                        </div>
-                    </div>
 
                     <div id="category-colors" class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="palette"></i> Category Colors</h2><p class="category-description">Distinctive colors assigned to each token type for visual categorization.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="tag"></i> Functional Palette</h2><p class="category-description">Specialized colors for categorization, status indication, and error states throughout the interface.</p></div>
                         <div class="tokens-grid color-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-cyan</div><div class="token-value">#00D1FF</div><div class="token-preview"><div class="color-preview bg-category-cyan" data-hex="#00D1FF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-cyan')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-purple</div><div class="token-value">#B48CFF</div><div class="token-preview"><div class="color-preview bg-category-purple" data-hex="#B48CFF"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-purple')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-orange</div><div class="token-value">#FFB86C</div><div class="token-preview"><div class="color-preview bg-category-orange" data-hex="#FFB86C"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-orange')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-pink</div><div class="token-value">#FF74BC</div><div class="token-preview"><div class="color-preview bg-category-pink" data-hex="#FF74BC"></div></div></div><button class="token-copy" onclick="copyToken('--category-color-pink')">Copy</button></div>
-                            <!-- Alpha Variants -->
+                            <div class="token-item"><div class="token-info"><div class="token-name">--red-6</div><div class="token-value">#FFDEE2</div><div class="token-preview"><div class="color-preview" style="background-color: #FFDEE2;" data-hex="#FFDEE2"></div></div></div><button class="token-copy" onclick="copyToken('--red-6')">Copy</button></div>
+                            <!-- Alpha variants moved to dedicated category below -->
+                        </div>
+                    </div>
+
+                    <!-- Alpha Variants Category -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="droplets"></i> Alpha Variants
+                            </h2>
+                            <p class="category-description">
+                                Transparent versions of functional and brand colors for subtle overlays and backgrounds.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-10</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-10')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--brand-primary-lime-alpha-20</div><div class="token-value">rgb(var(--brand-primary-lime-rgb) / 0.2)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-brand-primary-lime-alpha-20"></div></div></div></div><button class="token-copy" onclick="copyToken('--brand-primary-lime-alpha-20')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-cyan-alpha-10</div><div class="token-value">rgb(var(--category-color-cyan-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-cyan-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-cyan-alpha-10')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-purple-alpha-10</div><div class="token-value">rgb(var(--category-color-purple-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-purple-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-purple-alpha-10')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-orange-alpha-10</div><div class="token-value">rgb(var(--category-color-orange-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-orange-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-orange-alpha-10')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--category-color-pink-alpha-10</div><div class="token-value">rgb(var(--category-color-pink-rgb) / 0.1)</div><div class="token-preview"><div class="alpha-preview"><div class="checkerboard"></div><div class="alpha-preview-color bg-category-pink-alpha-10"></div></div></div></div><button class="token-copy" onclick="copyToken('--category-color-pink-alpha-10')">Copy</button></div>
                         </div>
                     </div>
-                </section>
 
+                    <!-- Semantic Colors - moved from separate section -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="puzzle"></i> Semantic Colors
+                            </h2>
+                            <p class="category-description">
+                                Contextual color tokens that bridge raw values with purpose - defining exactly how and when each color should be used across the interface.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Text Colors Subsection -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="type"></i> Text & Content Colors
+                            </h2>
+                            <p class="category-description">
+                                Color tokens for text hierarchy, readability, and content presentation across different contexts.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-default</div><div class="token-value">var(--gray-0)</div><div class="token-preview"><div class="text-preview"><div class="text-color-default">Default text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-default')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-secondary</div><div class="token-value">var(--gray-2)</div><div class="token-preview"><div class="text-preview"><div class="text-color-secondary">Secondary text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-secondary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-muted</div><div class="token-value">var(--gray-3)</div><div class="token-preview"><div class="text-preview"><div class="text-color-muted">Muted text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-muted')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-on-brand</div><div class="token-value">var(--brand-text-dark)</div><div class="token-preview"><div class="text-preview bg-brand-primary-lime"><div class="text-color-on-brand">Text on brand color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-on-brand')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-text-error</div><div class="token-value">var(--red-6)</div><div class="token-preview"><div class="text-preview"><div class="text-color-error">Error text color</div></div></div></div><button class="token-copy" onclick="copyToken('--color-text-error')">Copy</button></div>
+                        </div>
+                    </div>
+
+                    <!-- Surface & Background Colors Subsection -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="layers"></i> Surface & Background Colors
+                            </h2>
+                            <p class="category-description">
+                                Background and surface color tokens that create depth hierarchy and define interface layers.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-primary</div><div class="token-value">var(--gray-9)</div><div class="token-preview"><div class="color-preview bg-color-background-primary" data-hex="#1e1e1e"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-primary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-secondary</div><div class="token-value">var(--gray-8)</div><div class="token-preview"><div class="color-preview bg-color-background-secondary" data-hex="#2a2a2a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-secondary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-tertiary</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-background-tertiary" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-tertiary')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-background-disabled</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-background-disabled" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-background-disabled')">Copy</button></div>
+                        </div>
+                    </div>
+
+                    <!-- Border & Interactive Colors Subsection -->
+                    <div class="token-category">
+                        <div class="category-header">
+                            <h2 class="text-heading-lg category-title">
+                                <i data-lucide="square"></i> Border & Interactive Colors
+                            </h2>
+                            <p class="category-description">
+                                Color tokens for borders, focus states, and interactive element boundaries.
+                            </p>
+                        </div>
+                        <div class="tokens-grid color-grid">
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-default</div><div class="token-value">var(--gray-6)</div><div class="token-preview"><div class="color-preview bg-color-border-default" data-hex="#444444"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-default')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-subtle</div><div class="token-value">var(--gray-7)</div><div class="token-preview"><div class="color-preview bg-color-border-subtle" data-hex="#3a3a3a"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-subtle')">Copy</button></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--color-border-interactive-focus</div><div class="token-value">var(--brand-primary-lime)</div><div class="token-preview"><div class="color-preview bg-color-border-interactive-focus" data-hex="#D2FF37"></div></div></div><button class="token-copy" onclick="copyToken('--color-border-interactive-focus')">Copy</button></div>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- Typography Section -->
                 <section id="typography" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="type"></i>
+                            Typography Primitives
+                        </h2>
+                        <p class="section-description">
+                            Foundational type scale and font definitions - the typographic building blocks that establish hierarchy and readability.
+                        </p>
+                    </div>
         <div class="token-category">
             <div class="category-header">
                 <h2 class="text-heading-lg category-title">
                     <i data-lucide="align-left"></i> Type Scale
                 </h2>
                 <p class="category-description">
-                    Complete typography scale using Open Props font sizing. All sizes are defined in our CSS.
+                    Raw type sizes from Open Props, providing the foundation for all text hierarchy in the interface.
                 </p>
             </div>
             <div class="tokens-grid text-grid">
@@ -470,8 +544,17 @@
 
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="move-horizontal"></i>
+                            Spacing Primitives
+                        </h2>
+                        <p class="section-description">
+                            Core spacing values from Open Props - the fundamental measurements that create rhythm and consistency across all layouts.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="move-horizontal"></i> Spacing</h2><p class="category-description">Open Props spacing scale used for consistent layouts throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="ruler"></i> Size Scale</h2><p class="category-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div><button class="token-copy" onclick="copyToken('--size-2')">Copy</button></div>
@@ -485,8 +568,17 @@
 
                 <!-- Shadows Section -->
                 <section id="shadows" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="layers"></i>
+                            Shadow Primitives
+                        </h2>
+                        <p class="section-description">
+                            Core elevation values from Open Props - foundational shadows that create depth and visual hierarchy.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="layers"></i> Shadows</h2><p class="category-description">Open Props shadow tokens for creating depth and elevation.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="mountain"></i> Elevation Scale</h2><p class="category-description">Raw shadow values that define depth layers throughout the interface.</p></div>
                         <div class="tokens-grid shadow-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-2')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div><button class="token-copy" onclick="copyToken('--shadow-3')">Copy</button></div>
@@ -497,8 +589,17 @@
 
                 <!-- Border Radius Section -->
                 <section id="border-radius" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="corner-up-right"></i>
+                            Radius Primitives
+                        </h2>
+                        <p class="section-description">
+                            Fundamental border radius values from Open Props - the raw measurements for corner rounding across all interface elements.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="square"></i> Border & Radius</h2><p class="category-description">Open Props radius tokens for consistent corner rounding.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="square"></i> Corner Scale</h2><p class="category-description">Base radius values that create consistent corner treatments throughout the interface.</p></div>
                         <div class="tokens-grid radius-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-1</div><div class="token-value">Small radius</div><div class="token-preview"><div class="radius-preview rounded-1"></div></div></div><button class="token-copy" onclick="copyToken('--radius-1')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--radius-2</div><div class="token-value">Medium radius</div><div class="token-preview"><div class="radius-preview rounded-2"></div></div></div><button class="token-copy" onclick="copyToken('--radius-2')">Copy</button></div>
@@ -511,8 +612,17 @@
 
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-xl main-section-title">
+                            <i data-lucide="zap"></i>
+                            Motion Primitives
+                        </h2>
+                        <p class="section-description">
+                            Core animation values from Open Props - timing, easing, and duration foundations for all interface motion.
+                        </p>
+                    </div>
                     <div class="token-category">
-                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="film"></i> Motion</h2><p class="category-description">Open Props animation and easing tokens for smooth motion design.</p></div>
+                        <div class="category-header"><h2 class="text-heading-lg category-title"><i data-lucide="film"></i> Animation Foundation</h2><p class="category-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
                         <div class="tokens-grid animation-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div><button class="token-copy" onclick="copyToken('--ease-3')">Copy</button></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div><button class="token-copy" onclick="copyToken('--ease-spring-3')">Copy</button></div>
