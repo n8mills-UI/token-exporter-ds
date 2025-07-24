@@ -17,7 +17,7 @@ const path = require('path');
 const axios = require('axios');
 
 // Configuration
-const CSS_FILE_PATH = path.join(__dirname, '../docs/design-system.css');
+const CSS_FILE_PATH = path.join(__dirname, '../../docs/design-system.css');
 const OPEN_PROPS_URL = 'https://unpkg.com/open-props/style';
 
 // Dynamic/JavaScript-set tokens that should be ignored

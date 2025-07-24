@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const CSS_FILE_PATH = path.join(__dirname, '../docs/design-system.css');
+const CSS_FILE_PATH = path.join(__dirname, '../../docs/design-system.css');
 
 console.log('🔍 Analyzing for hardcoded values that could be tokens...\n');
 
