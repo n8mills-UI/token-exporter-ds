@@ -135,6 +135,7 @@ body {
  /* =========================
  FUNCTIONAL PALETTE
  ========================= */
+
  /* Category colors for token types */
  --category-color-cyan: #00D1FF;
  --category-color-purple: #B48CFF;
@@ -180,6 +181,7 @@ body {
  /* =========================
  ICON DESIGN TOKENS
  ========================= */
+
  /* Icon sizing tokens */
  --icon-xs: var(--size-3); /* 12px */
  --icon-sm: var(--size-4); /* 16px */
@@ -240,7 +242,6 @@ body {
  --surface-2: var(--gray-8);
  --surface-3: var(--gray-7);
  --surface-4: var(--gray-6);
- 
  --color-background-primary: var(--gray-9);
  --color-background-secondary: var(--gray-8);
  --color-background-tertiary: var(--gray-7);
@@ -249,7 +250,6 @@ body {
  --color-background-default: var(--gray-9); /* Same as primary */
  --color-background-subtle: var(--gray-8); /* Same as secondary */
  --color-backdrop: rgb(var(--color-backdrop-rgb), var(--opacity-backdrop));
- 
  --color-border-default: var(--gray-6);
  --color-border-subtle: var(--gray-7);
  --color-border-interactive-focus: var(--brand-primary-lime);
@@ -271,8 +271,8 @@ body {
  --color-status-error: var(--color-text-muted); /* For "not applicable" state */
 
 /* Interactive surface states */
---surface-hover: rgba(var(--gray-0-rgb, 255, 255, 255), 0.05);
---surface-active: rgba(var(--gray-0-rgb, 255, 255, 255), 0.1);
+--surface-hover: rgb(var(--gray-0-rgb, 255, 255, 255), 0.05);
+--surface-active: rgb(var(--gray-0-rgb, 255, 255, 255), 0.1);
  
  /* =========================
  SEMANTIC SPACING
@@ -298,6 +298,7 @@ body {
  --component-height-md: var(--size-8); /* 32px */
  --component-height-lg: var(--size-9); /* 36px */
  --component-height-xl: var(--size-10); /* 40px */
+--component-height-xxl: 140px; /* Token card minimum height */
  
  /* =========================
  Z-INDEX LAYERS
@@ -1082,7 +1083,7 @@ body {
     display: none;
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
     /* Hide desktop grid on mobile */
     .desktop-grid {
         display: none;
@@ -1326,6 +1327,7 @@ body {
  color: var(--color-text-secondary);
  line-height: 1.2;
  text-align: center;
+
  /* FLEXIBLE TEXT: Allow wrapping to prevent overflow */
  white-space: normal;
  word-break: break-word;
@@ -1337,7 +1339,7 @@ body {
 /* Compact cards */
 .compact-cards {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--guide-sidebar-width), 1fr));
  gap: var(--size-3);
 }
 
@@ -1663,6 +1665,7 @@ body {
 
 .profile-card .code-line {
  position: relative;
+
  /* Fixed height removed to allow proper text wrapping */
  line-height: 1.4; 
  display: flex;
@@ -1935,7 +1938,7 @@ body {
 }
 
 /* Profile Card Responsive Fixes */
-@media (max-width: 1200px) {
+@media (width <= 1200px) {
  .profile-card .code-container {
   max-width: 100%;
   overflow-x: auto;
@@ -1954,7 +1957,7 @@ body {
  }
 }
 
-@media (max-width: 900px) {
+@media (width <= 900px) {
  .profile-card {
   grid-template-columns: 1fr;
   gap: var(--size-3);
@@ -1966,6 +1969,7 @@ body {
  
  .profile-card .ascii-art-mobile {
   display: block;
+
   /* Font-size handled by clamp() in main rule above */
  }
  
@@ -2525,7 +2529,7 @@ body {
  flex-direction: column;
  justify-content: flex-start;
  align-items: center;
- padding: 8vh 0 0 0; /* Moved up from 15vh for tighter layout */
+ padding: 8vh 0 0; /* Moved up from 15vh for tighter layout */
 }
 
 /* Hero logo with animation */
@@ -2669,6 +2673,7 @@ body {
  color: var(--color-text-secondary);
  line-height: 1.2;
  text-align: center;
+
  /* FLEXIBLE TEXT: Allow wrapping to prevent overflow */
  white-space: normal;
  word-break: break-word;
@@ -2680,7 +2685,7 @@ body {
 /* Compact cards */
 .compact-cards {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--guide-sidebar-width), 1fr));
  gap: var(--size-3);
  margin-bottom: var(--size-6);
 }
@@ -4187,7 +4192,7 @@ select option {
     color: var(--pink-5);
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .footer-content {
         flex-direction: column;
         text-align: center;
@@ -4561,7 +4566,7 @@ select option {
 .hamburger-icon .line {
     width: 100%;
     height: var(--border-size-2);
-    background-color: currentColor;
+    background-color: currentcolor;
     border-radius: var(--border-size-1);
     transition: all 0.3s var(--ease-3);
     transform-origin: center;
@@ -4804,6 +4809,7 @@ body {
 .content-section {
  margin-bottom: var(--size-10);
  scroll-margin-top: var(--size-6);
+
  /* Removed horizontal padding - child elements handle their own padding */
 }
 
@@ -4913,7 +4919,7 @@ body {
 }
 
 .color-grid, .shadow-grid, .radius-grid {
- grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(var(--guide-sidebar-width), 1fr));
 }
 
 .gray-scale-grid {
@@ -4940,7 +4946,7 @@ body {
  transition: all var(--animation-duration-2) var(--ease-3);
  display: flex;
  flex-direction: column;
- min-height: 140px; /* TODO: Replace with --component-height-xl */
+ min-height: var(--component-height-xxl);
 }
 
 .token-item:hover {
@@ -5759,6 +5765,7 @@ body {
     
     .stat-label {
         font-size: var(--font-size-0); /* Smaller on mobile to fit better */
+
         /* Text can wrap on mobile */
         white-space: normal;
         padding: 0 var(--size-1);
@@ -5834,6 +5841,7 @@ body {
     animation-timing-function: linear;
     animation-fill-mode: backwards; /* Apply first keyframe during delay */
     will-change: transform, opacity;
+
     /* Let animation handle initial positioning */
 }
 
@@ -5850,6 +5858,7 @@ body {
     }
     5% { opacity: var(--animation-opacity-visible); }
     95% { opacity: var(--animation-opacity-visible); }
+
     100% { 
         transform: translateY(var(--animation-offset-top)) rotate(360deg); 
         opacity: 0; 
@@ -5859,7 +5868,7 @@ body {
 /* Bubble animation - sway side to side while rising */
 @keyframes bubblingUp {
     0% { 
-        transform: translateY(var(--animation-start-bottom)) translateX(0px) rotate(0deg); 
+        transform: translateY(var(--animation-start-bottom)) translateX(0) rotate(0deg); 
         opacity: 0; 
     }
     5% { opacity: var(--animation-opacity-visible); }
@@ -5867,8 +5876,9 @@ body {
     50% { transform: translateY(50vh) translateX(var(--animation-sway-md)) rotate(180deg); }
     75% { transform: translateY(25vh) translateX(calc(var(--animation-sway-sm) * -1)) rotate(270deg); }
     95% { opacity: var(--animation-opacity-visible); }
+
     100% { 
-        transform: translateY(var(--animation-offset-top)) translateX(0px) rotate(360deg); 
+        transform: translateY(var(--animation-offset-top)) translateX(0) rotate(360deg); 
         opacity: 0; 
     }
 }
@@ -5881,6 +5891,7 @@ body {
     }
     8% { opacity: var(--animation-opacity-visible); }
     92% { opacity: var(--animation-opacity-visible); }
+
     100% { 
         transform: translateY(var(--animation-offset-top)) scale(var(--animation-scale-normal)); 
         opacity: 0; 
@@ -5998,6 +6009,7 @@ body {
 }
 
 /* Base Footer Styles */
+
 /* Enhanced Footer - Option 3: Gradient Enhanced Design */
 .footer-desktop,
 .footer-mobile {
@@ -6005,11 +6017,12 @@ body {
     position: relative;
     background: 
         /* Enhanced gradients */
-        radial-gradient(circle at 15% 30%, rgba(210, 255, 55, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 85% 70%, rgba(238, 255, 0, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 50% 100%, rgba(210, 255, 55, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at 15% 30%, rgb(210, 255, 55, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 70%, rgb(238, 255, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 100%, rgb(210, 255, 55, 0.06) 0%, transparent 60%),
         /* Base gradient */
         linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%);
+
     /* Glass morphism effect */
     backdrop-filter: blur(20px);
     margin-top: var(--size-12); /* Large gap from last content section */
@@ -6026,9 +6039,9 @@ body {
     height: 3px;
     background: linear-gradient(90deg, 
         transparent 0%,
-        rgba(210, 255, 55, 0.8) 20%, 
-        rgba(238, 255, 0, 0.6) 50%, 
-        rgba(210, 255, 55, 0.8) 80%,
+        rgb(210, 255, 55, 0.8) 20%, 
+        rgb(238, 255, 0, 0.6) 50%, 
+        rgb(210, 255, 55, 0.8) 80%,
         transparent 100%);
 }
 
@@ -6065,7 +6078,7 @@ body {
     margin: 0 auto;
     margin-bottom: var(--size-6);
     padding-top: var(--size-4);
-    border-top: var(--border-size-1) solid rgba(255, 255, 255, 0.15);
+    border-top: var(--border-size-1) solid rgb(255, 255, 255, 0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6114,7 +6127,7 @@ body {
     align-items: center;
     gap: var(--size-4);
     padding-top: var(--size-4);
-    border-top: var(--border-size-1) solid rgba(255, 255, 255, 0.15);
+    border-top: var(--border-size-1) solid rgb(255, 255, 255, 0.15);
 }
 
 /* Use the existing token-exporter-logo component in footer */
@@ -6131,7 +6144,7 @@ body {
     line-height: 1.1;
     color: white;
     margin: 0;
-    text-shadow: 0 var(--border-size-2) var(--size-1) rgba(0, 0, 0, 0.3);
+    text-shadow: 0 var(--border-size-2) var(--size-1) rgb(0, 0, 0, 0.3);
 }
 
 .footer-tagline {
@@ -6165,20 +6178,20 @@ body {
 /* Small icon buttons with glass morphism */
 .footer-desktop .btn-icon,
 .footer-mobile .btn-icon {
-    background: rgba(255, 255, 255, 0.1);
-    border: var(--border-size-1) solid rgba(255, 255, 255, 0.2);
+    background: rgb(255, 255, 255, 0.1);
+    border: var(--border-size-1) solid rgb(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
 }
 
 .footer-desktop .btn-icon:hover,
 .footer-mobile .btn-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(210, 255, 55, 0.4);
+    background: rgb(255, 255, 255, 0.2);
+    border-color: rgb(210, 255, 55, 0.4);
     transform: translateY(calc(-1 * var(--border-size-1)));
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .footer-desktop {
         display: none;
     }
@@ -6510,7 +6523,7 @@ body {
 /* Compact Grid (for smaller items) */
 .compact-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--guide-sidebar-width), 1fr));
     gap: var(--guide-grid-gap-small);
     margin-bottom: var(--guide-subsection-gap);
 }
@@ -6550,7 +6563,7 @@ body {
 
 .token-reference-item:hover {
     border-color: var(--brand-primary-lime);
-    background: rgba(210, 255, 55, 0.05);
+    background: rgb(210, 255, 55, 0.05);
 }
 
 .token-reference-item code {
@@ -6708,6 +6721,7 @@ body {
     gap: var(--size-6);
     max-width: 1200px;
     margin: auto;
+
     /* PEEKING EFFECT: Pull stats up to peek from bottom of hero */
     margin-top: calc(-1 * var(--size-8)); /* Pull up by footer height to create peek */
     margin-bottom: var(--size-8);
@@ -6717,12 +6731,13 @@ body {
 
 /* Glass Morphism Stats Container */
 .stats-container-glass {
-    background: rgba(42, 42, 42, 0.4);
+    background: rgb(42, 42, 42, 0.4);
     backdrop-filter: var(--blur-xl);
-    border: var(--border-size-1) solid rgba(210, 255, 55, 0.2);
+    border: var(--border-size-1) solid rgb(210, 255, 55, 0.2);
     border-radius: var(--radius-3);
     padding: 4px var(--size-6) 8px var(--size-6);
     display: grid;
+
     /* RESPONSIVE GRID: Automatically adapts from 4 cols to 2 to 1 */
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: var(--size-4);
@@ -6731,7 +6746,7 @@ body {
 
 .stats-container-glass:hover {
     border-color: var(--brand-primary-lime);
-    box-shadow: 0 12px 24px rgba(210, 255, 55, 0.2);
+    box-shadow: 0 12px 24px rgb(210, 255, 55, 0.2);
 }
 
 /* Individual Stat Items */
@@ -6757,7 +6772,7 @@ body {
     line-height: 1;
     margin-bottom: var(--size-2);
     background: var(--brand-gradient-lime);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
@@ -6785,6 +6800,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text-secondary);
+
     /* SINGLE LINE: Stats labels must never wrap */
     white-space: nowrap;
     overflow: hidden;
@@ -6801,7 +6817,7 @@ body {
 /* Enhanced Cards with Glass Effect */
 .enhanced-card {
     position: relative;
-    background: rgba(42, 42, 42, 0.4);
+    background: rgb(42, 42, 42, 0.4);
     backdrop-filter: var(--blur-xl);
     border-radius: var(--radius-3);
     padding: var(--size-6);
@@ -6833,17 +6849,20 @@ body {
 /* Card Variants */
 .challenge-card {
     --gradient: linear-gradient(90deg, var(--category-color-pink), var(--category-color-purple));
-    border: var(--border-size-1) solid rgba(255, 116, 188, 0.2);
+
+    border: var(--border-size-1) solid rgb(255, 116, 188, 0.2);
 }
 
 .solution-card {
     --gradient: var(--brand-gradient-lime);
-    border: var(--border-size-1) solid rgba(210, 255, 55, 0.2);
+
+    border: var(--border-size-1) solid rgb(210, 255, 55, 0.2);
 }
 
 .impact-card {
     --gradient: linear-gradient(90deg, var(--category-color-cyan), var(--category-color-orange));
-    border: var(--border-size-1) solid rgba(0, 209, 255, 0.2);
+
+    border: var(--border-size-1) solid rgb(0, 209, 255, 0.2);
 }
 
 /* Card Content */
