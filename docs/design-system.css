@@ -4528,7 +4528,7 @@ select option {
     position: fixed;
     top: 0;
     right: 0;
-    width: 280px;
+    width: var(--guide-sidebar-width);
     height: 100%;
     background: rgb(var(--color-backdrop-rgb), 0.95);
     backdrop-filter: var(--blur-lg);
@@ -4675,7 +4675,7 @@ body {
 }
 
 .guide-sidebar {
-    width: 280px;
+    width: var(--guide-sidebar-width);
     background: var(--color-background-secondary);
     border-right: var(--border-size-1) solid var(--color-border-default);
     position: fixed;
@@ -4688,9 +4688,9 @@ body {
 }
 
 .guide-content {
-    margin-left: var(--size-content-1);
+    margin-left: var(--guide-sidebar-width);
     flex: 1;
-    max-width: calc(100vw - 280px);
+    max-width: calc(100vw - var(--guide-sidebar-width));
     width: 100%;
     box-sizing: border-box;
     overflow-wrap: break-word;
@@ -6343,6 +6343,9 @@ body {
    GUIDE LAYOUT TOKENS
    ========================= */
 :root {
+    /* Layout Dimensions */
+    --guide-sidebar-width: 280px;                 /* Fixed sidebar width */
+    
     /* Layout Spacing */
     --guide-section-padding: var(--size-6);
     --guide-section-padding-mobile: var(--size-3);
