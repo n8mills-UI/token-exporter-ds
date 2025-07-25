@@ -195,7 +195,7 @@ token-exporter-ds/
 │ ├── build/
 │ │ └── sync.sh # The master build script
 │ ├── audits/
-│ │   ├── architectural-advisor.js # Advanced design system architectural analysis
+│ │   ├── architectural-advisor.js # Advanced design system architectural analysis + pattern consistency
 │ │   ├── audit-documentation.py # Documentation completeness audit
 │ │   ├── analyze-duplicates.js # Token duplication analysis (basic)
 │ │   ├── figma-compat-check.js # Figma compatibility validator

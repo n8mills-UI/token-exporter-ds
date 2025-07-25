@@ -185,45 +185,8 @@
 
             <!-- Enhanced Stats & Project Overview -->
             <div class="stats-and-overview-container" id="stats-container">
-                <div class="stats-container-glass">
-                    <div class="stat-item">
-                        <i class="stat-icon"><i data-lucide="package"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="6">0</span></div>
-                        <div class="stat-label">Export Formats</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="stat-icon"><i data-lucide="atom"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="435">0</span><span class="stat-suffix stat-suffix--plus">+</span></div>
-                        <div class="stat-label">Design Tokens</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="stat-icon"><i data-lucide="zap"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="100">0</span><span class="stat-suffix stat-suffix--percent">%</span></div>
-                        <div class="stat-label">Automated</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="stat-icon"><i data-lucide="clock"></i></i>
-                        <div class="stat-number"><span class="stat-value" data-target="10">0</span><span class="stat-suffix stat-suffix--times">×</span></div>
-                        <div class="stat-label">Faster Export</div>
-                    </div>
-                </div>
-                <div class="challenge-solution-grid">
-                    <div class="enhanced-card challenge-card">
-                        <i data-lucide="alert-triangle" class="card-icon-large"></i>
-                        <h3 class="card-title">The Challenge</h3>
-                        <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
-                    </div>
-                    <div class="enhanced-card solution-card">
-                        <i data-lucide="lightbulb" class="card-icon-large"></i>
-                        <h3 class="card-title">The Solution</h3>
-                        <p class="card-content">Automated multi-format export with intelligent alias resolution and platform-native naming conventions.</p>
-                    </div>
-                    <div class="enhanced-card impact-card">
-                        <i data-lucide="trending-up" class="card-icon-large"></i>
-                        <h3 class="card-title">The Impact</h3>
-                        <p class="card-content">10x faster token export, zero manual errors, and a seamless design-to-code workflow.</p>
-                    </div>
-                </div>
+                <!-- @include src/components/_stats-container.html -->
+                <!-- @include src/components/_challenge-solution-grid.html -->
             </div>
 
 
@@ -1074,11 +1037,17 @@
                 <div class="example-wrapper">
                     <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-tall">
-                        <!-- This button will trigger the modal -->
-                        <button class="btn btn-secondary btn-md" id="show-modal-btn">
-                            <i data-lucide="eye"></i>
-                            <span>Show About Modal</span>
-                        </button>
+                        <!-- Control buttons -->
+                        <div class="modal-demo-controls">
+                            <button class="btn btn-secondary btn-md" id="show-modal-btn">
+                                <i data-lucide="eye"></i>
+                                <span>Show About Modal</span>
+                            </button>
+                            <button class="btn btn-brand btn-md" id="play-vortex-btn">
+                                <i data-lucide="play"></i>
+                                <span>Play Background Animation</span>
+                            </button>
+                        </div>
 
                         <!-- The modal partial is included here -->
                         <!-- @include src/components/_about-modal.html -->
@@ -1912,6 +1881,7 @@
     
         function initGuideModal() {
             const showButton = document.getElementById('show-modal-btn');
+            const playVortexButton = document.getElementById('play-vortex-btn');
             const modal = document.getElementById('about-modal');
 
             if (!showButton || !modal) return;
@@ -1931,6 +1901,23 @@
             showModal();
 
             showButton.addEventListener('click', showModal);
+
+            // Play vortex animation button
+            if (playVortexButton) {
+                playVortexButton.addEventListener('click', () => {
+                    const iconGrid = modal.querySelector('.te-icon-grid');
+                    if (iconGrid) {
+                        // Trigger vortex animation by temporarily removing and re-adding the grid
+                        iconGrid.style.opacity = '0';
+                        setTimeout(() => {
+                            if (window.VortexAnimation && window.VortexAnimation.populateVortex) {
+                                window.VortexAnimation.populateVortex(iconGrid);
+                                iconGrid.style.opacity = '0.8';
+                            }
+                        }, 100);
+                    }
+                });
+            }
             
             modal.addEventListener('click', (e) => {
                 if (e.target === modal || e.target.closest('.about-close')) {

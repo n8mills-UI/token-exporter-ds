@@ -77,6 +77,96 @@ The project includes automated documentation completeness auditing:
 ### Cleanup
 - `npm run clean` - Remove backup files
 
+## Design System Rule Enforcement
+
+**IMPORTANT**: When users request changes that break established design system rules, Claude must flag these requests and suggest system-compliant alternatives. This prevents design drift and maintains consistency.
+
+### Protected Design Rules
+
+**1. Badge Alignment System**
+- **Rule**: Badges must use `justify-content: center` for container alignment
+- **Rationale**: Ensures visual balance and consistent presentation across all badge groups
+- **Protected CSS**: `.badge-showcase { justify-content: center; }`
+
+**2. Standard Container Padding**  
+- **Rule**: Example containers use `var(--size-4)` padding consistently
+- **Rationale**: Maintains visual rhythm and spacing consistency across components
+- **Protected CSS**: `.example-container { padding: var(--size-4); }`
+
+**3. Grid Alignment Classes**
+- **Rule**: Use semantic alignment classes (`.align-top`, `.align-center`, `.align-stretch`)
+- **Rationale**: Provides consistent alignment behavior for mixed-height content
+- **Protected CSS**: Grid alignment utility classes and their behaviors
+
+**4. Responsive Breakpoint System**
+- **Rule**: Standard breakpoints at 768px (mobile), 900px (tablet), 1024px (desktop)
+- **Rationale**: Ensures consistent responsive behavior across all components
+- **Protected CSS**: Media query breakpoint values
+
+**5. Two-Layer Token Architecture** 
+- **Rule**: Raw values only in `:root` blocks, all other CSS must use `var()` tokens
+- **Rationale**: Maintains single source of truth and design system integrity
+- **Protected CSS**: Token usage patterns throughout the system
+
+### Challenge Protocol
+
+When users request rule-breaking changes, Claude should:
+
+1. **Flag the Rule Violation**: 
+   ```
+   "⚠️ This request would break the [specific rule name] design system rule. 
+   Current system uses [current approach] to ensure [rationale]."
+   ```
+
+2. **Explain the Impact**:
+   ```
+   "Changing this would affect consistency across [affected areas] and 
+   potentially create visual inconsistencies."
+   ```
+
+3. **Suggest Compliant Alternatives**:
+   ```
+   "Instead, I recommend [alternative approach] which achieves [user goal] 
+   while maintaining system integrity."
+   ```
+
+4. **Offer Override Option**:
+   ```
+   "If you need to override this rule for a specific use case, please 
+   confirm and I'll implement it with appropriate documentation."
+   ```
+
+### Example Challenge Response
+
+**User Request**: "Make badges left-aligned instead of centered"
+
+**Claude Response**: 
+```
+⚠️ This request would break the Badge Alignment System design rule. 
+Current system uses `justify-content: center` to ensure visual balance 
+and consistent presentation across all badge groups.
+
+Left-aligning badges would create visual inconsistencies, especially 
+in responsive layouts where badge groups wrap.
+
+Instead, I recommend:
+1. Creating a specific `.badge-showcase-left` variant for special cases
+2. Using the existing `.align-top` grid class for top-aligned layouts
+3. Adjusting the badge group structure to achieve your layout goals
+
+Would you like me to implement one of these alternatives, or do you 
+need to override the centering rule for this specific use case?
+```
+
+### When to Apply Rules
+
+- **Always challenge** changes to protected CSS patterns
+- **Document exceptions** when overrides are necessary  
+- **Suggest system-compliant alternatives** before implementing changes
+- **Maintain flexibility** for legitimate design evolution
+
+This enforcement helps maintain design system integrity while allowing for thoughtful evolution when needed.
+
 ## Architecture
 
 ### Build System

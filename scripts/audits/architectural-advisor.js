@@ -106,6 +106,9 @@ analyzeFrequency(componentCSS, recommendations);
 // 4. AMBIGUOUS REPLACEMENT ANALYSIS
 analyzeAmbiguousReplacements(componentCSS, recommendations);
 
+// 5. PATTERN CONSISTENCY ANALYSIS
+analyzePatternConsistency(componentCSS, recommendations);
+
 function analyzeCompositeValues(css, recommendations) {
     const compositePatterns = [
         {
@@ -309,6 +312,125 @@ function generateSemanticToken(property, value) {
     const context = contextMap[property] || property;
     const suffix = generateTokenSuffix(value);
     return `--${context}-${suffix}`;
+}
+
+function analyzePatternConsistency(css, recommendations) {
+    // Find component patterns and check for consistency across variants
+    const componentPatterns = [
+        {
+            name: 'badge',
+            selector: /\.badge(?:\.[\w-]+)*\s*\{[^}]+\}/g,
+            requiredProperties: ['background-color', 'color', 'padding', 'border-radius'],
+            variantPattern: /\.badge\.([\w-]+)/,
+            description: 'Badge component variants'
+        },
+        {
+            name: 'button',
+            selector: /\.btn(?:\.[\w-]+)*\s*\{[^}]+\}/g,
+            requiredProperties: ['background-color', 'color', 'padding', 'border-radius'],
+            variantPattern: /\.btn\.([\w-]+)/,
+            description: 'Button component variants'
+        },
+        {
+            name: 'card',
+            selector: /\.card(?:\.[\w-]+)*\s*\{[^}]+\}/g,
+            requiredProperties: ['background-color', 'border', 'border-radius', 'padding'],
+            variantPattern: /\.card\.([\w-]+)/,
+            description: 'Card component variants'
+        }
+    ];
+
+    componentPatterns.forEach(({ name, selector, requiredProperties, variantPattern, description }) => {
+        const variants = new Map(); // variant -> properties
+        let match;
+
+        // Find all component variants
+        while ((match = selector.exec(css)) !== null) {
+            const ruleBlock = match[0];
+            const variantMatch = ruleBlock.match(variantPattern);
+            const variantName = variantMatch ? variantMatch[1] : 'default';
+            
+            // Extract properties from this variant
+            const properties = new Map();
+            requiredProperties.forEach(prop => {
+                const propRegex = new RegExp(`${prop}\\s*:\\s*([^;]+);`, 'g');
+                const propMatch = propRegex.exec(ruleBlock);
+                if (propMatch) {
+                    properties.set(prop, propMatch[1].trim());
+                }
+            });
+
+            variants.set(variantName, properties);
+        }
+
+        // Check for missing properties across variants
+        if (variants.size > 1) {
+            const allVariants = Array.from(variants.keys());
+            const inconsistencies = [];
+
+            requiredProperties.forEach(requiredProp => {
+                const variantsWithProp = [];
+                const variantsWithoutProp = [];
+
+                allVariants.forEach(variant => {
+                    const props = variants.get(variant);
+                    if (props.has(requiredProp)) {
+                        variantsWithProp.push({
+                            variant,
+                            value: props.get(requiredProp)
+                        });
+                    } else {
+                        variantsWithoutProp.push(variant);
+                    }
+                });
+
+                // Flag missing properties
+                if (variantsWithoutProp.length > 0 && variantsWithProp.length > 0) {
+                    inconsistencies.push({
+                        property: requiredProp,
+                        issue: 'missing_property',
+                        variantsWithProperty: variantsWithProp,
+                        variantsWithoutProperty: variantsWithoutProp
+                    });
+                }
+
+                // Flag value inconsistencies (e.g., different patterns)
+                if (variantsWithProp.length > 1) {
+                    const valuePatterns = new Map();
+                    variantsWithProp.forEach(({ variant, value }) => {
+                        // Check if using var() or hardcoded values
+                        const pattern = value.includes('var(') ? 'token' : 'hardcoded';
+                        if (!valuePatterns.has(pattern)) {
+                            valuePatterns.set(pattern, []);
+                        }
+                        valuePatterns.get(pattern).push({ variant, value });
+                    });
+
+                    if (valuePatterns.size > 1) {
+                        inconsistencies.push({
+                            property: requiredProp,
+                            issue: 'mixed_patterns',
+                            patterns: Object.fromEntries(valuePatterns),
+                            description: 'Some variants use tokens while others use hardcoded values'
+                        });
+                    }
+                }
+            });
+
+            // Generate recommendations for inconsistencies
+            if (inconsistencies.length > 0) {
+                recommendations.push({
+                    type: 'PATTERN_CONSISTENCY',
+                    component: name,
+                    description: description,
+                    variants: allVariants,
+                    inconsistencies: inconsistencies,
+                    suggestion: `${description} show inconsistent patterns. Ensure all variants follow the same structural approach.`,
+                    impact: 'Visual inconsistency and maintenance burden'
+                });
+            }
+        }
+    });
 }
 
 function getContextualGuidance(property, tokens) {
