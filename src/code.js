@@ -108,7 +108,7 @@ function validateExportInputs(collectionIds, formats, activeTokenTypes) {
     
     const invalidFormats = formats.filter(f => !VALID_FORMATS.includes(f));
     if (invalidFormats.length > 0) {
-        errors.push(`Invalid formats: ${invalidFormats.join(', ')}. Valid formats: ${VALID_FORMATS.join(', ')}`);
+        errors.push('Invalid formats: ' + invalidFormats.join(', ') + '. Valid formats: ' + VALID_FORMATS.join(', '));
     }
     
     // Validate token types
@@ -153,8 +153,8 @@ function checkMemoryUsage(throwOnExceed = false) {
                 usagePercent: Math.round((used / limit) * 100)
             };
             
-            console.warn(`High memory usage: ${used.toFixed(2)}MB (${memoryInfo.usagePercent}% of limit)`);
-            figma.notify(`Processing large dataset. Memory: ${memoryInfo.used}MB`, { timeout: 3000 });
+            console.warn('High memory usage: ' + used.toFixed(2) + 'MB (' + memoryInfo.usagePercent + '% of limit)');
+            figma.notify('Processing large dataset. Memory: ' + memoryInfo.used + 'MB', { timeout: 3000 });
             
             // Throw error if memory usage is critical
             if (throwOnExceed && used > (MEMORY_WARNING_THRESHOLD * 1.5)) {
@@ -218,7 +218,7 @@ async function resolveVariableValue(variable, modeId, variablesById, visited = n
         
         // Safety check for deep nesting
         if (visited.size > MAX_ALIAS_DEPTH) {
-            console.warn(`Deep alias nesting detected (depth: ${visited.size}) for variable: "${variable.name}"`);
+            console.warn('Deep alias nesting detected (depth: ' + visited.size + ') for variable: "' + variable.name + '"');
             return null;
         }
         
@@ -238,7 +238,7 @@ async function resolveVariableValue(variable, modeId, variablesById, visited = n
         return value;
     } catch (error) {
         console.error('Error resolving variable:', createStructuredError('resolveVariableValue', error, {
-            // FIX: Replaced optional chaining (?.) with a standard conditional check
+            // FIX: Replaced optional chaining with standard conditional check
             variableName: variable && variable.name,
             modeId,
             visitedCount: visited.size
@@ -303,7 +303,7 @@ function sanitizeName(name, platform = 'css') {
 
     // Handle names starting with numbers for platforms that don't support it
     if (/^\d/.test(cleaned) && ['swift', 'flutter'].includes(platform)) {
-        cleaned = `_${cleaned}`;
+        cleaned = '_' + cleaned;
     }
 
     // Platform-specific transformations with validation
@@ -389,7 +389,7 @@ async function processCollectionsSequentially(collections, variablesByCollection
             await new Promise(resolve => setTimeout(resolve, 0));
             
         } catch (error) {
-            console.error(`Error processing collection ${collection.name}:`, 
+            console.error('Error processing collection ' + collection.name + ':', 
                 createStructuredError('processCollection', error, { collectionId: collection.id }));
             results.push({
                 id: collection.id,
@@ -421,8 +421,9 @@ async function getCollectionsForUI() {
         ]);
         
         if (collectionsResult[0].status === 'rejected') {
-            const reason = collectionsResult[0].reason && collectionsResult[0].reason.message 
-                ? collectionsResult[0].reason.message 
+            const reasonObj = collectionsResult[0].reason;
+            const reason = (reasonObj && reasonObj.message) 
+                ? reasonObj.message 
                 : 'Unknown error';
             throw new NetworkError('Failed to fetch variable collections', { reason });
         }
@@ -504,7 +505,7 @@ async function getCollectionsForUI() {
                         totalVariables: totalVariables
                     };
                 } catch (error) {
-                    console.error(`Error processing collection ${collection.name}:`, 
+                    console.error('Error processing collection ' + collection.name + ':', 
                         createStructuredError('processCollection', error, { collectionId: collection.id }));
                     return {
                         id: collection.id,
@@ -521,7 +522,7 @@ async function getCollectionsForUI() {
             // Update progress for very large datasets
             if (collections.length > 20 || isLargeDataset) {
                 const progress = Math.round((i + chunk.length) / collections.length * 100);
-                figma.notify(`Processing collections: ${progress}%`, { timeout: 500 });
+                figma.notify('Processing collections: ' + progress + '%', { timeout: 500 });
                 
                 // Additional memory check for large datasets
                 if (isLargeDataset) {
@@ -552,7 +553,7 @@ async function getCollectionsForUI() {
             userMessage = 'Network connection failed. Please check your internet connection.';
             structuredError = error;
         } else if (error instanceof MemoryError) {
-            userMessage = `Memory limit exceeded. Try processing fewer collections. (${error.context.used}MB used)`;
+            userMessage = 'Memory limit exceeded. Try processing fewer collections. (' + error.context.used + 'MB used)';
             structuredError = error;
         } else {
             structuredError = createStructuredError('getCollectionsForUI', error);
@@ -604,7 +605,8 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
         const failedRequests = dataResults.filter(result => result.status === 'rejected');
         if (failedRequests.length > 0) {
             const failures = failedRequests.map(f => {
-                return (f.reason && f.reason.message) ? f.reason.message : 'Unknown error';
+                const fReason = f.reason;
+                return (fReason && fReason.message) ? fReason.message : 'Unknown error';
             });
             throw new NetworkError('Failed to fetch Figma data', { failures });
         }
@@ -656,13 +658,13 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
                     const { r, g, b, a } = pv;
                     const toHex = (c) => Math.round(c * 255).toString(16).padStart(2, '0');
                     const colorValue = a < 1 
-                        ? `rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, ${a.toFixed(3)})` 
-                        : `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+                        ? 'rgba(' + Math.round(r * 255) + ', ' + Math.round(g * 255) + ', ' + Math.round(b * 255) + ', ' + a.toFixed(3) + ')' 
+                        : '#' + toHex(r) + toHex(g) + toHex(b);
                     return { value: colorValue, type: 'color', raw: pv };
                 })() : null,
                 
                 'STRING': (v, pv) => activeTokenTypes.includes('text') 
-                    ? { value: `"${pv}"`, type: 'string', raw: pv } : null,
+                    ? { value: '"' + pv + '"', type: 'string', raw: pv } : null,
                     
                 'BOOLEAN': (v, pv) => activeTokenTypes.includes('states') 
                     ? { value: pv, type: 'boolean', raw: pv } : null,
@@ -670,7 +672,7 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
                 'FLOAT': (v, pv) => activeTokenTypes.includes('number') ? (() => {
                     const isUnitless = v.scopes.some(scope => UNITLESS_SCOPES.includes(scope));
                     return { 
-                        value: isUnitless ? pv : `${pv}px`, 
+                        value: isUnitless ? pv : pv + 'px', 
                         type: isUnitless ? 'number' : 'dimension', 
                         raw: pv 
                     };
@@ -725,7 +727,7 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
                 try {
                     return generateFormatContent(designTokens, format);
                 } catch (error) {
-                    console.error(`Failed to generate ${format} format:`, error);
+                    console.error('Failed to generate ' + format + ' format:', error);
                     return null;
                 }
             })
@@ -758,13 +760,13 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
         let structuredError;
         
         if (error instanceof ValidationError) {
-            userMessage = `Validation error: ${error.message}`;
+            userMessage = 'Validation error: ' + error.message;
             structuredError = error;
         } else if (error instanceof ProcessingError) {
-            userMessage = `Processing failed: ${error.message}`;
+            userMessage = 'Processing failed: ' + error.message;
             structuredError = error;
         } else if (error instanceof MemoryError) {
-            userMessage = `Memory limit exceeded: ${error.context.used}MB used. Try selecting fewer collections.`;
+            userMessage = 'Memory limit exceeded: ' + error.context.used + 'MB used. Try selecting fewer collections.';
             structuredError = error;
         } else {
             structuredError = createStructuredError('generateExportData', error, { collectionIds, formats, activeTokenTypes });
@@ -787,7 +789,7 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
 function generateFormatContent(designTokens, format) {
     try {
         let content = '';
-        let filename = `tokens.${format}`;
+        let filename = 'tokens.' + format;
 
         // Recursive function to process tokens for code generation
         const processTokensForCode = (obj, path = []) => {
@@ -813,22 +815,22 @@ function generateFormatContent(designTokens, format) {
                     switch(format) {
                         case 'css': 
                             if (type === 'number') {
-                                lines.push(`  --${names.kebab}: ${rawValue};`);
+                                lines.push('  --' + names.kebab + ': ' + rawValue + ';');
                             } else {
-                                lines.push(`  --${names.kebab}: ${value};`);
+                                lines.push('  --' + names.kebab + ': ' + value + ';');
                             }
                             break;
                         case 'swift':
                             if (type === 'color') {
-                                lines.push(`    static let ${names.camel} = UIColor(red: ${r.toFixed(3)}, green: ${g.toFixed(3)}, blue: ${b.toFixed(3)}, alpha: ${a.toFixed(3)})`);
+                                lines.push('    static let ' + names.camel + ' = UIColor(red: ' + r.toFixed(3) + ', green: ' + g.toFixed(3) + ', blue: ' + b.toFixed(3) + ', alpha: ' + a.toFixed(3) + ')');
                             } else if (type === 'string') {
-                                lines.push(`    static let ${names.camel}: String = ${value}`);
+                                lines.push('    static let ' + names.camel + ': String = ' + value);
                             } else if (type === 'boolean') {
-                                lines.push(`    static let ${names.camel}: Bool = ${rawValue}`);
+                                lines.push('    static let ' + names.camel + ': Bool = ' + rawValue);
                             } else if (type === 'dimension') {
-                                lines.push(`    static let ${names.camel}: CGFloat = ${rawValue}`);
+                                lines.push('    static let ' + names.camel + ': CGFloat = ' + rawValue);
                             } else if (type === 'number') {
-                                lines.push(`    static let ${names.camel}: Double = ${rawValue}`);
+                                lines.push('    static let ' + names.camel + ': Double = ' + rawValue);
                             }
                             break;
                         case 'android':
@@ -838,35 +840,35 @@ function generateFormatContent(designTokens, format) {
                                     const redHex = Math.round(r * 255).toString(16).padStart(2, '0');
                                     const greenHex = Math.round(g * 255).toString(16).padStart(2, '0');
                                     const blueHex = Math.round(b * 255).toString(16).padStart(2, '0');
-                                    lines.push(`    <color name="${names.snake}">#${alphaHex}${redHex}${greenHex}${blueHex}</color>`);
+                                    lines.push('    <color name="' + names.snake + '">#' + alphaHex + redHex + greenHex + blueHex + '</color>');
                                 } else {
-                                    lines.push(`    <color name="${names.snake}">${value}</color>`);
+                                    lines.push('    <color name="' + names.snake + '">' + value + '</color>');
                                 }
                             } else if (type === 'string') {
-                                lines.push(`    <string name="${names.snake}">${rawValue}</string>`);
+                                lines.push('    <string name="' + names.snake + '">' + rawValue + '</string>');
                             } else if (type === 'boolean') {
-                                lines.push(`    <bool name="${names.snake}">${rawValue}</bool>`);
+                                lines.push('    <bool name="' + names.snake + '">' + rawValue + '</bool>');
                             } else if (type === 'dimension') {
                                 if (names.snake.includes('line_height')) {
-                                    lines.push(`    <item name="${names.snake}" type="float">${rawValue}</item>`);
+                                    lines.push('    <item name="' + names.snake + '" type="float">' + rawValue + '</item>');
                                 } else {
-                                    lines.push(`    <dimen name="${names.snake}">${rawValue}dp</dimen>`);
+                                    lines.push('    <dimen name="' + names.snake + '">' + rawValue + 'dp</dimen>');
                                 }
                             } else if (type === 'number') {
-                                lines.push(`    <item name="${names.snake}" type="float">${rawValue}</item>`);
+                                lines.push('    <item name="' + names.snake + '" type="float">' + rawValue + '</item>');
                             }
                             break;
                         case 'flutter':
                             if (type === 'color') {
                                 const alphaHex = Math.round((a !== undefined ? a : 1) * 255).toString(16).padStart(2, '0').toUpperCase();
                                 const hexColor = value.replace('#', '').toUpperCase();
-                                lines.push(`  static const Color ${names.camel} = Color(0x${alphaHex}${hexColor});`);
+                                lines.push('  static const Color ' + names.camel + ' = Color(0x' + alphaHex + hexColor + ');');
                             } else if (type === 'string') {
-                                lines.push(`  static const String ${names.camel} = ${value};`);
+                                lines.push('  static const String ' + names.camel + ' = ' + value + ';');
                             } else if (type === 'boolean') {
-                                lines.push(`  static const bool ${names.camel} = ${rawValue};`);
+                                lines.push('  static const bool ' + names.camel + ' = ' + rawValue + ';');
                             } else if (type === 'dimension' || type === 'number') {
-                                lines.push(`  static const double ${names.camel} = ${rawValue};`);
+                                lines.push('  static const double ' + names.camel + ' = ' + rawValue + ';');
                             }
                             break;
                         case 'tailwind': 
@@ -875,9 +877,9 @@ function generateFormatContent(designTokens, format) {
                 } else { // It's a category
                     const sectionName = key.charAt(0).toUpperCase() + key.slice(1);
                     switch(format) {
-                        case 'swift': lines.push(`\n    // MARK: - ${sectionName}`); break;
-                        case 'flutter': lines.push(`\n  // --- ${sectionName} ---`); break;
-                        case 'css': lines.push(`\n  /* ${sectionName} */`); break;
+                        case 'swift': lines.push('\n    // MARK: - ' + sectionName); break;
+                        case 'flutter': lines.push('\n  // --- ' + sectionName + ' ---'); break;
+                        case 'css': lines.push('\n  /* ' + sectionName + ' */'); break;
                         case 'android': lines.push(`\n    `); break;
                     }
                     lines.push(...processTokensForCode(currentObj, currentPath));
@@ -909,18 +911,18 @@ function generateFormatContent(designTokens, format) {
                 break;
             }
             case 'css': 
-                content = `:root {\n${processTokensForCode(designTokens).join('\n')}\n}`;
+                content = ':root {\n' + processTokensForCode(designTokens).join('\n') + '\n}';
                 break;
             case 'swift': 
-                content = `import UIKit\n\nstruct AppTokens {\n${processTokensForCode(designTokens).join('\n')}\n}`;
+                content = 'import UIKit\n\nstruct AppTokens {\n' + processTokensForCode(designTokens).join('\n') + '\n}';
                 break;
             case 'android':
                 filename = 'resources.xml';
-                content = `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n${processTokensForCode(designTokens).join('\n')}\n</resources>`;
+                content = '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n' + processTokensForCode(designTokens).join('\n') + '\n</resources>';
                 break;
             case 'flutter':
                 filename = 'app_tokens.dart';
-                content = `import 'package:flutter/material.dart';\n\nclass AppTokens {\n  AppTokens._();\n${processTokensForCode(designTokens).join('\n')}\n}`;
+                content = 'import \'package:flutter/material.dart\';\n\nclass AppTokens {\n  AppTokens._();\n' + processTokensForCode(designTokens).join('\n') + '\n}';
                 break;
             case 'tailwind': {
                 filename = 'tailwind.config.js';
@@ -977,7 +979,7 @@ function generateFormatContent(designTokens, format) {
                 };
                 
                 const tailwindTokens = buildTailwindTokens(designTokens);
-                content = `module.exports = {\n  theme: {\n    extend: ${JSON.stringify(tailwindTokens, null, 4)}\n  }\n}`;
+                content = 'module.exports = {\n  theme: {\n    extend: ' + JSON.stringify(tailwindTokens, null, 4) + '\n  }\n}';
                 break;
             }
             default: 
@@ -986,7 +988,7 @@ function generateFormatContent(designTokens, format) {
         
         return { filename, content };
     } catch (error) {
-        console.error(`Error generating ${format} content:`, createStructuredError('generateFormatContent', error, { format }));
+        console.error('Error generating ' + format + ' content:', createStructuredError('generateFormatContent', error, { format }));
         return null;
     }
 }
@@ -1043,7 +1045,7 @@ figma.ui.onmessage = async (msg) => {
                 } catch (error) {
                     if (error instanceof ValidationError) {
                         console.error('URL validation failed:', error.context);
-                        figma.notify(`Invalid URL: ${error.message}`, { error: true });
+                        figma.notify('Invalid URL: ' + error.message, { error: true });
                     } else {
                         console.error('Unexpected URL error:', error);
                         figma.notify('Failed to open URL', { error: true });

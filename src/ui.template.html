@@ -99,18 +99,17 @@ function updateTokenSummary() {
         const iconMap = { color: 'palette', text: 'type', number: 'hash', states: 'toggle-right' };
         const count = appState.globalTokenCounts[type] || 0;
         const isActive = appState.selectedTokenTypes.has(type);
-        return `
-            <div class="token-type-stat ${type} ${isActive ? 'active' : ''} ${count === 0 ? 'disabled' : ''}" data-type="${type}">
-                <i class="icon" data-icon="${iconMap[type]}"></i>
-                <div class="count">${count}</div>
-                <div class="text-label label" style="color: var(--color-text-muted);">${type}</div>
-            </div>`;
+        return '<div class="token-type-stat ' + type + ' ' + (isActive ? 'active' : '') + ' ' + (count === 0 ? 'disabled' : '') + '" data-type="' + type + '">' +
+                '<i class="icon" data-icon="' + iconMap[type] + '"></i>' +
+                '<div class="count">' + count + '</div>' +
+                '<div class="text-label label" style="color: var(--color-text-muted);">' + type + '</div>' +
+            '</div>';
     }).join('');
 
-    DOMElements.tokenSummaryCard.innerHTML = `
-        <div class="text-heading-xl token-count-total">${selectedCount}</div>
-        <div class="text-label token-label">${tokenLabelText}</div> 
-        <div class="token-breakdown">${tokenTypesHTML}</div>`;
+    DOMElements.tokenSummaryCard.innerHTML = 
+        '<div class="text-heading-xl token-count-total">' + selectedCount + '</div>' +
+        '<div class="text-label token-label">' + tokenLabelText + '</div>' + 
+        '<div class="token-breakdown">' + tokenTypesHTML + '</div>';
 }
 
                 function updateExportAndCollections() {
@@ -128,28 +127,26 @@ function updateTokenSummary() {
                         if (count === 0) return '';
                         const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
                         const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
-                        return `<span class="badge small ${colorClassMap[type]} ${!appState.selectedTokenTypes.has(type) ? 'disabled' : ''}"><i class="icon" data-icon="${iconMap[type]}"></i> ${count}</span>`;
+                        return '<span class="badge small ' + colorClassMap[type] + ' ' + (!appState.selectedTokenTypes.has(type) ? 'disabled' : '') + '"><i class="icon" data-icon="' + iconMap[type] + '"></i> ' + count + '</span>';
                     }).join('');
 
-                    return `
-                        <div class="collection-item ${isSelected ? 'selected' : ''}" data-collection-id="${c.id}">
-                            <div class="collection-checkbox" role="checkbox" aria-checked="${isSelected}" tabindex="0" aria-label="Select ${c.name} collection"></div>
-                            <div class="collection-info">
-                                <div class="text-body-lg collection-name">${c.name}</div>
-                                <div class="collection-badge-group">${pillsHTML}</div>
-                            </div>
-                            <div class="text-caption collection-count">${c.totalVariables} tokens</div>
-                        </div>`;
+                    return '<div class="collection-item ' + (isSelected ? 'selected' : '') + '" data-collection-id="' + c.id + '">' +
+                        '<div class="collection-checkbox" role="checkbox" aria-checked="' + isSelected + '" tabindex="0" aria-label="Select ' + c.name + ' collection"></div>' +
+                        '<div class="collection-info">' +
+                            '<div class="text-body-lg collection-name">' + c.name + '</div>' +
+                            '<div class="collection-badge-group">' + pillsHTML + '</div>' +
+                        '</div>' +
+                        '<div class="text-caption collection-count">' + c.totalVariables + ' tokens</div>' +
+                    '</div>';
                 }).join('');
 
-                DOMElements.advancedFilterView.innerHTML = `
-                    <h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Advanced Filtering</h3>
-                    <div class="collection-list" style="margin-top: var(--size-3);">${collectionItemsHTML}</div>
-                    <button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">
-                        <i data-icon="arrow-left"></i>
-                        <span>Back to Quick Export</span>
-                    </button>
-                `;
+                DOMElements.advancedFilterView.innerHTML = 
+                    '<h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Advanced Filtering</h3>' +
+                    '<div class="collection-list" style="margin-top: var(--size-3);">' + collectionItemsHTML + '</div>' +
+                    '<button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">' +
+                        '<i data-icon="arrow-left"></i>' +
+                        '<span>Back to Quick Export</span>' +
+                    '</button>';
             }
             
             // Always update the export button in the quick export view
@@ -163,7 +160,7 @@ function updateTokenSummary() {
             const exportBtn = document.getElementById('export-btn');
             if (exportBtn) {
                 exportBtn.disabled = selectedTokenCount === 0;
-                exportBtn.innerHTML = `<i data-icon="rocket"></i> Export ${selectedTokenCount} Token${selectedTokenCount !== 1 ? 's' : ''}`;
+                exportBtn.innerHTML = '<i data-icon="rocket"></i> Export ' + selectedTokenCount + ' Token' + (selectedTokenCount !== 1 ? 's' : '');
             }
         }
 
@@ -253,18 +250,18 @@ function updateTokenSummary() {
         }
 
         function showProgress() {
-            DOMElements.tokenSummaryCard.innerHTML = `
-                <div class="te-progress-loader" id="pluginProgressLoader" style="height: 194px;">
-                    <div class="te-icon-grid" id="pluginIconGrid"></div>
-                    <div class="te-celebration" id="pluginCelebration"></div>
-                    <div class="te-glass-status" id="pluginGlassStatus">
-                        <p class="te-progress-percent" id="pluginProgressPercent">0%</p>
-                        <div class="te-progress-track">
-                            <div class="te-progress-fill" id="pluginProgressFill"></div>
-                        </div>
-                        <p class="te-status-label" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Warming up</p>
-                    </div>
-                </div>`;
+            DOMElements.tokenSummaryCard.innerHTML = 
+                '<div class="te-progress-loader" id="pluginProgressLoader" style="height: 194px;">' +
+                    '<div class="te-icon-grid" id="pluginIconGrid"></div>' +
+                    '<div class="te-celebration" id="pluginCelebration"></div>' +
+                    '<div class="te-glass-status surface-glass" id="pluginGlassStatus">' +
+                        '<p class="te-progress-percent" id="pluginProgressPercent">0%</p>' +
+                        '<div class="te-progress-track">' +
+                            '<div class="te-progress-fill" id="pluginProgressFill"></div>' +
+                        '</div>' +
+                        '<p class="te-status-label" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Warming up</p>' +
+                    '</div>' +
+                '</div>';
             initializePluginLoader();
         }
         
@@ -280,8 +277,8 @@ function updateTokenSummary() {
             const fillEl = document.getElementById('pluginProgressFill');
             const labelEl = document.getElementById('pluginStatusLabel');
             
-            if (percentEl) percentEl.textContent = `${progress}%`;
-            if (fillEl) fillEl.style.width = `${progress}%`;
+            if (percentEl) percentEl.textContent = progress + '%';
+            if (fillEl) fillEl.style.width = progress + '%';
             
             const currentStage = progressStages.find(s => progress <= s.percent) || progressStages[progressStages.length - 1];
             if (labelEl) labelEl.textContent = currentStage.label;
@@ -318,13 +315,13 @@ function updateTokenSummary() {
         }
         
         function showErrorState(message) {
-            DOMElements.tokenSummaryCard.innerHTML = `
-                <div class="progress-container" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">
-                    <i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: none; margin-bottom: var(--size-2);"></i>
-                    <h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>
-                    <p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">${message}</p>
-                    <button class="btn secondary btn-inline" id="close-error-btn" aria-label="Close error and try again">Try Again</button>
-                </div>`;
+            DOMElements.tokenSummaryCard.innerHTML = 
+                '<div class="progress-container" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">' +
+                    '<i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: none; margin-bottom: var(--size-2);"></i>' +
+                    '<h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>' +
+                    '<p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">' + message + '</p>' +
+                    '<button class="btn secondary btn-inline" id="close-error-btn" aria-label="Close error and try again">Try Again</button>' +
+                '</div>';
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');
             if (closeBtn) closeBtn.onclick = updateTokenSummary;
@@ -370,18 +367,18 @@ function updateTokenSummary() {
                 const icon = document.createElement('i');
                 icon.setAttribute('data-icon', category.icon);
                 cell.appendChild(icon);
-                cell.style.setProperty('--color', `var(${category.color})`);
+                cell.style.setProperty('--color', 'var(' + category.color + ')');
                 
                 const angle = Math.random() * Math.PI * 2;
                 const radius = 120 + Math.random() * 40;
                 
-                cell.style.setProperty('--x-start', `${Math.cos(angle) * radius}px`);
-                cell.style.setProperty('--y-start', `${Math.sin(angle) * radius}px`);
-                cell.style.setProperty('--x-end', `${Math.cos(angle + Math.PI) * radius}px`);
-                cell.style.setProperty('--y-end', `${Math.sin(angle + Math.PI) * radius}px`);
-                cell.style.setProperty('--delay', `${Math.random() * 1.5}s`);
+                cell.style.setProperty('--x-start', Math.cos(angle) * radius + 'px');
+                cell.style.setProperty('--y-start', Math.sin(angle) * radius + 'px');
+                cell.style.setProperty('--x-end', Math.cos(angle + Math.PI) * radius + 'px');
+                cell.style.setProperty('--y-end', Math.sin(angle + Math.PI) * radius + 'px');
+                cell.style.setProperty('--delay', Math.random() * 1.5 + 's');
                 cell.style.setProperty('--scale', 0.6 + Math.random() * 0.5);
-                cell.style.setProperty('--blur', (Math.random() > 0.3) ? '0px' : `${Math.random() * 2}px`);
+                cell.style.setProperty('--blur', (Math.random() > 0.3) ? '0px' : Math.random() * 2 + 'px');
                 
                 grid.appendChild(cell);
             }

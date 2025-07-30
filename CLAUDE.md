@@ -4,453 +4,269 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Token Exporter** is a Figma plugin that transforms design variables into production-ready code across multiple platforms. It's built using vanilla JavaScript and features a component-based build system with automated CSS/JS bundling.
+**Token Exporter** is a Figma plugin that transforms design variables into production-ready code across multiple platforms. Built with vanilla JavaScript, it features a sophisticated build system that handles Figma's strict CSP requirements by inlining all external assets.
 
-## Development Commands
+## Essential Commands
 
-### Core Development
-- `npm run sync` - Main build command that compiles templates, bundles assets, and generates final HTML files
-- `npm run dev` - Watch mode that auto-rebuilds when source files change
-- `npm run build` - Alias for `npm run sync`
+```bash
+# Development
+npm start          # Start development with watch mode
+npm run dev        # Same as npm start - rebuilds on changes
+npm run build      # Build once for production
 
-### Quality Assurance Workflows
-The project includes organized QA workflows for efficient code quality management:
+# Quality Checks
+npm run check      # Essential checks: Figma compatibility, JS lint, CSS architecture (~10s)
+npm run audit      # Comprehensive audit: all checks + reports (~60s)
+npm run format     # Auto-fix CSS formatting issues
 
-**Quick Development Checks (~10 seconds):**
-- `npm run qa:quick` - Essential checks for fast feedback during development
-- `npm test` - Alias for `qa:quick` (figma-check + lint:js + lint:css)
-
-**Comprehensive Analysis (~60 seconds):**
-- `npm run qa:full` - Complete audit sweep with all quality scripts
-- Includes token validation, documentation audit, architecture analysis, and duplicate detection
-
-**CI/CD Pipeline:**
-- `npm run qa:ci` - Production-ready validation with detailed reporting and proper exit codes
-- Distinguishes between critical failures (block deployment) and warnings (log only)
-
-**Manual Testing:**
-- `npm run qa:test` - Opens all HTML test files for browser-based validation
-- Includes responsive, performance, accessibility, and animation tests
-
-### Individual Quality Scripts
-- `npm run lint:js` - Lint JavaScript files using ESLint (note: uses legacy flat config)
-- `npm run lint:css` - Validate CSS architecture and token usage with intelligent linting **[ARCHITECTURAL]**
-- `npm run audit:docs` - Audit documentation completeness for semantic components **[QUALITY]**
-- `npm run figma-check` - Check for Figma plugin compatibility issues **[CRITICAL - Run before testing in Figma]**
-- `npm run validate:tokens` - Validate design token consistency and references
-- `npm run audit:arch` - Analyze architecture patterns and recommendations
-- `npm run analyze:duplicates` - Detect code duplication and optimization opportunities
-- ESLint config includes Figma-specific globals (`figma`, `__html__`)
-- Stylelint is configured for CSS linting (extends `stylelint-config-standard`)
-
-### Design System Architecture
-The CSS follows a **strict two-layer hierarchy**:
-
-**Layer 1: Primitives (`:root` blocks)**
-- Raw values are **legitimate and required** - these define the source of truth
-- Examples: `--brand-primary-lime: #D2FF37;` ✅
-- Only place where "magic numbers" are permitted
-
-**Layer 2: Semantic/Components (outside `:root`)**
-- Must **only consume** primitives via `var()` - raw values are violations
-- Examples: `padding: var(--size-3);` ✅, `padding: 1rem;` ❌
-- The `lint:css` script enforces this architectural rule
-
-### Documentation Audit System
-The project includes automated documentation completeness auditing:
-
-**Component Detection:**
-- Uses intelligent parsing to identify semantic components (`.btn`, `.card`, etc.)
-- Filters out utility classes and implementation details to focus on documentable components
-- Targets only components that warrant individual documentation sections
-
-**Audit Process:**
-- Compares CSS semantic components against HTML documentation sections
-- Reports undocumented components that lack corresponding HTML sections
-- Identifies potentially stale documentation sections without CSS components
-- Uses semantic mapping (e.g., `.btn` → `id="buttons"`) for intelligent matching
-
-**Integration:**
-- `npm run audit:docs` - Run documentation audit independently
-- ✅ **Integrated into pre-commit hooks** for automated enforcement
-
-### Cleanup
-- `npm run clean` - Remove backup files
-
-## Design System Rule Enforcement
-
-**IMPORTANT**: When users request changes that break established design system rules, Claude must flag these requests and suggest system-compliant alternatives. This prevents design drift and maintains consistency.
-
-### Protected Design Rules
-
-**1. Badge Alignment System**
-- **Rule**: Badges must use `justify-content: center` for container alignment
-- **Rationale**: Ensures visual balance and consistent presentation across all badge groups
-- **Protected CSS**: `.badge-showcase { justify-content: center; }`
-
-**2. Standard Container Padding**  
-- **Rule**: Example containers use `var(--size-4)` padding consistently
-- **Rationale**: Maintains visual rhythm and spacing consistency across components
-- **Protected CSS**: `.example-container { padding: var(--size-4); }`
-
-**3. Grid Alignment Classes**
-- **Rule**: Use semantic alignment classes (`.align-top`, `.align-center`, `.align-stretch`)
-- **Rationale**: Provides consistent alignment behavior for mixed-height content
-- **Protected CSS**: Grid alignment utility classes and their behaviors
-
-**4. Responsive Breakpoint System**
-- **Rule**: Standard breakpoints at 768px (mobile), 900px (tablet), 1024px (desktop)
-- **Rationale**: Ensures consistent responsive behavior across all components
-- **Protected CSS**: Media query breakpoint values
-
-**5. Two-Layer Token Architecture** 
-- **Rule**: Raw values only in `:root` blocks, all other CSS must use `var()` tokens
-- **Rationale**: Maintains single source of truth and design system integrity
-- **Protected CSS**: Token usage patterns throughout the system
-
-### Challenge Protocol
-
-When users request rule-breaking changes, Claude should:
-
-1. **Flag the Rule Violation**: 
-   ```
-   "⚠️ This request would break the [specific rule name] design system rule. 
-   Current system uses [current approach] to ensure [rationale]."
-   ```
-
-2. **Explain the Impact**:
-   ```
-   "Changing this would affect consistency across [affected areas] and 
-   potentially create visual inconsistencies."
-   ```
-
-3. **Suggest Compliant Alternatives**:
-   ```
-   "Instead, I recommend [alternative approach] which achieves [user goal] 
-   while maintaining system integrity."
-   ```
-
-4. **Offer Override Option**:
-   ```
-   "If you need to override this rule for a specific use case, please 
-   confirm and I'll implement it with appropriate documentation."
-   ```
-
-### Example Challenge Response
-
-**User Request**: "Make badges left-aligned instead of centered"
-
-**Claude Response**: 
-```
-⚠️ This request would break the Badge Alignment System design rule. 
-Current system uses `justify-content: center` to ensure visual balance 
-and consistent presentation across all badge groups.
-
-Left-aligning badges would create visual inconsistencies, especially 
-in responsive layouts where badge groups wrap.
-
-Instead, I recommend:
-1. Creating a specific `.badge-showcase-left` variant for special cases
-2. Using the existing `.align-top` grid class for top-aligned layouts
-3. Adjusting the badge group structure to achieve your layout goals
-
-Would you like me to implement one of these alternatives, or do you 
-need to override the centering rule for this specific use case?
+# Specific Checks (rarely needed individually)
+npm run check:critical    # Check for breaking changes
+npm run check:all         # All checks including token validation
+npm run lint:a11y  # Run pa11y accessibility tests
 ```
 
-### When to Apply Rules
+## Critical Figma JavaScript Constraints
 
-- **Always challenge** changes to protected CSS patterns
-- **Document exceptions** when overrides are necessary  
-- **Suggest system-compliant alternatives** before implementing changes
-- **Maintain flexibility** for legitimate design evolution
-
-This enforcement helps maintain design system integrity while allowing for thoughtful evolution when needed.
-
-## Architecture
-
-### Build System
-The project uses a sophisticated bash-based build system (`scripts/sync.sh`) that:
-1. Bundles external CSS from `@import` statements by fetching and inlining them
-2. Bundles external JavaScript from `<script src>` tags
-3. Processes HTML templates by injecting component partials using `<!-- @include path/to/partial.html -->` syntax
-4. Assembles final HTML files with all assets embedded inline (required for Figma's CSP restrictions)
-
-### File Structure & Conventions
-
-**Source Files (EDIT THESE):**
-- `docs/design-system.css` - Single source of truth for all styles
-- `src/ui.template.html` - Template for plugin UI
-- `docs/design-system-guide.template.html` - Template for documentation site
-- `src/components/_*.html` - Reusable HTML component partials
-- `src/code.js` - Main plugin logic
-
-**Generated Files (DO NOT EDIT):**
-- `src/ui.html` - Final plugin UI (auto-generated)
-- `docs/design-system-guide.html` - Final documentation site (auto-generated)
-
-### Template System
-- Templates use `<!-- @include path/to/component.html -->` syntax to inject partials
-- All external resources (CSS/JS) are bundled inline due to Figma CSP restrictions
-- Build script automatically processes templates and resolves all includes
-
-### Plugin Architecture
-- Main plugin code in `src/code.js` handles token extraction and export
-- Supports 6 export formats: CSS, Swift, Android XML, Flutter, W3C JSON, Tailwind
-- Features intelligent alias resolution, platform-specific name sanitization, and context-aware unit handling
-- Includes performance monitoring with batch processing and memory management
-
-## Key Technical Constraints
-
-### Figma CSP Restrictions
-- All external CSS/JS must be bundled inline
-- No external `@import` or `<script src>` allowed in final plugin files
-- Build system automatically handles this bundling
-
-### Template Processing
-- Never edit `.html` files directly - they are build artifacts
-- Always edit `.template.html` files and component partials
-- Use the include syntax for component composition
-
-### Development Workflow
-1. Edit source files (CSS, templates, components)
-2. Run `npm run sync` to build
-3. Test in browser (design system guide) and Figma (plugin)
-
-## Code Style & Standards
-
-### JavaScript
-- ES2021+ features supported, but **IMPORTANT**: Figma's JavaScript environment has limitations
-- **Compatibility Requirements:**
-  - **CRITICAL:** Never use optional chaining (`?.`) - causes "Unexpected token ." errors
-  - **CRITICAL:** Always use `catch (error)` with a parameter - `catch { }` syntax is not supported
-  - Use conditional checks instead: `obj && obj.prop` or `obj ? obj.prop : defaultValue`
-  - Modern features like `const`, `let`, `Map`, `Set`, `async/await` work fine
-- ESLint extends `eslint:recommended`
-- Figma and plugin-specific globals are defined: `figma`, `__html__`
-- No unused vars warnings for function arguments
-
-### Modern JavaScript Patterns (Implemented)
-The codebase follows modern JavaScript best practices:
-
-**Error Handling:**
-- Custom error classes: `ValidationError`, `NetworkError`, `ProcessingError`, `MemoryError`
-- Always include context in errors for better debugging
-- Use specific error types rather than generic Error objects
-- Example: `throw new ValidationError('Message', { context: data })`
-
-**Async/Await Patterns:**
-- Use `Promise.allSettled()` instead of `Promise.all()` for better error handling
-- Wrap async operations in try/catch blocks with specific error types
-- Prefer concurrent processing where possible for performance
-
-**Functional Programming:**
-- Use `Object.entries()` instead of `for...in` loops for better performance
-- Prefer `map()`, `filter()`, `reduce()` over manual loops
-- Use array destructuring and spread operator where appropriate
-
-**Data Structures:**
-- Use `Map` for O(1) lookups instead of `Array.find()` for large datasets
-- Create lookup maps for frequently accessed data (variables, collections)
-- Example: `const variablesById = new Map(variables.map(v => [v.id, v]))`
-
-**Input Validation:**
-- Always validate inputs with specific error messages
-- Sanitize user inputs (URLs, names) before processing
-- Use type checking and bounds validation
-- Throw `ValidationError` for invalid inputs with detailed context
-
-### CSS
-- Uses CSS custom properties extensively
-- Built on Shoelace component library and Open Props
-- Follows atomic design principles
-- Alpha values use number notation, color functions use legacy notation
-
-### Component Architecture
-- Single source of truth principle
-- Template-based generation ensures consistency
-- Component partials enable reusability across plugin and documentation
-
-## Testing
-
-No formal testing framework is configured. Testing is done manually:
-- Test plugin functionality in Figma
-- Test UI/design system in browser via generated documentation site
-- Verify build process produces valid output
-
-## Performance Considerations
-
-### Implemented Optimizations
-The plugin includes several performance optimizations:
-- **Batch processing** with configurable batch sizes (`BATCH_SIZE = 100`)
-- **Memory monitoring** with warnings and error thresholds
-- **Chunked operations** for large datasets to prevent UI blocking
-- **Export size limits** (50MB max) to prevent memory issues
-- **Circular reference detection** in alias resolution with depth limits
-
-### Performance Patterns (Implemented)
-**Memory Management:**
-- Use `checkMemoryUsage()` before processing large datasets
-- Configurable memory thresholds: `MEMORY_WARNING_THRESHOLD = 100MB`
-- Throw `MemoryError` for critical memory conditions
-- Yield control with `setTimeout(0)` to prevent UI blocking
-
-**Data Processing:**
-- **Map-based lookups:** Replace `Array.find()` with `Map.get()` for O(1) performance
-- **Sequential processing** for datasets >1000 variables to manage memory
-- **Promise.allSettled()** for concurrent processing with graceful failure handling
-- **Lazy loading** with dataset size thresholds
-
-**Optimization Constants:**
+**NEVER use these features - they cause runtime errors:**
 ```javascript
-const BATCH_SIZE = 100;           // Variables per batch
-const CHUNK_SIZE = 10;            // Collections per chunk  
-const MAX_ALIAS_DEPTH = 100;      // Prevent infinite recursion
-const MEMORY_WARNING_THRESHOLD = 100; // MB threshold
+// ❌ Optional chaining
+obj?.prop                    // → Use: obj && obj.prop
+
+// ❌ Template literal interpolation  
+`Hello ${name}`             // → Use: 'Hello ' + name
+
+// ❌ Catch without parameter
+} catch {                   // → Use: } catch (error) {
 ```
 
-**Best Practices:**
-- Always use `variablesById.get(id)` instead of `allVariables.find(v => v.id === id)`
-- Process large datasets sequentially to prevent memory spikes
-- Monitor memory usage during processing with `checkMemoryUsage()`
-- Use functional patterns for better performance and readability
+## Architecture Overview
 
-## External Dependencies
+### Build System (`scripts/build.js`)
+The build process handles Figma's Content Security Policy restrictions:
+1. **CSS Bundling**: Fetches and inlines all `@import` statements (both CDN and local)
+2. **JavaScript Bundling**: Extracts and inlines external `<script src>` dependencies
+3. **Template Processing**: Resolves `<!-- @include path/to/partial.html -->` directives
+4. **Output Generation**:
+   - `src/ui.html` - Plugin UI with everything inlined (Figma requirement)
+   - `docs/design-system-guide.html` - Documentation site with external CSS link
 
-**Runtime:**
-- Shoelace (web components)
-- Open Props (CSS framework)
-- Lucide (icons)
+### Quality Assurance (`scripts/check.js`)
+Automated checks enforce design system integrity:
+- **Figma Compatibility**: Detects unsupported JavaScript features
+- **CSS Architecture**: Validates two-layer token system
+- **Theme Architecture**: Ensures token-only theming (no component overrides)
+- **Semantic Token Usage**: Flags direct primitive token usage in components
 
-**Development:**
-- ESLint for JavaScript linting
-- Stylelint for CSS linting
-- Nodemon for watch mode
+### Comprehensive Audit (`scripts/audit.js`)
+The audit command runs extensive analysis:
+- **Build Verification**: Ensures templates build correctly
+- **Code Quality**: Figma compatibility, ESLint, CSS architecture
+- **CSS Analysis**: Wallace complexity, cssstats metrics, specificity graphs
+- **Accessibility**: pa11y testing on design guide
+- **Token Validation**: Style Dictionary compatibility checks
+- **Reports**: Generated in `reports/` directory (gitignored)
 
-All external assets are bundled inline during build process.
+## CSS Architecture Rules
 
-## Debugging & Troubleshooting
+### 1. Two-Layer Token System
+```css
+/* Layer 1: Primitives in :root (raw values allowed) */
+:root {
+    --brand-primary: #D2FF37;      /* ✅ Raw value here */
+    --size-4: 1.25rem;             /* ✅ Raw value here */
+}
 
-### Common Issues & Solutions
-
-**1. JavaScript Compatibility Errors:**
-- **Error:** `Syntax error: Unexpected token .` (optional chaining)
-- **Solution:** Replace `obj?.prop` with `obj && obj.prop` or `obj ? obj.prop : defaultValue`
-- **Fix:** Never use `?.` syntax anywhere in the code
-
-- **Error:** `Syntax error: Unexpected token {` (catch blocks)  
-- **Solution:** Always use `catch (error)` with parameter, never `catch {}`
-- **Fix:** Replace `} catch {` with `} catch (error) {`
-
-**2. Performance Issues:**
-- **Problem:** Plugin crashes with large token collections
-- **Solution:** Check memory usage and use sequential processing
-- **Debug:** Look for `MemoryError` in console, use `checkMemoryUsage()`
-
-**3. Build Failures:**
-- **Problem:** Generated HTML files are empty or broken
-- **Solution:** Check that external resources are fetchable
-- **Debug:** Run `npm run sync` and check for failed fetches in output
-
-**4. Validation Errors:**
-- **Error:** `ValidationError` with specific context
-- **Solution:** Check the error context for detailed information
-- **Debug:** All validation errors include context object with debugging info
-
-### Debugging Best Practices
-
-**Error Context:**
-All custom errors include context for debugging:
-```javascript
-catch (error) {
-    if (error instanceof ValidationError) {
-        console.error('Validation failed:', error.context);
-        // Context contains: received, expected, validValues, etc.
-    }
+/* Layer 2: Components (MUST use tokens) */
+.btn {
+    background: var(--brand-primary);  /* ✅ Token reference */
+    padding: var(--size-4);           /* ✅ Token reference */
+    /* padding: 1.25rem; */           /* ❌ NEVER raw values */
 }
 ```
 
-**Memory Debugging:**
-```javascript
-const memInfo = checkMemoryUsage();
-if (memInfo) {
-    console.log(`Memory: ${memInfo.used}MB / ${memInfo.limit}MB`);
+### 2. Theme Architecture
+
+**CRITICAL: Only ONE theme section per theme**
+- Each theme (light/dark) must have exactly ONE `[data-theme="X"]` section
+- Multiple theme sections cause CSS specificity conflicts and break theme switching
+- The build system will FAIL if duplicate theme sections are detected
+
+```css
+/* ✅ CORRECT: Single theme section with all tokens */
+[data-theme="light"] {
+    --btn-primary-bg: var(--brand-primary);
+    --btn-primary-text: var(--gray-warm-9);
+    --card-bg: var(--gray-warm-0);
+    --surface-bg: var(--gray-cool-1);
+    /* ALL light theme tokens in ONE place */
+}
+
+/* ✅ CORRECT: Token-only theming */
+.btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+}
+
+/* ❌ WRONG: Multiple theme sections */
+[data-theme="light"] { --btn-primary-bg: #value; }
+/* ... other CSS ... */
+[data-theme="light"] { --card-bg: #value; }  /* NEVER - causes conflicts */
+
+/* ❌ WRONG: Component-specific overrides */
+[data-theme="light"] .btn-primary {
+    background: #D2FF37;  /* Never do this */
 }
 ```
 
-**Performance Profiling:**
-- Use browser dev tools Performance tab when testing in documentation site
-- Monitor console for memory warnings during large exports
-- Check network requests during build process for failed external resource fetches
+**Prevention:**
+- Run `npm run check` - fails build if duplicate sections found
+- Check shows line numbers of duplicate sections for easy fixing
+- Consolidate all theme tokens into single section per theme
 
-### Development Tips
+### 3. Brand Colors
+- `--brand-primary`: Always lime (#D2FF37) - used for primary actions, focus states
+- `--brand-secondary`: Theme-aware - lime (#EF0) in dark mode, pink (#FF1493) in light mode
 
-**Quick Testing Workflow (RECOMMENDED):**
-1. Make changes to `src/code.js`
-2. **Run `npm run figma-check`** - This catches compatibility issues instantly
-3. If compatibility check passes, run `npm run sync`
-4. Reload plugin in Figma (no need to reinstall)  
-5. Test with small token collection first
+## File Structure
 
-**Script Testing Before Commits:**
-When adding or modifying npm scripts in `package.json`:
-1. **Test critical scripts manually** before committing:
-   - `npm start` - Verify universal entry point works
-   - `npm run sync` - Ensure build process completes
-   - `npm run format` - Check CSS auto-fix functionality
-2. **Update README.md** to reflect any script changes
-3. **Document new scripts** with clear descriptions of their purpose
-4. **Avoid "unsafe" naming** - use descriptive names like `sync:skip-checks`
+**Edit These Source Files:**
+- `docs/design-system.css` - All styles (single source of truth)
+- `src/ui.template.html` - Plugin UI template
+- `docs/design-system-guide.template.html` - Documentation template
+- `src/components/_*.html` - Reusable HTML partials
+- `src/code.js` - Plugin logic (6 export formats)
 
-**Figma Compatibility Checker:**
-- **Purpose:** Validates code for Figma plugin environment issues before testing
-- **Usage:** `npm run figma-check` or `npm run figma-check path/to/file.js`
-- **Detects:** Optional chaining (`?.`), catch blocks without parameters, modern syntax issues
-- **Benefits:** Saves time by catching errors before Figma reload cycle
+**Never Edit (Auto-Generated):**
+- `src/ui.html` - Built plugin UI
+- `docs/design-system-guide.html` - Built documentation
 
-**Error Investigation:**
-- All errors include timestamps and operation context
-- Check both browser console and Figma console for different error types
-- Use `console.error()` with structured error objects for better debugging
+## Development Workflow
 
-## Critical CSS Limitations & Common Mistakes
+1. **Make changes** to source files (.template.html, .css, components)
+2. **Build**: `npm run build` (or use `npm run dev` for auto-rebuild)
+3. **Validate**: `npm run check` for quick verification
+4. **Test**:
+   - Browser: Open `docs/design-system-guide.html`
+   - Figma: Reload plugin (no reinstall needed)
 
-### **NEVER: CSS Variables in Media Queries**
-**❌ THIS DOES NOT WORK:**
-```css
-:root { --breakpoint-lg: 1024px; }
-@media (width <= var(--breakpoint-lg)) { /* BROKEN - CSS spec doesn't support this */ }
+## Plugin Export Formats
+
+The plugin (`src/code.js`) exports to 6 formats:
+- **CSS**: W3C custom properties
+- **Swift**: iOS native format
+- **Android XML**: Android resources
+- **Flutter**: Dart constants
+- **JSON**: W3C Design Token Standard
+- **Tailwind**: Theme configuration
+
+## Performance Optimizations
+
+For large token collections (>1000 variables):
+```javascript
+const BATCH_SIZE = 100;              // Process in chunks
+const MEMORY_WARNING_THRESHOLD = 100; // MB before warning
+const MAX_EXPORT_SIZE = 50;          // MB export limit
 ```
 
-**✅ CORRECT APPROACH:**
-```css
-@media (width <= 1024px) { /* Use hardcoded pixels in media queries */ }
+## Common Issues & Solutions
+
+### JavaScript Errors in Figma
+- **"Unexpected token ."** → Replace `obj?.prop` with `obj && obj.prop`
+- **"Unexpected token {"** → Use `catch (error)` not `catch {`
+- Check with: `npm run check`
+
+### CSS Architecture Violations
+- **Direct color references** → Use semantic tokens
+- **Raw values in components** → Move to tokens
+- **Theme overrides on components** → Use token-only approach
+
+### Build Issues
+- **Empty HTML output** → Check external resource URLs
+- **Missing styles** → Verify CSS imports are accessible
+- **Plugin not updating** → Hard refresh Figma (Cmd+R/Ctrl+R)
+
+## Vendor Dependencies
+
+Open Props CSS framework is vendored locally in `vendor/open-props/`:
+- `open-props.style.css` - Core styles
+- `open-props.normalize.css` - CSS reset
+- `open-props.buttons.css` - Button utilities
+
+**Important**: The `.min.css` files (e.g., `open-props.min.css`) must be kept even though they're identical to source files. The build system expects these minified versions, and `docs/design-system.css` imports them specifically. Do not delete or gitignore these files.
+
+## Code Style Rules
+
+**CRITICAL: Write clean code without comments unless absolutely critical**
+- DO NOT add explanatory comments to CSS, JavaScript, or HTML
+- DO NOT add "helpful" inline comments explaining what code does
+- DO NOT add TODO comments unless explicitly requested
+- ONLY add comments if they are critical for Figma compatibility warnings or security notes
+- EXCEPTIONS - Keep these comment types:
+  - **Section header comments** in CSS (e.g., `/* Button tokens */`, `/* FAQ tokens */`)
+  - **ASCII art headers** - They add personality and visual organization
+  - **Build markers** (e.g., `/* @docs-only-start */`, `/* @plugin-only-end */`)
+
+## Critical Elements Protection
+
+The `scripts/critical-elements-check.js` validates that changes don't break:
+- Icon visibility and rendering
+- Theme switching functionality
+- Dangerous CSS selectors that could affect plugin UI
+- JavaScript initialization patterns
+
+## Testing Strategy
+
+No formal test framework - rely on:
+1. **Automated checks**: `npm run check` / `npm run audit`
+2. **Manual testing**: Browser for UI, Figma for functionality
+3. **Visual regression**: Compare before/after in design guide
+
+## Pre-commit Validation
+
+Husky runs automated checks before commits:
+- CSS files → Architecture linting
+- JavaScript → Figma compatibility + ESLint
+- Templates → Documentation audit
+
+Configure in `package.json` under `lint-staged`.
+
+## CRITICAL: Color System Debugging Guide
+
+If the Color System breaks (empty container, JavaScript as text, stuck scrolling), check these:
+
+### 1. JavaScript Rendering as Text
+**Symptom**: JavaScript code appears as plain text below the footer
+**Cause**: Build system is injecting HTML content into JavaScript strings
+**Fix**: Never use `@include` directives inside JavaScript strings. The build system will replace them with raw HTML, breaking the string syntax.
+
+### 2. "Cannot read properties of undefined" Errors
+**Symptom**: Color System shows error about reading 'forEach' of undefined
+**Cause**: Some sections (like theme overview) don't have a `tokens` array
+**Fix**: Always check if `section.tokens` exists before iterating:
+```javascript
+if (section.tokens && section.tokens.length > 0) {
+    section.tokens.forEach(item => { ... });
+}
 ```
 
-**Why:** CSS variables cannot be used in media query declarations. This is a fundamental CSS specification limitation, not a browser support issue.
+### 3. Tab Panels Not Showing
+**Symptom**: Tabs appear but panels are always hidden
+**Cause**: CSS expects `aria-hidden="false"` but JavaScript only sets `.active` class
+**Fix**: Remove any CSS rules checking for `aria-hidden`. Use only `.tab-panel.active { display: block; }`
 
-**Prevention:** The `analyze-duplicates` script validates against this mistake.
+### 4. Scrolling Lock / Content Gets Stuck
+**Symptom**: Clicking navigation hides content above, can't scroll properly
+**Cause**: Sidebar with `position: sticky` and `height: 100vh` conflicts with content
+**Fix**: Use `position: fixed` for sidebar and adjust content margin accordingly
 
-### **Token Architecture Rules**
-1. **Primitives (in `:root`)** - Must use hardcoded values (source of truth)
-2. **Semantic tokens** - Should reference primitives via `var()`
-3. **Components** - Should only consume tokens, never hardcoded values
-4. **Media queries** - Exception: must use hardcoded pixels (CSS limitation)
+### 5. Horizontal Scrolling Issues
+**Symptom**: Page has unwanted horizontal scroll
+**Cause**: Fixed sidebar + 100% width content = overflow
+**Fix**: Use `width: calc(100% - var(--size-sidebar-width))` for content
 
-### **Design System Validation**
-- Run `npm run analyze:duplicates` to check for token violations
-- Script automatically skips `:root` blocks (primitives should stay hardcoded)
-- Script flags hardcoded values in components that should use tokens
-- Script validates media query token usage and warns about unsupported patterns
-
-## Learning Capture Process
-
-When encountering recurring issues or making the same mistake twice:
-
-1. **Document the issue** using `scripts/audits/learning-capture-template.md`
-2. **File in** `docs/learning-captures/[issue-name].md`
-3. **Implement prevention** through documentation, automation, or process changes
-4. **Validate prevention** works before considering the issue resolved
-
-**Existing captures:**
-- `css-variables-media-queries.md` - Why CSS variables don't work in media queries
+### Prevention Tips:
+- Always run `npm run check` before committing
+- Test Color System after any template changes
+- Check browser console for JavaScript errors
+- Never mix @include directives with JavaScript code
+- Keep duplicate CSS rules consolidated

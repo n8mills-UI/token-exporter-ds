@@ -1,29 +1,29 @@
 {
   "name": "token-exporter-ds",
   "version": "1.0.0",
+  "type": "module",
   "description": "![Token Exporter Hero Image](https://res.cloudinary.com/dbmvymdp1/image/upload/v1752106527/Figma_01_sk7ne5.png)",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "start": "npm run dev",
-    "sync": "npm run figma-check && bash scripts/build/sync.sh",
-    "lint:js": "ESLINT_USE_FLAT_CONFIG=false eslint src/code.js",
-    "lint:css": "python3 scripts/audits/lint-css.py docs/design-system.css",
-    "audit:docs": "python3 scripts/audits/audit-documentation.py docs/design-system.css docs/design-system-guide.html",
-    "audit:arch": "node scripts/audits/architectural-advisor.js",
-    "figma-check": "node scripts/audits/figma-compat-check.js",
-    "validate:tokens": "node scripts/audits/validate-tokens.js",
-    "analyze:duplicates": "node scripts/audits/analyze-duplicates.js",
-    "qa:quick": "node scripts/workflows/qa-orchestrator.js quick",
-    "qa:full": "node scripts/workflows/qa-orchestrator.js full",
-    "qa:ci": "node scripts/workflows/qa-orchestrator.js ci",
-    "test": "npm run qa:quick",
-    "dev": "nodemon --watch scripts/ --watch docs/ --watch src/ --ext \"sh,html,css\" --ignore src/ui.html --ignore docs/design-system-guide.html --exec \"npm run sync\"",
-    "build": "npm run sync",
+    "dev": "node scripts/build.js --watch",
+    "build": "node scripts/build.js",
+    "check": "node scripts/check.js",
+    "check:critical": "node scripts/critical-elements-check.js",
+    "check:themes": "node scripts/check-themes.js",
     "format": "stylelint docs/design-system.css --fix",
-    "clean": "rm -f src/ui.html.backup",
-    "prepare": "husky"
+    "audit": "node scripts/audit.js",
+    "prepare": "husky",
+    "_comment": "Individual tools (called by audit script):",
+    "check:all": "node scripts/check.js --all",
+    "tokens:build": "style-dictionary build",
+    "tokens:validate": "node scripts/validate-tokens.js",
+    "analyze:css": "wallace docs/design-system.css",
+    "stats:css": "cssstats docs/design-system.css > reports/css-stats.json",
+    "analyze:specificity": "specificity-graph docs/design-system.css -o reports/specificity.html",
+    "lint:a11y": "pa11y docs/design-system-guide.html"
   },
   "repository": {
     "type": "git",
@@ -37,12 +37,18 @@
   },
   "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme",
   "devDependencies": {
+    "cssstats": "^4.0.5",
     "eslint": "^9.31.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "nodemon": "^3.1.10",
+    "open-props": "^1.7.16",
+    "pa11y": "^6.2.3",
+    "specificity-graph": "^0.1.7",
+    "style-dictionary": "^3.9.2",
     "stylelint": "^16.21.1",
-    "stylelint-config-standard": "^38.0.0"
+    "stylelint-config-standard": "^38.0.0",
+    "wallace-cli": "^1.1.0"
   },
   "dependencies": {
     "axios": "^1.11.0"
@@ -50,17 +56,22 @@
   "lint-staged": {
     "docs/design-system.css": [
       "python3 scripts/audits/lint-css.py",
-      "bash scripts/audits/lint-staged-audit-warn.sh"
+      "bash scripts/audits/lint-staged-audit-warn.sh",
+      "npm run check:critical"
     ],
     "src/code.js": [
       "node scripts/audits/figma-compat-check.js",
       "npm run lint:js"
     ],
     "docs/design-system-guide.template.html": [
-      "bash scripts/audits/lint-staged-audit-warn.sh"
+      "bash scripts/audits/lint-staged-audit-warn.sh",
+      "npm run check:critical"
     ],
     "src/components/_*.html": [
       "bash scripts/audits/lint-staged-audit-warn.sh"
+    ],
+    "src/ui.template.html": [
+      "npm run check:critical"
     ]
   }
 }

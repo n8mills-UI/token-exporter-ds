@@ -1,15 +1,17 @@
 <!--
-Component: Export Card (Stateful)
-Purpose: Handles both Quick Export and Advanced Filtering states.
-Toggles the global appState.mode and communicates with the Token Summary card.
+Component: Forms Example
+Purpose: Shows Quick Export and Advanced Filtering cards side by side
 -->
-<div class="card export-section is-compact" id="export-card-container">
-    <!-- STATE 1: QUICK EXPORT VIEW (Default) -->
-    <div id="quick-export-view">
-        <h3 class="text-label section-title"><i data-icon="send"></i> Quick Export</h3>
-        <div class="format-select-wrapper" style="margin-top: var(--size-3);">
-            <label for="format-select" class="sr-only">Export format</label>
-            <select class="format-select" id="format-select" aria-label="Export format">
+<div class="forms-example-container">
+    <!-- Quick Export Card -->
+    <div class="card export-section is-compact">
+        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
+            <i data-icon="file-text" style="width: var(--icon-md); height: var(--icon-md);"></i>
+            <h4 class="text-label">Quick Export</h4>
+        </div>
+        <div class="format-select-wrapper" style="margin-bottom: var(--size-2);">
+            <label for="format-select" class="text-caption" style="display: block; margin-bottom: var(--size-1); color: var(--color-text-secondary);">Export format</label>
+            <select class="format-select" id="format-select">
                 <option value="css" selected>CSS Variables</option>
                 <option value="swift">Swift (iOS)</option>
                 <option value="android">Android XML</option>
@@ -18,18 +20,40 @@ Toggles the global appState.mode and communicates with the Token Summary card.
                 <option value="tailwind">Tailwind Config</option>
             </select>
         </div>
-        <button class="btn btn-primary btn-sm" id="export-btn" aria-label="Export design tokens">
+        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
             <i data-icon="rocket"></i>
             <span>Package Tokens</span>
         </button>
-        <button class="btn btn-secondary btn-sm" id="toggle-advanced-mode" style="margin-top: var(--size-2);" aria-label="Show advanced filter options">
-            <i data-icon="sliders-horizontal"></i>
-            <span>Filters</span>
-        </button>
     </div>
 
-    <!-- STATE 2: ADVANCED FILTERING VIEW (Hidden by default) -->
-    <div id="advanced-filter-view" class="state-hidden">
-        <!-- The collection list will be dynamically injected here by JavaScript -->
+    <!-- Advanced Filtering Card -->
+    <div class="card filter-section is-compact">
+        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
+            <i data-icon="sliders-horizontal" style="width: var(--icon-md); height: var(--icon-md);"></i>
+            <h4 class="text-label">Advanced Filters</h4>
+        </div>
+        <div class="filter-options">
+            <div class="collection-item">
+                <div class="collection-checkbox selected"></div>
+                <div class="collection-info">
+                    <span class="collection-name">Brand Colors</span>
+                    <span class="collection-count">12 tokens</span>
+                </div>
+            </div>
+            <div class="collection-item">
+                <div class="collection-checkbox selected"></div>
+                <div class="collection-info">
+                    <span class="collection-name">Typography</span>
+                    <span class="collection-count">24 tokens</span>
+                </div>
+            </div>
+            <div class="collection-item">
+                <div class="collection-checkbox"></div>
+                <div class="collection-info">
+                    <span class="collection-name">Spacing</span>
+                    <span class="collection-count">16 tokens</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

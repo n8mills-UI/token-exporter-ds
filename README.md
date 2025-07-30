@@ -106,19 +106,19 @@ Manual token exporting from Figma is slow, error-prone, and creates a disconnect
 
 ## 🏗️ Architectural Overview
 
-This project is organized into four distinct conceptual parts:
+This project follows a simple, streamlined architecture:
 
-*   **1. The Core Product (The "What"):** The final, compiled assets delivered to the user.
-    *   `design-system.css`, `ui.html`, `design-system-guide.html`
+*   **Source Files:** Edit these to make changes
+    *   `design-system.css` - All styles
+    *   `src/components/` - Reusable HTML partials
+    *   `*.template.html` - Page templates
 
-*   **2. The Source Code (The "Blueprint"):** The modular, human-readable source files where we work.
-    *   `design-system.css`, `src/components/`, `*.template.html`
+*   **Generated Files:** Auto-built, never edit directly
+    *   `ui.html`, `design-system-guide.html`
 
-*   **3. The Build System (The "Factory"):** The automation that turns the blueprint into the final product.
-    *   `scripts/build/sync.sh`
-
-*   **4. The Quality Assurance System (The "Automated Inspection"):** A suite of specialized scripts that automatically enforce system health, consistency, and best practices.
-    *   `scripts/audits/*`
+*   **Two Master Scripts:** All functionality in 2 files
+    *   `scripts/build.js` - Handles all building and bundling
+    *   `scripts/check.js` - Runs all quality checks
 
 <br>
 
@@ -128,31 +128,66 @@ This project is organized into four distinct conceptual parts:
 
 ## 🛠️ Development Workflow
 
-This project uses a fully automated, component-based architecture. A single build script (`npm run sync`) compiles all source files (CSS and HTML partials) into final, production-ready assets. This creates a **Single Source of Truth** for both styles and component structure, eliminating manual syncing and ensuring the plugin UI and the design system guide are always identical.
+Simple, streamlined development with just 2 master scripts. We've simplified from 20+ scripts down to 2 focused tools that handle everything.
 
 ### The Golden Workflow
 
 1.  **✍️ Edit Source Files**:
-    -   For **styles**, edit `docs/design-system.css`.
-    -   For **shared HTML components**, edit the relevant partial in `src/components/`.
-    -   For **page structure**, edit the `*.template.html` files.
-2.  **🔄 Run the Build Script**: In your terminal, run the single command:
+    -   **Styles**: `docs/design-system.css`
+    -   **Components**: `src/components/_*.html`
+    -   **Templates**: `*.template.html` files
+    
+2.  **🚀 Build**:
     ```bash
-    npm run sync
+    npm run build    # Build once
+    npm run dev      # Watch mode (auto-rebuilds)
     ```
-    _Note: This now automatically runs Figma compatibility checking before building to prevent deployment of incompatible code._
-3.  **👀 Review the Output**:
-    -   Refresh the **generated** `docs/design-system-guide.html` in your browser for a pixel-perfect preview.
-    -   Reload the plugin in Figma for final verification.
+    
+3.  **✅ Check Quality**:
+    ```bash
+    npm run check     # Essential checks (quick ~10s)
+    npm run audit     # EVERYTHING - Full system audit with reports
+    ```
 
 ### 🔍 Quality Assurance
 
-The project includes automated validation to maintain code quality and design system consistency:
+**One command to check everything:**
+```bash
+npm run audit  # Runs ALL quality checks and generates reports
+```
 
-- **Figma Compatibility**: Validates plugin code before deployment
-- **Token Validation**: Ensures all CSS `var()` references are defined
-- **Architecture Linting**: Enforces design system hierarchy
-- **Documentation Audit**: Keeps components and docs in sync
+This single command runs:
+- ✅ Build verification
+- ✅ Code quality checks (Figma compatibility, ESLint, CSS architecture)
+- ✅ Semantic token usage validation
+- ✅ CSS complexity analysis
+- ✅ Accessibility testing
+- ✅ Token validation with Style Dictionary
+- 📊 Generates visual reports in `reports/` folder
+
+For quick checks during development:
+```bash
+npm run check  # Just the essentials (~10 seconds)
+```
+
+### 🎯 The Audit Command - Your One-Stop Quality Check
+
+Don't remember all the tools? Just run:
+```bash
+npm run audit
+```
+
+This runs **everything** automatically:
+- ✅ Builds your project
+- ✅ Checks code quality
+- ✅ Validates CSS architecture
+- ✅ Tests accessibility
+- ✅ Analyzes complexity
+- 📊 Generates visual reports
+
+Reports are saved to the `reports/` folder with:
+- **css-stats.json** - Detailed metrics about your CSS
+- **specificity.html** - Visual graph of CSS specificity
 
 ### ♿ Accessibility Features
 
@@ -173,45 +208,33 @@ The design system is built with accessibility in mind:
 
 ## 📂 Project Structure
 
-The project is organized into source files and build artifacts.
+Clean, simple structure with only what matters:
 ```text
 token-exporter-ds/
 ├── docs/
-│ ├── design-system.css # ✅ EDIT THIS - Source of truth for all styles.
-│ ├── design-system-guide.template.html # ✅ EDIT THIS - Blueprint for the live guide.
-│ └── design-system-guide.html # ❌ DO NOT EDIT - Generated by script.
+│   ├── design-system.css               # ✅ EDIT - All styles
+│   ├── design-system-guide.template.html # ✅ EDIT - Guide template
+│   └── design-system-guide.html        # ❌ Generated - Don't edit
 │
 ├── src/
-│ ├── components/
-│ │ ├── _*.html # ✅ EDIT THIS - Reusable HTML components.
-│ │ └── icons/
-│ │     └── _icon-system.html # ✅ EDIT THIS - Consolidated icon system (60+ icons)
-│ │
-│ ├── ui.template.html # ✅ EDIT THIS - Blueprint for the plugin UI body.
-│ ├── ui.html # ❌ DO NOT EDIT - Generated by script.
-│ └── code.js # ✅ EDIT THIS - Plugin logic.
+│   ├── components/                     # ✅ EDIT - HTML partials
+│   │   ├── _*.html                     # Reusable components
+│   │   └── icons/
+│   │       └── _icon-system.html       # 60+ icons
+│   ├── code.js                         # ✅ EDIT - Plugin logic
+│   ├── ui.template.html                # ✅ EDIT - Plugin UI template
+│   └── ui.html                         # ❌ Generated - Don't edit
 │
-├── scripts/
-│ ├── build/
-│ │ └── sync.sh # The master build script
-│ ├── audits/
-│ │   ├── architectural-advisor.js # Advanced design system architectural analysis + pattern consistency
-│ │   ├── audit-documentation.py # Documentation completeness audit
-│ │   ├── analyze-duplicates.js # Token duplication analysis (basic)
-│ │   ├── figma-compat-check.js # Figma compatibility validator
-│ │   ├── lint-css.py # CSS architecture linting
-│ │   └── validate-tokens.js # CSS token reference validator
-│ └── workflows/
-│     └── qa-orchestrator.js # QA workflow management system
-│ 
-├── _sandbox/ # Personal testing files (ignored by git)
-├── .gitignore
-├── CLAUDE.md # Project instructions for Claude Code
-├── LICENSE
-├── manifest.json
-├── package-lock.json
-├── package.json
-└── README.md # This file.
+├── vendor/                             # Local dependencies
+│   └── open-props/                     # CSS framework files
+│
+├── scripts/                            # Just 2 master scripts!
+│   ├── build.js                        # All build operations
+│   └── check.js                        # All quality checks
+│
+├── manifest.json                       # Figma plugin config
+├── package.json                        # 7 simple npm commands
+└── CLAUDE.md                           # AI assistant instructions
 ```
 
 
@@ -225,24 +248,35 @@ token-exporter-ds/
 
 1.  **Fork & Clone** the repository.
 2.  **Install Dependencies**: Run `npm install` to set up the project.
-3.  **Run the Initial Build**: Run `npm run sync` to generate the initial HTML files.
+3.  **Run the Initial Build**: Run `npm run build` to generate the initial HTML files.
 4.  **Import into Figma**:
     -   Open the Figma Desktop app.
     -   Go to `Plugins` > `Development` > `Import plugin from manifest...`
     -   Select the local `manifest.json` file from this project.
 5.  **Development Workflow**:
-    -   Edit the source files (`.css`, `.template.html`, `_*.html`, `code.js`).
-    -   Run `npm run figma-check` to validate Figma compatibility (optional - automatically runs with sync).
-    -   Run `npm run sync` to build your changes.
-    -   Reload the plugin in Figma to test.
+    -   Edit source files (CSS, templates, components)
+    -   Run `npm run build` to compile changes
+    -   Or use `npm run dev` for auto-rebuild on file changes
+    -   Reload the plugin in Figma to test
 
-### Essential Commands
+### 🎯 Essential Commands
+
+Just 5 commands to remember:
 
 ```bash
-npm run sync     # Build the project
-npm run dev      # Watch mode for development
-npm test         # Run quality checks
+npm start         # Start development (watch mode)
+npm run build     # Build the project
+npm run check     # Quick quality check (~10s)
+npm run audit     # Full audit with reports (~60s)
+npm run format    # Auto-fix CSS issues
 ```
+
+**That's it!** The `audit` command runs all the industry-standard tools:
+- Wallace (CSS complexity)
+- CSS Stats (metrics)
+- Pa11y (accessibility)
+- Style Dictionary (token validation)
+- Plus all our custom checks
 
 
 <br>
@@ -284,9 +318,8 @@ For major changes, please open an issue first to discuss what you would like to 
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+
 ---
-
-
 
 
 

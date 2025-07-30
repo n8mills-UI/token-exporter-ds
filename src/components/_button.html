@@ -1,0 +1,195 @@
+<!-- 
+===================================================================
+BUTTON COMPONENT - SINGLE SOURCE OF TRUTH
+===================================================================
+Unified button system following design system principles:
+- Standard buttons (primary, secondary, tertiary)
+- Icon-only buttons (social, actions)
+- Size variants (sm, md, lg)
+- State management (hover, active, disabled)
+=================================================================== 
+-->
+
+<!-- SECTION: Standard Buttons -->
+<div class="component-section" id="standard-buttons">
+    <h3 class="component-title">Standard Buttons</h3>
+    
+    <!-- Primary Button -->
+    <div class="example-wrapper">
+        <label class="example-label">Primary</label>
+        <div class="button-showcase">
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary btn-md">Medium</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+    </div>
+
+    <!-- Secondary Button -->
+    <div class="example-wrapper">
+        <label class="example-label">Secondary</label>
+        <div class="button-showcase">
+            <button class="btn btn-secondary btn-sm">Small</button>
+            <button class="btn btn-secondary btn-md">Medium</button>
+            <button class="btn btn-secondary btn-lg">Large</button>
+        </div>
+    </div>
+
+    <!-- Tertiary Button -->
+    <div class="example-wrapper">
+        <label class="example-label">Tertiary</label>
+        <div class="button-showcase">
+            <button class="btn btn-tertiary btn-sm">Small</button>
+            <button class="btn btn-tertiary btn-md">Medium</button>
+            <button class="btn btn-tertiary btn-lg">Large</button>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION: Buttons with Icons -->
+<div class="component-section" id="buttons-with-icons">
+    <h3 class="component-title">Buttons with Icons</h3>
+    
+    <!-- Icon + Text Buttons -->
+    <div class="example-wrapper">
+        <label class="example-label">Icon + Text</label>
+        <div class="button-showcase">
+            <button class="btn btn-primary btn-sm"><span class="icon" data-icon="figma"></span> Small</button>
+            <button class="btn btn-primary btn-md"><span class="icon" data-icon="figma"></span> Medium</button>
+            <button class="btn btn-primary btn-lg"><span class="icon" data-icon="figma"></span> Large</button>
+        </div>
+    </div>
+
+    <!-- Primary with Icons -->
+    <div class="example-wrapper">
+        <label class="example-label">Primary Actions</label>
+        <div class="button-showcase">
+            <a href="#" class="btn btn-primary btn-gradient-brand btn-no-borders btn-shadow-none btn-bright btn-md">
+                <span class="icon" data-icon="figma"></span> Get the Plugin
+            </a>
+            <button class="btn btn-primary btn-md">
+                <span class="icon" data-icon="rocket"></span> Launch Demo
+            </button>
+            <button class="btn btn-primary btn-md">
+                <span class="icon" data-icon="code"></span> View Code
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION: Icon-Only Buttons -->
+<div class="component-section" id="icon-only-buttons">
+    <h3 class="component-title">Icon-Only Buttons</h3>
+    
+    <!-- Social Icons -->
+    <div class="example-wrapper">
+        <label class="example-label">Social Links</label>
+        <div class="icon-only-showcase">
+            <a href="#" class="btn btn-icon btn-sm" title="GitHub">
+                <span class="icon" data-icon="github"></span>
+            </a>
+            <a href="#" class="btn btn-icon btn-md" title="GitHub">
+                <span class="icon" data-icon="github"></span>
+            </a>
+            <a href="#" class="btn btn-icon btn-lg" title="GitHub">
+                <span class="icon" data-icon="github"></span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Action Icons -->
+    <div class="example-wrapper">
+        <label class="example-label">Actions</label>
+        <div class="icon-only-showcase">
+            <button class="btn btn-icon btn-md" title="Settings">
+                <span class="icon" data-icon="settings"></span>
+            </button>
+            <button class="btn btn-icon btn-md" title="External Link">
+                <span class="icon" data-icon="external-link"></span>
+            </button>
+            <button class="btn btn-icon btn-md" title="Close">
+                <span class="icon" data-icon="x"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Full Social Set -->
+    <div class="example-wrapper">
+        <label class="example-label">Complete Social Set</label>
+        <div class="social-links">
+            <a href="https://github.com" class="btn btn-icon btn-md" title="GitHub">
+                <span class="icon" data-icon="github"></span>
+            </a>
+            <a href="https://linkedin.com" class="btn btn-icon btn-md" title="LinkedIn">
+                <span class="icon" data-icon="linkedin"></span>
+            </a>
+            <a href="https://figma.com" class="btn btn-icon btn-md" title="Figma">
+                <span class="icon" data-icon="figma"></span>
+            </a>
+            <a href="#" class="btn btn-icon btn-md" title="Portfolio">
+                <span class="icon" data-icon="briefcase"></span>
+            </a>
+            <a href="mailto:example@email.com" class="btn btn-icon btn-md" title="Email">
+                <span class="icon" data-icon="mail"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION: Button States -->
+<div class="component-section" id="button-states">
+    <h3 class="component-title">Button States</h3>
+    
+    <!-- Disabled States -->
+    <div class="example-wrapper">
+        <label class="example-label">Disabled</label>
+        <div class="button-showcase">
+            <button class="btn btn-primary btn-md" disabled>Primary</button>
+            <button class="btn btn-secondary btn-md" disabled>Secondary</button>
+            <button class="btn btn-icon btn-md" disabled title="Disabled">
+                <span class="icon" data-icon="settings"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading States -->
+    <div class="example-wrapper">
+        <label class="example-label">Loading</label>
+        <div class="button-showcase">
+            <button class="btn btn-primary btn-md is-loading">
+                <span class="icon" data-icon="loader"></span> Processing...
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION: Special Buttons -->
+<div class="component-section" id="special-buttons">
+    <h3 class="component-title">Special Variants</h3>
+    
+    <!-- Close Button -->
+    <div class="example-wrapper">
+        <label class="example-label">Modal Close</label>
+        <button class="btn-close" title="Close">
+            <span class="icon" data-icon="x"></span>
+        </button>
+    </div>
+
+    <!-- Inline Button -->
+    <div class="example-wrapper">
+        <label class="example-label">Inline Link</label>
+        <p>Check out the <a href="#" class="btn btn-sm btn-inline">documentation <span class="icon" data-icon="arrow-right"></span></a> for more details.</p>
+    </div>
+</div>
+
+<!-- USAGE GUIDELINES -->
+<div class="usage-guidelines">
+    <h4 class="guideline-title">Button Usage Guidelines</h4>
+    <ul class="guideline-list">
+        <li><strong>Primary:</strong> Main actions (Save, Submit, Get Started)</li>
+        <li><strong>Secondary:</strong> Alternative actions (Cancel, Learn More)</li>
+        <li><strong>Tertiary:</strong> Low-emphasis actions (Skip, Maybe Later)</li>
+        <li><strong>Icon-Only:</strong> Social links, compact toolbars, close buttons</li>
+        <li><strong>Sizing:</strong> Use md as default, sm for inline/compact, lg for hero CTAs</li>
+        <li><strong>Icons:</strong> Always use <code>&lt;span class="icon" data-icon="name"&gt;&lt;/span&gt;</code></li>
+    </ul>
+</div>

@@ -17,6 +17,7 @@ node_modules/
 
 # Sandbox and experimental directories
 _sandbox/
+src/components/Sandbox/
 
 # Project-specific files to ignore
 integrated-project-roadmap.md
@@ -30,3 +31,44 @@ docs/design-system-guide.html
 # Ignore temporary build files created by our script
 temp_css_bundle.css
 *.temp
+
+# Private testing environment - completely excluded
+tests/
+
+# Generated reports and analysis files
+*-report.json
+*-analysis.json
+
+# Log files
+*.log
+npm-debug.log*
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+dist/
+build/
+
+# Generated reports from audit script
+reports/
+
+# Test tokens (just examples)
+tokens/
+
+# Backup directories (multiple patterns)
+.backups/
+backups/
+*.backup
+*.backup-*
+
+# Test and temporary files
+test-*.html
+fix-*.js
+*-report.txt
+temp-*
+

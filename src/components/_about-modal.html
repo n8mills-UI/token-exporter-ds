@@ -1,39 +1,39 @@
-<!--
-Component: Enhanced About Modal (v3 - Sandbox Integration)
-Purpose: Displays creator info with vortex animation background and glassmorphism effects.
--->
-<div class="about-modal" id="about-modal">
-    <div class="about-modal-container">
-        <div class="vortex-background">
-            <div class="te-icon-grid"></div>
-        </div>
-        <div class="about-modal-glass">
-            <button class="btn-close" aria-label="Close about modal">
-                <i data-icon="x"></i>
-            </button>
-            
-            <div class="profile-group">
-                <div class="about-avatar"></div>
-                <div class="about-header">
-                    <h2 class="about-name">Nate Mills</h2>
-                    <div class="about-title-wrapper">
-                        <p class="about-title-static">Senior UI Designer</p>
-                        <p class="about-title-hover">Senior UI Wizard <span class="wizard-emoji">🧙✨</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-block">
-                <p class="about-description">A 20-year design systems architect who believes in using a little magic to solve big workflow problems.</p>
-                <p class="about-mission">This tool was created to end the error-prone process of manual token exporting, freeing up designers and developers to focus on what they do best.</p>
+<!-- About Modal - Clean Version -->
+<div class="about-modal about-modal-clean" id="about-modal">
+    <div class="about-modal-backdrop"></div>
+    <div class="about-modal-content">
+        <button class="btn btn-icon btn-md about-modal-close" aria-label="Close modal">
+            <i data-icon="x"></i>
+        </button>
+        
+        <div class="about-modal-body">
+            <div class="about-avatar">
+                <img src="https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png" alt="Nate Mills">
             </div>
             
-            <div class="about-links">
-                <a href="https://github.com/n8mills-UI" target="_blank" class="btn-icon" title="GitHub"><i data-icon="github"></i></a>
-                <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn-icon" title="LinkedIn"><i data-icon="linkedin"></i></a>
-                <a href="https://www.figma.com/@mills" target="_blank" class="btn-icon" title="Figma"><i data-icon="figma"></i></a>
-                <a href="https://natemills.me" target="_blank" class="btn-icon" title="Portfolio"><i data-icon="briefcase"></i></a>
-                <a href="mailto:nate@natemills.me" class="btn-icon" title="Email"><i data-icon="mail"></i></a>
+            <h2 class="about-name">Nate Mills</h2>
+            <p class="about-role">Senior UI Designer</p>
+            
+            <p class="about-bio">
+                A 20-year design systems architect who believes in using a little magic to solve big workflow problems.
+            </p>
+            
+            <div class="about-social">
+                <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-md" title="GitHub">
+                    <i data-icon="github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-md" title="LinkedIn">
+                    <i data-icon="linkedin"></i>
+                </a>
+                <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-md" title="Figma">
+                    <i data-icon="figma"></i>
+                </a>
+                <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-md" title="Portfolio">
+                    <i data-icon="briefcase"></i>
+                </a>
+                <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-md" title="Email">
+                    <i data-icon="mail"></i>
+                </a>
             </div>
         </div>
     </div>
