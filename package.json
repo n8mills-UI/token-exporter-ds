@@ -55,23 +55,16 @@
   },
   "lint-staged": {
     "docs/design-system.css": [
-      "python3 scripts/audits/lint-css.py",
-      "bash scripts/audits/lint-staged-audit-warn.sh",
-      "npm run check:critical"
+      "npm run check"
     ],
     "src/code.js": [
-      "node scripts/audits/figma-compat-check.js",
-      "npm run lint:js"
+      "npm run check"
     ],
-    "docs/design-system-guide.template.html": [
-      "bash scripts/audits/lint-staged-audit-warn.sh",
-      "npm run check:critical"
+    "*.template.html": [
+      "npm run check"
     ],
     "src/components/_*.html": [
-      "bash scripts/audits/lint-staged-audit-warn.sh"
-    ],
-    "src/ui.template.html": [
-      "npm run check:critical"
+      "npm run check"
     ]
   }
 }
