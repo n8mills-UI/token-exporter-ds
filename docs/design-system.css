@@ -97,6 +97,12 @@ body {
  --system-updated: "2025-01-11";
  --system-stage: "production";
  
+ /* =========================
+ PLUGIN DIMENSIONS (from code.js)
+ ========================= */
+ --plugin-width: 340px;
+ --plugin-height: 480px;
+ 
  /* ╔══════════════════════════════════════════════════════════════════╗
     ║                    CSS CUSTOM PROPERTIES & TOKENS                ║
     ║                                                                  ║
@@ -137,8 +143,8 @@ body {
  --color-cyan-500: #00D1FF;   /* Bright cyan */
  
  /* Base Colors */
- --color-black: #000000;
- --color-white: #FFFFFF;
+ --color-black: #000;
+ --color-white: #FFF;
  --color-near-black: #1E1E1E;
  
  /* RGB values for opacity mixing */
@@ -186,20 +192,20 @@ body {
  ========================= */
 
  /* Category colors for token types */
- --category-color-cyan: #00D1FF;
- --category-color-purple: #B48CFF;
- --category-color-orange: #FFB86C;
- --category-color-pink: #FF74BC;
+ --color-type-color: #00D1FF;    /* Color values */
+ --color-type-text: #B48CFF;     /* Text/String values */
+ --color-type-number: #FFB86C;   /* Numeric values */
+ --color-type-state: #FF74BC;    /* Boolean/State values */
 
  /* Error colors */
  --red-6: #ff5252;
  --red-6-rgb: 255, 82, 82;
 
  /* RGB values for opacity mixing */
- --category-color-cyan-rgb: 0, 209, 255;
- --category-color-purple-rgb: 180, 140, 255;
- --category-color-orange-rgb: 255, 184, 108;
- --category-color-pink-rgb: 255, 116, 188;
+ --color-type-color-rgb: 0, 209, 255;
+ --color-type-text-rgb: 180, 140, 255;
+ --color-type-number-rgb: 255, 184, 108;
+ --color-type-state-rgb: 255, 116, 188;
  
  /* =========================
  TYPOGRAPHY
@@ -221,6 +227,36 @@ body {
  --opacity-90: 0.9;
  --opacity-100: 1;
 
+ 
+ /* =========================
+ GLASS EFFECT TOKENS
+ ========================= */
+ /* Dark glass effects (for dark backgrounds) */
+ --glass-dark-0: rgba(0, 0, 0, 0);        /* 0% opacity, use with blur only */
+ --glass-dark-5: rgba(0, 0, 0, 0.05);    /* 5% opacity, use with 2px blur */
+ --glass-dark-10: rgba(0, 0, 0, 0.1);    /* 10% opacity, use with 4px blur */
+ --glass-dark-20: rgba(0, 0, 0, 0.2);    /* 20% opacity, use with 8px blur */
+ --glass-dark-40: rgba(0, 0, 0, 0.4);    /* 40% opacity, use with 12px blur */
+ --glass-dark-60: rgba(0, 0, 0, 0.6);    /* 60% opacity, use with 16px blur */
+ --glass-dark-80: rgba(0, 0, 0, 0.8);    /* 80% opacity, use with 20px blur */
+ 
+ /* Light glass effects (for light backgrounds) */
+ --glass-light-0: rgba(255, 255, 255, 0);        /* 0% opacity, use with blur only */
+ --glass-light-5: rgba(255, 255, 255, 0.05);    /* 5% opacity, use with 2px blur */
+ --glass-light-10: rgba(255, 255, 255, 0.1);    /* 10% opacity, use with 4px blur */
+ --glass-light-20: rgba(255, 255, 255, 0.2);    /* 20% opacity, use with 8px blur */
+ --glass-light-40: rgba(255, 255, 255, 0.4);    /* 40% opacity, use with 12px blur */
+ --glass-light-60: rgba(255, 255, 255, 0.6);    /* 60% opacity, use with 16px blur */
+ --glass-light-80: rgba(255, 255, 255, 0.8);    /* 80% opacity, use with 20px blur */
+ 
+ /* Blur values for glass effects */
+ --glass-blur-subtle: 2px;
+ --glass-blur-light: 4px;
+ --glass-blur-medium: 8px;
+ --glass-blur-strong: 12px;
+ --glass-blur-heavy: 16px;
+ --glass-blur-max: 20px;
+
  /* Glass morphism opacities */
  --opacity-glass-10: 0.1;
  --opacity-glass-60: 0.6;
@@ -237,7 +273,8 @@ body {
  --icon-sm: var(--size-4);
  --icon-md: var(--size-5);
  --icon-lg: var(--size-6);
- --icon-xl: var(--size-8);
+ --icon-xl: var(--size-7);
+ --icon-xlg: var(--size-8); /* 48px - NEW */
  --icon-xxl: var(--size-9);
  --icon-3xl: var(--size-12);
  --icon-4xl: var(--size-15);
@@ -248,9 +285,9 @@ body {
  --font-size-responsive-tiny: clamp(0.45rem, 2.2vw, 0.65rem); /* Responsive tiny text */
 
  /* Icon stroke weight tokens */
- --icon-stroke-thin: 1;
+ --icon-stroke-thin: 1.5;
  --icon-stroke-regular: 2;
- --icon-stroke-bold: 3;
+ --icon-stroke-bold: 2.5;
  
  /* Icon SVG definitions as custom properties (source of truth) */
  --icon-svg-type: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 7 4 4 20 4 20 7'/><line x1='9' y1='20' x2='15' y2='20'/><line x1='12' y1='4' x2='12' y2='20'/></svg>");
@@ -288,6 +325,7 @@ body {
  --color-backdrop-rgb: 0, 0, 0; /* Black for dark theme */
  --scale-sm: 1.05;
 
+
  /* ╔══════════════════════════════════════════════════════════════════╗
     ║                   2. SEMANTIC TOKENS (ALIASES)                   ║
     ║          Contextual usage of primitives - The "how" & "when"     ║
@@ -301,14 +339,58 @@ body {
  --brand-accent: #00CED1;                       /* Dark Turquoise - Accent color */
  --brand-text-dark: var(--color-near-black);   /* Text on light backgrounds */
  
- /* Gradient semantics - Primary + Accent as hero gradient */
- --brand-gradient-primary: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
- --brand-gradient-secondary: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --brand-gradient-vibrant: linear-gradient(180deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --brand-gradient-logo: linear-gradient(180deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --brand-gradient-horizontal: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
- --brand-gradient-diagonal: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
- --brand-gradient-lime: var(--brand-gradient-secondary); /* Alias - now lime to pink */
+  /* =========================
+ GRADIENTS
+ ========================= */
+ --brand-gradient-primary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+ --brand-gradient-secondary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --brand-gradient-accent: linear-gradient(135deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --brand-gradient-highlight: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+
+ /* =========================
+ GRADIENT DIRECTIONAL VARIANTS
+ ========================= */
+ /* Primary gradient (lime to turquoise) - 8 directions */
+ --gradient-primary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-accent) 100%);     /* Bottom to Top */
+ --gradient-primary-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--brand-accent) 100%);   /* BR to TL */
+ --gradient-primary-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-accent) 100%);   /* Left to Right */
+ --gradient-primary-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* BL to TR */
+ --gradient-primary-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* Top to Bottom (default) */
+ --gradient-primary-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* TL to BR */
+ --gradient-primary-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* Right to Left */
+ --gradient-primary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* TR to BL */
+ 
+ /* Secondary gradient (lime to pink) - 8 directions */
+ --gradient-secondary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ --gradient-secondary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+ 
+ /* Accent gradient (pink to turquoise) - 8 directions */
+ --gradient-accent-0: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-45: linear-gradient(45deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-90: linear-gradient(90deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-135: linear-gradient(135deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-180: linear-gradient(180deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-225: linear-gradient(225deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-270: linear-gradient(270deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-315: linear-gradient(315deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ 
+ /* Highlight gradient (lime to yellow) - 8 directions */
+ --gradient-highlight-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ --gradient-highlight-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+
+
  
  /* RGB semantic aliases for mixing */
  --brand-primary-rgb: 210, 255, 55;            /* Lime RGB */
@@ -347,7 +429,7 @@ body {
  INTERACTIVE & STATUS COLORS
  ========================= */
  --color-status-success: var(--brand-primary);
- --color-status-warning: var(--category-color-orange); /* Optional, for future use */
+ --color-status-warning: var(--color-type-number); /* Optional, for future use */
  --color-status-error: var(--color-text-muted); /* For "not applicable" state */
 
 /* Interactive surface states */
@@ -369,7 +451,7 @@ body {
  ========================= */
 
  /* Button tokens */
- --btn-primary-bg: var(--brand-gradient-logo);
+ --btn-primary-bg: var(--gradient-highlight-90);
  --btn-primary-text: var(--gray-warm-9);
  --btn-primary-hover-filter: brightness(1.1);
  --btn-primary-focus-ring: var(--focus-ring);
@@ -417,7 +499,7 @@ body {
  --sun-icon-color: rgb(255, 255, 255, 0.3);
  --moon-icon-color: rgb(0, 0, 0, 0.1);
  --theme-toggle-bg: var(--gray-warm-8);
- --theme-toggle-gradient: linear-gradient(180deg, #D2FF37 0%, #00CED1 100%); /* Vertical for dark mode */
+ --theme-toggle-gradient: var(--gradient-accent-90); /* Pink to turquoise for dark mode */
  
  /* FAQ tokens */
  --faq-bg: var(--surface-2);
@@ -432,7 +514,7 @@ body {
  
  /* Progress tokens */
  --progress-bg: var(--surface-3);
- --progress-fill: var(--brand-gradient-lime);
+ --progress-fill: var(--gradient-primary-90); /* Use horizontal gradient for progress bars */
  
  /* Gradient text tokens */
  --gradient-text-bg: var(--brand-gradient-lime);
@@ -576,8 +658,8 @@ body {
  --design-section-border: var(--color-border-subtle);
  
  /* Tabs */
- --tab-active-color: var(--brand-secondary);
- --tab-active-border: var(--brand-secondary);
+ --tab-active-color: var(--brand-primary);
+ --tab-active-border: var(--brand-primary);
  
  /* Checkerboard */
  --checkerboard-color-1: var(--surface-3);
@@ -629,10 +711,10 @@ body {
  ========================= */
  --brand-primary-alpha-10: rgb(var(--brand-primary-rgb), 0.1);
  --brand-primary-alpha-20: rgb(var(--brand-primary-rgb), 0.2);
- --category-color-cyan-alpha-10: rgb(var(--category-color-cyan-rgb), 0.1);
- --category-color-purple-alpha-10: rgb(var(--category-color-purple-rgb), 0.1);
- --category-color-orange-alpha-10: rgb(var(--category-color-orange-rgb), 0.1);
- --category-color-pink-alpha-10: rgb(var(--category-color-pink-rgb), 0.1);
+ --color-type-color-alpha-10: rgb(var(--color-type-color-rgb), 0.1);
+ --color-type-text-alpha-10: rgb(var(--color-type-text-rgb), 0.1);
+ --color-type-number-alpha-10: rgb(var(--color-type-number-rgb), 0.1);
+ --color-type-state-alpha-10: rgb(var(--color-type-state-rgb), 0.1);
  
  /* Black & White Alpha Tokens */
  --black-alpha-05: rgb(0, 0, 0, 0.05);
@@ -646,13 +728,6 @@ body {
  --white-alpha-30: rgb(255, 255, 255, 0.3);
  --white-alpha-50: rgb(255, 255, 255, 0.5);
  
- /* =========================
- GRADIENTS
- ========================= */
- --brand-gradient-primary: rgb(255, 255, 255, 0.05);
- --brand-gradient-secondary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 50%, var(--brand-primary) 100%);
- --brand-gradient-vibrant: linear-gradient(45deg, var(--brand-accent-green) 0%, var(--brand-primary) 50%, var(--brand-secondary) 100%);
- --brand-gradient-lime: var(--brand-gradient-primary); /* Alias for backwards compatibility */
  
  /* =========================
  TRANSITIONS
@@ -660,6 +735,15 @@ body {
  --transition-fast: all var(--animation-duration-2) var(--ease-3);
  --transition-medium: all var(--animation-duration-3) var(--ease-3);
  --transition-slow: all var(--animation-duration-4) var(--ease-3);
+ 
+ /* =========================
+ GLASS EFFECT SEMANTIC ALIASES
+ ========================= */
+ /* Glass panels by intensity */
+ --glass-panel-zero: var(--glass-dark-0);      /* 0% opacity, blur only */
+ --glass-panel-subtle: var(--glass-dark-20);   /* 20% opacity, 8px blur */
+ --glass-panel-medium: var(--glass-dark-40);   /* 40% opacity, 12px blur */
+ --glass-panel-strong: var(--glass-dark-60);   /* 60% opacity, 16px blur */
  
  /* =========================
  FOCUS STATES
@@ -747,13 +831,13 @@ body {
     /* =========================
        SHADOWS - FLAT DESIGN (NO SHADOWS)
        ========================= */
-    --shadow-1: none;
-    --shadow-2: none;
-    --shadow-3: none;
-    --shadow-4: none;
-    --shadow-5: none;
-    --shadow-brand: none;
-    --shadow-brand-hover: none;
+    --shadow-1: 0 1px 2px rgb(0, 0, 0, 0.05);
+    --shadow-2: 0 2px 4px rgb(0, 0, 0, 0.08);
+    --shadow-3: 0 4px 8px rgb(0, 0, 0, 0.12);
+    --shadow-4: 0 8px 16px rgb(0, 0, 0, 0.16);
+    --shadow-5: 0 12px 24px rgb(0, 0, 0, 0.20);
+    --shadow-brand: 0 4px 15px rgb(var(--brand-secondary-rgb), 0.15);
+    --shadow-brand-hover: 0 6px 20px rgb(var(--brand-secondary-rgb), 0.25);
     
     /* =========================
        FOCUS STATES
@@ -771,10 +855,10 @@ body {
     --brand-secondary-alpha-20: rgb(255, 20, 147, 0.2); /* Pink 20% */
     
     /* Category colors alpha */
-    --category-color-cyan-alpha-10: rgb(0, 209, 255, 0.1);
-    --category-color-purple-alpha-10: rgb(180, 140, 255, 0.1);
-    --category-color-orange-alpha-10: rgb(255, 184, 108, 0.1);
-    --category-color-pink-alpha-10: rgb(255, 116, 188, 0.1);
+    --color-type-color-alpha-10: rgb(0, 209, 255, 0.1);
+    --color-type-text-alpha-10: rgb(180, 140, 255, 0.1);
+    --color-type-number-alpha-10: rgb(255, 184, 108, 0.1);
+    --color-type-state-alpha-10: rgb(255, 116, 188, 0.1);
     
     /* =========================
        STATUS COLORS
@@ -786,10 +870,10 @@ body {
     /* =========================
        CATEGORY COLORS (VIBRANT FOR LIGHT MODE)
        ========================= */
-    --category-color-cyan: #00D1FF;                     /* Keep original vibrancy */
-    --category-color-purple: #B48CFF;                   /* Keep original vibrancy */
-    --category-color-orange: #FFB86C;                   /* Keep original vibrancy */
-    --category-color-pink: #FF74BC;                     /* Keep original vibrancy */
+    --color-type-color: #00D1FF;                        /* Color values - Keep original vibrancy */
+    --color-type-text: #B48CFF;                         /* Text values - Keep original vibrancy */
+    --color-type-number: #FFB86C;                       /* Numeric values - Keep original vibrancy */
+    --color-type-state: #FF74BC;                        /* State values - Keep original vibrancy */
     
     /* =========================
        MISC OVERRIDES
@@ -873,7 +957,7 @@ body {
     --faq-answer-color: var(--color-text-secondary);
     
     /* Empty state tokens */
-    --empty-state-bg: var(--surface-2);
+    --empty-state-bg: var(--surface-1);
     --empty-state-border: var(--color-border-default);
     --empty-state-text: var(--color-text-muted);
     
@@ -1030,7 +1114,13 @@ body {
     --color-pattern-default: var(--color-border-default); /* For decorative patterns */
     
     /* Theme toggle gradient - horizontal for light mode */
-    --theme-toggle-gradient: linear-gradient(90deg, #D2FF37 0%, #FF1493 100%);
+    --theme-toggle-gradient: var(--gradient-highlight-90); /* Lime to yellow for light mode */
+    
+    /* Glass effect semantic aliases for light theme */
+    --glass-panel-zero: var(--glass-light-0);      /* 0% opacity, blur only */
+    --glass-panel-subtle: var(--glass-light-10);   /* 10% opacity, 4px blur */
+    --glass-panel-medium: var(--glass-light-20);   /* 20% opacity, 8px blur */
+    --glass-panel-strong: var(--glass-light-40);   /* 40% opacity, 12px blur */
     
     /* Component-specific overrides for light theme */
     
@@ -1146,10 +1236,6 @@ body {
         color: var(--color-text-secondary);
     }
     
-    .empty-state-category .text-label {
-        color: var(--color-text-muted);
-    }
-    
     /* Component body sections */
     .component-body {
         background: var(--surface-1);
@@ -1168,8 +1254,9 @@ body {
     }
     
     .te-glass-status {
-        background: rgb(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
+        background: var(--glass-panel-medium);
+        backdrop-filter: blur(var(--glass-blur-medium));
+        -webkit-backdrop-filter: blur(var(--glass-blur-medium));
         border: var(--border-size-1) solid var(--surface-3);
         box-shadow: 0 4px 16px rgb(0, 0, 0, 0.1);
     }
@@ -1264,10 +1351,18 @@ body {
     }
     
     /* Stats Container & Enhanced Cards - Consistent Light Mode */
-    .stats-container-glass,
+    .stats-container-glass {
+        background: var(--glass-panel-subtle); /* 10% white opacity */
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border-color: var(--color-border-default);
+        box-shadow: var(--shadow-2);
+    }
+    
     .enhanced-card {
-        background: var(--surface-1);
-        backdrop-filter: none;
+        background: var(--glass-panel-subtle); /* 10% white opacity */
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         border-color: var(--color-border-default);
         box-shadow: var(--shadow-2);
     }
@@ -1376,6 +1471,16 @@ body {
     fill: none;
 }
 
+[data-icon] svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke-regular);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
 /* Icon size variants */
 .icon--xs {
     width: var(--icon-xs);
@@ -1402,6 +1507,12 @@ body {
     height: var(--icon-xl);
 }
 
+.icon--xlg {
+    width: var(--icon-xlg);
+    height: var(--icon-xlg);
+}
+
+
 /* Icon stroke variants */
 .icon--thin svg {
     stroke-width: var(--icon-stroke-thin);
@@ -1412,6 +1523,18 @@ body {
 } /* default */
 
 .icon--bold svg {
+    stroke-width: var(--icon-stroke-bold);
+}
+
+/* Force consistent stroke width in icon showcase to fix thin icons */
+/* Simple stroke weight classes */
+.icon-weight-card.thin svg {
+    stroke-width: var(--icon-stroke-thin);
+}
+.icon-weight-card.regular svg {
+    stroke-width: var(--icon-stroke-regular);
+}
+.icon-weight-card.bold svg {
     stroke-width: var(--icon-stroke-bold);
 }
 
@@ -1456,10 +1579,16 @@ body {
 /* Ensure minimum touch targets on interactive elements */
 @media (width <= 768px) {
     /* Buttons */
-    .btn,
-    button {
+    .btn:not(.btn-icon),
+    button:not(.btn-icon) {
         min-height: 44px; /* Apple HIG minimum touch target */
         min-width: 44px;
+    }
+    
+    /* Icon buttons have their own explicit sizing */
+    .btn-icon {
+        min-height: unset;
+        min-width: unset;
     }
     
     /* Form controls */
@@ -1476,7 +1605,7 @@ body {
     }
     
     /* Clickable elements */
-    a.btn,
+    a.btn:not(.btn-icon),
     .clickable,
     .card-clickable,
     .list-item-clickable {
@@ -1614,10 +1743,10 @@ body {
  .bg-gray-8 { background-color: var(--color-background-primary); }
  .bg-gray-9 { background-color: var(--color-text-default); }
  .bg-transparent { background-color: transparent; }
- .bg-category-cyan { background-color: var(--category-color-cyan); }
- .bg-category-purple { background-color: var(--category-color-purple); }
- .bg-category-orange { background-color: var(--category-color-orange); }
- .bg-category-pink { background-color: var(--category-color-pink); }
+ .bg-color-type-color { background-color: var(--color-type-color); }
+ .bg-color-type-text { background-color: var(--color-type-text); }
+ .bg-color-type-number { background-color: var(--color-type-number); }
+ .bg-color-type-state { background-color: var(--color-type-state); }
  .bg-color-background-primary { background-color: var(--color-background-primary); }
  .bg-color-background-secondary { background-color: var(--color-background-secondary); }
  .bg-color-background-tertiary { background-color: var(--color-background-tertiary); }
@@ -1629,10 +1758,10 @@ body {
  /* Alpha Background Utilities */
  .bg-brand-primary-alpha-10 { background-color: var(--brand-primary-alpha-10); }
  .bg-brand-primary-alpha-20 { background-color: var(--brand-primary-alpha-20); }
- .bg-category-cyan-alpha-10 { background-color: var(--category-color-cyan-alpha-10); }
- .bg-category-purple-alpha-10 { background-color: var(--category-color-purple-alpha-10); }
- .bg-category-orange-alpha-10 { background-color: var(--category-color-orange-alpha-10); }
- .bg-category-pink-alpha-10 { background-color: var(--category-color-pink-alpha-10); }
+ .bg-color-type-color-alpha-10 { background-color: var(--color-type-color-alpha-10); }
+ .bg-color-type-text-alpha-10 { background-color: var(--color-type-text-alpha-10); }
+ .bg-color-type-number-alpha-10 { background-color: var(--color-type-number-alpha-10); }
+ .bg-color-type-state-alpha-10 { background-color: var(--color-type-state-alpha-10); }
 
  /* Text Color Utilities */
  .text-brand-primary { color: var(--brand-primary); }
@@ -1816,8 +1945,8 @@ body {
     pointer-events: none;
 }
 
-/* Make demo button full width like progress demo */
-.example-wrapper #show-modal-btn {
+/* Make demo buttons full width */
+.example-wrapper .btn-secondary {
     width: 100%;
     margin-top: var(--size-4);
 }
@@ -1930,11 +2059,11 @@ body {
     .btn-icon {
         padding: 0;
         border-radius: 50%;
-        background: var(--btn-icon-bg);
+        background: var(--glass-panel-subtle); /* Using glass-10 for consistency */
         color: var(--btn-icon-text);
         border: var(--border-size-1) solid var(--btn-icon-border);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         transition: var(--transition-fast);
     }
 
@@ -2008,7 +2137,6 @@ body {
     .btn-primary:hover:not(:disabled) {
         transform: translateY(calc(-1 * var(--border-size-1)));
         filter: var(--btn-primary-hover-filter);
-        box-shadow: 0 0 12px rgb(var(--brand-primary-rgb), 0.4), 0 4px 8px rgb(var(--brand-primary-rgb), 0.2);
     }
 
     .btn-primary:active:not(:disabled) {
@@ -2421,7 +2549,7 @@ body {
 .force-active.btn-secondary { background: rgb(var(--brand-secondary-rgb), 0.2); transform: scale(0.98); border-color: var(--brand-secondary); }
 .force-hover.btn-tertiary { background: var(--btn-tertiary-hover-bg); color: var(--btn-tertiary-hover-text); border-color: transparent; }
 .force-active.btn-tertiary { background: rgb(var(--brand-secondary-rgb), 0.1); transform: scale(0.98); color: var(--brand-secondary); }
-.force-hover.btn-icon { background: var(--btn-icon-hover-bg); border-color: var(--btn-icon-hover-border); color: var(--btn-icon-hover-border); transform: rotate(15deg); box-shadow: var(--btn-icon-hover-shadow); }
+.force-hover.btn-icon { background: var(--btn-icon-hover-bg); border-color: var(--btn-icon-hover-border); color: var(--btn-icon-hover-border); transform: rotate(15deg); }
 .force-active.btn-icon { transform: rotate(0) scale(0.95); }
 .force-focus { box-shadow: var(--focus-ring); }
 .force-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; transform: none !important; box-shadow: none !important; filter: none !important; }
@@ -2513,9 +2641,6 @@ body {
 }
 
 /* Fix specific problems */
-.nav-links .lucide {
- stroke-width: var(--icon-stroke-thin);
-}
 
 .success-icon,
 .empty-state-icon .lucide {
@@ -2571,7 +2696,9 @@ body {
  margin-left: auto;
  margin-right: auto;
  padding: var(--size-8) var(--size-6) 0; /* Add top padding to separate from hero */
- margin-top: var(--size-0);
+ margin-top: var(--size-4); /* Positive margin to separate from hero */
+ position: relative;
+ z-index: 2;
 }
 
 .intro-group {
@@ -2815,7 +2942,7 @@ body {
  max-width: calc(var(--content-lg) + var(--size-8) * 2); /* ~1200px */
  width: 100%;
  gap: var(--size-6);
- margin: var(--size-8) 0; 
+ margin: var(--size-8) auto; 
 }
 
 .profile-card:hover {
@@ -2831,8 +2958,7 @@ body {
  justify-content: left;
  z-index: 1;
  padding-right: var(--size-6);
- border-right: var(--border-size-1) solid var(--color-border-default);
- min-width: calc(var(--content-xs) + var(--size-8) * 2); /* ~400px */
+ min-width: var(--plugin-width);
  height: 100%;
 }
 
@@ -2936,12 +3062,12 @@ body {
 }
 
 .profile-card .comment { color: var(--color-text-muted); font-style: italic; }
-.profile-card .keyword { color: var(--category-color-pink); }
-.profile-card .variable { color: var(--category-color-cyan); }
+.profile-card .keyword { color: var(--color-type-state); }
+.profile-card .variable { color: var(--color-type-color); }
 .profile-card .string { color: var(--brand-primary); }
 .profile-card .punctuation { color: var(--color-text-default); }
-.profile-card .function { color: var(--category-color-orange); }
-.profile-card .number { color: var(--category-color-purple); }
+.profile-card .function { color: var(--color-type-number); }
+.profile-card .number { color: var(--color-type-text); }
 
 .profile-card .cursor {
  display: inline-block;
@@ -2999,6 +3125,12 @@ body {
 
  .profile-card .code-block {
  text-align: left;
+ }
+ 
+ /* Mobile spacing now handled by content container */
+ 
+ .profile-card .ascii-art-mobile {
+ margin-bottom: var(--size-4); /* Space between ASCII and badge */
  }
 }
 
@@ -3146,12 +3278,9 @@ body {
  opacity: 0.8;
 }
 
-/* Enhanced Status Dot Animation - Brand Green */
+/* Enhanced Status Dot Animation - No Glow */
 .profile-card .status-dot {
  background: var(--brand-primary);
- box-shadow: 
-  0 0 5px var(--brand-primary),
-  0 0 10px var(--brand-primary);
  animation: status-pulse 2s infinite;
 }
 
@@ -3159,18 +3288,11 @@ body {
  0%, 100% { 
   opacity: 1; 
   transform: scale(1);
-  box-shadow: 
-   0 0 5px currentcolor,
-   0 0 10px currentcolor;
  }
 
  50% { 
   opacity: 0.7; 
   transform: scale(1.2);
-  box-shadow: 
-   0 0 8px currentcolor,
-   0 0 15px currentcolor,
-   0 0 20px currentcolor;
  }
 }
 
@@ -3509,7 +3631,7 @@ body {
  background: var(--color-background-primary);
  border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-2);
- padding: var(--size-4);
+ padding: var(--size-4); /* Consistent padding */
  transition: all var(--animation-duration-2) var(--ease-3);
  position: relative;
  display: flex;
@@ -3533,6 +3655,8 @@ body {
 .example-wrapper > .btn {
  align-self: stretch;
  margin-top: var(--size-1);
+ width: 100%;
+ max-width: 100%;
 }
 
 /* Fallback for existing structure without wrapper */
@@ -3757,20 +3881,20 @@ body {
     color: var(--color-text-default); /* Set text/number to white */
 }
 
-.badge.cyan { background-color: var(--category-color-cyan-alpha-10); }
-.badge.purple { background-color: var(--category-color-purple-alpha-10); }
-.badge.orange { background-color: var(--category-color-orange-alpha-10); }  
-.badge.pink { background-color: var(--category-color-pink-alpha-10); }
+.badge.color { background-color: var(--color-type-color-alpha-10); }
+.badge.text { background-color: var(--color-type-text-alpha-10); }
+.badge.number { background-color: var(--color-type-number-alpha-10); }  
+.badge.state { background-color: var(--color-type-state-alpha-10); }
 
 /* Target only the icon within the badge to be colored */
-.badge.cyan .lucide { color: var(--category-color-cyan); }
-.badge.purple .lucide { color: var(--category-color-purple); }
-.badge.orange .lucide { color: var(--category-color-orange); }
-.badge.pink .lucide { color: var(--category-color-pink); }
+.badge.color .lucide { color: var(--color-type-color); }
+.badge.text .lucide { color: var(--color-type-text); }
+.badge.number .lucide { color: var(--color-type-number); }
+.badge.state .lucide { color: var(--color-type-state); }
 
 /* --- Size Variants --- */
 .badge.small {
-    padding: var(--size-1) var(--size-1);
+    padding: 2px var(--size-1);
     font-size: var(--font-size-00);
     gap: calc(var(--size-1) / 2);
 }
@@ -3819,10 +3943,6 @@ body {
     justify-content: center;
 }
 
-.badge.small .icon {
-    width: var(--icon-xs);
-    height: var(--icon-xs);
-}
 
 .badge .icon .lucide,
 .badge .icon svg {
@@ -4041,7 +4161,7 @@ body {
 }
 
 .hero-footer .heart {
- color: var(--category-color-pink);
+ color: var(--color-type-state);
  animation: heartbeat 1.5s ease-in-out infinite;
 }
 
@@ -4577,11 +4697,11 @@ body {
 }
 
 .code-keyword {
- color: var(--category-color-pink);
+ color: var(--color-type-state);
 }
 
 .code-variable {
- color: var(--category-color-cyan);
+ color: var(--color-type-color);
 }
 
 .code-string {
@@ -5151,7 +5271,7 @@ select option {
  background: var(--card-bg);
  border-radius: var(--radius-3);
  padding: var(--card-padding-sm);
- box-shadow: var(--shadow-2);
+ box-shadow: none;
  transition: box-shadow var(--animation-duration-2) var(--ease-3);
  animation: var(--animation-slide-in-up);
  border: var(--border-size-1) solid var(--card-border);
@@ -5159,9 +5279,19 @@ select option {
  contain: layout;
 }
 
+/* Cards in main sections should match plugin width */
+.card-gallery .card,
+#cards-section .card,
+.forms-example-container .card,
+.variants-grid .card,
+#token-card .card {
+    width: var(--plugin-width);
+    max-width: var(--plugin-width);
+}
+
 /* Card Component Modifier for tighter spacing */
 .card.is-compact {
-    padding: var(--size-4);
+    padding: var(--card-padding-sm);
 }
 
 .card.is-compact .section-title {
@@ -5191,11 +5321,7 @@ select option {
 }
 
 .token-summary .token-count-total { 
- color: var(--brand-primary); /* Fallback color */
- background: var(--token-count-bg);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- background-clip: text;
+ color: var(--color-text-primary);
  margin-bottom: var(--size-1);
 }
 
@@ -5211,6 +5337,9 @@ select option {
  grid-template-columns: repeat(4, 1fr); /* Force 4 columns always */
  gap: var(--size-1);
  padding-top: var(--size-4);
+ /* Prevent wrapping to 2x2 grid */
+ min-width: 0;
+ overflow: hidden;
 }
 
 /* For very narrow plugin windows, make everything smaller but keep 4 columns */
@@ -5245,7 +5374,7 @@ select option {
  border-radius: var(--radius-2);
  background: transparent; /* Default: no background */
  border: none; /* Default: no border */
- min-height: 60px;
+ min-height: 90px; /* Increased to match card height consistency */
  display: flex;
  flex-direction: column;
  align-items: center;
@@ -5254,6 +5383,7 @@ select option {
 
  /* Prevent individual stats from growing too large */
  max-width: 80px;
+ flex: 1 1 0; /* Equal width distribution */
 }
 
 .token-type-stat .label {
@@ -5261,7 +5391,8 @@ select option {
  font-size: var(--font-size-0); 
  line-height: 0.5;
  gap: var(--size-1);
- text-transform: none; 
+ text-transform: none; /* Keep lowercase */
+ font-weight: var(--font-weight-4); /* Reduced from default */
 }
 
 .token-type-stat .icon { 
@@ -5280,10 +5411,10 @@ select option {
 }
 
 /* Token type colors */
-.token-type-stat.color .icon { color: var(--category-color-cyan); }
-.token-type-stat.text .icon { color: var(--category-color-purple); }
-.token-type-stat.states .icon { color: var(--category-color-pink); }
-.token-type-stat.number .icon { color: var(--category-color-orange); }
+.token-type-stat.color .icon { color: var(--color-type-color); }
+.token-type-stat.text .icon { color: var(--color-type-text); }
+.token-type-stat.states .icon { color: var(--color-type-state); }
+.token-type-stat.number .icon { color: var(--color-type-number); }
 
 /* Advanced mode interactions */
 .advanced-mode .token-type-stat { cursor: pointer; }
@@ -5309,11 +5440,20 @@ select option {
 /* Unselected state - outline only */
 .token-type-stat:not(.active):not(.disabled) {
  background: transparent;
+ border: none;
+}
+/* Advanced mode borders */
+.advanced-mode .token-type-stat:not(.active):not(.disabled) {
  border: var(--border-size-1) solid var(--token-stat-border);
 }
 
 /* Active/selected state */
 .token-type-stat.active {
+ background: transparent;
+ border: none;
+}
+/* Advanced mode active state */
+.advanced-mode .token-type-stat.active {
  background: var(--token-stat-bg);
  border: var(--border-size-1) solid var(--token-stat-active-border);
 }
@@ -5440,7 +5580,7 @@ select option {
 }
 
 .collection-item.selected .collection-checkbox {
- background: var(--brand-gradient-primary);
+ background: var(--brand-primary);
  border-color: var(--brand-primary);
 }
 
@@ -5458,7 +5598,7 @@ select option {
 
 /* Dark mode checkbox contrast fix */
 [data-theme="dark"] .collection-item.selected .collection-checkbox::after {
- background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-check'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-check'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
 }
 
 .collection-info {
@@ -5515,6 +5655,7 @@ select option {
  max-width: var(--size-sidebar-width);
  width: 90%;
  animation: var(--animation-scale-up);
+ box-shadow: var(--shadow-2);
 }
 
 .success-icon {
@@ -5543,11 +5684,7 @@ select option {
  flex-direction: column;
 }
 
-/* Empty State - REMOVED: Replaced by updated definition below */
-
-.empty-state-subtitle {
- margin-bottom: var(--size-4);
-}
+/* Empty State */
 
 .empty-state-icon {
  width: var(--size-10);
@@ -5607,19 +5744,19 @@ select option {
 }
 
 .category-icon-cyan {
- color: var(--category-color-cyan);
+ color: var(--color-type-color);
 }
 
 .category-icon-purple {
- color: var(--category-color-purple);
+ color: var(--color-type-text);
 }
 
 .category-icon-orange {
- color: var(--category-color-orange);
+ color: var(--color-type-number);
 }
 
 .category-icon-pink {
- color: var(--category-color-pink);
+ color: var(--color-type-state);
 }
 
 
@@ -5635,7 +5772,7 @@ select option {
  align-items: center;
  gap: var(--size-4);
  width: 100%;
- max-width: 400px;
+ max-width: var(--plugin-width);
  height: var(--guide-grid-min-width);
  margin: 0 auto;
  position: relative;
@@ -5648,11 +5785,12 @@ select option {
  text-align: center;
  position: relative;
  z-index: var(--layer-card); /* FIX: This ensures the panel is on top */
- background: var(--surface-glass-dark);
- backdrop-filter: var(--blur-xl);
+ background: var(--glass-panel-subtle); /* Use semantic glass token */
+ backdrop-filter: blur(var(--glass-blur-medium));
+ -webkit-backdrop-filter: blur(var(--glass-blur-medium));
  
- @supports not (backdrop-filter: blur(var(--border-size-1))) {
- background: var(--surface-overlay-heavy);
+ @supports not (backdrop-filter: blur(8px)) {
+ background: rgb(0, 0, 0, 0.7);
  }
  
  border-radius: var(--radius-3); /* FIX: Reduced radius from previous step */
@@ -5909,9 +6047,15 @@ select option {
 }
 
 .token-summary.is-loading .token-breakdown .count.skeleton-pulse {
-    width: var(--size-10);
-    height: calc(var(--font-size-3) * 1.8); /* Correctly matches the computed height of the text */
-    margin-bottom: 0; /* The new gap property now handles this spacing */
+    width: var(--size-7);
+    height: calc(var(--font-size-3) * 1.8); /* Match actual count height with line-height */
+    margin-bottom: var(--size-1); /* Match actual count margin */
+}
+
+/* Prevent borders on loading state stats */
+.token-type-stat.loading {
+    border: none !important;
+    background: transparent !important;
 }
 
 /* ==========================================================================
@@ -6485,6 +6629,12 @@ select option {
  min-height: 100vh; /* Ensure pattern fills full viewport height */ 
  background: var(--hero-bg-pattern);
  pointer-events: none;
+ mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%),
+              linear-gradient(to bottom, black 0%, black 70%, transparent 90%);
+ mask-composite: intersect;
+ -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%),
+                     linear-gradient(to bottom, black 0%, black 70%, transparent 90%);
+ -webkit-mask-composite: source-in;
 }
 
 /* Remove the duplicate rule - pattern already defined above */
@@ -6498,7 +6648,6 @@ select option {
  background: var(--empty-state-bg);
  border: var(--border-size-1) dashed var(--empty-state-border);
  border-radius: var(--radius-3);
- padding: var(--size-6);
  color: var(--empty-state-text);
  text-align: center;
  display: flex;
@@ -6507,6 +6656,11 @@ select option {
  min-height: 360px; /* Comfortable height for content */
  justify-content: space-between; /* Distributes content evenly */
  box-sizing: border-box;
+}
+
+/* When empty state is also a card, adjust padding */
+.card.empty-state {
+ padding: var(--size-6);
 }
 
 
@@ -6530,14 +6684,12 @@ select option {
 
 .empty-state-category .icon {
     stroke-width: var(--icon-stroke-regular);
+    font-size: var(--font-size-4);
 }
 
 .empty-state-category .text-label {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-0);
-    font-weight: var(--font-weight-3); /* Lighter font weight */
-    text-transform: none;
     text-align: center;
+    text-transform: none; /* Keep lowercase */
 }
 
 
@@ -6774,7 +6926,7 @@ body {
 
 /* Sidebar Header */
 .guide-header {
- padding: var(--size-5);
+ padding: var(--size-4);
  background: var(--header-bg);
  border-bottom: var(--border-size-1) solid var(--header-border);
  display: flex;
@@ -6983,7 +7135,7 @@ body {
 /* Foundation Token & Component Styles */
 .token-category, .component-section {
  margin-bottom: var(--size-8);
- padding: var(--size-6); /* Full padding on all sides */
+ padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
  background: var(--component-section-bg);
  border-radius: var(--radius-3);
  border: var(--border-size-1) solid var(--component-section-border);
@@ -7327,24 +7479,18 @@ body {
 }
 
 .checkerboard {
-    background-image: repeating-conic-gradient(
-        var(--gray-warm-8) 0% 25%, 
-        var(--gray-warm-7) 25% 50%
-    );
+    background-color: var(--checkerboard-color-1);
+    background-image: 
+        linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--checkerboard-color-2) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--checkerboard-color-2) 75%);
     background-size: 16px 16px;
-    background-repeat: repeat; /* This is the critical fix */
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: relative;
     z-index: 0;
-}
-
-/* Checkerboard pattern uses semantic tokens */
-.checkerboard {
-    background-image: repeating-conic-gradient(
-        var(--checkerboard-color-1) 0% 25%, 
-        var(--checkerboard-color-2) 25% 50%
-    );
 }
 
 .color-preview {
@@ -7401,6 +7547,57 @@ body {
  border: none;
 }
 
+/* Spacing Example Cards */
+.spacing-example-card {
+    background: var(--color-background-secondary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-6);
+    margin-bottom: var(--size-4);
+}
+
+.spacing-example-card .example-title {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-4);
+    color: var(--color-text-default);
+}
+
+.spacing-example-card .example-description {
+    font-size: var(--font-size-0);
+    color: var(--color-text-secondary);
+    margin-top: var(--size-3);
+}
+
+.spacing-demo-row {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4);
+    flex-wrap: wrap;
+}
+
+.spacing-demo-card {
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+}
+
+.spacing-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-00);
+    color: var(--color-text-muted);
+}
+
+.demo-button {
+    background: var(--color-background-tertiary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-1);
+    font-size: var(--font-size-0);
+    display: inline-flex;
+    align-items: center;
+}
+
 .gradient-preview {
  width: 100%;
  height: 60px;
@@ -7416,6 +7613,63 @@ body {
  display: flex;
  align-items: center;
  justify-content: center;
+}
+
+/* Glass effect preview styles */
+.glass-preview-container {
+    width: 100%;
+    height: 80px;
+    position: relative;
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    background: var(--surface-2);
+}
+
+.glass-preview-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml,<svg width="200" height="80" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%23666" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="%23222"/><rect width="100%" height="100%" fill="url(%23grid)"/><circle cx="40" cy="40" r="15" fill="%23D2FF37" opacity="0.6"/><rect x="100" y="30" width="30" height="20" fill="%2300CED1" opacity="0.6"/><circle cx="160" cy="40" r="10" fill="%23FF1493" opacity="0.6"/></svg>');
+    background-size: cover;
+    background-position: center;
+}
+
+.glass-preview-panel {
+    position: absolute;
+    inset: 10px;
+    border-radius: var(--radius-2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-default);
+}
+
+/* Glow effect preview styles */
+.glow-preview {
+    width: 60px;
+    height: 60px;
+    background: var(--surface-2);
+    border-radius: var(--radius-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.glow-preview i {
+    width: var(--size-5);
+    height: var(--size-5);
+}
+
+.border-preview {
+ width: 100%;
+ height: 80px;
+ border-style: solid;
+ border-color: var(--brand-primary);
+ background: transparent;
+ display: flex;
 }
 
 .radius-preview {
@@ -7612,6 +7866,179 @@ body {
     background: var(--motion-btn-hover-bg);
 }
 
+/* Interactive Motion Demos */
+.motion-demo-category {
+    margin-bottom: var(--size-8);
+}
+
+.motion-demo-category h3 {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-4);
+    color: var(--color-text-default);
+}
+
+.motion-demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--size-4);
+}
+
+.motion-demo-card {
+    background: var(--color-background-secondary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-5);
+}
+
+.motion-demo-card h4 {
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-5);
+    margin-bottom: var(--size-2);
+    color: var(--color-text-default);
+}
+
+.motion-demo-card p {
+    font-size: var(--font-size-0);
+    color: var(--color-text-subtle);
+    margin-bottom: var(--size-4);
+}
+
+.motion-demo-box {
+    height: 120px;
+    background: var(--color-background-primary);
+    border: var(--border-size-1) solid var(--color-border-subtle);
+    border-radius: var(--radius-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: var(--size-3);
+}
+
+.motion-element {
+    width: var(--size-8);
+    height: var(--size-8);
+    background: var(--brand-gradient-primary);
+    border-radius: var(--radius-2);
+    position: relative;
+}
+
+.motion-play-button {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-2) var(--size-4);
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: none;
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-5);
+    cursor: pointer;
+    transition: all var(--duration-150) var(--ease-3);
+    width: 100%;
+    justify-content: center;
+}
+
+.motion-play-button:hover {
+    background: var(--btn-primary-hover);
+    transform: translateY(-1px);
+}
+
+.motion-play-button i {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+}
+
+/* Animation Classes */
+.animate-ease-3 {
+    animation: slideRight 1s var(--ease-3);
+}
+
+.animate-ease-spring-3 {
+    animation: slideRight 1s var(--ease-spring-3);
+}
+
+.animate-linear {
+    animation: slideRight 1s linear;
+}
+
+.animate-duration-100 {
+    animation: fadeScale var(--duration-100) var(--ease-3);
+}
+
+.animate-duration-150 {
+    animation: fadeScale var(--duration-150) var(--ease-3);
+}
+
+.animate-duration-300 {
+    animation: fadeScale var(--duration-300) var(--ease-3);
+}
+
+.animate-hover-lift {
+    animation: hoverLift 0.5s var(--ease-3);
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s var(--ease-spring-3);
+}
+
+.animate-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Keyframes */
+@keyframes slideRight {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes hoverLift {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Responsive design for motion demos */
 @media (width <= 768px) {
  .motion-demos-container {
@@ -7621,6 +8048,32 @@ body {
 }
 
 /* Token copy button styles removed - tokens are display only */
+
+/* Responsive Border Grid */
+.border-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--size-4);
+}
+
+@media (width <= 768px) {
+    .border-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Responsive Glass Effects Grid */
+.glass-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--size-4);
+}
+
+@media (width <= 768px) {
+    .glass-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* Alpha Comparison Grid */
 .alpha-comparison-grid {
@@ -7765,17 +8218,7 @@ body {
  transform: translateX(var(--border-size-2));
 }
 
-.example-container {
- background: var(--color-background-primary);
- border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-2);
- padding: var(--size-4);
- position: relative;
- display: flex;
- flex-direction: column;
-
- /* height: 100%; REMOVED - This was causing the issue */
-}
+/* REMOVED duplicate .example-container - using the one at line 3621 */
 
 .code-block {
  background: var(--code-bg);
@@ -7829,12 +8272,27 @@ body {
  color: var(--color-text-secondary);
 }
 
+/* Unified variants grid - primary responsive container pattern */
 .variants-grid {
  display: grid;
- grid-template-columns: repeat(auto-fit, minmax(var(--guide-grid-min-width), 1fr));
+ grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--plugin-width)), 1fr));
  gap: var(--size-4);
  margin-bottom: var(--size-4);
  align-items: stretch;
+}
+
+/* Ensure example containers in Cards section match plugin width */
+#token-card .variants-grid .example-container {
+    width: var(--plugin-width);
+    max-width: var(--plugin-width);
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+}
+
+/* Ensure cards fill their containers */
+.example-container .card {
+    width: 100%;
 }
 
 /* Pattern Section Styles */
@@ -7886,7 +8344,7 @@ body {
 
 
 .heart {
- color: var(--category-color-pink);
+ color: var(--color-type-state);
  display: inline-block;
  transition: transform var(--animation-duration-3) var(--ease-spring-4);
 }
@@ -8076,7 +8534,7 @@ body {
     background: var(--surface-1);
     border-radius: var(--radius-3);
     padding: var(--size-8);
-    max-width: 400px;
+    max-width: var(--plugin-width);
     width: 100%;
     text-align: center;
     box-shadow: var(--shadow-6);
@@ -8125,8 +8583,11 @@ body {
 .about-modal-clean .about-social,
 .about-modal-concept-1 .about-social {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: var(--size-3);
+    max-width: 180px;
+    margin: 0 auto;
 }
 
 /* Vortex Modal Styles */
@@ -8243,8 +8704,11 @@ body {
 .about-modal-vortex .about-social-row,
 .about-modal-concept-2 .about-social-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: var(--size-3);
+    max-width: 180px;
+    margin: 0 auto;
 }
 
 /* Concept 3: Card with Brand Accent */
@@ -8324,8 +8788,11 @@ body {
 
 .about-modal-concept-3 .about-social-grid {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: var(--size-2);
+    max-width: 180px;
+    margin: 0 auto;
 }
 
 /* Mobile adjustments for all concepts */
@@ -8437,9 +8904,24 @@ body {
         display: flex;
         align-items: center;
         gap: var(--size-4);
+        height: 100%;
     }
-    .mobile-theme-toggle {
+    
+    /* Prevent theme toggle from stretching in mobile header */
+    .mobile-header-controls .theme-toggle {
+        align-self: center;
         flex-shrink: 0;
+        width: 82px !important;
+        height: 38px !important;
+        max-height: 38px !important;
+        min-height: 38px !important;
+    }
+    
+    /* Ensure theme toggle wrapper doesn't stretch */
+    .mobile-header-controls #theme-toggle {
+        height: auto !important;
+        display: flex;
+        align-items: center;
     }
 
     .mobile-menu-toggle-right {
@@ -8719,7 +9201,7 @@ body {
     
     /* Position offsets */
     --animation-offset-top: calc(var(--size-15) * -1); /* -480px - ensures icons exit fully */
-    --animation-start-bottom: 100vh;
+    --animation-start-bottom: calc(100vh + 200px); /* Start below viewport, past stats panel */
     
     /* Sway distances for bubble animation */
     --animation-sway-sm: var(--size-3);  /* 10px */
@@ -9336,10 +9818,10 @@ body {
     --card-min-width-mobile-sm: 150px;                  /* Mobile small */
     
     /* Card padding tokens for consistent sizing */
-    --card-padding-sm: var(--size-3);                   /* Small cards: 12px */
-    --card-padding-md: var(--size-4);                   /* Medium cards: 16px */
-    --card-padding-lg: var(--size-5);                   /* Large cards: 20px */
-    --card-padding-xl: var(--size-6);                   /* Enhanced cards: 24px */
+    --card-padding-sm: var(--size-4);                   /* Small cards: 16px */
+    --card-padding-md: var(--size-5);                   /* Medium cards: 20px */
+    --card-padding-lg: var(--size-6);                   /* Large cards: 24px */
+    --card-padding-xl: var(--size-7);                   /* Enhanced cards: 28px */
 }
 
 /* =========================
@@ -9408,7 +9890,7 @@ body {
 
 /* Section Body Container - no horizontal padding (handled by parent) */
 .component-body {
-    padding: 0 0 var(--guide-content-gap) 0; /* Only bottom padding */
+    padding: 0 0 var(--size-2) 0; /* Reduced bottom padding for tighter spacing */
 }
 
 /* Table responsive needs horizontal padding since it extends full width */
@@ -9528,13 +10010,12 @@ body {
 }
 
 /* Grid Layouts */
-.variants-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--guide-grid-min-width), 1fr));
+/* Guide-specific variants grid override */
+.guide-content .variants-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--guide-grid-min-width)), 1fr));
     gap: var(--guide-grid-gap);
     margin-bottom: var(--guide-subsection-gap);
-    align-items: stretch;
-    padding: 0; /* Padding handled by parent */
+    padding: 0;
 }
 
 /* Compact Grid (for smaller items) */
@@ -9628,13 +10109,14 @@ body {
     
     .component-body {
         /* Padding handled by parent component-section */
-        padding: 0 0 var(--guide-content-gap) 0;
+        padding: 0 0 var(--size-2) 0; /* Reduced for consistency */
     }
     
     /* Ensure subsections and icons maintain padding on mobile */
     
     .icons-showcase .variants-grid {
         padding: 0;
+        grid-template-columns: 1fr; /* Single column on mobile */
     }
     
     .variants-grid {
@@ -9777,9 +10259,10 @@ body {
     border: var(--border-size-1) solid transparent;
     transition: all var(--animation-duration-3) var(--ease-3);
     
-    /* Default dark theme styles */
-    background: var(--surface-glass-dark);
-    backdrop-filter: var(--blur-xl);
+    /* Glass effect matching icon buttons */
+    background: var(--glass-dark-10); /* 10% black opacity */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     border-color: rgb(210, 255, 55, 0.2);
 }
 
@@ -9791,20 +10274,20 @@ body {
 /* Individual Stat Items */
 .stat-item {
     text-align: center;
-    padding: var(--size-1) var(--card-padding-sm) var(--size-5) var(--card-padding-sm); /* Reduced top/side padding, increased bottom */
+    padding: var(--size-1) var(--size-1) var(--size-2) var(--size-1); /* Minimal padding like challenge cards */
 }
 
 .stat-icon {
-    width: var(--icon-xxl);
-    height: var(--icon-xxl);
+    width: var(--icon-lg);
+    height: var(--icon-lg);
     color: var(--brand-primary);
-    margin-bottom: var(--size-3);
+    margin-bottom: var(--size-2);
     display: block;
-    opacity: 0.8; /* Match enhanced cards */
+    opacity: 0.8;
 }
 
 .stat-icon .lucide {
-    stroke-width: var(--icon-stroke-thin);
+    stroke-width: var(--icon-stroke-thin) !important;
 }
 
 .stat-number {
@@ -9834,15 +10317,17 @@ body {
 }
 
 .stat-label {
-    font-size: var(--font-size-1);
+    font-size: var(--font-size-0); /* Smaller to fit */
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em; /* Tighter spacing */
     color: var(--color-text-secondary);
 
     /* SINGLE LINE: Stats labels must stay on one line */
     white-space: nowrap;
     text-align: center;
-    overflow: visible; /* No truncation */
+    overflow: hidden; /* Prevent overflow */
+    text-overflow: ellipsis; /* Add ellipsis if needed */
+    max-width: 100%; /* Stay within container */
 }
 
 /* === COMPONENT: Challenge Solution Grid (_challenge-solution-grid.html) === */
@@ -9862,9 +10347,10 @@ body {
     transition: all var(--animation-duration-3) var(--ease-3);
     overflow: hidden;
     
-    /* Default dark theme styles */
-    background: var(--surface-glass-dark);
-    backdrop-filter: var(--blur-xl);
+    /* Glass effect matching icon buttons */
+    background: var(--glass-dark-10); /* 10% black opacity */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .enhanced-card::before {
@@ -9890,7 +10376,7 @@ body {
 
 /* Card Variants */
 .challenge-card {
-    --gradient: linear-gradient(90deg, var(--category-color-pink), var(--category-color-purple));
+    --gradient: linear-gradient(90deg, var(--color-type-state), var(--color-type-text));
     border-color: rgb(255, 116, 188, 0.2);
 }
 
@@ -9900,7 +10386,7 @@ body {
 }
 
 .impact-card {
-    --gradient: linear-gradient(90deg, var(--category-color-cyan), var(--category-color-orange));
+    --gradient: linear-gradient(90deg, var(--color-type-color), var(--color-type-number));
     border-color: rgb(0, 204, 255, 0.2);
 }
 
@@ -9915,7 +10401,7 @@ body {
 }
 
 .challenge-card .card-icon-large {
-    color: var(--category-color-pink);
+    color: var(--color-type-state);
 }
 
 .solution-card .card-icon-large {
@@ -9923,7 +10409,7 @@ body {
 }
 
 .impact-card .card-icon-large {
-    color: var(--category-color-cyan);
+    color: var(--color-type-color);
 }
 
 .card-title {
@@ -9973,12 +10459,11 @@ body {
     }
 }
 
-/* Dark theme stat numbers - apply gradient */
+/* Dark theme stat numbers - use solid color instead of broken gradient */
 [data-theme="dark"] .stat-number {
-    background: var(--brand-gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--brand-primary); /* Use solid lime color */
+    background: none;
+    -webkit-text-fill-color: unset;
 }
 
 /* =================================================================
@@ -9986,9 +10471,8 @@ body {
    ================================================================= */
 
 .theme-toggle-container {
-    padding: var(--size-4) var(--size-4) var(--size-6) var(--size-4);
+    padding: var(--size-4) var(--size-4) var(--size-4) var(--size-4);
     border-top: var(--border-size-1) solid var(--color-border-default);
-    margin-top: var(--size-4);
 }
 
 .theme-toggle-wrapper {
@@ -10023,6 +10507,18 @@ body {
     overflow: hidden;
 }
 
+/* Reset button styles for theme toggle */
+button.theme-toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    box-shadow: none;
+    text-shadow: none;
+    font: inherit;
+    color: inherit;
+    line-height: normal;
+}
+
 /* Dark mode uses dark gradient */
 /* Theme toggle gradient handled by semantic token */
 
@@ -10035,16 +10531,13 @@ body {
 
 /* Icon containers */
 .icon-container {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    position: absolute;
+    width: 26px;
+    height: 26px;
     z-index: 3;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: all 0.3s ease;
 }
 
 .icon-container svg {
@@ -10054,22 +10547,38 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Icon positioning */
+/* Icon positioning - optically centered */
 .sun-container {
-    left: 5px;
+    left: 6px;
 }
 
 .moon-container {
-    right: 5px;
+    right: 6px;
 }
 
-/* Icon states */
+/* Icon states with Scale & Spin animation */
+.sun-container svg,
+.moon-container svg {
+    transition: all 0.3s ease;
+}
+
 .sun-container svg {
     stroke: var(--sun-icon-color);
+    transform: scale(0.9) rotate(-90deg);
 }
 
 .moon-container svg {
     stroke: var(--moon-icon-color);
+    transform: scale(1.1);
+}
+
+/* Light mode - swap the transforms */
+[data-theme="light"] .sun-container svg {
+    transform: scale(1.1) rotate(90deg);
+}
+
+[data-theme="light"] .moon-container svg {
+    transform: scale(0.9);
 }
 
 /* Light mode states moved to main light theme section */
@@ -10080,18 +10589,19 @@ body {
 .slider {
     position: absolute;
     top: 3px;
-    left: 3px;
+    right: 3px; /* Start on right for dark mode (moon) */
     width: 32px;
     height: 32px;
-    background: white;
+    background: var(--gray-cool-9); /* Dark circle for dark mode */
     border-radius: 50%;
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 2;
 }
 
-.theme-toggle.active .slider {
-    transform: translateX(44px);
-    background: var(--surface-2);
+/* Light mode - move slider to left */
+[data-theme="light"] .slider {
+    transform: translateX(-44px); /* Move to left (sun) */
+    background: white; /* White circle for light mode */
 }
 
 /* Animations */
@@ -10104,22 +10614,22 @@ body {
 }
 
 @keyframes sunPulse {
-    0% { transform: translateY(-50%) rotate(0deg) scale(1); }
+    0% { transform: rotate(0deg) scale(1); }
 
     50% { 
-        transform: translateY(-50%) rotate(45deg) scale(1.15); 
+        transform: rotate(45deg) scale(1.15); 
     }
-    100% { transform: translateY(-50%) rotate(90deg) scale(1); }
+    100% { transform: rotate(90deg) scale(1); }
 }
 
 @keyframes moonGlow {
-    0% { transform: translateY(-50%) scale(1); filter: brightness(1); }
+    0% { transform: scale(1); filter: brightness(1); }
 
     50% { 
-        transform: translateY(-50%) scale(1.1); 
+        transform: scale(1.1); 
         filter: brightness(1.3);
     }
-    100% { transform: translateY(-50%) scale(1); filter: brightness(1); }
+    100% { transform: scale(1); filter: brightness(1); }
 }
 
 /* Mobile header theme toggle - inherit desktop styles */
@@ -10495,59 +11005,82 @@ body {
 
 /* Icons Section Styles */
 .icons-showcase {
-    padding: var(--size-4) 0 0 0; /* Add top padding to prevent label touching header */
-}
-
-/* Icons showcase variants-grid - padding handled by parent */
-.icons-showcase .variants-grid {
     padding: 0;
 }
 
-/* Consistent spacing between icon sections */
-.icons-showcase .example-wrapper {
-    margin-bottom: var(--size-8); /* Increased vertical spacing between subsections */
+/* Icons showcase variants-grid - responsive sections grid */
+.icons-showcase .variants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    padding: 0;
+    margin: 0;
+    gap: var(--size-6);
 }
 
-.icons-showcase .example-wrapper:last-child {
+/* Mobile: Allow 2-column layout for icon sections */
+@media (width <= 768px) {
+    .icons-showcase .variants-grid {
+        grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+        gap: var(--size-3);
+    }
+    
+    /* Ensure containers adapt to smaller space */
+    .icons-showcase .example-container {
+        padding: var(--size-3);
+    }
+}
+
+/* Icon section wrappers */
+.icons-showcase .example-wrapper {
     margin-bottom: 0;
 }
 
-/* Make all icon containers fill parent width */
+/* Icon containers - fill parent width */
 .icons-showcase .example-container {
     width: 100%;
-    padding: var(--size-4); /* Ensure consistent padding matches left/right */
+    padding: var(--size-4);
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent content from clipping */
 }
 
+/* Ensure all icon grids fill width */
 .icons-showcase .icons-grid-responsive,
 .icons-showcase .icon-sizes-grid,
 .icons-showcase .icon-weights-grid {
     width: 100%;
+    box-sizing: border-box;
 }
 
-/* Responsive icon grid: 4 columns desktop, 2 tablet, 2 mobile */
+/* Responsive icon grid: 4 columns desktop, 2 mobile */
 .icons-grid-responsive {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Default 4 columns */
     gap: var(--size-4);
+    width: 100%;
 }
 
-@media (max-width: 900px) {
+/* Ensure proper columns at different breakpoints */
+@media (width <= 768px) {
     .icons-grid-responsive {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .icons-grid-responsive {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
         gap: var(--size-3);
     }
 }
 
 /* Icon size XXL for better visibility */
 .icon--xxl {
-    width: 48px;
-    height: 48px;
+    width: var(--icon-xlg);    /* 48px for desktop */
+    height: var(--icon-xlg);
+}
+
+/* Only xxl showcase icons get thin strokes */
+.icon--xxl svg {
+    stroke-width: var(--icon-stroke-thin);
+}
+.icon--xxxl {
+    width: var(--icon-3xl);
+    height: var(--icon-3xl);
 }
 
 /* Lucide icon stroke-width support - removed to prevent conflicts with initial state */
@@ -10570,6 +11103,9 @@ body {
     border-radius: var(--radius-2);
     transition: var(--transition-fast);
     min-height: 120px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent icon overflow */
 }
 
 /* Removed hover state - icon cards are not interactive */
@@ -10588,19 +11124,19 @@ body {
 
 /* Category-specific icon colors using tokens */
 .category-cyan {
-    color: var(--category-color-cyan);
+    color: var(--color-type-color);
 }
 
 .category-purple {
-    color: var(--category-color-purple);
+    color: var(--color-type-text);
 }
 
 .category-orange {
-    color: var(--category-color-orange);
+    color: var(--color-type-number);
 }
 
 .category-pink {
-    color: var(--category-color-pink);
+    color: var(--color-type-state);
 }
 
 /* Size variations showcase - responsive grid */
@@ -10608,7 +11144,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: var(--size-4);
-    margin-bottom: var(--size-4);
+    /* Removed margin-bottom to fix double padding */
 }
 
 @media (max-width: 900px) {
@@ -10635,6 +11171,9 @@ body {
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-2);
     min-height: 120px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .icon-size-card code {
@@ -10686,12 +11225,12 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--size-4);
-    margin-bottom: var(--size-4);
+    /* Removed margin-bottom to fix double padding */
 }
 
 @media (max-width: 768px) {
     .icon-weights-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: var(--size-3);
     }
 }
@@ -10707,6 +11246,9 @@ body {
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-2);
     min-height: 120px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .icon-weight-card code {
@@ -10727,18 +11269,7 @@ body {
     fill: none;
 }
 
-/* Ensure stroke weights are visually distinct */
-.icon-weights-grid [data-lucide][style*="--icon-stroke-thin"] {
-    stroke-width: var(--icon-stroke-thin) !important;
-}
-
-.icon-weights-grid [data-lucide][style*="--icon-stroke-regular"] {
-    stroke-width: var(--icon-stroke-regular);
-}
-
-.icon-weights-grid [data-lucide][style*="--icon-stroke-bold"] {
-    stroke-width: var(--icon-stroke-bold) !important;
-}
+/* Removed duplicate stroke weight rules - moved to line 1529 with proper specificity */
 
 /* Icon notes for documentation */
 .icon-note {
@@ -11024,7 +11555,7 @@ body {
 /* Tab navigation - v4 style */
 .tab-nav-final {
     display: flex;
-    gap: var(--size-1);
+    gap: var(--size-3);
     border-bottom: var(--border-size-2) solid var(--color-border-default);
     margin-bottom: var(--size-6);
     overflow-x: auto;
@@ -11051,20 +11582,32 @@ body {
     transition: all var(--animation-duration-2) var(--ease-3);
     white-space: nowrap;
     box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Dark mode unselected tabs - using semantic token */
+[data-theme="dark"] .tab-clean {
+    color: var(--color-text-secondary);
 }
 
 .tab-clean:hover {
-    color: var(--color-text-default);
-}
-
-.tab-clean.active {
-    color: var(--brand-primary);
-    border-bottom-color: var(--brand-primary);
+    color: var(--color-text-primary);
 }
 
 .tab-clean.active {
     color: var(--tab-active-color);
     border-bottom-color: var(--tab-active-border);
+}
+
+/* Focus state - no ring */
+.tab-clean:focus-visible {
+    outline: none;
+}
+
+/* Remove default focus */
+.tab-clean:focus:not(:focus-visible) {
+    outline: none;
 }
 
 /* Removed duplicate tab panel rules - see consolidated rules above */
@@ -11074,6 +11617,23 @@ body {
     margin-bottom: var(--size-8);
     width: 100%;
     box-sizing: border-box;
+}
+
+/* Color subsections (for nested sections like brand) */
+.color-subsection {
+    margin-bottom: var(--size-5);
+}
+
+.color-subsection:last-child {
+    margin-bottom: 0;
+}
+
+.subsection-title {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--size-3);
+    letter-spacing: 0.02em;
 }
 
 /* Color System Overview */
@@ -11168,7 +11728,7 @@ body {
 }
 
 .color-card {
-    background: var(--color-background-primary);
+    background: var(--color-background-secondary);
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3);
     padding: var(--size-4);
@@ -11182,10 +11742,52 @@ body {
     height: 100px;
     border-radius: var(--radius-2);
     margin-bottom: var(--size-3);
+    position: relative;
+}
+
+/* Square gradient swatches for directional variants */
+.gradient-swatch-square {
+    aspect-ratio: 1;
+    height: auto;
+    max-height: 80px;
+}
+
+/* Angle badge for gradient swatches */
+.angle-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.8);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Compact label for gradients */
+.gradient-label-nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--font-size-0);
+    margin-bottom: 0.25rem;
+}
+
+/* Token name styling */
+.color-details .token-name {
+    font-size: 0.625rem;
+    display: block;
 }
 
 /* Checkerboard pattern for alpha swatches */
 .alpha-swatch {
+    background-color: var(--checkerboard-color-1);
     background-image: 
         linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
         linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
@@ -11195,6 +11797,14 @@ body {
     background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
     position: relative;
     overflow: hidden;
+}
+
+/* Mobile-specific alpha swatch checkerboard scaling */
+@media (max-width: 768px) {
+    .alpha-swatch {
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
 }
 
 /* Dark theme alpha swatch moved to consolidated section */
@@ -11420,11 +12030,11 @@ body {
 }
 
 .flow-token.semantic {
-    border-color: var(--category-color-purple);
+    border-color: var(--color-type-text);
 }
 
 .flow-token.component {
-    border-color: var(--category-color-cyan);
+    border-color: var(--color-type-color);
 }
 
 .flow-token .token-preview {
@@ -11678,14 +12288,35 @@ body {
 
 /* Forms Example Styles */
 .forms-example-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: var(--size-4);
+    flex-wrap: wrap;
 }
 
-@media (width <= 768px) {
+.forms-example-container .card {
+    width: 100%;
+    max-width: var(--plugin-width);
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.forms-example-container .export-section,
+.forms-example-container .filter-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+@media (width <= 850px) {
     .forms-example-container {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+    }
+    
+    .forms-example-container .card {
+        width: 100%;
+        max-width: var(--plugin-width);
     }
 }
 
@@ -11775,12 +12406,12 @@ body {
     width: var(--size-15);
     height: 60px;
     background: transparent;
-    border: var(--border-size-2) solid var(--brand-primary);
+    border: var(--border-size-2) solid var(--brand-secondary);
     border-radius: var(--radius-2);
     box-shadow: 
-        0 0 20px var(--brand-primary),
-        0 0 40px var(--brand-primary),
-        inset 0 0 20px var(--brand-primary-alpha-20);
+        0 0 20px var(--brand-secondary),
+        0 0 40px var(--brand-secondary),
+        inset 0 0 20px var(--brand-secondary-alpha-20);
 }
 
 /* Glow documentation section */
@@ -12037,6 +12668,7 @@ body {
 }
 
 .ref-swatch.alpha-swatch {
+    background-color: var(--checkerboard-color-1);
     background-image: 
         linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
         linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
@@ -12213,15 +12845,6 @@ body {
         height: 60px;
     }
     
-    /* Make buttons smaller on very small screens */
-    .about-social .btn-icon,
-    .about-modal-clean .about-social .btn-icon,
-    .about-modal-vortex .about-social-row .btn-icon,
-    .about-modal-concept-3 .about-social-grid .btn-icon {
-        width: var(--size-8);
-        height: var(--size-8);
-        font-size: var(--font-size-2);
-    }
 }
 
 /* 2. Token Card Mobile Fixes */
@@ -12240,10 +12863,10 @@ body {
         margin-bottom: var(--size-1);
     }
     
-    /* Make token breakdown responsive */
+    /* Keep token breakdown as 4 columns - never wrap */
     .token-breakdown {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--size-2);
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: var(--size-1);
         padding-top: var(--size-3);
     }
     
@@ -12268,11 +12891,11 @@ body {
     }
 }
 
-/* Ultra small screens - stack vertically */
+/* Ultra small screens - still keep 4 columns */
 @media (max-width: 375px) {
     .token-breakdown {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--size-1);
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 2px;
     }
     
     .token-type-stat {
@@ -12285,57 +12908,7 @@ body {
 }
 
 /* 3. Icon Grid Mobile Fixes */
-@media (max-width: 768px) {
-    /* Fix icon grid container */
-    .icons-grid-responsive {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--size-2);
-        padding: var(--size-2);
-    }
-    
-    /* Make icon cards more compact */
-    .icon-card {
-        padding: var(--size-3);
-        gap: var(--size-1);
-    }
-    
-    .icon-card .icon--xxl {
-        font-size: var(--font-size-5);
-    }
-    
-    .icon-card .icon-label {
-        font-size: var(--font-size-0);
-        display: none; /* Hide label on mobile to save space */
-    }
-    
-    .icon-card .icon-code,
-    .icon-card code {
-        font-size: var(--font-size-00);
-    }
-    
-    /* Icon size demo grid */
-    .icon-sizes-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--size-2);
-    }
-    
-    .icon-weights-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--size-2);
-    }
-}
-
-/* Ultra small screens */
-@media (max-width: 480px) {
-    .icons-grid-responsive {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .icon-sizes-grid,
-    .icon-weights-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+/* Removed duplicate rules - handled in main icon section styles */
 
 /* 4. General Mobile Fixes */
 @media (max-width: 768px) {
@@ -12457,6 +13030,43 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     }
     
+    /* Fix color grid for utilities and gradients on mobile */
+    .color-grid-4col {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--size-3);
+    }
+    
+    /* Ensure swatches are visible on mobile */
+    .color-swatch {
+        min-height: 60px;
+        height: 60px;
+    }
+    
+    /* Ensure alpha swatches show checkerboard pattern on mobile */
+    .alpha-swatch {
+        position: relative;
+        background-color: var(--checkerboard-color-1);
+        background-image: 
+            linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
+            linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, var(--checkerboard-color-2) 75%),
+            linear-gradient(-45deg, transparent 75%, var(--checkerboard-color-2) 75%);
+        background-size: 12px 12px;
+        background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    }
+    
+    /* Alpha color overlay for mobile */
+    .alpha-swatch .alpha-color-overlay {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+    
+    /* Adjust gradient square swatches for mobile */
+    .gradient-swatch-square {
+        max-height: 60px;
+    }
+    
     /* Fix empty states */
     .empty-state {
         padding: var(--size-4);
@@ -12483,7 +13093,7 @@ body {
 
 /* 7. Container Query Fallbacks */
 @supports not (container-type: inline-size) {
-    @media (max-width: 400px) {
+    @media (max-width: 340px) {
         .token-breakdown {
             font-size: var(--font-size-0);
         }
@@ -12504,11 +13114,61 @@ body {
         margin: 0 0 var(--size-3) 0; /* Simple bottom margin */
     }
     
-    /* Tab navigation mobile adjustment */
+    /* Tab navigation mobile adjustment - Minimalist Outline */
     .tab-nav-final {
-        margin: 0 calc(-1 * var(--size-3)) var(--size-3);
-        padding: 0 var(--size-3);
+        /* Remove bottom border on mobile */
+        border-bottom: none;
+        /* Remove container background for minimalist look */
+        background: transparent;
+        padding: var(--size-2);
+        margin: 0 0 var(--size-4) 0;
+        /* Enable smooth scrolling */
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        /* Prevent wrapping */
+        flex-wrap: nowrap;
     }
+    
+    
+    /* Hide scrollbar but keep functionality */
+    .tab-nav-final::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Transform tabs into outline pills on mobile */
+    .tab-clean {
+        /* Reset styles */
+        border: 2px solid var(--color-border-default);
+        border-bottom: 2px solid var(--color-border-default);
+        margin-bottom: 0;
+        /* Pill styling */
+        background: transparent;
+        border-radius: var(--radius-round);
+        padding: var(--size-2) var(--size-4);
+        color: var(--color-text-secondary);
+        /* Ensure no shrinking */
+        flex-shrink: 0;
+        /* Typography */
+        font-size: var(--font-size-1);
+        font-family: var(--font-sans);
+        font-weight: var(--font-weight-5);
+        /* Remove any shadows */
+        text-shadow: none;
+        box-shadow: none;
+        /* Smooth transitions */
+        transition: all var(--animation-duration-2) var(--ease-3);
+    }
+    
+    /* Active pill state */
+    .tab-clean.active {
+        background: var(--brand-secondary);
+        color: white;
+        border-color: var(--brand-secondary);
+        font-weight: var(--font-weight-6);
+    }
+    
+    /* Hover state for pills - no outline effect */
     
     /* Fix tab overflow in Color System - extend to edges for more space */
     .section-tabs {
@@ -12578,3 +13238,75 @@ body {
     }
     */
 }
+
+/* ================================================
+   INK SHADOW REMOVAL OVERRIDES
+   Remove Open Props text shadow effects from all interactive elements
+   ================================================ */
+
+/* Remove text shadows from all buttons, pills, and tabs */
+button,
+.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="file"]::-webkit-file-upload-button,
+input[type="file"]::file-selector-button {
+    text-shadow: none !important;
+    box-shadow: var(--shadow-2), 0 0 0 var(--_highlight-size, 0) var(--_highlight, transparent) !important;
+}
+
+/* Tabs specifically - no shadows */
+.tab-clean,
+.tab-button,
+.tab-pill {
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove drop shadows from all buttons */
+button,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-tertiary,
+.btn-icon,
+.btn-icon-only,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    box-shadow: none !important;
+}
+
+/* Remove drop shadow from SVG icons inside buttons */
+button svg,
+.btn svg,
+.tab-clean svg,
+.tab-button svg,
+input[type="button"] svg,
+input[type="submit"] svg,
+input[type="reset"] svg {
+    filter: none !important;
+}
+
+/* Ensure our custom button styles don't have shadows */
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+.btn-danger,
+.btn-success {
+    text-shadow: none !important;
+}
+
+/* Remove any shadows from icon buttons */
+.icon-button,
+[class*="btn-icon"] {
+    text-shadow: none !important;
+}
+
+/* Clean up file input buttons specifically */
+input[type="file"]::-webkit-file-upload-button,
+input[type="file"]::file-selector-button {
+    text-shadow: none !important;
+}
+

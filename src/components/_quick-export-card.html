@@ -1,0 +1,32 @@
+<!-- src/components/_quick-export-card.html -->
+<!-- Component: Quick Export Card -->
+<!-- Purpose: Standalone card for quick token export functionality -->
+<div class="card export-section has-inner-structure">
+    <div class="card-content">
+        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
+            <i data-icon="file-text" style="width: 1em; height: 1em;"></i>
+            <h4 class="text-label">Quick Export</h4>
+        </div>
+        <div class="format-select-wrapper">
+            <select class="format-select" id="format-select">
+                <option value="all" selected>All Formats</option>
+                <option value="css">CSS Variables</option>
+                <option value="swift">Swift (iOS)</option>
+                <option value="android">Android XML</option>
+                <option value="flutter">Flutter</option>
+                <option value="w3c">JSON (W3C)</option>
+                <option value="tailwind">Tailwind Config</option>
+            </select>
+        </div>
+    </div>
+    <div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">
+        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
+            <i data-icon="rocket"></i>
+            <span>Package Tokens</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" aria-label="Show filters">
+            <i data-icon="sliders-horizontal"></i>
+            <span>Filters</span>
+        </button>
+    </div>
+</div>

@@ -1,59 +1,20 @@
 <!--
 Component: Forms Example
-Purpose: Shows Quick Export and Advanced Filtering cards side by side
+Purpose: Layout wrapper for Quick Export and Filters cards
+Note: Uses individual card components via @include directives
 -->
-<div class="forms-example-container">
-    <!-- Quick Export Card -->
-    <div class="card export-section is-compact">
-        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-            <i data-icon="file-text" style="width: var(--icon-md); height: var(--icon-md);"></i>
-            <h4 class="text-label">Quick Export</h4>
-        </div>
-        <div class="format-select-wrapper" style="margin-bottom: var(--size-2);">
-            <label for="format-select" class="text-caption" style="display: block; margin-bottom: var(--size-1); color: var(--color-text-secondary);">Export format</label>
-            <select class="format-select" id="format-select">
-                <option value="css" selected>CSS Variables</option>
-                <option value="swift">Swift (iOS)</option>
-                <option value="android">Android XML</option>
-                <option value="flutter">Flutter</option>
-                <option value="w3c">JSON (W3C)</option>
-                <option value="tailwind">Tailwind Config</option>
-            </select>
-        </div>
-        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
-            <i data-icon="rocket"></i>
-            <span>Package Tokens</span>
-        </button>
+<!-- Card 6: Quick Export -->
+<div class="example-wrapper">
+    <div class="example-label">Quick Export</div>
+    <div class="example-container">
+        <!-- @include src/components/_quick-export-card.html -->
     </div>
+</div>
 
-    <!-- Advanced Filtering Card -->
-    <div class="card filter-section is-compact">
-        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-            <i data-icon="sliders-horizontal" style="width: var(--icon-md); height: var(--icon-md);"></i>
-            <h4 class="text-label">Advanced Filters</h4>
-        </div>
-        <div class="filter-options">
-            <div class="collection-item">
-                <div class="collection-checkbox selected"></div>
-                <div class="collection-info">
-                    <span class="collection-name">Brand Colors</span>
-                    <span class="collection-count">12 tokens</span>
-                </div>
-            </div>
-            <div class="collection-item">
-                <div class="collection-checkbox selected"></div>
-                <div class="collection-info">
-                    <span class="collection-name">Typography</span>
-                    <span class="collection-count">24 tokens</span>
-                </div>
-            </div>
-            <div class="collection-item">
-                <div class="collection-checkbox"></div>
-                <div class="collection-info">
-                    <span class="collection-name">Spacing</span>
-                    <span class="collection-count">16 tokens</span>
-                </div>
-            </div>
-        </div>
+<!-- Card 7: Filters -->
+<div class="example-wrapper">
+    <div class="example-label">Filters</div>
+    <div class="example-container">
+        <!-- @include src/components/_filters-card.html -->
     </div>
 </div>
