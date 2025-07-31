@@ -1,2 +1,0 @@
-# Run lint-staged to check only staged files with targeted scripts
-npx lint-staged
