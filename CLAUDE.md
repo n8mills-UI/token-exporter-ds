@@ -265,6 +265,53 @@ The `scripts/critical-elements-check.js` validates that changes don't break:
 - Dangerous CSS selectors that could affect plugin UI
 - JavaScript initialization patterns
 
+## Design Token Documentation System
+
+**CRITICAL: The documentation is partially dynamic!**
+
+### How Token Documentation Works:
+1. **Token VALUES are live** - Uses `getComputedStyle()` to pull current CSS values
+2. **Token LISTS are static** - Manually maintained in `colorSectionConfig` in design-system-guide.template.html
+3. **Some sections are dynamic** - e.g., Neutrals populate based on current theme
+4. **Some sections are hard-coded** - e.g., Shadows only shows 3 of 5 tokens
+
+### Important Implications:
+- **Changing a token's color/value** → Automatically reflected in docs ✅
+- **Adding a new token** → Must manually add to colorSectionConfig ❌
+- **Renaming a token** → Must update colorSectionConfig ❌
+- **Health checks** → May show false positives for dynamic sections
+
+### Token Documentation Sections:
+```javascript
+// Static sections (manually maintained):
+'alpha': { tokens: [...] }      // Manually list each token
+'shadows': { tokens: [...] }    // Currently incomplete (3 of 5)
+
+// Dynamic sections (auto-generated):
+'neutrals': { tokens: [] }      // Populated by JavaScript based on theme
+
+// Hybrid sections:
+'utilities': {
+    subgroups: {
+        'text': { tokens: [...] }    // Static list
+        'surface': { tokens: [...] } // Static list
+    }
+}
+```
+
+### When Adding New Tokens:
+1. Add to CSS (design-system.css)
+2. Add to documentation (design-system-guide.template.html)
+3. Run `node scripts/token-health-check.js` to verify
+4. Note: Health check may report false positives for dynamic sections
+
+### Common Pitfalls:
+- **Don't assume all tokens are auto-documented** - Most need manual addition
+- **Shadow tokens**: Currently only shadow-2,3,4 are shown (missing 1,5)
+- **Gray scales**: Documented dynamically, so won't appear in static token lists
+- **Internal tokens**: Many tokens (like `--plugin-width`) are internal and shouldn't be documented
+- **Health check limitations**: Shows ~15% health but many "missing" tokens are actually internal or dynamically rendered
+
 ## Testing Strategy
 
 No formal test framework - rely on:

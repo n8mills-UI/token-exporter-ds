@@ -715,6 +715,10 @@ body {
  --color-type-text-alpha-10: rgb(var(--color-type-text-rgb), 0.1);
  --color-type-number-alpha-10: rgb(var(--color-type-number-rgb), 0.1);
  --color-type-state-alpha-10: rgb(var(--color-type-state-rgb), 0.1);
+ --color-type-color-alpha-20: rgb(var(--color-type-color-rgb), 0.2);
+ --color-type-text-alpha-20: rgb(var(--color-type-text-rgb), 0.2);
+ --color-type-number-alpha-20: rgb(var(--color-type-number-rgb), 0.2);
+ --color-type-state-alpha-20: rgb(var(--color-type-state-rgb), 0.2);
  
  /* Black & White Alpha Tokens */
  --black-alpha-05: rgb(0, 0, 0, 0.05);
@@ -1356,7 +1360,6 @@ body {
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
         border-color: var(--color-border-default);
-        box-shadow: var(--shadow-2);
     }
     
     .enhanced-card {
@@ -1364,18 +1367,13 @@ body {
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
         border-color: var(--color-border-default);
-        box-shadow: var(--shadow-2);
     }
     
     .stats-container-glass:hover {
         border-color: var(--color-border-default);
-        box-shadow: var(--shadow-3);
     }
     
-    .enhanced-card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-3);
-    }
+    /* Removed hover effect - cards are not interactive */
     
     /* Remove colored borders for cards in light mode */
     .challenge-card,
@@ -6617,7 +6615,7 @@ select option {
  justify-content: center;
  text-align: center;
  isolation: isolate; 
- overflow: hidden; /* Contain the animation */
+ overflow: visible; /* Allow animations to start below viewport */
 }
 
 /* Hero pattern background - theme aware */
@@ -7059,7 +7057,7 @@ body {
 
 #overview {
  padding: 0; /* Ensures hero has no padding */
- overflow: hidden; /* ADDED: Prevents full-bleed pseudo-elements from causing a scrollbar */
+ overflow: visible; /* Allow animations to extend beyond bounds */
 }
 
 /* REMOVED: Generic .section-header - replaced by unified system below */
@@ -9201,7 +9199,7 @@ body {
     
     /* Position offsets */
     --animation-offset-top: calc(var(--size-15) * -1); /* -480px - ensures icons exit fully */
-    --animation-start-bottom: calc(100vh + 200px); /* Start below viewport, past stats panel */
+    --animation-start-bottom: calc(100vh + 300px); /* Start below viewport, past stats panel */
     
     /* Sway distances for bubble animation */
     --animation-sway-sm: var(--size-3);  /* 10px */
@@ -9519,7 +9517,6 @@ body {
 }
 
 .footer-container {
-    max-width: calc(var(--content-lg) + var(--size-8) * 2);
     margin: 0 auto;
     padding: 0 var(--size-6);
 }
@@ -10239,7 +10236,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--size-6);
-    max-width: calc(var(--content-lg) + var(--size-8) * 2); /* ~1200px */
     margin: auto;
 
     /* PEEKING EFFECT: Pull stats up to peek from bottom of hero */
@@ -10365,29 +10361,27 @@ body {
     transition: transform var(--animation-duration-4) var(--ease-3);
 }
 
-.enhanced-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-4);
-}
-
-.enhanced-card:hover::before {
-    transform: translateX(0);
-}
+/* Removed hover effects - these cards are not interactive */
 
 /* Card Variants */
 .challenge-card {
     --gradient: linear-gradient(90deg, var(--color-type-state), var(--color-type-text));
-    border-color: rgb(255, 116, 188, 0.2);
+    border-color: var(--color-type-state-alpha-20);
 }
 
 .solution-card {
     --gradient: var(--brand-gradient-primary);
-    border-color: rgb(210, 255, 55, 0.2);
+    border-color: var(--brand-primary-alpha-20);
 }
 
 .impact-card {
     --gradient: linear-gradient(90deg, var(--color-type-color), var(--color-type-number));
-    border-color: rgb(0, 204, 255, 0.2);
+    border-color: var(--color-type-color-alpha-20);
+}
+
+/* Dark mode: Solution card border matches icon color */
+[data-theme="dark"] .solution-card {
+    border-color: var(--color-type-text-alpha-20);
 }
 
 /* Card Content */
@@ -10405,7 +10399,7 @@ body {
 }
 
 .solution-card .card-icon-large {
-    color: var(--brand-primary);
+    color: var(--color-type-text);
 }
 
 .impact-card .card-icon-large {
