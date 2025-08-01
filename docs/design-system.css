@@ -1191,14 +1191,12 @@ body {
     
     /* Tech Item Icons */
     .tech-item h3 i,
-    .tech-item h3 .lucide,
     .tech-item h3 [data-icon] {
         color: var(--brand-secondary); /* Pink in light mode */
     }
     
     /* Compact Card Icons */
     .compact-card h3 i,
-    .compact-card h3 .lucide,
     .compact-card h3 [data-icon] {
         color: var(--brand-secondary); /* Pink in light mode */
     }
@@ -1525,19 +1523,15 @@ body {
 
 /* Force consistent stroke width in icon showcase to fix thin icons */
 /* Simple stroke weight classes - for demo cards only */
-.icon-weight-card.hairline .lucide,
 .icon-weight-card.hairline [data-icon] svg {
     stroke-width: var(--icon-stroke-hairline);
 }
-.icon-weight-card.thin .lucide,
 .icon-weight-card.thin [data-icon] svg {
     stroke-width: var(--icon-stroke-thin);
 }
-.icon-weight-card.bold .lucide,
 .icon-weight-card.bold [data-icon] svg {
     stroke-width: var(--icon-stroke-bold);
 }
-.icon-weight-card.heavy .lucide,
 .icon-weight-card.heavy [data-icon] svg {
     stroke-width: var(--icon-stroke-heavy);
 }
@@ -2080,8 +2074,6 @@ body {
         box-shadow: none;
     }
 
-    .btn .lucide,
-    .btn [data-lucide],
     .btn [data-icon] {
         text-shadow: none;
     }
@@ -2104,7 +2096,6 @@ body {
         gap: var(--size-1);
     }
 
-    .btn-sm .lucide,
     .btn-sm .icon,
     .btn-sm [data-icon] {
         width: var(--icon-xs);
@@ -2118,7 +2109,6 @@ body {
         gap: var(--size-2);
     }
 
-    .btn-md .lucide,
     .btn-md .icon,
     .btn-md [data-icon] {
         width: var(--icon-sm);
@@ -2132,7 +2122,6 @@ body {
         gap: var(--size-3);
     }
 
-    .btn-lg .lucide,
     .btn-lg .icon,
     .btn-lg [data-icon] {
         width: var(--icon-md);
@@ -2180,18 +2169,18 @@ body {
     }
 
     /* Icon size overrides for icon-only buttons, using tokens */
-    .btn-icon.btn-sm .lucide,
-    .btn-icon.btn-sm .icon {
+    .btn-icon.btn-sm .icon,
+    .btn-icon.btn-sm [data-icon] {
         width: var(--icon-sm);
         height: var(--icon-sm);
     }
-    .btn-icon.btn-md .lucide,
-    .btn-icon.btn-md .icon {
+    .btn-icon.btn-md .icon,
+    .btn-icon.btn-md [data-icon] {
         width: var(--icon-md);
         height: var(--icon-md);
     }
-    .btn-icon.btn-lg .lucide,
-    .btn-icon.btn-lg .icon {
+    .btn-icon.btn-lg .icon,
+    .btn-icon.btn-lg [data-icon] {
         width: var(--icon-lg);
         height: var(--icon-lg);
     }
@@ -2199,12 +2188,11 @@ body {
     /* --- ICON STROKE WEIGHT DIFFERENTIATION --- */
 
     /* Default stroke for all buttons with text */
-    /* Icons in buttons inherit from global .lucide rule */
+    /* Icons in buttons inherit from icon system base rules */
 
     /* Icon stroke now handled by semantic stroke system */
     
     /* Icon-only buttons use thin stroke */
-    .btn-icon .lucide,
     .btn-icon [data-icon] svg {
         stroke-width: var(--icon-stroke-thin);
     }
@@ -2359,7 +2347,7 @@ body {
         background: var(--brand-gradient-primary);
     }
 
-    .guideline-card.primary .guideline-icon-wrapper .lucide {
+    .guideline-card.primary .guideline-icon-wrapper [data-icon] {
         color: var(--brand-text-dark);
     }
 
@@ -2368,7 +2356,7 @@ body {
         border: var(--border-size-1) solid var(--color-border-default);
     }
 
-    .guideline-card.secondary .guideline-icon-wrapper .lucide {
+    .guideline-card.secondary .guideline-icon-wrapper [data-icon] {
         color: var(--color-text-secondary);
     }
 
@@ -2377,7 +2365,7 @@ body {
         border: var(--border-size-1) dashed var(--color-border-default);
     }
 
-    .guideline-card.tertiary .guideline-icon-wrapper .lucide {
+    .guideline-card.tertiary .guideline-icon-wrapper [data-icon] {
         color: var(--color-text-muted);
     }
 
@@ -2397,7 +2385,7 @@ body {
     gap: var(--size-3);
 }
 
-.main-section-title .lucide {
+.main-section-title [data-icon] {
     width: var(--icon-lg); /* Use design token for larger icon */
     height: var(--icon-lg);
 }
@@ -2699,7 +2687,7 @@ body {
  ========================================================================== */
 
 /* Prevent icon flicker by setting initial state */
-[data-lucide]:not(.lucide):not(.lucide-initialized) {
+[data-icon]:not(:has(svg)) {
  width: 1em;
  height: 1em;
  vertical-align: middle;
@@ -2708,8 +2696,8 @@ body {
  display: inline-block;
 }
 
-/* After Lucide processes icons */
-.lucide {
+/* After icons are processed */
+[data-icon] svg {
  width: 1em;
  height: 1em;
  stroke-width: var(--icon-stroke-regular); /* Default stroke weight */
@@ -2721,19 +2709,19 @@ body {
 
 
 /* Utility classes for explicit control - higher specificity */
-.icon--hairline .lucide {
+.icon--hairline [data-icon] svg {
     stroke-width: var(--icon-stroke-hairline) !important;
 }
 
-.icon--thin .lucide {
+.icon--thin [data-icon] svg {
     stroke-width: var(--icon-stroke-thin) !important;
 }
 
-.icon--bold .lucide {
+.icon--bold [data-icon] svg {
     stroke-width: var(--icon-stroke-bold) !important;
 }
 
-.icon--heavy .lucide {
+.icon--heavy [data-icon] svg {
     stroke-width: var(--icon-stroke-heavy) !important;
 }
 
@@ -2873,7 +2861,7 @@ body {
  gap: var(--size-2);
 }
 
-.compact-card h3 .lucide {
+.compact-card h3 [data-icon] {
  color: var(--brand-primary);
 }
 
@@ -2890,14 +2878,14 @@ body {
  gap: var(--size-2);
 }
 
-.section-title .lucide {
+.section-title [data-icon] {
  color: var(--color-text-muted); /* Muted text instead of lime */
  width: 1em;
  height: 1em;
 }
 
 /* Section title icons use semantic tokens */
-.section-title .lucide {
+.section-title [data-icon] {
  color: var(--section-title-icon-color);
 }
 
@@ -2989,7 +2977,7 @@ body {
  color: var(--color-text-default);
 }
 
-.tech-info-title .lucide,
+.tech-info-title [data-icon],
 .tech-info-title svg { /* Added svg for new logos */
  width: var(--icon-md);
  height: var(--icon-md);
@@ -3803,7 +3791,7 @@ body {
     width: 60%; /* Main content column */
 }
 
-.table thead th .lucide {
+.table thead th [data-icon] {
     color: var(--color-text-muted); /* Changed from brand-primary to grey */
     margin-right: var(--size-2);
     vertical-align: middle;
@@ -3975,19 +3963,19 @@ body {
 .badge.pink { background-color: var(--value-state-alpha-10); }
 
 /* Target only the icon within the badge to be colored */
-.badge.color .lucide { color: var(--value-color); }
-.badge.text .lucide { color: var(--value-text); }
-.badge.number .lucide { color: var(--value-number); }
-.badge.state .lucide { color: var(--value-state); }
+.badge.color [data-icon] { color: var(--value-color); }
+.badge.text [data-icon] { color: var(--value-text); }
+.badge.number [data-icon] { color: var(--value-number); }
+.badge.state [data-icon] { color: var(--value-state); }
 
 /* Also apply to badges with color names */
-.badge.cyan .lucide,
+.badge.cyan [data-icon],
 .badge.cyan .icon { color: var(--value-color); }
-.badge.purple .lucide,
+.badge.purple [data-icon],
 .badge.purple .icon { color: var(--value-text); }
-.badge.orange .lucide,
+.badge.orange [data-icon],
 .badge.orange .icon { color: var(--value-number); }
-.badge.pink .lucide,
+.badge.pink [data-icon],
 .badge.pink .icon { color: var(--value-state); }
 
 /* --- Size Variants --- */
@@ -3997,7 +3985,7 @@ body {
     gap: calc(var(--size-1) / 2);
 }
 
-.badge.small .lucide,
+.badge.small [data-icon],
 .badge.small .icon {
     width: 1em;  /* Match text height */
     height: 1em; /* Match text height */
@@ -4005,7 +3993,7 @@ body {
 }
 
 /* Default badge (medium) */
-.badge .lucide,
+.badge [data-icon],
 .badge .icon {
     width: 1em;  /* Match text height */
     height: 1em; /* Match text height */
@@ -4018,14 +4006,14 @@ body {
     gap: var(--size-2);
 }
 
-.badge.large .lucide,
+.badge.large [data-icon],
 .badge.large .icon {
     width: 1em;  /* Match text height */
     height: 1em; /* Match text height */
     flex-shrink: 0;
 }
 
-.badge i .lucide {
+.badge i [data-icon] svg {
     width: 100%;
     height: 100%;
 }
@@ -4042,7 +4030,6 @@ body {
 }
 
 
-.badge .icon .lucide,
 .badge .icon svg {
     width: 100%;
     height: 100%;
@@ -4421,7 +4408,7 @@ body {
 
 
 
-.tech-item .lucide,
+.tech-item [data-icon],
 .tech-item svg {
  width: var(--icon-lg);
  height: var(--icon-lg);
@@ -4464,7 +4451,7 @@ body {
 }
 
 /* Keep Lucide icons as outlines in tech items */
-.tech-item .lucide {
+.tech-item [data-icon] {
  fill: none !important;
  stroke: currentcolor;
 }
@@ -4487,7 +4474,7 @@ body {
 }
 
 /* Specific fix for Lucide icons to remain outline */
-.info-panel-a .title .lucide {
+.info-panel-a .title [data-icon] svg {
  fill: none !important;
  stroke: currentcolor;
 }
@@ -4526,7 +4513,7 @@ body {
  animation: content-fade-in 0.4s var(--ease-3) forwards;
 }
 
-.info-panel-a .title .lucide, 
+.info-panel-a .title [data-icon], 
 .info-panel-a .title svg {
  width: var(--icon-xl);
  height: var(--icon-xl);
@@ -4676,7 +4663,7 @@ body {
  gap: var(--size-4); 
 }
 
-.faq-question .lucide {
+.faq-question [data-icon] {
  color: var(--faq-toggle-color);
  transition: all 0.3s var(--ease-3);
  font-size: var(--font-size-2);
@@ -4746,13 +4733,13 @@ body {
  gap: var(--size-2);
 }
 
-.section-title .lucide,
+.section-title [data-icon],
 .section-title svg {
  color: var(--color-text-muted); /* Muted text instead of lime */
 }
 
 /* Section title icons and SVGs use semantic tokens */
-.section-title .lucide,
+.section-title [data-icon],
 .section-title svg {
  color: var(--section-title-icon-color);
 }
@@ -5129,9 +5116,9 @@ select option {
 }
 
 /* Icon styling for section titles */
-.section-title-primary [data-lucide],
+.section-title-primary [data-icon],
 .section-title-primary i,
-.section-title-secondary [data-lucide],
+.section-title-secondary [data-icon],
 .section-title-secondary i {
     color: var(--color-text-muted);
     width: 1em;
@@ -5932,7 +5919,7 @@ select option {
  font-size: var(--font-size-0);
 }
 
-.btn.btn-sm.btn-inline .lucide {
+.btn.btn-sm.btn-inline [data-icon] {
  width: var(--icon-xs);
  height: var(--icon-xs);
 }
@@ -6014,7 +6001,7 @@ select option {
  will-change: transform, opacity;
 }
 
-.te-icon-cell .lucide {
+.te-icon-cell [data-icon] svg {
  width: 100%;
  height: 100%;
  stroke-width: var(--icon-stroke-regular);
@@ -6056,7 +6043,7 @@ select option {
  animation: te-success-pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
-.te-success-icon .lucide {
+.te-success-icon [data-icon] {
  width: var(--icon-5xl);
  height: var(--icon-5xl);
  stroke-width: var(--icon-stroke-thin);
@@ -6382,7 +6369,7 @@ select option {
  position: relative;
 }
 
-.search-wrapper .lucide-search {
+.search-wrapper [data-icon="search"] {
  position: absolute;
  left: var(--size-3);
  top: 50%;
@@ -7055,7 +7042,7 @@ body:has(.mobile-menu.open) .mobile-header .hamburger-icon .line-3 {
     background: var(--nav-link-active-bg);
 }
 
-.mobile-nav-links .lucide {
+.mobile-nav-links [data-icon] {
     width: var(--icon-sm);
     height: var(--icon-sm);
 }
@@ -7250,7 +7237,7 @@ body {
  background: var(--nav-link-active-color);
 }
 
-.nav-links .lucide {
+.nav-links [data-icon] {
  width: var(--icon-sm);
  height: var(--icon-sm);
  stroke-width: var(--icon-stroke-regular);
@@ -7308,7 +7295,7 @@ body {
  gap: var(--size-3);
 }
 
-.main-section-title .lucide {
+.main-section-title [data-icon] {
  color: var(--color-text-muted); /* Muted text instead of lime */
  width: 1em;
  height: 1em;
@@ -7316,7 +7303,7 @@ body {
 }
 
 /* Main section title icons use semantic tokens */
-.main-section-title .lucide {
+.main-section-title [data-icon] {
  color: var(--section-title-icon-color);
 }
 
@@ -7378,7 +7365,7 @@ body {
  gap: var(--size-3);
 }
 
-.category-title .lucide, .component-title .lucide {
+.category-title [data-icon], .component-title [data-icon] {
  color: var(--color-text-muted); /* Muted text instead of lime */
  width: 1em;
  height: 1em;
@@ -7657,7 +7644,7 @@ body {
     color: var(--brand-primary); /* Lime color for headers */
 }
 
-[data-theme="dark"] .table thead th .lucide {
+[data-theme="dark"] .table thead th [data-icon] {
     color: var(--brand-primary); /* Lime icons to match */
     stroke-width: var(--icon-stroke-thin); /* Thinner stroke for icons */
 }
@@ -8048,7 +8035,7 @@ body {
  background: rgb(var(--brand-primary-rgb), 0.1);
 }
 
-.motion-play-btn .lucide {
+.motion-play-btn [data-icon] {
  width: var(--icon-xs);
  height: var(--icon-xs);
 }
@@ -8425,11 +8412,11 @@ body {
  color: var(--brand-primary);
 }
 
-.advanced-filters .lucide {
+.advanced-filters [data-icon] {
  transition: transform var(--animation-duration-2) var(--ease-3);
 }
 
-.advanced-filters:hover .lucide {
+.advanced-filters:hover [data-icon] {
  transform: translateX(var(--border-size-2));
 }
 
@@ -9154,7 +9141,7 @@ body {
         background: var(--color-background-primary);
     }
     
-    .mobile-menu-toggle-right .lucide {
+    .mobile-menu-toggle-right [data-icon] {
         width: var(--icon-md);
         height: var(--icon-md);
         stroke-width: var(--icon-stroke-regular);
@@ -10149,7 +10136,7 @@ body {
    ========================= */
 
 /* Header Icons - Consistent Sizing */
-.component-title [data-lucide],
+.component-title [data-icon],
 .component-title .icon {
     width: var(--guide-icon-size);
     height: var(--guide-icon-size);
@@ -10159,7 +10146,7 @@ body {
 }
 
 /* Main Section Title Icons - Larger for hierarchy */
-.main-section-title [data-lucide],
+.main-section-title [data-icon],
 .main-section-title .icon {
     width: var(--icon-lg);
     height: var(--icon-lg);
@@ -10169,17 +10156,17 @@ body {
 }
 
 /* Main section title icons with data-lucide use semantic tokens */
-.main-section-title [data-lucide],
+.main-section-title [data-icon],
 .main-section-title .icon {
     color: var(--section-title-icon-color);
 }
 
 /* Header icons use semantic tokens */
-.category-title [data-lucide],
+.category-title [data-icon],
 .category-title i,
-.text-heading-lg [data-lucide],
+.text-heading-lg [data-icon],
 .text-heading-lg i,
-.component-title [data-lucide],
+.component-title [data-icon],
 .component-title .icon {
     color: var(--section-title-icon-color);
 }
@@ -10192,7 +10179,7 @@ body {
 
 /* Subsection Icons */
 .example-subheader .icon,
-.example-subheader [data-lucide] {
+.example-subheader [data-icon] {
     width: var(--icon-md);
     height: var(--icon-md);
     color: var(--brand-primary);
@@ -10297,7 +10284,7 @@ body {
     }
     
     /* Mobile main section icons scale down appropriately */
-    .main-section-title [data-lucide],
+    .main-section-title [data-icon],
     .main-section-title .icon {
         width: var(--icon-md);
         height: var(--icon-md);
@@ -10371,8 +10358,8 @@ body {
 
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
-    .component-title [data-lucide],
-    .main-section-title [data-lucide] {
+    .component-title [data-icon],
+    .main-section-title [data-icon] {
         stroke-width: var(--icon-stroke-bold);
     }
     
@@ -10485,7 +10472,7 @@ body {
 }
 
 /* Stat icon styles */
-.stat-icon.lucide {
+.stat-icon[data-icon] svg {
     stroke-width: var(--icon-stroke-thin);
 }
 
@@ -10580,7 +10567,7 @@ body {
 }
 
 /* Card icon styles */
-.card-icon-large.lucide {
+.card-icon-large[data-icon] svg {
     stroke-width: var(--icon-stroke-thin);
 }
 
@@ -11122,12 +11109,12 @@ button.theme-toggle {
 }
 
 /* Fix category title icon colors - grey not green */
-.category-title [data-lucide],
+.category-title [data-icon],
 .category-title i {
     color: var(--color-text-muted) !important;
 }
 
-.category-title [data-lucide],
+.category-title [data-icon],
 .category-title i {
     color: var(--section-title-icon-color);
 }
@@ -11165,14 +11152,14 @@ button.theme-toggle {
     gap: var(--size-2);
 }
 
-.subsection-title [data-lucide],
+.subsection-title [data-icon],
 .subsection-title i {
     color: var(--color-text-muted);
     width: 1em;
     height: 1em;
 }
 
-.subsection-title [data-lucide],
+.subsection-title [data-icon],
 .subsection-title i {
     color: var(--section-title-icon-color);
 }
@@ -11263,7 +11250,7 @@ button.theme-toggle {
     height: var(--icon-3xl);
 }
 
-/* Stroke widths handled by global .lucide rule and component overrides */
+/* Stroke widths handled by icon system base rules and component overrides */
 
 /* Icon card thin stroke handled via icon--xxl class */
 
@@ -11356,34 +11343,34 @@ button.theme-toggle {
 }
 
 /* Force proper icon sizing in icon showcase */
-.icon-size-card [data-lucide] {
+.icon-size-card [data-icon] {
     display: block;
     stroke: currentColor;
     fill: none;
 }
 
 /* Ensure icon sizes are visible */
-.icon-sizes-grid [data-lucide][style*="--icon-xs"] {
+.icon-sizes-grid [data-icon][style*="--icon-xs"] {
     width: var(--icon-xs) !important;
     height: var(--icon-xs) !important;
 }
 
-.icon-sizes-grid [data-lucide][style*="--icon-sm"] {
+.icon-sizes-grid [data-icon][style*="--icon-sm"] {
     width: var(--icon-sm) !important;
     height: var(--icon-sm) !important;
 }
 
-.icon-sizes-grid [data-lucide][style*="--icon-md"] {
+.icon-sizes-grid [data-icon][style*="--icon-md"] {
     width: var(--icon-md) !important;
     height: var(--icon-md) !important;
 }
 
-.icon-sizes-grid [data-lucide][style*="--icon-lg"] {
+.icon-sizes-grid [data-icon][style*="--icon-lg"] {
     width: var(--icon-lg) !important;
     height: var(--icon-lg) !important;
 }
 
-.icon-sizes-grid [data-lucide][style*="--icon-xl"] {
+.icon-sizes-grid [data-icon][style*="--icon-xl"] {
     width: var(--icon-xl) !important;
     height: var(--icon-xl) !important;
 }
@@ -11417,7 +11404,7 @@ button.theme-toggle {
 }
 
 /* Force proper stroke width in weight showcase */
-.icon-weight-card [data-lucide] {
+.icon-weight-card [data-icon] {
     display: block;
     stroke: currentColor;
     fill: none;
@@ -11651,14 +11638,14 @@ button.theme-toggle {
 
 /* Fix icon color to grey */
 .layout-title i,
-.layout-title [data-lucide] {
+.layout-title [data-icon] {
     color: var(--color-text-muted);
     width: var(--icon-lg);
     height: var(--icon-lg);
 }
 
 .layout-title i,
-.layout-title [data-lucide] {
+.layout-title [data-icon] {
     color: var(--section-title-icon-color);
 }
 

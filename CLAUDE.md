@@ -398,3 +398,48 @@ if (section.tokens && section.tokens.length > 0) {
 - Check browser console for JavaScript errors
 - Never mix @include directives with JavaScript code
 - Keep duplicate CSS rules consolidated
+
+## Icon System Architecture
+
+The Token Exporter uses a JavaScript-enhanced icon system that injects SVG icons at runtime. This approach was chosen due to Figma's Content Security Policy restrictions that prevent loading external icon fonts.
+
+### How It Works:
+1. **HTML**: Use `<i class="icon" data-icon="icon-name"></i>`
+2. **JavaScript**: Replaces the `<i>` element content with the corresponding SVG from the icon library
+3. **CSS**: Target icons using `[data-icon]` attribute selectors
+
+### CSS Selector Patterns:
+```css
+/* Target the SVG inside the icon element */
+[data-icon] svg { stroke-width: 2; }
+
+/* Target specific icons */
+[data-icon="rocket"] { color: var(--brand-primary); }
+
+/* Icon size modifiers */
+.btn-sm [data-icon] { width: var(--icon-sm); height: var(--icon-sm); }
+
+/* Stroke weight modifiers */
+.btn-icon [data-icon] svg { stroke-width: var(--icon-stroke-thin); }
+```
+
+### Important Notes:
+- **Never use `.lucide` selectors** - This was legacy code from an older icon system
+- **Always use `[data-icon]` for icon targeting** - This is what the JavaScript looks for
+- **Use `.icon` class for layout/spacing** - But not for SVG-specific properties
+- **Icons require JavaScript** - They won't render without the icon system script
+
+### Common Patterns:
+```html
+<!-- Basic icon -->
+<i data-icon="rocket"></i>
+
+<!-- Icon with size class -->
+<i class="icon icon-lg" data-icon="rocket"></i>
+
+<!-- Icon in button -->
+<button class="btn">
+  <i data-icon="rocket"></i>
+  <span>Launch</span>
+</button>
+```
