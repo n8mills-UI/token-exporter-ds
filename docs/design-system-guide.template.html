@@ -3175,11 +3175,6 @@ document.addEventListener('DOMContentLoaded', function() {
         title: 'Color System',
         description: 'Comprehensive color palette with brand colors, neutrals, categories, and alpha values. Desktop uses expanded layout, mobile uses compact reference.',
         sections: {
-            'overview': {
-                title: 'Color System Overview',
-                isOverviewSection: true, // Special flag for overview section
-                customContent: true
-            },
             'core': {
                 title: 'Core Colors',
                 sections: {
@@ -3284,8 +3279,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         tokens: [
                             { token: '--brand-gradient-primary', gradient: true, label: 'Primary Brand' },
                             { token: '--brand-gradient-secondary', gradient: true, label: 'Secondary Brand' },
-                            { token: '--brand-gradient-accent', gradient: true, label: 'Accent' },
-                            { token: '--brand-gradient-highlight', gradient: true, label: 'Highlight' }
+                            { token: '--brand-gradient-accent', gradient: true, label: 'Accent Brand' },
+                            { token: '--brand-gradient-highlight', gradient: true, label: 'Highlight Brand' }
                         ]
                     },
                     'primary-directional': {
@@ -3313,8 +3308,39 @@ document.addEventListener('DOMContentLoaded', function() {
                             { token: '--gradient-secondary-270', gradient: true, label: 'Right to Left' },
                             { token: '--gradient-secondary-315', gradient: true, label: 'Diagonal TR-BL' }
                         ]
+                    },
+                    'accent-directional': {
+                        title: 'Accent Gradient - Directional Variants',
+                        tokens: [
+                            { token: '--gradient-accent-0', gradient: true, label: 'Bottom to Top' },
+                            { token: '--gradient-accent-45', gradient: true, label: 'Diagonal BR-TL' },
+                            { token: '--gradient-accent-90', gradient: true, label: 'Left to Right' },
+                            { token: '--gradient-accent-135', gradient: true, label: 'Diagonal BL-TR' },
+                            { token: '--gradient-accent-180', gradient: true, label: 'Top to Bottom' },
+                            { token: '--gradient-accent-225', gradient: true, label: 'Diagonal TL-BR' },
+                            { token: '--gradient-accent-270', gradient: true, label: 'Right to Left' },
+                            { token: '--gradient-accent-315', gradient: true, label: 'Diagonal TR-BL' }
+                        ]
+                    },
+                    'highlight-directional': {
+                        title: 'Highlight Gradient - Directional Variants',
+                        tokens: [
+                            { token: '--gradient-highlight-0', gradient: true, label: 'Bottom to Top' },
+                            { token: '--gradient-highlight-45', gradient: true, label: 'Diagonal BR-TL' },
+                            { token: '--gradient-highlight-90', gradient: true, label: 'Left to Right' },
+                            { token: '--gradient-highlight-135', gradient: true, label: 'Diagonal BL-TR' },
+                            { token: '--gradient-highlight-180', gradient: true, label: 'Top to Bottom' },
+                            { token: '--gradient-highlight-225', gradient: true, label: 'Diagonal TL-BR' },
+                            { token: '--gradient-highlight-270', gradient: true, label: 'Right to Left' },
+                            { token: '--gradient-highlight-315', gradient: true, label: 'Diagonal TR-BL' }
+                        ]
                     }
                 }
+            },
+            'tokens': {
+                title: 'Tokens',
+                isOverviewSection: true, // Special flag for overview section
+                customContent: true
             }
         }
     };
@@ -3410,12 +3436,12 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = '<div class="color-system-container">' +
                     '<!-- Tab Navigation -->' +
                     '<div class="tab-nav-final" role="tablist">' +
-                        '<button class="tab-clean active" role="tab" aria-selected="true" data-tab="overview">Overview</button>' +
-                        '<button class="tab-clean" role="tab" data-tab="core">Core</button>' +
+                        '<button class="tab-clean active" role="tab" aria-selected="true" data-tab="core">Core</button>' +
                         '<button class="tab-clean" role="tab" data-tab="neutrals">Neutrals</button>' +
                         '<button class="tab-clean" role="tab" data-tab="alpha">Alpha</button>' +
                         '<button class="tab-clean" role="tab" data-tab="utilities">Utilities</button>' +
                         '<button class="tab-clean" role="tab" data-tab="gradients">Gradients</button>' +
+                        '<button class="tab-clean" role="tab" data-tab="tokens">Tokens</button>' +
                     '</div>' +
                     
                     '<!-- Desktop Layout -->' +
@@ -3481,17 +3507,63 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check if this is a gradient with directional variant (same as in renderColorCard)
         const isDirectionalGradient = item.gradient && item.token && item.token.match(/-\d+$/);
         
+        // Check if this is a text utility token (same as in renderColorCard)
+        const isTextUtility = item.token && (
+            item.token.includes('--color-text-') || 
+            item.token.includes('--text-color-') ||
+            (item.token.includes('text') && item.token.includes('color'))
+        );
+        
+        // Calculate contrast class for text utilities (same as in renderColorCard)
+        const isLowContrast = isTextUtility && value && (
+            value.includes('#999') || 
+            value.includes('#666') || 
+            value.includes('#888') ||
+            value.includes('#777') ||
+            (value.includes('rgba') && value.includes('0.') && parseFloat(value.match(/0\.(\d+)/)?.[0] || '1') < 0.7)
+        );
+        
+        const contrastClass = isLowContrast ? 
+            (value.includes('#666') ? 'split-background' : 'low-contrast') : '';
+        
         // For gradients with labels, show both label and token
         let detailsContent;
-        if (item.gradient && item.label) {
-            detailsContent = '<div class="gradient-label-nowrap">' + item.label + '</div>' +
-                           '<code class="token-name">' + item.token + '</code>';
-        } else {
+        if (item.gradient && item.label && !isDirectionalGradient) {
+            // Make gradient cards match core card structure: token on top, label below
             detailsContent = '<code>' + item.token + '</code>' +
-                           (showValue ? '<span class="hex">' + (value || 'N/A') + '</span>' : '');
+                           '<span class="hex">' + item.label + '</span>';
+        } else {
+            // Check if this is an alpha token and simplify the display
+            let displayValue = value || 'N/A';
+            if (item.token && item.token.includes('alpha') && value && (value.includes('rgba') || value.includes('rgb'))) {
+                // Extract opacity from rgba() or rgb() value (both can have 4 parameters)
+                const match = value.match(/rgba?\([^,]+,[^,]+,[^,]+,\s*([0-9.]+)\)/);
+                if (match) {
+                    const opacity = parseFloat(match[1]);
+                    displayValue = Math.round(opacity * 100) + '% opacity';
+                }
+            }
+            
+            detailsContent = '<code>' + item.token + '</code>' +
+                           (showValue ? '<span class="hex">' + displayValue + '</span>' : '');
         }
         
-        return '<div class="color-card">' +
+        // Add appropriate classes for different card types
+        let cardClass = 'color-card';
+        if (item.gradient) {
+            cardClass += ' gradient-card';
+        }
+        if (isDirectionalGradient) {
+            cardClass += ' gradient-directional-variant';
+        }
+        if (isTextUtility) {
+            cardClass += ' text-utility-card';
+            if (contrastClass) {
+                cardClass += ' ' + contrastClass;
+            }
+        }
+        
+        return '<div class="' + cardClass + '">' +
                 swatchHtml +
                 '<div class="color-details">' +
                     detailsContent +
@@ -3512,6 +3584,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const isDirectionalGradient = item.gradient && item.token && item.token.match(/-\d+$/);
         const gradientAngle = isDirectionalGradient ? item.token.match(/-(\d+)$/)[1] + '°' : null;
         
+        // Check if this is a text utility token
+        const isTextUtility = item.token && (
+            item.token.includes('--color-text-') || 
+            item.token.includes('--text-color-') ||
+            (item.token.includes('text') && item.token.includes('color'))
+        );
+        
+        // Calculate contrast class for text utilities
+        const isLowContrast = isTextUtility && value && (
+            value.includes('#999') || 
+            value.includes('#666') || 
+            value.includes('#888') ||
+            value.includes('#777') ||
+            (value.includes('rgba') && value.includes('0.') && parseFloat(value.match(/0\.(\d+)/)?.[0] || '1') < 0.7)
+        );
+        
+        const contrastClass = isLowContrast ? 
+            (value.includes('#666') ? 'split-background' : 'low-contrast') : '';
+        
         const swatchClass = item.alpha ? 'color-swatch alpha-swatch' : 
                            (isDirectionalGradient ? 'color-swatch gradient-swatch-square' : 'color-swatch');
         const backgroundStyle = item.gradient ? 
@@ -3528,6 +3619,11 @@ document.addEventListener('DOMContentLoaded', function() {
             swatchHtml = '<div class="' + swatchClass + '" style="' + backgroundStyle + '">' +
                 '<span class="angle-badge">' + gradientAngle + '</span>' +
             '</div>';
+        } else if (isTextUtility) {
+            // Text utility cards with "Aa" preview and contrast-aware background
+            swatchHtml = '<div class="' + swatchClass + '" style="color: ' + value + ';">' +
+                'Aa' +
+            '</div>';
         } else {
             swatchHtml = '<div class="' + swatchClass + '" style="' + backgroundStyle + '"></div>';
         }
@@ -3537,15 +3633,42 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // For gradients with labels, show both label and token
         let detailsContent;
-        if (item.gradient && item.label) {
-            detailsContent = '<div class="gradient-label-nowrap">' + item.label + '</div>' +
-                           '<code class="token-name">' + item.token + '</code>';
-        } else {
+        if (item.gradient && item.label && !isDirectionalGradient) {
+            // Make gradient cards match core card structure: token on top, label below
             detailsContent = '<code>' + item.token + '</code>' +
-                           (showValue ? '<span class="hex">' + (value || 'N/A') + '</span>' : '');
+                           '<span class="hex">' + item.label + '</span>';
+        } else {
+            // Check if this is an alpha token and simplify the display
+            let displayValue = value || 'N/A';
+            if (item.token && item.token.includes('alpha') && value && (value.includes('rgba') || value.includes('rgb'))) {
+                // Extract opacity from rgba() or rgb() value (both can have 4 parameters)
+                const match = value.match(/rgba?\([^,]+,[^,]+,[^,]+,\s*([0-9.]+)\)/);
+                if (match) {
+                    const opacity = parseFloat(match[1]);
+                    displayValue = Math.round(opacity * 100) + '% opacity';
+                }
+            }
+            
+            detailsContent = '<code>' + item.token + '</code>' +
+                           (showValue ? '<span class="hex">' + displayValue + '</span>' : '');
         }
         
-        return '<div class="color-card">' +
+        // Add appropriate classes for different card types
+        let cardClass = 'color-card';
+        if (item.gradient) {
+            cardClass += ' gradient-card';
+        }
+        if (isDirectionalGradient) {
+            cardClass += ' gradient-directional-variant';
+        }
+        if (isTextUtility) {
+            cardClass += ' text-utility-card';
+            if (contrastClass) {
+                cardClass += ' ' + contrastClass;
+            }
+        }
+        
+        return '<div class="' + cardClass + '">' +
                 swatchHtml +
                 '<div class="color-details">' +
                     detailsContent +
@@ -3553,58 +3676,37 @@ document.addEventListener('DOMContentLoaded', function() {
             '</div>';
     };
 
-    // Helper function to render text color cards with split design
+    // Helper function to render text color cards with single Aa preview (updated from mockup)
     const renderTextColorCard = (item) => {
         let value = getCssValue(item.token) || '';
-        const brandColor = getCssValue('--brand-primary') || '#D2FF37';
         
-        // Create three variations for text tokens
-        const variations = [];
+        // Determine background based on contrast needs
+        let swatchBackground = 'var(--color-background-primary)';
+        let cardClass = 'color-card text-utility-card';
         
-        if (item.showOnBrand) {
-            // Text on Brand - show text on brand background
-            variations.push({
-                topBg: brandColor,
-                topText: value,
-                label: 'On Brand BG',
-                textExample: 'Aa'
-            });
+        // Low contrast tokens need special backgrounds
+        if (item.token.includes('secondary')) {
+            // Split background for secondary text
+            swatchBackground = 'linear-gradient(to right, var(--color-background-primary) 50%, var(--color-background-tertiary) 50%)';
+            cardClass += ' split-background';
+        } else if (item.token.includes('muted')) {
+            // Tertiary background for muted text  
+            swatchBackground = 'var(--color-background-tertiary)';
+            cardClass += ' low-contrast';
+        } else if (item.showOnBrand) {
+            // Brand background for on-brand text
+            swatchBackground = 'var(--brand-primary)';
         }
         
-        // Default variation - text on default background
-        variations.push({
-            topBg: 'var(--color-background-primary)',
-            topText: value,
-            label: 'On Default BG',
-            textExample: 'Aa'
-        });
-        
-        // Surface variation - text on surface
-        variations.push({
-            topBg: 'var(--surface-2)',
-            topText: value,
-            label: 'On Surface',
-            textExample: 'Aa'
-        });
-        
-        let html = '';
-        variations.forEach((variant, index) => {
-            html += '<div class="color-card text-color-card">' +
-                '<div class="text-color-split">' +
-                    '<div class="text-preview" style="background: ' + variant.topBg + '; color: ' + variant.topText + ';">' +
-                        '<span class="text-example">' + variant.textExample + '</span>' +
-                        '<span class="text-variant-label">' + variant.label + '</span>' +
-                    '</div>' +
-                    '<div class="color-swatch" style="background-color: ' + value + ';"></div>' +
+        return '<div class="' + cardClass + '" style="background: transparent;">' +
+                '<div class="color-swatch" style="background: ' + swatchBackground + '; display: flex; align-items: center; justify-content: center; color: ' + value + '; font-size: 2rem; font-weight: 600; border: 1px solid var(--color-border-default); height: 100px; margin-bottom: var(--size-3); border-radius: var(--radius-2);">' +
+                    'Aa' +
                 '</div>' +
                 '<div class="color-details">' +
-                    '<code>' + (item.label || item.token) + '</code>' +
+                    '<code>' + item.token + '</code>' +
                     '<span class="hex">' + (value || 'N/A') + '</span>' +
                 '</div>' +
             '</div>';
-        });
-        
-        return html;
     };
 
     // Render a color section
@@ -3727,12 +3829,21 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (key === 'gradients' && section.sections) {
             // Handle gradients section with nested sections
             Object.entries(section.sections).forEach(([subkey, subsection]) => {
-                html += '<h3 class="text-label" style="margin-bottom: var(--size-3);">' + subsection.title + '</h3>';
-                html += '<div class="color-grid-4col" style="margin-bottom: var(--size-6);">';
+                html += '<div class="color-subsection">';
+                
+                // Hero gradients: no title, 2-column grid (align with Core)
+                if (subkey === 'hero') {
+                    html += '<div class="color-grid-2col">';
+                } else {
+                    // Other gradient sections: keep title and 3-column grid
+                    html += '<h4 class="subsection-title">' + subsection.title + '</h4>';
+                    html += '<div class="color-grid-3col">';
+                }
                 
                 subsection.tokens.forEach(item => {
                     html += renderColorCard(item);
                 });
+                html += '</div>';
                 html += '</div>';
             });
         } else if (section.hasSubgroups && section.subgroups) {
@@ -3802,7 +3913,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Individual panels only - no 'all' panel
         Object.keys(config.sections).forEach((key, index) => {
-            html += '<div class="tab-panel ' + (key === 'overview' ? 'active' : '') + '" data-panel="' + key + '">';
+            html += '<div class="tab-panel ' + (key === 'core' ? 'active' : '') + '" data-panel="' + key + '">';
             // Skip title for sections where tab name is sufficient
             const skipTitle = key === 'neutrals' || key === 'alpha' || key === 'utilities';
             html += renderColorSection(key, config.sections[key], skipTitle);
@@ -3836,7 +3947,17 @@ document.addEventListener('DOMContentLoaded', function() {
             '<div class="' + swatchClass + '" style="' + backgroundStyle + '"></div>';
         
         // For gradients, show label instead of full CSS value
-        const displayValue = item.gradient && item.label ? item.label : value;
+        let displayValue = item.gradient && item.label ? item.label : value;
+        
+        // Check if this is an alpha token and simplify the display (same logic as desktop)
+        if (item.token && item.token.includes('alpha') && value && (value.includes('rgba') || value.includes('rgb'))) {
+            // Extract opacity from rgba() or rgb() value (both can have 4 parameters)
+            const match = value.match(/rgba?\([^,]+,[^,]+,[^,]+,\s*([0-9.]+)\)/);
+            if (match) {
+                const opacity = parseFloat(match[1]);
+                displayValue = Math.round(opacity * 100) + '% opacity';
+            }
+        }
         
         return '<div class="ref-item">' +
                 swatchHtml +
@@ -3851,6 +3972,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const renderMobileSections = (config) => {
         let html = '';
         Object.entries(config.sections).forEach(([key, section]) => {
+            // Add section label based on key
+            const sectionLabels = {
+                'core': 'BRAND',
+                'neutrals': 'NEUTRALS', 
+                'alpha': 'ALPHA',
+                'utilities': 'CATEGORIES',
+                'gradients': 'GRADIENTS'
+            };
+            
+            if (sectionLabels[key]) {
+                html += '<div class="mobile-section-label">' + sectionLabels[key] + '</div>';
+            }
             // Handle sections with nested structure (like gradients)
             if (section.sections) {
                 // Render each subsection

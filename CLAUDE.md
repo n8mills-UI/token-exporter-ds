@@ -185,6 +185,11 @@ const MAX_EXPORT_SIZE = 50;          // MB export limit
 - **Missing styles** → Verify CSS imports are accessible
 - **Plugin not updating** → Hard refresh Figma (Cmd+R/Ctrl+R)
 
+### CSS Rendering Issues
+- **NEVER blame browser compatibility** - It's always a CSS implementation issue
+- **If something isn't rendering** → Check the actual CSS being applied
+- **Verify the correct pattern** → Use the exact CSS from the mockup
+
 ## Vendor Dependencies
 
 Open Props CSS framework is vendored locally in `vendor/open-props/`:
@@ -205,6 +210,31 @@ Open Props CSS framework is vendored locally in `vendor/open-props/`:
   - **Section header comments** in CSS (e.g., `/* Button tokens */`, `/* FAQ tokens */`)
   - **ASCII art headers** - They add personality and visual organization
   - **Build markers** (e.g., `/* @docs-only-start */`, `/* @plugin-only-end */`)
+  - **Critical warnings** about Figma limitations or security issues
+  - **Complex algorithm explanations** when the "why" isn't obvious from code alone
+  - **Regex pattern documentation** for complex patterns
+
+**Examples of BAD comments (avoid these):**
+```css
+/* Set background to transparent for alpha swatches */
+.color-card:has(.alpha-swatch) { background: transparent; }
+
+/* Hover state */
+.btn:hover { opacity: 0.8; }
+
+/* Add 20px margin */
+.card { margin: 20px; }
+```
+
+**Examples of GOOD comments (keep these):**
+```css
+/* ========= Color System Tokens ========= */
+
+/* CRITICAL: Never use rgba() with CSS variables - breaks in Safari */
+
+/* Match price patterns like $19.99 or €50.00 */
+const priceRegex = /[€$]\d+\.\d{2}/g;
+```
 
 ## Dual-Persona Development Mode (Optional)
 

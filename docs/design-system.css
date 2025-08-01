@@ -661,9 +661,11 @@ body {
  --tab-active-color: var(--brand-primary);
  --tab-active-border: var(--brand-primary);
  
- /* Checkerboard */
+ /* Checkerboard Pattern */
  --checkerboard-color-1: var(--surface-3);
  --checkerboard-color-2: var(--surface-4);
+ --checkerboard-size: var(--size-4);          /* 20px for desktop */
+ --checkerboard-size-mobile: var(--size-2);   /* 10px for mobile */
  
  /* Mobile menu */
  --mobile-menu-hover-border: var(--brand-primary);
@@ -1427,13 +1429,7 @@ body {
     stroke: rgb(255, 255, 255, 0.3);
 }
 
-[data-theme="dark"] .alpha-swatch {
-    background-image: 
-        linear-gradient(45deg, var(--color-pattern-default) 25%, transparent 25%),
-        linear-gradient(-45deg, var(--color-pattern-default) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, var(--color-pattern-default) 75%),
-        linear-gradient(-45deg, transparent 75%, var(--color-pattern-default) 75%);
-}
+/* Dark theme alpha swatch removed - now using themed tokens */
 
 
 /* Dark theme mock toggle moved to consolidated section */
@@ -7477,14 +7473,10 @@ body {
 }
 
 .checkerboard {
-    background-color: var(--checkerboard-color-1);
-    background-image: 
-        linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-        linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, var(--checkerboard-color-2) 75%),
-        linear-gradient(-45deg, transparent 75%, var(--checkerboard-color-2) 75%);
-    background-size: 16px 16px;
-    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    background: repeating-conic-gradient(
+        var(--checkerboard-color-1) 0% 25%, 
+        var(--checkerboard-color-2) 0% 50%
+    ) 50% / var(--checkerboard-size) var(--checkerboard-size);
     width: 100%;
     height: 100%;
     position: relative;
@@ -10963,8 +10955,6 @@ button.theme-toggle {
     margin-bottom: var(--size-8);
 }
 
-/* Button sections need the same padding as variants-grid */
-
 .token-category .subsection:last-child {
     margin-bottom: 0;
 }
@@ -11713,6 +11703,22 @@ button.theme-toggle {
     color: var(--color-text-default);
 }
 
+.color-grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--size-4);
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.color-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--size-4);
+    margin-bottom: 0;
+    width: 100%;
+}
+
 .color-grid-4col {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
@@ -11722,13 +11728,18 @@ button.theme-toggle {
 }
 
 .color-card {
-    background: var(--color-background-secondary);
+    background: transparent;
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3);
     padding: var(--size-4);
     text-align: center;
     width: 100%;
     box-sizing: border-box;
+}
+
+.color-card:has(.alpha-swatch) {
+    background: transparent;
+    overflow: visible;  /* Fix to show checkerboard properly */
 }
 
 .color-swatch {
@@ -11746,22 +11757,80 @@ button.theme-toggle {
     max-height: 80px;
 }
 
-/* Angle badge for gradient swatches */
+/* Gradient card standardization */
+.color-card.gradient-card {
+    background: transparent !important;  /* Match other cards */
+}
+
+/* Compact gradient directional variants */
+.gradient-directional-variant {
+    padding: var(--size-2);
+}
+
+.gradient-directional-variant .color-swatch {
+    height: 60px;
+    margin-bottom: var(--size-1);
+}
+
+.gradient-directional-variant .color-details {
+    gap: 0;  /* Remove redundant spacing */
+}
+
+/* Hide redundant degree text for directional variants */
+.gradient-directional-variant .hex {
+    display: none;
+}
+
+/* ========================================
+   TEXT/UTILITY CARDS - NEW DESIGN
+   ======================================== */
+
+/* Text utility cards with "Aa" preview */
+.text-utility-card .color-swatch {
+    background: var(--color-background-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+    border: 1px solid var(--color-border-default);
+    height: 100px;
+    margin-bottom: var(--size-3);
+    border-radius: var(--radius-2);
+    position: relative;
+}
+
+/* Low contrast solution - use tertiary background */
+.text-utility-card.low-contrast .color-swatch {
+    background: var(--color-background-tertiary);
+}
+
+/* Split background solution for very low contrast */
+.text-utility-card.split-background .color-swatch {
+    background: linear-gradient(to right, 
+        var(--color-background-primary) 50%, 
+        var(--color-background-tertiary) 50%);
+}
+
+/* Angle badge for gradient swatches - Updated design without white box */
 .angle-badge {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.9);
+    /* Remove white box, use text shadow for visibility */
+    background: transparent;
     color: rgba(0, 0, 0, 0.8);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.8), 
+                 0 0 8px rgba(255, 255, 255, 0.6);
+    padding: 0;
+    border-radius: 0;
+    font-size: 20px;
     font-weight: 600;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
 }
 
 /* Compact label for gradients */
@@ -11781,23 +11850,47 @@ button.theme-toggle {
 
 /* Checkerboard pattern for alpha swatches */
 .alpha-swatch {
-    background-color: var(--checkerboard-color-1);
-    background-image: 
-        linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-        linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, var(--checkerboard-color-2) 75%),
-        linear-gradient(-45deg, transparent 75%, var(--checkerboard-color-2) 75%);
-    background-size: 16px 16px;
-    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    background: repeating-conic-gradient(
+        var(--checkerboard-color-1) 0% 25%, 
+        var(--checkerboard-color-2) 0% 50%
+    ) 50% / var(--checkerboard-size) var(--checkerboard-size);
     position: relative;
-    overflow: hidden;
+    z-index: 1;
+    overflow: visible;
 }
 
 /* Mobile-specific alpha swatch checkerboard scaling */
 @media (max-width: 768px) {
     .alpha-swatch {
-        background-size: 20px 20px;
-        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        background: repeating-conic-gradient(
+            var(--checkerboard-color-1) 0% 25%, 
+            var(--checkerboard-color-2) 0% 50%
+        ) 50% / var(--checkerboard-size-mobile) var(--checkerboard-size-mobile);
+    }
+    
+    /* Fix mobile font sizes for color details */
+    .color-details .hex {
+        font-size: var(--font-size-0) !important;
+    }
+    
+    .color-details {
+        align-items: flex-start;  /* Better alignment on mobile */
+    }
+    
+    .ref-info span {
+        font-size: var(--font-size-0);
+        font-weight: var(--font-weight-6);
+    }
+    
+    /* Mobile section labels */
+    .mobile-section-label {
+        font-size: var(--font-size-00);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-text-muted);
+        border-bottom: 1px solid var(--color-border-default);
+        padding: var(--size-2) 0;
+        margin: var(--size-4) 0 var(--size-2);
     }
 }
 
@@ -11818,6 +11911,7 @@ button.theme-toggle {
     inset: 0;
     border-radius: inherit;
     pointer-events: none;
+    z-index: 2; /* Ensure overlay is above checkerboard */
 }
 
 /* Text color card with split design */
@@ -12662,14 +12756,10 @@ button.theme-toggle {
 }
 
 .ref-swatch.alpha-swatch {
-    background-color: var(--checkerboard-color-1);
-    background-image: 
-        linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-        linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, var(--checkerboard-color-2) 75%),
-        linear-gradient(-45deg, transparent 75%, var(--checkerboard-color-2) 75%);
-    background-size: 8px 8px;
-    background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+    background: repeating-conic-gradient(
+        var(--checkerboard-color-1) 0% 25%, 
+        var(--checkerboard-color-2) 0% 50%
+    ) 50% / 10px 10px;
     position: relative;
 }
 
@@ -12690,6 +12780,7 @@ button.theme-toggle {
     inset: 0;
     border-radius: inherit;
     pointer-events: none;
+    z-index: 2; /* Ensure overlay is above checkerboard */
 }
 
 .ref-info {
@@ -13039,14 +13130,10 @@ button.theme-toggle {
     /* Ensure alpha swatches show checkerboard pattern on mobile */
     .alpha-swatch {
         position: relative;
-        background-color: var(--checkerboard-color-1);
-        background-image: 
-            linear-gradient(45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-            linear-gradient(-45deg, var(--checkerboard-color-2) 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, var(--checkerboard-color-2) 75%),
-            linear-gradient(-45deg, transparent 75%, var(--checkerboard-color-2) 75%);
-        background-size: 12px 12px;
-        background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+        background: repeating-conic-gradient(
+            var(--checkerboard-color-1) 0% 25%, 
+            var(--checkerboard-color-2) 0% 50%
+        ) 50% / var(--checkerboard-size-mobile) var(--checkerboard-size-mobile);
     }
     
     /* Alpha color overlay for mobile */
