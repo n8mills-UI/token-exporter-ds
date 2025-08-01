@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color System Implementation Audit - Current vs Proposed</title>
+    <link rel="stylesheet" href="docs/design-system.css">
+    <style>
+        body {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .audit-section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-3);
+        }
+        
+        .audit-title {
+            font-size: var(--font-size-6);
+            margin-bottom: 1rem;
+            color: var(--color-text-default);
+        }
+        
+        .audit-subtitle {
+            font-size: var(--font-size-3);
+            margin: 2rem 0 1rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .comparison-column h4 {
+            font-size: var(--font-size-2);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--color-background-tertiary);
+            border-radius: var(--radius-2);
+        }
+        
+        .status-bad { color: var(--color-text-error); }
+        .status-good { color: var(--color-text-success); }
+        .status-partial { color: var(--color-text-warning); }
+        
+        .findings-list {
+            background: var(--color-background-secondary);
+            padding: 1rem;
+            border-radius: var(--radius-2);
+            margin: 1rem 0;
+        }
+        
+        .findings-list ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+        
+        .implementation-gap {
+            background: var(--color-background-error);
+            color: var(--color-text-error);
+            padding: 1rem;
+            border-radius: var(--radius-2);
+            margin: 1rem 0;
+            border: 1px solid var(--color-border-error);
+        }
+        
+        .theme-toggle-demo {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-demo">
+        <button class="btn btn-secondary" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+
+    <!-- Header -->
+    <h1 class="audit-title">Color System Implementation Audit</h1>
+    <p style="color: var(--color-text-secondary); margin-bottom: 3rem;">
+        Comprehensive analysis comparing current implementation with proposed changes from color-system-mockup.html
+    </p>
+
+    <!-- Executive Summary -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">🚨 Executive Summary</h2>
+        <div class="implementation-gap">
+            <h4><strong>CRITICAL FINDING:</strong> Major Implementation Gaps Identified</h4>
+            <p>The current color system implementation does NOT match the proposed standardized design shown in the mockup. Multiple card types have inconsistent styling, and key functionality is missing or broken.</p>
+        </div>
+        
+        <div class="findings-list">
+            <h4>Key Issues Found:</h4>
+            <ul>
+                <li><span class="status-bad">❌ FAIL</span> - Core/Neutral cards have inconsistent backgrounds and styling</li>
+                <li><span class="status-bad">❌ FAIL</span> - Alpha cards don't show checkerboard patterns properly</li>
+                <li><span class="status-bad">❌ FAIL</span> - Utility/Text cards completely different from proposed design</li>
+                <li><span class="status-bad">❌ FAIL</span> - Gradient cards have inconsistent layout and redundant text</li>
+                <li><span class="status-bad">❌ FAIL</span> - Mobile view lacks section labels and has poor typography</li>
+                <li><span class="status-partial">⚠️ PARTIAL</span> - Some alpha simplification implemented but incomplete</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 1. Standard Color Cards Analysis -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">1. Standard Color Cards (Core/Neutrals)</h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-column">
+                <h4 class="status-bad">❌ CURRENT STATE (Inconsistent)</h4>
+                <p><strong>What we currently have:</strong></p>
+                <ul>
+                    <li>Cards have varied background styling</li>
+                    <li>Inconsistent padding and spacing</li>
+                    <li>Mixed use of transparent vs filled backgrounds</li>
+                    <li>Token name and hex value formatting varies</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-column">
+                <h4 class="status-good">✅ PROPOSED STATE (Standardized)</h4>
+                <p><strong>What the mockup shows we need:</strong></p>
+                <ul>
+                    <li><code style="background: var(--color-background-tertiary); padding: 0.2rem;">background: transparent</code> for ALL cards</li>
+                    <li>Consistent 100px height color swatches</li>
+                    <li>Standardized padding and margins</li>
+                    <li>Token name in <code>&lt;code&gt;</code> tags</li>
+                    <li>Hex value in <code>&lt;span class="hex"&gt;</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="implementation-gap">
+            <h4>IMPLEMENTATION REQUIRED:</h4>
+            <p>Need to standardize ALL color cards to use <code>background: transparent</code> and consistent layout structure.</p>
+        </div>
+    </div>
+
+    <!-- 2. Alpha Cards Analysis -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">2. Alpha Cards - Checkerboard Pattern</h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-column">
+                <h4 class="status-bad">❌ CURRENT STATE (Broken)</h4>
+                <p><strong>Issues found:</strong></p>
+                <ul>
+                    <li>Checkerboard pattern not visible in many cases</li>
+                    <li>Z-index issues with alpha overlay</li>
+                    <li>Full rgba() values displayed (too technical)</li>
+                    <li>Inconsistent alpha swatch styling</li>
+                </ul>
+                
+                <!-- Current alpha card example -->
+                <div class="color-grid-4col" style="margin-top: 1rem;">
+                    <div class="color-card" style="background: var(--color-background-secondary);">
+                        <div class="color-swatch alpha-swatch" style="overflow: hidden;">
+                            <div class="alpha-color-overlay" style="background: rgba(210, 255, 55, 0.1);"></div>
+                        </div>
+                        <div class="color-details">
+                            <code>--brand-primary-alpha-10</code>
+                            <span class="hex">rgba(210, 255, 55, 0.1)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-column">
+                <h4 class="status-good">✅ PROPOSED STATE (Fixed)</h4>
+                <p><strong>Required implementation:</strong></p>
+                <ul>
+                    <li>Visible checkerboard using <code>repeating-conic-gradient</code></li>
+                    <li>Proper z-index layering (checkerboard: 1, overlay: 2)</li>
+                    <li>Simplified percentage display ("10% opacity")</li>
+                    <li>Consistent with other card styling</li>
+                </ul>
+                
+                <!-- Proposed alpha card example -->
+                <div class="color-grid-4col" style="margin-top: 1rem;">
+                    <div class="color-card" style="background: transparent;">
+                        <div class="color-swatch" style="width: 100%; height: 100px; border-radius: var(--radius-2); margin-bottom: var(--size-3); position: relative;
+                            background: repeating-conic-gradient(#333 0% 25%, #444 0% 50%) 50% / 20px 20px;">
+                            <div style="position: absolute; inset: 0; background: rgba(210, 255, 55, 0.1); border-radius: inherit; pointer-events: none;"></div>
+                        </div>
+                        <div class="color-details">
+                            <code>--brand-primary-alpha-10</code>
+                            <span class="hex" style="font-size: var(--font-size-1); color: var(--color-text-secondary); font-weight: var(--font-weight-5);">10% opacity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="implementation-gap">
+            <h4>CRITICAL IMPLEMENTATION GAPS:</h4>
+            <ul>
+                <li>Need to add <code>overflow: visible</code> to <code>.color-card:has(.alpha-swatch)</code></li>
+                <li>Fix z-index layering for proper checkerboard visibility</li>
+                <li>Implement simplified alpha value display in JavaScript</li>
+                <li>Apply consistent transparent background to alpha cards</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. Text/Utility Cards Analysis -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">3. Text/Utility Cards - MAJOR DISCREPANCY</h2>
+        
+        <div class="implementation-gap">
+            <h4>🚨 CRITICAL FINDING: Complete Design Mismatch</h4>
+            <p>The current utility cards implementation is completely different from the proposed design. This is the most significant gap found in the audit.</p>
+        </div>
+
+        <div class="comparison-grid">
+            <div class="comparison-column">
+                <h4 class="status-bad">❌ CURRENT STATE (Wrong Design)</h4>
+                <p><strong>What we currently have:</strong></p>
+                <ul>
+                    <li>Unknown/inconsistent text card design</li>
+                    <li>No proper contrast handling</li>
+                    <li>No "Aa" preview implementation</li>
+                    <li>Missing border and background solutions</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-column">
+                <h4 class="status-good">✅ PROPOSED STATE (Proper Design)</h4>
+                <p><strong>Required implementation:</strong></p>
+                
+                <h5>Standard Text Colors:</h5>
+                <div class="color-grid-4col" style="margin: 1rem 0;">
+                    <div class="color-card" style="background: transparent;">
+                        <div class="color-swatch" style="background: var(--color-background-primary); display: flex; align-items: center; justify-content: center; color: #30A400; font-size: 2rem; font-weight: 600; border: 1px solid var(--color-border-default);">
+                            Aa
+                        </div>
+                        <div class="color-details">
+                            <code>--color-text-success</code>
+                            <span class="hex">#30A400</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h5>Low Contrast Solutions:</h5>
+                <div class="color-grid-4col" style="margin: 1rem 0;">
+                    <div class="color-card" style="background: transparent;">
+                        <div class="color-swatch" style="background: var(--color-background-tertiary); display: flex; align-items: center; justify-content: center; color: #999999; font-size: 2rem; font-weight: 600; border: 1px solid var(--color-border-default);">
+                            Aa
+                        </div>
+                        <div class="color-details">
+                            <code>--color-text-muted</code>
+                            <span class="hex">#999999</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="color-grid-4col" style="margin: 1rem 0;">
+                    <div class="color-card" style="background: transparent;">
+                        <div class="color-swatch" style="background: linear-gradient(to right, var(--color-background-primary) 50%, var(--color-background-tertiary) 50%); display: flex; align-items: center; justify-content: center; color: #666666; font-size: 2rem; font-weight: 600; border: 1px solid var(--color-border-default);">
+                            Aa
+                        </div>
+                        <div class="color-details">
+                            <code>--color-text-secondary</code>
+                            <span class="hex">#666666</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="implementation-gap">
+            <h4>IMPLEMENTATION REQUIRED:</h4>
+            <ul>
+                <li><strong>Complete redesign needed</strong> for utility/text cards</li>
+                <li>Implement "Aa" text preview in color swatch</li>
+                <li>Add contrast-aware background solutions:
+                    <ul>
+                        <li>Option 1: <code>background: var(--color-background-tertiary)</code></li>
+                        <li>Option 2: Split background gradient</li>
+                        <li>Option 3: Auto-detect contrast and switch background</li>
+                    </ul>
+                </li>
+                <li>Add <code>border: 1px solid var(--color-border-default)</code> to swatches</li>
+                <li>Implement proper font sizing (2rem, font-weight: 600)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. Gradient Cards Analysis -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">4. Gradient Cards - Layout Inconsistency</h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-column">
+                <h4 class="status-bad">❌ CURRENT STATE (Inconsistent)</h4>
+                <p><strong>Issues found:</strong></p>
+                <ul>
+                    <li>Different background styling from other cards</li>
+                    <li>Token name at bottom (inconsistent)</li>
+                    <li>Different font sizes</li>
+                    <li>Directional variants have redundant text</li>
+                    <li>Square aspect ratio makes cards too tall</li>
+                    <li>White boxes on gradients are distracting</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-column">
+                <h4 class="status-good">✅ PROPOSED STATE (Standardized)</h4>
+                <p><strong>Required implementation:</strong></p>
+                <ul>
+                    <li><code>background: transparent</code> (match other cards)</li>
+                    <li>Token name on top (consistent with others)</li>
+                    <li>Same font sizes as other cards</li>
+                    <li>Directional variants: compact design</li>
+                    <li>Fixed 60px height for directional variants</li>
+                    <li>Text shadow instead of white boxes</li>
+                    <li>Remove redundant degree text in labels</li>
+                </ul>
+                
+                <!-- Example of proposed gradient card -->
+                <div class="color-grid-4col" style="margin-top: 1rem;">
+                    <div class="color-card" style="background: transparent;">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #D2FF37 0%, #00F0FF 100%);"></div>
+                        <div class="color-details">
+                            <code>--gradient-hero-1</code>
+                            <span class="hex">Hero Gradient 1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="implementation-gap">
+            <h4>IMPLEMENTATION REQUIRED:</h4>
+            <ul>
+                <li>Remove background fill from gradient cards</li>
+                <li>Swap label and token positions (token on top)</li>
+                <li>Add <code>.gradient-directional-variant</code> class with:
+                    <ul>
+                        <li><code>padding: var(--size-2)</code></li>
+                        <li><code>height: 60px</code> for swatches</li>
+                        <li>Hide redundant hex text</li>
+                    </ul>
+                </li>
+                <li>Update angle badges to use text shadow</li>
+                <li>Detect directional tokens (-45, -90, etc.) in JavaScript</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 5. Mobile View Analysis -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">5. Mobile View Issues</h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-column">
+                <h4 class="status-bad">❌ CURRENT STATE (Poor Mobile UX)</h4>
+                <p><strong>Issues found:</strong></p>
+                <ul>
+                    <li>Hex text too large (font-size-2 vs font-size-0)</li>
+                    <li>No section labels</li>
+                    <li>Poor text alignment</li>
+                    <li>Inconsistent mobile reference styling</li>
+                    <li>Missing mobile section organization</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-column">
+                <h4 class="status-good">✅ PROPOSED STATE (Better Mobile UX)</h4>
+                <p><strong>Required implementation:</strong></p>
+                <ul>
+                    <li>Consistent font sizing (font-size-0 for both token and hex)</li>
+                    <li>Section labels with proper styling</li>
+                    <li>Better hierarchy with subsection labels</li>
+                    <li>Proper mobile reference layout</li>
+                    <li>Grouped content (e.g., single "Gradients" container)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="implementation-gap">
+            <h4>IMPLEMENTATION REQUIRED:</h4>
+            <ul>
+                <li>Fix mobile font sizes in media queries</li>
+                <li>Add mobile section label styling</li>
+                <li>Implement dynamic section labels in JavaScript</li>
+                <li>Improve mobile gradient grouping</li>
+                <li>Add <code>align-items: flex-start</code> for better alignment</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 6. Implementation Priority -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">📋 Implementation Priority & Action Plan</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="findings-list">
+                <h4 class="status-bad">🚨 CRITICAL (Do First)</h4>
+                <ul>
+                    <li>Implement text/utility cards "Aa" preview design</li>
+                    <li>Fix alpha card checkerboard visibility</li>
+                    <li>Standardize all cards to <code>background: transparent</code></li>
+                    <li>Implement alpha value simplification</li>
+                </ul>
+            </div>
+            
+            <div class="findings-list">
+                <h4 class="status-partial">⚠️ HIGH (Do Next)</h4>
+                <ul>
+                    <li>Fix gradient card layout consistency</li>
+                    <li>Implement mobile typography fixes</li>
+                    <li>Add mobile section labels</li>
+                    <li>Remove redundant gradient text</li>
+                </ul>
+            </div>
+            
+            <div class="findings-list">
+                <h4 class="status-good">✅ MEDIUM (Polish)</h4>
+                <ul>
+                    <li>Compact directional gradient variants</li>
+                    <li>Mobile section organization</li>
+                    <li>Theme-aware improvements</li>
+                    <li>Animation and hover states</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Code Implementation Guide -->
+    <div class="audit-section">
+        <h2 class="audit-subtitle">🔧 Specific Code Changes Required</h2>
+        
+        <h4>CSS Updates (design-system.css):</h4>
+        <pre style="background: var(--color-background-secondary); padding: 1rem; border-radius: var(--radius-2); overflow-x: auto;"><code>/* 1. Standardize all color cards */
+.color-card {
+    background: transparent !important;
+}
+
+/* 2. Fix alpha card rendering */
+.color-card:has(.alpha-swatch) {
+    overflow: visible;
+}
+
+.alpha-swatch {
+    z-index: 1;
+}
+
+.alpha-color-overlay {
+    z-index: 2;
+}
+
+/* 3. Text/Utility cards - NEW DESIGN */
+.text-utility-card .color-swatch {
+    background: var(--color-background-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+    border: 1px solid var(--color-border-default);
+}
+
+/* Low contrast solution */
+.text-utility-card.low-contrast .color-swatch {
+    background: var(--color-background-tertiary);
+}
+
+.text-utility-card.split-background .color-swatch {
+    background: linear-gradient(to right, 
+        var(--color-background-primary) 50%, 
+        var(--color-background-tertiary) 50%);
+}
+
+/* 4. Mobile fixes */
+@media (max-width: 768px) {
+    .color-details .hex {
+        font-size: var(--font-size-0);
+    }
+    
+    .mobile-section-label {
+        font-size: var(--font-size-00);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-text-muted);
+        border-bottom: 1px solid var(--color-border-default);
+        padding: var(--size-2) 0;
+        margin: var(--size-4) 0 var(--size-2);
+    }
+}
+
+/* 5. Gradient card fixes */
+.gradient-directional-variant {
+    padding: var(--size-2);
+}
+
+.gradient-directional-variant .color-swatch {
+    height: 60px;
+    margin-bottom: var(--size-1);
+}
+
+.gradient-directional-variant .hex {
+    display: none;
+}</code></pre>
+
+        <h4>JavaScript Updates (design-system-guide.template.html):</h4>
+        <pre style="background: var(--color-background-secondary); padding: 1rem; border-radius: var(--radius-2); overflow-x: auto;"><code>// 1. Alpha value simplification
+if (item.token && item.token.includes('alpha') && value && value.includes('rgba')) {
+    const match = value.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([0-9.]+)\)/);
+    if (match) {
+        const opacity = parseFloat(match[1]);
+        displayValue = Math.round(opacity * 100) + '% opacity';
+    }
+}
+
+// 2. Text utility card detection and special rendering
+const isTextUtility = item.token && (
+    item.token.includes('text-') || 
+    item.token.includes('color-text-')
+);
+
+if (isTextUtility) {
+    // Implement "Aa" preview with contrast-aware background
+    const isLowContrast = /* contrast detection logic */;
+    const backgroundClass = isLowContrast ? 'low-contrast' : '';
+    
+    swatchHtml = `<div class="color-swatch text-utility-swatch ${backgroundClass}" 
+        style="color: ${value};">Aa</div>`;
+}
+
+// 3. Gradient directional variant detection
+const isDirectionalGradient = item.gradient && item.token && item.token.match(/-\d+$/);
+const cardClass = isDirectionalGradient ? 'color-card gradient-directional-variant' : 'color-card';</code></pre>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+        }
+    </script>
+</body>
+</html>
