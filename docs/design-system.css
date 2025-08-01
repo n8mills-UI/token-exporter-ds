@@ -192,20 +192,20 @@ body {
  ========================= */
 
  /* Category colors for token types */
- --color-type-color: #00D1FF;    /* Color values */
- --color-type-text: #B48CFF;     /* Text/String values */
- --color-type-number: #FFB86C;   /* Numeric values */
- --color-type-state: #FF74BC;    /* Boolean/State values */
+ --value-color: #00D1FF;    /* Color values */
+ --value-text: #B48CFF;     /* Text/String values */
+ --value-number: #FFB86C;   /* Numeric values */
+ --value-state: #FF74BC;    /* Boolean/State values */
 
  /* Error colors */
  --red-6: #ff5252;
  --red-6-rgb: 255, 82, 82;
 
  /* RGB values for opacity mixing */
- --color-type-color-rgb: 0, 209, 255;
- --color-type-text-rgb: 180, 140, 255;
- --color-type-number-rgb: 255, 184, 108;
- --color-type-state-rgb: 255, 116, 188;
+ --value-color-rgb: 0, 209, 255;
+ --value-text-rgb: 180, 140, 255;
+ --value-number-rgb: 255, 184, 108;
+ --value-state-rgb: 255, 116, 188;
  
  /* =========================
  TYPOGRAPHY
@@ -429,7 +429,7 @@ body {
  INTERACTIVE & STATUS COLORS
  ========================= */
  --color-status-success: var(--brand-primary);
- --color-status-warning: var(--color-type-number); /* Optional, for future use */
+ --color-status-warning: var(--value-number); /* Optional, for future use */
  --color-status-error: var(--color-text-muted); /* For "not applicable" state */
 
 /* Interactive surface states */
@@ -713,14 +713,14 @@ body {
  ========================= */
  --brand-primary-alpha-10: rgb(var(--brand-primary-rgb), 0.1);
  --brand-primary-alpha-20: rgb(var(--brand-primary-rgb), 0.2);
- --color-type-color-alpha-10: rgb(var(--color-type-color-rgb), 0.1);
- --color-type-text-alpha-10: rgb(var(--color-type-text-rgb), 0.1);
- --color-type-number-alpha-10: rgb(var(--color-type-number-rgb), 0.1);
- --color-type-state-alpha-10: rgb(var(--color-type-state-rgb), 0.1);
- --color-type-color-alpha-20: rgb(var(--color-type-color-rgb), 0.2);
- --color-type-text-alpha-20: rgb(var(--color-type-text-rgb), 0.2);
- --color-type-number-alpha-20: rgb(var(--color-type-number-rgb), 0.2);
- --color-type-state-alpha-20: rgb(var(--color-type-state-rgb), 0.2);
+ --value-color-alpha-10: rgb(var(--value-color-rgb), 0.1);
+ --value-text-alpha-10: rgb(var(--value-text-rgb), 0.1);
+ --value-number-alpha-10: rgb(var(--value-number-rgb), 0.1);
+ --value-state-alpha-10: rgb(var(--value-state-rgb), 0.1);
+ --value-color-alpha-20: rgb(var(--value-color-rgb), 0.2);
+ --value-text-alpha-20: rgb(var(--value-text-rgb), 0.2);
+ --value-number-alpha-20: rgb(var(--value-number-rgb), 0.2);
+ --value-state-alpha-20: rgb(var(--value-state-rgb), 0.2);
  
  /* Black & White Alpha Tokens */
  --black-alpha-05: rgb(0, 0, 0, 0.05);
@@ -861,10 +861,10 @@ body {
     --brand-secondary-alpha-20: rgb(255, 20, 147, 0.2); /* Pink 20% */
     
     /* Category colors alpha */
-    --color-type-color-alpha-10: rgb(0, 209, 255, 0.1);
-    --color-type-text-alpha-10: rgb(180, 140, 255, 0.1);
-    --color-type-number-alpha-10: rgb(255, 184, 108, 0.1);
-    --color-type-state-alpha-10: rgb(255, 116, 188, 0.1);
+    --value-color-alpha-10: rgb(0, 209, 255, 0.1);
+    --value-text-alpha-10: rgb(180, 140, 255, 0.1);
+    --value-number-alpha-10: rgb(255, 184, 108, 0.1);
+    --value-state-alpha-10: rgb(255, 116, 188, 0.1);
     
     /* =========================
        STATUS COLORS
@@ -876,10 +876,10 @@ body {
     /* =========================
        CATEGORY COLORS (VIBRANT FOR LIGHT MODE)
        ========================= */
-    --color-type-color: #00D1FF;                        /* Color values - Keep original vibrancy */
-    --color-type-text: #B48CFF;                         /* Text values - Keep original vibrancy */
-    --color-type-number: #FFB86C;                       /* Numeric values - Keep original vibrancy */
-    --color-type-state: #FF74BC;                        /* State values - Keep original vibrancy */
+    --value-color: #00D1FF;                        /* Color values - Keep original vibrancy */
+    --value-text: #B48CFF;                         /* Text values - Keep original vibrancy */
+    --value-number: #FFB86C;                       /* Numeric values - Keep original vibrancy */
+    --value-state: #FF74BC;                        /* State values - Keep original vibrancy */
     
     /* =========================
        MISC OVERRIDES
@@ -1737,10 +1737,10 @@ body {
  .bg-gray-8 { background-color: var(--color-background-primary); }
  .bg-gray-9 { background-color: var(--color-text-default); }
  .bg-transparent { background-color: transparent; }
- .bg-color-type-color { background-color: var(--color-type-color); }
- .bg-color-type-text { background-color: var(--color-type-text); }
- .bg-color-type-number { background-color: var(--color-type-number); }
- .bg-color-type-state { background-color: var(--color-type-state); }
+ .bg-value-color { background-color: var(--value-color); }
+ .bg-value-text { background-color: var(--value-text); }
+ .bg-value-number { background-color: var(--value-number); }
+ .bg-value-state { background-color: var(--value-state); }
  .bg-color-background-primary { background-color: var(--color-background-primary); }
  .bg-color-background-secondary { background-color: var(--color-background-secondary); }
  .bg-color-background-tertiary { background-color: var(--color-background-tertiary); }
@@ -1752,10 +1752,10 @@ body {
  /* Alpha Background Utilities */
  .bg-brand-primary-alpha-10 { background-color: var(--brand-primary-alpha-10); }
  .bg-brand-primary-alpha-20 { background-color: var(--brand-primary-alpha-20); }
- .bg-color-type-color-alpha-10 { background-color: var(--color-type-color-alpha-10); }
- .bg-color-type-text-alpha-10 { background-color: var(--color-type-text-alpha-10); }
- .bg-color-type-number-alpha-10 { background-color: var(--color-type-number-alpha-10); }
- .bg-color-type-state-alpha-10 { background-color: var(--color-type-state-alpha-10); }
+ .bg-value-color-alpha-10 { background-color: var(--value-color-alpha-10); }
+ .bg-value-text-alpha-10 { background-color: var(--value-text-alpha-10); }
+ .bg-value-number-alpha-10 { background-color: var(--value-number-alpha-10); }
+ .bg-value-state-alpha-10 { background-color: var(--value-state-alpha-10); }
 
  /* Text Color Utilities */
  .text-brand-primary { color: var(--brand-primary); }
@@ -2113,11 +2113,7 @@ body {
         stroke-width: var(--icon-stroke-regular);
     }
 
-    /* Thinner stroke ONLY for icon-only buttons */
-    .btn-icon .lucide,
-    .btn-icon .icon svg {
-        stroke-width: var(--icon-stroke-thin);
-    }
+    /* Icon stroke now handled by semantic stroke system */
 
 
 
@@ -2623,15 +2619,58 @@ body {
 .lucide {
  width: 1em;
  height: 1em;
- stroke-width: var(--icon-stroke-regular); /* Updated to use icon token */
+ /* Removed global stroke-width - let components control their own */
  vertical-align: middle;
  color: inherit;
  opacity: 1;
  transition: opacity 0.15s ease;
 }
 
-.icon-thin {
+/* =========================
+SEMANTIC ICON STROKE SYSTEM
+========================= */
+
+/* Component-based stroke weights - clean and maintainable */
+
+/* Default stroke for most icons */
+.icon svg,
+.icon .lucide,
+[data-icon] svg {
+    stroke-width: var(--icon-stroke-regular);
+}
+
+/* Thin stroke contexts */
+.stat-icon svg,
+.stat-icon .lucide,
+.card-icon-large svg,
+.card-icon-large .lucide,
+.btn-icon svg,
+.btn-icon .lucide,
+.icon--xxl svg,
+.table th .lucide {
     stroke-width: var(--icon-stroke-thin);
+}
+
+/* Bold stroke contexts */
+.icon--bold svg,
+.icon--bold .lucide {
+    stroke-width: var(--icon-stroke-bold);
+}
+
+/* Utility classes for explicit control */
+.icon-thin svg,
+.icon-thin .lucide {
+    stroke-width: var(--icon-stroke-thin);
+}
+
+.icon-regular svg,
+.icon-regular .lucide {
+    stroke-width: var(--icon-stroke-regular);
+}
+
+.icon-bold svg,
+.icon-bold .lucide {
+    stroke-width: var(--icon-stroke-bold);
 }
 
 /* Fix specific problems */
@@ -3056,12 +3095,12 @@ body {
 }
 
 .profile-card .comment { color: var(--color-text-muted); font-style: italic; }
-.profile-card .keyword { color: var(--color-type-state); }
-.profile-card .variable { color: var(--color-type-color); }
+.profile-card .keyword { color: var(--value-state); }
+.profile-card .variable { color: var(--value-color); }
 .profile-card .string { color: var(--brand-primary); }
 .profile-card .punctuation { color: var(--color-text-default); }
-.profile-card .function { color: var(--color-type-number); }
-.profile-card .number { color: var(--color-type-text); }
+.profile-card .function { color: var(--value-number); }
+.profile-card .number { color: var(--value-text); }
 
 .profile-card .cursor {
  display: inline-block;
@@ -3875,16 +3914,32 @@ body {
     color: var(--color-text-default); /* Set text/number to white */
 }
 
-.badge.color { background-color: var(--color-type-color-alpha-10); }
-.badge.text { background-color: var(--color-type-text-alpha-10); }
-.badge.number { background-color: var(--color-type-number-alpha-10); }  
-.badge.state { background-color: var(--color-type-state-alpha-10); }
+.badge.color { background-color: var(--value-color-alpha-10); }
+.badge.text { background-color: var(--value-text-alpha-10); }
+.badge.number { background-color: var(--value-number-alpha-10); }  
+.badge.state { background-color: var(--value-state-alpha-10); }
+
+/* Map color class names to category badges */
+.badge.cyan { background-color: var(--value-color-alpha-10); }
+.badge.purple { background-color: var(--value-text-alpha-10); }
+.badge.orange { background-color: var(--value-number-alpha-10); }
+.badge.pink { background-color: var(--value-state-alpha-10); }
 
 /* Target only the icon within the badge to be colored */
-.badge.color .lucide { color: var(--color-type-color); }
-.badge.text .lucide { color: var(--color-type-text); }
-.badge.number .lucide { color: var(--color-type-number); }
-.badge.state .lucide { color: var(--color-type-state); }
+.badge.color .lucide { color: var(--value-color); }
+.badge.text .lucide { color: var(--value-text); }
+.badge.number .lucide { color: var(--value-number); }
+.badge.state .lucide { color: var(--value-state); }
+
+/* Also apply to badges with color names */
+.badge.cyan .lucide,
+.badge.cyan .icon { color: var(--value-color); }
+.badge.purple .lucide,
+.badge.purple .icon { color: var(--value-text); }
+.badge.orange .lucide,
+.badge.orange .icon { color: var(--value-number); }
+.badge.pink .lucide,
+.badge.pink .icon { color: var(--value-state); }
 
 /* --- Size Variants --- */
 .badge.small {
@@ -4155,7 +4210,7 @@ body {
 }
 
 .hero-footer .heart {
- color: var(--color-type-state);
+ color: var(--value-state);
  animation: heartbeat 1.5s ease-in-out infinite;
 }
 
@@ -4691,11 +4746,11 @@ body {
 }
 
 .code-keyword {
- color: var(--color-type-state);
+ color: var(--value-state);
 }
 
 .code-variable {
- color: var(--color-type-color);
+ color: var(--value-color);
 }
 
 .code-string {
@@ -5230,6 +5285,8 @@ select option {
 @media (max-width: 768px) {
     .scroll-cue-container {
         bottom: 4vh;
+        left: 50%; /* Center on mobile */
+        transform: translateX(-50%);
     }
 }
 
@@ -5405,10 +5462,10 @@ select option {
 }
 
 /* Token type colors */
-.token-type-stat.color .icon { color: var(--color-type-color); }
-.token-type-stat.text .icon { color: var(--color-type-text); }
-.token-type-stat.states .icon { color: var(--color-type-state); }
-.token-type-stat.number .icon { color: var(--color-type-number); }
+.token-type-stat.color .icon { color: var(--value-color); }
+.token-type-stat.text .icon { color: var(--value-text); }
+.token-type-stat.states .icon { color: var(--value-state); }
+.token-type-stat.number .icon { color: var(--value-number); }
 
 /* Advanced mode interactions */
 .advanced-mode .token-type-stat { cursor: pointer; }
@@ -5738,19 +5795,19 @@ select option {
 }
 
 .category-icon-cyan {
- color: var(--color-type-color);
+ color: var(--value-color);
 }
 
 .category-icon-purple {
- color: var(--color-type-text);
+ color: var(--value-text);
 }
 
 .category-icon-orange {
- color: var(--color-type-number);
+ color: var(--value-number);
 }
 
 .category-icon-pink {
- color: var(--color-type-state);
+ color: var(--value-state);
 }
 
 
@@ -8334,7 +8391,7 @@ body {
 
 
 .heart {
- color: var(--color-type-state);
+ color: var(--value-state);
  display: inline-block;
  transition: transform var(--animation-duration-3) var(--ease-spring-4);
 }
@@ -10274,9 +10331,7 @@ body {
     opacity: 0.8;
 }
 
-.stat-icon .lucide {
-    stroke-width: var(--icon-stroke-thin) !important;
-}
+/* Stat icon styles */
 
 .stat-number {
     font-size: var(--font-size-7); /* 3rem */
@@ -10357,8 +10412,8 @@ body {
 
 /* Card Variants */
 .challenge-card {
-    --gradient: linear-gradient(90deg, var(--color-type-state), var(--color-type-text));
-    border-color: var(--color-type-state-alpha-20);
+    --gradient: linear-gradient(90deg, var(--value-state), var(--value-text));
+    border-color: var(--value-state-alpha-20);
 }
 
 .solution-card {
@@ -10367,13 +10422,13 @@ body {
 }
 
 .impact-card {
-    --gradient: linear-gradient(90deg, var(--color-type-color), var(--color-type-number));
-    border-color: var(--color-type-color-alpha-20);
+    --gradient: linear-gradient(90deg, var(--value-color), var(--value-number));
+    border-color: var(--value-color-alpha-20);
 }
 
 /* Dark mode: Solution card border matches icon color */
 [data-theme="dark"] .solution-card {
-    border-color: var(--color-type-text-alpha-20);
+    border-color: var(--value-text-alpha-20);
 }
 
 /* Card Content */
@@ -10383,19 +10438,20 @@ body {
     margin-bottom: var(--size-4);
     display: block;
     opacity: 0.8;
-    stroke-width: var(--icon-stroke-thin);
 }
 
+/* Card icon styles */
+
 .challenge-card .card-icon-large {
-    color: var(--color-type-state);
+    color: var(--value-state);
 }
 
 .solution-card .card-icon-large {
-    color: var(--color-type-text);
+    color: var(--value-text);
 }
 
 .impact-card .card-icon-large {
-    color: var(--color-type-color);
+    color: var(--value-color);
 }
 
 .card-title {
@@ -10428,8 +10484,8 @@ body {
     /* Mobile stats grid - force 2x2 layout (no auto-fit to prevent 3x1 orphan) */
     .stats-container-glass {
         grid-template-columns: repeat(2, 1fr);
-        gap: var(--size-1);
-        padding: 4px var(--size-3) 8px var(--size-3); /* Tighter horizontal padding */
+        gap: var(--size-1) var(--size-4); /* Horizontal gap: size-1, Vertical gap: size-4 for more row spacing */
+        padding: var(--size-6) var(--size-3) var(--size-7) var(--size-3); /* Match enhanced card padding: 24px top, 28px bottom */
     }
     
     /* Mobile stat labels - smaller text to fit single line */
@@ -11108,19 +11164,19 @@ button.theme-toggle {
 
 /* Category-specific icon colors using tokens */
 .category-cyan {
-    color: var(--color-type-color);
+    color: var(--value-color);
 }
 
 .category-purple {
-    color: var(--color-type-text);
+    color: var(--value-text);
 }
 
 .category-orange {
-    color: var(--color-type-number);
+    color: var(--value-number);
 }
 
 .category-pink {
-    color: var(--color-type-state);
+    color: var(--value-state);
 }
 
 /* Size variations showcase - responsive grid */
@@ -11882,15 +11938,9 @@ button.theme-toggle {
         font-weight: var(--font-weight-6);
     }
     
-    /* Mobile section labels */
+    /* Mobile section labels - REMOVED as they should not appear */
     .mobile-section-label {
-        font-size: var(--font-size-00);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--color-text-muted);
-        border-bottom: 1px solid var(--color-border-default);
-        padding: var(--size-2) 0;
-        margin: var(--size-4) 0 var(--size-2);
+        display: none;
     }
 }
 
@@ -12118,11 +12168,11 @@ button.theme-toggle {
 }
 
 .flow-token.semantic {
-    border-color: var(--color-type-text);
+    border-color: var(--value-text);
 }
 
 .flow-token.component {
-    border-color: var(--color-type-color);
+    border-color: var(--value-color);
 }
 
 .flow-token .token-preview {
@@ -12714,27 +12764,38 @@ button.theme-toggle {
 .mobile-reference {
     display: flex;
     flex-direction: column;
-    gap: var(--size-3);
+    gap: var(--size-2);
+    margin-top: var(--size-2);
 }
 
 .ref-section {
-    border: var(--border-size-1) solid var(--color-border-default);
+    border: none;
     border-radius: var(--radius-2);
     padding: var(--size-3);
+    margin-bottom: var(--size-3);
+}
+.ref-section:last-child {
+    margin-bottom: 0;
 }
 
 .ref-title {
-    font-size: var(--font-size-1);
-    font-weight: var(--font-weight-6);
+    font-size: var(--font-size-00);
+    font-weight: var(--font-weight-5);
     color: var(--color-text-muted);
     margin-bottom: var(--size-2);
     text-transform: uppercase;
     letter-spacing: var(--font-letterspacing-2);
+    padding-bottom: var(--size-2);
+    border-bottom: 1px solid var(--color-border-default);
+    margin-left: calc(var(--size-3) * -1);
+    margin-right: calc(var(--size-3) * -1);
+    padding-left: var(--size-3);
+    padding-right: var(--size-3);
 }
 
 .ref-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--size-2);
 }
 
@@ -12786,22 +12847,30 @@ button.theme-toggle {
 .ref-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     min-width: 0;
 }
 
 .ref-info code {
-    font-size: var(--font-size-00);
+    font-size: var(--font-size-0);
     color: var(--color-text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
+    font-family: var(--font-mono);
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
 }
 
 .ref-info span {
     font-size: var(--font-size-0);
     font-weight: var(--font-weight-6);
     color: var(--color-text-default);
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
 }
 
 /* Responsive */
@@ -13275,20 +13344,86 @@ button.theme-toggle {
 
 /* Fix mobile State Reference spacing */
 @media (max-width: 768px) {
+    /* Reset code element spacing in mobile */
+    .ref-info code,
+    .ref-info span {
+        margin: 0 !important;
+        padding: 0 !important;
+        text-indent: 0 !important;
+    }
     .mobile-reference {
         gap: var(--size-2); /* Reduce gap between sections */
     }
     
     .ref-section {
         padding: var(--size-2); /* Reduce padding */
+        border: none; /* Ensure no border on mobile */
+    }
+    
+    .ref-title {
+        /* Reset desktop negative margins first */
+        margin-left: 0;
+        margin-right: 0;
+        /* Then apply mobile-specific full-width extension */
+        display: block;
+        width: calc(100% + (var(--size-2) * 2));
+        margin: 0 calc(var(--size-2) * -1) var(--size-2) calc(var(--size-2) * -1);
+        padding: 0 var(--size-2) var(--size-2) var(--size-2);
+        border-bottom: 1px solid var(--color-border-default);
     }
     
     .ref-items {
         gap: var(--size-1); /* Tighter spacing between items */
     }
     
+    /* Mobile overview styles */
+    .mobile-overview {
+        padding: 0;
+    }
+    
+    .mobile-overview .overview-intro {
+        margin-bottom: var(--size-3);
+    }
+    
+    .mobile-overview .text-label {
+        font-size: var(--font-size-1);
+        margin-bottom: var(--size-1);
+    }
+    
+    .mobile-overview .architecture-layers {
+        display: flex;
+        flex-direction: column;
+        gap: var(--size-2);
+    }
+    
+    .mobile-overview .architecture-layer {
+        padding: var(--size-2);
+        background: var(--surface-2);
+        border-radius: var(--radius-2);
+        border: 1px solid var(--color-border-default);
+    }
+    
+    .mobile-overview .architecture-layer strong {
+        display: block;
+        color: var(--color-text-primary);
+        margin-bottom: var(--size-1);
+    }
+    
+    .mobile-overview .architecture-layer p {
+        margin: 0;
+        font-size: var(--font-size-0);
+        color: var(--color-text-muted);
+    }
+    
+    .mobile-overview code {
+        font-size: var(--font-size-00);
+        background: var(--surface-3);
+        padding: 2px 6px;
+        border-radius: var(--radius-1);
+    }
+    
     .ref-item {
-        padding: var(--size-1); /* Reduce item padding */
+        padding: var(--size-1); /* Restore padding on all sides */
     }
 }
 

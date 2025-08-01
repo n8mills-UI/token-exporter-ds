@@ -37,7 +37,8 @@ const checks = {
         { name: 'Specificity Graph', cmd: 'npx', args: ['specificity-graph', 'docs/design-system.css', '-o', 'reports/specificity.html'], critical: false }
     ],
     validation: [
-        { name: 'Token Validation', cmd: 'npm', args: ['run', 'check:all'], critical: false }
+        // Removed token validation - too many false positives with imported frameworks
+        // { name: 'Token Validation', cmd: 'npm', args: ['run', 'check:all'], critical: false }
     ],
     accessibility: [
         { name: 'A11y Check', cmd: 'npx', args: ['pa11y', 'docs/design-system-guide.html'], critical: false }

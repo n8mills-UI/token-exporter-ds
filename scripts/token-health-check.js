@@ -79,7 +79,7 @@ class TokenHealthCheck {
     categorizeToken(token) {
         if (token.includes('-alpha-')) return 'alpha';
         if (token.includes('--brand-')) return 'brand';
-        if (token.includes('--color-type-')) return 'colorType';
+        if (token.includes('--value-')) return 'colorType';
         if (token.includes('--color-text-')) return 'text';
         if (token.includes('--surface-')) return 'surface';
         if (token.includes('--color-border-')) return 'border';

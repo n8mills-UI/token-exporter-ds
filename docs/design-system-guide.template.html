@@ -5,346 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Token Exporter - Design System Guide</title>
         
-        <!-- Consolidated Icon System -->
-        <!-- 
-===================================================================
-DESIGN SYSTEM ICON LIBRARY
-===================================================================
-Industry-standard icon system following best practices:
-- Individual SVG files (maintainable)
-- CSS custom properties (design tokens)
-- Optimized SVG markup (responsive)
-- Component-based architecture
-=================================================================== 
--->
-
-<style>
-/* =================================================================
-   ICON DESIGN TOKENS (SOURCE OF TRUTH)
-   ================================================================= */
-:root {
-    /* Icon sizing tokens - already defined in design system */
-    /* --icon-xs: var(--size-3);  /* 12px */
-    /* --icon-sm: var(--size-4);  /* 16px */
-    /* --icon-md: var(--size-5);  /* 20px */
-    /* --icon-lg: var(--size-6);  /* 24px */
-    /* --icon-xl: var(--size-8);  /* 32px */
-
-    /* Icon stroke width tokens */
-    --icon-stroke-thin: 1.5;
-    --icon-stroke-regular: 2;
-    --icon-stroke-bold: 2.5;
-}
-
-/* =================================================================
-   ICON BASE CLASS (RESPONSIVE & ACCESSIBLE)
-   ================================================================= */
-.icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--icon-md); /* Default size */
-    height: var(--icon-md);
-    flex-shrink: 0;
-}
-
-.icon svg {
-    width: 100%;
-    height: 100%;
-    stroke: currentColor;
-    stroke-width: var(--icon-stroke-regular);
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-}
-
-/* Icon size variants */
-.icon--xs { width: var(--icon-xs); height: var(--icon-xs); }
-.icon--sm { width: var(--icon-sm); height: var(--icon-sm); }
-.icon--md { width: var(--icon-md); height: var(--icon-md); } /* default */
-.icon--lg { width: var(--icon-lg); height: var(--icon-lg); }
-.icon--xl { width: var(--icon-xl); height: var(--icon-xl); }
-
-/* Icon stroke variants */
-.icon--thin svg { stroke-width: var(--icon-stroke-thin); }
-.icon--regular svg { stroke-width: var(--icon-stroke-regular); } /* default */
-.icon--bold svg { stroke-width: var(--icon-stroke-bold); }
-</style>
-
-<script>
-/* =================================================================
-   ARCHITECTURE NOTE: Dual Icon System
-   =================================================================
-   This codebase maintains two icon systems by design:
-   
-   1. PluginIcons (inline SVGs) - Required for Figma plugin due to CSP
-   2. Lucide Icons (external) - Used in design guide for broader icon set
-   
-   This is NOT technical debt but a conscious decision to handle
-   different runtime environments with different constraints.
-   ================================================================= */
-
-/* =================================================================
-   ENHANCED ICON SYSTEM (BACKWARDS COMPATIBLE)
-   ================================================================= */
-window.PluginIcons = {
-    // Optimized SVG strings (removed hardcoded dimensions)
-    
-    type: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`,
-    
-    hash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>`,
-    
-    'toggle-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="6" ry="6"/><circle cx="16" cy="12" r="2"/></svg>`,
-    
-    // Action icons (optimized)
-    rocket: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
-    
-    'sliders-horizontal': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>`,
-    
-    // Status icons
-    'check-circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`,
-    
-    'alert-triangle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="m12 17 .01 0"/></svg>`,
-    
-    x: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg>`,
-    
-    // Navigation icons
-    'arrow-left': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
-    
-    'arrow-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
-    
-    'external-link': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>`,
-    
-    // Missing Lucide Icons for Design System Guide
-    menu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>`,
-    
-    package: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`,
-    
-    'mouse-pointer-2': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m4 4 7.07 17 2.51-7.39L21 11.07z"/></svg>`,
-    
-    'pie-chart': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="m22 12-10-5v7z"/></svg>`,
-    
-    image: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`,
-    
-    tag: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>`,
-    
-    'file-text': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>`,
-    
-    list: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`,
-    
-    'app-window': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg>`,
-    
-    'move-horizontal': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="18,8 22,12 18,16"/><polyline points="6,8 2,12 6,16"/><line x1="2" y1="12" x2="22" y2="12"/></svg>`,
-    
-    layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`,
-    
-    square: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>`,
-    
-    'play-circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16 10,8"/></svg>`,
-    
-    maximize: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>`,
-    
-    book: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>`,
-    
-    code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg>`,
-    
-    settings: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`,
-    
-    'pen-tool': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"/><path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"/><path d="m2.3 2.3 7.286 7.286"/><circle cx="11" cy="11" r="2"/></svg>`,
-    
-    // Social/External icons
-    figma: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg>`,
-    
-    github: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`,
-    
-    linkedin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>`,
-    
-    mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>`,
-    
-    briefcase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-    
-    send: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`,
-    
-    // Missing icons used in Stats & Project Overview file
-    atom: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/></svg>`,
-    
-    zap: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg>`,
-    
-    clock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>`,
-    
-    lightbulb: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`,
-    
-    'trending-up': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>`,
-    
-    // Missing icons from design system guide
-    'alert-circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-    
-    'code-2': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>`,
-    
-    'help-circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
-    
-    plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
-    
-    link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
-    
-    component: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/></svg>`,
-    
-    'grid-3x3': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
-    
-    // Missing icons from design guide (Lucide replacement)
-    'droplet': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-5.5-6.5a2 2 0 0 0-3 0c-2 2.5-3.5 4.9-5.5 6.5S5 13 5 15a7 7 0 0 0 7 7z"/></svg>`,
-    'circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>`,
-    'align-left': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>`,
-    'ruler': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L3 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0L18 11.7l3.3-3.3a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>`,
-    'mountain': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>`,
-    'corner-up-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>`,
-    'film': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`,
-    'user': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
-    'terminal': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
-    
-    // Missing icons that were causing rendering failures
-    palette: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`,
-    
-    heart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>`,
-    
-    droplet: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-5-6.5a1 1 0 0 0-2 0C7 5 5 7 3 9.5S1 13 1 15a7 7 0 0 0 7 7z"/></svg>`,
-    droplets: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3a.5.5 0 0 0-.86-.4C5.27 5.85 4.5 6.79 4.5 7.9c0 1.97 1.37 3.48 2.5 3.48Zm9-3.4c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S16.29 3.36 16 1.9a.5.5 0 0 0-.86-.4c-.87.95-1.64 1.89-1.64 3c0 1.97 1.37 3.48 2.5 3.48Z"/><path d="M6 20a2 2 0 1 0 4 0v-3a2 2 0 1 0-4 0Zm8 0a2 2 0 1 0 4 0v-3a2 2 0 1 0-4 0Z"/></svg>`,
-    
-    puzzle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 7.85c-.049.322-.059.648-.026.975.056.506.194.976.288 1.46.071.365.126.734.126 1.115.013.666.039 1.332.039 2-.006.49-.017.979-.017 1.469 0 .338-.014.654-.047.984-.024.332-.039.655-.039.988-0 .338.014.654.047.984.024.332.039.655.039.988 0 .338-.014.654-.047.984-.024.332-.039.655-.039.988 0 .338.014.654.047.984.024.332.039.655.039.988 0 .338-.014.654-.047.984-.024.332-.039.655-.039.988 0 .338.014.654.047.984.024.332.039.655.039.988 0 .338-.014.654-.047.984-.024.332-.039.655-.039.988 0 .338.014.654.047.984.024.332.039.655.039.988"/><path d="M16 8V5a3 3 0 0 0-6 0v3"/><path d="M8 21v-3a3 3 0 0 1 6 0v3"/></svg>`,
-    
-    wrench: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
-    
-    loader: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>`,
-    
-    // Additional missing icons causing render failures
-    'arrow-up-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>`,
-    'arrow-right-circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="m12 16 4-4-4-4"/></svg>`,
-    save: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>`,
-    download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
-    filter: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/></svg>`,
-    play: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21 5,3"/></svg>`,
-    
-    // Missing icons from design system guide showcase
-    'chevron-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`,
-    search: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>`,
-    copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`,
-    check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`,
-    eye: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`,
-    sparkles: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`,
-    star: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-    trophy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`,
-    feather: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/></svg>`,
-    shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>`,
-    'align-right': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="7" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>`,
-    
-    // Additional missing icons
-    'wand': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>`,
-    'chevron-down': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`,
-    'chevron-up': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>`,
-    'chevron-left': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>`,
-    'minus': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>`,
-    'circle-x': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>`,
-    'circle-alert': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-    'info': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`
-};
-
-/* =================================================================
-   ENHANCED ICON RENDERING WITH SIZE SUPPORT
-   ================================================================= */
-window._iconRenderDebounce = null;
-window.renderPluginIconsDebounced = function(container) {
-    clearTimeout(window._iconRenderDebounce);
-    window._iconRenderDebounce = setTimeout(function() {
-        window.renderPluginIcons(container);
-    }, 16); // One frame at 60fps
-};
-
-window.renderPluginIcons = function(container = document) {
-    let rendered = 0;
-    let missing = [];
-    
-    // Handle data-icon attributes (new system)
-    const dataIconElements = container.querySelectorAll('[data-icon]');
-    dataIconElements.forEach(element => {
-        const iconName = element.getAttribute('data-icon');
-        if (window.PluginIcons[iconName]) {
-            element.innerHTML = window.PluginIcons[iconName];
-            rendered++;
-            
-            // Apply proper icon class if not present
-            if (!element.classList.contains('icon')) {
-                element.classList.add('icon');
-            }
-        } else {
-            missing.push(iconName);
-            console.warn('Missing icon definition:', iconName);
-        }
-    });
-    
-    // Handle data-lucide attributes (legacy/design guide compatibility)
-    const lucideElements = container.querySelectorAll('[data-lucide]');
-    lucideElements.forEach(element => {
-        const iconName = element.getAttribute('data-lucide');
-        if (window.PluginIcons[iconName]) {
-            element.innerHTML = window.PluginIcons[iconName];
-            rendered++;
-            
-            // Apply proper icon class if not present
-            if (!element.classList.contains('icon')) {
-                element.classList.add('icon');
-            }
-            // Also add lucide class for styling compatibility
-            if (!element.classList.contains('lucide')) {
-                element.classList.add('lucide');
-            }
-        } else {
-            missing.push(iconName);
-            console.warn('Missing icon definition:', iconName);
-        }
-    });
-    
-    console.log('Icons rendered: ' + rendered + ', Missing: ' + missing.length, missing.length > 0 ? missing : '');
-};
-
-/* =================================================================
-   COMPONENT-BASED ICON FUNCTION
-   ================================================================= */
-window.createIcon = function(iconName, options = {}) {
-    const { size = 'md', stroke = 'regular', className = '' } = options;
-    
-    if (!window.PluginIcons[iconName]) {
-        console.warn('Icon "' + iconName + '" not found');
-        return '';
-    }
-    
-    const classes = [
-        'icon',
-        'icon--' + size,
-        'icon--' + stroke,
-        className
-    ].filter(Boolean).join(' ');
-    
-    return '<span class="' + classes + '" data-icon="' + iconName + '">' + window.PluginIcons[iconName] + '</span>';
-};
-
-// Auto-render on load (backwards compatible)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        window.renderPluginIcons();
-        console.log('Icons rendered on DOMContentLoaded');
-    });
-} else {
-    window.renderPluginIcons();
-    console.log('Icons rendered immediately');
-}
-
-// Re-render icons whenever new content is dynamically added
-window.addEventListener('load', () => {
-    window.renderPluginIcons();
-    console.log('Icons re-rendered on window load');
-});
-</script>
-        
         <!-- Lucide Icons -->
         <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
@@ -1061,19 +721,19 @@ window.addEventListener('load', () => {
                                     <div class="example-container">
                                         <div class="icons-grid-responsive">
                                             <div class="icon-card">
-                                                <i class="icon icon--xxl" data-icon="palette" style="color: var(--color-type-color);"></i>
+                                                <i class="icon icon--xxl" data-icon="palette" style="color: var(--value-color);"></i>
                                                 <code class="icon-code">color</code>
                                             </div>
                                             <div class="icon-card">
-                                                <i class="icon icon--xxl" data-icon="type" style="color: var(--color-type-text);"></i>
+                                                <i class="icon icon--xxl" data-icon="type" style="color: var(--value-text);"></i>
                                                 <code class="icon-code">type</code>
                                             </div>
                                             <div class="icon-card">
-                                                <i class="icon icon--xxl" data-icon="hash" style="color: var(--color-type-number);"></i>
+                                                <i class="icon icon--xxl" data-icon="hash" style="color: var(--value-number);"></i>
                                                 <code class="icon-code">numbers</code>
                                             </div>
                                             <div class="icon-card">
-                                                <i class="icon icon--xxl" data-icon="toggle-right" style="color: var(--color-type-state);"></i>
+                                                <i class="icon icon--xxl" data-icon="toggle-right" style="color: var(--value-state);"></i>
                                                 <code class="icon-code">states</code>
                                             </div>
                                         </div>
@@ -1144,11 +804,11 @@ window.addEventListener('load', () => {
                                             </div>
                                             <div class="icon-card">
                                                 <i class="icon icon--xxl" data-icon="sliders-horizontal"></i>
-                                                <code class="icon-code">sliders-horizontal</code>
+                                                <code class="icon-code">filters</code>
                                             </div>
                                             <div class="icon-card">
                                                 <i class="icon icon--xxl" data-icon="file-text"></i>
-                                                <code class="icon-code">file-text</code>
+                                                <code class="icon-code">export</code>
                                             </div>
                                             <div class="icon-card">
                                                 <i class="icon icon--xxl" data-icon="layers"></i>
@@ -2255,10 +1915,10 @@ Note: Uses individual card components via @include directives
             
             grid.innerHTML = '';
             const tokenTypes = [
-                { icon: 'palette', color: '--color-type-color' },
-                { icon: 'type', color: '--color-type-text' },
-                { icon: 'hash', color: '--color-type-number' },
-                { icon: 'toggle-right', color: '--color-type-state' }
+                { icon: 'palette', color: '--value-color' },
+                { icon: 'type', color: '--value-text' },
+                { icon: 'hash', color: '--value-number' },
+                { icon: 'toggle-right', color: '--value-state' }
             ];
             
             for (let i = 0; i < 40; i++) {
@@ -2745,8 +2405,8 @@ Note: Uses individual card components via @include directives
                 grid.innerHTML = ''; 
                 
                 const tokenTypes = [
-                    { icon: 'palette', color: '--color-type-color' }, { icon: 'type', color: '--color-type-text' },
-                    { icon: 'hash', color: '--color-type-number' }, { icon: 'toggle-right', color: '--color-type-state' }
+                    { icon: 'palette', color: '--value-color' }, { icon: 'type', color: '--value-text' },
+                    { icon: 'hash', color: '--value-number' }, { icon: 'toggle-right', color: '--value-state' }
                 ];
                 
                 for (let i = 0; i < 80; i++) {
@@ -3087,10 +2747,10 @@ Note: Uses individual card components via @include directives
 
             const iconCount = 30; // Reduced from 60 for better performance
             const tokenTypes = [
-                { icon: 'palette', color: 'var(--color-type-color)' },
-                { icon: 'type', color: 'var(--color-type-text)' },
-                { icon: 'hash', color: 'var(--color-type-number)' },
-                { icon: 'toggle-right', color: 'var(--color-type-state)' },
+                { icon: 'palette', color: 'var(--value-color)' },
+                { icon: 'type', color: 'var(--value-text)' },
+                { icon: 'hash', color: 'var(--value-number)' },
+                { icon: 'toggle-right', color: 'var(--value-state)' },
                 { icon: 'layers', color: 'var(--brand-primary)' }
             ];
             const sizeTokens = ['--icon-xs', '--icon-sm', '--icon-md', '--icon-lg', '--icon-xl'];
@@ -3189,10 +2849,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     'categories': {
                         title: 'Categories',
                         tokens: [
-                            { token: '--color-type-color' },
-                            { token: '--color-type-text' },
-                            { token: '--color-type-number' },
-                            { token: '--color-type-state' }
+                            { token: '--value-color' },
+                            { token: '--value-text' },
+                            { token: '--value-number' },
+                            { token: '--value-state' }
                         ]
                     }
                 }
@@ -3202,35 +2862,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 tokens: [] // Will be populated dynamically based on theme
             },
             'alpha': {
-                title: 'Alpha', // Simplified title
-                tokens: [
-                    // Brand alphas
-                    { token: '--brand-primary-alpha-10', alpha: true },
-                    { token: '--brand-primary-alpha-20', alpha: true },
-                    { token: '--brand-secondary-alpha-10', alpha: true }, // Added missing
-                    { token: '--brand-secondary-alpha-20', alpha: true }, // Added missing
-                    // Category alphas
-                    { token: '--color-type-color-alpha-10', alpha: true },
-                    { token: '--color-type-text-alpha-10', alpha: true },
-                    { token: '--color-type-number-alpha-10', alpha: true },
-                    { token: '--color-type-state-alpha-10', alpha: true },
-                    { token: '--color-type-color-alpha-20', alpha: true },
-                    { token: '--color-type-text-alpha-20', alpha: true },
-                    { token: '--color-type-number-alpha-20', alpha: true },
-                    { token: '--color-type-state-alpha-20', alpha: true },
-                    // Black alphas
-                    { token: '--black-alpha-05', alpha: true }, // Added missing
-                    { token: '--black-alpha-10', alpha: true },
-                    { token: '--black-alpha-20', alpha: true },
-                    { token: '--black-alpha-30', alpha: true },
-                    { token: '--black-alpha-50', alpha: true },
-                    // White alphas
-                    { token: '--white-alpha-05', alpha: true }, // Added missing
-                    { token: '--white-alpha-10', alpha: true },
-                    { token: '--white-alpha-20', alpha: true },
-                    { token: '--white-alpha-30', alpha: true },
-                    { token: '--white-alpha-50', alpha: true }
-                ]
+                title: 'Alpha',
+                sections: {
+                    'brand': {
+                        title: 'Brand',
+                        tokens: [
+                            { token: '--brand-primary-alpha-10', alpha: true },
+                            { token: '--brand-primary-alpha-20', alpha: true },
+                            { token: '--brand-secondary-alpha-10', alpha: true },
+                            { token: '--brand-secondary-alpha-20', alpha: true },
+                            { token: '--value-color-alpha-10', alpha: true },
+                            { token: '--value-text-alpha-10', alpha: true },
+                            { token: '--value-number-alpha-10', alpha: true },
+                            { token: '--value-state-alpha-10', alpha: true },
+                            { token: '--value-color-alpha-20', alpha: true },
+                            { token: '--value-text-alpha-20', alpha: true },
+                            { token: '--value-number-alpha-20', alpha: true },
+                            { token: '--value-state-alpha-20', alpha: true }
+                        ]
+                    },
+                    'black': {
+                        title: 'Black',
+                        tokens: [
+                            { token: '--black-alpha-05', alpha: true },
+                            { token: '--black-alpha-10', alpha: true },
+                            { token: '--black-alpha-20', alpha: true },
+                            { token: '--black-alpha-30', alpha: true },
+                            { token: '--black-alpha-50', alpha: true }
+                        ]
+                    },
+                    'white': {
+                        title: 'White',
+                        tokens: [
+                            { token: '--white-alpha-05', alpha: true },
+                            { token: '--white-alpha-10', alpha: true },
+                            { token: '--white-alpha-20', alpha: true },
+                            { token: '--white-alpha-30', alpha: true },
+                            { token: '--white-alpha-50', alpha: true }
+                        ]
+                    }
+                }
             },
             'utilities': {
                 title: 'Utilities',
@@ -3384,22 +3055,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (window.innerWidth <= 768) {
                     // Mobile filtering
                     document.querySelectorAll('.ref-section').forEach(section => {
+                        const parent = section.getAttribute('data-parent');
                         const category = section.getAttribute('data-category');
-                        // Show all sections for overview
-                        if (targetTab === 'overview') {
-                            section.style.display = 'block';
-                        } else if (targetTab === 'core') {
-                            // Special handling for core tab - show both brand and categories
-                            section.style.display = (category === 'core-brand' || category === 'core-categories') ? 'block' : 'none';
+                        
+                        // Show sections based on parent attribute matching target tab
+                        if (targetTab === 'core') {
+                            section.style.display = (parent === 'core') ? 'block' : 'none';
+                        } else if (targetTab === 'neutrals') {
+                            section.style.display = (parent === 'neutrals') ? 'block' : 'none';
+                        } else if (targetTab === 'alpha') {
+                            section.style.display = (parent === 'alpha') ? 'block' : 'none';
                         } else if (targetTab === 'utilities') {
-                            // Show all utilities subgroups
-                            section.style.display = category.startsWith('utilities-') ? 'block' : 'none';
+                            section.style.display = (parent === 'utilities') ? 'block' : 'none';
                         } else if (targetTab === 'gradients') {
-                            // Show all gradient subsections
-                            section.style.display = category.startsWith('gradients-') ? 'block' : 'none';
+                            section.style.display = (parent === 'gradients') ? 'block' : 'none';
+                        } else if (targetTab === 'tokens') {
+                            section.style.display = (parent === 'tokens') ? 'block' : 'none';
                         } else {
-                            // Standard matching for other tabs
-                            section.style.display = category === targetTab ? 'block' : 'none';
+                            // Default hide all
+                            section.style.display = 'none';
                         }
                     });
                 } else {
@@ -3463,6 +3137,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add tab functionality
         initializeTabNavigation();
         
+        // Initialize mobile view - show only core sections by default
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                document.querySelectorAll('.ref-section').forEach(section => {
+                    const parent = section.getAttribute('data-parent');
+                    section.style.display = (parent === 'core') ? 'block' : 'none';
+                });
+            }, 0);
+        }
+        
         // Watch for theme changes to update neutrals
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -3511,7 +3195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isTextUtility = item.token && (
             item.token.includes('--color-text-') || 
             item.token.includes('--text-color-') ||
-            (item.token.includes('text') && item.token.includes('color'))
+            item.token === '--text-color'
         );
         
         // Calculate contrast class for text utilities (same as in renderColorCard)
@@ -3588,7 +3272,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isTextUtility = item.token && (
             item.token.includes('--color-text-') || 
             item.token.includes('--text-color-') ||
-            (item.token.includes('text') && item.token.includes('color'))
+            item.token === '--text-color'
         );
         
         // Calculate contrast class for text utilities
@@ -3763,10 +3447,27 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = '<section class="color-section">';
         
         // Add subheaders for alpha section
-        if (key === 'alpha') {
-            // Group alpha tokens by type
-            const brandAlphas = section.tokens.filter(t => t.token.includes('brand'));
-            const categoryAlphas = section.tokens.filter(t => t.token.includes('category'));
+        if (key === 'alpha' && section.sections) {
+            // Alpha now has sections structure, handle it differently
+            Object.entries(section.sections).forEach(([subkey, subsection]) => {
+                if (subsection.tokens && subsection.tokens.length > 0) {
+                    html += '<div class="color-subsection">';
+                    html += '<h4 class="subsection-title">' + subsection.title + '</h4>';
+                    html += '<div class="color-grid-4col">';
+                    
+                    subsection.tokens.forEach(item => {
+                        html += renderAlphaCard(item);
+                    });
+                    
+                    html += '</div>';
+                    html += '</div>';
+                }
+            });
+            html += '</section>';
+            return html;
+        } else if (key === 'alpha' && section.tokens) {
+            // Legacy alpha structure (fallback)
+            const brandAlphas = section.tokens.filter(t => t.token.includes('brand') || t.token.includes('value'));
             const blackAlphas = section.tokens.filter(t => t.token.includes('black'));
             const whiteAlphas = section.tokens.filter(t => t.token.includes('white'));
             
@@ -3962,7 +3663,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return '<div class="ref-item">' +
                 swatchHtml +
                 '<div class="ref-info">' +
-                    '<code>' + item.token + '</code>' +
+                    '<code>' + item.token.trim() + '</code>' +
                     '<span>' + displayValue + '</span>' +
                 '</div>' +
             '</div>';
@@ -3972,26 +3673,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const renderMobileSections = (config) => {
         let html = '';
         Object.entries(config.sections).forEach(([key, section]) => {
-            // Add section label based on key
-            const sectionLabels = {
-                'core': 'BRAND',
-                'neutrals': 'NEUTRALS', 
-                'alpha': 'ALPHA',
-                'utilities': 'CATEGORIES',
-                'gradients': 'GRADIENTS'
-            };
-            
-            if (sectionLabels[key]) {
-                html += '<div class="mobile-section-label">' + sectionLabels[key] + '</div>';
-            }
-            // Handle sections with nested structure (like gradients)
+            // Handle sections with nested structure (like core and gradients)
             if (section.sections) {
-                // Render each subsection
+                // For core section, add proper subsection headers
                 Object.entries(section.sections).forEach(([subkey, subsection]) => {
                     if (subsection.tokens && subsection.tokens.length > 0) {
-                        html += '<div class="ref-section" data-category="' + key + '-' + subkey + '">' +
-                                '<h4 class="ref-title">' + subsection.title.split(' ')[0] + '</h4>' +
-                                '<div class="ref-items">';
+                        // Add subsection header with proper data-category
+                        let categoryAttr = key + '-' + subkey;
+                        let title = subsection.title;
+                        
+                        html += '<div class="ref-section" data-category="' + categoryAttr + '" data-parent="' + key + '">';
+                        
+                        // Add subsection header
+                        html += '<h4 class="ref-title">' + title + '</h4>';
+                        html += '<div class="ref-items">';
                         
                         subsection.tokens.forEach(item => {
                             html += renderMobileToken(item);
@@ -4007,9 +3702,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (section.hasSubgroups && section.subgroups) {
                 Object.entries(section.subgroups).forEach(([subkey, subgroup]) => {
                     if (subgroup.tokens && subgroup.tokens.length > 0) {
-                        html += '<div class="ref-section" data-category="' + key + '-' + subkey + '">' +
-                                '<h4 class="ref-title">' + subgroup.title.split(' ')[0] + '</h4>' +
-                                '<div class="ref-items">';
+                        html += '<div class="ref-section" data-category="' + key + '-' + subkey + '" data-parent="' + key + '">';
+                        html += '<h4 class="ref-title">' + subgroup.title + '</h4>';
+                        html += '<div class="ref-items">';
                         
                         subgroup.tokens.forEach(item => {
                             html += renderMobileToken(item);
@@ -4021,14 +3716,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Skip sections without tokens (like theme overview)
+            // Handle special sections
+            if (section.isOverviewSection) {
+                // Render tokens overview content for mobile
+                html += '<div class="ref-section" data-category="' + key + '" data-parent="' + key + '">' +
+                    '<div class="color-overview-section mobile-overview">' +
+                        '<div class="overview-intro">' +
+                            '<h4 class="text-label">Token Architecture</h4>' +
+                            '<p class="section-description">Three layers of design tokens:</p>' +
+                        '</div>' +
+                        '<div class="architecture-layers">' +
+                            '<div class="architecture-layer">' +
+                                '<strong>1. Primitives</strong>' +
+                                '<p>Raw values: <code>--gray-0</code></p>' +
+                            '</div>' +
+                            '<div class="architecture-layer">' +
+                                '<strong>2. Semantic</strong>' +
+                                '<p>Purpose: <code>--surface-1</code></p>' +
+                            '</div>' +
+                            '<div class="architecture-layer">' +
+                                '<strong>3. Component</strong>' +
+                                '<p>Specific: <code>--btn-primary-bg</code></p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+                return;
+            }
+            
+            // Skip sections without tokens
             if (!section.tokens || section.tokens.length === 0) {
                 return;
             }
             
-            html += '<div class="ref-section" data-category="' + key + '">' +
-                    '<h4 class="ref-title">' + section.title.split(' ')[0] + '</h4>' +
-                    '<div class="ref-items">';
+            // Regular sections (neutrals, alpha without subsections)
+            html += '<div class="ref-section" data-category="' + key + '" data-parent="' + key + '">';
+            
+            // Don't add redundant title for single sections
+            html += '<div class="ref-items">';
             
             section.tokens.forEach(item => {
                 html += renderMobileToken(item);
