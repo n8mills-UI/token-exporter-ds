@@ -163,6 +163,9 @@ window.renderIcons = function(container) {
     });
 };
 
+// Plugin compatibility alias
+window.renderPluginIcons = window.renderIcons;
+
 // Auto-render on load
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {

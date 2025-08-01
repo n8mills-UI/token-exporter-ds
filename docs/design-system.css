@@ -13614,3 +13614,48 @@ input[type="file"]::file-selector-button {
     text-shadow: none !important;
 }
 
+/* ==========================================================================
+   FIGMA PLUGIN SPECIFIC FIXES
+   ========================================================================== */
+   
+/* Figma renders animations differently - need slower timing */
+.figma-plugin .te-icon-cell {
+    animation-duration: 4s; /* Slower for better Figma performance */
+    animation-timing-function: ease-out; /* Smoother in Figma */
+}
+
+/* Ensure proper spacing between cards in plugin context */
+.figma-plugin #main-ui > * + * {
+    margin-top: var(--size-3);
+}
+
+/* Fix icon visibility in Figma context */
+.figma-plugin [data-icon] {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure animations aren't blocked by Figma's rendering */
+.figma-plugin .te-progress-loader {
+    will-change: auto; /* Let Figma handle optimization */
+}
+
+/* Fix collection item icon colors in advanced mode */
+.figma-plugin .collection-item .badge [data-icon] {
+    color: inherit !important;
+}
+
+/* Ensure padding on export cards */
+.figma-plugin #export-card-container {
+    padding: 0;
+    margin: 0;
+}
+
+/* Debug class for identifying rendering issues */
+.figma-plugin.debug [data-icon]:not(:has(svg)) {
+    background: red !important;
+    min-width: 20px;
+    min-height: 20px;
+    display: inline-block;
+}
+

@@ -606,6 +606,60 @@ async function checkSemanticTokenUsage() {
 }
 
 /**
+ * Check plugin-specific compatibility
+ */
+async function checkPluginCompatibility() {
+    const sectionName = '📱 Plugin Compatibility Check';
+    console.log(`\n${colors.blue}${sectionName}${colors.reset}`);
+    
+    const issues = [];
+    
+    try {
+        // Check icon system
+        const iconSystemPath = path.join(__dirname, '../src/components/icons/_icon-system.html');
+        const iconSystem = await fs.promises.readFile(iconSystemPath, 'utf8');
+        
+        if (!iconSystem.includes('window.renderPluginIcons')) {
+            issues.push('Icon system missing plugin compatibility alias (window.renderPluginIcons)');
+        }
+        
+        // Check animations in CSS
+        const cssPath = path.join(__dirname, '../docs/design-system.css');
+        const css = await fs.promises.readFile(cssPath, 'utf8');
+        
+        const requiredAnimations = ['te-vortex-swirl'];
+        requiredAnimations.forEach(anim => {
+            if (!css.includes(`@keyframes ${anim}`)) {
+                issues.push(`Missing required animation: @keyframes ${anim}`);
+            }
+        });
+        
+        // Check for Figma-specific CSS
+        if (css.includes('.figma-plugin')) {
+            console.log(`  ${colors.green}✓${colors.reset} Figma-specific CSS rules found`);
+        } else {
+            console.log(`  ${colors.yellow}⚠${colors.reset}  No Figma-specific CSS rules found`);
+        }
+        
+        // Report results
+        if (issues.length === 0) {
+            console.log(`  ${colors.green}✓${colors.reset} All plugin compatibility checks passed`);
+            return true;
+        } else {
+            console.log(`  ${colors.red}✗${colors.reset} Found ${issues.length} plugin compatibility issues:`);
+            issues.forEach(issue => {
+                console.log(`    ${colors.red}•${colors.reset} ${issue}`);
+            });
+            return false;
+        }
+    } catch (error) {
+        console.log(`  ${colors.red}✗${colors.reset} Plugin compatibility check failed`);
+        console.error(`    ${error.message}`);
+        return false;
+    }
+}
+
+/**
  * Main check function
  */
 async function check(options = {}) {
@@ -641,6 +695,11 @@ async function check(options = {}) {
     results.push({
         name: 'Semantic Token Usage',
         passed: await checkSemanticTokenUsage()
+    });
+    
+    results.push({
+        name: 'Plugin Compatibility',
+        passed: await checkPluginCompatibility()
     });
     
     // Additional checks in full mode
