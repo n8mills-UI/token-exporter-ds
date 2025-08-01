@@ -17,8 +17,18 @@
                         <!-- Token Summary will be injected here by the script -->
                     </div>
                     
-                    <!-- The new, stateful export card -->
-                    <!-- @include src/components/_forms-example.html -->
+                    <!-- Export Card Container -->
+                    <div id="export-card-container">
+                        <!-- Quick Export View (Simple Mode) -->
+                        <div id="quick-export-view">
+                            <!-- @include src/components/_quick-export-card.html -->
+                        </div>
+                        
+                        <!-- Advanced Filter View (Advanced Mode) -->
+                        <div id="advanced-filter-view" class="state-hidden">
+                            <!-- Dynamic content will be injected by JavaScript -->
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -175,7 +185,7 @@ function updateTokenSummary() {
                 renderIcons();
             };
             DOMElements.aboutModal.onclick = (e) => {
-                if (e.target.closest('.about-close') || e.target === DOMElements.aboutModal) {
+                if (e.target.closest('[data-close-modal]') || e.target.closest('.about-modal-backdrop') || e.target === DOMElements.aboutModal) {
                     DOMElements.aboutModal.classList.remove('show');
                 }
             };

@@ -1191,14 +1191,21 @@ body {
     
     /* Tech Item Icons */
     .tech-item h3 i,
-    .tech-item h3 .lucide {
+    .tech-item h3 .lucide,
+    .tech-item h3 [data-icon] {
         color: var(--brand-secondary); /* Pink in light mode */
     }
     
     /* Compact Card Icons */
     .compact-card h3 i,
-    .compact-card h3 .lucide {
+    .compact-card h3 .lucide,
+    .compact-card h3 [data-icon] {
         color: var(--brand-secondary); /* Pink in light mode */
+    }
+    
+    /* About Modal Feature Icons - Pink in light mode */
+    .about-modal-features .feature-icon {
+        color: var(--brand-secondary);
     }
     
     /* Additional component overrides from consolidated sections */
@@ -1518,16 +1525,20 @@ body {
 
 /* Force consistent stroke width in icon showcase to fix thin icons */
 /* Simple stroke weight classes - for demo cards only */
-.icon-weight-card.hairline .lucide {
+.icon-weight-card.hairline .lucide,
+.icon-weight-card.hairline [data-icon] svg {
     stroke-width: var(--icon-stroke-hairline);
 }
-.icon-weight-card.thin .lucide {
+.icon-weight-card.thin .lucide,
+.icon-weight-card.thin [data-icon] svg {
     stroke-width: var(--icon-stroke-thin);
 }
-.icon-weight-card.bold .lucide {
+.icon-weight-card.bold .lucide,
+.icon-weight-card.bold [data-icon] svg {
     stroke-width: var(--icon-stroke-bold);
 }
-.icon-weight-card.heavy .lucide {
+.icon-weight-card.heavy .lucide,
+.icon-weight-card.heavy [data-icon] svg {
     stroke-width: var(--icon-stroke-heavy);
 }
 
@@ -1869,6 +1880,9 @@ body {
  .gap-1 { gap: var(--size-1); }
  .gap-5 { gap: var(--size-5); }
 
+/* Visibility Utilities */
+.state-hidden { display: none !important; }
+
  /* Additional Flex Utilities */
  .flex-between { 
      display: flex; 
@@ -1913,6 +1927,31 @@ body {
      width: 100%;
      box-sizing: border-box;
      overflow: hidden;
+ }
+
+ /* Common Background Patterns - Consolidate duplicates */
+ .example-container,
+ .type-scale-item,
+ .token-item,
+ .spacing-demo-card,
+ .motion-demo-item,
+ .token-usage,
+ .pattern-content pre,
+ .state-documentation,
+ .token-card,
+ .usage-examples,
+ .usage-section-light {
+     background: var(--color-background-primary);
+     border: var(--border-size-1) solid var(--color-border-default);
+     border-radius: var(--radius-2);
+ }
+
+ /* Secondary Pattern - surface with larger radius */
+ .architecture-layer {
+     background: var(--surface-1);
+     padding: var(--size-4);
+     border-radius: var(--radius-3);
+     border: var(--border-size-1) solid var(--color-border-default);
  }
 
  /* Layout and Sizing */
@@ -2042,7 +2081,8 @@ body {
     }
 
     .btn .lucide,
-    .btn [data-lucide] {
+    .btn [data-lucide],
+    .btn [data-icon] {
         text-shadow: none;
     }
 
@@ -2065,7 +2105,8 @@ body {
     }
 
     .btn-sm .lucide,
-    .btn-sm .icon {
+    .btn-sm .icon,
+    .btn-sm [data-icon] {
         width: var(--icon-xs);
         height: var(--icon-xs);
     }
@@ -2078,7 +2119,8 @@ body {
     }
 
     .btn-md .lucide,
-    .btn-md .icon {
+    .btn-md .icon,
+    .btn-md [data-icon] {
         width: var(--icon-sm);
         height: var(--icon-sm);
     }
@@ -2091,7 +2133,8 @@ body {
     }
 
     .btn-lg .lucide,
-    .btn-lg .icon {
+    .btn-lg .icon,
+    .btn-lg [data-icon] {
         width: var(--icon-md);
         height: var(--icon-md);
     }
@@ -2161,7 +2204,8 @@ body {
     /* Icon stroke now handled by semantic stroke system */
     
     /* Icon-only buttons use thin stroke */
-    .btn-icon .lucide {
+    .btn-icon .lucide,
+    .btn-icon [data-icon] svg {
         stroke-width: var(--icon-stroke-thin);
     }
 
@@ -2813,18 +2857,11 @@ body {
  padding: 0 var(--size-1);
 }
 
-/* Compact cards */
+/* Compact cards - duplicate removed, see line 2840 for definition */
 .compact-cards {
  display: grid;
  grid-template-columns: repeat(auto-fit, minmax(var(--size-sidebar-width), 1fr));
  gap: var(--size-3);
-}
-
-.compact-card {
- background: var(--color-background-secondary);
- border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-3);
- padding: var(--size-4);
 }
 
 .compact-card h3 {
@@ -3676,9 +3713,6 @@ body {
 }
 
 .example-container {
- background: var(--color-background-primary);
- border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-2);
  padding: var(--size-4); /* Consistent padding */
  transition: all var(--animation-duration-2) var(--ease-3);
  position: relative;
@@ -5374,6 +5408,17 @@ select option {
     gap: var(--size-3); /* Uses your design token for consistent spacing */
 }
 
+/* Plugin UI Card Constraints */
+#export-card-container .card {
+    width: 100%;
+    max-width: var(--plugin-width);
+}
+
+#quick-export-view .card,
+#advanced-filter-view .card {
+    margin: 0;
+}
+
 /* Token Summary Card */
 .token-summary {
     display: flex;
@@ -6456,15 +6501,7 @@ select option {
     gap: var(--size-2);
 }
 
-.about-avatar {
-    width: calc(var(--size-9) * 1.5); /* 4.5rem */
-    height: calc(var(--size-9) * 1.5);
-    border-radius: var(--radius-round);
-    background-image: url('https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png');
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 0 25px rgb(210, 255, 55, 0.35);
-}
+/* Avatar styles removed - using features-focused modal instead */
 
 .about-header {
     display: flex;
@@ -6564,6 +6601,117 @@ select option {
 }
 
 /* About modal uses standard btn-icon styles */
+
+/* About Modal - Features Focused Variant */
+.about-modal-features .about-modal-content {
+    position: relative;
+    background: var(--surface-1);
+    border-radius: var(--radius-3);
+    padding: var(--size-4);
+    max-width: var(--plugin-width);
+    width: 100%;
+    box-shadow: var(--shadow-6);
+}
+
+.about-modal-features .about-header {
+    text-align: center;
+    margin-bottom: var(--size-5);
+}
+
+.about-modal-features .app-icon {
+    width: var(--size-9);
+    height: var(--size-9);
+    margin: 0 auto var(--size-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-modal-features .app-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.about-modal-features .app-name {
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-7);
+    margin-bottom: var(--size-1);
+    color: var(--color-text-default);
+}
+
+.about-modal-features .app-tagline {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-1);
+    margin: 0;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.about-modal-features .features-list {
+    margin-bottom: var(--size-5);
+}
+
+.about-modal-features .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--size-3);
+    margin-bottom: var(--size-3);
+}
+
+.about-modal-features .feature-icon {
+    width: var(--size-5);
+    height: var(--size-5);
+    flex-shrink: 0;
+    color: var(--brand-primary); /* Default: lime, overridden in light theme */
+    margin-top: 2px;
+}
+
+.about-modal-features .feature-text {
+    font-size: var(--font-size-1);
+    line-height: 1.5;
+    color: var(--color-text-default);
+}
+
+.about-modal-features .about-footer {
+    text-align: center;
+    padding-top: var(--size-4);
+    border-top: var(--border-size-1) solid var(--color-border-subtle);
+}
+
+.about-modal-features .creator-info {
+    font-size: var(--font-size-0);
+    color: var(--color-text-secondary);
+    margin: 0;
+    text-align: center;
+}
+
+.about-modal-features .creator-info a {
+    color: var(--brand-secondary);
+    text-decoration: none;
+    font-weight: var(--font-weight-5);
+}
+
+.about-modal-features .creator-info a:hover {
+    text-decoration: underline;
+}
+
+.about-modal-features .about-social {
+    display: flex;
+    justify-content: center;
+    gap: var(--size-5);
+    margin-bottom: var(--size-3);
+}
+
+.about-modal-features .about-modal-close {
+    position: absolute;
+    top: var(--size-3);
+    right: var(--size-3);
+    width: var(--size-7);
+    height: var(--size-7);
+    padding: 0;
+}
 
 /* ========================================================================
    ACCESSIBILITY: REDUCED MOTION SUPPORT
@@ -8607,22 +8755,7 @@ body {
     box-shadow: var(--shadow-6);
 }
 
-.about-modal-clean .about-avatar,
-.about-modal-concept-1 .about-avatar {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto var(--size-5);
-    border-radius: var(--radius-round);
-    overflow: hidden;
-    border: 3px solid var(--brand-primary);
-}
-
-.about-modal-clean .about-avatar img,
-.about-modal-concept-1 .about-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+/* Legacy avatar styles removed */
 
 .about-modal-clean .about-name,
 .about-modal-concept-1 .about-name {
@@ -10896,9 +11029,7 @@ button.theme-toggle {
     display: none;
 }
 
-.section-tabs {
-    border-bottom-color: var(--design-section-border);
-}
+/* Border color override moved to main .section-tabs definition */
 
 /* Tab buttons - clean without box shadows */
 .tab-button {
@@ -11389,45 +11520,9 @@ button.theme-toggle {
     margin: 0 auto;
 }
 
-/* Tab Navigation */
-.section-tabs {
-    display: flex;
-    gap: var(--size-1);
-    border-bottom: var(--border-size-2) solid var(--color-border-default);
-    margin-bottom: var(--size-6);
-    overflow-x: auto;
-    scrollbar-width: none;
-}
+/* Tab Navigation - duplicate removed, defined at line ~10893 */
 
-.section-tabs::-webkit-scrollbar {
-    display: none;
-}
-
-.tab-button {
-    background: transparent;
-    border: none;
-    padding: var(--size-3) var(--size-4);
-    cursor: pointer;
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-1);
-    font-weight: var(--font-weight-5);
-    display: flex;
-    align-items: center;
-    gap: var(--size-2);
-    border-bottom: var(--border-size-3) solid transparent;
-    margin-bottom: calc(-1 * var(--border-size-2));
-    transition: all var(--animation-duration-2) var(--ease-3);
-    white-space: nowrap;
-}
-
-.tab-button:hover {
-    color: var(--color-text-default);
-}
-
-.tab-button[aria-selected="true"] {
-    color: var(--brand-primary);
-    border-bottom-color: var(--brand-primary);
-}
+/* Tab button - duplicate removed, defined at line ~10909 */
 
 /* Removed duplicate tab panel rules - see consolidated rules above */
 
@@ -11675,12 +11770,7 @@ button.theme-toggle {
     margin-bottom: var(--size-6);
 }
 
-.architecture-layer {
-    background: var(--surface-1);
-    padding: var(--size-4);
-    border-radius: var(--radius-3);
-    border: var(--border-size-1) solid var(--color-border-default);
-}
+/* .architecture-layer - styles consolidated to line ~1936 */
 
 .architecture-layer h4 {
     color: var(--brand-secondary);
@@ -12907,7 +12997,8 @@ button.theme-toggle {
     
     .about-modal-content,
     .about-modal-clean .about-modal-content,
-    .about-modal-concept-1 .about-modal-content {
+    .about-modal-concept-1 .about-modal-content,
+    .about-modal-features .about-modal-content {
         max-width: calc(100vw - var(--size-4));
         width: 100%;
         padding: var(--size-5);
@@ -13054,6 +13145,20 @@ button.theme-toggle {
     
     .token-type-stat .icon {
         font-size: var(--font-size-2);
+    }
+    
+    /* About Modal Features - Small screens */
+    .about-modal-features .about-modal-content {
+        padding: var(--size-4);
+    }
+    
+    .about-modal-features .app-icon {
+        width: var(--size-9);
+        height: var(--size-9);
+    }
+    
+    .about-modal-features .feature-text {
+        font-size: var(--font-size-0);
     }
 }
 

@@ -1539,42 +1539,77 @@ Note: Uses individual card components via @include directives
                     <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-modal">
                         <!-- The modal partial is included here -->
-                        <!-- About Modal - Clean Version -->
-<div class="about-modal about-modal-clean" id="about-modal">
+                        <!-- About Modal - Features Focused -->
+<div class="about-modal about-modal-features" id="about-modal">
     <div class="about-modal-backdrop"></div>
     <div class="about-modal-content">
-        <button class="btn btn-icon btn-md about-modal-close" aria-label="Close modal">
+        <button class="btn btn-icon btn-sm about-modal-close" aria-label="Close modal" data-close-modal>
             <i data-icon="x"></i>
         </button>
         
         <div class="about-modal-body">
-            <div class="about-avatar">
-                <img src="https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png" alt="Nate Mills">
+            <div class="about-header">
+                <div class="app-icon">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_about_logo)">
+                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_about_logo)"/>
+                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        </g>
+                        <defs>
+                            <linearGradient id="paint0_linear_about_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#D2FF37"/>
+                                <stop offset="1" stop-color="#EEFF00"/>
+                            </linearGradient>
+                            <clipPath id="clip0_about_logo">
+                                <rect width="355" height="355" rx="58" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <h2 class="app-name">Token Exporter</h2>
+                <p class="app-tagline">Bridge the gap between design and code</p>
             </div>
-            
-            <h2 class="about-name">Nate Mills</h2>
-            <p class="about-role">Senior UI Designer</p>
-            
-            <p class="about-bio">
-                A 20-year design systems architect who believes in using a little magic to solve big workflow problems.
-            </p>
-            
-            <div class="about-social">
-                <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-md" title="GitHub">
-                    <i data-icon="github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-md" title="LinkedIn">
-                    <i data-icon="linkedin"></i>
-                </a>
-                <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-md" title="Figma">
-                    <i data-icon="figma"></i>
-                </a>
-                <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-md" title="Portfolio">
-                    <i data-icon="briefcase"></i>
-                </a>
-                <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-md" title="Email">
-                    <i data-icon="mail"></i>
-                </a>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <i data-icon="zap" class="feature-icon"></i>
+                    <span class="feature-text">Export design tokens to 6 different formats</span>
+                </div>
+                <div class="feature-item">
+                    <i data-icon="target" class="feature-icon"></i>
+                    <span class="feature-text">Smart collection filtering & organization</span>
+                </div>
+                <div class="feature-item">
+                    <i data-icon="activity" class="feature-icon"></i>
+                    <span class="feature-text">Real-time preview & batch processing</span>
+                </div>
+                <div class="feature-item">
+                    <i data-icon="layers" class="feature-icon"></i>
+                    <span class="feature-text">Theme-aware color transformations</span>
+                </div>
+            </div>
+
+            <div class="about-footer">
+                <div class="about-social">
+                    <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-sm" title="GitHub">
+                        <i data-icon="github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-sm" title="LinkedIn">
+                        <i data-icon="linkedin"></i>
+                    </a>
+                    <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-sm" title="Figma">
+                        <i data-icon="figma"></i>
+                    </a>
+                    <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Portfolio">
+                        <i data-icon="briefcase"></i>
+                    </a>
+                    <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Email">
+                        <i data-icon="mail"></i>
+                    </a>
+                </div>
+                <p class="creator-info">Crafted with ❤️ by <a href="https://natemills.me" target="_blank" class="link-primary">Nate Mills</a></p>
             </div>
         </div>
     </div>
