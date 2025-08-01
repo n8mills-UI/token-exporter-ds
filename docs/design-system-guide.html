@@ -274,17 +274,17 @@
 </div>
                 <div class="challenge-solution-grid">
     <div class="enhanced-card challenge-card">
-        <span class="icon card-icon-large" data-icon="alert-triangle"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="alert-triangle"></span>
         <h3 class="card-title">The Challenge</h3>
         <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
     </div>
     <div class="enhanced-card solution-card">
-        <span class="icon card-icon-large" data-icon="lightbulb"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="lightbulb"></span>
         <h3 class="card-title">The Solution</h3>
         <p class="card-content">Automated multi-format export with intelligent alias resolution and platform-native naming conventions.</p>
     </div>
     <div class="enhanced-card impact-card">
-        <span class="icon card-icon-large" data-icon="trending-up"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="trending-up"></span>
         <h3 class="card-title">The Impact</h3>
         <p class="card-content">10x faster token export, zero manual errors, and a seamless design-to-code workflow.</p>
     </div>
@@ -480,7 +480,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tokens-grid font-grid mt-0">
+            <div class="tokens-grid font-grid">
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview font-sans">The quick brown fox jumps over the lazy dog.</div></div></div>
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-mono</div><div class="token-value">'Monaco', 'Menlo', monospace</div><div class="text-preview font-mono">const greeting = "Hello, World!";</div></div></div>
             </div>
@@ -943,6 +943,11 @@
                                     <div class="example-label">Stroke Weights</div>
                                     <div class="example-container">
                                         <div class="icon-weights-grid">
+                                            <div class="icon-weight-card hairline">
+                                                <i data-icon="feather" style="width: 48px; height: 48px;"></i>
+                                                <code>--icon-stroke-hairline</code>
+                                                <span class="weight-value">1px</span>
+                                            </div>
                                             <div class="icon-weight-card thin">
                                                 <i data-icon="feather" style="width: 48px; height: 48px;"></i>
                                                 <code>--icon-stroke-thin</code>
@@ -957,6 +962,11 @@
                                                 <i data-icon="feather" style="width: 48px; height: 48px;"></i>
                                                 <code>--icon-stroke-bold</code>
                                                 <span class="weight-value">2.5px</span>
+                                            </div>
+                                            <div class="icon-weight-card heavy">
+                                                <i data-icon="feather" style="width: 48px; height: 48px;"></i>
+                                                <code>--icon-stroke-heavy</code>
+                                                <span class="weight-value">3px</span>
                                             </div>
                                         </div>
                                     </div>
@@ -2842,9 +2852,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         title: 'Brand',
                         tokens: [
                             { token: '--brand-primary' },
-                            { token: '--brand-secondary' },
-                            { token: '--brand-accent' }
-                        ]
+                            { token: '--brand-secondary' }
+                        ],
+                        gridClass: 'color-grid-2col'  // Use 2-column grid for brand colors
                     },
                     'categories': {
                         title: 'Categories',
@@ -3112,7 +3122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<div class="tab-nav-final" role="tablist">' +
                         '<button class="tab-clean active" role="tab" aria-selected="true" data-tab="core">Core</button>' +
                         '<button class="tab-clean" role="tab" data-tab="neutrals">Neutrals</button>' +
-                        '<button class="tab-clean" role="tab" data-tab="alpha">Alpha</button>' +
+                        '<button class="tab-clean" role="tab" data-tab="alpha">Alphas</button>' +
                         '<button class="tab-clean" role="tab" data-tab="utilities">Utilities</button>' +
                         '<button class="tab-clean" role="tab" data-tab="gradients">Gradients</button>' +
                         '<button class="tab-clean" role="tab" data-tab="tokens">Tokens</button>' +
@@ -3570,7 +3580,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const subSection = section.sections[subKey];
                 html += '<div class="color-subsection">';
                 html += '<h4 class="subsection-title">' + subSection.title + '</h4>';
-                html += '<div class="color-grid-4col">';
+                
+                // Use custom grid class if specified, otherwise default to 4-column
+                const gridClass = subSection.gridClass || 'color-grid-4col';
+                html += '<div class="' + gridClass + '">';
                 
                 if (subSection.tokens && subSection.tokens.length > 0) {
                     subSection.tokens.forEach(item => {

@@ -285,9 +285,11 @@ body {
  --font-size-responsive-tiny: clamp(0.45rem, 2.2vw, 0.65rem); /* Responsive tiny text */
 
  /* Icon stroke weight tokens */
+ --icon-stroke-hairline: 1;
  --icon-stroke-thin: 1.5;
  --icon-stroke-regular: 2;
  --icon-stroke-bold: 2.5;
+ --icon-stroke-heavy: 3;
  
  /* Icon SVG definitions as custom properties (source of truth) */
  --icon-svg-type: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 7 4 4 20 4 20 7'/><line x1='9' y1='20' x2='15' y2='20'/><line x1='12' y1='4' x2='12' y2='20'/></svg>");
@@ -336,29 +338,28 @@ body {
  ========================= */
  --brand-primary: #D2FF37;                      /* Lime - Primary brand color */
  --brand-secondary: #FF1493;                    /* Deep Pink - Secondary color */
- --brand-accent: #00CED1;                       /* Dark Turquoise - Accent color */
  --brand-text-dark: var(--color-near-black);   /* Text on light backgrounds */
  
   /* =========================
  GRADIENTS
  ========================= */
- --brand-gradient-primary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+ --brand-gradient-primary: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);
  --brand-gradient-secondary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --brand-gradient-accent: linear-gradient(135deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --brand-gradient-accent: linear-gradient(135deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
  --brand-gradient-highlight: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
 
  /* =========================
  GRADIENT DIRECTIONAL VARIANTS
  ========================= */
  /* Primary gradient (lime to turquoise) - 8 directions */
- --gradient-primary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-accent) 100%);     /* Bottom to Top */
- --gradient-primary-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--brand-accent) 100%);   /* BR to TL */
- --gradient-primary-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-accent) 100%);   /* Left to Right */
- --gradient-primary-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* BL to TR */
- --gradient-primary-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* Top to Bottom (default) */
- --gradient-primary-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* TL to BR */
- --gradient-primary-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* Right to Left */
- --gradient-primary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--brand-accent) 100%); /* TR to BL */
+ --gradient-primary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);     /* Bottom to Top */
+ --gradient-primary-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);   /* BR to TL */
+ --gradient-primary-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);   /* Left to Right */
+ --gradient-primary-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* BL to TR */
+ --gradient-primary-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* Top to Bottom (default) */
+ --gradient-primary-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* TL to BR */
+ --gradient-primary-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* Right to Left */
+ --gradient-primary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* TR to BL */
  
  /* Secondary gradient (lime to pink) - 8 directions */
  --gradient-secondary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
@@ -371,14 +372,14 @@ body {
  --gradient-secondary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
  
  /* Accent gradient (pink to turquoise) - 8 directions */
- --gradient-accent-0: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-45: linear-gradient(45deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-90: linear-gradient(90deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-135: linear-gradient(135deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-180: linear-gradient(180deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-225: linear-gradient(225deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-270: linear-gradient(270deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
- --gradient-accent-315: linear-gradient(315deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+ --gradient-accent-0: linear-gradient(0deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-45: linear-gradient(45deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-90: linear-gradient(90deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-135: linear-gradient(135deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-180: linear-gradient(180deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-225: linear-gradient(225deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-270: linear-gradient(270deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
+ --gradient-accent-315: linear-gradient(315deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
  
  /* Highlight gradient (lime to yellow) - 8 directions */
  --gradient-highlight-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
@@ -395,7 +396,6 @@ body {
  /* RGB semantic aliases for mixing */
  --brand-primary-rgb: 210, 255, 55;            /* Lime RGB */
  --brand-secondary-rgb: 255, 20, 147;          /* Deep Pink RGB */
- --brand-accent-rgb: 0, 206, 209;              /* Dark Turquoise RGB */
 
  /* =========================
  SURFACE & BORDER COLORS
@@ -600,22 +600,26 @@ body {
  rgb(210, 255, 55, 0.02) 20px
  );
  
+ /* Unified container styling for dark theme */
+ --container-bg: var(--surface-2);
+ --container-border: var(--color-border-subtle);
+ 
  /* Token sections */
  --token-section-bg: transparent;
- --token-section-border: var(--color-border-subtle);
+ --token-section-border: var(--container-border);
  --token-header-bg: var(--surface-3);
- --token-item-bg: var(--surface-2);
- --token-item-border: var(--color-border-subtle);
+ --token-item-bg: var(--container-bg);
+ --token-item-border: var(--container-border);
  
  /* Type scale */
- --type-scale-bg: var(--surface-2);
- --type-scale-border: var(--color-border-subtle);
+ --type-scale-bg: var(--container-bg);
+ --type-scale-border: var(--container-border);
  --type-scale-code-color: var(--color-text-default);
  --type-scale-details-color: var(--color-text-secondary);
  
  /* Examples and previews */
- --example-container-bg: var(--surface-2);
- --example-container-border: var(--color-border-subtle);
+ --example-container-bg: var(--container-bg);
+ --example-container-border: var(--container-border);
  --preview-bg: var(--surface-3);
  --preview-border: var(--color-border-subtle);
  
@@ -1040,22 +1044,26 @@ body {
     /* Hero */
     --hero-bg-pattern: none;
     
+    /* Unified container styling - all use same colors for consistency */
+    --container-bg: var(--gray-cool-0);
+    --container-border: var(--gray-cool-2);
+    
     /* Token sections */
-    --token-section-bg: var(--gray-cool-0);
-    --token-section-border: var(--gray-cool-2);
+    --token-section-bg: var(--container-bg);
+    --token-section-border: var(--container-border);
     --token-header-bg: var(--gray-cool-1);
-    --token-item-bg: var(--gray-cool-0);
-    --token-item-border: var(--gray-cool-3);
+    --token-item-bg: var(--container-bg);
+    --token-item-border: var(--container-border);
     
     /* Type scale */
-    --type-scale-bg: var(--gray-cool-0);
-    --type-scale-border: var(--gray-cool-3);
+    --type-scale-bg: var(--container-bg);
+    --type-scale-border: var(--container-border);
     --type-scale-code-color: var(--color-text-default);
     --type-scale-details-color: var(--color-text-secondary);
     
     /* Examples and previews */
-    --example-container-bg: var(--gray-cool-0);
-    --example-container-border: var(--gray-cool-2);
+    --example-container-bg: var(--container-bg);
+    --example-container-border: var(--container-border);
     --preview-bg: var(--gray-cool-1);
     --preview-border: var(--gray-cool-3);
     
@@ -1459,7 +1467,6 @@ body {
     width: 100%;
     height: 100%;
     stroke: currentcolor;
-    stroke-width: var(--icon-stroke-regular);
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
@@ -1507,29 +1514,21 @@ body {
 }
 
 
-/* Icon stroke variants */
-.icon--thin svg {
-    stroke-width: var(--icon-stroke-thin);
-}
-
-.icon--regular svg {
-    stroke-width: var(--icon-stroke-regular);
-} /* default */
-
-.icon--bold svg {
-    stroke-width: var(--icon-stroke-bold);
-}
+/* Icon stroke variants - REMOVED duplicate rules, see utility classes below */
 
 /* Force consistent stroke width in icon showcase to fix thin icons */
-/* Simple stroke weight classes */
-.icon-weight-card.thin svg {
+/* Simple stroke weight classes - for demo cards only */
+.icon-weight-card.hairline .lucide {
+    stroke-width: var(--icon-stroke-hairline);
+}
+.icon-weight-card.thin .lucide {
     stroke-width: var(--icon-stroke-thin);
 }
-.icon-weight-card.regular svg {
-    stroke-width: var(--icon-stroke-regular);
-}
-.icon-weight-card.bold svg {
+.icon-weight-card.bold .lucide {
     stroke-width: var(--icon-stroke-bold);
+}
+.icon-weight-card.heavy .lucide {
+    stroke-width: var(--icon-stroke-heavy);
 }
 
 /* ╔══════════════════════════════════════════════════════════════════╗
@@ -1995,7 +1994,6 @@ body {
     .btn .lucide,
     .btn [data-lucide] {
         text-shadow: none;
-        stroke-width: var(--icon-stroke-regular);
     }
 
     .btn:focus-visible {
@@ -2108,12 +2106,14 @@ body {
     /* --- ICON STROKE WEIGHT DIFFERENTIATION --- */
 
     /* Default stroke for all buttons with text */
-    .btn:not(.btn-icon) .lucide,
-    .btn:not(.btn-icon) .icon svg {
-        stroke-width: var(--icon-stroke-regular);
-    }
+    /* Icons in buttons inherit from global .lucide rule */
 
     /* Icon stroke now handled by semantic stroke system */
+    
+    /* Icon-only buttons use thin stroke */
+    .btn-icon .lucide {
+        stroke-width: var(--icon-stroke-thin);
+    }
 
 
 
@@ -2608,7 +2608,6 @@ body {
 [data-lucide]:not(.lucide):not(.lucide-initialized) {
  width: 1em;
  height: 1em;
- stroke-width: var(--icon-stroke-regular);
  vertical-align: middle;
  color: inherit;
  opacity: 0;
@@ -2619,66 +2618,32 @@ body {
 .lucide {
  width: 1em;
  height: 1em;
- /* Removed global stroke-width - let components control their own */
+ stroke-width: var(--icon-stroke-regular); /* Default stroke weight */
  vertical-align: middle;
  color: inherit;
  opacity: 1;
  transition: opacity 0.15s ease;
 }
 
-/* =========================
-SEMANTIC ICON STROKE SYSTEM
-========================= */
 
-/* Component-based stroke weights - clean and maintainable */
-
-/* Default stroke for most icons */
-.icon svg,
-.icon .lucide,
-[data-icon] svg {
-    stroke-width: var(--icon-stroke-regular);
+/* Utility classes for explicit control - higher specificity */
+.icon--hairline .lucide {
+    stroke-width: var(--icon-stroke-hairline) !important;
 }
 
-/* Thin stroke contexts */
-.stat-icon svg,
-.stat-icon .lucide,
-.card-icon-large svg,
-.card-icon-large .lucide,
-.btn-icon svg,
-.btn-icon .lucide,
-.icon--xxl svg,
-.table th .lucide {
-    stroke-width: var(--icon-stroke-thin);
+.icon--thin .lucide {
+    stroke-width: var(--icon-stroke-thin) !important;
 }
 
-/* Bold stroke contexts */
-.icon--bold svg,
 .icon--bold .lucide {
-    stroke-width: var(--icon-stroke-bold);
+    stroke-width: var(--icon-stroke-bold) !important;
 }
 
-/* Utility classes for explicit control */
-.icon-thin svg,
-.icon-thin .lucide {
-    stroke-width: var(--icon-stroke-thin);
+.icon--heavy .lucide {
+    stroke-width: var(--icon-stroke-heavy) !important;
 }
 
-.icon-regular svg,
-.icon-regular .lucide {
-    stroke-width: var(--icon-stroke-regular);
-}
-
-.icon-bold svg,
-.icon-bold .lucide {
-    stroke-width: var(--icon-stroke-bold);
-}
-
-/* Fix specific problems */
-
-.success-icon,
-.empty-state-icon .lucide {
- stroke-width: var(--icon-stroke-regular);
-}
+/* Alert & Success icons use default stroke weight */
 
 :root {
 
@@ -7252,6 +7217,11 @@ body {
     padding-top: var(--size-4);
 }
 
+/* Add spacing between type scale and font family boxes */
+.token-category .tokens-grid.font-grid {
+    margin-top: var(--size-4);
+}
+
 /* Icon category grid - 4 columns on desktop */
 .icon-category-grid {
  grid-template-columns: repeat(4, 1fr) !important;
@@ -10332,6 +10302,9 @@ body {
 }
 
 /* Stat icon styles */
+.stat-icon.lucide {
+    stroke-width: var(--icon-stroke-thin);
+}
 
 .stat-number {
     font-size: var(--font-size-7); /* 3rem */
@@ -10396,33 +10369,16 @@ body {
     -webkit-backdrop-filter: blur(4px);
 }
 
-.enhanced-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient);
-    transform: translateX(-100%);
-    transition: transform var(--animation-duration-4) var(--ease-3);
-}
-
-/* Removed hover effects - these cards are not interactive */
-
-/* Card Variants */
+/* Card Variants - simplified without gradient bars */
 .challenge-card {
-    --gradient: linear-gradient(90deg, var(--value-state), var(--value-text));
     border-color: var(--value-state-alpha-20);
 }
 
 .solution-card {
-    --gradient: var(--brand-gradient-primary);
     border-color: var(--brand-primary-alpha-20);
 }
 
 .impact-card {
-    --gradient: linear-gradient(90deg, var(--value-color), var(--value-number));
     border-color: var(--value-color-alpha-20);
 }
 
@@ -10441,6 +10397,9 @@ body {
 }
 
 /* Card icon styles */
+.card-icon-large.lucide {
+    stroke-width: var(--icon-stroke-thin);
+}
 
 .challenge-card .card-icon-large {
     color: var(--value-state);
@@ -11123,13 +11082,9 @@ button.theme-toggle {
     height: var(--icon-3xl);
 }
 
-/* Lucide icon stroke-width support - removed to prevent conflicts with initial state */
-/* Stroke width is now set in the [data-lucide]:not(.lucide) rule above */
+/* Stroke widths handled by global .lucide rule and component overrides */
 
-/* Apply thin stroke to all icon subsection cards */
-.icon-card [data-lucide] {
-    stroke-width: var(--icon-stroke-thin);
-}
+/* Icon card thin stroke handled via icon--xxl class */
 
 .icon-card {
     display: flex;
@@ -11777,10 +11732,18 @@ button.theme-toggle {
 
 .color-grid-4col {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--size-4);
     margin-bottom: 0; /* Remove bottom margin - section handles spacing */
     width: 100%;
+}
+
+/* Make alpha and utilities sections switch to 3 columns sooner */
+@media (max-width: 1400px) {
+    .tab-panel[data-panel="alpha"] .color-grid-4col,
+    .tab-panel[data-panel="utilities"] .color-grid-4col {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .color-card {
@@ -11791,6 +11754,8 @@ button.theme-toggle {
     text-align: center;
     width: 100%;
     box-sizing: border-box;
+    min-width: 0; /* Allow card to shrink */
+    overflow: visible; /* Allow content to be visible */
 }
 
 .color-card:has(.alpha-swatch) {
@@ -12422,6 +12387,8 @@ button.theme-toggle {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 100%;
+    min-width: 0; /* Allow shrinking */
 }
 
 /* Forms Example Styles */
@@ -12477,11 +12444,12 @@ button.theme-toggle {
 
 .color-details code {
     font-size: var(--font-size-0);
-    color: var(--brand-secondary);
-}
-
-.color-details code {
     color: var(--color-text-default);
+    word-break: normal;
+    overflow-wrap: normal;
+    display: block;
+    width: 100%;
+    line-height: 1.2;
 }
 
 .color-details .hex {
