@@ -1865,6 +1865,56 @@ body {
  /* Overflow */
  .overflow-hidden { overflow: hidden; }
 
+ /* Additional Gap Utilities */
+ .gap-1 { gap: var(--size-1); }
+ .gap-5 { gap: var(--size-5); }
+
+ /* Additional Flex Utilities */
+ .flex-between { 
+     display: flex; 
+     justify-content: space-between; 
+ }
+ .flex-wrap { flex-wrap: wrap; }
+ .items-start { align-items: flex-start; }
+ .items-end { align-items: flex-end; }
+ .justify-end { justify-content: flex-end; }
+
+ /* Common Component Patterns */
+ .flex-center-gap-2 {
+     display: flex;
+     align-items: center;
+     gap: var(--size-2);
+ }
+ 
+ .flex-center-gap-3 {
+     display: flex;
+     align-items: center;
+     gap: var(--size-3);
+ }
+ 
+ .flex-center-gap-4 {
+     display: flex;
+     align-items: center;
+     gap: var(--size-4);
+ }
+ 
+ /* Centered Card Layout - Used by icon cards */
+ .card-centered {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     gap: var(--size-2);
+     padding: var(--size-4);
+     background: var(--color-background-secondary);
+     border: var(--border-size-1) solid var(--color-border-default);
+     border-radius: var(--radius-2);
+     min-height: 120px;
+     width: 100%;
+     box-sizing: border-box;
+     overflow: hidden;
+ }
+
  /* Layout and Sizing */
 
 .flex-between-center {
@@ -11086,7 +11136,10 @@ button.theme-toggle {
 
 /* Icon card thin stroke handled via icon--xxl class */
 
-.icon-card {
+.icon-card,
+.icon-size-card,
+.icon-weight-card {
+    /* Shared centered card layout */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11096,11 +11149,14 @@ button.theme-toggle {
     background: var(--color-background-secondary);
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-2);
-    transition: var(--transition-fast);
     min-height: 120px;
     width: 100%;
     box-sizing: border-box;
-    overflow: hidden; /* Prevent icon overflow */
+    overflow: hidden;
+}
+
+.icon-card {
+    transition: var(--transition-fast);
 }
 
 /* Removed hover state - icon cards are not interactive */
@@ -11155,21 +11211,7 @@ button.theme-toggle {
     }
 }
 
-.icon-size-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--size-2);
-    padding: var(--size-4);
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    min-height: 120px;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-}
+/* .icon-size-card styles now shared with .icon-card */
 
 .icon-size-card code {
     font-size: var(--font-size-0);
@@ -11230,21 +11272,7 @@ button.theme-toggle {
     }
 }
 
-.icon-weight-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--size-2);
-    padding: var(--size-4);
-    background: var(--color-background-secondary);
-    border: var(--border-size-1) solid var(--color-border-default);
-    border-radius: var(--radius-2);
-    min-height: 120px;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-}
+/* .icon-weight-card styles now shared with .icon-card */
 
 .icon-weight-card code {
     font-size: var(--font-size-0);
