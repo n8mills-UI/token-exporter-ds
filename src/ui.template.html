@@ -149,26 +149,35 @@ function updateTokenSummary() {
                         if (count === 0) return '';
                         const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
                         const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
-                        return '<span class="badge small ' + colorClassMap[type] + ' ' + (!appState.selectedTokenTypes.has(type) ? 'disabled' : '') + '"><i class="icon" data-icon="' + iconMap[type] + '"></i> ' + count + '</span>';
+                        return '<span class="badge small ' + colorClassMap[type] + ' ' + (!appState.selectedTokenTypes.has(type) ? 'disabled' : '') + '"><span class="icon" data-icon="' + iconMap[type] + '"></span> ' + count + '</span>';
                     }).join('');
 
                     return '<div class="collection-item ' + (isSelected ? 'selected' : '') + '" data-collection-id="' + c.id + '">' +
                         '<div class="collection-checkbox" role="checkbox" aria-checked="' + isSelected + '" tabindex="0" aria-label="Select ' + c.name + ' collection"></div>' +
                         '<div class="collection-info">' +
                             '<div class="text-body-lg collection-name">' + c.name + '</div>' +
-                            '<div class="collection-badge-group">' + pillsHTML + '</div>' +
+                            '<div class="collection-pills">' + pillsHTML + '</div>' +
                         '</div>' +
                         '<div class="text-caption collection-count">' + c.totalVariables + ' tokens</div>' +
                     '</div>';
                 }).join('');
 
                 DOMElements.advancedFilterView.innerHTML = 
-                    '<h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Filters</h3>' +
-                    '<div class="collection-list" style="margin-top: var(--size-3);">' + collectionItemsHTML + '</div>' +
-                    '<button class="btn btn-secondary btn-sm" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">' +
-                        '<i data-icon="arrow-left"></i>' +
-                        '<span>Back to Quick Export</span>' +
-                    '</button>';
+                    '<div class="card filter-section is-compact">' +
+                        '<div class="card-content">' +
+                            '<div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">' +
+                                '<i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>' +
+                                '<h4 class="text-label">Filters</h4>' +
+                            '</div>' +
+                            '<div class="collection-list">' + collectionItemsHTML + '</div>' +
+                        '</div>' +
+                        '<div class="card-actions" style="margin-top: var(--size-3);">' +
+                            '<button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">' +
+                                '<i data-icon="arrow-left"></i>' +
+                                '<span>Back to Quick Export</span>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>';
             }
             
             // Always update the export button in the quick export view
@@ -474,7 +483,7 @@ function updateTokenSummary() {
                 { icon: 'hash', color: '--value-number' }, { icon: 'toggle-right', color: '--value-state' }
             ];
             
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 80; i++) {
                 const cell = document.createElement('div');
                 cell.classList.add('te-icon-cell');
                 

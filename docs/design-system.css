@@ -2707,6 +2707,13 @@ body {
  transition: opacity 0.15s ease;
 }
 
+/* Glass effect utility */
+.surface-glass {
+    background: var(--glass-panel-subtle);
+    backdrop-filter: blur(var(--glass-blur-medium));
+    -webkit-backdrop-filter: blur(var(--glass-blur-medium));
+    border: var(--border-size-1) solid var(--surface-3);
+}
 
 /* Utility classes for explicit control - higher specificity */
 .icon--hairline [data-icon] svg {
@@ -5762,7 +5769,8 @@ select option {
     font-weight: var(--font-weight-5);
 }
 
-.collection-badge-group {
+.collection-badge-group,
+.collection-pills {
  display: flex;
  gap: var(--size-1);
  flex-wrap: wrap;
@@ -10631,6 +10639,12 @@ body {
 .card-content {
     color: var(--color-text-secondary);
     line-height: 1.6;
+}
+
+.card-actions {
+    display: flex;
+    gap: var(--size-2);
+    margin-top: var(--size-3);
 }
 
 /* Responsive Design - Stats and Cards */
