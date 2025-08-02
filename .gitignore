@@ -57,6 +57,9 @@ build/
 # Generated reports from audit script
 reports/
 
+# Internal documentation and architecture decisions
+docs-internal/
+
 # Test tokens (just examples)
 tokens/
 
@@ -75,5 +78,3 @@ temp-*
 .Mocks/about-modal.html
 .Mocks/color-system-5-core-mockup.html
 .Mocks/mock-figma-to-code-option-b-clean.html
-CLAUDE.md
-CLAUDE.md

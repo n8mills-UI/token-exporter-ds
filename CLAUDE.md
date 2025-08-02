@@ -443,3 +443,12 @@ The Token Exporter uses a JavaScript-enhanced icon system that injects SVG icons
   <span>Launch</span>
 </button>
 ```
+
+## Architecture Documentation
+
+Important technical decisions and architecture details are documented in `/docs-internal/`:
+- `/architecture/style-dictionary-strategy.md` - How we integrate with Style Dictionary
+- `/architecture/icon-system.md` - Detailed icon system architecture
+- `/decisions/ADR-001-style-dictionary.md` - Decision to use Style Dictionary for transformations
+
+These documents are gitignored but provide critical context for development.

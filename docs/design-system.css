@@ -5580,40 +5580,79 @@ select option {
  margin-bottom: var(--size-4);
 }
 
-.format-select {
- width: 100%; 
- padding: var(--size-2) var(--size-8) var(--size-2) var(--size-3); /* Tighter padding */
+/* Multi-Select Format Dropdown */
+.format-select-container {
+ position: relative;
+}
+
+.format-select-trigger {
+ width: 100%;
+ padding: var(--size-2) var(--size-3);
  height: var(--component-height-md);
- background: var(--color-background-tertiary); 
- border: var(--border-size-1) solid var(--color-border-default); 
+ background: var(--color-background-tertiary);
+ border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-2);
  font-weight: var(--font-weight-5);
- cursor: pointer; 
- appearance: none; 
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
  transition: background var(--animation-duration-2) var(--ease-3),
- border-color var(--animation-duration-2) var(--ease-3);
+             border-color var(--animation-duration-2) var(--ease-3);
 }
 
-.format-select:hover { 
+.format-select-trigger:hover {
  background: var(--surface-3);
- border-color: var(--color-border-default);
+ border-color: var(--color-border-hover);
 }
 
-.format-select-wrapper::after {
- content: '';
- background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
- background-repeat: no-repeat;
- background-position: center;
- width: 24px;
- height: 24px;
- position: absolute; 
- right: var(--size-3); 
- top: 50%; 
- transform: translateY(-50%);
- pointer-events: none; 
- transition: transform var(--animation-duration-2) var(--ease-3);
- font-size: var(--font-size-1);
+.format-select-trigger:focus-visible {
+ outline: none;
+ box-shadow: var(--focus-ring);
 }
+
+.format-select-trigger[aria-expanded="true"] {
+ border-color: var(--brand-primary);
+}
+
+.format-select-trigger[aria-expanded="true"] .icon-xs {
+ transform: rotate(180deg);
+}
+
+.format-select-dropdown {
+ position: absolute;
+ bottom: calc(100% + var(--size-2));
+ left: 50%;
+ transform: translateX(-50%);
+ min-width: 200px;
+ background: var(--color-background-secondary);
+ border: var(--border-size-1) solid var(--color-border-default);
+ border-radius: var(--radius-2);
+ box-shadow: var(--shadow-4);
+ z-index: 20;
+ max-height: none;
+ overflow: visible;
+}
+
+.format-option {
+ display: flex;
+ align-items: center;
+ padding: var(--size-2) var(--size-3);
+ cursor: pointer;
+ transition: background-color var(--animation-duration-2) var(--ease-3);
+}
+
+.format-option:hover {
+ background-color: var(--surface-2);
+}
+
+.format-checkbox {
+ margin-right: var(--size-2);
+ cursor: pointer;
+ accent-color: var(--brand-primary);
+}
+
+
 
 /* Collection Items */
 .collection-list {

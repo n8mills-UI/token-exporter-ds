@@ -1,5 +1,6 @@
 <!-- Consolidated Icon System -->
 <!-- @include src/components/icons/_icon-system.html -->
+<script src="../vendor/jszip.min.js"></script>
 <body class="figma-plugin">
     <main>
         <!-- This is the main content wrapper -->
@@ -47,7 +48,7 @@
             mode: 'simple',
             collections: [],
             selectedCollections: new Set(),
-            selectedFormat: 'css',
+            selectedFormats: new Set(['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind']),
             selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
             globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 },
         };
@@ -162,9 +163,9 @@ function updateTokenSummary() {
                 }).join('');
 
                 DOMElements.advancedFilterView.innerHTML = 
-                    '<h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Advanced Filtering</h3>' +
+                    '<h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Filters</h3>' +
                     '<div class="collection-list" style="margin-top: var(--size-3);">' + collectionItemsHTML + '</div>' +
-                    '<button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">' +
+                    '<button class="btn btn-secondary btn-sm" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">' +
                         '<i data-icon="arrow-left"></i>' +
                         '<span>Back to Quick Export</span>' +
                     '</button>';
@@ -233,11 +234,26 @@ function updateTokenSummary() {
             };
 
             document.querySelectorAll('.collection-item').forEach(item => {
-                item.onclick = () => {
+                item.onclick = (e) => {
+                    // Prevent clicks on badges from triggering selection
+                    if (e.target.closest('.badge')) return;
+                    
                     const id = item.dataset.collectionId;
-                    if (appState.mode === 'advanced') {
-                        appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+                    if (appState.mode === 'advanced' && id) {
+                        if (appState.selectedCollections.has(id)) {
+                            appState.selectedCollections.delete(id);
+                        } else {
+                            appState.selectedCollections.add(id);
+                        }
                         updateUI();
+                    }
+                };
+                
+                // Add keyboard support for accessibility
+                item.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        item.click();
                     }
                 };
             });
@@ -252,10 +268,67 @@ function updateTokenSummary() {
                 });
             }
 
-            const formatSelect = document.getElementById('format-select');
-            if (formatSelect) formatSelect.onchange = e => {
-                appState.selectedFormat = e.target.value;
-            };
+            // Multi-select format dropdown
+            const formatTrigger = document.getElementById('format-select-trigger');
+            const formatDropdown = document.getElementById('format-select-dropdown');
+            const formatLabel = document.getElementById('format-select-label');
+            const formatCheckboxes = document.querySelectorAll('.format-checkbox');
+            
+            if (formatTrigger && formatDropdown) {
+                // Initialize all checkboxes as checked
+                formatCheckboxes.forEach(cb => cb.checked = true);
+                
+                formatTrigger.onclick = (e) => {
+                    e.stopPropagation();
+                    const isExpanded = formatTrigger.getAttribute('aria-expanded') === 'true';
+                    formatTrigger.setAttribute('aria-expanded', !isExpanded);
+                    formatDropdown.hidden = isExpanded;
+                };
+                
+                // Handle checkbox changes
+                formatCheckboxes.forEach(checkbox => {
+                    checkbox.onchange = () => {
+                        appState.selectedFormats.clear();
+                        formatCheckboxes.forEach(cb => {
+                            if (cb.checked) {
+                                appState.selectedFormats.add(cb.value);
+                            }
+                        });
+                        updateFormatLabel();
+                    };
+                });
+                
+                // Update label based on selection
+                function updateFormatLabel() {
+                    const count = appState.selectedFormats.size;
+                    if (count === 0) {
+                        formatLabel.textContent = 'No formats selected';
+                    } else if (count === 6) {
+                        formatLabel.textContent = 'All Formats';
+                    } else if (count === 1) {
+                        const format = Array.from(appState.selectedFormats)[0];
+                        const labels = {
+                            css: 'CSS Variables',
+                            swift: 'Swift (iOS)',
+                            android: 'Android XML',
+                            flutter: 'Flutter',
+                            w3c: 'JSON (W3C)',
+                            tailwind: 'Tailwind Config'
+                        };
+                        formatLabel.textContent = labels[format] || format;
+                    } else {
+                        formatLabel.textContent = count + ' formats selected';
+                    }
+                }
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!formatTrigger.contains(e.target) && !formatDropdown.contains(e.target)) {
+                        formatTrigger.setAttribute('aria-expanded', 'false');
+                        formatDropdown.hidden = true;
+                    }
+                });
+            }
         }
         
         // --- EXPORT & PROGRESS ---
@@ -263,7 +336,7 @@ function updateTokenSummary() {
             const collectionIds = appState.mode === 'simple' ? appState.collections.map(c => c.id) : Array.from(appState.selectedCollections);
             const tokenTypes = Array.from(appState.selectedTokenTypes);
             if (collectionIds.length === 0 || tokenTypes.length === 0) return;
-            const formats = appState.selectedFormat === 'all' ? ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'] : [appState.selectedFormat];
+            const formats = Array.from(appState.selectedFormats);
             
             showProgress();
             
@@ -321,7 +394,7 @@ function updateTokenSummary() {
             if(celebrationContainer) {
                 const successIcon = document.createElement('div');
                 successIcon.className = 'te-success-icon';
-                successIcon.innerHTML = '<i data-icon="check-circle"></i>';
+                successIcon.innerHTML = '<i data-icon="circle-check"></i>';
                 celebrationContainer.appendChild(successIcon);
             }
             
@@ -332,7 +405,7 @@ function updateTokenSummary() {
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
-            }, 2500);
+            }, 5000);
         }
         
         function showErrorState(message) {
@@ -341,34 +414,55 @@ function updateTokenSummary() {
                     '<i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: none; margin-bottom: var(--size-2);"></i>' +
                     '<h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>' +
                     '<p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">' + message + '</p>' +
-                    '<button class="btn secondary btn-inline" id="close-error-btn" aria-label="Close error and try again">Try Again</button>' +
+                    '<button class="btn btn-secondary btn-sm" id="close-error-btn" aria-label="Close error and try again">Try Again</button>' +
                 '</div>';
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');
             if (closeBtn) closeBtn.onclick = updateTokenSummary;
         }
 
-        function triggerSave(data) {
+        async function triggerSave(data) {
             const link = document.createElement('a');
+            
             if (data.length === 1) {
                 const blob = new Blob([data[0].content], { type: 'text/plain;charset=utf-8' });
                 link.href = URL.createObjectURL(blob);
                 link.download = data[0].filename;
-            } else {
-                data.forEach((file, index) => {
-                    setTimeout(() => {
-                        const fileLink = document.createElement('a');
-                        const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
-                        fileLink.href = URL.createObjectURL(blob);
-                        fileLink.download = file.filename;
-                        fileLink.click();
-                        URL.revokeObjectURL(fileLink.href);
-                    }, index * 300);
-                });
-                return;
+                link.click();
+                URL.revokeObjectURL(link.href);
+            } else if (data.length > 1) {
+                // Create ZIP file for multiple formats
+                try {
+                    const zip = new JSZip();
+                    
+                    // Add each file to the ZIP
+                    data.forEach(file => {
+                        zip.file(file.filename, file.content);
+                    });
+                    
+                    // Generate the ZIP file
+                    const content = await zip.generateAsync({ type: 'blob' });
+                    
+                    // Create download link
+                    link.href = URL.createObjectURL(content);
+                    link.download = 'design-tokens.zip';
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                } catch (error) {
+                    console.error('Failed to create ZIP:', error);
+                    // Fallback to individual downloads
+                    data.forEach((file, index) => {
+                        setTimeout(() => {
+                            const fileLink = document.createElement('a');
+                            const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
+                            fileLink.href = URL.createObjectURL(blob);
+                            fileLink.download = file.filename;
+                            fileLink.click();
+                            URL.revokeObjectURL(fileLink.href);
+                        }, index * 300);
+                    });
+                }
             }
-            link.click();
-            URL.revokeObjectURL(link.href);
         }
 
         function initializePluginLoader() {
