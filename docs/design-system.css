@@ -10312,6 +10312,30 @@ body {
     padding-left: 0 !important;
 }
 
+/* Major Section Headers (Foundation & Components) */
+.major-section-header {
+    margin-top: var(--size-10);
+    margin-bottom: var(--size-8);
+    padding-bottom: var(--size-6);
+    border-bottom: var(--border-size-2) solid var(--color-border-default);
+}
+
+.major-section-header h2 {
+    font-size: var(--font-size-8);
+    font-weight: var(--font-weight-7);
+    color: var(--color-text-default);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--size-4);
+}
+
+.major-section-header [data-icon] {
+    color: var(--color-text-muted);
+    width: var(--icon-xxl);
+    height: var(--icon-xxl);
+}
+
 /* Main Section Headers (Foundation & Components) Override */
 .main-section-title {
     /* Typography from .text-heading-xl class */
