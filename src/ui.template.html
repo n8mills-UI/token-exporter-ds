@@ -373,7 +373,11 @@ function updateTokenSummary() {
             initializePluginLoader();
         }
         
-        function updateProgress(progress) {
+        // Store current progress for smooth animation
+        let currentProgress = 0;
+        let animationFrame = null;
+        
+        function updateProgress(targetProgress) {
             const progressStages = [
                 { percent: 25, label: "Analyzing" },
                 { percent: 50, label: "Packaging" },
@@ -385,11 +389,38 @@ function updateTokenSummary() {
             const fillEl = document.getElementById('pluginProgressFill');
             const labelEl = document.getElementById('pluginStatusLabel');
             
-            if (percentEl) percentEl.textContent = progress + '%';
-            if (fillEl) fillEl.style.width = progress + '%';
+            // Cancel any existing animation
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
             
-            const currentStage = progressStages.find(s => progress <= s.percent) || progressStages[progressStages.length - 1];
-            if (labelEl) labelEl.textContent = currentStage.label;
+            // Smooth animation function
+            function animateProgress() {
+                const diff = targetProgress - currentProgress;
+                const step = diff * 0.1; // Ease-out animation
+                
+                if (Math.abs(diff) > 0.5) {
+                    currentProgress += step;
+                    
+                    if (percentEl) percentEl.textContent = Math.round(currentProgress) + '%';
+                    if (fillEl) fillEl.style.width = currentProgress + '%';
+                    
+                    const currentStage = progressStages.find(s => currentProgress <= s.percent) || progressStages[progressStages.length - 1];
+                    if (labelEl) labelEl.textContent = currentStage.label;
+                    
+                    animationFrame = requestAnimationFrame(animateProgress);
+                } else {
+                    // Final update
+                    currentProgress = targetProgress;
+                    if (percentEl) percentEl.textContent = targetProgress + '%';
+                    if (fillEl) fillEl.style.width = targetProgress + '%';
+                    
+                    const currentStage = progressStages.find(s => targetProgress <= s.percent) || progressStages[progressStages.length - 1];
+                    if (labelEl) labelEl.textContent = currentStage.label;
+                }
+            }
+            
+            animateProgress();
         }
 
         function showSuccessState(fileData) {
@@ -408,7 +439,7 @@ function updateTokenSummary() {
             if(celebrationContainer) {
                 const successIcon = document.createElement('div');
                 successIcon.className = 'te-success-icon';
-                successIcon.innerHTML = '<i data-icon="circle-check"></i>';
+                successIcon.innerHTML = '<i data-icon="circle-check-big"></i>';
                 celebrationContainer.appendChild(successIcon);
             }
             
