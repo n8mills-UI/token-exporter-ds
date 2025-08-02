@@ -32,27 +32,7 @@
         </div>
         <div class="mobile-header-controls">
             <!-- Mobile Theme Toggle -->
-            <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
-    <div class="sun-container icon-container">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" >
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-    </div>
-    <div class="moon-container icon-container">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-    </div>
-    <div class="slider"></div>
-</button>
+            <!-- @include src/components/_theme-toggle.html -->
             <button class="mobile-menu-toggle-right" id="mobile-menu-toggle-right" aria-label="Toggle navigation">
                 <span class="hamburger-icon">
                     <span class="line line-1"></span>
@@ -116,14 +96,14 @@
             <div class="nav-section">
                 <h3 class="nav-section-title">Foundation</h3>
                 <ul class="nav-links">
-                    <li><a href="#colors" class="nav-link"><i data-icon="palette"></i> Colors</a></li>
-                    <li><a href="#typography" class="nav-link"><i data-icon="type"></i> Typography</a></li>
-                    <li><a href="#spacing" class="nav-link"><i data-icon="move"></i> Spacing</a></li>
-                    <li><a href="#effects" class="nav-link"><i data-icon="layers"></i> Effects</a></li>
-                    <li><a href="#border" class="nav-link"><i data-icon="square"></i> Borders</a></li>
-                    <li><a href="#border-radius" class="nav-link"><i data-icon="circle"></i> Radius</a></li>
-                    <li><a href="#animations" class="nav-link"><i data-icon="play"></i> Motion</a></li>
-                    <li><a href="#icons" class="nav-link"><i data-icon="sparkles"></i> Icons</a></li>
+                    <li><a href="#colors" class="nav-links"><i data-icon="palette"></i> Colors</a></li>
+                    <li><a href="#typography" class="nav-links"><i data-icon="type"></i> Typography</a></li>
+                    <li><a href="#spacing" class="nav-links"><i data-icon="move"></i> Spacing</a></li>
+                    <li><a href="#effects" class="nav-links"><i data-icon="layers"></i> Effects</a></li>
+                    <li><a href="#border" class="nav-links"><i data-icon="square"></i> Borders</a></li>
+                    <li><a href="#border-radius" class="nav-links"><i data-icon="circle"></i> Radius</a></li>
+                    <li><a href="#animations" class="nav-links"><i data-icon="play"></i> Motion</a></li>
+                    <li><a href="#icons" class="nav-links"><i data-icon="sparkles"></i> Icons</a></li>
                 </ul>
             </div>
             
@@ -131,10 +111,10 @@
             <div class="nav-section">
                 <h3 class="nav-section-title">Components</h3>
                 <ul class="nav-links">
-                    <li><a href="#token-card" class="nav-link"><i data-icon="credit-card"></i> Cards</a></li>
-                    <li><a href="#buttons" class="nav-link"><i data-icon="pointer"></i> Buttons</a></li>
+                    <li><a href="#token-card" class="nav-links"><i data-icon="credit-card"></i> Cards</a></li>
+                    <li><a href="#buttons" class="nav-links"><i data-icon="pointer"></i> Buttons</a></li>
                     <li><a href="#badges"><i data-icon="tag"></i> Badges</a></li>
-                    <li><a href="#modals" class="nav-link"><i data-icon="app-window"></i> Modals</a></li>
+                    <li><a href="#modals" class="nav-links"><i data-icon="app-window"></i> Modals</a></li>
                 </ul>
             </div>
         </div>
@@ -144,27 +124,7 @@
             <div class="theme-toggle-wrapper">
                 <span class="theme-toggle-label">Theme</span>
                 <div id="theme-toggle">
-                    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
-    <div class="sun-container icon-container">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" >
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-    </div>
-    <div class="moon-container icon-container">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-    </div>
-    <div class="slider"></div>
-</button>
+                    <!-- @include src/components/_theme-toggle.html -->
                 </div>
             </div>
         </div>
@@ -205,8 +165,8 @@
                             </div>
                         </div>
                         <h1 class="guide-main-title text-size-8 mb-3">Token Exporter</h1>
-                        <p class="hero-tagline">Figma variables to production-ready code</p>
-                        <p class="hero-description">Built on Open Props foundation with 500+ tokens</p>
+                        <p class="hero-tagline">Bridge the gap from Figma variables to code</p>
+                        <p class="hero-description">Export design tokens to 6 platforms, validated with Style Dictionary standards</p>
                     </div>
 
                     <!-- GROUP B: Call-to-Action Block (Middle) -->
@@ -249,45 +209,8 @@
 
             <!-- Enhanced Stats & Project Overview -->
             <div class="stats-and-overview-container" id="stats-container">
-                <div class="stats-container-glass surface-glass">
-    <div class="stat-item">
-        <span class="icon stat-icon" data-icon="package"></span>
-        <div class="stat-number text-gradient-brand"><span class="stat-value" data-target="6">0</span></div>
-        <div class="stat-label">Export Formats</div>
-    </div>
-    <div class="stat-item">
-        <span class="icon stat-icon" data-icon="atom"></span>
-        <div class="stat-number text-gradient-brand"><span class="stat-value" data-target="435">0</span><span class="stat-suffix stat-suffix--plus">+</span></div>
-        <div class="stat-label">Design Tokens</div>
-    </div>
-    <div class="stat-item">
-        <span class="icon stat-icon" data-icon="zap"></span>
-        <div class="stat-number text-gradient-brand"><span class="stat-value" data-target="100">0</span><span class="stat-suffix stat-suffix--percent">%</span></div>
-        <div class="stat-label">Automated</div>
-    </div>
-    <div class="stat-item">
-        <span class="icon stat-icon" data-icon="clock"></span>
-        <div class="stat-number text-gradient-brand"><span class="stat-value" data-target="10">0</span><span class="stat-suffix stat-suffix--times">×</span></div>
-        <div class="stat-label">Faster Export</div>
-    </div>
-</div>
-                <div class="challenge-solution-grid">
-    <div class="enhanced-card challenge-card">
-        <span class="icon card-icon-large icon--hairline" data-icon="triangle-alert"></span>
-        <h3 class="card-title">The Challenge</h3>
-        <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
-    </div>
-    <div class="enhanced-card solution-card">
-        <span class="icon card-icon-large icon--hairline" data-icon="lightbulb"></span>
-        <h3 class="card-title">The Solution</h3>
-        <p class="card-content">Automated multi-format export with intelligent alias resolution and platform-native naming conventions.</p>
-    </div>
-    <div class="enhanced-card impact-card">
-        <span class="icon card-icon-large icon--hairline" data-icon="trending-up"></span>
-        <h3 class="card-title">The Impact</h3>
-        <p class="card-content">10x faster token export, zero manual errors, and a seamless design-to-code workflow.</p>
-    </div>
-</div>
+                <!-- @include src/components/_stats-container.html -->
+                <!-- @include src/components/_challenge-solution-grid.html -->
             </div>
 
 
@@ -419,6 +342,14 @@
 
             
     </div> <!-- END: 2-Column Grid Wrapper -->
+              
+              <!-- Major Section: Foundations -->
+              <section class="major-section-header">
+                  <h2>
+                      <i data-icon="layers"></i>
+                      Foundations
+                  </h2>
+              </section>
 
               <!-- Color System Section -->
               <section id="colors" class="content-section">
@@ -978,6 +909,14 @@
 
                 <!-- COMPONENT LIBRARY SECTION -->
 
+    <!-- Major Section: Components -->
+    <section class="major-section-header">
+        <h2>
+            <i data-icon="package"></i>
+            Components
+        </h2>
+    </section>
+
       <!-- REFACTORED: Token Card Section -->
 <div id="token-card" class="component-section">
     <div class="component-header">
@@ -1007,37 +946,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Loading State</div>
                 <div class="example-container">
-                    <!-- src/components/_skeleton-loader.html -->
-<div class="card token-summary is-loading" id="skeleton-loader">
-    <div class="text-heading-xl token-count-total"><span class="skeleton-pulse"></span></div>
-    <div class="text-label token-label">Tokens Loading...</div> <!-- Use a non-breaking space to maintain height -->
-    <div class="token-breakdown">
-        <!-- Color Stat -->
-        <div class="token-type-stat color loading">
-            <span class="icon" data-icon="palette"></span>
-            <div class="count skeleton-pulse"></div>
-            <div class="text-label label">colors</div>
-        </div>
-        <!-- Text Stat -->
-        <div class="token-type-stat text loading">
-            <span class="icon" data-icon="type"></span>
-            <div class="count skeleton-pulse"></div>
-            <div class="text-label label">text</div>
-        </div>
-        <!-- Number Stat -->
-        <div class="token-type-stat number loading">
-            <span class="icon" data-icon="hash"></span>
-            <div class="count skeleton-pulse"></div>
-            <div class="text-label label">numbers</div>
-        </div>
-        <!-- States Stat -->
-        <div class="token-type-stat states loading">
-            <span class="icon" data-icon="toggle-right"></span>
-            <div class="count skeleton-pulse"></div>
-            <div class="text-label label">states</div>
-        </div>
-    </div>
-</div>
+                    <!-- @include src/components/_skeleton-loader.html -->
                 </div>
             </div> 
 
@@ -1058,47 +967,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Empty State</div>
                 <div class="example-container">
-                    <!-- src/components/_empty-state.html -->
-<!-- Single Source of Truth for the "Empty State" component. -->
-<div class="card empty-state" id="empty-state">
-    <!-- Top Group -->
-    <div class="flex flex-col items-center gap-2">
-        <div class="empty-state-icon">
-            <div class="token-exporter-logo large">
-                <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_empty_logo_refactor)"><path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_empty_logo_refactor)"/><circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/><path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/><circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/></g><defs><linearGradient id="paint0_linear_empty_logo_refactor" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse"><stop stop-color="#D2FF37"/><stop offset="1" stop-color="#EEFF00"/></linearGradient><clipPath id="clip0_empty_logo_refactor"><rect width="355" height="355" rx="58" fill="white"/></clipPath></defs></svg>
-            </div>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-            <div class="text-heading-lg empty-state-title">Let's build something!</div>
-            <div class="text-body-md empty-state-subtitle">Create a variable collection in Figma to get started.</div>
-        </div>
-    </div>
-
-    <!-- Middle Group -->
-    <div class="empty-state-categories">
-        <div class="empty-state-category">
-            <span class="icon category-icon-cyan" data-icon="palette"></span>
-            <span class="text-label">color</span>
-        </div>
-        <div class="empty-state-category">
-            <span class="icon category-icon-purple" data-icon="type"></span>
-            <span class="text-label">text</span>
-        </div>
-        <div class="empty-state-category">
-            <span class="icon category-icon-orange" data-icon="hash"></span>
-            <span class="text-label">number</span>
-        </div>
-        <div class="empty-state-category">
-            <span class="icon category-icon-pink" data-icon="toggle-right"></span>
-            <span class="text-label">states</span>
-        </div>
-    </div>
-
-    <!-- Bottom Button -->
-    <a href="https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma" class="btn btn-primary btn-gradient-brand btn-no-borders btn-shadow-none btn-bright btn-md btn-inline" target="_blank" rel="noopener noreferrer" aria-label="Learn about Variables in Figma">
-        Learn about Variables <span class="icon" data-icon="external-link"></span>
-    </a>
-</div>
+                    <!-- @include src/components/_empty-state.html -->
                 </div>
             </div>
             
@@ -1120,77 +989,7 @@ Note: Uses individual card components via @include directives
 <div class="example-wrapper">
     <div class="example-label">Filters</div>
     <div class="example-container">
-        <!-- src/components/_filters-card.html -->
-<!-- Component: Filters Card -->
-<!-- Purpose: Collection-based filtering interface for token selection -->
-<div class="card filter-section is-compact">
-    <div class="card-content">
-        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-            <i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>
-            <h4 class="text-label">Filters</h4>
-        </div>
-        <div class="collection-list">
-        <!-- Collection 1: Brand -->
-        <div class="collection-item selected">
-            <div class="collection-checkbox"></div>
-            <div class="collection-info">
-                <div class="text-body-lg collection-name">Brand</div>
-                <div class="collection-pills">
-                    <span class="badge small cyan"><span class="icon" data-icon="palette"></span> 12</span>
-                    <span class="badge small pink"><span class="icon" data-icon="toggle-right"></span> 2</span>
-                </div>
-            </div>
-            <div class="text-caption collection-count">14 tokens</div>
-        </div>
-        <!-- Collection 2: Typography -->
-        <div class="collection-item selected">
-            <div class="collection-checkbox"></div>
-            <div class="collection-info">
-                <div class="text-body-lg collection-name">Typography</div>
-                <div class="collection-pills">
-                    <span class="badge small purple"><span class="icon" data-icon="type"></span> 24</span>
-                    <span class="badge small orange"><span class="icon" data-icon="hash"></span> 8</span>
-                </div>
-            </div>
-            <div class="text-caption collection-count">32 tokens</div>
-        </div>
-        <!-- Collection 3: Spacing -->
-        <div class="collection-item">
-            <div class="collection-checkbox"></div>
-            <div class="collection-info">
-                <div class="text-body-lg collection-name">Spacing</div>
-                <div class="collection-pills">
-                    <span class="badge small orange"><span class="icon" data-icon="hash"></span> 16</span>
-                </div>
-            </div>
-            <div class="text-caption collection-count">16 tokens</div>
-        </div>
-        <!-- Collection 4: Effects -->
-        <div class="collection-item">
-            <div class="collection-checkbox"></div>
-            <div class="collection-info">
-                <div class="text-body-lg collection-name">Effects</div>
-                <div class="collection-pills">
-                    <span class="badge small cyan"><span class="icon" data-icon="palette"></span> 8</span>
-                    <span class="badge small orange"><span class="icon" data-icon="hash"></span> 4</span>
-                </div>
-            </div>
-            <div class="text-caption collection-count">12 tokens</div>
-        </div>
-        <!-- Collection 5: Borders & Radii -->
-        <div class="collection-item selected">
-            <div class="collection-checkbox"></div>
-            <div class="collection-info">
-                <div class="text-body-lg collection-name">Borders & Radii</div>
-                <div class="collection-pills">
-                    <span class="badge small orange"><span class="icon" data-icon="hash"></span> 10</span>
-                </div>
-            </div>
-            <div class="text-caption collection-count">10 tokens</div>
-        </div>
-    </div>
-    </div>
-</div>
+        <!-- @include src/components/_filters-card.html -->
     </div>
 </div>
         </div> <!-- This closes the variants-grid -->
@@ -1199,6 +998,7 @@ Note: Uses individual card components via @include directives
         <!-- ==========================================================================
          START: FINAL, CORRECTED, SYSTEM-ACCURATE BUTTON COMPONENT SECTION
          ========================================================================== -->
+         
     <div id="buttons" class="component-section">
         <div class="component-header">
             <h2 class="section-title-primary"><i data-icon="pointer"></i> Buttons</h2>
@@ -1493,99 +1293,7 @@ Note: Uses individual card components via @include directives
     <section class="content-section">
         <div class="section-divider" style="padding: 0 var(--size-3);"></div>
         <div class="guide-container" style="padding: 0 var(--size-3);">
-            <!-- src/components/_profile-card.html -->
-<div class="profile-card">
-    <span class="badge brand absolute">Figma Plugin ASCII ART</span>
-    
-    <!-- Left side: ASCII Art -->
-    <div class="ascii-container">
-        <!-- Desktop Version -->
-        <div class="ascii-art">
-████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗     ███████╗██╗  ██╗██████╗  
-╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║     ██╔════╝╚██╗██╔╝██╔══██╗
-   ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║     █████╗   ╚███╔╝ ██████╔╝
-   ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║     ██╔══╝   ██╔██╗ ██╔═══╝ 
-   ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║     ███████╗██╔╝ ██╗██║       ██╗
-   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝     ╚══════╝╚═╝  ╚═╝╚═╝       ╚═╝
-
-==============================================================================
-
-[STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER] : [ARCHITECT: NATE MILLS]
-
-==============================================================================
-
-███╗   ██╗ █████╗ ████████╗███████╗     ███╗   ███╗██╗██╗     ██╗     ███████╗
-████╗  ██║██╔══██╗╚══██╔══╝██╔════╝     ████╗ ████║██║██║     ██║     ██╔════╝
-██╔██╗ ██║███████║   ██║   █████╗       ██╔████╔██║██║██║     ██║     ███████╗
-██║╚██╗██║██╔══██║   ██║   ██╔══╝       ██║╚██╔╝██║██║██║     ██║     ╚════██║
-██║ ╚████║██║  ██║   ██║   ███████╗     ██║ ╚═╝ ██║██║███████╗███████╗███████║
-╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚══════╝     ╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
-
-┌─[ PURPOSE & MISSION ]──────────────────────────────────────────────────────┐
-│                                                                            │
-│ Building bridges between design and development through Token Exporter—    │
-│ a plugin that transforms Figma variables into production-ready code for    │
-│ 6 platforms: CSS, Swift, Android, Flutter, JSON, and Tailwind.             │
-│                                                                            │
-│ 20+ years crafting scalable design systems that empower teams to ship      │
-│ consistent, accessible experiences faster.                                 │
-│                                                                            │
-│ One click. Six platforms. Zero inconsistencies.                            │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
-        </div>
-        <!-- Mobile Version (Compact) -->
-        <div class="ascii-art-mobile">
-             
-████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗     ███████╗██╗  ██╗██████╗  
-╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║     ██╔════╝╚██╗██╔╝██╔══██╗
-   ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║     █████╗   ╚███╔╝ ██████╔╝
-   ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║     ██╔══╝   ██╔██╗ ██╔═══╝ 
-   ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║     ███████╗██╔╝ ██╗██║       ██╗
-   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝     ╚══════╝╚═╝  ╚═╝╚═╝       ╚═╝
-==============================================================================
-[STATUS: ONLINE] : [PROJECT: TOKEN EXPORTER] : [ARCHITECT: NATE MILLS]
-==============================================================================
-        </div>
-    </div>
-    
-    <!-- Right side: Code Terminal -->
-    <div class="code-section">
-        <div class="code-container">
-            <div class="terminal-header">
-                <div class="terminal-title auto-glitch" data-text="creator_profile.exe">creator_profile.exe</div>
-                <div class="terminal-status">
-                    <div class="status-dot"></div>
-                    <span style="color: var(--color-text-muted); font-size: 12px;">CONNECTED</span>
-                </div>
-            </div>
-            <div class="code-block" id="codeBlock">
-                <div class="code-line" data-text='<span class="prompt"></span><span class="comment">// Initializing creator profile...</span>'></div>
-                <div class="code-line" data-text='<span class="comment">// Loading design system architect...</span>'></div>
-                <div class="code-line" data-text=''></div>
-                <div class="code-line" data-text='<span class="keyword">const</span> <span class="variable">creator</span> = {'></div>
-                <div class="code-line" data-text='    <span class="variable">name</span>: <span class="string">"Nate Mills"</span>,'></div>
-                <div class="code-line" data-text='    <span class="variable">role</span>: <span class="string">"Design Systems Architect"</span>,'></div>
-                <div class="code-line" data-text='    <span class="variable">mission</span>: <span class="string">"Bridging design and development"</span>,'></div>
-                <div class="code-line" data-text='    <span class="variable">philosophy</span>: <span class="string">"Design is code. Code is design."</span>,'></div>
-                <div class="code-line" data-text='    '></div>
-                <div class="code-line" data-text='    <span class="variable">projects</span>: {'></div>
-                <div class="code-line" data-text='        <span class="variable">tokenExporter</span>: <span class="string">"Multi-platform design token generator"</span>,'></div>
-                <div class="code-line" data-text='        <span class="variable">designSystem</span>: <span class="string">"Scalable component architecture"</span>'></div>
-                <div class="code-line" data-text='    },'></div>
-                <div class="code-line" data-text='    '></div>
-                <div class="code-line" data-text='    <span class="variable">platforms</span>: [<span class="string">"CSS"</span>, <span class="string">"Swift"</span>, <span class="string">"Android"</span>, <span class="string">"Flutter"</span>, <span class="string">"JSON"</span>, <span class="string">"Tailwind"</span>]'></div>
-                <div class="code-line" data-text='};'></div>
-                <div class="code-line" data-text=''></div>
-                <div class="code-line" data-text='<span class="comment">// Ready to transform your design tokens</span>'></div>
-                <div class="code-line" data-text='<span class="variable">creator</span>.<span class="function">initializePlugin</span>();'></div>
-            </div>
-            <div class="control-panel">
-                <button class="btn btn-secondary btn-sm btn-inline glitch-button" data-text="[RE-RUN DEMO]" onclick="startTyping()">[RE-RUN]</button>
-            </div>
-        </div>
-    </div>
-</div>
+            <!-- @include src/components/_profile-card.html -->
         </div> <!-- END: guide-container -->
     </section> <!-- END: content-section -->
 
@@ -2184,7 +1892,7 @@ Note: Uses individual card components via @include directives
                 
                 const celebrationContainer = document.getElementById('guideCelebration');
                 if (celebrationContainer) {
-                    celebrationContainer.innerHTML = '<div class="te-success-icon"><i data-icon="circle-check"></i></div>';
+                    celebrationContainer.innerHTML = '<div class="te-success-icon"><i data-icon="circle-check-big"></i></div>';
                     renderAllIcons();
                 }
             };
@@ -2753,65 +2461,13 @@ document.addEventListener('DOMContentLoaded', function() {
             'gradients': {
                 title: 'Gradients',
                 sections: {
-                    'hero': {
-                        title: 'Hero Gradients',
+                    'gradients': {
+                        title: 'Gradients',
                         tokens: [
-                            { token: '--brand-gradient-primary', gradient: true, label: 'Primary Brand' },
-                            { token: '--brand-gradient-secondary', gradient: true, label: 'Secondary Brand' },
-                            { token: '--brand-gradient-accent', gradient: true, label: 'Accent Brand' },
-                            { token: '--brand-gradient-highlight', gradient: true, label: 'Highlight Brand' }
-                        ]
-                    },
-                    'primary-directional': {
-                        title: 'Primary Gradient - Directional Variants',
-                        tokens: [
-                            { token: '--gradient-primary-0', gradient: true, label: 'Bottom to Top' },
-                            { token: '--gradient-primary-45', gradient: true, label: 'Diagonal BR-TL' },
-                            { token: '--gradient-primary-90', gradient: true, label: 'Left to Right' },
-                            { token: '--gradient-primary-135', gradient: true, label: 'Diagonal BL-TR' },
-                            { token: '--gradient-primary-180', gradient: true, label: 'Top to Bottom' },
-                            { token: '--gradient-primary-225', gradient: true, label: 'Diagonal TL-BR' },
-                            { token: '--gradient-primary-270', gradient: true, label: 'Right to Left' },
-                            { token: '--gradient-primary-315', gradient: true, label: 'Diagonal TR-BL' }
-                        ]
-                    },
-                    'secondary-directional': {
-                        title: 'Secondary Gradient - Directional Variants',
-                        tokens: [
-                            { token: '--gradient-secondary-0', gradient: true, label: 'Bottom to Top' },
-                            { token: '--gradient-secondary-45', gradient: true, label: 'Diagonal BR-TL' },
-                            { token: '--gradient-secondary-90', gradient: true, label: 'Left to Right' },
-                            { token: '--gradient-secondary-135', gradient: true, label: 'Diagonal BL-TR' },
-                            { token: '--gradient-secondary-180', gradient: true, label: 'Top to Bottom' },
-                            { token: '--gradient-secondary-225', gradient: true, label: 'Diagonal TL-BR' },
-                            { token: '--gradient-secondary-270', gradient: true, label: 'Right to Left' },
-                            { token: '--gradient-secondary-315', gradient: true, label: 'Diagonal TR-BL' }
-                        ]
-                    },
-                    'accent-directional': {
-                        title: 'Accent Gradient - Directional Variants',
-                        tokens: [
-                            { token: '--gradient-accent-0', gradient: true, label: 'Bottom to Top' },
-                            { token: '--gradient-accent-45', gradient: true, label: 'Diagonal BR-TL' },
-                            { token: '--gradient-accent-90', gradient: true, label: 'Left to Right' },
-                            { token: '--gradient-accent-135', gradient: true, label: 'Diagonal BL-TR' },
-                            { token: '--gradient-accent-180', gradient: true, label: 'Top to Bottom' },
-                            { token: '--gradient-accent-225', gradient: true, label: 'Diagonal TL-BR' },
-                            { token: '--gradient-accent-270', gradient: true, label: 'Right to Left' },
-                            { token: '--gradient-accent-315', gradient: true, label: 'Diagonal TR-BL' }
-                        ]
-                    },
-                    'highlight-directional': {
-                        title: 'Highlight Gradient - Directional Variants',
-                        tokens: [
-                            { token: '--gradient-highlight-0', gradient: true, label: 'Bottom to Top' },
-                            { token: '--gradient-highlight-45', gradient: true, label: 'Diagonal BR-TL' },
-                            { token: '--gradient-highlight-90', gradient: true, label: 'Left to Right' },
-                            { token: '--gradient-highlight-135', gradient: true, label: 'Diagonal BL-TR' },
-                            { token: '--gradient-highlight-180', gradient: true, label: 'Top to Bottom' },
-                            { token: '--gradient-highlight-225', gradient: true, label: 'Diagonal TL-BR' },
-                            { token: '--gradient-highlight-270', gradient: true, label: 'Right to Left' },
-                            { token: '--gradient-highlight-315', gradient: true, label: 'Diagonal TR-BL' }
+                            { token: '--gradient-primary', gradient: true, label: 'Primary Brand' },
+                            { token: '--gradient-secondary', gradient: true, label: 'Secondary Brand' },
+                            { token: '--gradient-accent', gradient: true, label: 'Accent Brand' },
+                            { token: '--gradient-highlight', gradient: true, label: 'Highlight Brand' }
                         ]
                     }
                 }
@@ -3095,8 +2751,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const contrastClass = isLowContrast ? 
             (value.includes('#666') ? 'split-background' : 'low-contrast') : '';
         
-        const swatchClass = item.alpha ? 'color-swatch alpha-swatch' : 
-                           (isDirectionalGradient ? 'color-swatch gradient-swatch-square' : 'color-swatch');
+        const swatchClass = item.alpha ? 'color-swatch alpha-swatch' : 'color-swatch';
         const backgroundStyle = item.gradient ? 
             'background: ' + value : 
             'background-color: ' + value;
@@ -3336,18 +2991,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += '</div>';
             });
         } else if (key === 'gradients' && section.sections) {
-            // Handle gradients section with nested sections
+            // Handle gradients section - always use 2-column grid
             Object.entries(section.sections).forEach(([subkey, subsection]) => {
                 html += '<div class="color-subsection">';
-                
-                // Hero gradients: no title, 2-column grid (align with Core)
-                if (subkey === 'hero') {
-                    html += '<div class="color-grid-2col">';
-                } else {
-                    // Other gradient sections: keep title and 3-column grid
-                    html += '<h4 class="subsection-title">' + subsection.title + '</h4>';
-                    html += '<div class="color-grid-3col">';
-                }
+                html += '<div class="color-grid-2col">';
                 
                 subsection.tokens.forEach(item => {
                     html += renderColorCard(item);

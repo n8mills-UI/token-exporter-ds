@@ -74,6 +74,14 @@ test-*.html
 fix-*.js
 *-report.txt
 temp-*
+temp/
+
+# Development workspace (agent collaboration area)
+# Comment out if you want to track agent work
+# .dev/
+
+# Archive directory for old files
+.archive/
 
 .Mocks/about-modal.html
 .Mocks/color-system-5-core-mockup.html

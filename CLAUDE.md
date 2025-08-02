@@ -2,9 +2,20 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚀 Quick Start for Claude
+
+When starting a new session, Claude should:
+1. Read this CLAUDE.md file first
+2. Run `npm run check` to understand current state
+3. Check git status to see work in progress
+4. Review recent commits for context
+5. Use appropriate agents for complex tasks
+
 ## Project Overview
 
 **Token Exporter** is a Figma plugin that transforms design variables into production-ready code across multiple platforms. Built with vanilla JavaScript, it features a sophisticated build system that handles Figma's strict CSP requirements by inlining all external assets.
+
+**Portfolio Context**: This is a portfolio piece for natemills.me - professional tool with purposeful delight (Apple/Wealthsimple aesthetic, not gaming themed).
 
 ## Essential Commands
 
@@ -18,12 +29,23 @@ npm run build      # Build once for production
 npm run check      # Essential checks: Figma compatibility, JS lint, CSS architecture (~10s)
 npm run audit      # Comprehensive audit: all checks + reports (~60s)
 npm run format     # Auto-fix CSS formatting issues
-
-# Specific Checks (rarely needed individually)
-npm run check:critical    # Check for breaking changes
-npm run check:all         # All checks including token validation
-npm run lint:a11y  # Run pa11y accessibility tests
 ```
+
+## 🤖 Agent Workflow Triggers
+
+Claude should proactively use specialized agents when appropriate:
+
+### Phase-Based Work
+- **Starting new feature**: Use `rapid-prototyper` agent
+- **After code changes**: Use `test-writer-fixer` agent
+- **Design updates**: Use `whimsy-injector` agent after UI changes
+- **Complex tasks**: Use `studio-coach` agent for coordination
+
+### Automatic Triggers
+- **CSS/UI changes** → Run `npm run check`
+- **JavaScript changes** → Check Figma compatibility
+- **Component updates** → Verify template synchronization
+- **Before commits** → Run quality checks
 
 ## Critical Figma JavaScript Constraints
 
@@ -39,32 +61,22 @@ obj?.prop                    // → Use: obj && obj.prop
 } catch {                   // → Use: } catch (error) {
 ```
 
-## Architecture Overview
+## Current Design System State
 
-### Build System (`scripts/build.js`)
-The build process handles Figma's Content Security Policy restrictions:
-1. **CSS Bundling**: Fetches and inlines all `@import` statements (both CDN and local)
-2. **JavaScript Bundling**: Extracts and inlines external `<script src>` dependencies
-3. **Template Processing**: Resolves `<!-- @include path/to/partial.html -->` directives
-4. **Output Generation**:
-   - `src/ui.html` - Plugin UI with everything inlined (Figma requirement)
-   - `docs/design-system-guide.html` - Documentation site with external CSS link
+### Core Design Tokens (Simplified)
+- **4 Core Gradients**: Primary, Secondary, Accent, Highlight (all 90deg)
+- **Brand Colors**: 
+  - Primary: Always lime (#D2FF37)
+  - Secondary: Theme-aware (lime in dark, pink in light)
+- **No hover states on non-interactive cards**
+- **No animation dots/icons in vortex or progress flows**
 
-### Quality Assurance (`scripts/check.js`)
-Automated checks enforce design system integrity:
-- **Figma Compatibility**: Detects unsupported JavaScript features
-- **CSS Architecture**: Validates two-layer token system
-- **Theme Architecture**: Ensures token-only theming (no component overrides)
-- **Semantic Token Usage**: Flags direct primitive token usage in components
-
-### Comprehensive Audit (`scripts/audit.js`)
-The audit command runs extensive analysis:
-- **Build Verification**: Ensures templates build correctly
-- **Code Quality**: Figma compatibility, ESLint, CSS architecture
-- **CSS Analysis**: Wallace complexity, cssstats metrics, specificity graphs
-- **Accessibility**: pa11y testing on design guide
-- **Token Validation**: Style Dictionary compatibility checks
-- **Reports**: Generated in `reports/` directory (gitignored)
+### Recent Architectural Decisions
+1. Consolidated 32 gradients → 4 core gradients
+2. Removed hover states from static cards
+3. Hidden icon grid animations (dots) 
+4. Updated stats to reflect plugin capabilities, not design system size
+5. Copy focuses on truthful claims (portfolio piece, not launched product)
 
 ## CSS Architecture Rules
 
@@ -73,59 +85,18 @@ The audit command runs extensive analysis:
 /* Layer 1: Primitives in :root (raw values allowed) */
 :root {
     --brand-primary: #D2FF37;      /* ✅ Raw value here */
-    --size-4: 1.25rem;             /* ✅ Raw value here */
+    --gradient-primary: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);
 }
 
 /* Layer 2: Components (MUST use tokens) */
 .btn {
-    background: var(--brand-primary);  /* ✅ Token reference */
-    padding: var(--size-4);           /* ✅ Token reference */
-    /* padding: 1.25rem; */           /* ❌ NEVER raw values */
+    background: var(--gradient-primary);  /* ✅ Token reference */
+    /* background: linear-gradient(...); */ /* ❌ NEVER raw gradients */
 }
 ```
 
-### 2. Theme Architecture
-
-**CRITICAL: Only ONE theme section per theme**
-- Each theme (light/dark) must have exactly ONE `[data-theme="X"]` section
-- Multiple theme sections cause CSS specificity conflicts and break theme switching
-- The build system will FAIL if duplicate theme sections are detected
-
-```css
-/* ✅ CORRECT: Single theme section with all tokens */
-[data-theme="light"] {
-    --btn-primary-bg: var(--brand-primary);
-    --btn-primary-text: var(--gray-warm-9);
-    --card-bg: var(--gray-warm-0);
-    --surface-bg: var(--gray-cool-1);
-    /* ALL light theme tokens in ONE place */
-}
-
-/* ✅ CORRECT: Token-only theming */
-.btn-primary {
-    background: var(--btn-primary-bg);
-    color: var(--btn-primary-text);
-}
-
-/* ❌ WRONG: Multiple theme sections */
-[data-theme="light"] { --btn-primary-bg: #value; }
-/* ... other CSS ... */
-[data-theme="light"] { --card-bg: #value; }  /* NEVER - causes conflicts */
-
-/* ❌ WRONG: Component-specific overrides */
-[data-theme="light"] .btn-primary {
-    background: #D2FF37;  /* Never do this */
-}
-```
-
-**Prevention:**
-- Run `npm run check` - fails build if duplicate sections found
-- Check shows line numbers of duplicate sections for easy fixing
-- Consolidate all theme tokens into single section per theme
-
-### 3. Brand Colors
-- `--brand-primary`: Always lime (#D2FF37) - used for primary actions, focus states
-- `--brand-secondary`: Theme-aware - lime (#EF0) in dark mode, pink (#FF1493) in light mode
+### 2. Single Theme Section Rule
+Each theme must have exactly ONE `[data-theme="X"]` section. Never split theme tokens across multiple selectors.
 
 ## File Structure
 
@@ -134,362 +105,141 @@ The audit command runs extensive analysis:
 - `src/ui.template.html` - Plugin UI template
 - `docs/design-system-guide.template.html` - Documentation template
 - `src/components/_*.html` - Reusable HTML partials
-- `src/code.js` - Plugin logic (6 export formats)
+- `src/shared/data.js` - Shared data for templates
+- `src/shared/templates.js` - Template functions
 
 **Never Edit (Auto-Generated):**
 - `src/ui.html` - Built plugin UI
 - `docs/design-system-guide.html` - Built documentation
+- `src/components/*` (without underscore) - Generated from templates
 
 ## Development Workflow
 
-1. **Make changes** to source files (.template.html, .css, components)
-2. **Build**: `npm run build` (or use `npm run dev` for auto-rebuild)
-3. **Validate**: `npm run check` for quick verification
-4. **Test**:
-   - Browser: Open `docs/design-system-guide.html`
-   - Figma: Reload plugin (no reinstall needed)
-
-## Plugin Export Formats
-
-The plugin (`src/code.js`) exports to 6 formats:
-- **CSS**: W3C custom properties
-- **Swift**: iOS native format
-- **Android XML**: Android resources
-- **Flutter**: Dart constants
-- **JSON**: W3C Design Token Standard
-- **Tailwind**: Theme configuration
-
-## Performance Optimizations
-
-For large token collections (>1000 variables):
-```javascript
-const BATCH_SIZE = 100;              // Process in chunks
-const MEMORY_WARNING_THRESHOLD = 100; // MB before warning
-const MAX_EXPORT_SIZE = 50;          // MB export limit
-```
-
-## Common Issues & Solutions
-
-### JavaScript Errors in Figma
-- **"Unexpected token ."** → Replace `obj?.prop` with `obj && obj.prop`
-- **"Unexpected token {"** → Use `catch (error)` not `catch {`
-- Check with: `npm run check`
-
-### CSS Architecture Violations
-- **Direct color references** → Use semantic tokens
-- **Raw values in components** → Move to tokens
-- **Theme overrides on components** → Use token-only approach
-
-### Build Issues
-- **Empty HTML output** → Check external resource URLs
-- **Missing styles** → Verify CSS imports are accessible
-- **Plugin not updating** → Hard refresh Figma (Cmd+R/Ctrl+R)
-
-### CSS Rendering Issues
-- **NEVER blame browser compatibility** - It's always a CSS implementation issue
-- **If something isn't rendering** → Check the actual CSS being applied
-- **Verify the correct pattern** → Use the exact CSS from the mockup
-
-## Vendor Dependencies
-
-Open Props CSS framework is vendored locally in `vendor/open-props/`:
-- `open-props.style.css` - Core styles
-- `open-props.normalize.css` - CSS reset
-- `open-props.buttons.css` - Button utilities
-
-**Important**: The `.min.css` files (e.g., `open-props.min.css`) must be kept even though they're identical to source files. The build system expects these minified versions, and `docs/design-system.css` imports them specifically. Do not delete or gitignore these files.
+1. **Check current state**: `git status` and `npm run check`
+2. **Make changes** to source files
+3. **Build**: `npm run build` 
+4. **Validate**: `npm run check`
+5. **Test**: Browser and Figma
 
 ## Code Style Rules
 
-**CRITICAL: Write clean code without comments unless absolutely critical**
-- DO NOT add explanatory comments to CSS, JavaScript, or HTML
-- DO NOT add "helpful" inline comments explaining what code does
-- DO NOT add TODO comments unless explicitly requested
-- ONLY add comments if they are critical for Figma compatibility warnings or security notes
-- EXCEPTIONS - Keep these comment types:
-  - **Section header comments** in CSS (e.g., `/* Button tokens */`, `/* FAQ tokens */`)
-  - **ASCII art headers** - They add personality and visual organization
-  - **Build markers** (e.g., `/* @docs-only-start */`, `/* @plugin-only-end */`)
-  - **Critical warnings** about Figma limitations or security issues
-  - **Complex algorithm explanations** when the "why" isn't obvious from code alone
-  - **Regex pattern documentation** for complex patterns
+**Write clean code without explanatory comments**
+- NO comments explaining what code does
+- NO TODO comments unless requested
+- KEEP section headers, ASCII art, build markers
+- KEEP critical warnings (Figma limitations, security)
 
-**Examples of BAD comments (avoid these):**
-```css
-/* Set background to transparent for alpha swatches */
-.color-card:has(.alpha-swatch) { background: transparent; }
+## Icon System Rules
 
-/* Hover state */
-.btn:hover { opacity: 0.8; }
+**NEVER add external icon libraries - the build will fail!**
 
-/* Add 20px margin */
-.card { margin: 20px; }
-```
+- All icons defined in `src/components/icons/_icon-system.html`
+- Use `<i data-icon="icon-name"></i>` pattern
+- Add new icons to the system before use
+- Build system blocks external icon CDNs
 
-**Examples of GOOD comments (keep these):**
-```css
-/* ========= Color System Tokens ========= */
+## Common Issues & Quick Fixes
 
-/* CRITICAL: Never use rgba() with CSS variables - breaks in Safari */
+### Build Failures
+- **External resources blocked** → Check CDN URLs in imports
+- **Icon validation fails** → Add missing icon to system
+- **Template not found** → Use underscore prefix for partials
 
-/* Match price patterns like $19.99 or €50.00 */
-const priceRegex = /[€$]\d+\.\d{2}/g;
-```
+### CSS Issues  
+- **Gradient not showing** → Use the 4 core gradient tokens
+- **Hover on static card** → Remove, only interactive elements hover
+- **Theme switching broken** → Consolidate theme sections
 
-## Dual-Persona Development Mode (Optional)
+### JavaScript Errors
+- **Optional chaining** → Use `obj && obj.prop`
+- **Template literals** → Use string concatenation
+- **Catch blocks** → Always include error parameter
 
-**Toggle Instructions:**
-- **Enable**: Uncomment the section below for complex architectural decisions, new features, or systemic changes
-- **Disable**: Keep commented for routine fixes, simple edits, or when preferring direct responses
+## CRITICAL: Color System Debugging Guide
 
-### DUAL-PERSONA MODE ACTIVE
+Past issues we've learned from:
 
-When this mode is enabled, responses will include a structured dialogue between two personas:
+### 1. JavaScript Rendering as Text
+**Symptom**: JavaScript code appears as plain text below the footer
+**Fix**: Never use `@include` directives inside JavaScript strings
 
-**Claude**: Implementation-focused persona with deep design system expertise. Proposes solutions efficiently while considering:
-- CSS token architecture and theme consistency
-- Build system implications (Figma CSP constraints, template processing)
-- Design system scalability and maintainability
-- Existing project patterns and established workflows
+### 2. "Cannot read properties of undefined" Errors
+**Symptom**: Color System shows error about reading 'forEach' of undefined
+**Fix**: Always check if `section.tokens` exists before iterating
 
-**Bob**: Quality guardian and UX advocate. Challenges approaches by questioning:
-- Accessibility implications and user experience impact
-- Edge cases and potential failure modes
-- Testing strategy and validation approach
-- Systemic risks and unintended consequences
-- Cross-browser compatibility and Figma plugin constraints
+### 3. Tab Panels Not Showing
+**Symptom**: Tabs appear but panels are always hidden
+**Fix**: Use only `.tab-panel.active { display: block; }`
 
-### Output Format (when active):
-1. **Dialogue**: Brief exchange between Claude and Bob reaching alignment
-2. **Unified Approach**: Joint recommendation 
-3. **Implementation**: Design system specific technical details
-4. **Quality Checklist**: Validation steps, potential issues, testing approach
-
-### When to Use:
-- ✅ New component architecture decisions
-- ✅ Theme system changes or token restructuring  
-- ✅ Build system modifications
-- ✅ Complex CSS architecture decisions
-- ✅ Feature additions that affect multiple components
-- ❌ Simple bug fixes or typos
-- ❌ Following established patterns
-- ❌ Routine maintenance tasks
-
-### Example Triggers:
-- "Should we refactor the color token system?"
-- "How do we add a new theme variant?"
-- "What's the best way to implement this new component?"
-- "We need to change the build process to support X"
-
-Both personas understand this project's constraints:
-- Figma JavaScript limitations (no optional chaining, template literals, etc.)
-- CSS two-layer token system and single theme section rule
-- Build system requirements and component architecture
-- Existing quality tools (`npm run check`, `npm run audit`)
-
-## Critical Elements Protection
-
-The `scripts/critical-elements-check.js` validates that changes don't break:
-- Icon visibility and rendering
-- Theme switching functionality
-- Dangerous CSS selectors that could affect plugin UI
-- JavaScript initialization patterns
+### 4. Horizontal Scrolling Issues
+**Symptom**: Page has unwanted horizontal scroll
+**Fix**: Use `width: calc(100% - var(--size-sidebar-width))` for content
 
 ## Design Token Documentation System
 
 **CRITICAL: The documentation is partially dynamic!**
 
-### How Token Documentation Works:
-1. **Token VALUES are live** - Uses `getComputedStyle()` to pull current CSS values
-2. **Token LISTS are static** - Manually maintained in `colorSectionConfig` in design-system-guide.template.html
-3. **Some sections are dynamic** - e.g., Neutrals populate based on current theme
-4. **Some sections are hard-coded** - e.g., Shadows only shows 3 of 5 tokens
-
-### Important Implications:
-- **Changing a token's color/value** → Automatically reflected in docs ✅
-- **Adding a new token** → Must manually add to colorSectionConfig ❌
-- **Renaming a token** → Must update colorSectionConfig ❌
-- **Health checks** → May show false positives for dynamic sections
-
-### Token Documentation Sections:
-```javascript
-// Static sections (manually maintained):
-'alpha': { tokens: [...] }      // Manually list each token
-'shadows': { tokens: [...] }    // Currently incomplete (3 of 5)
-
-// Dynamic sections (auto-generated):
-'neutrals': { tokens: [] }      // Populated by JavaScript based on theme
-
-// Hybrid sections:
-'utilities': {
-    subgroups: {
-        'text': { tokens: [...] }    // Static list
-        'surface': { tokens: [...] } // Static list
-    }
-}
-```
-
-### When Adding New Tokens:
-1. Add to CSS (design-system.css)
-2. Add to documentation (design-system-guide.template.html)
-3. Run `node scripts/token-health-check.js` to verify
-4. Note: Health check may report false positives for dynamic sections
-
-### Common Pitfalls:
-- **Don't assume all tokens are auto-documented** - Most need manual addition
+- **Token VALUES are live** - Uses `getComputedStyle()` 
+- **Token LISTS are static** - Manually maintained in `colorSectionConfig`
+- **Adding new token** → Must manually add to colorSectionConfig
 - **Shadow tokens**: Currently only shadow-2,3,4 are shown (missing 1,5)
-- **Gray scales**: Documented dynamically, so won't appear in static token lists
-- **Internal tokens**: Many tokens (like `--plugin-width`) are internal and shouldn't be documented
-- **Health check limitations**: Shows ~15% health but many "missing" tokens are actually internal or dynamically rendered
 
-## Testing Strategy
+## Quality Checklist
 
-No formal test framework - rely on:
-1. **Automated checks**: `npm run check` / `npm run audit`
-2. **Manual testing**: Browser for UI, Figma for functionality
-3. **Visual regression**: Compare before/after in design guide
+Before major changes:
+- [ ] Run `npm run check` - all passing?
+- [ ] Test in browser - UI renders correctly?
+- [ ] Test in Figma - plugin works?
+- [ ] Review git diff - changes intentional?
+- [ ] Update CLAUDE.md - document decisions?
 
-## Pre-commit Validation
+## Agent Directory
 
-Husky runs automated checks before commits:
-- CSS files → Architecture linting
-- JavaScript → Figma compatibility + ESLint
-- Templates → Documentation audit
+For complex tasks, use these specialized agents:
+- `rapid-prototyper` - New features/MVPs
+- `test-writer-fixer` - After code changes
+- `frontend-developer` - UI/UX implementation
+- `backend-architect` - API/data structure design
+- `whimsy-injector` - Add delightful touches
+- `studio-coach` - Coordinate complex work
 
-Configure in `package.json` under `lint-staged`.
+## Working with Nate
 
-## CRITICAL: Color System Debugging Guide
+- **Design is sacred** - Don't change UI without mockup approval
+- **Truth in marketing** - No false claims about users/features
+- **Professional aesthetic** - Apple/Wealthsimple vibe, not gaming
+- **Purposeful delight** - Fun moments that enhance, not distract
+- **Portfolio quality** - This showcases design system expertise
 
-If the Color System breaks (empty container, JavaScript as text, stuck scrolling), check these:
+## Project Organization
 
-### 1. JavaScript Rendering as Text
-**Symptom**: JavaScript code appears as plain text below the footer
-**Cause**: Build system is injecting HTML content into JavaScript strings
-**Fix**: Never use `@include` directives inside JavaScript strings. The build system will replace them with raw HTML, breaking the string syntax.
+### Agent Workspace
+- `.dev/agents/` - AI agent collaboration workspace (gitignored)
+  - `prototypes/` - Quick experiments and proof-of-concepts
+  - `analysis/` - Research outputs and audits
+  - `plans/` - Strategy documents and roadmaps
+  - `scripts/` - Experimental scripts (not production-ready)
+- Production scripts stay in `/scripts/`
+- See `.dev/agents/README.md` for agent protocols
 
-### 2. "Cannot read properties of undefined" Errors
-**Symptom**: Color System shows error about reading 'forEach' of undefined
-**Cause**: Some sections (like theme overview) don't have a `tokens` array
-**Fix**: Always check if `section.tokens` exists before iterating:
-```javascript
-if (section.tokens && section.tokens.length > 0) {
-    section.tokens.forEach(item => { ... });
-}
-```
+### Critical Elements Protection
+Run `npm run check:critical` to validate:
+- Icon visibility and rendering
+- Theme switching functionality
+- Dangerous CSS selectors that could affect plugin UI
+- JavaScript initialization patterns
+- Required animations (e.g., `te-vortex-swirl`)
 
-### 3. Tab Panels Not Showing
-**Symptom**: Tabs appear but panels are always hidden
-**Cause**: CSS expects `aria-hidden="false"` but JavaScript only sets `.active` class
-**Fix**: Remove any CSS rules checking for `aria-hidden`. Use only `.tab-panel.active { display: block; }`
+### Project Roadmap
+See `docs-internal/MASTER_PLAN.md` for the comprehensive project roadmap and completed phases.
 
-### 4. Scrolling Lock / Content Gets Stuck
-**Symptom**: Clicking navigation hides content above, can't scroll properly
-**Cause**: Sidebar with `position: sticky` and `height: 100vh` conflicts with content
-**Fix**: Use `position: fixed` for sidebar and adjust content margin accordingly
+## Recent Updates Log
 
-### 5. Horizontal Scrolling Issues
-**Symptom**: Page has unwanted horizontal scroll
-**Cause**: Fixed sidebar + 100% width content = overflow
-**Fix**: Use `width: calc(100% - var(--size-sidebar-width))` for content
+- **2024-01**: Consolidated gradients, removed animation dots
+- **2024-01**: Updated copy for accuracy (portfolio piece)
+- **2024-01**: Simplified hover states to interactive elements only
+- **2024-01**: Added shield-check icon for Style Dictionary validation
 
-### Prevention Tips:
-- Always run `npm run check` before committing
-- Test Color System after any template changes
-- Check browser console for JavaScript errors
-- Never mix @include directives with JavaScript code
-- Keep duplicate CSS rules consolidated
+---
 
-## Icon System Architecture
-
-The Token Exporter uses a JavaScript-enhanced icon system that injects SVG icons at runtime. This approach was chosen due to Figma's Content Security Policy restrictions that prevent loading external icon fonts.
-
-### How It Works:
-1. **HTML**: Use `<i class="icon" data-icon="icon-name"></i>`
-2. **JavaScript**: Replaces the `<i>` element content with the corresponding SVG from the icon library
-3. **CSS**: Target icons using `[data-icon]` attribute selectors
-
-### CSS Selector Patterns:
-```css
-/* Target the SVG inside the icon element */
-[data-icon] svg { stroke-width: 2; }
-
-/* Target specific icons */
-[data-icon="rocket"] { color: var(--brand-primary); }
-
-/* Icon size modifiers */
-.btn-sm [data-icon] { width: var(--icon-sm); height: var(--icon-sm); }
-
-/* Stroke weight modifiers */
-.btn-icon [data-icon] svg { stroke-width: var(--icon-stroke-thin); }
-```
-
-### Important Notes:
-- **Never use `.lucide` selectors** - This was legacy code from an older icon system
-- **Always use `[data-icon]` for icon targeting** - This is what the JavaScript looks for
-- **Use `.icon` class for layout/spacing** - But not for SVG-specific properties
-- **Icons require JavaScript** - They won't render without the icon system script
-
-### Common Patterns:
-```html
-<!-- Basic icon -->
-<i data-icon="rocket"></i>
-
-<!-- Icon with size class -->
-<i class="icon icon-lg" data-icon="rocket"></i>
-
-<!-- Icon in button -->
-<button class="btn">
-  <i data-icon="rocket"></i>
-  <span>Launch</span>
-</button>
-```
-
-## CRITICAL: Icon System Rules
-
-**NEVER add external icon libraries - the build will fail!**
-
-### Icon System Architecture
-- **Single Source of Truth**: All icons MUST be defined in `src/components/icons/_icon-system.html`
-- **No External Dependencies**: CDN icon libraries (Lucide, FontAwesome, etc.) are BLOCKED by build.js
-- **JavaScript Runtime Injection**: Icons are injected at runtime due to Figma CSP restrictions
-- **Validation Script**: `scripts/validate-icons-temp.js` checks all icon references exist
-
-### Usage Rules:
-1. **All icons must exist in the icon system before use**
-   - Check available icons: `node scripts/validate-icons-temp.js`
-   - Missing icons will fail validation
-   
-2. **Never add external icon libraries**
-   ```html
-   <!-- ❌ BLOCKED - Build will fail -->
-   <script src="https://unpkg.com/lucide@latest"></script>
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/...">
-   
-   <!-- ✅ CORRECT - Use internal system -->
-   <i data-icon="rocket"></i>
-   ```
-
-3. **Adding new icons**
-   - Add SVG definition to `src/components/icons/_icon-system.html`
-   - Use clean, optimized SVG paths
-   - Test with validation script before committing
-
-### Build Protection:
-The build system will immediately fail with clear error messages if:
-- External icon library CDNs are detected in JavaScript
-- Icon font CDNs are detected in CSS imports
-- Missing icons are referenced in templates
-
-### Common Icon Issues:
-- **Malformed SVG paths**: Check that all paths are properly closed and valid
-- **Missing viewBox**: All SVGs must have `viewBox="0 0 24 24"`
-- **Wrong stroke width**: Default should be 2, adjustable via CSS
-
-## Architecture Documentation
-
-Important technical decisions and architecture details are documented in `/docs-internal/`:
-- `/architecture/style-dictionary-strategy.md` - How we integrate with Style Dictionary
-- `/architecture/icon-system.md` - Detailed icon system architecture
-- `/decisions/ADR-001-style-dictionary.md` - Decision to use Style Dictionary for transformations
-
-These documents are gitignored but provide critical context for development.
+**Remember**: This is a living document. Update it when making architectural decisions or discovering new constraints.

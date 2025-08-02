@@ -93,6 +93,39 @@
                 timeout = setTimeout(() => func.apply(this, args), delay);
             };
         };
+        
+        // --- EASTER EGG: Logo Click Counter ---
+        let logoClickCount = 0;
+        const easterEggMessages = [
+            "Keep clicking...",
+            "Getting warmer...",
+            "Almost there!",
+            "🎉 You found the secret! You're clearly a design system enthusiast!",
+            "✨ Fun fact: This plugin was built with love and lots of coffee!",
+            "🚀 Thanks for being awesome!"
+        ];
+        
+        function handleLogoClick() {
+            logoClickCount++;
+            if (logoClickCount >= 5 && logoClickCount < easterEggMessages.length + 5) {
+                const messageIndex = logoClickCount - 5;
+                const message = easterEggMessages[messageIndex];
+                showTemporaryMessage(message);
+            }
+        }
+        
+        function showTemporaryMessage(message) {
+            // Create a temporary toast-like message
+            const toast = document.createElement('div');
+            toast.className = 'easter-egg-toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
         const renderIcons = () => {
             try {
                 console.log('[DEBUG] Rendering icons...');
@@ -196,7 +229,23 @@ function updateTokenSummary() {
             const exportBtn = document.getElementById('export-btn');
             if (exportBtn) {
                 exportBtn.disabled = selectedTokenCount === 0;
-                exportBtn.innerHTML = '<i data-icon="rocket"></i> Export ' + selectedTokenCount + ' Token' + (selectedTokenCount !== 1 ? 's' : '');
+                const tokenText = selectedTokenCount === 1 ? 'Token' : 'Tokens';
+                const buttonTexts = [
+                    '🚀 Launch ' + selectedTokenCount + ' ' + tokenText,
+                    '📦 Package ' + selectedTokenCount + ' ' + tokenText,
+                    '✨ Export ' + selectedTokenCount + ' ' + tokenText,
+                    '🎯 Deploy ' + selectedTokenCount + ' ' + tokenText
+                ];
+                const randomText = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
+                exportBtn.innerHTML = '<i data-icon="rocket"></i> ' + randomText;
+                
+                // Add satisfying click handler
+                exportBtn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                });
             }
         }
 
@@ -228,6 +277,13 @@ function updateTokenSummary() {
                 emptyStateAction.addEventListener('click', () =>
                     openUrl('https://help.figma.com/hc/en-us/articles/360041085694-Create-and-use-variables')
                 );
+            }
+            
+            // Add easter egg to empty state logo
+            const emptyStateLogo = document.querySelector('.empty-state .token-exporter-logo');
+            if (emptyStateLogo) {
+                emptyStateLogo.addEventListener('click', handleLogoClick);
+                emptyStateLogo.style.cursor = 'pointer';
             }
         }
 
@@ -277,6 +333,16 @@ function updateTokenSummary() {
                     stat.onclick = () => {
                         const type = stat.dataset.type;
                         appState.selectedTokenTypes.has(type) ? appState.selectedTokenTypes.delete(type) : appState.selectedTokenTypes.add(type);
+                        
+                        // Add a delightful bounce animation on click
+                        stat.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            stat.style.transform = 'scale(1.05)';
+                            setTimeout(() => {
+                                stat.style.transform = 'scale(1)';
+                            }, 100);
+                        }, 50);
+                        
                         updateUI();
                     };
                 });
@@ -363,19 +429,40 @@ function updateTokenSummary() {
                     '<div class="te-icon-grid" id="pluginIconGrid"></div>' +
                     '<div class="te-celebration" id="pluginCelebration"></div>' +
                     '<div class="te-glass-status surface-glass" id="pluginGlassStatus">' +
-                        '<p class="te-progress-percent" id="pluginProgressPercent">0%</p>' +
-                        '<div class="te-progress-track">' +
+                        '<p class="te-progress-percent te-progress-percent" id="pluginProgressPercent">0%</p>' +
+                        '<div class="te-te-progress-track te-progress-track">' +
                             '<div class="te-progress-fill" id="pluginProgressFill"></div>' +
                         '</div>' +
-                        '<p class="te-status-label" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Warming up</p>' +
+                        '<p class="te-status-label te-status-label" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Ready to export</p>' +
                     '</div>' +
                 '</div>';
             initializePluginLoader();
+            
+            // Start the beautiful animation sequence
+            animateExportProgress();
+        }
+        
+        // Match the design guide's beautiful timing
+        function animateExportProgress() {
+            // Track when we started for success timing
+            animationStartTime = Date.now();
+            
+            // Reset progress
+            currentProgress = 0;
+            updateProgress(0);
+            
+            // Animate with the same timing as the guide
+            setTimeout(() => updateProgress(25), 1500);   // 0 -> 25% at 1.5s
+            setTimeout(() => updateProgress(50), 2700);   // 25 -> 50% at 2.7s
+            setTimeout(() => updateProgress(75), 4000);   // 50 -> 75% at 4s
+            setTimeout(() => updateProgress(100), 4500);  // 75 -> 100% at 4.5s
+            // Success animation will trigger via message from Figma
         }
         
         // Store current progress for smooth animation
         let currentProgress = 0;
         let animationFrame = null;
+        let animationStartTime = 0;
         
         function updateProgress(targetProgress) {
             const progressStages = [
@@ -454,12 +541,21 @@ function updateTokenSummary() {
         }
         
         function showErrorState(message) {
+            // Make error messages more friendly and less scary
+            const friendlyMessages = {
+                'No tokens found': "Hmm, looks like we couldn't find any tokens to export. Maybe try creating some variables first?",
+                'Export failed': "Oops! Something went sideways during export. Don't worry, it happens to the best of us!",
+                'No collections selected': "Looks like no collections are selected. Pick some tokens to make the magic happen!"
+            };
+            
+            const friendlyMessage = friendlyMessages[message] || "Something unexpected happened, but we're sure you'll figure it out!";
+            
             DOMElements.tokenSummaryCard.innerHTML = 
-                '<div class="progress-container" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">' +
-                    '<i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: none; margin-bottom: var(--size-2);"></i>' +
-                    '<h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>' +
-                    '<p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">' + message + '</p>' +
-                    '<button class="btn btn-secondary btn-sm" id="close-error-btn" aria-label="Close error and try again">Try Again</button>' +
+                '<div class="progress-container error-state" style="animation: none; padding: var(--size-4); display:flex; flex-direction:column; align-items:center; justify-content:center; height: 194px; gap: var(--size-2);">' +
+                    '<i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: gentle-wiggle 0.5s ease-in-out; margin-bottom: var(--size-2);"></i>' +
+                    '<h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Oops!</h2>' +
+                    '<p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3); text-align: center;">' + friendlyMessage + '</p>' +
+                    '<button class="btn btn-secondary btn-sm" id="close-error-btn" aria-label="Close error and try again">Let\'s Try Again ✨</button>' +
                 '</div>';
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');
@@ -545,6 +641,36 @@ function updateTokenSummary() {
             renderIcons();
         }
 
+        // --- WHIMSICAL LOADING MESSAGES ---
+        let loadingMessageIndex = 0;
+        let loadingMessageInterval = null;
+        const loadingMessages = [
+            "Discovering tokens...",
+            "Exploring your design system...",
+            "Counting beautiful variables...",
+            "Organizing design magic...",
+            "Finding color treasures...",
+            "Collecting typography gems...",
+            "Almost ready to export!"
+        ];
+        
+        function startLoadingMessages() {
+            const messageEl = document.getElementById('loading-message');
+            if (!messageEl) return;
+            
+            loadingMessageInterval = setInterval(() => {
+                loadingMessageIndex = (loadingMessageIndex + 1) % loadingMessages.length;
+                messageEl.textContent = loadingMessages[loadingMessageIndex];
+            }, 1200); // Change message every 1.2 seconds
+        }
+        
+        function stopLoadingMessages() {
+            if (loadingMessageInterval) {
+                clearInterval(loadingMessageInterval);
+                loadingMessageInterval = null;
+            }
+        }
+
         // --- INITIALIZATION ---
         function initialize() {
             console.log('[DEBUG] Initializing plugin...');
@@ -552,6 +678,7 @@ function updateTokenSummary() {
             if (DOMElements.skeletonLoader) {
                 DOMElements.skeletonLoader.style.display = 'block';
                 console.log('[DEBUG] Skeleton loader visible');
+                startLoadingMessages(); // Start the delightful messages
             }
             if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
             if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
@@ -574,6 +701,7 @@ function updateTokenSummary() {
             switch (msg.type) {
                 case 'all-collections':
                     console.log('[DEBUG] Received collections:', msg.collections);
+                    stopLoadingMessages(); // Stop the delightful messages
                     DOMElements.skeletonLoader.style.display = 'none';
                     appState.collections = msg.collections || [];
                     if (appState.collections.length === 0) {
@@ -595,11 +723,13 @@ function updateTokenSummary() {
                     renderIcons();
                     break;
                 case 'export-progress':
-                    updateProgress(msg.percent);
+                    // Don't update if we're already animating smoothly
+                    // This prevents jumpy behavior from Figma messages
                     break;
                 case 'export-result':
-                    updateProgress(100);
-                    setTimeout(() => showSuccessState(msg.data), 500);
+                    // Wait for our animation to complete before showing success
+                    const timeToWait = Math.max(0, 4800 - (Date.now() - animationStartTime));
+                    setTimeout(() => showSuccessState(msg.data), timeToWait);
                     break;
                 case 'notify':
                     if (msg.error) showErrorState(msg.message);

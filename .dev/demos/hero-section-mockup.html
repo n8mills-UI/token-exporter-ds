@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Section Mockup - Token Exporter</title>
+    <link rel="stylesheet" href="../../docs/design-system.css">
+    <style>
+        /* Mobile title size adjustment */
+        @media (max-width: 768px) {
+            .guide-main-title {
+                font-size: var(--font-size-7) !important; /* Down from size-8 */
+                line-height: 1.1;
+            }
+        }
+
+        /* Improved hero layout */
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* New hook section */
+        .hero-hook {
+            margin: var(--size-6) 0;
+            padding: var(--size-4);
+            background: var(--surface-2);
+            border-radius: var(--radius-3);
+            border-left: 4px solid var(--brand-primary);
+        }
+
+        .hero-hook p {
+            margin: 0;
+            color: var(--text-2);
+            font-size: var(--font-size-2);
+            line-height: 1.6;
+        }
+
+        /* Stats improvements */
+        .stats-divider {
+            margin: var(--size-8) 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .stats-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--surface-3);
+        }
+
+        .stats-divider span {
+            background: var(--surface-1);
+            padding: 0 var(--size-4);
+            position: relative;
+            color: var(--text-2);
+            font-size: var(--font-size-1);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Refined stats for plugin only */
+        .plugin-stats .stat-label {
+            font-size: var(--font-size-1);
+        }
+
+        /* Better spacing */
+        .hero-description {
+            margin-top: var(--size-3);
+            margin-bottom: var(--size-6);
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container" style="max-width: 1200px; margin: 0 auto; padding: var(--size-6);">
+        
+        <!-- OPTION 1: Refined Hero with Plugin Focus -->
+        <section class="content-section hero-section" style="padding: var(--size-8) 0;">
+            <div class="hero-content">
+                <!-- Logo remains same -->
+                <div class="logo-container mb-3">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 160px; height: 160px;">
+                        <g clip-path="url(#clip0)">
+                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear)"/>
+                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        </g>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#D2FF37"/>
+                                <stop offset="1" stop-color="#EEFF00"/>
+                            </linearGradient>
+                            <clipPath id="clip0">
+                                <rect width="355" height="355" rx="58" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                
+                <h1 class="guide-main-title text-size-8 mb-3">Token Exporter</h1>
+                <p class="hero-tagline text-size-3">Bridge the gap from Figma variables to code</p>
+                <p class="hero-description text-2">Export design tokens to 6 platforms, validated with Style Dictionary standards</p>
+                
+                <!-- New hook section - placed after description -->
+                <div class="hero-hook">
+                    <p>Every designer knows this workflow: Copy variables from Figma. Paste into code. Rename for each platform. Repeat for every update.</p>
+                </div>
+            </div>
+
+            <!-- Plugin-only stats -->
+            <div class="stats-divider">
+                <span>Plugin Capabilities</span>
+            </div>
+            
+            <div class="stats-container-glass surface-glass plugin-stats">
+                <div class="stat-item">
+                    <span class="icon stat-icon" data-icon="package"></span>
+                    <div class="stat-number text-gradient-brand">
+                        <span class="stat-value">6</span>
+                    </div>
+                    <div class="stat-label">Export Platforms</div>
+                </div>
+                <div class="stat-item">
+                    <span class="icon stat-icon" data-icon="zap"></span>
+                    <div class="stat-number text-gradient-brand">
+                        <span class="stat-value">1</span>
+                    </div>
+                    <div class="stat-label">Click Export</div>
+                </div>
+                <div class="stat-item">
+                    <span class="icon stat-icon" data-icon="shield-check"></span>
+                    <div class="stat-number text-gradient-brand">
+                        <span class="stat-value">100</span><span class="stat-suffix">%</span>
+                    </div>
+                    <div class="stat-label">Style Dictionary Valid</div>
+                </div>
+                <div class="stat-item">
+                    <span class="icon stat-icon" data-icon="clock"></span>
+                    <div class="stat-number text-gradient-brand">
+                        <span class="stat-value">60</span><span class="stat-suffix">s</span>
+                    </div>
+                    <div class="stat-label">Export Time</div>
+                </div>
+            </div>
+        </section>
+
+        <hr style="margin: var(--size-8) 0; border: none; border-top: 1px solid var(--surface-3);">
+
+        <!-- OPTION 2: Separated Design System Section -->
+        <section class="content-section" style="padding: var(--size-8) 0;">
+            <h2 class="text-size-5 mb-4">Built with a Robust Foundation</h2>
+            
+            <div class="two-column-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--size-6); margin-bottom: var(--size-6);">
+                <div class="foundation-card" style="padding: var(--size-4); background: var(--surface-2); border-radius: var(--radius-3);">
+                    <h3 class="text-size-3 mb-2">Open Props Foundation</h3>
+                    <p class="text-2">500+ design tokens power this design system, providing a comprehensive foundation for both the plugin and documentation.</p>
+                </div>
+                
+                <div class="foundation-card" style="padding: var(--size-4); background: var(--surface-2); border-radius: var(--radius-3);">
+                    <h3 class="text-size-3 mb-2">Style Dictionary Validation</h3>
+                    <p class="text-2">Every export is validated against industry standards, ensuring compatibility with existing design token pipelines.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr style="margin: var(--size-8) 0; border: none; border-top: 1px solid var(--surface-3);">
+
+        <!-- Challenge/Solution/Impact remains same but with updated copy -->
+        <section class="content-section" style="padding: var(--size-8) 0;">
+            <div class="challenge-solution-grid">
+                <div class="enhanced-card challenge-card">
+                    <span class="icon card-icon-large icon--hairline" data-icon="triangle-alert"></span>
+                    <h3 class="card-title">The Challenge</h3>
+                    <p class="card-content">Manual token export is slow and error-prone, creating a disconnect between design and development.</p>
+                </div>
+                <div class="enhanced-card solution-card">
+                    <span class="icon card-icon-large icon--hairline" data-icon="lightbulb"></span>
+                    <h3 class="card-title">The Solution</h3>
+                    <p class="card-content">One-click export to 6 platforms, with Style Dictionary validation ensuring compatibility.</p>
+                </div>
+                <div class="enhanced-card impact-card">
+                    <span class="icon card-icon-large icon--hairline" data-icon="trending-up"></span>
+                    <h3 class="card-title">The Impact</h3>
+                    <p class="card-content">Export workflow reduced from minutes to seconds, with consistent naming across platforms.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
