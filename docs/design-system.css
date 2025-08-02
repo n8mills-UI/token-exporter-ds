@@ -13709,3 +13709,72 @@ input[type="file"]::file-selector-button {
     display: inline-block;
 }
 
+/* ========================================================================
+   FILTER CARD CONSISTENCY
+   Make filter cards look visually similar between guide and plugin
+   ======================================================================== */
+
+/* Ensure consistent filter card styling in plugin context */
+.figma-plugin .filter-section {
+    border-radius: var(--radius-3);
+    background: var(--surface-2);
+    border: var(--border-size-1) solid var(--color-border-default);
+}
+
+/* Match collection item styling between contexts */
+.figma-plugin .collection-item {
+    border-radius: var(--radius-3);
+    background: var(--surface-1);
+    border: var(--border-size-2) solid var(--color-border-subtle);
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.figma-plugin .collection-item:hover {
+    background: var(--surface-2);
+    border-color: var(--color-border-default);
+}
+
+/* Consistent selected state with lime highlighting */
+.figma-plugin .collection-item.selected {
+    background: color-mix(in srgb, var(--brand-primary) 8%, var(--surface-1));
+    border-color: var(--brand-primary);
+    border-width: var(--border-size-2);
+}
+
+/* Dark mode adjustments for better contrast */
+[data-theme="dark"] .figma-plugin .collection-item {
+    background: var(--surface-2);
+}
+
+[data-theme="dark"] .figma-plugin .collection-item.selected {
+    background: color-mix(in srgb, var(--brand-primary) 12%, var(--surface-2));
+}
+
+/* Ensure consistent checkbox styling */
+.figma-plugin .collection-checkbox {
+    border-radius: var(--radius-1);
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: var(--border-size-2) solid var(--color-border-default);
+}
+
+.figma-plugin .collection-item.selected .collection-checkbox {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+/* Consistent spacing in plugin */
+.figma-plugin .collection-list {
+    gap: var(--size-2);
+    padding: 0;
+}
+
+/* Ensure filter header matches */
+.figma-plugin .filter-section h4 {
+    font-size: var(--font-size-1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+}
+
