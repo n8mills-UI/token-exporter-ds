@@ -398,3 +398,98 @@ if (section.tokens && section.tokens.length > 0) {
 - Check browser console for JavaScript errors
 - Never mix @include directives with JavaScript code
 - Keep duplicate CSS rules consolidated
+
+## Icon System Architecture
+
+The Token Exporter uses a JavaScript-enhanced icon system that injects SVG icons at runtime. This approach was chosen due to Figma's Content Security Policy restrictions that prevent loading external icon fonts.
+
+### How It Works:
+1. **HTML**: Use `<i class="icon" data-icon="icon-name"></i>`
+2. **JavaScript**: Replaces the `<i>` element content with the corresponding SVG from the icon library
+3. **CSS**: Target icons using `[data-icon]` attribute selectors
+
+### CSS Selector Patterns:
+```css
+/* Target the SVG inside the icon element */
+[data-icon] svg { stroke-width: 2; }
+
+/* Target specific icons */
+[data-icon="rocket"] { color: var(--brand-primary); }
+
+/* Icon size modifiers */
+.btn-sm [data-icon] { width: var(--icon-sm); height: var(--icon-sm); }
+
+/* Stroke weight modifiers */
+.btn-icon [data-icon] svg { stroke-width: var(--icon-stroke-thin); }
+```
+
+### Important Notes:
+- **Never use `.lucide` selectors** - This was legacy code from an older icon system
+- **Always use `[data-icon]` for icon targeting** - This is what the JavaScript looks for
+- **Use `.icon` class for layout/spacing** - But not for SVG-specific properties
+- **Icons require JavaScript** - They won't render without the icon system script
+
+### Common Patterns:
+```html
+<!-- Basic icon -->
+<i data-icon="rocket"></i>
+
+<!-- Icon with size class -->
+<i class="icon icon-lg" data-icon="rocket"></i>
+
+<!-- Icon in button -->
+<button class="btn">
+  <i data-icon="rocket"></i>
+  <span>Launch</span>
+</button>
+```
+
+## CRITICAL: Icon System Rules
+
+**NEVER add external icon libraries - the build will fail!**
+
+### Icon System Architecture
+- **Single Source of Truth**: All icons MUST be defined in `src/components/icons/_icon-system.html`
+- **No External Dependencies**: CDN icon libraries (Lucide, FontAwesome, etc.) are BLOCKED by build.js
+- **JavaScript Runtime Injection**: Icons are injected at runtime due to Figma CSP restrictions
+- **Validation Script**: `scripts/validate-icons-temp.js` checks all icon references exist
+
+### Usage Rules:
+1. **All icons must exist in the icon system before use**
+   - Check available icons: `node scripts/validate-icons-temp.js`
+   - Missing icons will fail validation
+   
+2. **Never add external icon libraries**
+   ```html
+   <!-- ❌ BLOCKED - Build will fail -->
+   <script src="https://unpkg.com/lucide@latest"></script>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/...">
+   
+   <!-- ✅ CORRECT - Use internal system -->
+   <i data-icon="rocket"></i>
+   ```
+
+3. **Adding new icons**
+   - Add SVG definition to `src/components/icons/_icon-system.html`
+   - Use clean, optimized SVG paths
+   - Test with validation script before committing
+
+### Build Protection:
+The build system will immediately fail with clear error messages if:
+- External icon library CDNs are detected in JavaScript
+- Icon font CDNs are detected in CSS imports
+- Missing icons are referenced in templates
+
+### Common Icon Issues:
+- **Malformed SVG paths**: Check that all paths are properly closed and valid
+- **Missing viewBox**: All SVGs must have `viewBox="0 0 24 24"`
+- **Wrong stroke width**: Default should be 2, adjustable via CSS
+
+## Architecture Documentation
+
+Important technical decisions and architecture details are documented in `/docs-internal/`:
+- `/architecture/style-dictionary-strategy.md` - How we integrate with Style Dictionary
+- `/architecture/icon-system.md` - Detailed icon system architecture
+- `/decisions/ADR-001-style-dictionary.md` - Decision to use Style Dictionary for transformations
+
+These documents are gitignored but provide critical context for development.

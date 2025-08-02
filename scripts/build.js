@@ -117,7 +117,17 @@ async function processCssImports(cssFile, outputBundle) {
                 console.error(`  ${colors.red}✗${colors.reset} File not found: ${localPath}`);
             }
         } else if (url.startsWith('https://')) {
-            // Remote file
+            // Remote file - CHECK FOR ICON LIBRARIES
+            const iconLibraries = ['lucide', 'fontawesome', 'heroicons', 'feather', 'tabler'];
+            const isIconLibrary = iconLibraries.some(lib => url.toLowerCase().includes(lib));
+            
+            if (isIconLibrary) {
+                console.error(`\n  ${colors.red}✗ BLOCKED: External icon library detected in CSS!${colors.reset}`);
+                console.error(`    ${colors.yellow}${url}${colors.reset}`);
+                console.error(`    ${colors.red}Use internal icon system only. See CLAUDE.md#icon-system${colors.reset}\n`);
+                process.exit(1);
+            }
+            
             console.log(`  ${colors.cyan}↓${colors.reset} Fetching: ${url.substring(0, 50)}...`);
             try {
                 const response = await fetch(url);
@@ -147,21 +157,48 @@ async function processJavaScriptBundles(templateFile, outputBundle) {
     const templateContent = fs.readFileSync(templateFile, 'utf8');
     let bundledJs = '';
     
-    // Find all external script tags
-    const scriptUrls = [...templateContent.matchAll(/<script\s+src="(https:\/\/[^"]+)"/g)]
-        .map(match => match[1]);
+    // Find all script tags (both external and local)
+    const scriptMatches = [...templateContent.matchAll(/<script\s+src="([^"]+)"/g)];
     
-    for (const url of scriptUrls) {
-        console.log(`  ${colors.cyan}↓${colors.reset} Fetching JS: ${url.substring(0, 50)}...`);
-        try {
-            const response = await fetch(url);
-            if (response.ok) {
-                bundledJs += await response.text() + '\n';
-            } else {
-                console.error(`  ${colors.red}✗${colors.reset} Failed to fetch: ${response.status}`);
+    for (const match of scriptMatches) {
+        const src = match[1];
+        
+        if (src.startsWith('https://')) {
+            // External script - CHECK FOR ICON LIBRARIES
+            const iconLibraries = ['lucide', 'fontawesome', 'heroicons', 'feather', 'tabler'];
+            const isIconLibrary = iconLibraries.some(lib => src.toLowerCase().includes(lib));
+            
+            if (isIconLibrary) {
+                console.error(`\n  ${colors.red}✗ BLOCKED: External icon library detected!${colors.reset}`);
+                console.error(`    ${colors.yellow}${src}${colors.reset}`);
+                console.error(`    ${colors.red}Use internal icon system only. See CLAUDE.md#icon-system${colors.reset}\n`);
+                process.exit(1);
             }
-        } catch (error) {
-            console.error(`  ${colors.red}✗${colors.reset} Network error: ${error.message}`);
+            
+            console.log(`  ${colors.cyan}↓${colors.reset} Fetching JS: ${src.substring(0, 50)}...`);
+            try {
+                const response = await fetch(src);
+                if (response.ok) {
+                    bundledJs += await response.text() + '\n';
+                } else {
+                    console.error(`  ${colors.red}✗${colors.reset} Failed to fetch: ${response.status}`);
+                }
+            } catch (error) {
+                console.error(`  ${colors.red}✗${colors.reset} Network error: ${error.message}`);
+            }
+        } else {
+            // Local script
+            const scriptPath = path.resolve(path.dirname(templateFile), src);
+            console.log(`  ${colors.cyan}↓${colors.reset} Reading local: ${path.basename(src)}`);
+            try {
+                if (fs.existsSync(scriptPath)) {
+                    bundledJs += fs.readFileSync(scriptPath, 'utf8') + '\n';
+                } else {
+                    console.error(`  ${colors.red}✗${colors.reset} File not found: ${scriptPath}`);
+                }
+            } catch (error) {
+                console.error(`  ${colors.red}✗${colors.reset} Read error: ${error.message}`);
+            }
         }
     }
     

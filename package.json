@@ -51,7 +51,8 @@
     "wallace-cli": "^1.1.0"
   },
   "dependencies": {
-    "axios": "^1.11.0"
+    "axios": "^1.11.0",
+    "jszip": "^3.10.1"
   },
   "lint-staged": {
     "docs/design-system.css": [
@@ -61,10 +62,15 @@
       "npm run check"
     ],
     "*.template.html": [
-      "npm run check"
+      "npm run check",
+      "node scripts/validate-icons-temp.js"
     ],
     "src/components/_*.html": [
-      "npm run check"
+      "npm run check",
+      "node scripts/validate-icons-temp.js"
+    ],
+    "src/components/icons/_icon-system.html": [
+      "node scripts/validate-icons-temp.js"
     ]
   }
 }

@@ -1,6 +1,7 @@
 <!-- Consolidated Icon System -->
 <!-- @include src/components/icons/_icon-system.html -->
-<body>
+<script src="../vendor/jszip.min.js"></script>
+<body class="figma-plugin">
     <main>
         <!-- This is the main content wrapper -->
         <div class="content-wrapper" id="content-wrapper">
@@ -17,8 +18,34 @@
                         <!-- Token Summary will be injected here by the script -->
                     </div>
                     
-                    <!-- The new, stateful export card -->
-                    <!-- @include src/components/_forms-example.html -->
+                    <!-- Export Card Container -->
+                    <div id="export-card-container">
+                        <!-- Quick Export View (Simple Mode) -->
+                        <div id="quick-export-view">
+                            <!-- @include src/components/_quick-export-card.html -->
+                        </div>
+                        
+                        <!-- Advanced Filter View (Advanced Mode) -->
+                        <div id="advanced-filter-view" class="state-hidden">
+                            <div class="card filter-section is-compact">
+                                <div class="card-content">
+                                    <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
+                                        <i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>
+                                        <h4 class="text-label">Filters</h4>
+                                    </div>
+                                    <div class="collection-list" id="collection-list">
+                                        <!-- Dynamic collection items will be injected here -->
+                                    </div>
+                                </div>
+                                <div class="card-actions" style="margin-top: var(--size-3);">
+                                    <button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">
+                                        <i data-icon="arrow-left"></i>
+                                        <span>Back to Quick Export</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -37,7 +64,7 @@
             mode: 'simple',
             collections: [],
             selectedCollections: new Set(),
-            selectedFormat: 'css',
+            selectedFormats: new Set(['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind']),
             selectedTokenTypes: new Set(['color', 'text', 'number', 'states']),
             globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 },
         };
@@ -68,8 +95,16 @@
         };
         const renderIcons = () => {
             try {
-                if (window.renderPluginIcons) {
+                console.log('[DEBUG] Rendering icons...');
+                // Try both function names for compatibility
+                if (window.renderIcons) {
+                    window.renderIcons();
+                    console.log('[DEBUG] Icons rendered using window.renderIcons');
+                } else if (window.renderPluginIcons) {
                     window.renderPluginIcons();
+                    console.log('[DEBUG] Icons rendered using window.renderPluginIcons');
+                } else {
+                    console.warn("Icon rendering function not found");
                 }
             } catch (error) {
                 console.error("Plugin icon rendering failed:", error);
@@ -87,6 +122,7 @@
 
 
 function updateTokenSummary() {
+    console.log('[DEBUG] Updating token summary...');
     const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
     const selectedCount = appState.mode === 'simple' ? totalTokens : appState.collections.reduce((count, col) => {
         if (!appState.selectedCollections.has(col.id)) return count;
@@ -106,10 +142,12 @@ function updateTokenSummary() {
             '</div>';
     }).join('');
 
+    console.log('[DEBUG] Token types HTML includes icons:', tokenTypesHTML.includes('data-icon'));
     DOMElements.tokenSummaryCard.innerHTML = 
         '<div class="text-heading-xl token-count-total">' + selectedCount + '</div>' +
         '<div class="text-label token-label">' + tokenLabelText + '</div>' + 
         '<div class="token-breakdown">' + tokenTypesHTML + '</div>';
+    console.log('[DEBUG] Token summary updated - icons need re-rendering');
 }
 
                 function updateExportAndCollections() {
@@ -127,26 +165,24 @@ function updateTokenSummary() {
                         if (count === 0) return '';
                         const iconMap = { color: 'palette', text: 'type', states: 'toggle-right', number: 'hash' };
                         const colorClassMap = { color: 'cyan', text: 'purple', number: 'orange', states: 'pink' };
-                        return '<span class="badge small ' + colorClassMap[type] + ' ' + (!appState.selectedTokenTypes.has(type) ? 'disabled' : '') + '"><i class="icon" data-icon="' + iconMap[type] + '"></i> ' + count + '</span>';
+                        return '<span class="badge small ' + colorClassMap[type] + ' ' + (!appState.selectedTokenTypes.has(type) ? 'disabled' : '') + '"><span class="icon" data-icon="' + iconMap[type] + '"></span> ' + count + '</span>';
                     }).join('');
 
                     return '<div class="collection-item ' + (isSelected ? 'selected' : '') + '" data-collection-id="' + c.id + '">' +
                         '<div class="collection-checkbox" role="checkbox" aria-checked="' + isSelected + '" tabindex="0" aria-label="Select ' + c.name + ' collection"></div>' +
                         '<div class="collection-info">' +
                             '<div class="text-body-lg collection-name">' + c.name + '</div>' +
-                            '<div class="collection-badge-group">' + pillsHTML + '</div>' +
+                            '<div class="collection-pills">' + pillsHTML + '</div>' +
                         '</div>' +
                         '<div class="text-caption collection-count">' + c.totalVariables + ' tokens</div>' +
                     '</div>';
                 }).join('');
 
-                DOMElements.advancedFilterView.innerHTML = 
-                    '<h3 class="text-label section-title"><i data-icon="sliders-horizontal"></i> Advanced Filtering</h3>' +
-                    '<div class="collection-list" style="margin-top: var(--size-3);">' + collectionItemsHTML + '</div>' +
-                    '<button class="btn secondary btn-md" id="toggle-simple-mode" style="margin-top: var(--size-3);" aria-label="Return to quick export mode">' +
-                        '<i data-icon="arrow-left"></i>' +
-                        '<span>Back to Quick Export</span>' +
-                    '</button>';
+                // Only update the collection list content, not the entire card
+                const collectionListElement = document.getElementById('collection-list');
+                if (collectionListElement) {
+                    collectionListElement.innerHTML = collectionItemsHTML;
+                }
             }
             
             // Always update the export button in the quick export view
@@ -175,7 +211,7 @@ function updateTokenSummary() {
                 renderIcons();
             };
             DOMElements.aboutModal.onclick = (e) => {
-                if (e.target.closest('.about-close') || e.target === DOMElements.aboutModal) {
+                if (e.target.closest('[data-close-modal]') || e.target.closest('.about-modal-backdrop') || e.target === DOMElements.aboutModal) {
                     DOMElements.aboutModal.classList.remove('show');
                 }
             };
@@ -212,11 +248,26 @@ function updateTokenSummary() {
             };
 
             document.querySelectorAll('.collection-item').forEach(item => {
-                item.onclick = () => {
+                item.onclick = (e) => {
+                    // Prevent clicks on badges from triggering selection
+                    if (e.target.closest('.badge')) return;
+                    
                     const id = item.dataset.collectionId;
-                    if (appState.mode === 'advanced') {
-                        appState.selectedCollections.has(id) ? appState.selectedCollections.delete(id) : appState.selectedCollections.add(id);
+                    if (appState.mode === 'advanced' && id) {
+                        if (appState.selectedCollections.has(id)) {
+                            appState.selectedCollections.delete(id);
+                        } else {
+                            appState.selectedCollections.add(id);
+                        }
                         updateUI();
+                    }
+                };
+                
+                // Add keyboard support for accessibility
+                item.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        item.click();
                     }
                 };
             });
@@ -231,10 +282,67 @@ function updateTokenSummary() {
                 });
             }
 
-            const formatSelect = document.getElementById('format-select');
-            if (formatSelect) formatSelect.onchange = e => {
-                appState.selectedFormat = e.target.value;
-            };
+            // Multi-select format dropdown
+            const formatTrigger = document.getElementById('format-select-trigger');
+            const formatDropdown = document.getElementById('format-select-dropdown');
+            const formatLabel = document.getElementById('format-select-label');
+            const formatCheckboxes = document.querySelectorAll('.format-checkbox');
+            
+            if (formatTrigger && formatDropdown) {
+                // Initialize all checkboxes as checked
+                formatCheckboxes.forEach(cb => cb.checked = true);
+                
+                formatTrigger.onclick = (e) => {
+                    e.stopPropagation();
+                    const isExpanded = formatTrigger.getAttribute('aria-expanded') === 'true';
+                    formatTrigger.setAttribute('aria-expanded', !isExpanded);
+                    formatDropdown.hidden = isExpanded;
+                };
+                
+                // Handle checkbox changes
+                formatCheckboxes.forEach(checkbox => {
+                    checkbox.onchange = () => {
+                        appState.selectedFormats.clear();
+                        formatCheckboxes.forEach(cb => {
+                            if (cb.checked) {
+                                appState.selectedFormats.add(cb.value);
+                            }
+                        });
+                        updateFormatLabel();
+                    };
+                });
+                
+                // Update label based on selection
+                function updateFormatLabel() {
+                    const count = appState.selectedFormats.size;
+                    if (count === 0) {
+                        formatLabel.textContent = 'No formats selected';
+                    } else if (count === 6) {
+                        formatLabel.textContent = 'All Formats';
+                    } else if (count === 1) {
+                        const format = Array.from(appState.selectedFormats)[0];
+                        const labels = {
+                            css: 'CSS Variables',
+                            swift: 'Swift (iOS)',
+                            android: 'Android XML',
+                            flutter: 'Flutter',
+                            w3c: 'JSON (W3C)',
+                            tailwind: 'Tailwind Config'
+                        };
+                        formatLabel.textContent = labels[format] || format;
+                    } else {
+                        formatLabel.textContent = count + ' formats selected';
+                    }
+                }
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!formatTrigger.contains(e.target) && !formatDropdown.contains(e.target)) {
+                        formatTrigger.setAttribute('aria-expanded', 'false');
+                        formatDropdown.hidden = true;
+                    }
+                });
+            }
         }
         
         // --- EXPORT & PROGRESS ---
@@ -242,7 +350,7 @@ function updateTokenSummary() {
             const collectionIds = appState.mode === 'simple' ? appState.collections.map(c => c.id) : Array.from(appState.selectedCollections);
             const tokenTypes = Array.from(appState.selectedTokenTypes);
             if (collectionIds.length === 0 || tokenTypes.length === 0) return;
-            const formats = appState.selectedFormat === 'all' ? ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'] : [appState.selectedFormat];
+            const formats = Array.from(appState.selectedFormats);
             
             showProgress();
             
@@ -265,7 +373,11 @@ function updateTokenSummary() {
             initializePluginLoader();
         }
         
-        function updateProgress(progress) {
+        // Store current progress for smooth animation
+        let currentProgress = 0;
+        let animationFrame = null;
+        
+        function updateProgress(targetProgress) {
             const progressStages = [
                 { percent: 25, label: "Analyzing" },
                 { percent: 50, label: "Packaging" },
@@ -277,11 +389,38 @@ function updateTokenSummary() {
             const fillEl = document.getElementById('pluginProgressFill');
             const labelEl = document.getElementById('pluginStatusLabel');
             
-            if (percentEl) percentEl.textContent = progress + '%';
-            if (fillEl) fillEl.style.width = progress + '%';
+            // Cancel any existing animation
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
             
-            const currentStage = progressStages.find(s => progress <= s.percent) || progressStages[progressStages.length - 1];
-            if (labelEl) labelEl.textContent = currentStage.label;
+            // Smooth animation function
+            function animateProgress() {
+                const diff = targetProgress - currentProgress;
+                const step = diff * 0.1; // Ease-out animation
+                
+                if (Math.abs(diff) > 0.5) {
+                    currentProgress += step;
+                    
+                    if (percentEl) percentEl.textContent = Math.round(currentProgress) + '%';
+                    if (fillEl) fillEl.style.width = currentProgress + '%';
+                    
+                    const currentStage = progressStages.find(s => currentProgress <= s.percent) || progressStages[progressStages.length - 1];
+                    if (labelEl) labelEl.textContent = currentStage.label;
+                    
+                    animationFrame = requestAnimationFrame(animateProgress);
+                } else {
+                    // Final update
+                    currentProgress = targetProgress;
+                    if (percentEl) percentEl.textContent = targetProgress + '%';
+                    if (fillEl) fillEl.style.width = targetProgress + '%';
+                    
+                    const currentStage = progressStages.find(s => targetProgress <= s.percent) || progressStages[progressStages.length - 1];
+                    if (labelEl) labelEl.textContent = currentStage.label;
+                }
+            }
+            
+            animateProgress();
         }
 
         function showSuccessState(fileData) {
@@ -300,7 +439,7 @@ function updateTokenSummary() {
             if(celebrationContainer) {
                 const successIcon = document.createElement('div');
                 successIcon.className = 'te-success-icon';
-                successIcon.innerHTML = '<i data-icon="check-circle"></i>';
+                successIcon.innerHTML = '<i data-icon="circle-check-big"></i>';
                 celebrationContainer.appendChild(successIcon);
             }
             
@@ -311,7 +450,7 @@ function updateTokenSummary() {
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
-            }, 2500);
+            }, 5000);
         }
         
         function showErrorState(message) {
@@ -320,34 +459,55 @@ function updateTokenSummary() {
                     '<i data-icon="alert-triangle" class="icon icon--xl success-icon" style="color:var(--color-text-error); animation: none; margin-bottom: var(--size-2);"></i>' +
                     '<h2 class="text-heading-md success-title" style="margin-bottom: var(--size-1);">Export Failed</h2>' +
                     '<p class="text-body-md success-subtitle" style="margin-bottom: var(--size-3);">' + message + '</p>' +
-                    '<button class="btn secondary btn-inline" id="close-error-btn" aria-label="Close error and try again">Try Again</button>' +
+                    '<button class="btn btn-secondary btn-sm" id="close-error-btn" aria-label="Close error and try again">Try Again</button>' +
                 '</div>';
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');
             if (closeBtn) closeBtn.onclick = updateTokenSummary;
         }
 
-        function triggerSave(data) {
+        async function triggerSave(data) {
             const link = document.createElement('a');
+            
             if (data.length === 1) {
                 const blob = new Blob([data[0].content], { type: 'text/plain;charset=utf-8' });
                 link.href = URL.createObjectURL(blob);
                 link.download = data[0].filename;
-            } else {
-                data.forEach((file, index) => {
-                    setTimeout(() => {
-                        const fileLink = document.createElement('a');
-                        const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
-                        fileLink.href = URL.createObjectURL(blob);
-                        fileLink.download = file.filename;
-                        fileLink.click();
-                        URL.revokeObjectURL(fileLink.href);
-                    }, index * 300);
-                });
-                return;
+                link.click();
+                URL.revokeObjectURL(link.href);
+            } else if (data.length > 1) {
+                // Create ZIP file for multiple formats
+                try {
+                    const zip = new JSZip();
+                    
+                    // Add each file to the ZIP
+                    data.forEach(file => {
+                        zip.file(file.filename, file.content);
+                    });
+                    
+                    // Generate the ZIP file
+                    const content = await zip.generateAsync({ type: 'blob' });
+                    
+                    // Create download link
+                    link.href = URL.createObjectURL(content);
+                    link.download = 'design-tokens.zip';
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                } catch (error) {
+                    console.error('Failed to create ZIP:', error);
+                    // Fallback to individual downloads
+                    data.forEach((file, index) => {
+                        setTimeout(() => {
+                            const fileLink = document.createElement('a');
+                            const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
+                            fileLink.href = URL.createObjectURL(blob);
+                            fileLink.download = file.filename;
+                            fileLink.click();
+                            URL.revokeObjectURL(fileLink.href);
+                        }, index * 300);
+                    });
+                }
             }
-            link.click();
-            URL.revokeObjectURL(link.href);
         }
 
         function initializePluginLoader() {
@@ -359,7 +519,7 @@ function updateTokenSummary() {
                 { icon: 'hash', color: '--value-number' }, { icon: 'toggle-right', color: '--value-state' }
             ];
             
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 80; i++) {
                 const cell = document.createElement('div');
                 cell.classList.add('te-icon-cell');
                 
@@ -387,15 +547,21 @@ function updateTokenSummary() {
 
         // --- INITIALIZATION ---
         function initialize() {
+            console.log('[DEBUG] Initializing plugin...');
             // Explicitly set the correct initial UI state.
-            if (DOMElements.skeletonLoader) DOMElements.skeletonLoader.style.display = 'block';
+            if (DOMElements.skeletonLoader) {
+                DOMElements.skeletonLoader.style.display = 'block';
+                console.log('[DEBUG] Skeleton loader visible');
+            }
             if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
             if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
 
             // Render icons for the skeleton loader.
+            console.log('[DEBUG] Initial icon render for skeleton loader');
             renderIcons(); 
 
             // Immediately ask the main plugin for the variable collections.
+            console.log('[DEBUG] Requesting collections from plugin...');
             parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
 
             // Attach all static event listeners.
@@ -407,14 +573,17 @@ function updateTokenSummary() {
             if (!msg) return;
             switch (msg.type) {
                 case 'all-collections':
+                    console.log('[DEBUG] Received collections:', msg.collections);
                     DOMElements.skeletonLoader.style.display = 'none';
                     appState.collections = msg.collections || [];
                     if (appState.collections.length === 0) {
                         // If no collections, show the empty state and hide the main UI
+                        console.log('[DEBUG] No collections - showing empty state');
                         DOMElements.emptyState.style.display = 'flex';
                         DOMElements.mainUI.style.display = 'none';
                     } else {
                         // If collections exist, show the main UI and hide the empty state
+                        console.log('[DEBUG] Collections found - showing main UI');
                         DOMElements.emptyState.style.display = 'none';
                         DOMElements.mainUI.style.display = 'block';
                         appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
@@ -422,6 +591,7 @@ function updateTokenSummary() {
                         appState.selectedCollections = new Set(appState.collections.map(c => c.id));
                         updateUI();
                     }
+                    console.log('[DEBUG] About to render icons after collections loaded');
                     renderIcons();
                     break;
                 case 'export-progress':

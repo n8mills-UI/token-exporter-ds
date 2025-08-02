@@ -8,23 +8,46 @@
             <h4 class="text-label">Quick Export</h4>
         </div>
         <div class="format-select-wrapper">
-            <select class="format-select" id="format-select">
-                <option value="all" selected>All Formats</option>
-                <option value="css">CSS Variables</option>
-                <option value="swift">Swift (iOS)</option>
-                <option value="android">Android XML</option>
-                <option value="flutter">Flutter</option>
-                <option value="w3c">JSON (W3C)</option>
-                <option value="tailwind">Tailwind Config</option>
-            </select>
+            <div class="format-select-container" id="format-select-container">
+                <button class="format-select-trigger" id="format-select-trigger" aria-expanded="false" aria-haspopup="true">
+                    <span id="format-select-label">All Formats</span>
+                    <i data-icon="chevron-down" class="icon-xs"></i>
+                </button>
+                <div class="format-select-dropdown" id="format-select-dropdown" hidden>
+                    <label class="format-option">
+                        <input type="checkbox" value="css" class="format-checkbox">
+                        <span>CSS Variables</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="swift" class="format-checkbox">
+                        <span>Swift (iOS)</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="android" class="format-checkbox">
+                        <span>Android XML</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="flutter" class="format-checkbox">
+                        <span>Flutter</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="w3c" class="format-checkbox">
+                        <span>JSON (W3C)</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="tailwind" class="format-checkbox">
+                        <span>Tailwind Config</span>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">
-        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
+        <button class="btn btn-primary btn-sm" id="export-btn" aria-label="Export design tokens">
             <i data-icon="rocket"></i>
             <span>Package Tokens</span>
         </button>
-        <button class="btn btn-secondary btn-sm" aria-label="Show filters">
+        <button class="btn btn-secondary btn-sm" id="toggle-advanced-mode" aria-label="Show filters">
             <i data-icon="sliders-horizontal"></i>
             <span>Filters</span>
         </button>

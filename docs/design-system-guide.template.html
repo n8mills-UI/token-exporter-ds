@@ -5,12 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Token Exporter - Design System Guide</title>
         
-        <!-- Lucide Icons -->
-        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-        
         <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
         <link rel="stylesheet" href="design-system.css">
+        
+        <!-- Icon System -->
+        <!-- @include src/components/icons/_icon-system.html -->
     </head>
 
 
@@ -119,11 +118,11 @@
                 <ul class="nav-links">
                     <li><a href="#colors" class="nav-link"><i data-icon="palette"></i> Colors</a></li>
                     <li><a href="#typography" class="nav-link"><i data-icon="type"></i> Typography</a></li>
-                    <li><a href="#spacing" class="nav-link"><i data-icon="move-horizontal"></i> Spacing</a></li>
+                    <li><a href="#spacing" class="nav-link"><i data-icon="move"></i> Spacing</a></li>
                     <li><a href="#effects" class="nav-link"><i data-icon="layers"></i> Effects</a></li>
                     <li><a href="#border" class="nav-link"><i data-icon="square"></i> Borders</a></li>
                     <li><a href="#border-radius" class="nav-link"><i data-icon="circle"></i> Radius</a></li>
-                    <li><a href="#animations" class="nav-link"><i data-icon="play-circle"></i> Motion</a></li>
+                    <li><a href="#animations" class="nav-link"><i data-icon="play"></i> Motion</a></li>
                     <li><a href="#icons" class="nav-link"><i data-icon="sparkles"></i> Icons</a></li>
                 </ul>
             </div>
@@ -133,7 +132,7 @@
                 <h3 class="nav-section-title">Components</h3>
                 <ul class="nav-links">
                     <li><a href="#token-card" class="nav-link"><i data-icon="credit-card"></i> Cards</a></li>
-                    <li><a href="#buttons" class="nav-link"><i data-icon="mouse-pointer-2"></i> Buttons</a></li>
+                    <li><a href="#buttons" class="nav-link"><i data-icon="pointer"></i> Buttons</a></li>
                     <li><a href="#badges"><i data-icon="tag"></i> Badges</a></li>
                     <li><a href="#modals" class="nav-link"><i data-icon="app-window"></i> Modals</a></li>
                 </ul>
@@ -274,17 +273,17 @@
 </div>
                 <div class="challenge-solution-grid">
     <div class="enhanced-card challenge-card">
-        <span class="icon card-icon-large" data-icon="alert-triangle"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="triangle-alert"></span>
         <h3 class="card-title">The Challenge</h3>
         <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
     </div>
     <div class="enhanced-card solution-card">
-        <span class="icon card-icon-large" data-icon="lightbulb"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="lightbulb"></span>
         <h3 class="card-title">The Solution</h3>
         <p class="card-content">Automated multi-format export with intelligent alias resolution and platform-native naming conventions.</p>
     </div>
     <div class="enhanced-card impact-card">
-        <span class="icon card-icon-large" data-icon="trending-up"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="trending-up"></span>
         <h3 class="card-title">The Impact</h3>
         <p class="card-content">10x faster token export, zero manual errors, and a seamless design-to-code workflow.</p>
     </div>
@@ -380,11 +379,11 @@
             </div>
             <div class="tech-item" data-tech="figma" data-url="https://www.figma.com/">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Figma
             </div>
@@ -480,7 +479,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tokens-grid font-grid mt-0">
+            <div class="tokens-grid font-grid">
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview font-sans">The quick brown fox jumps over the lazy dog.</div></div></div>
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-mono</div><div class="token-value">'Monaco', 'Menlo', monospace</div><div class="text-preview font-mono">const greeting = "Hello, World!";</div></div></div>
             </div>
@@ -490,7 +489,7 @@
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="move-horizontal"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
+                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="move"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div></div>
@@ -691,7 +690,7 @@
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play-circle"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
                         <div class="tokens-grid animation-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div></div>
@@ -943,6 +942,11 @@
                                     <div class="example-label">Stroke Weights</div>
                                     <div class="example-container">
                                         <div class="icon-weights-grid">
+                                            <div class="icon-weight-card hairline">
+                                                <i data-icon="feather" style="width: 48px; height: 48px;"></i>
+                                                <code>--icon-stroke-hairline</code>
+                                                <span class="weight-value">1px</span>
+                                            </div>
                                             <div class="icon-weight-card thin">
                                                 <i data-icon="feather" style="width: 48px; height: 48px;"></i>
                                                 <code>--icon-stroke-thin</code>
@@ -957,6 +961,11 @@
                                                 <i data-icon="feather" style="width: 48px; height: 48px;"></i>
                                                 <code>--icon-stroke-bold</code>
                                                 <span class="weight-value">2.5px</span>
+                                            </div>
+                                            <div class="icon-weight-card heavy">
+                                                <i data-icon="feather" style="width: 48px; height: 48px;"></i>
+                                                <code>--icon-stroke-heavy</code>
+                                                <span class="weight-value">3px</span>
                                             </div>
                                         </div>
                                     </div>
@@ -982,17 +991,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Default State</div>
                 <div class="example-container">
-                    <!-- src/components/_token-card-default.html -->
-<div class="card token-summary">
-    <div class="text-heading-xl token-count-total">247</div>
-    <div class="text-label token-label">Tokens Found</div>
-    <div class="token-breakdown">
-        <div class="token-type-stat color"><span class="icon" data-icon="palette"></span><div class="count">89</div><div class="text-label label">colors</div></div>
-        <div class="token-type-stat text"><span class="icon" data-icon="type"></span><div class="count">42</div><div class="text-label label">text</div></div>
-        <div class="token-type-stat number"><span class="icon" data-icon="hash"></span><div class="count">98</div><div class="text-label label">numbers</div></div>
-        <div class="token-type-stat states"><span class="icon" data-icon="toggle-right"></span><div class="count">18</div><div class="text-label label">states</div></div>
-    </div>
-</div>
+                    <!-- @include src/components/_token-card-default.html -->
                 </div>
             </div>
 
@@ -1000,17 +999,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Advanced Mode</div>
                 <div class="example-container">
-                    <!-- src/components/_token-card-advanced.html -->
-<div class="card token-summary advanced-mode">
-    <div class="text-heading-xl token-count-total">131</div>
-    <div class="text-label token-label">Tokens Selected</div>
-    <div class="token-breakdown">
-        <div class="token-type-stat color active"><span class="icon" data-icon="palette"></span><div class="count">89</div><div class="text-label label">colors</div></div>
-        <div class="token-type-stat text active"><span class="icon" data-icon="type"></span><div class="count">42</div><div class="text-label label">text</div></div>
-        <div class="token-type-stat number"><span class="icon" data-icon="hash"></span><div class="count">98</div><div class="text-label label">numbers</div></div>
-        <div class="token-type-stat states disabled"><span class="icon" data-icon="toggle-right"></span><div class="count">0</div><div class="text-label label">states</div></div>
-    </div>
-</div>
+                    <!-- @include src/components/_token-card-advanced.html -->
                 </div>
             </div>
 
@@ -1056,18 +1045,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Progress Flow</div>
                 <div class="example-container">
-                    <!-- src/components/_progress-flow-demo.html -->
-<div class="te-progress-loader" id="guideProgressLoader">
-    <div class="te-icon-grid" id="guideIconGrid"></div>
-    <div class="te-celebration" id="guideCelebration"></div>
-    <div class="te-glass-status surface-glass" id="guideGlassStatus">
-        <p class="te-progress-percent glass-text-primary" id="guideProgressPercent">0%</p>
-        <div class="te-progress-track progress-track">
-            <div class="te-progress-fill" id="guideProgressFill"></div>
-        </div>
-        <p class="te-status-label glass-text-muted" id="guideStatusLabel">Ready to export</p>
-    </div>
-</div>
+                    <!-- @include src/components/_progress-flow-demo.html -->
                 </div>
                 <button class="btn btn-secondary btn-md" onclick="demoGuideExport()">
                     <i data-icon="play"></i>
@@ -1134,38 +1112,7 @@ Note: Uses individual card components via @include directives
 <div class="example-wrapper">
     <div class="example-label">Quick Export</div>
     <div class="example-container">
-        <!-- src/components/_quick-export-card.html -->
-<!-- Component: Quick Export Card -->
-<!-- Purpose: Standalone card for quick token export functionality -->
-<div class="card export-section is-compact">
-    <div class="card-content">
-        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-            <i data-icon="file-text" style="width: 1em; height: 1em;"></i>
-            <h4 class="text-label">Quick Export</h4>
-        </div>
-        <div class="format-select-wrapper">
-            <select class="format-select" id="format-select">
-                <option value="all" selected>All Formats</option>
-                <option value="css">CSS Variables</option>
-                <option value="swift">Swift (iOS)</option>
-                <option value="android">Android XML</option>
-                <option value="flutter">Flutter</option>
-                <option value="w3c">JSON (W3C)</option>
-                <option value="tailwind">Tailwind Config</option>
-            </select>
-        </div>
-    </div>
-    <div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">
-        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
-            <i data-icon="rocket"></i>
-            <span>Package Tokens</span>
-        </button>
-        <button class="btn btn-secondary btn-sm" aria-label="Show filters">
-            <i data-icon="sliders-horizontal"></i>
-            <span>Filters</span>
-        </button>
-    </div>
-</div>
+        <!-- @include src/components/_quick-export-card.html -->
     </div>
 </div>
 
@@ -1254,7 +1201,7 @@ Note: Uses individual card components via @include directives
          ========================================================================== -->
     <div id="buttons" class="component-section">
         <div class="component-header">
-            <h2 class="section-title-primary"><i data-icon="mouse-pointer-2"></i> Buttons</h2>
+            <h2 class="section-title-primary"><i data-icon="pointer"></i> Buttons</h2>
             <p class="section-description">A comprehensive button system with multiple variants, sizes, and states. Built for flexibility and consistency across the interface.</p>
         </div>
         <div class="component-body">
@@ -1529,46 +1476,7 @@ Note: Uses individual card components via @include directives
                     <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-modal">
                         <!-- The modal partial is included here -->
-                        <!-- About Modal - Clean Version -->
-<div class="about-modal about-modal-clean" id="about-modal">
-    <div class="about-modal-backdrop"></div>
-    <div class="about-modal-content">
-        <button class="btn btn-icon btn-md about-modal-close" aria-label="Close modal">
-            <i data-icon="x"></i>
-        </button>
-        
-        <div class="about-modal-body">
-            <div class="about-avatar">
-                <img src="https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png" alt="Nate Mills">
-            </div>
-            
-            <h2 class="about-name">Nate Mills</h2>
-            <p class="about-role">Senior UI Designer</p>
-            
-            <p class="about-bio">
-                A 20-year design systems architect who believes in using a little magic to solve big workflow problems.
-            </p>
-            
-            <div class="about-social">
-                <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-md" title="GitHub">
-                    <i data-icon="github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-md" title="LinkedIn">
-                    <i data-icon="linkedin"></i>
-                </a>
-                <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-md" title="Figma">
-                    <i data-icon="figma"></i>
-                </a>
-                <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-md" title="Portfolio">
-                    <i data-icon="briefcase"></i>
-                </a>
-                <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-md" title="Email">
-                    <i data-icon="mail"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+                        <!-- @include src/components/_about-modal.html -->
                     </div>
                     <button class="btn btn-secondary btn-md" id="show-modal-btn" onclick="showAboutModal()">
                         <i data-icon="play"></i>
@@ -1682,107 +1590,7 @@ Note: Uses individual card components via @include directives
     </section> <!-- END: content-section -->
 
     <!-- Guide Footer Section -->
-    <!-- Clean Minimal Footer -->
-<footer class="footer-minimal">
-    <div class="footer-container">
-        <!-- Desktop Layout -->
-        <div class="footer-desktop">
-            <!-- Main row -->
-            <div class="footer-main-row">
-                <!-- Left: Logo and Text -->
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_footer)">
-                                <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_footer)"/>
-                                <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                                <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                                <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                            </g>
-                            <defs>
-                                <linearGradient id="paint0_linear_footer" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#D2FF37"/>
-                                    <stop offset="1" stop-color="#EEFF00"/>
-                                </linearGradient>
-                                <clipPath id="clip0_footer">
-                                    <rect width="355" height="355" rx="58" fill="white"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </div>
-                    <div class="footer-text">
-                        <h3 class="footer-title">Token Exporter</h3>
-                        <p class="footer-tagline">Figma variables to production-ready code</p>
-                    </div>
-                </div>
-                
-                <!-- Right: CTA Button -->
-                <a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter" target="_blank" class="btn btn-primary btn-md btn-inline">
-                    <i data-icon="figma"></i>
-                    <span>Get the Plugin</span>
-                </a>
-            </div>
-            
-            <!-- Bottom row -->
-            <div class="footer-bottom-row">
-                <p class="footer-attribution">Created with <span class="footer-heart">❤️</span> by Nate Mills for the design community</p>
-                <div class="footer-social">
-                    <a href="https://github.com/n8mills-UI/token-exporter-ds" class="btn btn-icon btn-md" title="GitHub"><i data-icon="github"></i></a>
-                    <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn"><i data-icon="linkedin"></i></a>
-                    <a href="https://www.figma.com/@n8mills" class="btn btn-icon btn-md" title="Figma"><i data-icon="figma"></i></a>
-                    <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio"><i data-icon="briefcase"></i></a>
-                    <a href="mailto:hello@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-icon="mail"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Layout -->
-        <div class="footer-mobile">
-            <!-- Logo and Text -->
-            <div class="footer-brand-mobile">
-                <div class="footer-logo">
-                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_footer_mobile)">
-                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_footer_mobile)"/>
-                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                        </g>
-                        <defs>
-                            <linearGradient id="paint0_linear_footer_mobile" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#D2FF37"/>
-                                <stop offset="1" stop-color="#EEFF00"/>
-                            </linearGradient>
-                            <clipPath id="clip0_footer_mobile">
-                                <rect width="355" height="355" rx="58" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </div>
-                <h3 class="footer-title">Token Exporter</h3>
-                <p class="footer-tagline">Figma variables to production-ready code</p>
-            </div>
-            
-            <!-- CTA Button -->
-            <a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter" target="_blank" class="btn btn-primary btn-md btn-inline">
-                <i data-icon="figma"></i>
-                <span>Get the Plugin</span>
-            </a>
-            
-            <!-- Social and Attribution -->
-            <div class="footer-bottom-mobile">
-                <div class="footer-social">
-                    <a href="https://github.com/n8mills-UI/token-exporter-ds" class="btn btn-icon btn-md" title="GitHub"><i data-icon="github"></i></a>
-                    <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn"><i data-icon="linkedin"></i></a>
-                    <a href="https://www.figma.com/@n8mills" class="btn btn-icon btn-md" title="Figma"><i data-icon="figma"></i></a>
-                    <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio"><i data-icon="briefcase"></i></a>
-                    <a href="mailto:hello@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-icon="mail"></i></a>
-                </div>
-                <p class="footer-attribution">Created with <span class="footer-heart">❤️</span> by Nate Mills for the design community</p>
-            </div>
-        </div>
-    </div>
-</footer>
+    <!-- @include src/components/_footer-minimal.html -->
 
 
     <a href="YOUR_GITHUB_REPO_URL" target="_blank" rel="noopener noreferrer" class="version-badge" title="View on GitHub">
@@ -2148,7 +1956,7 @@ Note: Uses individual card components via @include directives
                             attrs: {
                                 'width': null,
                                 'height': null,
-                                'class': 'lucide lucide-initialized'
+                                'class': 'icon-initialized'
                                 // Let CSS control stroke-width
                             },
                             nameAttr: 'data-icon' // Ensure we're using data-icon attribute
@@ -2158,7 +1966,7 @@ Note: Uses individual card components via @include directives
                         // Mark all icons as initialized to trigger opacity transition
                         setTimeout(() => {
                             document.querySelectorAll('[data-icon]').forEach(icon => {
-                                icon.classList.add('lucide-initialized');
+                                icon.classList.add('icon-initialized');
                             });
                         }, 50);
                     } catch (error) {
@@ -2167,13 +1975,13 @@ Note: Uses individual card components via @include directives
                 } else if (window.lucide && lucideInitialized) {
                     // For subsequent calls, only process new icons that aren't already initialized
                     try {
-                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.lucide-initialized)');
+                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.icon-initialized)');
                         if (uninitializedIcons.length > 0) {
                             lucide.createIcons({
                                 attrs: {
                                     'width': null,
                                     'height': null,
-                                    'class': 'lucide lucide-initialized'
+                                    'class': 'icon-initialized'
                                     // Let CSS control stroke-width
                                 },
                                 nameAttr: 'data-icon',
@@ -2376,7 +2184,7 @@ Note: Uses individual card components via @include directives
                 
                 const celebrationContainer = document.getElementById('guideCelebration');
                 if (celebrationContainer) {
-                    celebrationContainer.innerHTML = '<div class="te-success-icon"><i data-icon="check-circle"></i></div>';
+                    celebrationContainer.innerHTML = '<div class="te-success-icon"><i data-icon="circle-check"></i></div>';
                     renderAllIcons();
                 }
             };
@@ -2629,7 +2437,7 @@ Note: Uses individual card components via @include directives
                 };
                 const name = nameMap[tech] || techItem.textContent.trim();
                 const description = descriptions[tech] || "Description not available.";
-                const icon = techItem.querySelector('svg, .lucide');
+                const icon = techItem.querySelector('svg, [data-icon] svg');
 
                 infoPanel.innerHTML = `
                     <div class="title">
@@ -2842,9 +2650,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         title: 'Brand',
                         tokens: [
                             { token: '--brand-primary' },
-                            { token: '--brand-secondary' },
-                            { token: '--brand-accent' }
-                        ]
+                            { token: '--brand-secondary' }
+                        ],
+                        gridClass: 'color-grid-2col'  // Use 2-column grid for brand colors
                     },
                     'categories': {
                         title: 'Categories',
@@ -3112,7 +2920,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<div class="tab-nav-final" role="tablist">' +
                         '<button class="tab-clean active" role="tab" aria-selected="true" data-tab="core">Core</button>' +
                         '<button class="tab-clean" role="tab" data-tab="neutrals">Neutrals</button>' +
-                        '<button class="tab-clean" role="tab" data-tab="alpha">Alpha</button>' +
+                        '<button class="tab-clean" role="tab" data-tab="alpha">Alphas</button>' +
                         '<button class="tab-clean" role="tab" data-tab="utilities">Utilities</button>' +
                         '<button class="tab-clean" role="tab" data-tab="gradients">Gradients</button>' +
                         '<button class="tab-clean" role="tab" data-tab="tokens">Tokens</button>' +
@@ -3570,7 +3378,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const subSection = section.sections[subKey];
                 html += '<div class="color-subsection">';
                 html += '<h4 class="subsection-title">' + subSection.title + '</h4>';
-                html += '<div class="color-grid-4col">';
+                
+                // Use custom grid class if specified, otherwise default to 4-column
+                const gridClass = subSection.gridClass || 'color-grid-4col';
+                html += '<div class="' + gridClass + '">';
                 
                 if (subSection.tokens && subSection.tokens.length > 0) {
                     subSection.tokens.forEach(item => {

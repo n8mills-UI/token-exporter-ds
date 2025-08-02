@@ -5,12 +5,217 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Token Exporter - Design System Guide</title>
         
-        <!-- Lucide Icons -->
-        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-        
         <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
         <link rel="stylesheet" href="design-system.css">
+        
+        <!-- Icon System -->
+        <!-- Unified Icon System - Generated from Lucide -->
+<style>
+/* Icon Design Tokens */
+:root {
+    --icon-stroke-thin: 1.5;
+    --icon-stroke-regular: 2;
+    --icon-stroke-bold: 2.5;
+}
+
+/* Icon Base */
+[data-icon] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-md);
+    height: var(--icon-md);
+    flex-shrink: 0;
+}
+
+[data-icon] svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke-regular);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+/* Icon Sizes */
+[data-icon].icon-xs { width: var(--icon-xs); height: var(--icon-xs); }
+[data-icon].icon-sm { width: var(--icon-sm); height: var(--icon-sm); }
+[data-icon].icon-md { width: var(--icon-md); height: var(--icon-md); }
+[data-icon].icon-lg { width: var(--icon-lg); height: var(--icon-lg); }
+[data-icon].icon-xl { width: var(--icon-xl); height: var(--icon-xl); }
+[data-icon].icon--xxl { width: 48px; height: 48px; }
+
+/* Icon Stroke Variants */
+[data-icon].icon-thin svg { stroke-width: var(--icon-stroke-thin); }
+[data-icon].icon-regular svg { stroke-width: var(--icon-stroke-regular); }
+[data-icon].icon-bold svg { stroke-width: var(--icon-stroke-bold); }
+</style>
+
+<script>
+// Unified icon library - works in Figma and web
+window.Icons = {
+    "x": "<svg viewBox=\"0 0 24 24\"><path d=\"M18 6 6 18\" />\n  <path d=\"m6 6 12 12\" /></svg>",
+    "plus": "<svg viewBox=\"0 0 24 24\"><path d=\"M5 12h14\" />\n  <path d=\"M12 5v14\" /></svg>",
+    "minus": "<svg viewBox=\"0 0 24 24\"><path d=\"M5 12h14\" /></svg>",
+    "check": "<svg viewBox=\"0 0 24 24\"><path d=\"M20 6 9 17l-5-5\" /></svg>",
+    "copy": "<svg viewBox=\"0 0 24 24\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" />\n  <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" /></svg>",
+    "download": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 15V3\" />\n  <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" />\n  <path d=\"m7 10 5 5 5-5\" /></svg>",
+    "search": "<svg viewBox=\"0 0 24 24\"><path d=\"m21 21-4.34-4.34\" />\n  <circle cx=\"11\" cy=\"11\" r=\"8\" /></svg>",
+    "chevron-down": "<svg viewBox=\"0 0 24 24\"><path d=\"m6 9 6 6 6-6\" /></svg>",
+    "chevron-up": "<svg viewBox=\"0 0 24 24\"><path d=\"m18 15-6-6-6 6\" /></svg>",
+    "chevron-left": "<svg viewBox=\"0 0 24 24\"><path d=\"m15 18-6-6 6-6\" /></svg>",
+    "chevron-right": "<svg viewBox=\"0 0 24 24\"><path d=\"m9 18 6-6-6-6\" /></svg>",
+    "arrow-left": "<svg viewBox=\"0 0 24 24\"><path d=\"m12 19-7-7 7-7\" />\n  <path d=\"M19 12H5\" /></svg>",
+    "arrow-right": "<svg viewBox=\"0 0 24 24\"><path d=\"M5 12h14\" />\n  <path d=\"m12 5 7 7-7 7\" /></svg>",
+    "arrow-up-right": "<svg viewBox=\"0 0 24 24\"><path d=\"M7 7h10v10\" />\n  <path d=\"M7 17 17 7\" /></svg>",
+    "circle-arrow-right": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"m12 16 4-4-4-4\" />\n  <path d=\"M8 12h8\" /></svg>",
+    "external-link": "<svg viewBox=\"0 0 24 24\"><path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6\" />\n  <path d=\"M15 3h6v6\" />\n  <path d=\"M10 14 21 3\" /></svg>",
+    "settings": "<svg viewBox=\"0 0 24 24\"><path d=\"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915\" />\n  <circle cx=\"12\" cy=\"12\" r=\"3\" /></svg>",
+    "package": "<svg viewBox=\"0 0 24 24\"><path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" />\n  <path d=\"M12 22V12\" />\n  <polyline points=\"3.29 7 12 12 20.71 7\" />\n  <path d=\"m7.5 4.27 9 5.15\" /></svg>",
+    "palette": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z\" />\n  <circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" />\n  <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" />\n  <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" />\n  <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" /></svg>",
+    "type": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 4v16\" />\n  <path d=\"M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2\" />\n  <path d=\"M9 20h6\" /></svg>",
+    "hash": "<svg viewBox=\"0 0 24 24\"><line x1=\"4\" x2=\"20\" y1=\"9\" y2=\"9\" />\n  <line x1=\"4\" x2=\"20\" y1=\"15\" y2=\"15\" />\n  <line x1=\"10\" x2=\"8\" y1=\"3\" y2=\"21\" />\n  <line x1=\"16\" x2=\"14\" y1=\"3\" y2=\"21\" /></svg>",
+    "toggle-right": "<svg viewBox=\"0 0 24 24\"><circle cx=\"15\" cy=\"12\" r=\"3\" />\n  <rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"7\" /></svg>",
+    "eye": "<svg viewBox=\"0 0 24 24\"><path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" />\n  <circle cx=\"12\" cy=\"12\" r=\"3\" /></svg>",
+    "play": "<svg viewBox=\"0 0 24 24\"><path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" /></svg>",
+    "circle-play": "<svg viewBox=\"0 0 24 24\"><path d=\"M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z\" />\n  <circle cx=\"12\" cy=\"12\" r=\"10\" /></svg>",
+    "zap": "<svg viewBox=\"0 0 24 24\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\" /></svg>",
+    "sparkles": "<svg viewBox=\"0 0 24 24\"><path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" />\n  <path d=\"M20 2v4\" />\n  <path d=\"M22 4h-4\" />\n  <circle cx=\"4\" cy=\"20\" r=\"2\" /></svg>",
+    "component": "<svg viewBox=\"0 0 24 24\"><path d=\"M15.536 11.293a1 1 0 0 0 0 1.414l2.376 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z\" />\n  <path d=\"M2.297 11.293a1 1 0 0 0 0 1.414l2.377 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414L6.088 8.916a1 1 0 0 0-1.414 0z\" />\n  <path d=\"M8.916 17.912a1 1 0 0 0 0 1.415l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.415l-2.377-2.376a1 1 0 0 0-1.414 0z\" />\n  <path d=\"M8.916 4.674a1 1 0 0 0 0 1.414l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z\" /></svg>",
+    "layers": "<svg viewBox=\"0 0 24 24\"><path d=\"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z\" />\n  <path d=\"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12\" />\n  <path d=\"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17\" /></svg>",
+    "maximize": "<svg viewBox=\"0 0 24 24\"><path d=\"M8 3H5a2 2 0 0 0-2 2v3\" />\n  <path d=\"M21 8V5a2 2 0 0 0-2-2h-3\" />\n  <path d=\"M3 16v3a2 2 0 0 0 2 2h3\" />\n  <path d=\"M16 21h3a2 2 0 0 0 2-2v-3\" /></svg>",
+    "save": "<svg viewBox=\"0 0 24 24\"><path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\" />\n  <path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\" />\n  <path d=\"M7 3v4a1 1 0 0 0 1 1h7\" /></svg>",
+    "shield": "<svg viewBox=\"0 0 24 24\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /></svg>",
+    "sliders-horizontal": "<svg viewBox=\"0 0 24 24\"><line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\" />\n  <line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\" />\n  <line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\" />\n  <line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\" />\n  <line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\" />\n  <line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\" />\n  <line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\" />\n  <line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\" />\n  <line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\" /></svg>",
+    "clock": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 6v6l4 2\" />\n  <circle cx=\"12\" cy=\"12\" r=\"10\" /></svg>",
+    "move-horizontal": "<svg viewBox=\"0 0 24 24\"><path d=\"m18 8 4 4-4 4\" />\n  <path d=\"M2 12h20\" />\n  <path d=\"m6 8-4 4 4 4\" /></svg>",
+    "file-text": "<svg viewBox=\"0 0 24 24\"><path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\" />\n  <path d=\"M14 2v4a2 2 0 0 0 2 2h4\" />\n  <path d=\"M10 9H8\" />\n  <path d=\"M16 13H8\" />\n  <path d=\"M16 17H8\" /></svg>",
+    "image": "<svg viewBox=\"0 0 24 24\"><rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" />\n  <circle cx=\"9\" cy=\"9\" r=\"2\" />\n  <path d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\" /></svg>",
+    "link": "<svg viewBox=\"0 0 24 24\"><path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\" />\n  <path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\" /></svg>",
+    "tag": "<svg viewBox=\"0 0 24 24\"><path d=\"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z\" />\n  <circle cx=\"7.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" /></svg>",
+    "feather": "<svg viewBox=\"0 0 24 24\"><path d=\"M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z\" />\n  <path d=\"M16 8 2 22\" />\n  <path d=\"M17.5 15H9\" /></svg>",
+    "lightbulb": "<svg viewBox=\"0 0 24 24\"><path d=\"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5\" />\n  <path d=\"M9 18h6\" />\n  <path d=\"M10 22h4\" /></svg>",
+    "terminal": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 19h8\" />\n  <path d=\"m4 17 6-6-6-6\" /></svg>",
+    "github": "<svg viewBox=\"0 0 24 24\"><path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\" />\n  <path d=\"M9 18c-4.51 2-5-2-7-2\" /></svg>",
+    "linkedin": "<svg viewBox=\"0 0 24 24\"><path d=\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z\" />\n  <rect width=\"4\" height=\"12\" x=\"2\" y=\"9\" />\n  <circle cx=\"4\" cy=\"4\" r=\"2\" /></svg>",
+    "figma": "<svg viewBox=\"0 0 24 24\"><path d=\"M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z\" />\n  <path d=\"M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z\" />\n  <path d=\"M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z\" />\n  <path d=\"M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z\" />\n  <path d=\"M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z\" /></svg>",
+    "mail": "<svg viewBox=\"0 0 24 24\"><path d=\"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7\" />\n  <rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" /></svg>",
+    "briefcase": "<svg viewBox=\"0 0 24 24\"><path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\" />\n  <rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\" /></svg>",
+    "info": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"M12 16v-4\" />\n  <path d=\"M12 8h.01\" /></svg>",
+    "circle-alert": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\" />\n  <line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\" /></svg>",
+    "triangle-alert": "<svg viewBox=\"0 0 24 24\"><path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" />\n  <path d=\"M12 9v4\" />\n  <path d=\"M12 17h.01\" /></svg>",
+    "circle-check": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"m9 12 2 2 4-4\" /></svg>",
+    "circle-x": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"m15 9-6 6\" />\n  <path d=\"m9 9 6 6\" /></svg>",
+    "heart": "<svg viewBox=\"0 0 24 24\"><path d=\"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5\" /></svg>",
+    "star": "<svg viewBox=\"0 0 24 24\"><path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" /></svg>",
+    "trophy": "<svg viewBox=\"0 0 24 24\"><path d=\"M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978\" />\n  <path d=\"M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978\" />\n  <path d=\"M18 9h1.5a1 1 0 0 0 0-5H18\" />\n  <path d=\"M4 22h16\" />\n  <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\" />\n  <path d=\"M6 9H4.5a1 1 0 0 1 0-5H6\" /></svg>",
+    "trending-up": "<svg viewBox=\"0 0 24 24\"><path d=\"M16 7h6v6\" />\n  <path d=\"m22 7-8.5 8.5-5-5L2 17\" /></svg>",
+    "rocket": "<svg viewBox=\"0 0 24 24\"><path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z\" />\n  <path d=\"m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z\" />\n  <path d=\"M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0\" />\n  <path d=\"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5\" /></svg>",
+    "circle": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" /></svg>",
+    "square": "<svg viewBox=\"0 0 24 24\"><rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /></svg>",
+    "atom": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"1\" />\n  <path d=\"M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z\" />\n  <path d=\"M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z\" /></svg>",
+    "app-window": "<svg viewBox=\"0 0 24 24\"><rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" />\n  <path d=\"M10 4v4\" />\n  <path d=\"M2 8h20\" />\n  <path d=\"M6 4v4\" /></svg>",
+    "credit-card": "<svg viewBox=\"0 0 24 24\"><rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\" />\n  <line x1=\"2\" x2=\"22\" y1=\"10\" y2=\"10\" /></svg>",
+    "target": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <circle cx=\"12\" cy=\"12\" r=\"6\" />\n  <circle cx=\"12\" cy=\"12\" r=\"2\" /></svg>",
+    "align-left": "<svg viewBox=\"0 0 24 24\"><path d=\"M15 12H3\" />\n  <path d=\"M17 18H3\" />\n  <path d=\"M21 6H3\" /></svg>",
+    "align-right": "<svg viewBox=\"0 0 24 24\"><path d=\"M21 12H9\" />\n  <path d=\"M21 18H7\" />\n  <path d=\"M21 6H3\" /></svg>",
+    "filter": "<svg viewBox=\"0 0 24 24\"><path d=\"M22 3H2l8 9.46V19l4 2v-8.54z\" /></svg>",
+    "help-circle": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" />\n  <path d=\"M12 17h.01\" /></svg>",
+    "wand": "<svg viewBox=\"0 0 24 24\"><path d=\"M15 4V2\" />\n  <path d=\"M15 16v-2\" />\n  <path d=\"M8 9h2\" />\n  <path d=\"M20 9h2\" />\n  <path d=\"M17.8 11.8 19 13\" />\n  <path d=\"M15 9h.01\" />\n  <path d=\"M17.8 6.2 19 5\" />\n  <path d=\"m3 21 9-9\" />\n  <path d=\"M12.2 6.2 11 5\" /></svg>",
+    "move": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 2v20\" />\n  <path d=\"m15 19-3 3-3-3\" />\n  <path d=\"m19 9 3 3-3 3\" />\n  <path d=\"M2 12h20\" />\n  <path d=\"m5 9-3 3 3 3\" />\n  <path d=\"m9 5 3-3 3 3\" /></svg>",
+    "sliders": "<svg viewBox=\"0 0 24 24\"><line x1=\"4\" x2=\"4\" y1=\"21\" y2=\"14\" />\n  <line x1=\"4\" x2=\"4\" y1=\"10\" y2=\"3\" />\n  <line x1=\"12\" x2=\"12\" y1=\"21\" y2=\"12\" />\n  <line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"3\" />\n  <line x1=\"20\" x2=\"20\" y1=\"21\" y2=\"16\" />\n  <line x1=\"20\" x2=\"20\" y1=\"12\" y2=\"3\" />\n  <line x1=\"2\" x2=\"6\" y1=\"14\" y2=\"14\" />\n  <line x1=\"10\" x2=\"14\" y1=\"8\" y2=\"8\" />\n  <line x1=\"18\" x2=\"22\" y1=\"16\" y2=\"16\" /></svg>",
+    "code-2": "<svg viewBox=\"0 0 24 24\"><path d=\"m18 16 4-4-4-4\" />\n  <path d=\"m6 8-4 4 4 4\" />\n  <path d=\"M12 2v20\" /></svg>",
+    "arrow-right-circle": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"m12 16 4-4-4-4\" />\n  <path d=\"M8 12h8\" /></svg>",
+    "alert-circle": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\" />\n  <line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\" /></svg>",
+    "alert-triangle": "<svg viewBox=\"0 0 24 24\"><path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" />\n  <path d=\"M12 9v4\" />\n  <path d=\"M12 17h.01\" /></svg>",
+    "circle-check-big": "<svg viewBox=\"0 0 24 24\"><path d=\"M21.801 10A10 10 0 1 1 17 3.335\" />\n  <path d=\"m9 11 3 3L22 4\" /></svg>",
+    "pointer": "<svg viewBox=\"0 0 24 24\"><path d=\"M22 14a8 8 0 0 1-8 8\" />\n  <path d=\"M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" />\n  <path d=\"M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1\" />\n  <path d=\"M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10\" />\n  <path d=\"M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" /></svg>",
+    "square-terminal": "<svg viewBox=\"0 0 24 24\"><path d=\"m7 11 2-2-2-2\" />\n  <path d=\"M11 13h4\" />\n  <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" /></svg>"
+};
+
+// Icon name compatibility map (old Lucide names -> new names)
+window.IconNameMap = {
+    'alert-circle': 'circle-alert',
+    'alert-triangle': 'triangle-alert',
+    'check-circle': 'circle-check-big',
+    'x-circle': 'circle-x',
+    'help-circle': 'help-circle', // This one stays the same
+    'play-circle': 'circle-play',
+    'arrow-right-circle': 'circle-arrow-right'
+};
+
+// Backward compatibility
+window.PluginIcons = window.Icons;
+
+// Render all icons
+window.renderIcons = function(container) {
+    const root = container || document;
+    
+    // Handle data-icon attributes
+    root.querySelectorAll('[data-icon]').forEach(function(element) {
+        let iconName = element.getAttribute('data-icon');
+        
+        // Map old names to new names
+        if (window.IconNameMap[iconName]) {
+            iconName = window.IconNameMap[iconName];
+        }
+        
+        if (window.Icons[iconName] && !element.querySelector('svg')) {
+            element.innerHTML = window.Icons[iconName];
+        }
+    });
+    
+    // TEMPORARY: Also handle data-lucide for smooth transition
+    root.querySelectorAll('[data-lucide]').forEach(function(element) {
+        let iconName = element.getAttribute('data-lucide');
+        
+        // Map old names to new names
+        if (window.IconNameMap[iconName]) {
+            iconName = window.IconNameMap[iconName];
+        }
+        
+        if (window.Icons[iconName] && !element.querySelector('svg')) {
+            element.innerHTML = window.Icons[iconName];
+            // Add classes for consistent styling
+            element.setAttribute('data-icon', element.getAttribute('data-lucide'));
+        }
+    });
+};
+
+// Plugin compatibility alias
+window.renderPluginIcons = window.renderIcons;
+
+// Auto-render on load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        window.renderIcons();
+    });
+} else {
+    window.renderIcons();
+}
+
+// Support dynamic content
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) { // Element node
+                if (node.hasAttribute('data-icon')) {
+                    window.renderIcons(node);
+                } else if (node.querySelectorAll) {
+                    window.renderIcons(node);
+                }
+            }
+        });
+    });
+});
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+</script>
+
     </head>
 
 
@@ -119,11 +324,11 @@
                 <ul class="nav-links">
                     <li><a href="#colors" class="nav-link"><i data-icon="palette"></i> Colors</a></li>
                     <li><a href="#typography" class="nav-link"><i data-icon="type"></i> Typography</a></li>
-                    <li><a href="#spacing" class="nav-link"><i data-icon="move-horizontal"></i> Spacing</a></li>
+                    <li><a href="#spacing" class="nav-link"><i data-icon="move"></i> Spacing</a></li>
                     <li><a href="#effects" class="nav-link"><i data-icon="layers"></i> Effects</a></li>
                     <li><a href="#border" class="nav-link"><i data-icon="square"></i> Borders</a></li>
                     <li><a href="#border-radius" class="nav-link"><i data-icon="circle"></i> Radius</a></li>
-                    <li><a href="#animations" class="nav-link"><i data-icon="play-circle"></i> Motion</a></li>
+                    <li><a href="#animations" class="nav-link"><i data-icon="play"></i> Motion</a></li>
                     <li><a href="#icons" class="nav-link"><i data-icon="sparkles"></i> Icons</a></li>
                 </ul>
             </div>
@@ -133,7 +338,7 @@
                 <h3 class="nav-section-title">Components</h3>
                 <ul class="nav-links">
                     <li><a href="#token-card" class="nav-link"><i data-icon="credit-card"></i> Cards</a></li>
-                    <li><a href="#buttons" class="nav-link"><i data-icon="mouse-pointer-2"></i> Buttons</a></li>
+                    <li><a href="#buttons" class="nav-link"><i data-icon="pointer"></i> Buttons</a></li>
                     <li><a href="#badges"><i data-icon="tag"></i> Badges</a></li>
                     <li><a href="#modals" class="nav-link"><i data-icon="app-window"></i> Modals</a></li>
                 </ul>
@@ -274,17 +479,17 @@
 </div>
                 <div class="challenge-solution-grid">
     <div class="enhanced-card challenge-card">
-        <span class="icon card-icon-large" data-icon="alert-triangle"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="triangle-alert"></span>
         <h3 class="card-title">The Challenge</h3>
         <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
     </div>
     <div class="enhanced-card solution-card">
-        <span class="icon card-icon-large" data-icon="lightbulb"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="lightbulb"></span>
         <h3 class="card-title">The Solution</h3>
         <p class="card-content">Automated multi-format export with intelligent alias resolution and platform-native naming conventions.</p>
     </div>
     <div class="enhanced-card impact-card">
-        <span class="icon card-icon-large" data-icon="trending-up"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="trending-up"></span>
         <h3 class="card-title">The Impact</h3>
         <p class="card-content">10x faster token export, zero manual errors, and a seamless design-to-code workflow.</p>
     </div>
@@ -380,11 +585,11 @@
             </div>
             <div class="tech-item" data-tech="figma" data-url="https://www.figma.com/">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Figma
             </div>
@@ -480,7 +685,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tokens-grid font-grid mt-0">
+            <div class="tokens-grid font-grid">
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview font-sans">The quick brown fox jumps over the lazy dog.</div></div></div>
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-mono</div><div class="token-value">'Monaco', 'Menlo', monospace</div><div class="text-preview font-mono">const greeting = "Hello, World!";</div></div></div>
             </div>
@@ -490,7 +695,7 @@
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="move-horizontal"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
+                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="move"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div></div>
@@ -691,7 +896,7 @@
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play-circle"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
                         <div class="tokens-grid animation-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div></div>
@@ -943,6 +1148,11 @@
                                     <div class="example-label">Stroke Weights</div>
                                     <div class="example-container">
                                         <div class="icon-weights-grid">
+                                            <div class="icon-weight-card hairline">
+                                                <i data-icon="feather" style="width: 48px; height: 48px;"></i>
+                                                <code>--icon-stroke-hairline</code>
+                                                <span class="weight-value">1px</span>
+                                            </div>
                                             <div class="icon-weight-card thin">
                                                 <i data-icon="feather" style="width: 48px; height: 48px;"></i>
                                                 <code>--icon-stroke-thin</code>
@@ -957,6 +1167,11 @@
                                                 <i data-icon="feather" style="width: 48px; height: 48px;"></i>
                                                 <code>--icon-stroke-bold</code>
                                                 <span class="weight-value">2.5px</span>
+                                            </div>
+                                            <div class="icon-weight-card heavy">
+                                                <i data-icon="feather" style="width: 48px; height: 48px;"></i>
+                                                <code>--icon-stroke-heavy</code>
+                                                <span class="weight-value">3px</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1137,30 +1352,53 @@ Note: Uses individual card components via @include directives
         <!-- src/components/_quick-export-card.html -->
 <!-- Component: Quick Export Card -->
 <!-- Purpose: Standalone card for quick token export functionality -->
-<div class="card export-section is-compact">
+<div class="card export-section has-inner-structure">
     <div class="card-content">
         <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
             <i data-icon="file-text" style="width: 1em; height: 1em;"></i>
             <h4 class="text-label">Quick Export</h4>
         </div>
         <div class="format-select-wrapper">
-            <select class="format-select" id="format-select">
-                <option value="all" selected>All Formats</option>
-                <option value="css">CSS Variables</option>
-                <option value="swift">Swift (iOS)</option>
-                <option value="android">Android XML</option>
-                <option value="flutter">Flutter</option>
-                <option value="w3c">JSON (W3C)</option>
-                <option value="tailwind">Tailwind Config</option>
-            </select>
+            <div class="format-select-container" id="format-select-container">
+                <button class="format-select-trigger" id="format-select-trigger" aria-expanded="false" aria-haspopup="true">
+                    <span id="format-select-label">All Formats</span>
+                    <i data-icon="chevron-down" class="icon-xs"></i>
+                </button>
+                <div class="format-select-dropdown" id="format-select-dropdown" hidden>
+                    <label class="format-option">
+                        <input type="checkbox" value="css" class="format-checkbox">
+                        <span>CSS Variables</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="swift" class="format-checkbox">
+                        <span>Swift (iOS)</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="android" class="format-checkbox">
+                        <span>Android XML</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="flutter" class="format-checkbox">
+                        <span>Flutter</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="w3c" class="format-checkbox">
+                        <span>JSON (W3C)</span>
+                    </label>
+                    <label class="format-option">
+                        <input type="checkbox" value="tailwind" class="format-checkbox">
+                        <span>Tailwind Config</span>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">
-        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
+        <button class="btn btn-primary btn-sm" id="export-btn" aria-label="Export design tokens">
             <i data-icon="rocket"></i>
             <span>Package Tokens</span>
         </button>
-        <button class="btn btn-secondary btn-sm" aria-label="Show filters">
+        <button class="btn btn-secondary btn-sm" id="toggle-advanced-mode" aria-label="Show filters">
             <i data-icon="sliders-horizontal"></i>
             <span>Filters</span>
         </button>
@@ -1254,7 +1492,7 @@ Note: Uses individual card components via @include directives
          ========================================================================== -->
     <div id="buttons" class="component-section">
         <div class="component-header">
-            <h2 class="section-title-primary"><i data-icon="mouse-pointer-2"></i> Buttons</h2>
+            <h2 class="section-title-primary"><i data-icon="pointer"></i> Buttons</h2>
             <p class="section-description">A comprehensive button system with multiple variants, sizes, and states. Built for flexibility and consistency across the interface.</p>
         </div>
         <div class="component-body">
@@ -1529,42 +1767,77 @@ Note: Uses individual card components via @include directives
                     <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-modal">
                         <!-- The modal partial is included here -->
-                        <!-- About Modal - Clean Version -->
-<div class="about-modal about-modal-clean" id="about-modal">
+                        <!-- About Modal - Features Focused -->
+<div class="about-modal about-modal-features" id="about-modal">
     <div class="about-modal-backdrop"></div>
     <div class="about-modal-content">
-        <button class="btn btn-icon btn-md about-modal-close" aria-label="Close modal">
+        <button class="btn btn-icon btn-sm about-modal-close" aria-label="Close modal" data-close-modal>
             <i data-icon="x"></i>
         </button>
         
         <div class="about-modal-body">
-            <div class="about-avatar">
-                <img src="https://res.cloudinary.com/dbmvymdp1/image/upload/v1751613219/nate_mills_nizmxp.png" alt="Nate Mills">
+            <div class="about-header">
+                <div class="app-icon">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_about_logo)">
+                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_about_logo)"/>
+                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        </g>
+                        <defs>
+                            <linearGradient id="paint0_linear_about_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#D2FF37"/>
+                                <stop offset="1" stop-color="#EEFF00"/>
+                            </linearGradient>
+                            <clipPath id="clip0_about_logo">
+                                <rect width="355" height="355" rx="58" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <h2 class="app-name">Token Exporter</h2>
+                <p class="app-tagline">Bridge the gap between design and code</p>
             </div>
-            
-            <h2 class="about-name">Nate Mills</h2>
-            <p class="about-role">Senior UI Designer</p>
-            
-            <p class="about-bio">
-                A 20-year design systems architect who believes in using a little magic to solve big workflow problems.
-            </p>
-            
-            <div class="about-social">
-                <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-md" title="GitHub">
-                    <i data-icon="github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-md" title="LinkedIn">
-                    <i data-icon="linkedin"></i>
-                </a>
-                <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-md" title="Figma">
-                    <i data-icon="figma"></i>
-                </a>
-                <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-md" title="Portfolio">
-                    <i data-icon="briefcase"></i>
-                </a>
-                <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-md" title="Email">
-                    <i data-icon="mail"></i>
-                </a>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <i data-icon="zap" class="feature-icon"></i>
+                    <span class="feature-text">Export design tokens to 6 different formats</span>
+                </div>
+                <div class="feature-item">
+                    <i data-icon="target" class="feature-icon"></i>
+                    <span class="feature-text">Smart collection filtering & organization</span>
+                </div>
+                <div class="feature-item">
+                    <i data-icon="activity" class="feature-icon"></i>
+                    <span class="feature-text">Real-time preview & batch processing</span>
+                </div>
+                <div class="feature-item">
+                    <i data-icon="layers" class="feature-icon"></i>
+                    <span class="feature-text">Theme-aware color transformations</span>
+                </div>
+            </div>
+
+            <div class="about-footer">
+                <div class="about-social">
+                    <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-sm" title="GitHub">
+                        <i data-icon="github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-sm" title="LinkedIn">
+                        <i data-icon="linkedin"></i>
+                    </a>
+                    <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-sm" title="Figma">
+                        <i data-icon="figma"></i>
+                    </a>
+                    <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Portfolio">
+                        <i data-icon="briefcase"></i>
+                    </a>
+                    <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Email">
+                        <i data-icon="mail"></i>
+                    </a>
+                </div>
+                <p class="creator-info">Crafted with ❤️ by <a href="https://natemills.me" target="_blank" class="link-primary">Nate Mills</a></p>
             </div>
         </div>
     </div>
@@ -2148,7 +2421,7 @@ Note: Uses individual card components via @include directives
                             attrs: {
                                 'width': null,
                                 'height': null,
-                                'class': 'lucide lucide-initialized'
+                                'class': 'icon-initialized'
                                 // Let CSS control stroke-width
                             },
                             nameAttr: 'data-icon' // Ensure we're using data-icon attribute
@@ -2158,7 +2431,7 @@ Note: Uses individual card components via @include directives
                         // Mark all icons as initialized to trigger opacity transition
                         setTimeout(() => {
                             document.querySelectorAll('[data-icon]').forEach(icon => {
-                                icon.classList.add('lucide-initialized');
+                                icon.classList.add('icon-initialized');
                             });
                         }, 50);
                     } catch (error) {
@@ -2167,13 +2440,13 @@ Note: Uses individual card components via @include directives
                 } else if (window.lucide && lucideInitialized) {
                     // For subsequent calls, only process new icons that aren't already initialized
                     try {
-                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.lucide-initialized)');
+                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.icon-initialized)');
                         if (uninitializedIcons.length > 0) {
                             lucide.createIcons({
                                 attrs: {
                                     'width': null,
                                     'height': null,
-                                    'class': 'lucide lucide-initialized'
+                                    'class': 'icon-initialized'
                                     // Let CSS control stroke-width
                                 },
                                 nameAttr: 'data-icon',
@@ -2376,7 +2649,7 @@ Note: Uses individual card components via @include directives
                 
                 const celebrationContainer = document.getElementById('guideCelebration');
                 if (celebrationContainer) {
-                    celebrationContainer.innerHTML = '<div class="te-success-icon"><i data-icon="check-circle"></i></div>';
+                    celebrationContainer.innerHTML = '<div class="te-success-icon"><i data-icon="circle-check"></i></div>';
                     renderAllIcons();
                 }
             };
@@ -2629,7 +2902,7 @@ Note: Uses individual card components via @include directives
                 };
                 const name = nameMap[tech] || techItem.textContent.trim();
                 const description = descriptions[tech] || "Description not available.";
-                const icon = techItem.querySelector('svg, .lucide');
+                const icon = techItem.querySelector('svg, [data-icon] svg');
 
                 infoPanel.innerHTML = `
                     <div class="title">
@@ -2842,9 +3115,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         title: 'Brand',
                         tokens: [
                             { token: '--brand-primary' },
-                            { token: '--brand-secondary' },
-                            { token: '--brand-accent' }
-                        ]
+                            { token: '--brand-secondary' }
+                        ],
+                        gridClass: 'color-grid-2col'  // Use 2-column grid for brand colors
                     },
                     'categories': {
                         title: 'Categories',
@@ -3112,7 +3385,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<div class="tab-nav-final" role="tablist">' +
                         '<button class="tab-clean active" role="tab" aria-selected="true" data-tab="core">Core</button>' +
                         '<button class="tab-clean" role="tab" data-tab="neutrals">Neutrals</button>' +
-                        '<button class="tab-clean" role="tab" data-tab="alpha">Alpha</button>' +
+                        '<button class="tab-clean" role="tab" data-tab="alpha">Alphas</button>' +
                         '<button class="tab-clean" role="tab" data-tab="utilities">Utilities</button>' +
                         '<button class="tab-clean" role="tab" data-tab="gradients">Gradients</button>' +
                         '<button class="tab-clean" role="tab" data-tab="tokens">Tokens</button>' +
@@ -3570,7 +3843,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const subSection = section.sections[subKey];
                 html += '<div class="color-subsection">';
                 html += '<h4 class="subsection-title">' + subSection.title + '</h4>';
-                html += '<div class="color-grid-4col">';
+                
+                // Use custom grid class if specified, otherwise default to 4-column
+                const gridClass = subSection.gridClass || 'color-grid-4col';
+                html += '<div class="' + gridClass + '">';
                 
                 if (subSection.tokens && subSection.tokens.length > 0) {
                     subSection.tokens.forEach(item => {
