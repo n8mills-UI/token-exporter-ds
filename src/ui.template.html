@@ -27,7 +27,23 @@
                         
                         <!-- Advanced Filter View (Advanced Mode) -->
                         <div id="advanced-filter-view" class="state-hidden">
-                            <!-- Dynamic content will be injected by JavaScript -->
+                            <div class="card filter-section is-compact">
+                                <div class="card-content">
+                                    <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
+                                        <i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>
+                                        <h4 class="text-label">Filters</h4>
+                                    </div>
+                                    <div class="collection-list" id="collection-list">
+                                        <!-- Dynamic collection items will be injected here -->
+                                    </div>
+                                </div>
+                                <div class="card-actions" style="margin-top: var(--size-3);">
+                                    <button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">
+                                        <i data-icon="arrow-left"></i>
+                                        <span>Back to Quick Export</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -162,22 +178,11 @@ function updateTokenSummary() {
                     '</div>';
                 }).join('');
 
-                DOMElements.advancedFilterView.innerHTML = 
-                    '<div class="card filter-section is-compact">' +
-                        '<div class="card-content">' +
-                            '<div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">' +
-                                '<i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>' +
-                                '<h4 class="text-label">Filters</h4>' +
-                            '</div>' +
-                            '<div class="collection-list">' + collectionItemsHTML + '</div>' +
-                        '</div>' +
-                        '<div class="card-actions" style="margin-top: var(--size-3);">' +
-                            '<button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">' +
-                                '<i data-icon="arrow-left"></i>' +
-                                '<span>Back to Quick Export</span>' +
-                            '</button>' +
-                        '</div>' +
-                    '</div>';
+                // Only update the collection list content, not the entire card
+                const collectionListElement = document.getElementById('collection-list');
+                if (collectionListElement) {
+                    collectionListElement.innerHTML = collectionItemsHTML;
+                }
             }
             
             // Always update the export button in the quick export view
