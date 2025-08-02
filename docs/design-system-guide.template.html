@@ -991,17 +991,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Default State</div>
                 <div class="example-container">
-                    <!-- src/components/_token-card-default.html -->
-<div class="card token-summary">
-    <div class="text-heading-xl token-count-total">247</div>
-    <div class="text-label token-label">Tokens Found</div>
-    <div class="token-breakdown">
-        <div class="token-type-stat color"><span class="icon" data-icon="palette"></span><div class="count">89</div><div class="text-label label">colors</div></div>
-        <div class="token-type-stat text"><span class="icon" data-icon="type"></span><div class="count">42</div><div class="text-label label">text</div></div>
-        <div class="token-type-stat number"><span class="icon" data-icon="hash"></span><div class="count">98</div><div class="text-label label">numbers</div></div>
-        <div class="token-type-stat states"><span class="icon" data-icon="toggle-right"></span><div class="count">18</div><div class="text-label label">states</div></div>
-    </div>
-</div>
+                    <!-- @include src/components/_token-card-default.html -->
                 </div>
             </div>
 
@@ -1009,17 +999,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Advanced Mode</div>
                 <div class="example-container">
-                    <!-- src/components/_token-card-advanced.html -->
-<div class="card token-summary advanced-mode">
-    <div class="text-heading-xl token-count-total">131</div>
-    <div class="text-label token-label">Tokens Selected</div>
-    <div class="token-breakdown">
-        <div class="token-type-stat color active"><span class="icon" data-icon="palette"></span><div class="count">89</div><div class="text-label label">colors</div></div>
-        <div class="token-type-stat text active"><span class="icon" data-icon="type"></span><div class="count">42</div><div class="text-label label">text</div></div>
-        <div class="token-type-stat number"><span class="icon" data-icon="hash"></span><div class="count">98</div><div class="text-label label">numbers</div></div>
-        <div class="token-type-stat states disabled"><span class="icon" data-icon="toggle-right"></span><div class="count">0</div><div class="text-label label">states</div></div>
-    </div>
-</div>
+                    <!-- @include src/components/_token-card-advanced.html -->
                 </div>
             </div>
 
@@ -1065,18 +1045,7 @@
             <div class="example-wrapper">
                 <div class="example-label">Progress Flow</div>
                 <div class="example-container">
-                    <!-- src/components/_progress-flow-demo.html -->
-<div class="te-progress-loader" id="guideProgressLoader">
-    <div class="te-icon-grid" id="guideIconGrid"></div>
-    <div class="te-celebration" id="guideCelebration"></div>
-    <div class="te-glass-status surface-glass" id="guideGlassStatus">
-        <p class="te-progress-percent glass-text-primary" id="guideProgressPercent">0%</p>
-        <div class="te-progress-track progress-track">
-            <div class="te-progress-fill" id="guideProgressFill"></div>
-        </div>
-        <p class="te-status-label glass-text-muted" id="guideStatusLabel">Ready to export</p>
-    </div>
-</div>
+                    <!-- @include src/components/_progress-flow-demo.html -->
                 </div>
                 <button class="btn btn-secondary btn-md" onclick="demoGuideExport()">
                     <i data-icon="play"></i>
@@ -1507,81 +1476,7 @@ Note: Uses individual card components via @include directives
                     <div class="example-label">About Modal - Live Example</div>
                     <div class="example-container example-container-modal">
                         <!-- The modal partial is included here -->
-                        <!-- About Modal - Features Focused -->
-<div class="about-modal about-modal-features" id="about-modal">
-    <div class="about-modal-backdrop"></div>
-    <div class="about-modal-content">
-        <button class="btn btn-icon btn-sm about-modal-close" aria-label="Close modal" data-close-modal>
-            <i data-icon="x"></i>
-        </button>
-        
-        <div class="about-modal-body">
-            <div class="about-header">
-                <div class="app-icon">
-                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_about_logo)">
-                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_about_logo)"/>
-                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                        </g>
-                        <defs>
-                            <linearGradient id="paint0_linear_about_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#D2FF37"/>
-                                <stop offset="1" stop-color="#EEFF00"/>
-                            </linearGradient>
-                            <clipPath id="clip0_about_logo">
-                                <rect width="355" height="355" rx="58" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </div>
-                <h2 class="app-name">Token Exporter</h2>
-                <p class="app-tagline">Bridge the gap between design and code</p>
-            </div>
-
-            <div class="features-list">
-                <div class="feature-item">
-                    <i data-icon="zap" class="feature-icon"></i>
-                    <span class="feature-text">Export design tokens to 6 different formats</span>
-                </div>
-                <div class="feature-item">
-                    <i data-icon="target" class="feature-icon"></i>
-                    <span class="feature-text">Smart collection filtering & organization</span>
-                </div>
-                <div class="feature-item">
-                    <i data-icon="activity" class="feature-icon"></i>
-                    <span class="feature-text">Real-time preview & batch processing</span>
-                </div>
-                <div class="feature-item">
-                    <i data-icon="layers" class="feature-icon"></i>
-                    <span class="feature-text">Theme-aware color transformations</span>
-                </div>
-            </div>
-
-            <div class="about-footer">
-                <div class="about-social">
-                    <a href="https://github.com/n8mills-UI" target="_blank" class="btn btn-icon btn-sm" title="GitHub">
-                        <i data-icon="github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/millsdesign/" target="_blank" class="btn btn-icon btn-sm" title="LinkedIn">
-                        <i data-icon="linkedin"></i>
-                    </a>
-                    <a href="https://www.figma.com/@n8mills" target="_blank" class="btn btn-icon btn-sm" title="Figma">
-                        <i data-icon="figma"></i>
-                    </a>
-                    <a href="https://natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Portfolio">
-                        <i data-icon="briefcase"></i>
-                    </a>
-                    <a href="mailto:hello@natemills.me" target="_blank" class="btn btn-icon btn-sm" title="Email">
-                        <i data-icon="mail"></i>
-                    </a>
-                </div>
-                <p class="creator-info">Crafted with ❤️ by <a href="https://natemills.me" target="_blank" class="link-primary">Nate Mills</a></p>
-            </div>
-        </div>
-    </div>
-</div>
+                        <!-- @include src/components/_about-modal.html -->
                     </div>
                     <button class="btn btn-secondary btn-md" id="show-modal-btn" onclick="showAboutModal()">
                         <i data-icon="play"></i>
@@ -1695,107 +1590,7 @@ Note: Uses individual card components via @include directives
     </section> <!-- END: content-section -->
 
     <!-- Guide Footer Section -->
-    <!-- Clean Minimal Footer -->
-<footer class="footer-minimal">
-    <div class="footer-container">
-        <!-- Desktop Layout -->
-        <div class="footer-desktop">
-            <!-- Main row -->
-            <div class="footer-main-row">
-                <!-- Left: Logo and Text -->
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_footer)">
-                                <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_footer)"/>
-                                <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                                <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                                <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                            </g>
-                            <defs>
-                                <linearGradient id="paint0_linear_footer" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#D2FF37"/>
-                                    <stop offset="1" stop-color="#EEFF00"/>
-                                </linearGradient>
-                                <clipPath id="clip0_footer">
-                                    <rect width="355" height="355" rx="58" fill="white"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </div>
-                    <div class="footer-text">
-                        <h3 class="footer-title">Token Exporter</h3>
-                        <p class="footer-tagline">Figma variables to production-ready code</p>
-                    </div>
-                </div>
-                
-                <!-- Right: CTA Button -->
-                <a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter" target="_blank" class="btn btn-primary btn-md btn-inline">
-                    <i data-icon="figma"></i>
-                    <span>Get the Plugin</span>
-                </a>
-            </div>
-            
-            <!-- Bottom row -->
-            <div class="footer-bottom-row">
-                <p class="footer-attribution">Created with <span class="footer-heart">❤️</span> by Nate Mills for the design community</p>
-                <div class="footer-social">
-                    <a href="https://github.com/n8mills-UI/token-exporter-ds" class="btn btn-icon btn-md" title="GitHub"><i data-icon="github"></i></a>
-                    <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn"><i data-icon="linkedin"></i></a>
-                    <a href="https://www.figma.com/@n8mills" class="btn btn-icon btn-md" title="Figma"><i data-icon="figma"></i></a>
-                    <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio"><i data-icon="briefcase"></i></a>
-                    <a href="mailto:hello@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-icon="mail"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Layout -->
-        <div class="footer-mobile">
-            <!-- Logo and Text -->
-            <div class="footer-brand-mobile">
-                <div class="footer-logo">
-                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_footer_mobile)">
-                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_footer_mobile)"/>
-                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
-                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
-                        </g>
-                        <defs>
-                            <linearGradient id="paint0_linear_footer_mobile" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#D2FF37"/>
-                                <stop offset="1" stop-color="#EEFF00"/>
-                            </linearGradient>
-                            <clipPath id="clip0_footer_mobile">
-                                <rect width="355" height="355" rx="58" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </div>
-                <h3 class="footer-title">Token Exporter</h3>
-                <p class="footer-tagline">Figma variables to production-ready code</p>
-            </div>
-            
-            <!-- CTA Button -->
-            <a href="https://www.figma.com/community/plugin/1521741753717588633/token-exporter" target="_blank" class="btn btn-primary btn-md btn-inline">
-                <i data-icon="figma"></i>
-                <span>Get the Plugin</span>
-            </a>
-            
-            <!-- Social and Attribution -->
-            <div class="footer-bottom-mobile">
-                <div class="footer-social">
-                    <a href="https://github.com/n8mills-UI/token-exporter-ds" class="btn btn-icon btn-md" title="GitHub"><i data-icon="github"></i></a>
-                    <a href="https://www.linkedin.com/in/millsdesign/" class="btn btn-icon btn-md" title="LinkedIn"><i data-icon="linkedin"></i></a>
-                    <a href="https://www.figma.com/@n8mills" class="btn btn-icon btn-md" title="Figma"><i data-icon="figma"></i></a>
-                    <a href="https://natemills.me" class="btn btn-icon btn-md" title="Portfolio"><i data-icon="briefcase"></i></a>
-                    <a href="mailto:hello@natemills.me" class="btn btn-icon btn-md" title="Email"><i data-icon="mail"></i></a>
-                </div>
-                <p class="footer-attribution">Created with <span class="footer-heart">❤️</span> by Nate Mills for the design community</p>
-            </div>
-        </div>
-    </div>
-</footer>
+    <!-- @include src/components/_footer-minimal.html -->
 
 
     <a href="YOUR_GITHUB_REPO_URL" target="_blank" rel="noopener noreferrer" class="version-badge" title="View on GitHub">
