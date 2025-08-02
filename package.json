@@ -16,7 +16,7 @@
     "format": "stylelint docs/design-system.css --fix",
     "audit": "node scripts/audit.js",
     "prepare": "husky",
-    "_comment": "Individual tools (called by audit script):",
+    "_comment3": "Individual tools (called by audit script):",
     "check:all": "node scripts/check.js --all",
     "tokens:build": "style-dictionary build",
     "tokens:validate": "node scripts/validate-tokens.js",
@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme",
   "devDependencies": {
+    "chokidar": "^3.5.3",
     "cssstats": "^4.0.5",
     "eslint": "^9.31.0",
     "husky": "^9.1.7",
@@ -48,7 +49,8 @@
     "style-dictionary": "^3.9.2",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^38.0.0",
-    "wallace-cli": "^1.1.0"
+    "wallace-cli": "^1.1.0",
+    "ws": "^8.14.2"
   },
   "dependencies": {
     "axios": "^1.11.0",
@@ -56,21 +58,28 @@
   },
   "lint-staged": {
     "docs/design-system.css": [
-      "npm run check"
+      "npm run check",
+      "npm run format"
     ],
     "src/code.js": [
       "npm run check"
     ],
     "*.template.html": [
       "npm run check",
+      "npm run templates:validate",
       "node scripts/validate-icons-temp.js"
     ],
     "src/components/_*.html": [
       "npm run check",
+      "npm run templates:validate",
       "node scripts/validate-icons-temp.js"
     ],
     "src/components/icons/_icon-system.html": [
       "node scripts/validate-icons-temp.js"
+    ],
+    "src/shared/templates.js": [
+      "npm run templates:generate",
+      "npm run templates:validate"
     ]
   }
 }

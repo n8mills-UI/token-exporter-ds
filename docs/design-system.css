@@ -2080,12 +2080,16 @@ body {
 
     .btn:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--focus-ring), 0 0 0 4px rgba(var(--brand-primary-rgb), 0.1);
+        border-color: var(--brand-primary);
     }
     
-    /* Primary button focus ring token */
+    /* Enhanced primary button focus ring */
     .btn-primary:focus-visible {
-        box-shadow: var(--btn-primary-focus-ring);
+        box-shadow: var(--btn-primary-focus-ring), 
+                   0 0 0 4px rgba(var(--brand-primary-rgb), 0.15),
+                   0 4px 12px rgba(var(--brand-primary-rgb), 0.3);
+        transform: translateY(-1px);
     }
 
     /* --- SIZES --- */
@@ -2145,8 +2149,10 @@ body {
         background: var(--btn-icon-hover-bg);
         border-color: var(--btn-icon-hover-border);
         color: var(--btn-icon-hover-border);
-        transform: rotate(15deg); /* Playful tilt instead of vertical shift */
-        box-shadow: var(--btn-icon-hover-shadow); /* Theme-aware glow */
+        transform: rotate(12deg) scale(1.08) translateY(-2px);
+        box-shadow: var(--btn-icon-hover-shadow),
+                   0 6px 16px rgba(var(--brand-primary-rgb), 0.2);
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     .btn-icon:active:not(:disabled) {
@@ -2207,8 +2213,13 @@ body {
     }
 
     .btn-primary:hover:not(:disabled) {
-        transform: translateY(calc(-1 * var(--border-size-1)));
+        transform: translateY(calc(-1 * var(--border-size-1))) scale(1.02);
         filter: var(--btn-primary-hover-filter);
+        /* Enhanced glow with pulsing effect */
+        box-shadow: 0 4px 12px rgba(var(--brand-primary-rgb), 0.4), 
+                   0 0 20px rgba(var(--brand-primary-rgb), 0.15);
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        animation: subtle-pulse-glow 2s infinite;
     }
 
     .btn-primary:active:not(:disabled) {
@@ -2226,6 +2237,10 @@ body {
         border-color: var(--btn-secondary-hover-border);
         color: var(--btn-secondary-hover-text);
         background: var(--btn-secondary-hover-bg);
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 4px 12px rgba(var(--brand-secondary-rgb), 0.15),
+                   0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .btn-secondary:active:not(:disabled) {
@@ -2289,9 +2304,11 @@ body {
     }
 
     .guideline-card:hover {
-        transform: translateY(calc(-1 * var(--border-size-2)));
+        transform: translateY(-6px) scale(1.01);
         border-color: var(--color-border-interactive-focus);
-        box-shadow: var(--shadow-3);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 
+                   0 4px 16px rgba(0, 0, 0, 0.08),
+                   0 0 0 1px var(--brand-primary-alpha-20);
     }
 
     .guideline-card-header {
@@ -2761,6 +2778,8 @@ body {
 .hero-main-title {
  line-height: 1.1;
  margin-bottom: var(--size-4);
+ letter-spacing: -0.02em;
+ font-weight: var(--font-weight-7);
 }
 
 /* ==========================================================================
@@ -5611,6 +5630,13 @@ select option {
 .format-select-trigger:hover {
  background: var(--surface-3);
  border-color: var(--color-border-hover);
+ transform: scale(1.02);
+ transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.format-select-trigger:active {
+ transform: scale(0.98);
+ transition: all 0.1s;
 }
 
 .format-select-trigger:focus-visible {
@@ -5651,6 +5677,13 @@ select option {
 
 .format-option:hover {
  background-color: var(--surface-2);
+ transform: translateX(4px);
+ transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.format-option:active {
+ transform: translateX(2px) scale(0.98);
+ transition: all 0.1s;
 }
 
 .format-checkbox {
@@ -5705,6 +5738,14 @@ select option {
 .collection-item:hover {
  background: var(--color-background-tertiary);
  border-color: var(--color-border-default);
+ transform: translateY(-1px) scale(1.01);
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+ transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.collection-item:active {
+ transform: translateY(0) scale(0.99);
+ transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .collection-item.selected {
@@ -5999,15 +6040,31 @@ select option {
  background: linear-gradient(
  90deg,
  transparent 0%,
- var(--white-alpha-50) 50%,
+ rgba(255, 255, 255, 0.8) 30%,
+ rgba(255, 255, 255, 1) 50%,
+ rgba(255, 255, 255, 0.8) 70%,
  transparent 100%
  );
- animation: te-shimmer 1.5s infinite;
+ animation: te-shimmer 1.8s infinite;
+ border-radius: inherit;
 }
 
 @keyframes te-shimmer {
- 0% { transform: translateX(-200%); }
- 100% { transform: translateX(200%); }
+ 0% { transform: translateX(-200%); opacity: 0; }
+ 50% { opacity: 1; }
+ 100% { transform: translateX(200%); opacity: 0; }
+}
+
+/* Enhanced subtle pulse for buttons */
+@keyframes subtle-pulse-glow {
+ 0%, 100% { 
+  box-shadow: 0 4px 12px rgba(var(--brand-primary-rgb), 0.4), 
+             0 0 20px rgba(var(--brand-primary-rgb), 0.15);
+ }
+ 50% { 
+  box-shadow: 0 4px 12px rgba(var(--brand-primary-rgb), 0.5), 
+             0 0 25px rgba(var(--brand-primary-rgb), 0.25);
+ }
 }
 
 .te-status-label {
@@ -6056,18 +6113,33 @@ select option {
 
 @keyframes te-vortex-swirl {
  0% {
- transform: translate(var(--x-start), var(--y-start)) scale(0);
+ transform: translate(var(--x-start), var(--y-start)) scale(0) rotate(0deg);
  opacity: 0;
+ filter: blur(4px);
+ }
+
+ 25% {
+ transform: translate(calc(var(--x-start) * 0.5), calc(var(--y-start) * 0.5)) scale(0.6) rotate(90deg);
+ opacity: 0.4;
+ filter: blur(2px);
  }
 
  50% {
- transform: translate(0, 0) scale(var(--scale, 1));
+ transform: translate(0, 0) scale(var(--scale, 1)) rotate(180deg);
  opacity: 1;
+ filter: blur(0px);
+ }
+
+ 75% {
+ transform: translate(calc(var(--x-end) * 0.5), calc(var(--y-end) * 0.5)) scale(0.6) rotate(270deg);
+ opacity: 0.4;
+ filter: blur(2px);
  }
 
  100% {
- transform: translate(var(--x-end), var(--y-end)) scale(0);
+ transform: translate(var(--x-end), var(--y-end)) scale(0) rotate(360deg);
  opacity: 0;
+ filter: blur(4px);
  }
 }
 
@@ -6090,6 +6162,50 @@ select option {
  animation: te-success-pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
+/* Add sparkle confetti effect on success */
+.te-celebration::before,
+.te-celebration::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--brand-primary);
+    border-radius: 50%;
+    animation: confetti-sparkle 1.5s ease-out infinite;
+}
+
+.te-celebration::before {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0.2s;
+}
+
+.te-celebration::after {
+    top: 30%;
+    right: 25%;
+    animation-delay: 0.5s;
+    background: var(--brand-secondary);
+}
+
+@keyframes confetti-sparkle {
+    0% {
+        transform: translateY(0) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1) rotate(180deg);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(-50px) scale(0.8) rotate(540deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-70px) scale(0) rotate(720deg);
+    }
+}
+
 .te-success-icon [data-icon] {
  width: var(--icon-5xl);
  height: var(--icon-5xl);
@@ -6100,16 +6216,25 @@ select option {
  0% {
  transform: translate(-50%, -50%) scale(0) rotate(-180deg);
  opacity: 0;
+ filter: blur(4px);
  }
 
- 50% {
- transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
+ 30% {
+ transform: translate(-50%, -50%) scale(1.2) rotate(15deg);
+ opacity: 0.8;
+ filter: blur(2px);
+ }
+
+ 60% {
+ transform: translate(-50%, -50%) scale(0.95) rotate(-5deg);
  opacity: 1;
+ filter: blur(0px);
  }
 
  100% {
  transform: translate(-50%, -50%) scale(1) rotate(0deg);
  opacity: 1;
+ filter: blur(0px);
  }
 }
 
@@ -6118,6 +6243,73 @@ select option {
 /* Hide status during celebration */
 .te-celebrating .te-glass-status {
  animation: te-fade-scale-out 0.4s forwards;
+}
+
+/* Easter egg toast notification */
+.easter-egg-toast {
+    position: fixed;
+    top: var(--size-4);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--brand-primary);
+    color: var(--gray-warm-9);
+    padding: var(--size-3) var(--size-4);
+    border-radius: var(--radius-3);
+    font-weight: var(--font-weight-6);
+    font-size: var(--font-size-1);
+    box-shadow: 0 4px 20px rgba(var(--brand-primary-rgb), 0.4);
+    z-index: 1000;
+    animation: toast-slide-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+               toast-slide-out 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 2.7s forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes toast-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+@keyframes toast-slide-out {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px) scale(0.9);
+    }
+}
+
+/* Gentle wiggle animation for friendly error states */
+@keyframes gentle-wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+}
+
+/* Error state container with friendly styling */
+.error-state {
+    border-radius: var(--radius-3);
+    background: color-mix(in srgb, var(--color-text-error) 5%, transparent);
+    border: var(--border-size-1) dashed var(--color-text-error);
+    animation: error-entrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes error-entrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 @keyframes te-fade-scale-out {
@@ -6175,9 +6367,28 @@ select option {
     vertical-align: middle;
 }
 
-/* Skeleton loader uses semantic tokens */
+/* Skeleton loader uses semantic tokens with playful animation */
 .token-summary.is-loading .skeleton-pulse {
     background-color: var(--skeleton-pulse-bg);
+    /* Add a subtle shimmer effect to make loading more delightful */
+    position: relative;
+    overflow: hidden;
+}
+
+.token-summary.is-loading .skeleton-pulse::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
 .token-summary.is-loading .token-count-total .skeleton-pulse {
@@ -6904,6 +7115,29 @@ select option {
  min-height: 360px; /* Comfortable height for content */
  justify-content: space-between; /* Distributes content evenly */
  box-sizing: border-box;
+ /* Add delightful entrance animation */
+ animation: empty-state-entrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes empty-state-entrance {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Make the logo gently pulse to draw attention */
+.empty-state .token-exporter-logo {
+    animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
 /* When empty state is also a card, adjust padding */
@@ -6920,6 +7154,54 @@ select option {
     width: 100%;
     padding: 0 var(--size-4);
     box-sizing: border-box;
+}
+
+/* Add staggered animations for category icons */
+.empty-state-category {
+    animation: category-bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.empty-state-category:nth-child(1) { animation-delay: 0.1s; }
+.empty-state-category:nth-child(2) { animation-delay: 0.2s; }
+.empty-state-category:nth-child(3) { animation-delay: 0.3s; }
+.empty-state-category:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes category-bounce-in {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.3);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Add hover effect to category icons */
+.empty-state-category:hover {
+    transform: translateY(-2px) scale(1.1);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.empty-state-category:hover .icon {
+    transform: rotate(10deg);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Enhanced token stat interactions */
+.token-type-stat {
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.token-type-stat:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.token-type-stat:active {
+    transform: translateY(0) scale(0.98);
 }
 
 .empty-state-category {
@@ -10577,13 +10859,23 @@ body {
     padding: var(--card-padding-xl);
     border-radius: var(--radius-3);
     border: var(--border-size-1) solid transparent;
-    transition: all var(--animation-duration-3) var(--ease-3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     overflow: hidden;
     
-    /* Glass effect matching icon buttons */
-    background: var(--glass-dark-10); /* 10% black opacity */
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    /* Enhanced glass effect with better depth */
+    background: var(--glass-dark-10);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 
+                0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.enhanced-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 
+                0 16px 48px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(var(--brand-primary-rgb), 0.2);
+    border-color: rgba(var(--brand-primary-rgb), 0.3);
 }
 
 /* Card Variants - simplified without gradient bars */
@@ -10747,8 +11039,11 @@ button.theme-toggle {
 /* Theme toggle gradient handled by semantic token */
 
 .theme-toggle:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.1), 0 4px 16px rgb(0, 0, 0, 0.05);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 
+                0 8px 24px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(var(--brand-primary-rgb), 0.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Dark theme hover moved to consolidated section */
@@ -10818,14 +11113,16 @@ button.theme-toggle {
     height: 32px;
     background: var(--gray-cool-9); /* Dark circle for dark mode */
     border-radius: 50%;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Light mode - move slider to left */
+/* Light mode - move slider to left with enhanced animation */
 [data-theme="light"] .slider {
     transform: translateX(-44px); /* Move to left (sun) */
     background: white; /* White circle for light mode */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 /* Animations */
@@ -11484,7 +11781,7 @@ button.theme-toggle {
     display: none;
     width: 100%;
     box-sizing: border-box;
-    animation: fadeIn var(--animation-duration-2) var(--ease-3);
+    animation: fadeInStagger 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .tab-panel.active {
@@ -11492,8 +11789,26 @@ button.theme-toggle {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { 
+        opacity: 0; 
+        transform: translateY(8px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+/* Staggered animation for multiple elements */
+@keyframes fadeInStagger {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* Responsive adjustments */
@@ -11585,7 +11900,10 @@ button.theme-toggle {
 
 .token-card:hover {
     border-color: var(--brand-primary);
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 8px 24px rgba(var(--brand-primary-rgb), 0.15),
+                0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .token-preview {
@@ -11758,6 +12076,8 @@ button.theme-toggle {
 /* Focus state - no ring */
 .tab-clean:focus-visible {
     outline: none;
+    box-shadow: 0 0 0 2px var(--brand-primary), 0 0 0 4px rgba(var(--brand-primary-rgb), 0.1);
+    border-radius: var(--radius-2);
 }
 
 /* Remove default focus */
@@ -11909,8 +12229,17 @@ button.theme-toggle {
     text-align: center;
     width: 100%;
     box-sizing: border-box;
-    min-width: 0; /* Allow card to shrink */
-    overflow: visible; /* Allow content to be visible */
+    min-width: 0;
+    overflow: visible;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+.color-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(var(--brand-primary-rgb), 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08),
+                0 2px 8px rgba(var(--brand-primary-rgb), 0.1);
 }
 
 .color-card:has(.alpha-swatch) {
@@ -11924,6 +12253,15 @@ button.theme-toggle {
     border-radius: var(--radius-2);
     margin-bottom: var(--size-3);
     position: relative;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-swatch:hover {
+    transform: scale(1.02);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Square gradient swatches for directional variants */
@@ -13732,6 +14070,14 @@ input[type="file"]::file-selector-button {
 .figma-plugin .collection-item:hover {
     background: var(--surface-2);
     border-color: var(--color-border-default);
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.figma-plugin .collection-item:active {
+    transform: translateY(0) scale(0.99);
+    transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Consistent selected state with lime highlighting */
