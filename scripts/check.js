@@ -31,6 +31,7 @@ const colors = {
 
 // Configuration
 const CONFIG = {
+    projectRoot: projectRoot,
     jsFile: 'src/code.js',
     cssFile: 'docs/design-system.css',
     guideFile: 'docs/design-system-guide.html'
@@ -660,6 +661,245 @@ async function checkPluginCompatibility() {
 }
 
 /**
+ * Find the closest matching CSS class
+ */
+function findClosestClass(className, definedClasses) {
+    // Simple edit distance algorithm
+    const candidates = Array.from(definedClasses)
+        .map(defined => ({
+            class: defined,
+            distance: levenshteinDistance(className, defined)
+        }))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 3);
+    
+    return candidates.filter(c => c.distance <= 3);
+}
+
+/**
+ * Simple Levenshtein distance for string similarity
+ */
+function levenshteinDistance(str1, str2) {
+    const matrix = [];
+    for (let i = 0; i <= str2.length; i++) {
+        matrix[i] = [i];
+    }
+    for (let j = 0; j <= str1.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (let i = 1; i <= str2.length; i++) {
+        for (let j = 1; j <= str1.length; j++) {
+            if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
+                );
+            }
+        }
+    }
+    return matrix[str2.length][str1.length];
+}
+
+/**
+ * Validate that all CSS classes used in HTML are defined
+ */
+async function validateCSSClasses() {
+    console.log(`\n${colors.blue}🎯 CSS Class Validation${colors.reset}`);
+    
+    try {
+        // Read CSS and extract defined classes
+        const cssContent = await fs.promises.readFile(path.join(CONFIG.projectRoot, CONFIG.cssFile), 'utf8');
+        const definedClasses = new Set();
+        
+        // Match class selectors
+        const classRegex = /\.([a-zA-Z0-9_-]+)(?=[^{]*{)/g;
+        let match;
+        
+        while ((match = classRegex.exec(cssContent)) !== null) {
+            definedClasses.add(match[1]);
+        }
+        
+        // Check HTML files for undefined classes
+        const htmlFiles = [
+            path.join(CONFIG.projectRoot, 'src/ui.template.html'),
+            path.join(CONFIG.projectRoot, 'docs/design-system-guide.template.html')
+        ];
+        
+        // Add component files
+        const componentFiles = await fs.promises.readdir(path.join(CONFIG.projectRoot, 'src/components'));
+        componentFiles.forEach(file => {
+            if (file.endsWith('.html')) {
+                htmlFiles.push(path.join(CONFIG.projectRoot, 'src/components', file));
+            }
+        });
+        
+        let hasErrors = false;
+        const issues = [];
+        
+        for (const file of htmlFiles) {
+            try {
+                const content = await fs.promises.readFile(file, 'utf8');
+                const lines = content.split('\n');
+                const classAttrRegex = /class\s*=\s*["']([^"']+)["']/g;
+                
+                let lineMatch;
+                lines.forEach((line, index) => {
+                    classAttrRegex.lastIndex = 0;
+                    while ((lineMatch = classAttrRegex.exec(line)) !== null) {
+                        const classes = lineMatch[1].split(/\s+/).filter(c => c.length > 0);
+                        
+                        for (const className of classes) {
+                            // Skip dynamic/JS classes and known exceptions
+                            if (className.startsWith('data-') || 
+                                className.startsWith('js-') ||
+                                ['icon-rendered', 'state-hidden', 'active', 'selected', 
+                                 'disabled', 'force-hover', 'figma-plugin', 'icon'].includes(className)) {
+                                continue;
+                            }
+                            
+                            if (!definedClasses.has(className)) {
+                                const suggestions = findClosestClass(className, definedClasses);
+                                issues.push({
+                                    file: path.relative(CONFIG.projectRoot, file),
+                                    line: index + 1,
+                                    className,
+                                    suggestions
+                                });
+                                hasErrors = true;
+                            }
+                        }
+                    }
+                });
+            } catch (err) {
+                // File might not exist, skip
+            }
+        }
+        
+        if (hasErrors) {
+            console.log(`  ${colors.red}✗${colors.reset} Found ${issues.length} undefined CSS classes\n`);
+            
+            issues.forEach(issue => {
+                console.log(`  ${colors.yellow}File:${colors.reset} ${issue.file}:${issue.line}`);
+                console.log(`  ${colors.red}Class:${colors.reset} .${issue.className}`);
+                
+                if (issue.suggestions.length > 0) {
+                    console.log(`  ${colors.green}Did you mean:${colors.reset}`);
+                    issue.suggestions.forEach(suggestion => {
+                        console.log(`    • .${suggestion.class} (distance: ${suggestion.distance})`);
+                    });
+                } else {
+                    console.log(`  ${colors.gray}No similar classes found. Define this class in design-system.css${colors.reset}`);
+                }
+                console.log();
+            });
+            
+            console.log(`  ${colors.bright}How to fix:${colors.reset}`);
+            console.log(`  1. Define the missing class in design-system.css`);
+            console.log(`  2. Or update the HTML to use an existing class`);
+            console.log(`  3. If it's a dynamic class, add it to the exceptions list\n`);
+            
+            return false;
+        } else {
+            console.log(`  ${colors.green}✓${colors.reset} All CSS classes are properly defined`);
+            return true;
+        }
+    } catch (error) {
+        console.log(`  ${colors.red}✗${colors.reset} Error validating CSS classes:`, error.message);
+        return false;
+    }
+}
+
+/**
+ * Validate component synchronization
+ */
+async function validateComponentSync() {
+    console.log(`\n${colors.blue}🔄 Component Sync Validation${colors.reset}`);
+    
+    try {
+        // Get all component files
+        const componentsDir = path.join(CONFIG.projectRoot, 'src/components');
+        const componentFiles = await fs.promises.readdir(componentsDir);
+        const components = componentFiles
+            .filter(f => f.startsWith('_') && f.endsWith('.html'))
+            .map(f => ({
+                file: f,
+                name: f.replace(/^_|\.html$/g, ''),
+                path: path.join(componentsDir, f)
+            }));
+        
+        // Read design guide template
+        const guideTemplate = path.join(CONFIG.projectRoot, 'docs/design-system-guide.template.html');
+        const guideContent = await fs.promises.readFile(guideTemplate, 'utf8');
+        
+        const issues = [];
+        
+        // For each component, check if it's properly included or hardcoded
+        for (const component of components) {
+            const componentContent = await fs.promises.readFile(component.path, 'utf8');
+            
+            // Extract key patterns from component (first few distinctive lines)
+            const componentLines = componentContent.split('\n').slice(2, 6)
+                .map(line => line.trim())
+                .filter(line => line.length > 10 && !line.startsWith('<!--'));
+            
+            // Check if component content appears directly in guide (hardcoded)
+            let isHardcoded = false;
+            componentLines.forEach(line => {
+                if (line && guideContent.includes(line)) {
+                    isHardcoded = true;
+                }
+            });
+            
+            // Check if component is included properly
+            const includePattern = new RegExp(`<!--\\s*@include\\s+src/components/${component.file}\\s*-->`);
+            const isIncluded = includePattern.test(guideContent);
+            
+            if (isHardcoded && !isIncluded) {
+                // Find where it's hardcoded
+                const lineNumber = guideContent.split('\n').findIndex(line => 
+                    componentLines.some(cl => line.includes(cl))
+                ) + 1;
+                
+                issues.push({
+                    component: component.name,
+                    problem: 'hardcoded',
+                    lineNumber,
+                    fix: `Replace with: <!-- @include src/components/${component.file} -->`
+                });
+            }
+        }
+        
+        if (issues.length > 0) {
+            console.log(`  ${colors.red}✗${colors.reset} Found ${issues.length} component sync issues\n`);
+            
+            issues.forEach(issue => {
+                console.log(`  ${colors.yellow}Component:${colors.reset} ${issue.component}`);
+                console.log(`  ${colors.red}Problem:${colors.reset} Component is hardcoded instead of using @include`);
+                console.log(`  ${colors.gray}Line:${colors.reset} ~${issue.lineNumber} in design-system-guide.template.html`);
+                console.log(`  ${colors.green}Fix:${colors.reset} ${issue.fix}\n`);
+            });
+            
+            console.log(`  ${colors.bright}Why this matters:${colors.reset}`);
+            console.log(`  • Components get out of sync between plugin and guide`);
+            console.log(`  • Changes to components don't propagate automatically`);
+            console.log(`  • Violates single source of truth principle\n`);
+            
+            return false;
+        } else {
+            console.log(`  ${colors.green}✓${colors.reset} All components properly use @include directives`);
+            return true;
+        }
+        
+    } catch (error) {
+        console.log(`  ${colors.red}✗${colors.reset} Error validating component sync:`, error.message);
+        return false;
+    }
+}
+
+/**
  * Main check function
  */
 async function check(options = {}) {
@@ -702,6 +942,16 @@ async function check(options = {}) {
         passed: await checkPluginCompatibility()
     });
     
+    results.push({
+        name: 'CSS Class Validation',
+        passed: await validateCSSClasses()
+    });
+    
+    results.push({
+        name: 'Component Sync',
+        passed: await validateComponentSync()
+    });
+    
     // Additional checks in full mode
     if (isFullMode) {
         results.push({
@@ -734,11 +984,15 @@ async function check(options = {}) {
     
     const elapsed = Date.now() - startTime;
     console.log(`\n${colors.bright}Results: ${colors.green}${passed} passed${colors.reset}, ${failed > 0 ? colors.red : colors.gray}${failed} failed${colors.reset}`);
-    console.log(`${colors.gray}Time: ${elapsed}ms${colors.reset}\n`);
+    console.log(`${colors.gray}Time: ${elapsed}ms${colors.reset}`);
     
     // Exit with error code if any critical checks failed
     if (failed > 0 && !isFullMode) {
+        console.log(`\n${colors.red}✗ Quality checks failed${colors.reset}`);
+        console.log(`${colors.yellow}Fix the issues above and run again${colors.reset}\n`);
         process.exit(1);
+    } else {
+        console.log(`\n${colors.green}✓ All quality checks passed!${colors.reset}\n`);
     }
 }
 

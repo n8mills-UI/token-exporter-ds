@@ -444,6 +444,47 @@ The Token Exporter uses a JavaScript-enhanced icon system that injects SVG icons
 </button>
 ```
 
+## CRITICAL: Icon System Rules
+
+**NEVER add external icon libraries - the build will fail!**
+
+### Icon System Architecture
+- **Single Source of Truth**: All icons MUST be defined in `src/components/icons/_icon-system.html`
+- **No External Dependencies**: CDN icon libraries (Lucide, FontAwesome, etc.) are BLOCKED by build.js
+- **JavaScript Runtime Injection**: Icons are injected at runtime due to Figma CSP restrictions
+- **Validation Script**: `scripts/validate-icons-temp.js` checks all icon references exist
+
+### Usage Rules:
+1. **All icons must exist in the icon system before use**
+   - Check available icons: `node scripts/validate-icons-temp.js`
+   - Missing icons will fail validation
+   
+2. **Never add external icon libraries**
+   ```html
+   <!-- ❌ BLOCKED - Build will fail -->
+   <script src="https://unpkg.com/lucide@latest"></script>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/...">
+   
+   <!-- ✅ CORRECT - Use internal system -->
+   <i data-icon="rocket"></i>
+   ```
+
+3. **Adding new icons**
+   - Add SVG definition to `src/components/icons/_icon-system.html`
+   - Use clean, optimized SVG paths
+   - Test with validation script before committing
+
+### Build Protection:
+The build system will immediately fail with clear error messages if:
+- External icon library CDNs are detected in JavaScript
+- Icon font CDNs are detected in CSS imports
+- Missing icons are referenced in templates
+
+### Common Icon Issues:
+- **Malformed SVG paths**: Check that all paths are properly closed and valid
+- **Missing viewBox**: All SVGs must have `viewBox="0 0 24 24"`
+- **Wrong stroke width**: Default should be 2, adjustable via CSS
+
 ## Architecture Documentation
 
 Important technical decisions and architecture details are documented in `/docs-internal/`:

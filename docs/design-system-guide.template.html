@@ -5,12 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Token Exporter - Design System Guide</title>
         
-        <!-- Lucide Icons -->
-        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-        
         <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
         <link rel="stylesheet" href="design-system.css">
+        
+        <!-- Icon System -->
+        <!-- @include src/components/icons/_icon-system.html -->
     </head>
 
 
@@ -119,11 +118,11 @@
                 <ul class="nav-links">
                     <li><a href="#colors" class="nav-link"><i data-icon="palette"></i> Colors</a></li>
                     <li><a href="#typography" class="nav-link"><i data-icon="type"></i> Typography</a></li>
-                    <li><a href="#spacing" class="nav-link"><i data-icon="move-horizontal"></i> Spacing</a></li>
+                    <li><a href="#spacing" class="nav-link"><i data-icon="move"></i> Spacing</a></li>
                     <li><a href="#effects" class="nav-link"><i data-icon="layers"></i> Effects</a></li>
                     <li><a href="#border" class="nav-link"><i data-icon="square"></i> Borders</a></li>
                     <li><a href="#border-radius" class="nav-link"><i data-icon="circle"></i> Radius</a></li>
-                    <li><a href="#animations" class="nav-link"><i data-icon="play-circle"></i> Motion</a></li>
+                    <li><a href="#animations" class="nav-link"><i data-icon="play"></i> Motion</a></li>
                     <li><a href="#icons" class="nav-link"><i data-icon="sparkles"></i> Icons</a></li>
                 </ul>
             </div>
@@ -133,7 +132,7 @@
                 <h3 class="nav-section-title">Components</h3>
                 <ul class="nav-links">
                     <li><a href="#token-card" class="nav-link"><i data-icon="credit-card"></i> Cards</a></li>
-                    <li><a href="#buttons" class="nav-link"><i data-icon="mouse-pointer-2"></i> Buttons</a></li>
+                    <li><a href="#buttons" class="nav-link"><i data-icon="pointer"></i> Buttons</a></li>
                     <li><a href="#badges"><i data-icon="tag"></i> Badges</a></li>
                     <li><a href="#modals" class="nav-link"><i data-icon="app-window"></i> Modals</a></li>
                 </ul>
@@ -274,7 +273,7 @@
 </div>
                 <div class="challenge-solution-grid">
     <div class="enhanced-card challenge-card">
-        <span class="icon card-icon-large icon--hairline" data-icon="alert-triangle"></span>
+        <span class="icon card-icon-large icon--hairline" data-icon="triangle-alert"></span>
         <h3 class="card-title">The Challenge</h3>
         <p class="card-content">Manual token export was slow and error-prone, creating a disconnect between design and development.</p>
     </div>
@@ -380,11 +379,11 @@
             </div>
             <div class="tech-item" data-tech="figma" data-url="https://www.figma.com/">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Figma
             </div>
@@ -490,7 +489,7 @@
                 <!-- Spacing Section -->
                 <section id="spacing" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="move-horizontal"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
+                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="move"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
                         <div class="tokens-grid spacing-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div></div>
@@ -691,7 +690,7 @@
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play-circle"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
+                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
                         <div class="tokens-grid animation-grid">
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div></div>
                             <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div></div>
@@ -803,7 +802,7 @@
                                                 <code class="icon-code">rocket</code>
                                             </div>
                                             <div class="icon-card">
-                                                <i class="icon icon--xxl" data-icon="sliders-horizontal"></i>
+                                                <i class="icon icon--xxl" data-icon="sliders"></i>
                                                 <code class="icon-code">filters</code>
                                             </div>
                                             <div class="icon-card">
@@ -1144,38 +1143,7 @@ Note: Uses individual card components via @include directives
 <div class="example-wrapper">
     <div class="example-label">Quick Export</div>
     <div class="example-container">
-        <!-- src/components/_quick-export-card.html -->
-<!-- Component: Quick Export Card -->
-<!-- Purpose: Standalone card for quick token export functionality -->
-<div class="card export-section is-compact">
-    <div class="card-content">
-        <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-            <i data-icon="file-text" style="width: 1em; height: 1em;"></i>
-            <h4 class="text-label">Quick Export</h4>
-        </div>
-        <div class="format-select-wrapper">
-            <select class="format-select" id="format-select">
-                <option value="all" selected>All Formats</option>
-                <option value="css">CSS Variables</option>
-                <option value="swift">Swift (iOS)</option>
-                <option value="android">Android XML</option>
-                <option value="flutter">Flutter</option>
-                <option value="w3c">JSON (W3C)</option>
-                <option value="tailwind">Tailwind Config</option>
-            </select>
-        </div>
-    </div>
-    <div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">
-        <button class="btn btn-primary btn-sm" aria-label="Export design tokens">
-            <i data-icon="rocket"></i>
-            <span>Package Tokens</span>
-        </button>
-        <button class="btn btn-secondary btn-sm" aria-label="Show filters">
-            <i data-icon="sliders-horizontal"></i>
-            <span>Filters</span>
-        </button>
-    </div>
-</div>
+        <!-- @include src/components/_quick-export-card.html -->
     </div>
 </div>
 
@@ -1189,7 +1157,7 @@ Note: Uses individual card components via @include directives
 <div class="card filter-section is-compact">
     <div class="card-content">
         <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-            <i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>
+            <i data-icon="sliders" style="width: 1em; height: 1em;"></i>
             <h4 class="text-label">Filters</h4>
         </div>
         <div class="collection-list">
@@ -1264,7 +1232,7 @@ Note: Uses individual card components via @include directives
          ========================================================================== -->
     <div id="buttons" class="component-section">
         <div class="component-header">
-            <h2 class="section-title-primary"><i data-icon="mouse-pointer-2"></i> Buttons</h2>
+            <h2 class="section-title-primary"><i data-icon="pointer"></i> Buttons</h2>
             <p class="section-description">A comprehensive button system with multiple variants, sizes, and states. Built for flexibility and consistency across the interface.</p>
         </div>
         <div class="component-body">
@@ -1290,9 +1258,9 @@ Note: Uses individual card components via @include directives
                 <div class="example-wrapper">
                     <div class="example-label">Secondary</div>
                     <div class="button-showcase">
-                        <button class="btn btn-secondary btn-sm"><i data-icon="sliders-horizontal"></i> Small Button</button>
-                        <button class="btn btn-secondary btn-md"><i data-icon="sliders-horizontal"></i> Medium Button</button>
-                        <button class="btn btn-secondary btn-lg"><i data-icon="sliders-horizontal"></i> Large Button</button>
+                        <button class="btn btn-secondary btn-sm"><i data-icon="sliders"></i> Small Button</button>
+                        <button class="btn btn-secondary btn-md"><i data-icon="sliders"></i> Medium Button</button>
+                        <button class="btn btn-secondary btn-lg"><i data-icon="sliders"></i> Large Button</button>
                     </div>
                 </div>
             </div>
@@ -2193,7 +2161,7 @@ Note: Uses individual card components via @include directives
                             attrs: {
                                 'width': null,
                                 'height': null,
-                                'class': 'lucide lucide-initialized'
+                                'class': 'icon-initialized'
                                 // Let CSS control stroke-width
                             },
                             nameAttr: 'data-icon' // Ensure we're using data-icon attribute
@@ -2203,7 +2171,7 @@ Note: Uses individual card components via @include directives
                         // Mark all icons as initialized to trigger opacity transition
                         setTimeout(() => {
                             document.querySelectorAll('[data-icon]').forEach(icon => {
-                                icon.classList.add('lucide-initialized');
+                                icon.classList.add('icon-initialized');
                             });
                         }, 50);
                     } catch (error) {
@@ -2212,13 +2180,13 @@ Note: Uses individual card components via @include directives
                 } else if (window.lucide && lucideInitialized) {
                     // For subsequent calls, only process new icons that aren't already initialized
                     try {
-                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.lucide-initialized)');
+                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.icon-initialized)');
                         if (uninitializedIcons.length > 0) {
                             lucide.createIcons({
                                 attrs: {
                                     'width': null,
                                     'height': null,
-                                    'class': 'lucide lucide-initialized'
+                                    'class': 'icon-initialized'
                                     // Let CSS control stroke-width
                                 },
                                 nameAttr: 'data-icon',
@@ -2674,7 +2642,7 @@ Note: Uses individual card components via @include directives
                 };
                 const name = nameMap[tech] || techItem.textContent.trim();
                 const description = descriptions[tech] || "Description not available.";
-                const icon = techItem.querySelector('svg, .lucide');
+                const icon = techItem.querySelector('svg, [data-icon] svg');
 
                 infoPanel.innerHTML = `
                     <div class="title">

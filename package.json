@@ -62,10 +62,15 @@
       "npm run check"
     ],
     "*.template.html": [
-      "npm run check"
+      "npm run check",
+      "node scripts/validate-icons-temp.js"
     ],
     "src/components/_*.html": [
-      "npm run check"
+      "npm run check",
+      "node scripts/validate-icons-temp.js"
+    ],
+    "src/components/icons/_icon-system.html": [
+      "node scripts/validate-icons-temp.js"
     ]
   }
 }

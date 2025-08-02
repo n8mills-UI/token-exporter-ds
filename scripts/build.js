@@ -117,7 +117,17 @@ async function processCssImports(cssFile, outputBundle) {
                 console.error(`  ${colors.red}✗${colors.reset} File not found: ${localPath}`);
             }
         } else if (url.startsWith('https://')) {
-            // Remote file
+            // Remote file - CHECK FOR ICON LIBRARIES
+            const iconLibraries = ['lucide', 'fontawesome', 'heroicons', 'feather', 'tabler'];
+            const isIconLibrary = iconLibraries.some(lib => url.toLowerCase().includes(lib));
+            
+            if (isIconLibrary) {
+                console.error(`\n  ${colors.red}✗ BLOCKED: External icon library detected in CSS!${colors.reset}`);
+                console.error(`    ${colors.yellow}${url}${colors.reset}`);
+                console.error(`    ${colors.red}Use internal icon system only. See CLAUDE.md#icon-system${colors.reset}\n`);
+                process.exit(1);
+            }
+            
             console.log(`  ${colors.cyan}↓${colors.reset} Fetching: ${url.substring(0, 50)}...`);
             try {
                 const response = await fetch(url);
@@ -154,7 +164,17 @@ async function processJavaScriptBundles(templateFile, outputBundle) {
         const src = match[1];
         
         if (src.startsWith('https://')) {
-            // External script
+            // External script - CHECK FOR ICON LIBRARIES
+            const iconLibraries = ['lucide', 'fontawesome', 'heroicons', 'feather', 'tabler'];
+            const isIconLibrary = iconLibraries.some(lib => src.toLowerCase().includes(lib));
+            
+            if (isIconLibrary) {
+                console.error(`\n  ${colors.red}✗ BLOCKED: External icon library detected!${colors.reset}`);
+                console.error(`    ${colors.yellow}${src}${colors.reset}`);
+                console.error(`    ${colors.red}Use internal icon system only. See CLAUDE.md#icon-system${colors.reset}\n`);
+                process.exit(1);
+            }
+            
             console.log(`  ${colors.cyan}↓${colors.reset} Fetching JS: ${src.substring(0, 50)}...`);
             try {
                 const response = await fetch(src);

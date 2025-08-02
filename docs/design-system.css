@@ -11280,10 +11280,7 @@ button.theme-toggle {
     height: var(--icon-xlg);
 }
 
-/* Only xxl showcase icons get thin strokes */
-.icon--xxl svg {
-    stroke-width: var(--icon-stroke-thin);
-}
+/* Note: Removed forced thin stroke on xxl icons - let them use default stroke */
 .icon--xxxl {
     width: var(--icon-3xl);
     height: var(--icon-3xl);
