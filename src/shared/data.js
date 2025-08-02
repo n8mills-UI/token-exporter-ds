@@ -51,10 +51,10 @@ const sampleData = {
 
   // Sample stats for stats container
   stats: [
-    { icon: 'package', value: 6, suffix: '', label: 'Export Formats' },
-    { icon: 'atom', value: 435, suffix: 'plus', label: 'Design Tokens' },
-    { icon: 'zap', value: 100, suffix: 'percent', label: 'Automated' },
-    { icon: 'clock', value: 10, suffix: 'times', label: 'Faster Export' }
+    { icon: 'package', value: 6, suffix: '', label: 'Export Platforms' },
+    { icon: 'zap', value: 1, suffix: '', label: 'Click Export' },
+    { icon: 'shield-check', value: 100, suffix: 'percent', label: 'Style Dictionary Valid' },
+    { icon: 'clock', value: 60, suffix: 's', label: 'Export Time' }
   ],
 
   // Sample export formats for quick export card

@@ -349,47 +349,18 @@ body {
  --brand-gradient-highlight: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
 
  /* =========================
- GRADIENT DIRECTIONAL VARIANTS
+ CORE GRADIENTS (Simplified to 4)
  ========================= */
- /* Primary gradient (lime to turquoise) - 8 directions */
- --gradient-primary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);     /* Bottom to Top */
- --gradient-primary-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);   /* BR to TL */
- --gradient-primary-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);   /* Left to Right */
- --gradient-primary-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* BL to TR */
- --gradient-primary-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* Top to Bottom (default) */
- --gradient-primary-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* TL to BR */
- --gradient-primary-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* Right to Left */
- --gradient-primary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%); /* TR to BL */
+ /* Core gradient tokens - all horizontal (90deg) for consistency */
+ --gradient-primary: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);     /* Lime to cyan */
+ --gradient-secondary: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-secondary) 100%); /* Lime to pink/lime */
+ --gradient-accent: linear-gradient(90deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);   /* Pink to cyan (dark mode) */
+ --gradient-highlight: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%); /* Lime to yellow */
  
- /* Secondary gradient (lime to pink) - 8 directions */
- --gradient-secondary-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- --gradient-secondary-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
- 
- /* Accent gradient (pink to turquoise) - 8 directions */
- --gradient-accent-0: linear-gradient(0deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-45: linear-gradient(45deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-90: linear-gradient(90deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-135: linear-gradient(135deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-180: linear-gradient(180deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-225: linear-gradient(225deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-270: linear-gradient(270deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- --gradient-accent-315: linear-gradient(315deg, var(--brand-secondary) 0%, var(--color-cyan-500) 100%);
- 
- /* Highlight gradient (lime to yellow) - 8 directions */
- --gradient-highlight-0: linear-gradient(0deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-45: linear-gradient(45deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-90: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-135: linear-gradient(135deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-180: linear-gradient(180deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-225: linear-gradient(225deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-270: linear-gradient(270deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
- --gradient-highlight-315: linear-gradient(315deg, var(--brand-primary) 0%, var(--color-yellow-400) 100%);
+ /* Legacy aliases for backwards compatibility */
+ --gradient-primary-90: var(--gradient-primary);
+ --gradient-accent-90: var(--gradient-accent);
+ --gradient-highlight-90: var(--gradient-highlight);
 
 
  
@@ -1384,9 +1355,7 @@ body {
         border-color: var(--color-border-default);
     }
     
-    .stats-container-glass:hover {
-        border-color: var(--color-border-default);
-    }
+    /* Hover state removed - stats container is non-interactive */
     
     /* Removed hover effect - cards are not interactive */
     
@@ -2303,13 +2272,7 @@ body {
         transition: all var(--transition-fast);
     }
 
-    .guideline-card:hover {
-        transform: translateY(-6px) scale(1.01);
-        border-color: var(--color-border-interactive-focus);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 
-                   0 4px 16px rgba(0, 0, 0, 0.08),
-                   0 0 0 1px var(--brand-primary-alpha-20);
-    }
+    /* Hover state removed - guideline cards are non-interactive */
 
     .guideline-card-header {
         display: flex;
@@ -6078,7 +6041,7 @@ select option {
 
 /* Icon grid */
 .te-icon-grid {
- display: grid;
+ display: none; /* Icons removed from vortex animation per user request */
  grid-template-columns: repeat(10, 1fr);
  position: absolute;
  inset: 0;
@@ -6162,49 +6125,7 @@ select option {
  animation: te-success-pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
-/* Add sparkle confetti effect on success */
-.te-celebration::before,
-.te-celebration::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: var(--brand-primary);
-    border-radius: 50%;
-    animation: confetti-sparkle 1.5s ease-out infinite;
-}
-
-.te-celebration::before {
-    top: 20%;
-    left: 20%;
-    animation-delay: 0.2s;
-}
-
-.te-celebration::after {
-    top: 30%;
-    right: 25%;
-    animation-delay: 0.5s;
-    background: var(--brand-secondary);
-}
-
-@keyframes confetti-sparkle {
-    0% {
-        transform: translateY(0) scale(0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-        transform: translateY(-10px) scale(1) rotate(180deg);
-    }
-    90% {
-        opacity: 1;
-        transform: translateY(-50px) scale(0.8) rotate(540deg);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-70px) scale(0) rotate(720deg);
-    }
-}
+/* Confetti dots removed per user request - vortex animation preserved */
 
 .te-success-icon [data-icon] {
  width: var(--icon-5xl);
@@ -10780,10 +10701,7 @@ body {
     border-color: rgb(210, 255, 55, 0.2);
 }
 
-.stats-container-glass:hover {
-    border-color: var(--brand-primary);
-    box-shadow: 0 12px 24px rgb(210, 255, 55, 0.2);
-}
+/* Hover state removed - stats container is non-interactive */
 
 /* Individual Stat Items */
 .stat-item {
@@ -10870,13 +10788,7 @@ body {
                 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
-.enhanced-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 
-                0 16px 48px rgba(0, 0, 0, 0.1),
-                0 0 0 1px rgba(var(--brand-primary-rgb), 0.2);
-    border-color: rgba(var(--brand-primary-rgb), 0.3);
-}
+/* Hover state removed - these are non-interactive cards */
 
 /* Card Variants - simplified without gradient bars */
 .challenge-card {
@@ -11638,6 +11550,11 @@ button.theme-toggle {
     color: var(--color-text-muted);
 }
 
+/* Icon showcase categories should use thin stroke */
+.icon-card .icon--xxl[data-icon] svg {
+    stroke-width: var(--icon-stroke-thin);
+}
+
 /* Category-specific icon colors using tokens */
 .category-cyan {
     color: var(--value-color);
@@ -12231,16 +12148,11 @@ button.theme-toggle {
     box-sizing: border-box;
     min-width: 0;
     overflow: visible;
-    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-    cursor: pointer;
+    transition: border-color 0.2s ease;
+    cursor: default; /* No hover functionality currently */
 }
 
-.color-card:hover {
-    transform: translateY(-2px) scale(1.01);
-    border-color: rgba(var(--brand-primary-rgb), 0.4);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08),
-                0 2px 8px rgba(var(--brand-primary-rgb), 0.1);
-}
+/* Hover state removed - no current functionality */
 
 .color-card:has(.alpha-swatch) {
     background: transparent;
@@ -12258,11 +12170,14 @@ button.theme-toggle {
                 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.color-swatch:hover {
-    transform: scale(1.02);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                0 4px 8px rgba(0, 0, 0, 0.15);
+/* Ensure gradient and brand swatches have proper dimensions */
+.color-grid-2col .color-swatch {
+    width: 100%;
+    height: 120px; /* Fixed height for consistent appearance */
+    min-height: 120px;
 }
+
+/* Hover state removed - no current functionality */
 
 /* Square gradient swatches for directional variants */
 .gradient-swatch-square {
@@ -12274,6 +12189,13 @@ button.theme-toggle {
 /* Gradient card standardization */
 .color-card.gradient-card {
     background: transparent !important;  /* Match other cards */
+}
+
+/* Ensure gradient swatches fill their containers */
+.gradient-card .color-swatch {
+    width: 100%;
+    height: 120px;
+    min-height: 120px;
 }
 
 /* Compact gradient directional variants */
@@ -13346,6 +13268,10 @@ button.theme-toggle {
     
     .color-grid-4col {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .color-grid-2col {
+        grid-template-columns: 1fr; /* Single column on mobile */
     }
 
     .usage-grid-2col {
