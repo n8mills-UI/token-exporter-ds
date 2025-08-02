@@ -363,19 +363,40 @@ function updateTokenSummary() {
                     '<div class="te-icon-grid" id="pluginIconGrid"></div>' +
                     '<div class="te-celebration" id="pluginCelebration"></div>' +
                     '<div class="te-glass-status surface-glass" id="pluginGlassStatus">' +
-                        '<p class="te-progress-percent" id="pluginProgressPercent">0%</p>' +
-                        '<div class="te-progress-track">' +
+                        '<p class="te-progress-percent glass-text-primary" id="pluginProgressPercent">0%</p>' +
+                        '<div class="te-progress-track progress-track">' +
                             '<div class="te-progress-fill" id="pluginProgressFill"></div>' +
                         '</div>' +
-                        '<p class="te-status-label" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Warming up</p>' +
+                        '<p class="te-status-label glass-text-muted" id="pluginStatusLabel" aria-live="polite" aria-atomic="true">Ready to export</p>' +
                     '</div>' +
                 '</div>';
             initializePluginLoader();
+            
+            // Start the beautiful animation sequence
+            animateExportProgress();
+        }
+        
+        // Match the design guide's beautiful timing
+        function animateExportProgress() {
+            // Track when we started for success timing
+            animationStartTime = Date.now();
+            
+            // Reset progress
+            currentProgress = 0;
+            updateProgress(0);
+            
+            // Animate with the same timing as the guide
+            setTimeout(() => updateProgress(25), 1500);   // 0 -> 25% at 1.5s
+            setTimeout(() => updateProgress(50), 2700);   // 25 -> 50% at 2.7s
+            setTimeout(() => updateProgress(75), 4000);   // 50 -> 75% at 4s
+            setTimeout(() => updateProgress(100), 4500);  // 75 -> 100% at 4.5s
+            // Success animation will trigger via message from Figma
         }
         
         // Store current progress for smooth animation
         let currentProgress = 0;
         let animationFrame = null;
+        let animationStartTime = 0;
         
         function updateProgress(targetProgress) {
             const progressStages = [
@@ -595,11 +616,13 @@ function updateTokenSummary() {
                     renderIcons();
                     break;
                 case 'export-progress':
-                    updateProgress(msg.percent);
+                    // Don't update if we're already animating smoothly
+                    // This prevents jumpy behavior from Figma messages
                     break;
                 case 'export-result':
-                    updateProgress(100);
-                    setTimeout(() => showSuccessState(msg.data), 500);
+                    // Wait for our animation to complete before showing success
+                    const timeToWait = Math.max(0, 4800 - (Date.now() - animationStartTime));
+                    setTimeout(() => showSuccessState(msg.data), timeToWait);
                     break;
                 case 'notify':
                     if (msg.error) showErrorState(msg.message);
