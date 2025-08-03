@@ -7584,8 +7584,8 @@ body {
 /* Token sections inherit light mode styles from category elements */
 
 /* Foundation Token & Component Styles */
-.token-category, .component-section {
- margin-bottom: var(--size-8);
+.token-category {
+ margin-bottom: var(--size-10); /* Consistent spacing across all sections */
  padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
  background: var(--component-section-bg);
  border-radius: var(--radius-3);
@@ -7593,19 +7593,37 @@ body {
  overflow: hidden;
 }
 
+/* Component sections that contain component-body get the same container styling */
+.content-section:has(.component-body) {
+ margin-bottom: var(--size-10); /* Consistent spacing across all sections */
+ padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
+ background: var(--component-section-bg);
+ border-radius: var(--radius-3);
+ border: var(--border-size-1) solid var(--component-section-border);
+ overflow: hidden;
+}
+
+/* Figma to Code section needs container styling too */
+.figma-to-code-section {
+ margin-bottom: var(--size-10); /* Consistent spacing across all sections */
+ padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Same padding as other containers */
+ background: var(--component-section-bg);
+ border-radius: var(--radius-3);
+ border: var(--border-size-1) solid var(--component-section-border);
+ overflow: hidden;
+}
+
+/* No special overrides needed - unified system handles all sections */
+
 /* Container styling uses semantic tokens */
-.token-category,
-.component-section {
+.token-category, 
+.content-section:has(.component-body),
+.figma-to-code-section {
     background: var(--token-section-bg);
     border-color: var(--token-section-border);
 }
 
-.category-header, .component-header {
- padding: var(--size-4) 0;
- margin: 0 0 var(--size-4) 0;
- background: transparent;
- border-bottom: var(--border-size-1) solid var(--token-section-border);
-}
+/* Category and component headers now use unified system above */
 
 .category-title, .component-title {
  color: var(--color-text-default);
@@ -10265,51 +10283,38 @@ body {
    ========================= */
 
 /* Main Section Container */
-.component-section,
 .content-section {
     margin-bottom: var(--guide-content-gap);
     position: relative;
 }
 
-/* Section Header Container */
-.component-header,
-.section-header {
-    padding: 0 0 var(--size-3) 0; /* Minimal bottom padding only */
+/* ========= UNIFIED SECTION HEADER SYSTEM ========= */
+/* Single header style for ALL sections - no special cases */
+
+.section-header,
+.category-header,
+.component-header {
+    padding: 0 0 var(--size-4) 0;
+    margin-bottom: var(--size-6);
     background: transparent;
     border-bottom: var(--border-size-1) solid var(--token-section-border);
-    margin-bottom: var(--size-4);
+    text-align: left;
 }
 
-/* Remove background from subsection headers - different padding for different structures */
-.faq-section .section-header,
-.tech-stack-grid .section-header,
-.about-content .section-header {
-    background: transparent !important;
-    text-align: left !important; /* Left align headers with content */
-    padding: 0 0 var(--size-4) 0 !important; /* No top padding - containers handle it */
-    margin-bottom: var(--size-6) !important; /* Consistent spacing */
+/* All section titles use consistent typography */
+.section-header .section-title-primary,
+.category-header .section-title-primary,
+.component-header .section-title-primary {
+    font-size: var(--font-size-5);
+    margin: 0;
 }
-/* Figma to Code section - now without component-body wrapper */
-.component-section .section-header {
-    background: transparent !important;
-    text-align: left !important; /* Left align headers with content */
-    padding: 0 0 var(--size-4) 0 !important; /* No top padding - section handles it */
-    margin-bottom: var(--size-6) !important; /* Consistent spacing */
-}
-/* Fix subsection header sizing - should be larger */
-.faq-section .section-header .section-title,
-.tech-stack-grid .section-header .section-title,
-.about-content .section-header .section-title,
-.component-section .section-header .section-title {
-    font-size: var(--font-size-5) !important; /* Increase from --font-size-4 */
-}
-/* Fix description alignment and padding */
-.faq-section .section-header .section-subtitle,
-.tech-stack-grid .section-header .section-subtitle,
-.about-content .section-header .section-subtitle,
-.component-section .section-header .section-subtitle {
-    margin-left: 0 !important; /* Remove excess left padding */
-    padding-left: 0 !important;
+
+/* All section descriptions use consistent styling */
+.section-header .section-description,
+.category-header .section-description,
+.component-header .section-description {
+    margin: var(--size-2) 0 0 0;
+    padding: 0;
 }
 
 /* Major Section Headers (Foundation & Components) */
@@ -10341,17 +10346,9 @@ body {
     /* Typography from .text-heading-xl class */
 }
 
-.content-section > .section-header {
-    background: transparent !important; /* Remove background for main sections */
-    border-bottom: var(--border-size-2) solid var(--color-border-default) !important; /* Thicker dividing line */
-    padding: 0 0 var(--size-4) 0 !important; /* Full-width alignment with bottom padding only */
-    margin-bottom: var(--guide-content-gap);
-}
+/* No content-section overrides needed - unified system handles all sections */
 
-/* Section Body Container - no horizontal padding (handled by parent) */
-.component-body {
-    padding: 0 0 var(--size-2) 0; /* Reduced bottom padding for tighter spacing */
-}
+/* Section Body Container - inherits padding from token-category styles */
 
 /* Table responsive needs horizontal padding since it extends full width */
 .component-body:has(.table-responsive) {
@@ -10564,13 +10561,9 @@ body {
         height: var(--icon-md);
     }
     
-    .component-header,
-    /* Section header padding handled by main rule */
+    /* All headers now use unified system - no mobile overrides needed */
     
-    .component-body {
-        /* Padding handled by parent component-section */
-        padding: 0 0 var(--size-2) 0; /* Reduced for consistency */
-    }
+    /* Component body padding now handled by main rule */
     
     /* Ensure subsections and icons maintain padding on mobile */
     
@@ -10648,8 +10641,7 @@ body {
     .example-container,
     .token-reference-item,
     .token-item,
-    .collection-item,
-    .component-section {
+    .collection-item {
         transition: none !important;
         transform: none !important;
     }
@@ -13680,14 +13672,16 @@ button.theme-toggle {
 @media (max-width: 768px) {
     /* Consistent padding for all sections on mobile */
     .token-category, 
-    .component-section {
+    .content-section:has(.component-body),
+    .figma-to-code-section {
         padding: var(--size-3); /* Full padding on mobile */
     }
     
-    /* Adjust header margins for mobile */
-    .category-header, 
+    /* All headers use unified system with consistent mobile spacing */
+    .section-header,
+    .category-header,
     .component-header {
-        margin: 0 0 var(--size-3) 0; /* Simple bottom margin */
+        margin-bottom: var(--size-4); /* Slightly reduced spacing on mobile */
     }
     
     /* Tab navigation mobile adjustment - Minimalist Outline */

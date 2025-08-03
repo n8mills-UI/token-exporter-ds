@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation Sections Redesign - Comprehensive Mockup</title>
+    
+    <!-- CRITICAL: Include design system CSS for live token access -->
+    <link rel="stylesheet" href="../../../docs/design-system.css">
+    
+    <!-- STAGE 1 ZONE A: Brand Guardian - Global Foundation (Lines 15-80) -->
+    <!-- AGENT: Brand Guardian | RESPONSIBILITY: Global tokens, theming, brand consistency -->
+    <!-- DO NOT MODIFY: This zone reserved for Brand Guardian agent -->
+    <style id="zone-brand-guardian">
+        /* Global foundation tokens and brand consistency rules */
+        /* Brand Guardian will define cohesive visual concepts here */
+        /* Theme-aware color relationships and brand expression */
+    </style>
+    
+    <!-- STAGE 1 ZONE B: UI Designer - Layout System (Lines 85-150) -->
+    <!-- AGENT: UI Designer | RESPONSIBILITY: Layout system, responsive rules, visual hierarchy -->
+    <!-- DO NOT MODIFY: This zone reserved for UI Designer agent -->
+    <style id="zone-ui-designer">
+        /* Responsive layout system */
+        /* Smart grid rules: even items → 2 cols, odd → 1 col */
+        /* Visual hierarchy and spacing relationships */
+    </style>
+    
+    <!-- STAGE 1 ZONE C: Frontend Developer - Technical Architecture (Lines 155-220) -->
+    <!-- AGENT: Frontend Developer | RESPONSIBILITY: Technical architecture, icon embedding, interactions -->
+    <!-- DO NOT MODIFY: This zone reserved for Frontend Developer agent -->
+    <style id="zone-frontend-developer">
+        /* Technical implementation patterns */
+        /* Icon system integration */
+        /* Interactive states and animations */
+    </style>
+    
+    <!-- STAGE 2 ZONES: Individual Section Agents (Lines 225+) -->
+    <!-- Each section gets dedicated agent and zone after Stage 1 completion -->
+    
+    <!-- Icon System - CRITICAL: All icons must be embedded properly -->
+    <script>
+        // Icon definitions embedded for Figma compatibility
+        const ICONS = {
+            'type': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,7 4,4 20,4 20,7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>',
+            'move': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,9 2,12 5,15"></polyline><polyline points="9,5 12,2 15,5"></polyline><polyline points="15,19 12,22 9,19"></polyline><polyline points="19,9 22,12 19,15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>',
+            'layers': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 2,7 12,12 22,7"></polygon><polyline points="2,17 12,22 22,17"></polyline><polyline points="2,12 12,17 22,12"></polyline></svg>',
+            'square': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>',
+            'circle': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></svg>',
+            'play': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21"></polygon></svg>',
+            'sun': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>',
+            'moon': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
+        };
+        
+        // Icon injection system - runs after DOM load
+        function injectIcons() {
+            document.querySelectorAll('[data-icon]').forEach(el => {
+                const iconName = el.getAttribute('data-icon');
+                if (ICONS[iconName]) {
+                    el.innerHTML = ICONS[iconName];
+                }
+            });
+        }
+        
+        // Theme switcher functionality
+        function initThemeToggle() {
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    const html = document.documentElement;
+                    const currentTheme = html.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    html.setAttribute('data-theme', newTheme);
+                });
+            }
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            injectIcons();
+            initThemeToggle();
+        });
+    </script>
+</head>
+
+<body>
+    <!-- HEADER: Theme Switcher for Live Testing -->
+    <header style="position: sticky; top: 0; background: var(--color-surface); border-bottom: var(--border-size-1) solid var(--color-border); padding: var(--size-4); z-index: 100;">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+            <h1 style="margin: 0; color: var(--color-text);">Foundation Sections Redesign</h1>
+            <button id="theme-toggle" style="display: flex; align-items: center; gap: var(--size-2); padding: var(--size-2) var(--size-4); background: var(--color-surface-raised); border: var(--border-size-1) solid var(--color-border); border-radius: var(--radius-2); color: var(--color-text); cursor: pointer;">
+                <i data-icon="sun"></i>
+                <span>Toggle Theme</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main style="max-width: 1200px; margin: 0 auto; padding: var(--size-6);">
+        
+        <!-- SECTION 1: Typography -->
+        <!-- STAGE 2 ZONE: Typography Agent (Lines 110-200) -->
+        <!-- AGENT: Typography Specialist | RESPONSIBILITY: Typography section redesign -->
+        <section id="typography-zone" class="foundation-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i data-icon="type"></i>
+                    Typography
+                </h2>
+                <p class="section-description">
+                    Foundational type scale and font definitions - the typographic building blocks that establish hierarchy and readability.
+                </p>
+            </div>
+            <div class="section-content">
+                <!-- Typography Agent will redesign this section with strong, cohesive concepts -->
+                <!-- Focus: Content only, keep existing container structure -->
+                <div class="placeholder-content">
+                    <p>Typography section content will be redesigned here...</p>
+                    <p>Requirements: Strong concepts, controlled playfulness, responsive grid</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Spacing -->
+        <!-- STAGE 2 ZONE: Spacing Agent (Lines 205-295) -->
+        <!-- AGENT: Spacing Specialist | RESPONSIBILITY: Spacing section redesign -->
+        <section id="spacing-zone" class="foundation-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i data-icon="move"></i>
+                    Spacing
+                </h2>
+                <p class="section-description">
+                    Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.
+                </p>
+            </div>
+            <div class="section-content">
+                <!-- Spacing Agent will redesign this section -->
+                <div class="placeholder-content">
+                    <p>Spacing section content will be redesigned here...</p>
+                    <p>Requirements: Visual demonstration of spacing values, smart responsive layout</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Effects -->
+        <!-- STAGE 2 ZONE: Effects Agent (Lines 300-390) -->
+        <!-- AGENT: Effects Specialist | RESPONSIBILITY: Effects section redesign -->
+        <section id="effects-zone" class="foundation-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i data-icon="layers"></i>
+                    Effects
+                </h2>
+                <p class="section-description">
+                    Visual effects including elevation shadows, glass morphism, and glow effects for creating depth and hierarchy.
+                </p>
+            </div>
+            <div class="section-content">
+                <!-- Effects Agent will redesign this section -->
+                <div class="placeholder-content">
+                    <p>Effects section content will be redesigned here...</p>
+                    <p>Requirements: Interactive shadow/glass demonstrations, cohesive visual approach</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Borders -->
+        <!-- STAGE 2 ZONE: Borders Agent (Lines 395-485) -->
+        <!-- AGENT: Borders Specialist | RESPONSIBILITY: Borders section redesign -->
+        <section id="borders-zone" class="foundation-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i data-icon="square"></i>
+                    Borders
+                </h2>
+                <p class="section-description">
+                    Border width values for consistent strokes and outlines throughout the interface.
+                </p>
+            </div>
+            <div class="section-content">
+                <!-- Borders Agent will redesign this section -->
+                <div class="placeholder-content">
+                    <p>Borders section content will be redesigned here...</p>
+                    <p>Requirements: Clear border width demonstrations, consistent with overall design</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Radius -->
+        <!-- STAGE 2 ZONE: Radius Agent (Lines 490-580) -->
+        <!-- AGENT: Radius Specialist | RESPONSIBILITY: Radius section redesign -->
+        <section id="radius-zone" class="foundation-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i data-icon="circle"></i>
+                    Radius
+                </h2>
+                <p class="section-description">
+                    Base radius values that create consistent corner treatments throughout the interface.
+                </p>
+            </div>
+            <div class="section-content">
+                <!-- Radius Agent will redesign this section -->
+                <div class="placeholder-content">
+                    <p>Radius section content will be redesigned here...</p>
+                    <p>Requirements: Visual radius demonstrations, playful but controlled approach</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: Motion -->
+        <!-- STAGE 2 ZONE: Motion Agent (Lines 585-675) -->
+        <!-- AGENT: Motion Specialist | RESPONSIBILITY: Motion section redesign -->
+        <section id="motion-zone" class="foundation-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i data-icon="play"></i>
+                    Motion
+                </h2>
+                <p class="section-description">
+                    Raw timing and easing values that power smooth, consistent motion throughout the interface.
+                </p>
+            </div>
+            <div class="section-content">
+                <!-- Motion Agent will redesign this section -->
+                <div class="placeholder-content">
+                    <p>Motion section content will be redesigned here...</p>
+                    <p>Requirements: Interactive motion demonstrations, engaging but professional</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ZONE DOCUMENTATION -->
+    <!-- This comment block defines the zone boundaries for all agents -->
+    <!--
+    ZONE BOUNDARIES REFERENCE:
+    
+    STAGE 1 ZONES:
+    - Lines 15-80:   Brand Guardian (Global foundation, tokens, theming)
+    - Lines 85-150:  UI Designer (Layout system, responsive rules)
+    - Lines 155-220: Frontend Developer (Technical architecture, icons)
+    
+    STAGE 2 ZONES:
+    - Lines 110-200: Typography Agent
+    - Lines 205-295: Spacing Agent  
+    - Lines 300-390: Effects Agent
+    - Lines 395-485: Borders Agent
+    - Lines 490-580: Radius Agent
+    - Lines 585-675: Motion Agent
+    
+    HANDOFF PROTOCOL:
+    1. Stage 1 agents complete foundation work
+    2. Coordinate handoff meeting
+    3. Stage 2 agents receive completed foundation
+    4. Stage 2 agents work in parallel on individual sections
+    5. Final integration and polish
+    -->
+
+</body>
+</html>

@@ -193,6 +193,35 @@ Before major changes:
 - [ ] Review git diff - changes intentional?
 - [ ] Update CLAUDE.md - document decisions?
 
+## 🔄 Working Principles
+
+### Self-Correction Protocol
+Before finalizing any code modification:
+1. **Review changes against initial request** - Does this match what was asked?
+2. **Check project's existing patterns** - Am I following conventions?
+3. **State deviations** - If something differs from expectations, ask for confirmation
+4. **Learning from CLAUDE.md** - If request contradicts these instructions, point it out
+
+### Comment Standards
+**Focus on WHY, not WHAT:**
+- ✅ `/* CRITICAL: Figma doesn't support optional chaining */`
+- ✅ `/* Using 3-column grid for odd number of items */`
+- ❌ `/* Set background to red */`
+- ❌ `/* Loop through array */`
+
+### Test Adherence
+After EVERY significant code change:
+1. **Run tests automatically** - `npm run check`
+2. **Debug failures before asking** - Attempt fixes first
+3. **Document what was tried** - If escalating issues
+
+### Multi-Agent Workflow Standard
+For complex tasks, use **parallel pipeline** approach:
+- **Single file** with clear agent zones
+- **3-4 agents working simultaneously**
+- **2.5x faster** than sequential approach
+- See `.dev/agents/AGENT-WORKFLOW-STANDARD.md` for details
+
 ## Agent Directory
 
 For complex tasks, use these specialized agents:
