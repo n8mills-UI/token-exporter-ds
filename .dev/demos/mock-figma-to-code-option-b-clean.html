@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma to Code - Option B Clean (Mobile-First)</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #212529;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin: 3rem 0 1.5rem;
+            color: #495057;
+        }
+        
+        /* Card Grid */
+        .export-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        /* Base Card Styles */
+        .export-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Atoms Card - Special Merged Card */
+        .atoms-card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .atoms-section {
+            padding: 1.5rem;
+            flex: 1;
+        }
+        
+        .atoms-divider {
+            height: 1px;
+            background: #e9ecef;
+            margin: 0;
+        }
+        
+        .atoms-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .icon-circle svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .figma-icon {
+            background: #F24E1E;
+            color: white;
+        }
+        
+        .code-icon {
+            background: #007ACC;
+            color: white;
+        }
+        
+        .atoms-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 0;
+            color: #212529;
+        }
+        
+        .atoms-description {
+            color: #6c757d;
+            margin: 0.25rem 0 0 0;
+            font-size: 0.875rem;
+        }
+        
+        .atoms-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .feature-tag {
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8125rem;
+            color: #495057;
+        }
+        
+        /* Regular Export Cards */
+        .format-card {
+            padding: 1.5rem;
+        }
+        
+        .format-header {
+            margin-bottom: 1rem;
+        }
+        
+        .format-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem 0;
+            color: #212529;
+        }
+        
+        .format-subtitle {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin: 0;
+        }
+        
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+            font-size: 0.8125rem;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.4;
+        }
+        
+        .token { color: #0969da; }
+        .value { color: #0a3069; }
+        .comment { color: #6e7781; }
+        
+        /* Tablet Layout */
+        @media (min-width: 768px) {
+            .export-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
+            }
+            
+            .atoms-card {
+                grid-column: 1 / -1;
+                flex-direction: row;
+            }
+            
+            .atoms-divider {
+                width: 1px;
+                height: auto;
+                margin: 1.5rem 0;
+            }
+        }
+        
+        /* Desktop Layout */
+        @media (min-width: 1024px) {
+            h1 { font-size: 2.5rem; }
+            
+            .export-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .atoms-card {
+                grid-column: 1 / -1;
+            }
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 767px) {
+            body { padding: 1rem; }
+            
+            h1 { 
+                font-size: 1.75rem; 
+                margin-bottom: 1.5rem;
+            }
+            
+            .export-card { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+            
+            .atoms-section,
+            .format-card { padding: 1.25rem; }
+            
+            .code-example { 
+                font-size: 0.75rem;
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Figma to Code Export</h1>
+        
+        <h2>Transform Your Design Tokens</h2>
+        
+        <div class="export-grid">
+            <!-- Merged Atoms Card -->
+            <div class="export-card atoms-card">
+                <div class="atoms-section">
+                    <div class="atoms-header">
+                        <div class="icon-circle figma-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/>
+                                <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/>
+                                <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/>
+                                <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/>
+                                <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="atoms-title">Figma Variables</h3>
+                            <p class="atoms-description">Raw design tokens</p>
+                        </div>
+                    </div>
+                    <div class="atoms-features">
+                        <span class="feature-tag">Color Variables</span>
+                        <span class="feature-tag">Number Variables</span>
+                        <span class="feature-tag">Mode Support</span>
+                    </div>
+                </div>
+                
+                <div class="atoms-divider"></div>
+                
+                <div class="atoms-section">
+                    <div class="atoms-header">
+                        <div class="icon-circle code-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="atoms-title">Code Tokens</h3>
+                            <p class="atoms-description">Platform-ready output</p>
+                        </div>
+                    </div>
+                    <div class="atoms-features">
+                        <span class="feature-tag">Semantic Names</span>
+                        <span class="feature-tag">Type Safety</span>
+                        <span class="feature-tag">Alias Resolution</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CSS Variables -->
+            <div class="export-card format-card">
+                <div class="format-header">
+                    <h3 class="format-title">CSS Variables</h3>
+                    <p class="format-subtitle">Web Standards</p>
+                </div>
+                <div class="code-example"><span class="comment">/* Brand Colors */</span>
+<span class="token">--brand-primary</span>: <span class="value">#D2FF37</span>;
+<span class="token">--brand-secondary</span>: <span class="value">#FF1493</span>;</div>
+            </div>
+            
+            <!-- Swift -->
+            <div class="export-card format-card">
+                <div class="format-header">
+                    <h3 class="format-title">Swift</h3>
+                    <p class="format-subtitle">iOS & macOS</p>
+                </div>
+                <div class="code-example"><span class="comment">// Brand Colors</span>
+static let <span class="token">brandPrimary</span> = <span class="value">Color(hex: "#D2FF37")</span>
+static let <span class="token">brandSecondary</span> = <span class="value">Color(hex: "#FF1493")</span></div>
+            </div>
+            
+            <!-- Android -->
+            <div class="export-card format-card">
+                <div class="format-header">
+                    <h3 class="format-title">Android XML</h3>
+                    <p class="format-subtitle">Material Design</p>
+                </div>
+                <div class="code-example"><span class="comment">&lt;!-- Brand Colors --&gt;</span>
+&lt;color name="<span class="token">brand_primary</span>"&gt;<span class="value">#D2FF37</span>&lt;/color&gt;
+&lt;color name="<span class="token">brand_secondary</span>"&gt;<span class="value">#FF1493</span>&lt;/color&gt;</div>
+            </div>
+            
+            <!-- Flutter -->
+            <div class="export-card format-card">
+                <div class="format-header">
+                    <h3 class="format-title">Flutter</h3>
+                    <p class="format-subtitle">Cross-platform</p>
+                </div>
+                <div class="code-example"><span class="comment">// Brand Colors</span>
+static const <span class="token">brandPrimary</span> = <span class="value">Color(0xFFD2FF37)</span>;
+static const <span class="token">brandSecondary</span> = <span class="value">Color(0xFFFF1493)</span>;</div>
+            </div>
+            
+            <!-- JSON -->
+            <div class="export-card format-card">
+                <div class="format-header">
+                    <h3 class="format-title">JSON</h3>
+                    <p class="format-subtitle">W3C Standard</p>
+                </div>
+                <div class="code-example">{
+  "<span class="token">brand-primary</span>": {
+    "$value": "<span class="value">#D2FF37</span>",
+    "$type": "color"
+  }
+}</div>
+            </div>
+            
+            <!-- Tailwind -->
+            <div class="export-card format-card">
+                <div class="format-header">
+                    <h3 class="format-title">Tailwind</h3>
+                    <p class="format-subtitle">Config Ready</p>
+                </div>
+                <div class="code-example">colors: {
+  brand: {
+    primary: '<span class="value">#D2FF37</span>',
+    secondary: '<span class="value">#FF1493</span>'
+  }
+}</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

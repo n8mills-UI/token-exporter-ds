@@ -1414,6 +1414,7 @@ body {
         background: var(--glass-panel-subtle); /* 10% white opacity */
         backdrop-filter: blur(4px);
         border-color: var(--color-border-default);
+        box-shadow: none; /* Remove shadows in light mode for flat design */
     }
     
     /* Hover state removed - stats container is non-interactive */
@@ -4154,13 +4155,17 @@ body {
 }
 
 [data-brand-context="hero"] .brand-title {
-    font-size: calc(var(--font-size-8) * 1.2);
+    font-size: clamp(2.5rem, 8vw, var(--font-size-7));
     font-weight: var(--font-weight-7);
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--color-text-default);
     margin-top: 0;
     margin-bottom: var(--size-4);
+    white-space: nowrap;
+    max-width: 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 [data-brand-context="hero"] .brand-tagline {
@@ -4262,7 +4267,7 @@ body {
  display: flex;
  flex-direction: column;
  align-items: center; /* Center items */
- gap: var(--size-4);
+ gap: var(--size-2);
 }
 
 .hero-bottom p {
@@ -4999,6 +5004,13 @@ body {
  transition: opacity var(--animation-duration-2) var(--ease-3);
 }
 
+/* Safe area support for version badge */
+@supports (bottom: env(safe-area-inset-bottom)) {
+ .version-badge {
+  bottom: max(var(--size-4), env(safe-area-inset-bottom, var(--size-4)));
+ }
+}
+
 .version-badge:hover {
  opacity: 1;
  cursor: help;
@@ -5223,7 +5235,7 @@ select option {
 /* Scroll cue styles */
 .scroll-cue-container {
     position: fixed;
-    bottom: 5vh;
+    bottom: 2vh;
     left: calc(var(--size-sidebar-width) + (100vw - var(--size-sidebar-width)) / 2);
     transform: translateX(-50%);
     display: flex;
@@ -5236,6 +5248,13 @@ select option {
     z-index: var(--layer-3);
     width: max-content;
     text-align: center;
+}
+
+/* Safe area support for scroll cue container */
+@supports (bottom: env(safe-area-inset-bottom)) {
+ .scroll-cue-container {
+  bottom: max(2vh, calc(env(safe-area-inset-bottom, 0px) + 2vh));
+ }
 }
 
 .scroll-cue-container:hover {
@@ -5400,10 +5419,54 @@ select option {
 /* Responsive scroll cue */
 @media (width <= 768px) {
     .scroll-cue-container {
-        bottom: 4vh;
+        bottom: 2vh;
         left: 50%; /* Center on mobile */
         transform: translateX(-50%);
+        padding: var(--size-3); /* Larger touch target */
+        min-height: 44px; /* iOS minimum touch target */
     }
+
+    /* Safe area support for mobile scroll cue */
+    @supports (bottom: env(safe-area-inset-bottom)) {
+     .scroll-cue-container {
+      bottom: max(2vh, calc(env(safe-area-inset-bottom, 0px) + 2vh));
+     }
+    }
+}
+
+/* ===== COMPREHENSIVE SAFE AREA SUPPORT ===== */
+
+/* Global safe area support for modern devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+ /* Ensure main content respects safe areas */
+ .guide-content,
+ .sidebar {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+ }
+
+ /* Utility class for any fixed positioned elements at the bottom */
+ .fixed-bottom {
+  bottom: max(var(--size-4), env(safe-area-inset-bottom, var(--size-4)));
+ }
+
+ /* Modal overlays should extend to safe areas */
+ .progress-overlay,
+ .about-modal,
+ .menu-overlay {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+ }
+
+ /* Tooltips and dropdowns near bottom edge */
+ .tooltip-bottom,
+ .dropdown-bottom {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+ }
+
+ /* Ensure any bottom-positioned form elements respect safe areas */
+ .form-bottom,
+ .action-bar {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+ }
 }
 
 
@@ -9655,12 +9718,18 @@ body {
     }
     
     .hero-bottom {
-        gap: var(--size-3); /* Tighter spacing on mobile */
+        gap: var(--size-2); /* Tighter spacing on mobile */
+    }
+    
+    .hero-bottom p {
+        margin-top: var(--size-2); /* Extra separation from social buttons */
     }
     
     /* Text hierarchy improvements using existing tokens */
     .hero-main-title {
-        font-size: var(--font-size-7); /* Down from calc formula */
+        font-size: clamp(2rem, 7vw, var(--font-size-7)); /* Responsive font sizing */
+        line-height: 1.1; /* Maintain tight line height */
+        letter-spacing: -0.02em; /* Maintain letter spacing */
     }
     
     .hero-tagline {
@@ -9673,6 +9742,16 @@ body {
         font-size: var(--font-size-1); /* Increased by one size from font-size-0 */
         color: var(--color-text-muted); /* Use semantic muted color */
         padding: 0 var(--size-2);
+    }
+}
+
+/* =========================
+  RESPONSIVE TITLE ENHANCEMENT
+  ========================= */
+/* Apply nowrap only on wider phones to prevent line breaks */
+@media (min-width: 400px) {
+    .hero-main-title {
+        white-space: nowrap; /* Keep title on one line for wider screens */
     }
     
     /* Legacy hero-footer mobile styles (keeping for backwards compatibility) */
