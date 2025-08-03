@@ -1,12 +1,8 @@
-name: System Status Dashboard
+name: System Status Dashboard (Disabled)
 
 on:
-  schedule:
-    # Update status every 15 minutes during business hours (9 AM - 6 PM UTC)
-    - cron: '*/15 9-18 * * 1-5'
+  # Disabled automatic runs - can still be triggered manually if needed
   workflow_dispatch:
-  push:
-    branches: [ main ]
 
 env:
   NODE_VERSION: '20'
