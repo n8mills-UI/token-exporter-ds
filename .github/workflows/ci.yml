@@ -42,8 +42,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_VERSION }}-
             
-      - name: Run critical checks (fast fail)
-        run: npm run check:critical
+      # Critical checks moved to build-and-test job since they need built files
         
       - name: Run Figma compatibility checks
         run: npm run check
@@ -111,6 +110,10 @@ jobs:
             echo "::warning::Plugin UI size exceeds 2MB (${UI_SIZE} bytes)"
           fi
           
+      - name: Run critical checks (requires built files)
+        if: matrix.target == 'documentation'
+        run: npm run check:critical
+        
       - name: Validate build content
         run: |
           # Check for CSS inlining success
