@@ -49,7 +49,7 @@ jobs:
         continue-on-error: true
         
       - name: Validate icon system
-        run: node scripts/validate-icons-temp.js
+        run: node scripts/check.js
         
       - name: Run comprehensive checks
         run: npm run check:all

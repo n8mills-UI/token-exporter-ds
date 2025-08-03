@@ -53,6 +53,7 @@ npm-debug.log*
 # Build artifacts
 dist/
 build/
+build/current-tokens.json
 
 # Generated reports from audit script
 reports/

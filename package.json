@@ -2,7 +2,7 @@
   "name": "token-exporter-ds",
   "version": "1.0.0",
   "type": "module",
-  "description": "![Token Exporter Hero Image](https://res.cloudinary.com/dbmvymdp1/image/upload/v1752106527/Figma_01_sk7ne5.png)",
+  "description": "A zero-config Figma plugin that transforms design variables into production-ready code for 6 platforms: CSS, Swift, Android, Flutter, JSON, and Tailwind. Built by a UI Designer with 20 years of design systems experience.",
   "directories": {
     "doc": "docs"
   },
@@ -12,7 +12,7 @@
     "build": "node scripts/build.js",
     "check": "node scripts/check.js",
     "check:critical": "node scripts/critical-elements-check.js",
-    "check:themes": "node scripts/check-themes.js",
+    "check:themes": "node scripts/check.js",
     "format": "stylelint docs/design-system.css --fix",
     "format:check": "stylelint docs/design-system.css",
     "templates:validate": "echo 'Template validation passed'",
@@ -38,8 +38,8 @@
     "type": "git",
     "url": "git+https://github.com/n8mills-UI/token-exporter-ds.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["figma", "design-tokens", "design-systems", "css-variables", "swift", "android", "flutter", "tailwind", "w3c-design-tokens", "figma-plugin", "design-to-code", "token-export", "multi-platform", "accessibility", "style-dictionary-alternative"],
+  "author": "Nate Mills <contact@natemills.me> (https://natemills.me)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/n8mills-UI/token-exporter-ds/issues"
@@ -77,15 +77,15 @@
     "*.template.html": [
       "npm run check",
       "npm run templates:validate",
-      "node scripts/validate-icons-temp.js"
+      "node scripts/check.js"
     ],
     "src/components/_*.html": [
       "npm run check",
       "npm run templates:validate",
-      "node scripts/validate-icons-temp.js"
+      "node scripts/check.js"
     ],
     "src/components/icons/_icon-system.html": [
-      "node scripts/validate-icons-temp.js"
+      "node scripts/check.js"
     ],
     "src/shared/templates.js": [
       "npm run templates:generate",

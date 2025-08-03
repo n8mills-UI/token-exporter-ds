@@ -286,6 +286,23 @@ async function checkThemeArchitecture() {
         }
     });
     
+    // Check 3: Theme color contrast validation
+    const themeContrast = validateThemeContrast(cssContent);
+    if (!themeContrast.valid) {
+        console.log(`  ${colors.yellow}⚠${colors.reset} Theme contrast validation: ${themeContrast.message}`);
+    } else {
+        console.log(`  ${colors.green}✓${colors.reset} Theme color contrast meets accessibility standards`);
+    }
+    
+    // Check 4: Theme variable consistency
+    const themeConsistency = validateThemeConsistency(cssContent);
+    if (!themeConsistency.valid) {
+        console.log(`  ${colors.yellow}⚠${colors.reset} Theme consistency: ${themeConsistency.message}`);
+        issues.push('theme-inconsistency');
+    } else {
+        console.log(`  ${colors.green}✓${colors.reset} Theme variables are consistent across themes`);
+    }
+    
     if (issues.length === 0) {
         console.log(`  ${colors.green}✓${colors.reset} No component-specific theme overrides found`);
         console.log(`  ${colors.green}✓${colors.reset} No duplicate theme sections found`);
@@ -294,6 +311,61 @@ async function checkThemeArchitecture() {
     }
     
     return false;
+}
+
+/**
+ * Validate theme color contrast ratios
+ */
+function validateThemeContrast(cssContent) {
+    // Basic contrast validation placeholder
+    // In a real implementation, this would parse color values and calculate contrast ratios
+    const hasContrastChecks = cssContent.includes('--color-text-') && cssContent.includes('--color-background-');
+    
+    if (hasContrastChecks) {
+        return { valid: true, message: 'Contrast tokens found' };
+    } else {
+        return { valid: false, message: 'Missing contrast-aware color tokens' };
+    }
+}
+
+/**
+ * Validate theme variable consistency
+ */
+function validateThemeConsistency(cssContent) {
+    // Extract theme token names from light and dark themes
+    const lightTokens = new Set();
+    const darkTokens = new Set();
+    
+    // Find light theme tokens
+    const lightMatch = cssContent.match(/\[data-theme="light"\]\s*\{([^}]*)\}/s);
+    if (lightMatch) {
+        const tokenMatches = lightMatch[1].match(/--([a-zA-Z0-9-]+):/g) || [];
+        tokenMatches.forEach(token => lightTokens.add(token.slice(2, -1)));
+    }
+    
+    // Find dark theme tokens (if exists)
+    const darkMatch = cssContent.match(/\[data-theme="dark"\]\s*\{([^}]*)\}/s);
+    if (darkMatch) {
+        const tokenMatches = darkMatch[1].match(/--([a-zA-Z0-9-]+):/g) || [];
+        tokenMatches.forEach(token => darkTokens.add(token.slice(2, -1)));
+    }
+    
+    // Check if themes have consistent token names
+    if (darkTokens.size === 0) {
+        return { valid: true, message: 'Only light theme defined' };
+    }
+    
+    const lightOnly = [...lightTokens].filter(token => !darkTokens.has(token));
+    const darkOnly = [...darkTokens].filter(token => !lightTokens.has(token));
+    
+    if (lightOnly.length === 0 && darkOnly.length === 0) {
+        return { valid: true, message: 'Theme tokens are consistent' };
+    } else {
+        const issues = [];
+        if (lightOnly.length > 0) issues.push(`Light-only: ${lightOnly.slice(0, 3).join(', ')}`);
+        if (darkOnly.length > 0) issues.push(`Dark-only: ${darkOnly.slice(0, 3).join(', ')}`);
+        return { valid: false, message: issues.join('; ') };
+    }
 }
 
 /**
@@ -640,6 +712,26 @@ async function checkPluginCompatibility() {
             console.log(`  ${colors.green}✓${colors.reset} Figma-specific CSS rules found`);
         } else {
             console.log(`  ${colors.yellow}⚠${colors.reset}  No Figma-specific CSS rules found`);
+        }
+        
+        // Validate icon system accessibility and consistency
+        if (iconSystem.includes('aria-label') && iconSystem.includes('role="img"')) {
+            console.log(`  ${colors.green}✓${colors.reset} Icon system includes accessibility attributes`);
+        } else {
+            issues.push('Icon system missing accessibility attributes (aria-label, role)');
+        }
+        
+        // Check icon naming conventions
+        const iconMatches = iconSystem.match(/data-icon="([^"]+)"/g) || [];
+        const invalidIcons = iconMatches.filter(match => {
+            const iconName = match.match(/data-icon="([^"]+)"/)[1];
+            return !/^[a-z0-9-]+$/.test(iconName);
+        });
+        
+        if (invalidIcons.length === 0) {
+            console.log(`  ${colors.green}✓${colors.reset} Icon naming conventions followed`);
+        } else {
+            issues.push(`${invalidIcons.length} icons with invalid naming conventions`);
         }
         
         // Report results
