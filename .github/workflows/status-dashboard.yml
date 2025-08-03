@@ -1,0 +1,269 @@
+name: System Status Dashboard
+
+on:
+  schedule:
+    # Update status every 15 minutes during business hours (9 AM - 6 PM UTC)
+    - cron: '*/15 9-18 * * 1-5'
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '20'
+  FORCE_COLOR: 1
+
+jobs:
+  health-check:
+    name: System Health Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    outputs:
+      production-status: ${{ steps.prod-check.outputs.status }}
+      staging-status: ${{ steps.staging-check.outputs.status }}
+      build-status: ${{ steps.build-check.outputs.status }}
+    
+    steps:
+      - name: Check production site
+        id: prod-check
+        run: |
+          if curl -sSf https://token-exporter.design > /dev/null; then
+            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "✅ Production site is accessible"
+          else
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            echo "❌ Production site is not accessible"
+          fi
+          
+      - name: Check staging site
+        id: staging-check
+        run: |
+          if curl -sSf https://staging-token-exporter.netlify.app > /dev/null; then
+            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "✅ Staging site is accessible"
+          else
+            echo "status=degraded" >> $GITHUB_OUTPUT
+            echo "⚠️ Staging site may not be available"
+          fi
+        continue-on-error: true
+        
+      - name: Checkout for build test
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Test build system
+        id: build-check
+        run: |
+          if npm ci && npm run build; then
+            echo "status=operational" >> $GITHUB_OUTPUT
+            echo "✅ Build system is operational"
+          else
+            echo "status=failing" >> $GITHUB_OUTPUT
+            echo "❌ Build system is failing"
+          fi
+
+  performance-check:
+    name: Performance Monitoring
+    runs-on: ubuntu-latest
+    needs: health-check
+    if: needs.health-check.outputs.production-status == 'healthy'
+    timeout-minutes: 5
+    
+    steps:
+      - name: Measure site performance
+        run: |
+          echo "Measuring production site performance..."
+          
+          # Measure response time
+          START=$(date +%s%N)
+          curl -sSf https://token-exporter.design > /dev/null
+          END=$(date +%s%N)
+          RESPONSE_TIME=$(( (END - START) / 1000000 ))
+          
+          echo "Response time: ${RESPONSE_TIME}ms"
+          
+          if [ $RESPONSE_TIME -gt 3000 ]; then
+            echo "::warning::Site response time is slow (${RESPONSE_TIME}ms)"
+          else
+            echo "✅ Site response time is good (${RESPONSE_TIME}ms)"
+          fi
+          
+          # Check content size
+          CONTENT_SIZE=$(curl -sSf https://token-exporter.design | wc -c)
+          echo "Content size: ${CONTENT_SIZE} bytes"
+          
+          if [ $CONTENT_SIZE -lt 1000 ]; then
+            echo "::warning::Content size seems unusually small"
+          fi
+
+  security-status:
+    name: Security Status Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Quick security audit
+        run: |
+          npm audit --audit-level high > security-report.txt 2>&1 || true
+          
+          if grep -q "found 0 vulnerabilities" security-report.txt; then
+            echo "✅ No high-severity vulnerabilities found"
+          else
+            echo "⚠️ Security vulnerabilities detected"
+            cat security-report.txt
+          fi
+
+  generate-status-report:
+    name: Generate Status Report
+    runs-on: ubuntu-latest
+    needs: [health-check, performance-check, security-status]
+    if: always()
+    
+    steps:
+      - name: Create status report
+        run: |
+          echo "# Token Exporter System Status" > status-report.md
+          echo "Generated: $(date -u)" >> status-report.md
+          echo "" >> status-report.md
+          
+          echo "## Service Status" >> status-report.md
+          echo "| Service | Status |" >> status-report.md
+          echo "|---------|--------|" >> status-report.md
+          
+          # Production status
+          if [ "${{ needs.health-check.outputs.production-status }}" = "healthy" ]; then
+            echo "| Production (token-exporter.design) | ✅ Operational |" >> status-report.md
+          else
+            echo "| Production (token-exporter.design) | ❌ Down |" >> status-report.md
+          fi
+          
+          # Staging status
+          if [ "${{ needs.health-check.outputs.staging-status }}" = "healthy" ]; then
+            echo "| Staging | ✅ Operational |" >> status-report.md
+          elif [ "${{ needs.health-check.outputs.staging-status }}" = "degraded" ]; then
+            echo "| Staging | ⚠️ Degraded |" >> status-report.md
+          else
+            echo "| Staging | ❌ Down |" >> status-report.md
+          fi
+          
+          # Build system status
+          if [ "${{ needs.health-check.outputs.build-status }}" = "operational" ]; then
+            echo "| Build System | ✅ Operational |" >> status-report.md
+          else
+            echo "| Build System | ❌ Failing |" >> status-report.md
+          fi
+          
+          echo "" >> status-report.md
+          echo "## Recent Activity" >> status-report.md
+          echo "- Last status check: $(date -u)" >> status-report.md
+          echo "- Health check: ${{ needs.health-check.result }}" >> status-report.md
+          echo "- Performance check: ${{ needs.performance-check.result }}" >> status-report.md
+          echo "- Security check: ${{ needs.security-status.result }}" >> status-report.md
+          
+          echo "" >> status-report.md
+          echo "## Links" >> status-report.md
+          echo "- [Production Site](https://token-exporter.design)" >> status-report.md
+          echo "- [GitHub Repository](https://github.com/n8mills-UI/token-exporter-ds)" >> status-report.md
+          echo "- [Actions Dashboard](https://github.com/n8mills-UI/token-exporter-ds/actions)" >> status-report.md
+          
+          cat status-report.md
+          
+      - name: Upload status report
+        uses: actions/upload-artifact@v4
+        with:
+          name: status-report-${{ github.run_number }}
+          path: status-report.md
+          retention-days: 7
+
+  alert-on-issues:
+    name: Alert on System Issues
+    runs-on: ubuntu-latest
+    needs: [health-check, performance-check, security-status]
+    if: failure() || (needs.health-check.outputs.production-status != 'healthy')
+    
+    steps:
+      - name: Create incident summary
+        run: |
+          echo "## 🚨 System Alert Triggered" > incident.md
+          echo "Timestamp: $(date -u)" >> incident.md
+          echo "" >> incident.md
+          
+          echo "### Status Summary" >> incident.md
+          echo "- Production: ${{ needs.health-check.outputs.production-status }}" >> incident.md
+          echo "- Staging: ${{ needs.health-check.outputs.staging-status }}" >> incident.md
+          echo "- Build System: ${{ needs.health-check.outputs.build-status }}" >> incident.md
+          echo "" >> incident.md
+          
+          echo "### Failed Jobs" >> incident.md
+          if [ "${{ needs.health-check.result }}" = "failure" ]; then
+            echo "- Health Check: Failed" >> incident.md
+          fi
+          if [ "${{ needs.performance-check.result }}" = "failure" ]; then
+            echo "- Performance Check: Failed" >> incident.md
+          fi
+          if [ "${{ needs.security-status.result }}" = "failure" ]; then
+            echo "- Security Check: Failed" >> incident.md
+          fi
+          
+          echo "" >> incident.md
+          echo "### Immediate Actions Required" >> incident.md
+          if [ "${{ needs.health-check.outputs.production-status }}" != "healthy" ]; then
+            echo "1. Check production deployment status" >> incident.md
+            echo "2. Review recent commits for breaking changes" >> incident.md
+            echo "3. Consider rollback if necessary" >> incident.md
+          fi
+          
+          cat incident.md
+          
+      - name: Create GitHub issue for incident
+        if: needs.health-check.outputs.production-status != 'healthy'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const incidentContent = fs.readFileSync('incident.md', 'utf8');
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 System Alert: Production Site Issues Detected`,
+              body: incidentContent,
+              labels: ['incident', 'production', 'urgent']
+            });
+
+  update-status-badge:
+    name: Update Status Badge
+    runs-on: ubuntu-latest
+    needs: [health-check]
+    if: always()
+    
+    steps:
+      - name: Generate status badge data
+        run: |
+          if [ "${{ needs.health-check.outputs.production-status }}" = "healthy" ]; then
+            echo "STATUS=operational" >> $GITHUB_ENV
+            echo "COLOR=brightgreen" >> $GITHUB_ENV
+          else
+            echo "STATUS=down" >> $GITHUB_ENV
+            echo "COLOR=red" >> $GITHUB_ENV
+          fi
+          
+      - name: Create status badge
+        run: |
+          echo "Status: $STATUS"
+          echo "Badge would show: https://img.shields.io/badge/status-$STATUS-$COLOR"
+          echo "This can be integrated with a status page or README"
