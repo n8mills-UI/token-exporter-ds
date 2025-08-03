@@ -12,6 +12,10 @@ env:
   NODE_VERSION: '20'
   FORCE_COLOR: 1
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   health-check:
     name: System Health Check
@@ -237,13 +241,19 @@ jobs:
             const fs = require('fs');
             const incidentContent = fs.readFileSync('incident.md', 'utf8');
             
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `🚨 System Alert: Production Site Issues Detected`,
-              body: incidentContent,
-              labels: ['incident', 'production', 'urgent']
-            });
+            try {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🚨 System Alert: Production Site Issues Detected`,
+                body: incidentContent,
+                labels: ['incident', 'production', 'urgent']
+              });
+              console.log('Issue created successfully');
+            } catch (error) {
+              console.log('Could not create issue:', error.message);
+              console.log('This is expected if running from a fork or with limited permissions');
+            }
 
   update-status-badge:
     name: Update Status Badge
