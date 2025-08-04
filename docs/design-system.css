@@ -1726,6 +1726,13 @@ body {
     padding: 0; /* Hero manages its own padding */
 }
 
+/* Remove any inherited borders from the overview section */
+#overview.content-section.hero-section {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+}
+
 /* Icon label utility */
 .icon-label {
     display: inline-flex;
@@ -2835,6 +2842,26 @@ body {
 @media (width <= 768px) {
     .portfolio-content {
         padding: var(--size-8) var(--size-4) 0; /* Match mobile header's 20px horizontal padding */
+    }
+}
+
+/* ==========================================================================
+   PAGE LAYOUT CORRECTION
+   Fixes unwanted border and background on the main portfolio content wrapper.
+   ========================================================================== */
+
+.portfolio-content {
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    /* Restore original padding and margin that might be overridden */
+    padding: var(--size-8) var(--size-6) 0;
+    margin-top: var(--size-4);
+}
+
+@media (width <= 768px) {
+    .portfolio-content {
+        padding: var(--size-8) var(--size-4) 0;
     }
 }
 
@@ -4449,7 +4476,7 @@ body {
 
 /* Built With Section */
 .tech-stack-grid {
- background: var(--color-background-secondary);
+ background: transparent;
  border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-3);
  padding: var(--size-6);
@@ -4605,8 +4632,8 @@ body {
 
 .info-panel-a .title [data-icon], 
 .info-panel-a .title svg {
- width: var(--icon-xl);
- height: var(--icon-xl);
+ width: var(--icon-xxl);
+ height: var(--icon-xxl);
  color: var(--brand-secondary);
 }
 
@@ -4718,7 +4745,7 @@ body {
 /* FAQ Section */
 
 .faq-section {
- background: var(--color-background-secondary);
+ background: transparent;
  border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-3);
  padding: var(--size-6);
@@ -8052,15 +8079,7 @@ body {
     border-color: var(--compact-card-border);
 }
 
-.tech-stack-grid {
-    background: var(--tech-stack-bg);
-    border-color: var(--compact-card-border);
-}
-
-.faq-section {
-    background: var(--faq-section-bg);
-    border-color: var(--compact-card-border);
-}
+/* Removed tech-stack-grid and faq-section overrides to keep them transparent */
 
 
 .faq-item {
