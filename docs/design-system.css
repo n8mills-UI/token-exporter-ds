@@ -4296,8 +4296,8 @@ body {
  flex-shrink: 0;
  display: flex;
  align-items: center;
- justify-content: center; /* Center CTA button */
- margin: var(--size-4) 0 var(--size-6) 0; /* Consistent spacing */
+ justify-content: center;
+ margin: var(--size-4) 0 var(--size-8) 0; /* More space before social icons */
 }
 
 /* Legacy hero-footer styles (for backwards compatibility) */
@@ -9520,15 +9520,15 @@ body {
     }
 
     .header-title {
-        font-size: clamp(1.25rem, 4vw, 1.5rem);  /* Optimized for visual balance with 40px elements */
+        font-size: 1.25rem; /* Fixed 20px to align with 40px logo */
         font-weight: var(--font-weight-6);
         color: var(--color-text-default);
         line-height: 1;
         display: flex;
-        flex-direction: column;  /* Stack vertically */
+        flex-direction: column;
         justify-content: center;
-        height: 40px;  /* Match hamburger button height */
-        letter-spacing: -0.01em;  /* Subtle tightening for professional look */
+        height: 40px;
+        letter-spacing: -0.01em;
     }
 
     .header-title span {
@@ -9724,7 +9724,7 @@ body {
     }
     
     .hero-cta-group {
-        margin: var(--size-3) 0 var(--size-4) 0; /* Reduced margins for mobile */
+        margin: var(--size-3) 0 var(--size-6) 0; /* More space before social icons on mobile */
     }
     
     .hero-bottom {
