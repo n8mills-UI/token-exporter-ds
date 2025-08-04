@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma to Code - Design System</title>
+    <link rel="stylesheet" href="docs/design-system.css">
+    <style>
+        /* Additional styles for this specific section */
+        .figma-code-wrapper {
+            min-height: 100vh;
+            background: var(--color-background-primary);
+            color: var(--color-text-default);
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+        
+        /* Container matching existing design system */
+        .container {
+            max-width: calc(var(--content-lg) + var(--size-8) * 2);
+            margin: 0 auto;
+            padding: var(--size-6) var(--size-4);
+        }
+        
+        /* Simple Flow */
+        .flow-container {
+            display: grid;
+            gap: var(--size-3);
+        }
+        
+        .flow-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 40px 1fr;
+            align-items: start; /* Top align items */
+            gap: var(--size-3);
+            padding: var(--size-4);
+            border: var(--border-size-1) solid var(--color-border-default);
+            border-radius: var(--radius-3);
+            transition: none; /* No hover state */
+        }
+        
+        /* Different backgrounds for each atomic level - using surface tokens */
+        .flow-row.atoms {
+            background: var(--surface-1);
+        }
+        
+        .flow-row.molecules {
+            background: var(--surface-2);
+        }
+        
+        .flow-row.organisms {
+            background: var(--surface-3);
+        }
+        
+        .flow-row.templates {
+            background: var(--surface-4);
+        }
+        
+        /* Atomic level label */
+        .atomic-label {
+            font-weight: var(--font-weight-6);
+            font-size: var(--font-size-0);
+            text-transform: uppercase;
+            letter-spacing: var(--font-letterspacing-2);
+            color: var(--color-text-secondary);
+            align-self: start;
+        }
+        
+        .flow-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--size-1);
+        }
+        
+        .flow-item strong {
+            color: var(--color-text-default);
+            font-weight: var(--font-weight-5);
+        }
+        
+        .flow-item span {
+            font-size: var(--font-size-0);
+            color: var(--color-text-secondary);
+            line-height: var(--font-lineheight-2);
+        }
+        
+        /* Code examples using proper badge styles */
+        .code-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--size-2);
+            margin-top: var(--size-1);
+        }
+        
+        .flow-arrow {
+            color: var(--brand-primary);
+            font-size: var(--font-size-3);
+            opacity: 0.6;
+            text-align: center;
+            align-self: center;
+        }
+        
+        [data-theme="light"] .flow-arrow {
+            color: var(--brand-secondary);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--size-4) var(--size-3);
+            }
+            
+            .section-header {
+                margin-bottom: var(--size-4);
+            }
+            
+            /* Mobile Flow - Responsive */
+            .flow-row {
+                grid-template-columns: 80px 1fr 30px 1fr;
+                gap: var(--size-2);
+                padding: var(--size-3);
+            }
+            
+            .atomic-label {
+                font-size: var(--font-size-00);
+            }
+            
+            .flow-arrow {
+                font-size: var(--font-size-2);
+            }
+            
+            .code-examples {
+                gap: var(--size-1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="figma-code-wrapper">
+        <div class="container">
+            <!-- Header matching existing design -->
+            <div class="section-header">
+                <h2 class="section-title-primary"><i data-icon="link"></i> Figma to Code</h2>
+                <p class="section-description" style="margin-top: 0;">A shared language for designers and developers</p>
+            </div>
+            <p class="section-description content-max-width section-spacing-md">
+                A successful design system relies on a shared understanding between design and development. 
+                This guide translates common Figma concepts into their direct code counterparts using the 
+                principles of <a href="https://atomicdesign.bradfrost.com/" target="_blank" rel="noopener noreferrer" class="link-brand">Atomic Design</a>.
+            </p>
+            
+            <div class="flow-container">
+                <!-- Atoms - Combined -->
+                <div class="flow-row atoms">
+                    <div class="atomic-label">Atoms</div>
+                    <div class="flow-item">
+                        <strong>Styles & Layout</strong>
+                        <span>Colors, Text, Effects<br>Spacing, Alignment</span>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">
+                        <strong>Foundation & Utilities</strong>
+                        <div class="code-examples">
+                            <span class="badge small brand">--brand-primary</span>
+                            <span class="badge small brand">.flex</span>
+                            <span class="badge small brand">.p-4</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Molecules -->
+                <div class="flow-row molecules">
+                    <div class="atomic-label">Molecules</div>
+                    <div class="flow-item">
+                        <strong>Components</strong>
+                        <span>Button, Input, Card</span>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">
+                        <strong>Component Classes</strong>
+                        <div class="code-examples">
+                            <span class="badge small brand">.btn</span>
+                            <span class="badge small brand">.card</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Organisms -->
+                <div class="flow-row organisms">
+                    <div class="atomic-label">Organisms</div>
+                    <div class="flow-item">
+                        <strong>Component Sets</strong>
+                        <span>Navigation, Forms</span>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">
+                        <strong>Complex Classes</strong>
+                        <div class="code-examples">
+                            <span class="badge small brand">.nav-header</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Templates -->
+                <div class="flow-row templates">
+                    <div class="atomic-label">Templates</div>
+                    <div class="flow-item">
+                        <strong>Pages</strong>
+                        <span>Full layouts</span>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">
+                        <strong>Layout Classes</strong>
+                        <div class="code-examples">
+                            <span class="badge small brand">.guide-container</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Theme toggle
+        const html = document.documentElement;
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>

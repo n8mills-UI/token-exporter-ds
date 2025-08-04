@@ -1,0 +1,82 @@
+<!-- Figma to Code Section Component -->
+<div class="content-section figma-to-code-section">
+    <div class="section-header">
+        <h2 class="section-title-primary"><i data-icon="link"></i> Figma to Code</h2>
+        <p class="section-description" style="margin-top: 0;">Bridging design and development with shared terminology</p>
+    </div>
+    <p class="section-description content-max-width section-spacing-md">
+        A successful design system relies on a shared understanding between design and development. This mapping translates Figma design concepts into their corresponding code implementations using <a href="https://atomicdesign.bradfrost.com/" target="_blank" rel="noopener noreferrer" class="link-brand">Atomic Design</a> principles.
+    </p>
+    
+    <div class="flow-container">
+        <!-- Atoms - Combined -->
+        <div class="flow-row">
+            <div class="atomic-label">Atoms</div>
+            <div class="flow-item">
+                <strong>Styles & Layout</strong>
+                <span>Colors, Text, Effects<br>Spacing, Alignment</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <strong>Foundation & Utilities</strong>
+                <div class="code-examples">
+                    <span class="badge small brand">--brand-primary</span>
+                    <span class="badge small brand">.text-center</span>
+                    <span class="badge small brand">.p-4</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Molecules -->
+        <div class="flow-row">
+            <div class="atomic-label">Molecules</div>
+            <div class="flow-item">
+                <strong>Components</strong>
+                <span>Button, Input, Card</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <strong>Component Classes</strong>
+                <div class="code-examples">
+                    <span class="badge small brand">.btn</span>
+                    <span class="badge small brand">.card</span>
+                    <span class="badge small brand">.input</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Organisms -->
+        <div class="flow-row">
+            <div class="atomic-label">Organisms</div>
+            <div class="flow-item">
+                <strong>Component Sets</strong>
+                <span>Navigation, Forms, Headers</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <strong>Composite Components</strong>
+                <div class="code-examples">
+                    <span class="badge small brand">.nav-header</span>
+                    <span class="badge small brand">.form-group</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Templates -->
+        <div class="flow-row">
+            <div class="atomic-label">Templates</div>
+            <div class="flow-item">
+                <strong>Pages</strong>
+                <span>Page structures, Layouts</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <strong>Page Templates</strong>
+                <div class="code-examples">
+                    <span class="badge small brand">.page-layout</span>
+                    <span class="badge small brand">.guide-container</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

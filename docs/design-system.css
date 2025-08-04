@@ -973,9 +973,9 @@ body {
     --card-text: var(--color-text-default);
     
     /* Badge tokens */
-    --badge-bg: rgb(204, 255, 0, 0.1);
-    --badge-border: var(--brand-primary);
-    --badge-text: var(--color-text-default);
+    --badge-bg: transparent;
+    --badge-border: var(--brand-secondary);
+    --badge-text: var(--brand-secondary);
     --badge-secondary-bg: rgb(255, 20, 147, 0.1);
     --badge-secondary-border: var(--brand-secondary);
     
@@ -3018,10 +3018,22 @@ body {
     transition: all 0.2s var(--ease-3);
 }
 
-.tech-item:hover i {
-    color: var(--brand-secondary);
+/* Theme-aware hover colors */
+[data-theme="light"] .tech-item:hover svg {
+    color: var(--brand-secondary);  /* Pink in light mode */
     opacity: 1;
     transform: scale(1.1);
+}
+
+[data-theme="dark"] .tech-item:hover svg {
+    color: var(--brand-primary);  /* Lime in dark mode */
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Dark mode: FAQ toggles use brand-primary (lime) */
+[data-theme="dark"] {
+    --faq-toggle-color: var(--brand-primary);
 }
 
 .tech-info-panel {
@@ -4005,11 +4017,29 @@ body {
     border-color: var(--badge-border);
 }
 
-/* Brand inverted - lime background with dark text */
+/* Brand secondary - uses secondary color in light mode for better contrast */
+.badge.brand-secondary {
+    background-color: transparent;
+    color: var(--brand-secondary);
+    border-color: var(--brand-secondary);
+}
+
+[data-theme="light"] .badge.brand {
+    color: var(--brand-secondary);
+    border-color: var(--brand-secondary);
+}
+
+/* Brand inverted - filled background */
 .badge.brand-inverted {
     background-color: var(--brand-primary);
     color: var(--color-text-on-brand);
     border-color: var(--brand-primary);
+}
+
+[data-theme="light"] .badge.brand-inverted {
+    background-color: var(--brand-secondary);
+    color: var(--color-white);
+    border-color: var(--brand-secondary);
 }
 
 /* Secondary variant */
@@ -4509,7 +4539,7 @@ body {
  /* Adjust tech item sizing for 4-column layout */
  .tech-item {
   padding: var(--size-2);
-  font-size: var(--font-size-00);
+  font-size: var(--font-size-0);  /* Better readability on mobile */
  }
  
  .tech-item svg {
@@ -4575,14 +4605,44 @@ body {
  stroke: none !important;
 }
 
+/* Light mode: Small Lucide uses text colors by default */
 .tech-item[data-tech="lucide"] svg path {
- fill: var(--color-text-default) !important; /* Theme-aware dark color */
+ fill: var(--color-text-default) !important;
  stroke: none !important;
 }
 
 .tech-item[data-tech="lucide"] svg path:nth-child(2) {
- fill: var(--color-text-muted) !important; /* Theme-aware light color */
+ fill: var(--color-text-muted) !important;
+ stroke: none !important;
  opacity: 0.5; /* Ensure duotone effect */
+}
+
+/* Light mode: On hover, Lucide uses brand-secondary */
+.tech-item[data-tech="lucide"]:hover svg path {
+ fill: var(--brand-secondary) !important;
+}
+
+.tech-item[data-tech="lucide"]:hover svg path:nth-child(2) {
+ opacity: 0.5;
+}
+
+/* Dark mode: Small Lucide logo uses text colors by default */
+[data-theme="dark"] .tech-item[data-tech="lucide"] svg path {
+ fill: var(--color-text-default) !important;
+}
+
+[data-theme="dark"] .tech-item[data-tech="lucide"] svg path:nth-child(2) {
+ fill: var(--color-text-muted) !important;
+ opacity: 0.5;
+}
+
+/* Only on hover should it use brand-primary */
+[data-theme="dark"] .tech-item[data-tech="lucide"]:hover svg path {
+ fill: var(--brand-primary) !important;
+}
+
+[data-theme="dark"] .tech-item[data-tech="lucide"]:hover svg path:nth-child(2) {
+ opacity: 0.5;
 }
 
 .info-panel-a .title svg {
@@ -4637,6 +4697,17 @@ body {
  color: var(--brand-secondary);
 }
 
+/* Dark mode: use brand-primary for info panel icon */
+[data-theme="dark"] .info-panel-a .title [data-icon],
+[data-theme="dark"] .info-panel-a .title svg {
+ color: var(--brand-primary);
+}
+
+/* Ensure Lucide gets the color applied */
+[data-theme="dark"] .info-panel-a .title[data-tech="lucide"] svg {
+ color: var(--brand-primary);
+}
+
 /* Apply brand secondary to all SVG paths in info panel - respect original rendering style */
 .info-panel-a .title svg {
  overflow: visible !important;
@@ -4653,10 +4724,25 @@ body {
  stroke: none;
 }
 
+/* Dark mode: fill-based logos use brand-primary */
+[data-theme="dark"] .info-panel-a .title[data-tech="github"] svg path,
+[data-theme="dark"] .info-panel-a .title[data-tech="openprops"] svg path,
+[data-theme="dark"] .info-panel-a .title[data-tech="vscode"] svg path,
+[data-theme="dark"] .info-panel-a .title[data-tech="claude"] svg path,
+[data-theme="dark"] .info-panel-a .title[data-tech="aistudio"] svg path,
+[data-theme="dark"] .info-panel-a .title[data-tech="manus"] svg path {
+ fill: var(--brand-primary);
+}
+
 /* For stroke-based logos (Figma) */
 .info-panel-a .title[data-tech="figma"] svg path {
  stroke: var(--brand-secondary);
  fill: none;
+}
+
+/* Dark mode: Figma logo uses brand-primary */
+[data-theme="dark"] .info-panel-a .title[data-tech="figma"] svg path {
+ stroke: var(--brand-primary);
 }
 
 /* General rule: any SVG in info panel with fill="none" should remain stroke-based */
@@ -4665,13 +4751,63 @@ body {
  fill: none !important;
 }
 
-/* For Lucide duotone logo - use theme-aware colors like small version */
-.info-panel-a .title[data-tech="lucide"] svg path:first-child {
- fill: var(--color-text-default) !important;
+/* Dark mode: stroke-based SVGs use brand-primary */
+[data-theme="dark"] .info-panel-a .title svg[fill="none"] path {
+ stroke: var(--brand-primary) !important;
+}
+
+/* For Lucide duotone logo - use brand colors */
+.info-panel-a .title[data-tech="lucide"] svg path {
+ fill: var(--brand-secondary) !important;
+ stroke: none !important;
 }
 
 .info-panel-a .title[data-tech="lucide"] svg path:nth-child(2) {
- fill: var(--color-text-muted) !important;
+ opacity: 0.5;
+}
+
+/* Dark mode: Lucide duotone uses brand-primary */
+[data-theme="dark"] .info-panel-a .title[data-tech="lucide"] svg {
+ stroke: none !important;
+}
+
+[data-theme="dark"] .info-panel-a .title[data-tech="lucide"] svg path {
+ fill: var(--brand-primary) !important;
+ stroke: none !important;
+ stroke-width: 0 !important;
+}
+
+[data-theme="dark"] .info-panel-a .title[data-tech="lucide"] svg path:nth-child(2) {
+ opacity: 0.5;
+}
+
+/* Additional specificity for dynamically generated content */
+[data-theme="dark"] .info-panel-a [data-tech="lucide"] svg path {
+ fill: var(--brand-primary) !important;
+}
+
+[data-theme="dark"] .info-panel-a [data-tech="lucide"] svg path:nth-child(2) {
+ opacity: 0.5;
+}
+
+/* Target Lucide specifically if it's using the logo structure */
+.info-panel-a .title svg[viewBox="0 0 24 22"] path {
+ fill: var(--brand-secondary) !important;
+ stroke: none !important;
+}
+
+.info-panel-a .title svg[viewBox="0 0 24 22"] path:nth-child(2) {
+ opacity: 0.5;
+}
+
+[data-theme="dark"] .info-panel-a .title svg[viewBox="0 0 24 22"] path {
+ fill: var(--brand-primary) !important;
+ stroke: none !important;
+ stroke-width: 0 !important;
+}
+
+[data-theme="dark"] .info-panel-a .title svg[viewBox="0 0 24 22"] path:nth-child(2) {
+ opacity: 0.5;
 }
 
 .info-panel-a .description {
@@ -4903,6 +5039,12 @@ body {
 .faq-item:hover {
  border-color: rgb(var(--brand-secondary-rgb), 0.3);
  background: rgb(var(--brand-secondary-rgb), 0.02);
+}
+
+/* Dark mode: FAQ items use brand-primary for hover */
+[data-theme="dark"] .faq-item:hover {
+ border-color: rgb(var(--brand-primary-rgb), 0.3);
+ background: rgb(var(--brand-primary-rgb), 0.02);
 }
 
 .faq-item:last-child {
@@ -9347,13 +9489,27 @@ body {
  align-items: stretch;
 }
 
-/* Ensure example containers in Cards section match plugin width */
+/* Ensure example containers in Cards section fill their grid cells */
 #token-card .variants-grid .example-container {
-    width: var(--plugin-width);
-    max-width: var(--plugin-width);
+    width: 100%;
+    max-width: 100%;
     height: auto;
     min-height: auto;
     overflow: visible;
+    padding: var(--size-4);
+    box-sizing: border-box;
+}
+
+/* Responsive behavior for Cards section */
+@media (width <= 768px) {
+    #token-card .variants-grid {
+        grid-template-columns: 1fr;
+        gap: var(--size-3);
+    }
+    
+    #token-card .variants-grid .example-container {
+        padding: var(--size-3);
+    }
 }
 
 /* Ensure cards fill their containers */
@@ -10918,7 +11074,7 @@ body {
 }
 
 .major-section-header h2 {
-    font-size: var(--font-size-8);
+    font-size: clamp(2rem, 8vw, var(--font-size-8)); /* Responsive: 32px min, scales with viewport */
     font-weight: var(--font-weight-7);
     color: var(--color-text-default);
     margin: 0;
@@ -10931,6 +11087,24 @@ body {
     color: var(--color-text-muted);
     width: var(--icon-xxl);
     height: var(--icon-xxl);
+}
+
+/* Mobile adjustments for major section headers */
+@media (max-width: 768px) {
+    .major-section-header {
+        margin-top: var(--size-8);
+        margin-bottom: var(--size-6);
+        padding-bottom: var(--size-4);
+    }
+    
+    .major-section-header h2 {
+        gap: var(--size-3);
+    }
+    
+    .major-section-header [data-icon] {
+        width: var(--icon-xl);
+        height: var(--icon-xl);
+    }
 }
 
 /* Main Section Headers (Foundation & Components) Override */
@@ -14669,5 +14843,159 @@ input[type="file"]::file-selector-button {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-secondary);
+}
+
+/* ==========================================
+   * FIGMA TO CODE FLOW DESIGN
+   * ========================================== */
+
+/* Figma to Code Flow Container */
+.flow-container {
+    display: grid;
+    gap: var(--size-2); /* Tighter spacing between rows */
+    margin-top: var(--size-4); /* Add space after section description */
+}
+
+.flow-row {
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    align-items: start; /* Top align content */
+    gap: var(--size-3);
+    padding: var(--size-4);
+    padding-left: calc(var(--size-8) + var(--size-2));
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    position: relative;
+    min-height: 80px;
+}
+
+/* All flow rows have no background */
+.flow-row {
+    background: transparent;
+}
+
+/* Atomic level label - styled as vertical badge */
+.atomic-label {
+    /* Badge base styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-2) var(--size-1);
+    font-size: var(--font-size-0); /* Slightly larger */
+    font-weight: var(--font-weight-6);
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: var(--radius-1);
+    border: var(--border-size-1) solid var(--color-border-subtle);
+    transition: all 0.2s ease;
+    
+    /* Vertical orientation */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-transform: uppercase;
+    letter-spacing: var(--font-letterspacing-1);
+    
+    /* Positioning */
+    position: absolute;
+    left: var(--size-2); /* 8px from edge */
+    top: 50%;
+    transform: translateY(-50%);
+    height: calc(100% - var(--size-4)); /* Dynamic height with padding */
+    
+    /* Colors matching badge system */
+    background: var(--color-background-tertiary);
+    color: var(--color-text-muted);
+}
+
+
+.flow-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+    min-width: 0; /* Prevent text overflow */
+}
+
+.flow-item strong {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-5);
+    font-size: var(--font-size-1);
+    margin-bottom: var(--size-1);
+    display: block;
+}
+
+.flow-item span {
+    font-size: var(--font-size-0); /* Match badge text size */
+    color: var(--color-text-secondary);
+    line-height: var(--font-lineheight-3);
+    display: block;
+}
+
+/* Code examples - ensure badges don't stretch */
+.code-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-1);
+    margin-top: var(--size-1);
+    align-items: flex-start;
+}
+
+.code-examples .badge {
+    width: auto; /* Ensure badges hug content */
+    flex-shrink: 0; /* Prevent badge compression */
+    font-size: var(--font-size-0); /* Ensure readable size */
+}
+
+.flow-arrow {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-3); /* Slightly smaller arrow */
+    opacity: 1;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+[data-theme="dark"] .flow-arrow {
+    color: var(--brand-primary);
+    opacity: 0.7;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .flow-row {
+        grid-template-columns: 1fr 35px 1fr;
+        gap: var(--size-2);
+        padding: var(--size-3);
+        padding-left: calc(var(--size-6) + var(--size-2));
+        min-height: 70px;
+        align-items: start; /* Maintain top alignment on mobile */
+    }
+    
+    .atomic-label {
+        font-size: var(--font-size-00);
+        padding: var(--size-1);
+        left: var(--size-1); /* 8px from edge on mobile */
+        height: calc(100% - var(--size-2));
+    }
+    
+    .flow-arrow {
+        font-size: var(--font-size-2);
+    }
+    
+    .code-examples {
+        gap: var(--size-1);
+    }
+    
+    .flow-item span {
+        font-size: var(--font-size-0); /* Keep readable on mobile */
+    }
+    
+    .flow-item strong {
+        font-size: var(--font-size-1);
+    }
 }
 

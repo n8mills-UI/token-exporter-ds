@@ -1,0 +1,51 @@
+<!-- Backup of original Figma to Code table section -->
+<!-- Date: 2025-08-04 -->
+<!-- This section was replaced with a more mobile-friendly flow design -->
+
+<div class="content-section figma-to-code-section">
+    <div class="section-header">
+        <h2 class="section-title-primary"><i data-icon="link"></i> Figma to Code</h2>
+        <p class="section-description" style="margin-top: 0;">A shared language for designers and developers</p>
+    </div>
+    <p class="section-description content-max-width section-spacing-md">
+        A successful design system relies on a shared understanding between design and development. This table translates common Figma concepts into their direct code counterparts using the principles of <a href="https://atomicdesign.bradfrost.com/" target="_blank" rel="noopener noreferrer" class="link-brand">Atomic Design</a>. It provides a mental map that connects the visual design to the underlying CSS architecture.
+    </p>
+    <div class="table-responsive">
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th><span class="icon-label"><i data-icon="atom"></i> Atomic</span></th>
+                        <th><span class="icon-label"><i data-icon="figma"></i> Figma</span></th>
+                        <th><span class="icon-label"><i data-icon="code-2"></i> Code</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Atomic"><strong>Atoms</strong></td>
+                        <td data-label="Figma"><strong>Styles</strong> (Color, Text, Effects)</td>
+                        <td data-label="Code"><strong>Foundation / Tokens:</strong> The raw, unchangeable values defined as CSS variables in the <span class="badge brand">:root</span> block (e.g., <span class="badge brand">--brand-primary-lime</span>).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Atomic"><strong>Atoms</strong></td>
+                        <td data-label="Figma"><strong>Auto Layout</strong> (Spacing, Alignment)</td>
+                        <td data-label="Code"><strong>Utility Classes:</strong> Single-purpose classes that apply one token directly to an element (e.g., <span class="badge brand">.flex</span>, <span class="badge brand">.p-4</span>, <span class="badge brand">.text-center</span>).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Atomic"><strong>Molecules</strong></td>
+                        <td data-label="Figma"><strong>Components</strong> (Button, Input, Card)</td>
+                        <td data-label="Code"><strong>Component Classes:</strong> Medium-level styles that combine tokens into reusable UI pieces (e.g., <span class="badge brand">.btn</span>, <span class="badge brand">.card</span>, <span class="badge brand">.badge</span>).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Atomic"><strong>Organisms</strong></td>
+                        <td data-label="Figma"><strong>Component Sets</strong> (Navigation, Header, Footer)</td>
+                        <td data-label="Code"><strong>Complex Components:</strong> Higher-level classes that combine multiple components (e.g., <span class="badge brand">.nav-header</span>, <span class="badge brand">.format-select</span>).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Atomic"><strong>Templates</strong></td>
+                        <td data-label="Figma"><strong>Pages / Frames</strong> (The Plugin UI)</td>
+                        <td data-label="Code"><strong>Layout Styles:</strong> The highest-level styles that arrange components on the screen (e.g., <span class="badge brand">.guide-container</span>, <span class="badge brand">.guide-sidebar</span>).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
