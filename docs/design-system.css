@@ -2831,6 +2831,13 @@ body {
  z-index: 2;
 }
 
+/* Mobile: Match header padding for visual consistency */
+@media (width <= 768px) {
+    .portfolio-content {
+        padding: var(--size-8) var(--size-4) 0; /* Match mobile header's 20px horizontal padding */
+    }
+}
+
 .intro-group {
  display: flex;
  flex-direction: column;
@@ -7756,33 +7763,50 @@ body {
 /* Token sections inherit light mode styles from category elements */
 
 /* Foundation Token & Component Styles */
-.token-category {
- margin-bottom: var(--size-10); /* Consistent spacing across all sections */
- padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
- background: var(--component-section-bg);
- border-radius: var(--radius-3);
- border: var(--border-size-1) solid var(--component-section-border);
- overflow: hidden;
+/* Desktop: Larger horizontal padding for better content framing */
+@media (width > 768px) {
+    .token-category {
+        margin-bottom: var(--size-10); /* Consistent spacing across all sections */
+        padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
+        background: var(--component-section-bg);
+        border-radius: var(--radius-3);
+        border: var(--border-size-1) solid var(--component-section-border);
+        overflow: hidden;
+    }
+
+    /* Component sections that contain component-body get the same container styling */
+    .content-section:has(.component-body) {
+        margin-bottom: var(--size-10); /* Consistent spacing across all sections */
+        padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
+        background: var(--component-section-bg);
+        border-radius: var(--radius-3);
+        border: var(--border-size-1) solid var(--component-section-border);
+        overflow: hidden;
+    }
+
+    /* Figma to Code section needs container styling too */
+    .figma-to-code-section {
+        margin-bottom: var(--size-10); /* Consistent spacing across all sections */
+        padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Same padding as other containers */
+        background: var(--component-section-bg);
+        border-radius: var(--radius-3);
+        border: var(--border-size-1) solid var(--component-section-border);
+        overflow: hidden;
+    }
 }
 
-/* Component sections that contain component-body get the same container styling */
-.content-section:has(.component-body) {
- margin-bottom: var(--size-10); /* Consistent spacing across all sections */
- padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Reduced top padding to match icons section */
- background: var(--component-section-bg);
- border-radius: var(--radius-3);
- border: var(--border-size-1) solid var(--component-section-border);
- overflow: hidden;
-}
-
-/* Figma to Code section needs container styling too */
-.figma-to-code-section {
- margin-bottom: var(--size-10); /* Consistent spacing across all sections */
- padding: var(--size-4) var(--size-6) var(--size-6) var(--size-6); /* Same padding as other containers */
- background: var(--component-section-bg);
- border-radius: var(--radius-3);
- border: var(--border-size-1) solid var(--component-section-border);
- overflow: hidden;
+/* Mobile & Tablet: Consistent padding aligned with header */
+@media (width <= 768px) {
+    .token-category,
+    .content-section:has(.component-body),
+    .figma-to-code-section {
+        margin-bottom: var(--size-10); /* Consistent spacing across all sections */
+        padding: var(--size-4); /* Match header padding (16px) */
+        background: var(--component-section-bg);
+        border-radius: var(--radius-3);
+        border: var(--border-size-1) solid var(--component-section-border);
+        overflow: hidden;
+    }
 }
 
 /* No special overrides needed - unified system handles all sections */
@@ -13662,7 +13686,7 @@ button.theme-toggle {
 @media (width <= 768px) {
     /* Fix main content padding */
     .main-content {
-        padding: var(--size-3);
+        padding: 0; /* Remove double padding - sections handle their own */
     }
     
     /* Fix section spacing */
@@ -13846,12 +13870,8 @@ button.theme-toggle {
 
 /* 8. Unified Mobile Padding System */
 @media (width <= 768px) {
-    /* Consistent padding for all sections on mobile */
-    .token-category, 
-    .content-section:has(.component-body),
-    .figma-to-code-section {
-        padding: var(--size-3); /* Full padding on mobile */
-    }
+    /* Note: Section padding is now handled in the main section definitions above */
+    /* This provides clean CSS without !important overrides */
     
     /* All headers use unified system with consistent mobile spacing */
     .section-header,
