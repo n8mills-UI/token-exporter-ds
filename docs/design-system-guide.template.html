@@ -1579,6 +1579,12 @@ Note: Uses individual card components via @include directives
                 }
             });
             
+            // Set initial theme label
+            const themeLabel = document.querySelector('.theme-toggle-label');
+            if (themeLabel) {
+                themeLabel.textContent = savedTheme === 'light' ? 'Light Mode' : 'Dark Mode';
+            }
+            
             // Handle toggle click with animations for both desktop and mobile
             toggles.forEach(toggleEl => {
                 toggleEl.addEventListener('click', () => {
@@ -1611,6 +1617,12 @@ Note: Uses individual card components via @include directives
                             setTimeout(() => moonContainer.classList.remove('animate-once'), 600);
                         }
                     });
+                    
+                    // Update theme label
+                    const themeLabel = document.querySelector('.theme-toggle-label');
+                    if (themeLabel) {
+                        themeLabel.textContent = newTheme === 'light' ? 'Light Mode' : 'Dark Mode';
+                    }
                 });
             });
             
