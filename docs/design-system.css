@@ -1810,6 +1810,18 @@ body {
  .text-color-on-brand { color: var(--color-text-on-brand); }
  .text-color-error { color: var(--color-text-error); }
 
+.text-body-sm {
+    font-size: var(--font-size-0);
+    line-height: var(--font-lineheight-3);
+}
+
+.text-gradient-brand {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
  /* Dimension Utilities (Width & Height) */
  .w-1 { width: var(--size-1); }
  .h-1 { height: var(--size-1); }
@@ -3307,6 +3319,22 @@ body {
    ========================================================================== */
 
 /* No glow effects for now - clean ASCII art */
+
+.prompt {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-1);
+    color: var(--color-text-muted);
+}
+
+.glitch-button {
+    background: var(--gradient-accent);
+    border: none;
+    cursor: pointer;
+    padding: var(--size-2) var(--size-4);
+    border-radius: var(--radius-2);
+    font-weight: var(--font-weight-6);
+    transition: var(--transition-fast);
+}
 .profile-card .ascii-art {
  text-shadow: none;
  animation: none;
@@ -3534,6 +3562,11 @@ body {
  --terminal-green: #00FF41;
  --neon-cyan: #0FF;
  --neon-pink: #FF10F0;
+}
+
+.effects-subsection {
+    margin-bottom: var(--size-6);
+    padding: var(--size-4);
 }
 
 /* @docs-only-end */
@@ -3963,6 +3996,16 @@ body {
 .link-brand:hover {
     color: var(--brand-secondary);
     text-decoration-color: var(--brand-secondary);
+}
+
+.link-primary {
+    color: var(--brand-primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.link-primary:hover {
+    text-decoration: underline;
 }
 
 .token-exporter-logo {
@@ -6108,6 +6151,11 @@ select option {
 #quick-export-view .card,
 #advanced-filter-view .card {
     margin: 0;
+}
+
+.has-inner-structure {
+    position: relative;
+    overflow: visible;
 }
 
 /* Token Summary Card */
@@ -11481,6 +11529,12 @@ body {
     background: var(--glass-dark-10); /* 10% black opacity */
     backdrop-filter: blur(4px);
     border-color: rgb(210, 255, 55, 0.2);
+}
+
+.stat-value {
+    font-size: var(--font-size-7);
+    font-weight: var(--font-weight-8);
+    line-height: 1;
 }
 
 /* Hover state removed - stats container is non-interactive */
