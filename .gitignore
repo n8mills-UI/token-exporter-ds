@@ -88,6 +88,9 @@ temp/
 # Archive directory for old files
 .archive/
 
+# Claude Desktop settings
+.claude/
+
 .Mocks/about-modal.html
 .Mocks/color-system-5-core-mockup.html
 .Mocks/mock-figma-to-code-option-b-clean.html

@@ -1001,46 +1001,66 @@ async function check(options = {}) {
     console.log(`${colors.gray}${'─'.repeat(50)}${colors.reset}`);
     
     const startTime = Date.now();
+    const results = [];
     
-    // Define all checks
-    const essentialChecks = [
-        { name: 'Figma Compatibility', fn: checkFigmaCompatibility },
-        { name: 'JavaScript Linting', fn: lintJavaScript },
-        { name: 'CSS Architecture', fn: checkCSSArchitecture },
-        { name: 'Theme Architecture', fn: checkThemeArchitecture },
-        { name: 'Semantic Token Usage', fn: checkSemanticTokenUsage },
-        { name: 'Plugin Compatibility', fn: checkPluginCompatibility },
-        { name: 'CSS Class Validation', fn: validateCSSClasses },
-        { name: 'Component Sync', fn: validateComponentSync }
-    ];
-    
-    const additionalChecks = [
-        { name: 'Token Validation', fn: validateTokens },
-        { name: 'Documentation', fn: checkDocumentation },
-        { name: 'Duplicate Analysis', fn: checkDuplicates }
-    ];
-    
-    // Combine checks based on mode
-    const checksToRun = isFullMode 
-        ? [...essentialChecks, ...additionalChecks]
-        : essentialChecks;
-    
-    // Show parallel execution notice
-    console.log(`${colors.cyan}⚡ Running ${checksToRun.length} checks in parallel...${colors.reset}\n`);
-    
-    // Run all checks in parallel
-    const checkPromises = checksToRun.map(async (check) => {
-        try {
-            const passed = await check.fn();
-            return { name: check.name, passed };
-        } catch (error) {
-            console.error(`\n${colors.red}Error in ${check.name}:${colors.reset}`, error.message);
-            return { name: check.name, passed: false };
-        }
+    // Essential checks (always run)
+    results.push({
+        name: 'Figma Compatibility',
+        passed: await checkFigmaCompatibility()
     });
     
-    // Wait for all checks to complete
-    const results = await Promise.all(checkPromises);
+    results.push({
+        name: 'JavaScript Linting',
+        passed: await lintJavaScript()
+    });
+    
+    results.push({
+        name: 'CSS Architecture',
+        passed: await checkCSSArchitecture()
+    });
+    
+    results.push({
+        name: 'Theme Architecture',
+        passed: await checkThemeArchitecture()
+    });
+    
+    results.push({
+        name: 'Semantic Token Usage',
+        passed: await checkSemanticTokenUsage()
+    });
+    
+    results.push({
+        name: 'Plugin Compatibility',
+        passed: await checkPluginCompatibility()
+    });
+    
+    results.push({
+        name: 'CSS Class Validation',
+        passed: await validateCSSClasses()
+    });
+    
+    results.push({
+        name: 'Component Sync',
+        passed: await validateComponentSync()
+    });
+    
+    // Additional checks in full mode
+    if (isFullMode) {
+        results.push({
+            name: 'Token Validation',
+            passed: await validateTokens()
+        });
+        
+        results.push({
+            name: 'Documentation',
+            passed: await checkDocumentation()
+        });
+        
+        results.push({
+            name: 'Duplicate Analysis',
+            passed: await checkDuplicates()
+        });
+    }
     
     // Summary
     console.log(`\n${colors.gray}${'─'.repeat(50)}${colors.reset}`);

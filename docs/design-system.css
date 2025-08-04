@@ -1549,7 +1549,7 @@ body {
 }
 
 
-/* Icon stroke variants - REMOVED duplicate rules, see utility classes below */
+/* Icon stroke variants - see utility classes below */
 
 /* Force consistent stroke width in icon showcase to fix thin icons */
 
@@ -2438,7 +2438,6 @@ body {
     height: var(--icon-lg);
 }
 
-/* REMOVED: .guide-container .section-header - replaced by unified system below */
 
 .guide-container .section-description {
     margin-top: var(--size-2);
@@ -2702,11 +2701,6 @@ body {
 
 /* @future-feature-end */
 
-/* @deprecated-start - To be removed in next version */
-
-/* Legacy components that are being phased out */
-
-/* @deprecated-end */
 
 /* @experimental-start - Use at your own risk */
 
@@ -2845,8 +2839,8 @@ body {
  position: relative;
  z-index: var(--layer-card);
  
- /* ABSOLUTE HARD STOP: Push stats below hero section completely */
- margin-top: calc(100vh + var(--size-8)); /* Full viewport height PLUS extra buffer */
+ /* CLEAN SOLUTION: Normal document flow after hero section */
+ margin-top: var(--size-8); /* Standard section spacing */
  
  /* Centering styles */
  max-width: calc(var(--content-lg) + var(--size-8) * 2); /* ~1200px with padding */
@@ -2922,7 +2916,6 @@ body {
 }
 
 
-/* REMOVED: Generic .section-header - replaced by unified system below */
 
 .section-title {
  color: var(--color-text-default); 
@@ -3730,8 +3723,7 @@ body {
  padding: 0;
 }
 
-/* REMOVED: Content section children now handle their own horizontal spacing
-   This was causing triple-layered padding issues
+/* Content section children handle their own horizontal spacing
 .content-section .token-category,
 .content-section .component-section:not(:has(.table-responsive)) {
     margin-left: var(--size-6);
@@ -4099,13 +4091,22 @@ body {
 @keyframes subtle-shift { from { transform: translate(0, 0); } to { transform: translate(20px, 20px); } }
 
 
-/* Content wrapper - Positioned higher up, responsive */
+/* Content wrapper - Vertically centered, responsive */
 .hero-content-wrapper {
  position: relative;
  z-index: 1;
  max-width: var(--content-md);
- margin: 0 auto;
  width: 100%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ text-align: center;
+ /* Remove margin auto - parent flexbox handles centering */
+ flex: 1; /* Take available space for proper centering */
+ /* Add padding to account for mobile header and provide breathing room */
+ padding-top: calc(var(--size-10) + var(--size-4)); /* Mobile header height + extra spacing */
+ padding-bottom: var(--size-4);
  height: 100%;
  display: flex;
  flex-direction: column;
@@ -4201,8 +4202,8 @@ body {
 
 /* Mobile header context */
 [data-brand-context="mobile-header"] .brand-logo {
-    width: var(--size-8);
-    height: var(--size-8);
+    width: var(--icon-md);  /* Match hamburger size */
+    height: var(--icon-md);
 }
 
 [data-brand-context="mobile-header"] .brand-title {
@@ -4236,7 +4237,7 @@ body {
 
 /* Tagline with improved hierarchy */
 .hero-tagline {
- font-size: var(--font-size-3);
+ font-size: clamp(1.125rem, 4vw, var(--font-size-3)); /* Responsive with 18px minimum */
  color: var(--color-text-secondary);
  max-width: 60ch;
  margin: 0 auto var(--size-3); /* Center with auto margins */
@@ -4258,6 +4259,7 @@ body {
 .hero-intro-group {
  flex-shrink: 0;
  text-align: center;
+ margin-bottom: var(--size-6); /* Add space between intro and CTA */
 }
 
 /* GROUP C: Bottom Block */
@@ -4267,7 +4269,20 @@ body {
  display: flex;
  flex-direction: column;
  align-items: center; /* Center items */
- gap: var(--size-2);
+ gap: var(--size-4);  /* 16px - Base gap between social and attribution */
+ position: relative; /* For pseudo-element positioning */
+ margin-top: var(--size-6); /* Add space above footer content */
+}
+
+/* Optional: Subtle separator above personal section */
+.hero-bottom::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--size-4) * -1 / 2); /* Position halfway in the gap */
+    width: 60px;
+    height: 1px;
+    background: rgb(var(--color-text-muted-rgb), 0.2);
+    border-radius: 1px;
 }
 
 .hero-bottom p {
@@ -4278,11 +4293,11 @@ body {
 
 /* GROUP B: Call-to-Action Block (Middle) - Closer to main content */
 .hero-cta-group {
- flex: 1;
+ flex-shrink: 0;
  display: flex;
- align-items: flex-start;
+ align-items: center;
  justify-content: center; /* Center CTA button */
- padding: var(--size-4) 0 var(--size-8) 0; /* Less space above, more below */
+ margin: var(--size-4) 0 var(--size-6) 0; /* Consistent spacing */
 }
 
 /* Legacy hero-footer styles (for backwards compatibility) */
@@ -4797,7 +4812,6 @@ body {
 }
 
 
-/* REMOVED: Generic .section-header - replaced by unified system below */
 
 .section-title {
  color: var(--color-text-default);
@@ -5235,7 +5249,7 @@ select option {
 /* Scroll cue styles */
 .scroll-cue-container {
     position: fixed;
-    bottom: 2vh;
+    bottom: 6vh;  /* Desktop position - moved up higher */
     left: calc(var(--size-sidebar-width) + (100vw - var(--size-sidebar-width)) / 2);
     transform: translateX(-50%);
     display: flex;
@@ -5253,7 +5267,7 @@ select option {
 /* Safe area support for scroll cue container */
 @supports (bottom: env(safe-area-inset-bottom)) {
  .scroll-cue-container {
-  bottom: max(2vh, calc(env(safe-area-inset-bottom, 0px) + 2vh));
+  bottom: max(6vh, calc(env(safe-area-inset-bottom, 0px) + 6vh));  /* Desktop safe area - match main rule */
  }
 }
 
@@ -5419,7 +5433,7 @@ select option {
 /* Responsive scroll cue */
 @media (width <= 768px) {
     .scroll-cue-container {
-        bottom: 2vh;
+        bottom: 0.25vh;  /* Even lower on mobile - almost touching bottom */
         left: 50%; /* Center on mobile */
         transform: translateX(-50%);
         padding: var(--size-3); /* Larger touch target */
@@ -5429,7 +5443,7 @@ select option {
     /* Safe area support for mobile scroll cue */
     @supports (bottom: env(safe-area-inset-bottom)) {
      .scroll-cue-container {
-      bottom: max(2vh, calc(env(safe-area-inset-bottom, 0px) + 2vh));
+      bottom: max(0.25vh, env(safe-area-inset-bottom, 0px));  /* Mobile safe area - very bottom */
      }
     }
 }
@@ -7154,11 +7168,13 @@ select option {
  padding: var(--size-6) var(--size-6) var(--size-8);
  min-height: 100vh;
  display: flex;
- align-items: flex-start;
- justify-content: center;
+ align-items: center; /* Center content vertically */
+ justify-content: center; /* Center content horizontally */
  text-align: center;
  isolation: isolate; 
  overflow: visible; /* Allow animations to start below viewport */
+ /* Create proper flex container for true centering */
+ flex-direction: column;
 }
 
 /* Hero pattern background - theme aware */
@@ -7529,7 +7545,6 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 
-    /* REMOVED: Padding will be handled by child elements now */
 }
 
 /* Theme-aware guide content background */
@@ -7540,7 +7555,7 @@ body {
 
 /* Sidebar Header */
 .guide-header {
- padding: var(--size-4);
+ padding: var(--size-4);  /* Comfortable padding */
  background: var(--header-bg);
  border-bottom: var(--border-size-1) solid var(--header-border);
  display: flex;
@@ -7551,7 +7566,7 @@ body {
 
 /* Guide logo and title styles replaced by brand lockup component */
 .guide-logo {
-    width: var(--icon-lg);  /* Reduced from default to match font size better */
+    width: var(--icon-lg);  /* Standard size for clean look */
     height: var(--icon-lg);
     flex-shrink: 0;
 }
@@ -7559,7 +7574,7 @@ body {
 .guide-logo-link {
     display: flex;
     align-items: center;
-    gap: var(--size-3);
+    gap: var(--size-3);  /* Proper spacing */
     transition: opacity 200ms ease;
 }
 
@@ -7580,14 +7595,14 @@ body {
 }
 
 .nav-section {
- padding: var(--size-2) var(--size-4);
+ padding: var(--size-2) var(--size-4);  /* Comfortable section padding */
 }
 
 .nav-section-title {
  color: var(--color-text-default);
  font-size: var(--font-size-1);
  font-weight: var(--font-weight-6);
- margin-bottom: var(--size-3);
+ margin-bottom: var(--size-3);  /* Good spacing below titles */
  text-transform: uppercase;
  letter-spacing: var(--font-letterspacing-2);
 }
@@ -7599,14 +7614,14 @@ body {
 }
 
 .nav-links li {
- margin-bottom: var(--size-1);
+ margin-bottom: var(--size-1);  /* Comfortable spacing between items */
 }
 
 .nav-links a {
  display: flex;
  align-items: center;
  gap: var(--size-2);
- padding: var(--size-2) var(--size-3);
+ padding: var(--size-2) var(--size-3);  /* Comfortable padding */
  color: var(--color-text-secondary);
  text-decoration: none;
  border-radius: var(--radius-2);
@@ -7676,20 +7691,14 @@ body {
  overflow: visible; /* Allow animations to extend beyond bounds */
 }
 
-/* REMOVED: Generic .section-header - replaced by unified system below */
 
 .guide-main-title {
  font-size: calc(var(--font-size-8) * 1.2);
  font-weight: var(--font-weight-7);
  line-height: var(--font-lineheight-1);
  letter-spacing: -0.02em;
- color: var(--brand-primary);
+ color: var(--guide-main-title-color);  /* Uses semantic token */
  margin-bottom: 0;
-}
-
-/* Guide main title uses semantic tokens */
-.guide-main-title {
- color: var(--guide-main-title-color);
 }
 
 .guide-subtitle {
@@ -9501,8 +9510,8 @@ body {
     }
 
     .mobile-header-logo {
-        width: 48px;
-        height: 48px;
+        width: 40px;  /* Match hamburger button size */
+        height: 40px;
     }
 
     .mobile-header-logo svg {
@@ -9511,17 +9520,20 @@ body {
     }
 
     .header-title {
-        font-size: var(--font-size-3);
+        font-size: clamp(1.25rem, 4vw, 1.5rem);  /* Optimized for visual balance with 40px elements */
         font-weight: var(--font-weight-6);
         color: var(--color-text-default);
-        line-height: 1.2;
+        line-height: 1;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: column;  /* Stack vertically */
+        justify-content: center;
+        height: 40px;  /* Match hamburger button height */
+        letter-spacing: -0.01em;  /* Subtle tightening for professional look */
     }
 
     .header-title span {
-        display: block;
+        display: block;  /* Each word on its own line */
+        line-height: 1;
     }
 
     .mobile-header-controls {
@@ -9692,37 +9704,39 @@ body {
 @media (width <= 900px) {
     /* Hero section adjustments */
     .portfolio-hero {
-    padding: var(--size-4) var(--size-3);
-    min-height: 100vh; /* Keep full viewport height on mobile */
-    padding-bottom: var(--size-6);
-    margin-bottom: var(--size-6); /* Reduced from size-8 to bring stats closer */
-    display: flex;
-    align-items: flex-start;
-}
+        padding: var(--size-4) var(--size-3);
+        min-height: 100vh;
+        margin-bottom: var(--size-6);
+        /* Account for mobile header in flexbox layout */
+        padding-top: calc(var(--size-10) + var(--size-6)); /* Mobile header height + spacing */
+    }
     
-    /* Pattern is controlled by theme tokens - no mobile override needed */
-
-    /* Responsive positioning on mobile - less aggressive padding */
+    /* Content wrapper - maintain flex centering */
     .hero-content-wrapper {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding: var(--size-6) 0 0 0; /* Reduced from size-8 to match desktop tighter spacing */
+        /* Remove hardcoded padding - parent handles spacing */
+        padding-top: 0;
+        padding-bottom: 0;
     }
     
     /* Mobile group spacing adjustments */
+    .hero-intro-group {
+        margin-bottom: var(--size-4); /* Reduced spacing for mobile */
+    }
+    
     .hero-cta-group {
-        padding: var(--size-3) 0 var(--size-6) 0; /* Closer to content, further from footer */
+        margin: var(--size-3) 0 var(--size-4) 0; /* Reduced margins for mobile */
     }
     
     .hero-bottom {
-        gap: var(--size-2); /* Tighter spacing on mobile */
+        gap: var(--size-4);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .hero-bottom p {
-        margin-top: var(--size-2); /* Extra separation from social buttons */
+        margin: 0;
     }
     
     /* Text hierarchy improvements using existing tokens */
@@ -9732,14 +9746,22 @@ body {
         letter-spacing: -0.02em; /* Maintain letter spacing */
     }
     
+    /* Hero title optimization for mobile */
+    .guide-main-title {
+        font-size: clamp(2rem, 8vw, 3.5rem); /* Responsive: 32px min, scales with viewport, 56px max */
+        white-space: nowrap; /* Force single line */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Graceful fallback if too long */
+    }
+    
     .hero-tagline {
-        font-size: var(--font-size-3); /* Keep normal size */
+        font-size: clamp(1.125rem, 4vw, var(--font-size-3)); /* Responsive scaling maintained */
         color: var(--color-text-secondary); /* Use semantic color */
         padding: 0 var(--size-2);
     }
     
     .hero-description {
-        font-size: var(--font-size-1); /* Increased by one size from font-size-0 */
+        font-size: var(--font-size-2); /* Increased for better mobile readability */
         color: var(--color-text-muted); /* Use semantic muted color */
         padding: 0 var(--size-2);
     }
@@ -9748,46 +9770,18 @@ body {
 /* =========================
   RESPONSIVE TITLE ENHANCEMENT
   ========================= */
-/* Apply nowrap only on wider phones to prevent line breaks */
-@media (min-width: 400px) {
-    .hero-main-title {
-        white-space: nowrap; /* Keep title on one line for wider screens */
-    }
-    
-    /* Legacy hero-footer mobile styles (keeping for backwards compatibility) */
-    .hero-footer {
-        margin-top: var(--size-6); /* Fixed spacing instead of auto */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--size-4); /* Even spacing between elements */
-    }
-    
-    .hero-footer p {
-        font-size: var(--font-size-00); /* REDUCED - Significantly smaller text */
-    }
+/* Mobile-first approach - title is always single-line now */
 
-    /* Ensure social icons are centered */
+@media (min-width: 400px) and (max-width: 900px) {
+    /* Social links responsive spacing */
     .social-links {
         display: flex;
         gap: var(--size-4);
     }
     
-    /* CTA button grouping */
+    /* Remove manual margin overrides */
     .figma-cta {
-        margin: 0; /* Remove margin since handled by group containers */
-    }
-    
-    /* Portfolio content wrapper */
-    .portfolio-content {
-        padding: 0 var(--size-4);
-    }
-    
-    /* Intro group - prevent hero overlap on mobile */
-    .intro-group {
-    /* ABSOLUTE HARD STOP: Always start after hero viewport */
-    margin-top: calc(100vh + var(--size-4)) !important; /* Full viewport + buffer on mobile */
-    gap: var(--size-2);
+        margin: 0;
     }
     
     /* Impact stats - force 2x2 grid */
@@ -9841,7 +9835,7 @@ body {
     
     /* Position offsets */
     --animation-offset-top: calc(var(--size-15) * -1); /* -480px - ensures icons exit fully */
-    --animation-start-bottom: calc(100vh + 300px); /* Start below viewport, past stats panel */
+    --animation-start-bottom: 120vh; /* Start well below viewport for smooth entry */
     
     /* Sway distances for bubble animation */
     --animation-sway-sm: var(--size-3);  /* 10px */
@@ -9945,32 +9939,25 @@ body {
 @media (width <= 480px) {
     .portfolio-hero {
         padding: var(--size-3) var(--size-2);
-        min-height: 100vh; /* Ensure full height on very small screens too */
+        min-height: 100vh;
+        /* Adjust for smaller mobile header spacing */
+        padding-top: calc(var(--size-10) + var(--size-5)); /* Mobile header height + spacing */
     }
     
-    /* Very small screen stats positioning */
-    .stats-and-overview-container {
-        margin-top: calc(-1 * var(--size-4)); /* Minimal pullup on tiny screens */
-    }
-    
-    /* Pattern is controlled by theme tokens - no small screen override needed */
-    
-    /* Conservative positioning on small screens to prevent cutoff */
+    /* Content wrapper - maintain flex behavior */
     .hero-content-wrapper {
-        padding: var(--size-4) 0 0 0; /* Further reduced for small screens to match tighter layout */
-    }
-    
-    .hero-cta-group {
-        padding: var(--size-2) 0 var(--size-5) 0; /* Even closer on small screens */
+        /* Let flexbox handle centering */
+        padding-top: 0;
+        padding-bottom: 0;
     }
     
     .hero-bottom {
-        gap: var(--size-2);
+        gap: var(--size-4); /* 16px - Consistent spacing */
     }
     
     /* Further font size adjustments for very small screens */
     .hero-description {
-        font-size: var(--font-size-0); /* Built on Open Props - back to normal on very small screens */
+        font-size: var(--font-size-1); /* Still readable on very small screens */
     }
     
     .hero-footer p {
@@ -11100,7 +11087,7 @@ body {
    ================================================================= */
 
 .theme-toggle-container {
-    padding: var(--size-4) var(--size-4) var(--size-4) var(--size-4);
+    padding: var(--size-4);  /* Comfortable padding */
     border-top: var(--border-size-1) solid var(--color-border-default);
 }
 
@@ -11114,7 +11101,7 @@ body {
 .theme-toggle-label {
     font-size: var(--font-size-1);
     font-weight: var(--font-weight-5);
-    color: var(--color-text-default);
+    color: var(--color-text-default);  /* Clear readable text */
     min-width: 80px;
     text-align: left;
 }
@@ -11289,6 +11276,11 @@ button.theme-toggle {
         gap: var(--size-3); /* Increased from size-1 for better spacing */
     }
     
+    /* Extra spacing for hero bottom on very small screens */
+    .hero-bottom {
+        gap: var(--size-5); /* 20px - Slightly more space for tiny screens */
+    }
+    
     /* Theme toggle maintains desktop size on all devices */
 
     /* Removed mobile-specific sizing */
@@ -11345,8 +11337,8 @@ button.theme-toggle {
 }
 
 [data-brand-context="mobile-header"] .brand-logo {
-    width: var(--size-8);
-    height: var(--size-8);
+    width: var(--icon-md);  /* Match hamburger size */
+    height: var(--icon-md);
 }
 
 [data-brand-context="mobile-header"] .brand-title {
@@ -11878,7 +11870,6 @@ button.theme-toggle {
     fill: none;
 }
 
-/* Removed duplicate stroke weight rules - moved to line 1529 with proper specificity */
 
 /* Icon notes for documentation */
 .icon-note {
@@ -12000,7 +11991,6 @@ button.theme-toggle {
 
 /* Tab button - duplicate removed, defined at line ~10909 */
 
-/* Removed duplicate tab panel rules - see consolidated rules above */
 
 /* Token Grid */
 .token-grid {
@@ -12208,7 +12198,6 @@ button.theme-toggle {
     outline: none;
 }
 
-/* Removed duplicate tab panel rules - see consolidated rules above */
 
 /* Color sections */
 .color-section {
@@ -12524,10 +12513,6 @@ button.theme-toggle {
         font-weight: var(--font-weight-6);
     }
     
-    /* Mobile section labels - REMOVED as they should not appear */
-    .mobile-section-label {
-        display: none;
-    }
 }
 
 /* Dark theme alpha swatch moved to consolidated section */
@@ -13672,7 +13657,6 @@ button.theme-toggle {
 
 /* 3. Icon Grid Mobile Fixes */
 
-/* Removed duplicate rules - handled in main icon section styles */
 
 /* 4. General Mobile Fixes */
 @media (width <= 768px) {

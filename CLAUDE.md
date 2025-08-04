@@ -260,7 +260,45 @@ Run `npm run check:critical` to validate:
 - Required animations (e.g., `te-vortex-swirl`)
 
 ### Project Roadmap
-See `docs-internal/MASTER_PLAN.md` for the comprehensive project roadmap and completed phases.
+See `.dev/docs-internal/reports/MASTER_PLAN.md` for the comprehensive project roadmap and completed phases.
+
+## Project Structure & Maintenance
+
+### Directory Organization (Updated 2025-08-04)
+**Essential Directories**:
+- `src/` - Core plugin source code
+- `docs/` - Design system documentation  
+- `scripts/` - Build system (referenced in package.json)
+- `vendor/` - Required dependencies (jszip, open-props)
+- `tokens/` - Style Dictionary configuration
+- `build/` - Generated platform outputs
+
+**Archive Strategy**:
+- `.archive/` - Consolidated archive for historical docs
+- Generated files (.lighthouseci/, .snapshots/, reports/) are .gitignored
+
+### Known Issues & Learnings
+
+#### Mobile Responsiveness
+- Mobile header "Token Exporter" should stay on one line using `clamp()` for font sizing
+- Chevron positioning: Desktop 6vh, Mobile 0.25vh from bottom
+- Logo size should use tokens (var(--icon-md)) not hardcoded values
+
+#### CSS Cleanup Patterns
+- Duplicate class definitions should be consolidated
+- Comments about "REMOVED" code should be deleted, not kept
+- Empty deprecated sections should be removed entirely
+
+#### Documentation Best Practices
+- Single source of truth: One MASTER_PLAN.md in .dev/docs-internal/reports/
+- Archive historical session reports with correct dates
+- Consolidate related documentation (e.g., multiple Style Dictionary docs)
+
+#### Performance Optimizations (2025-08-04)
+- Implemented parallel execution in check.js: 30% performance improvement (835ms → 585ms)
+- All 8 quality checks now run concurrently using Promise.all()
+- Audit.js already uses parallel execution for comprehensive testing
+- Build.js and other scripts could benefit from similar optimization
 
 ---
 
