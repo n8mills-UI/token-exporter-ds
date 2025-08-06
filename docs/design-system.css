@@ -580,7 +580,7 @@ body {
  
  /* Empty state tokens */
  --empty-state-bg: var(--surface-2);
- --empty-state-border: var(--color-border-default);
+ --empty-state-border: var(--color-border-strong);
  --empty-state-text: var(--color-text-muted);
  
  /* Progress tokens */
@@ -1178,7 +1178,7 @@ body {
     
     /* Empty state tokens */
     --empty-state-bg: var(--surface-1);
-    --empty-state-border: var(--color-border-default);
+    --empty-state-border: var(--color-border-strong);
     --empty-state-text: var(--color-text-muted);
     
     /* Progress tokens */
@@ -1790,9 +1790,9 @@ body {
 
 /* Ensure minimum touch targets on interactive elements */
 @media (width <= 768px) {
-    /* Buttons */
-    .btn:not(.btn-icon),
-    button:not(.btn-icon) {
+    /* Buttons - exclude .btn-sm for compact interfaces */
+    .btn:not(.btn-icon):not(.btn-sm),
+    button:not(.btn-icon):not(.btn-sm) {
         min-height: 44px; /* Apple HIG minimum touch target */
         min-width: 44px;
     }
@@ -1832,6 +1832,19 @@ body {
         min-height: 44px;
         padding: var(--size-1);
     }
+}
+
+/* =========================
+  FIGMA PLUGIN SPECIFIC OVERRIDES
+  ========================= */
+
+/* Figma plugins run at fixed width (340px) which triggers mobile queries
+   These overrides ensure correct button sizing in plugin context */
+.figma-plugin .btn-sm,
+.figma-plugin button.btn-sm {
+    min-height: var(--size-7) !important;
+    max-height: var(--size-7) !important;
+    height: var(--size-7) !important;
 }
 
 /* =========================
@@ -2330,8 +2343,16 @@ body {
     /* --- SIZES --- */
     .btn-sm {
         font-size: var(--font-size-0);
-        height: var(--component-height-sm);
+        height: var(--size-7) !important;
+        min-height: var(--size-7) !important;
+        max-height: var(--size-7) !important;
         gap: var(--size-1);
+        padding-block: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        align-items: center;
+        flex-shrink: 0;
+        flex-grow: 0;
     }
 
     .btn-sm .icon,
@@ -2355,7 +2376,11 @@ body {
     .btn-lg {
         font-size: var(--font-size-2);
         height: var(--component-height-lg);
+        min-height: var(--component-height-lg);
+        max-height: var(--component-height-lg);
         gap: var(--size-3);
+        padding-block: 0; /* Override Open Props padding */
+        align-items: center;
     }
 
     .btn-lg .icon,
@@ -3170,7 +3195,7 @@ body {
 @media (width <= 768px) {
     .state-divider {
         border-color: var(--color-border-default);
-        margin: var(--size-4) 0;
+        margin: var(--size-6) 0;
         border-top: none;
     }
 }
@@ -6713,6 +6738,8 @@ select option {
 .has-inner-structure {
     position: relative;
     overflow: visible;
+    /* Ensure dropdown container can expand without clipping */
+    z-index: 1;
 }
 
 /* Token Summary Card */
@@ -6800,7 +6827,7 @@ select option {
  line-height: 0.5;
  gap: var(--size-1);
  text-transform: none; /* Keep lowercase */
- font-weight: var(--font-weight-4); /* Reduced from default */
+ font-weight: var(--font-weight-5); /* Medium weight for consistency */
 }
 
 .token-type-stat .icon { 
@@ -6889,18 +6916,20 @@ select option {
 /* Form Elements */
 .format-select-wrapper { 
  position: relative; 
- margin-bottom: var(--size-4);
+ margin-bottom: var(--size-2);
 }
 
 /* Multi-Select Format Dropdown */
 .format-select-container {
  position: relative;
+ /* Ensure dropdown doesn't get clipped by parent containers */
+ z-index: var(--layer-dropdown);
 }
 
 .format-select-trigger {
  width: 100%;
- padding: var(--size-2) var(--size-3);
- height: var(--component-height-md);
+ padding: var(--size-1) var(--size-3);
+ height: var(--size-7);
  background: var(--color-background-tertiary);
  border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-2);
@@ -6938,12 +6967,41 @@ select option {
  transform: rotate(180deg);
 }
 
+/* When dropdown is expanded, ensure parent containers don't clip it */
+.format-select-trigger[aria-expanded="true"] {
+ position: relative;
+ z-index: var(--layer-dropdown);
+}
+
+/* Ensure card allows dropdown overflow when expanded */
+.has-inner-structure:has(.format-select-trigger[aria-expanded="true"]) {
+ overflow: visible;
+ z-index: var(--layer-dropdown);
+}
+
+/* Fallback for browsers without :has() support - use class toggle */
+.has-inner-structure.dropdown-expanded {
+ overflow: visible;
+ z-index: var(--layer-dropdown);
+}
+
+/* Improve visual alignment of first and last format options */
+.format-option:first-child {
+ border-top-left-radius: var(--radius-2);
+ border-top-right-radius: var(--radius-2);
+}
+
+.format-option:last-child {
+ border-bottom-left-radius: var(--radius-2);
+ border-bottom-right-radius: var(--radius-2);
+}
+
 .format-select-dropdown {
  position: absolute;
- bottom: calc(100% + var(--size-2));
- left: 50%;
- transform: translateX(-50%);
- min-width: 200px;
+ top: calc(100% + var(--size-1));
+ left: 0;
+ right: 0;
+ width: 100%;
  background: var(--color-background-secondary);
  border: var(--border-size-1) solid var(--color-border-default);
  border-radius: var(--radius-2);
@@ -6956,7 +7014,7 @@ select option {
 .format-option {
  display: flex;
  align-items: center;
- padding: var(--size-2) var(--size-3);
+ padding: var(--size-1) var(--size-3);
  cursor: pointer;
  transition: background-color var(--animation-duration-2) var(--ease-3);
 }
@@ -6976,6 +7034,7 @@ select option {
  margin-right: var(--size-2);
  cursor: pointer;
  accent-color: var(--brand-primary);
+ vertical-align: middle;
 }
 
 
@@ -7183,6 +7242,7 @@ select option {
  font-weight: var(--font-weight-5);
  margin-bottom: var(--size-1);
  line-height: 1.2;
+ color: var(--color-text-default);
 }
 
 .empty-state-header {
@@ -7193,7 +7253,7 @@ select option {
     display: flex;
     justify-content: center;
     gap: var(--size-4);
-    margin: var(--size-4) 0;
+    margin: var(--size-6) 0;
     width: 100%;
     box-sizing: border-box;
 }
@@ -7651,7 +7711,7 @@ select option {
 }
 
 .token-summary.is-loading .token-breakdown .count.skeleton-pulse {
-    width: var(--size-7);
+    width: var(--size-8);
     height: calc(var(--font-size-3) * 1.8); /* Match actual count height with line-height */
     margin-bottom: var(--size-1); /* Match actual count margin */
 }
@@ -8400,7 +8460,7 @@ select option {
     display: flex; /* Changed from inline-flex for consistency */
     justify-content: center; /* This is the key change */
     gap: var(--size-1); /* Increased gap for better spacing */
-    margin: var(--size-4) 0;
+    margin: var(--size-6) 0;
     width: 100%;
     padding: 0 var(--size-4);
     box-sizing: border-box;
@@ -8471,6 +8531,7 @@ select option {
 .empty-state-category .text-label {
     text-align: center;
     text-transform: none; /* Keep lowercase */
+    font-weight: var(--font-weight-5); /* Medium weight for consistency */
 }
 
 
@@ -12246,8 +12307,19 @@ body {
 
 .card-actions {
     display: flex;
-    gap: var(--size-2);
-    margin-top: var(--size-3);
+    gap: var(--size-1);
+    margin-top: var(--size-1);
+}
+
+.export-section .card-actions {
+    margin-top: var(--size-2);
+    padding: 0 var(--size-3) var(--size-3);
+}
+
+.export-section .btn {
+    height: var(--size-7) !important;
+    max-height: var(--size-7) !important;
+    min-height: var(--size-7) !important;
 }
 
 /* Responsive Design - Stats and Cards */
@@ -12353,6 +12425,89 @@ button.theme-toggle {
 }
 
 /* Dark theme hover moved to consolidated section */
+
+/* Plugin Header Container */
+.plugin-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--size-2) 0;
+    margin-bottom: var(--size-3);
+    background: var(--color-surface-primary);
+}
+
+/* Theme Toggle Track - the pill-shaped container */
+.theme-toggle-track {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: inherit;
+    background: inherit;
+}
+
+/* Theme Toggle Thumb - the sliding circle */
+.theme-toggle-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 
+                0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode - thumb slides to the right */
+[data-theme="dark"] .theme-toggle-thumb {
+    transform: translateX(44px);
+}
+
+/* Theme Icons Base Styles */
+.theme-icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+/* Light Theme Icon (Sun) */
+.theme-icon-light {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+
+[data-theme="dark"] .theme-icon-light {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8) rotate(-90deg);
+}
+
+/* Dark Theme Icon (Moon) */
+.theme-icon-dark {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8) rotate(90deg);
+}
+
+[data-theme="dark"] .theme-icon-dark {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+
+/* Export Cards Section Container */
+.export-cards-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    padding: var(--size-2);
+}
 
 /* Icon containers */
 .icon-container {
@@ -14254,13 +14409,7 @@ button.theme-toggle {
     width: 100%;
 }
 
-/* Make card actions responsive */
-/* REMOVED: Override violates single source of truth
-.export-section .card-actions {
-    width: 100%;
-    gap: clamp(var(--size-1), 2vw, var(--size-2));
-}
-*/
+/* Make card actions responsive - REMOVED */
 
 @media (width <= 850px) {
     .forms-example-container {
