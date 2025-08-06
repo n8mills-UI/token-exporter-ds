@@ -52,11 +52,13 @@ npm-debug.log*
 
 # Build artifacts
 dist/
-build/
+# build/ - Keep this for plugin outputs
 build/current-tokens.json
 
 # Generated reports from audit script
 reports/
+*.backup
+*.backup-*
 
 # Quality monitoring artifacts
 .lighthouseci/
@@ -66,7 +68,7 @@ reports/
 docs-internal/
 
 # Test tokens (just examples)
-tokens/
+style-dictionary/tokens/
 
 # Backup directories (multiple patterns)
 .backups/
@@ -87,6 +89,9 @@ temp/
 
 # Archive directory for old files
 .archive/
+
+# Marketing materials (external use only)
+.marketing/
 
 # Claude Desktop settings
 .claude/

@@ -229,15 +229,6 @@ function updateTokenSummary() {
             const exportBtn = document.getElementById('export-btn');
             if (exportBtn) {
                 exportBtn.disabled = selectedTokenCount === 0;
-                const tokenText = selectedTokenCount === 1 ? 'Token' : 'Tokens';
-                const buttonTexts = [
-                    '🚀 Launch ' + selectedTokenCount + ' ' + tokenText,
-                    '📦 Package ' + selectedTokenCount + ' ' + tokenText,
-                    '✨ Export ' + selectedTokenCount + ' ' + tokenText,
-                    '🎯 Deploy ' + selectedTokenCount + ' ' + tokenText
-                ];
-                const randomText = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
-                exportBtn.innerHTML = '<i data-icon="rocket"></i> ' + randomText;
                 
                 // Add satisfying click handler
                 exportBtn.addEventListener('click', function() {

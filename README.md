@@ -386,12 +386,13 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 │                                                                            │
 │ Building bridges between design and development through Token Exporter—    │
 │ a plugin that transforms Figma variables into production-ready code for    │
-│ 6 platforms: CSS, Swift, Android, Flutter, JSON, and Tailwind.             │
+│ 9 platforms: CSS, Swift, Android, Flutter, JSON, Tailwind, TypeScript,    │
+│ SCSS, and React Native. Powered by Amazon's Style Dictionary engine.       │
 │                                                                            │
 │ 20+ years crafting scalable design systems that empower teams to ship      │
 │ consistent, accessible experiences faster.                                 │
 │                                                                            │
-│ One click. Six platforms. Zero inconsistencies.                            │
+│ One click. Nine platforms. Zero inconsistencies.                           │
 │                                                                            │
 └────────────────────────────────────────────────────────────────────────────┘
 

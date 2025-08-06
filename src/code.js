@@ -12,7 +12,7 @@ const CHUNK_SIZE = 10;
 const MEMORY_WARNING_THRESHOLD = 100; // MB
 const MAX_EXPORT_SIZE = 50 * 1024 * 1024; // 50MB
 const MAX_ALIAS_DEPTH = 100; // Configurable limit for alias nesting
-const VALID_FORMATS = ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind'];
+const VALID_FORMATS = ['css', 'swift', 'android', 'flutter', 'w3c', 'tailwind', 'typescript'];
 const UNITLESS_SCOPES = ['FONT_WEIGHT', 'OPACITY', 'LINE_HEIGHT'];
 
 // --- CUSTOM ERROR CLASSES ---
@@ -781,12 +781,213 @@ async function generateExportData(collectionIds, formats, activeTokenTypes) {
 }
 
 /**
- * Generates content for a specific format
+ * Flattens nested token structure to simple key-value pairs
+ * Style Dictionary transforms expect flat token objects
+ */
+function flattenTokens(obj, prefix = '') {
+    const flattened = {};
+    
+    function traverse(currentObj, currentPrefix) {
+        for (const [key, value] of Object.entries(currentObj)) {
+            const newKey = currentPrefix ? currentPrefix + '-' + key : key;
+            
+            if (value && typeof value === 'object' && value.value !== undefined) {
+                // This is a token - extract its value
+                if (value.type === 'color' && value.raw && typeof value.raw === 'object') {
+                    // Convert RGBA object to hex
+                    const r = Math.round((value.raw.r || 0) * 255);
+                    const g = Math.round((value.raw.g || 0) * 255);
+                    const b = Math.round((value.raw.b || 0) * 255);
+                    const a = value.raw.a !== undefined ? value.raw.a : 1;
+                    
+                    if (a < 1) {
+                        // RGBA format
+                        flattened[newKey] = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+                    } else {
+                        // Hex format
+                        const hex = '#' + [r, g, b].map(function(x) { 
+                            return x.toString(16).padStart(2, '0');
+                        }).join('');
+                        flattened[newKey] = hex;
+                    }
+                } else if (value.type === 'dimension' && typeof value.raw === 'number') {
+                    // Add px unit if missing
+                    flattened[newKey] = value.raw + 'px';
+                } else if (value.type === 'number' && typeof value.raw === 'number') {
+                    // Keep raw number for calculations
+                    flattened[newKey] = value.raw;
+                } else {
+                    // Use the formatted value
+                    flattened[newKey] = value.value;
+                }
+            } else if (value && typeof value === 'object') {
+                // This is a group - traverse deeper
+                traverse(value, newKey);
+            }
+        }
+    }
+    
+    traverse(obj, prefix);
+    return flattened;
+}
+
+/**
+ * Generate format content using Style Dictionary transforms
+ * @param {Object} designTokens - The design tokens object
+ * @param {string} format - The export format
+ * @returns {Object|null} File object with filename and content
+ */
+function generateFormatContent(designTokens, format) {
+    try {
+        // Enhanced check for Style Dictionary availability with proper fallback
+        var hasStyleTransforms = false;
+        try {
+            hasStyleTransforms = window && 
+                                window.styleTransforms && 
+                                window.styleTransforms.formatGenerators &&
+                                typeof window.styleTransforms.formatGenerators === 'object';
+        } catch (windowError) {
+            // window might not be available in some environments
+            hasStyleTransforms = false;
+        }
+        
+        if (!hasStyleTransforms) {
+            console.log('Style Dictionary transforms not available, using manual transforms');
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        // Validate input parameters
+        if (!designTokens || typeof designTokens !== 'object') {
+            throw new Error('Invalid design tokens provided');
+        }
+        
+        if (!format || typeof format !== 'string') {
+            throw new Error('Invalid format provided');
+        }
+        
+        // Flatten the token structure for Style Dictionary
+        var flatTokens;
+        try {
+            flatTokens = flattenTokens(designTokens);
+        } catch (flattenError) {
+            console.error('Error flattening tokens:', flattenError);
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        // Validate we have tokens to export
+        if (!flatTokens || Object.keys(flatTokens).length === 0) {
+            console.warn('No tokens found after flattening, trying manual transform');
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        // Get the format generator with proper error handling
+        var formatGenerator;
+        try {
+            formatGenerator = window.styleTransforms.formatGenerators[format];
+        } catch (generatorError) {
+            console.error('Error accessing format generator:', generatorError);
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        if (!formatGenerator || typeof formatGenerator !== 'function') {
+            console.log('Format "' + format + '" not supported by Style Dictionary, using manual transforms');
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        // Generate content using Style Dictionary with error handling
+        var content;
+        try {
+            content = formatGenerator(flatTokens);
+        } catch (generationError) {
+            console.error('Error generating content with Style Dictionary:', generationError);
+            console.log('Falling back to manual transform for format: ' + format);
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        // Validate generated content
+        if (!content || (typeof content !== 'string' && typeof content !== 'object')) {
+            console.warn('Style Dictionary generated invalid content, using manual transform');
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        // Ensure content is a string
+        if (typeof content === 'object') {
+            try {
+                content = JSON.stringify(content, null, 2);
+            } catch (stringifyError) {
+                console.error('Error stringifying Style Dictionary output:', stringifyError);
+                return generateFormatContentManual(designTokens, format);
+            }
+        }
+        
+        // Determine filename based on format using traditional approach
+        var filename;
+        if (format === 'css') {
+            filename = 'tokens.css';
+        } else if (format === 'swift') {
+            filename = 'DesignTokens.swift';
+        } else if (format === 'android') {
+            filename = 'colors.xml';
+        } else if (format === 'flutter') {
+            filename = 'design_tokens.dart';
+        } else if (format === 'w3c') {
+            filename = 'tokens.json';
+        } else if (format === 'tailwind') {
+            filename = 'tailwind.config.js';
+        } else if (format === 'typescript') {
+            filename = 'tokens.ts';
+        } else {
+            filename = 'tokens.' + format;
+        }
+        
+        // Final validation before returning
+        if (!filename || !content) {
+            console.error('Generated invalid filename or content, using manual transform');
+            return generateFormatContentManual(designTokens, format);
+        }
+        
+        console.log('Successfully generated ' + format + ' format using Style Dictionary');
+        return {
+            filename: filename,
+            content: String(content) // Ensure content is always a string
+        };
+        
+    } catch (error) {
+        // Enhanced error handling with context
+        var errorContext = {
+            format: format,
+            hasDesignTokens: !!(designTokens && typeof designTokens === 'object'),
+            tokenCount: 0
+        };
+        
+        try {
+            if (designTokens && typeof designTokens === 'object') {
+                errorContext.tokenCount = Object.keys(designTokens).length;
+            }
+        } catch (countError) {
+            // Ignore count error
+        }
+        
+        console.error('Error in generateFormatContent:', createStructuredError('generateFormatContent', error, errorContext));
+        console.log('Falling back to manual transforms for format: ' + format);
+        
+        // Always fall back to manual transforms on any error
+        try {
+            return generateFormatContentManual(designTokens, format);
+        } catch (fallbackError) {
+            console.error('Manual transform also failed:', fallbackError);
+            return null;
+        }
+    }
+}
+
+/**
+ * Original manual transform function (kept as fallback)
  * @param {Object} designTokens - The design tokens object
  * @param {string} format - The target format
  * @returns {Object|null} File object with filename and content
  */
-function generateFormatContent(designTokens, format) {
+function generateFormatContentManual(designTokens, format) {
     try {
         let content = '';
         let filename = 'tokens.' + format;
@@ -873,6 +1074,19 @@ function generateFormatContent(designTokens, format) {
                             break;
                         case 'tailwind': 
                             break; // Handled separately
+                        case 'typescript':
+                            if (type === 'color') {
+                                lines.push('  ' + names.camel + ': "' + value + '",');
+                            } else if (type === 'string') {
+                                lines.push('  ' + names.camel + ': ' + value + ',');
+                            } else if (type === 'boolean') {
+                                lines.push('  ' + names.camel + ': ' + rawValue + ',');
+                            } else if (type === 'dimension') {
+                                lines.push('  ' + names.camel + ': "' + value + '",');
+                            } else if (type === 'number') {
+                                lines.push('  ' + names.camel + ': ' + rawValue + ',');
+                            }
+                            break;
                     }
                 } else { // It's a category
                     const sectionName = key.charAt(0).toUpperCase() + key.slice(1);
@@ -880,7 +1094,8 @@ function generateFormatContent(designTokens, format) {
                         case 'swift': lines.push('\n    // MARK: - ' + sectionName); break;
                         case 'flutter': lines.push('\n  // --- ' + sectionName + ' ---'); break;
                         case 'css': lines.push('\n  /* ' + sectionName + ' */'); break;
-                        case 'android': lines.push(`\n    `); break;
+                        case 'android': lines.push('\n    '); break;
+                        case 'typescript': lines.push('\n  // ' + sectionName); break;
                     }
                     lines.push(...processTokensForCode(currentObj, currentPath));
                 }
@@ -980,6 +1195,69 @@ function generateFormatContent(designTokens, format) {
                 
                 const tailwindTokens = buildTailwindTokens(designTokens);
                 content = 'module.exports = {\n  theme: {\n    extend: ' + JSON.stringify(tailwindTokens, null, 4) + '\n  }\n}';
+                break;
+            }
+            case 'typescript': {
+                filename = 'tokens.ts';
+                const processForTS = (obj, path = []) => {
+                    let interfaceProps = [];
+                    let tokenValues = [];
+                    
+                    for (const [key, currentObj] of Object.entries(obj)) {
+                        const currentPath = [...path, key];
+                        const camelKey = key.replace(/-(.)/g, (_, letter) => letter.toUpperCase());
+                        
+                        if (currentObj.value !== undefined) {
+                            const names = generateNamingVariants(currentPath);
+                            const type = currentObj.type;
+                            const value = currentObj.value;
+                            const rawValue = currentObj.raw;
+                            
+                            // Determine TypeScript type
+                            let tsType = 'string';
+                            let tsValue = '"' + value + '"';
+                            
+                            if (type === 'number') {
+                                tsType = 'number';
+                                tsValue = rawValue.toString();
+                            } else if (type === 'boolean') {
+                                tsType = 'boolean';
+                                tsValue = rawValue.toString();
+                            }
+                            
+                            interfaceProps.push('  /** ' + currentPath.join('-') + ' */\n  ' + names.camel + ': ' + tsType + ';');
+                            tokenValues.push('  ' + names.camel + ': ' + tsValue + ',');
+                        } else {
+                            // Nested structure
+                            const nested = processForTS(currentObj, currentPath);
+                            if (nested.interfaceProps.length > 0) {
+                                interfaceProps.push('  ' + camelKey + ': {');
+                                interfaceProps.push(...nested.interfaceProps.map(prop => '  ' + prop));
+                                interfaceProps.push('  };');
+                                
+                                tokenValues.push('  ' + camelKey + ': {');
+                                tokenValues.push(...nested.tokenValues.map(val => '  ' + val));
+                                tokenValues.push('  },');
+                            }
+                        }
+                    }
+                    
+                    return { interfaceProps, tokenValues };
+                };
+                
+                const tsStructure = processForTS(designTokens);
+                
+                content = '/**\n';
+                content += ' * Design Tokens - TypeScript Definitions\n';
+                content += ' * Generated from Figma design tokens\n';
+                content += ' */\n\n';
+                content += 'export interface DesignTokens {\n';
+                content += tsStructure.interfaceProps.join('\n');
+                content += '\n}\n\n';
+                content += 'export const DESIGN_TOKENS: DesignTokens = {\n';
+                content += tsStructure.tokenValues.join('\n');
+                content += '\n};\n\n';
+                content += 'export default DESIGN_TOKENS;\n';
                 break;
             }
             default: 

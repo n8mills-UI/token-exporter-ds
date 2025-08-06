@@ -14,6 +14,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawn, exec } from 'child_process';
 import { promisify } from 'util';
+import { integrateStyleDictionary, validateStyleDictionaryAvailability } from './style-dictionary-integration.js';
 
 const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -24,6 +25,7 @@ const CONFIG = {
     cssSource: 'docs/design-system.css',
     tempCssBundle: 'temp_css_bundle.css',
     tempJsBundle: 'temp_js_bundle.js',
+    styleTransformsBundle: 'temp_style_transforms_bundle.js',
     templates: {
         ui: {
             source: 'src/ui.template.html',
@@ -54,6 +56,7 @@ function cleanup() {
     try {
         if (fs.existsSync(CONFIG.tempCssBundle)) fs.unlinkSync(CONFIG.tempCssBundle);
         if (fs.existsSync(CONFIG.tempJsBundle)) fs.unlinkSync(CONFIG.tempJsBundle);
+        if (fs.existsSync(CONFIG.styleTransformsBundle)) fs.unlinkSync(CONFIG.styleTransformsBundle);
         
         // Remove any .temp files
         const tempFiles = fs.readdirSync(projectRoot)
@@ -207,6 +210,107 @@ async function processJavaScriptBundles(templateFile, outputBundle) {
 }
 
 /**
+ * Bundle Style Dictionary transforms for plugin UI
+ */
+function bundleStyleTransforms() {
+    try {
+        const transformsPath = path.join(projectRoot, 'build/style-dictionary-transforms.js');
+        
+        if (!fs.existsSync(transformsPath)) {
+            console.warn(`  ${colors.yellow}⚠${colors.reset} Style Dictionary transforms not found at ${transformsPath}`);
+            
+            // Create a minimal fallback
+            const fallbackTransforms = `
+// Fallback transforms when Style Dictionary is unavailable
+window.styleTransforms = {
+    colorTransforms: {
+        hexToIosRgb: function(hexValue) {
+            const hex = hexValue.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16) / 255;
+            const g = parseInt(hex.substring(2, 4), 16) / 255;
+            const b = parseInt(hex.substring(4, 6), 16) / 255;
+            return { red: r, green: g, blue: b, alpha: 1 };
+        }
+    },
+    formatGenerators: {
+        css: function(tokens) {
+            let output = ':root {\\n';
+            Object.entries(tokens).forEach(([name, value]) => {
+                output += \`  --\${name}: \${value};\\n\`;
+            });
+            output += '}';
+            return output;
+        }
+    }
+};
+`;
+            
+            fs.writeFileSync(path.join(projectRoot, CONFIG.styleTransformsBundle), fallbackTransforms);
+            return fallbackTransforms;
+        }
+        
+        console.log(`  ${colors.cyan}↓${colors.reset} Bundling Style Dictionary transforms...`);
+        const transformsContent = fs.readFileSync(transformsPath, 'utf8');
+        
+        // Ensure the transforms are available as window.styleTransforms
+        let bundledContent = transformsContent;
+        if (!bundledContent.includes('window.styleTransforms')) {
+            bundledContent += '\n\n// Ensure transforms are available globally\nif (typeof window !== "undefined") {\n    window.styleTransforms = { colorTransforms, sizeTransforms, fontWeightTransforms, formatGenerators };\n}';
+        }
+        
+        fs.writeFileSync(path.join(projectRoot, CONFIG.styleTransformsBundle), bundledContent);
+        console.log(`  ${colors.green}✓${colors.reset} Style Dictionary transforms bundled`);
+        
+        return bundledContent;
+        
+    } catch (error) {
+        console.error(`  ${colors.red}✗${colors.reset} Error bundling transforms: ${error.message}`);
+        
+        // Return minimal fallback on error
+        const errorFallback = `
+// Error fallback transforms
+window.styleTransforms = {
+    error: true,
+    message: "Transform error occurred"
+};
+`;
+        
+        fs.writeFileSync(path.join(projectRoot, CONFIG.styleTransformsBundle), errorFallback);
+        return errorFallback;
+    }
+}
+
+/**
+ * Test Style Dictionary integration with sample tokens
+ */
+async function testStyleDictionaryIntegration() {
+    console.log(`  ${colors.cyan}🧪${colors.reset} Testing Style Dictionary integration...`);
+    
+    const sampleTokens = {
+        'primary-color': '#3b82f6',
+        'secondary-color': '#64748b',
+        'base-spacing': '16px',
+        'font-size-lg': '1.125rem'
+    };
+    
+    try {
+        const result = await integrateStyleDictionary(sampleTokens);
+        
+        if (result.error) {
+            console.warn(`  ${colors.yellow}⚠${colors.reset} Style Dictionary test failed, using fallback`);
+        } else {
+            console.log(`  ${colors.green}✓${colors.reset} Style Dictionary integration test passed`);
+        }
+        
+        return result;
+        
+    } catch (error) {
+        console.warn(`  ${colors.yellow}⚠${colors.reset} Style Dictionary test error: ${error.message}`);
+        return { error: error.message, fallback: true };
+    }
+}
+
+/**
  * Process HTML template with includes
  */
 function processTemplate(templateFile, outputFile) {
@@ -246,8 +350,8 @@ function processTemplate(templateFile, outputFile) {
  * Process template functions to generate static components
  */
 async function processTemplates() {
-    const templatesPath = path.join(projectRoot, 'src/shared/templates.js');
-    const dataPath = path.join(projectRoot, 'src/shared/data.js');
+    const templatesPath = path.join(projectRoot, 'src/lib/templates.js');
+    const dataPath = path.join(projectRoot, 'src/lib/data.js');
     
     // Check if template files exist
     if (!fs.existsSync(templatesPath) || !fs.existsSync(dataPath)) {
@@ -312,7 +416,7 @@ async function processTemplates() {
         components.forEach(component => {
             const html = templates[component.template](component.data);
             const output = 
-                `<!-- Auto-generated from src/shared/templates.js -->\n` +
+                `<!-- Auto-generated from src/lib/templates.js -->\n` +
                 `<!-- Component: ${component.name} -->\n` +
                 `<!-- DO NOT EDIT: This file is generated by build.js -->\n` +
                 html;
@@ -389,7 +493,7 @@ async function build() {
     console.log(`  ${colors.green}✓${colors.reset} CSS bundled (${cssSize}KB)\n`);
     
     // Step 3: Bundle JavaScript
-    console.log(`${colors.blue}[3/5]${colors.reset} Bundling JavaScript...`);
+    console.log(`${colors.blue}[3/6]${colors.reset} Bundling JavaScript...`);
     const jsBundle = await processJavaScriptBundles(
         path.join(projectRoot, CONFIG.templates.ui.source),
         path.join(projectRoot, CONFIG.tempJsBundle)
@@ -397,8 +501,18 @@ async function build() {
     const jsSize = Math.round(jsBundle.length / 1024);
     console.log(`  ${colors.green}✓${colors.reset} JavaScript bundled (${jsSize}KB)\n`);
     
-    // Step 4: Process templates
-    console.log(`${colors.blue}[4/5]${colors.reset} Processing templates...`);
+    // Step 4: Bundle Style Dictionary transforms
+    console.log(`${colors.blue}[4/6]${colors.reset} Bundling Style Dictionary transforms...`);
+    const styleTransforms = bundleStyleTransforms();
+    const transformsSize = Math.round(styleTransforms.length / 1024);
+    console.log(`  ${colors.green}✓${colors.reset} Style transforms bundled (${transformsSize}KB)`);
+    
+    // Test Style Dictionary integration
+    await testStyleDictionaryIntegration();
+    console.log();
+    
+    // Step 5: Process templates
+    console.log(`${colors.blue}[5/6]${colors.reset} Processing templates...`);
     
     // Process UI template
     const uiTemp = path.join(projectRoot, CONFIG.templates.ui.output + '.temp');
@@ -416,8 +530,8 @@ async function build() {
     );
     console.log(`  ${colors.green}✓${colors.reset} Guide template processed\n`);
     
-    // Step 5: Final assembly
-    console.log(`${colors.blue}[5/5]${colors.reset} Assembling final files...`);
+    // Step 6: Final assembly
+    console.log(`${colors.blue}[6/6]${colors.reset} Assembling final files...`);
     
     // Assemble UI HTML (with inlined CSS for Figma plugin)
     const uiTempContent = fs.readFileSync(uiTemp, 'utf8');
@@ -433,6 +547,9 @@ ${cssBundle}
     <script>
 ${jsBundle}
 ${templateBundle ? '\n// Template functions\n' + templateBundle : ''}
+
+// Style Dictionary transforms
+${styleTransforms}
     </script>
 </head>
 ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
@@ -464,6 +581,9 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     // Cleanup temp files
     fs.unlinkSync(uiTemp);
     fs.unlinkSync(guideTemp);
+    
+    // Additional cleanup for new temp files
+    cleanup();
     
     const elapsed = Date.now() - startTime;
     console.log(`\n${colors.bright}${colors.green}✨ Build complete in ${elapsed}ms${colors.reset}\n`);

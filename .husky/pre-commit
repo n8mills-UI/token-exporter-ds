@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint-staged for incremental checks
+npx lint-staged
+
+# Run component override detection
+echo "🔍 Checking for CSS component overrides..."
+npm run check:overrides
+
+if [ $? -ne 0 ]; then
+  echo "❌ Component override violations detected!"
+  echo "Please remove context-specific CSS overrides and use component variants instead."
+  echo "See CLAUDE.md for more information on the Zero Tolerance Component Override Policy."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"

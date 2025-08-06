@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly
+  Generated on Sun, 03 Aug 2025 05:48:30 GMT
+-->
+<resources>
+  <color name="color_lime_300">#ffe6ff7a</color>
+  <color name="color_lime_400">#ffd2ff37</color>
+  <color name="color_lime_500">#ffbfff00</color>
+  <color name="color_lime_600">#ff99cc00</color>
+  <color name="color_yellow_300">#ffffff66</color>
+  <color name="color_yellow_400">#ffeeff00</color>
+  <color name="color_yellow_500">#ffffd700</color>
+  <color name="color_pink_300">#ffffb6c1</color>
+  <color name="color_pink_400">#ffff1493</color>
+  <color name="color_pink_500">#ffff69b4</color>
+  <color name="color_green_400">#ff00ff88</color>
+  <color name="color_cyan_400">#ff00bfff</color>
+  <color name="color_cyan_500">#ff00d1ff</color>
+  <color name="color_black">#ff000000</color>
+  <color name="color_white">#ffffffff</color>
+  <color name="color_near_black">#ff1e1e1e</color>
+  <color name="color_backdrop_rgb">#ff000000</color>
+  
+</resources>

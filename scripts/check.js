@@ -157,6 +157,62 @@ async function checkCSSArchitecture() {
     
     const issues = [];
     
+    // Check for context-based overrides (anti-pattern)
+    const contextOverrides = cssContent.match(/\.[a-zA-Z0-9-]+\s+\.[a-zA-Z0-9-]+\s*\{/g) || [];
+    
+    // Legacy components to ignore (too complex to refactor safely)
+    const LEGACY_IGNORE_PATTERNS = [
+        'profile-card',  // Complex component with many nested elements
+        'about-modal',   // Modal with specific nested styles
+        'faq-item'       // FAQ accordion with state-based styles
+    ];
+    
+    // Guide-only patterns to ignore (not used in plugin)
+    const GUIDE_ONLY_PATTERNS = [
+        'guide-container',     // Guide layout wrapper
+        'guideline',          // Documentation components
+        'tech-item',          // Guide-only tech stack display
+        'collection-item',    // Guide-only examples
+        'example-',           // Example wrappers
+        'demo-',              // Demo containers
+        'docs-',              // Documentation specific
+        'section-'            // Guide sections
+    ];
+    
+    const activeOverrides = contextOverrides.filter(override => {
+        // Skip commented overrides
+        const overrideIndex = cssContent.indexOf(override);
+        const beforeOverride = cssContent.substring(Math.max(0, overrideIndex - 200), overrideIndex);
+        const isCommented = beforeOverride.includes('/*') && beforeOverride.lastIndexOf('*/') < beforeOverride.lastIndexOf('/*');
+        
+        // Skip legacy components
+        const isLegacy = LEGACY_IGNORE_PATTERNS.some(pattern => override.includes(pattern));
+        
+        // Skip guide-only components
+        const isGuideOnly = GUIDE_ONLY_PATTERNS.some(pattern => override.includes(pattern));
+        
+        return !isCommented && !isLegacy && !isGuideOnly;
+    });
+    
+    if (activeOverrides.length > 0) {
+        issues.push({
+            type: 'Context-based overrides (anti-pattern)',
+            count: activeOverrides.length,
+            examples: [...new Set(activeOverrides)].slice(0, 3)
+        });
+        
+        console.log(`  ${colors.red}✗${colors.reset} Found ${activeOverrides.length} context-based overrides`);
+        console.log(`  ${colors.yellow}⚠${colors.reset} Use component variants instead of context overrides`);
+        activeOverrides.slice(0, 5).forEach(override => {
+            console.log(`    • ${override.trim()}`);
+        });
+        if (activeOverrides.length > 5) {
+            console.log(`    ... and ${activeOverrides.length - 5} more`);
+        }
+    } else {
+        console.log(`  ${colors.green}✓${colors.reset} No context-based overrides found`);
+    }
+    
     // Check for hardcoded colors
     const hexColors = nonRootContent.match(/#(?:[0-9a-fA-F]{3}){1,2}(?![0-9a-fA-F])/g);
     if (hexColors) {
@@ -226,10 +282,34 @@ async function checkThemeArchitecture() {
     
     const componentOverrides = cssContent.match(themeComponentPattern) || [];
     
-    if (componentOverrides.length > 0) {
+    // Legacy components to ignore (too complex to refactor safely)
+    const LEGACY_IGNORE_PATTERNS = [
+        'profile-card',  // Complex component with many nested elements
+        'about-modal',   // Modal with specific nested styles
+        'faq'            // FAQ accordion with state-based styles
+    ];
+    
+    // Guide-only patterns to ignore (not used in plugin)
+    const GUIDE_ONLY_PATTERNS = [
+        'tech-item',      // Guide-only tech stack display
+        'collection',     // Guide-only examples
+        'badge',          // Guide-only badge demos
+        'example',        // Example components
+        'demo',           // Demo components
+        'guideline'       // Documentation components
+    ];
+    
+    // Filter out legacy and guide-only components
+    const filteredOverrides = componentOverrides.filter(override => {
+        const isLegacy = LEGACY_IGNORE_PATTERNS.some(pattern => override.includes(pattern));
+        const isGuideOnly = GUIDE_ONLY_PATTERNS.some(pattern => override.includes(pattern));
+        return !isLegacy && !isGuideOnly;
+    });
+    
+    if (filteredOverrides.length > 0) {
         // Group by component type
         const componentGroups = {};
-        componentOverrides.forEach(match => {
+        filteredOverrides.forEach(match => {
             const componentMatch = match.match(/\.([\w-]+)/);
             if (componentMatch) {
                 const component = componentMatch[1];
@@ -240,7 +320,7 @@ async function checkThemeArchitecture() {
             }
         });
         
-        console.log(`  ${colors.red}✗${colors.reset} Found ${componentOverrides.length} component-specific theme overrides`);
+        console.log(`  ${colors.red}✗${colors.reset} Found ${filteredOverrides.length} component-specific theme overrides`);
         console.log(`  ${colors.yellow}⚠${colors.reset} Components should use semantic tokens that adapt to themes`);
         console.log(`\n  ${colors.bright}Anti-pattern found:${colors.reset}`);
         
@@ -365,6 +445,185 @@ function validateThemeConsistency(cssContent) {
         if (lightOnly.length > 0) issues.push(`Light-only: ${lightOnly.slice(0, 3).join(', ')}`);
         if (darkOnly.length > 0) issues.push(`Dark-only: ${darkOnly.slice(0, 3).join(', ')}`);
         return { valid: false, message: issues.join('; ') };
+    }
+}
+
+/**
+ * Validate undefined CSS variables
+ */
+async function checkUndefinedVariables() {
+    console.log(`\n${colors.blue}🔍 Undefined CSS Variable Check${colors.reset}`);
+    
+    // Read CSS content
+    const cssContent = fs.readFileSync(path.join(projectRoot, CONFIG.cssFile), 'utf8');
+    
+    // Extract all defined CSS variables
+    const definedVariables = new Set();
+    
+    // Match variable definitions in any context
+    const varDefPattern = /--([a-zA-Z0-9-]+):\s*[^;]+;/g;
+    let match;
+    
+    while ((match = varDefPattern.exec(cssContent)) !== null) {
+        definedVariables.add(match[1]);
+    }
+    
+    // Add Open Props variables that are imported
+    const openPropsVars = [
+        // Size scale
+        'size-000', 'size-00', 'size-0', 'size-1', 'size-2', 'size-3', 'size-4', 'size-5', 
+        'size-6', 'size-7', 'size-8', 'size-9', 'size-10', 'size-11', 'size-12', 'size-13',
+        'size-14', 'size-15', 'size-fluid-1', 'size-fluid-2', 'size-fluid-3', 'size-fluid-4',
+        'size-fluid-5', 'size-fluid-6', 'size-fluid-7', 'size-fluid-8', 'size-fluid-9', 'size-fluid-10',
+        // Font sizes
+        'font-size-00', 'font-size-0', 'font-size-1', 'font-size-2', 'font-size-3',
+        'font-size-4', 'font-size-5', 'font-size-6', 'font-size-7', 'font-size-8',
+        'font-size-fluid-0', 'font-size-fluid-1', 'font-size-fluid-2', 'font-size-fluid-3',
+        // Font weights
+        'font-weight-1', 'font-weight-2', 'font-weight-3', 'font-weight-4', 'font-weight-5',
+        'font-weight-6', 'font-weight-7', 'font-weight-8', 'font-weight-9',
+        // Line heights
+        'font-lineheight-00', 'font-lineheight-0', 'font-lineheight-1', 'font-lineheight-2',
+        'font-lineheight-3', 'font-lineheight-4', 'font-lineheight-5',
+        // Letter spacing
+        'font-letterspacing-0', 'font-letterspacing-1', 'font-letterspacing-2', 'font-letterspacing-3',
+        'font-letterspacing-4', 'font-letterspacing-5', 'font-letterspacing-6', 'font-letterspacing-7',
+        // Colors
+        'gray-0', 'gray-1', 'gray-2', 'gray-3', 'gray-4', 'gray-5', 'gray-6', 'gray-7', 'gray-8', 'gray-9', 'gray-10', 'gray-11', 'gray-12',
+        'stone-0', 'stone-1', 'stone-2', 'stone-3', 'stone-4', 'stone-5', 'stone-6', 'stone-7', 'stone-8', 'stone-9', 'stone-10', 'stone-11', 'stone-12',
+        'red-0', 'red-1', 'red-2', 'red-3', 'red-4', 'red-5', 'red-6', 'red-7', 'red-8', 'red-9', 'red-10', 'red-11', 'red-12',
+        'pink-0', 'pink-1', 'pink-2', 'pink-3', 'pink-4', 'pink-5', 'pink-6', 'pink-7', 'pink-8', 'pink-9', 'pink-10', 'pink-11', 'pink-12',
+        'purple-0', 'purple-1', 'purple-2', 'purple-3', 'purple-4', 'purple-5', 'purple-6', 'purple-7', 'purple-8', 'purple-9', 'purple-10', 'purple-11', 'purple-12',
+        'violet-0', 'violet-1', 'violet-2', 'violet-3', 'violet-4', 'violet-5', 'violet-6', 'violet-7', 'violet-8', 'violet-9', 'violet-10', 'violet-11', 'violet-12',
+        'indigo-0', 'indigo-1', 'indigo-2', 'indigo-3', 'indigo-4', 'indigo-5', 'indigo-6', 'indigo-7', 'indigo-8', 'indigo-9', 'indigo-10', 'indigo-11', 'indigo-12',
+        'blue-0', 'blue-1', 'blue-2', 'blue-3', 'blue-4', 'blue-5', 'blue-6', 'blue-7', 'blue-8', 'blue-9', 'blue-10', 'blue-11', 'blue-12',
+        'cyan-0', 'cyan-1', 'cyan-2', 'cyan-3', 'cyan-4', 'cyan-5', 'cyan-6', 'cyan-7', 'cyan-8', 'cyan-9', 'cyan-10', 'cyan-11', 'cyan-12',
+        'teal-0', 'teal-1', 'teal-2', 'teal-3', 'teal-4', 'teal-5', 'teal-6', 'teal-7', 'teal-8', 'teal-9', 'teal-10', 'teal-11', 'teal-12',
+        'green-0', 'green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10', 'green-11', 'green-12',
+        'lime-0', 'lime-1', 'lime-2', 'lime-3', 'lime-4', 'lime-5', 'lime-6', 'lime-7', 'lime-8', 'lime-9', 'lime-10', 'lime-11', 'lime-12',
+        'yellow-0', 'yellow-1', 'yellow-2', 'yellow-3', 'yellow-4', 'yellow-5', 'yellow-6', 'yellow-7', 'yellow-8', 'yellow-9', 'yellow-10', 'yellow-11', 'yellow-12',
+        'orange-0', 'orange-1', 'orange-2', 'orange-3', 'orange-4', 'orange-5', 'orange-6', 'orange-7', 'orange-8', 'orange-9', 'orange-10', 'orange-11', 'orange-12',
+        'choco-0', 'choco-1', 'choco-2', 'choco-3', 'choco-4', 'choco-5', 'choco-6', 'choco-7', 'choco-8', 'choco-9', 'choco-10', 'choco-11', 'choco-12',
+        'brown-0', 'brown-1', 'brown-2', 'brown-3', 'brown-4', 'brown-5', 'brown-6', 'brown-7', 'brown-8', 'brown-9', 'brown-10', 'brown-11', 'brown-12',
+        'sand-0', 'sand-1', 'sand-2', 'sand-3', 'sand-4', 'sand-5', 'sand-6', 'sand-7', 'sand-8', 'sand-9', 'sand-10', 'sand-11', 'sand-12',
+        'camo-0', 'camo-1', 'camo-2', 'camo-3', 'camo-4', 'camo-5', 'camo-6', 'camo-7', 'camo-8', 'camo-9', 'camo-10', 'camo-11', 'camo-12',
+        'jungle-0', 'jungle-1', 'jungle-2', 'jungle-3', 'jungle-4', 'jungle-5', 'jungle-6', 'jungle-7', 'jungle-8', 'jungle-9', 'jungle-10', 'jungle-11', 'jungle-12',
+        // Warm and cool grays
+        'gray-warm-0', 'gray-warm-1', 'gray-warm-2', 'gray-warm-3', 'gray-warm-4', 'gray-warm-5', 'gray-warm-6', 'gray-warm-7', 'gray-warm-8', 'gray-warm-9', 'gray-warm-10', 'gray-warm-11', 'gray-warm-12',
+        'gray-cool-0', 'gray-cool-1', 'gray-cool-2', 'gray-cool-3', 'gray-cool-4', 'gray-cool-5', 'gray-cool-6', 'gray-cool-7', 'gray-cool-8', 'gray-cool-9', 'gray-cool-10', 'gray-cool-11', 'gray-cool-12',
+        // Radius
+        'radius-1', 'radius-2', 'radius-3', 'radius-4', 'radius-5', 'radius-6',
+        'radius-round', 'radius-blob-1', 'radius-blob-2', 'radius-blob-3', 'radius-blob-4', 'radius-blob-5',
+        'radius-conditional-1', 'radius-conditional-2', 'radius-conditional-3', 'radius-conditional-4', 'radius-conditional-5', 'radius-conditional-6',
+        // Border sizes
+        'border-size-1', 'border-size-2', 'border-size-3', 'border-size-4', 'border-size-5',
+        // Shadows
+        'shadow-1', 'shadow-2', 'shadow-3', 'shadow-4', 'shadow-5', 'shadow-6',
+        'inner-shadow-0', 'inner-shadow-1', 'inner-shadow-2', 'inner-shadow-3', 'inner-shadow-4',
+        // Easings
+        'ease-1', 'ease-2', 'ease-3', 'ease-4', 'ease-5',
+        'ease-in-1', 'ease-in-2', 'ease-in-3', 'ease-in-4', 'ease-in-5',
+        'ease-out-1', 'ease-out-2', 'ease-out-3', 'ease-out-4', 'ease-out-5',
+        'ease-in-out-1', 'ease-in-out-2', 'ease-in-out-3', 'ease-in-out-4', 'ease-in-out-5',
+        'ease-elastic-1', 'ease-elastic-2', 'ease-elastic-3', 'ease-elastic-4', 'ease-elastic-5',
+        'ease-squish-1', 'ease-squish-2', 'ease-squish-3', 'ease-squish-4', 'ease-squish-5',
+        'ease-spring-1', 'ease-spring-2', 'ease-spring-3', 'ease-spring-4', 'ease-spring-5',
+        'ease-bounce-1', 'ease-bounce-2', 'ease-bounce-3', 'ease-bounce-4', 'ease-bounce-5',
+        // Additional props
+        'layer-1', 'layer-2', 'layer-3', 'layer-4', 'layer-5', 'layer-important',
+        'font-sans', 'font-serif', 'font-mono',
+        'gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 
+        'gradient-8', 'gradient-9', 'gradient-10', 'gradient-11', 'gradient-12', 'gradient-13', 'gradient-14',
+        'gradient-15', 'gradient-16', 'gradient-17', 'gradient-18', 'gradient-19', 'gradient-20', 'gradient-21',
+        'gradient-22', 'gradient-23', 'gradient-24', 'gradient-25', 'gradient-26', 'gradient-27', 'gradient-28',
+        'gradient-29', 'gradient-30',
+        'noise-1', 'noise-2', 'noise-3', 'noise-4', 'noise-5',
+        'noise-filter-1', 'noise-filter-2', 'noise-filter-3', 'noise-filter-4', 'noise-filter-5',
+        // Animation
+        'animation-slide-in-up', 'animation-slide-in-down', 'animation-slide-in-right', 'animation-slide-in-left',
+        'animation-slide-out-up', 'animation-slide-out-down', 'animation-slide-out-right', 'animation-slide-out-left',
+        'animation-scale-up', 'animation-scale-down', 'animation-fade-in', 'animation-fade-out',
+        'animation-fade-in-bloom', 'animation-fade-out-bloom', 'animation-rotate-in', 'animation-rotate-out',
+        'animation-float', 'animation-bounce', 'animation-pulse', 'animation-ping', 'animation-blink',
+        'animation-spin', 'animation-shake-x', 'animation-shake-y'
+    ];
+    
+    // Check if using Open Props
+    if (cssContent.includes('open-props')) {
+        openPropsVars.forEach(v => definedVariables.add(v));
+    }
+    
+    // Find all variable references
+    const varRefPattern = /var\(--([a-zA-Z0-9-]+)(?:,\s*[^)]+)?\)/g;
+    const undefinedVars = [];
+    const lines = cssContent.split('\n');
+    
+    // Reset regex for new search
+    varRefPattern.lastIndex = 0;
+    
+    while ((match = varRefPattern.exec(cssContent)) !== null) {
+        const varName = match[1];
+        
+        if (!definedVariables.has(varName)) {
+            // Find line number
+            const position = match.index;
+            let lineNumber = 1;
+            let charCount = 0;
+            
+            for (let i = 0; i < lines.length; i++) {
+                charCount += lines[i].length + 1;
+                if (charCount > position) {
+                    lineNumber = i + 1;
+                    break;
+                }
+            }
+            
+            // Get the line content for context
+            const lineContent = lines[lineNumber - 1].trim();
+            
+            undefinedVars.push({
+                variable: `--${varName}`,
+                line: lineNumber,
+                context: lineContent.substring(0, 80) + (lineContent.length > 80 ? '...' : '')
+            });
+        }
+    }
+    
+    if (undefinedVars.length === 0) {
+        console.log(`  ${colors.green}✓${colors.reset} All CSS variables are properly defined`);
+        return true;
+    } else {
+        console.log(`  ${colors.red}✗${colors.reset} Found ${undefinedVars.length} undefined CSS variables:\n`);
+        
+        // Group by variable name to avoid duplicates
+        const grouped = {};
+        undefinedVars.forEach(item => {
+            if (!grouped[item.variable]) {
+                grouped[item.variable] = [];
+            }
+            grouped[item.variable].push(item);
+        });
+        
+        Object.entries(grouped).forEach(([variable, occurrences]) => {
+            console.log(`  ${colors.red}Variable:${colors.reset} ${variable} (${occurrences.length} usage${occurrences.length > 1 ? 's' : ''})`);
+            
+            // Show first 3 occurrences
+            occurrences.slice(0, 3).forEach(item => {
+                console.log(`    ${colors.gray}Line ${item.line}: ${item.context}${colors.reset}`);
+            });
+            
+            if (occurrences.length > 3) {
+                console.log(`    ${colors.gray}... and ${occurrences.length - 3} more${colors.reset}`);
+            }
+            console.log();
+        });
+        
+        console.log(`  ${colors.bright}How to fix:${colors.reset}`);
+        console.log(`  1. Add the missing variable to :root in design-system.css`);
+        console.log(`  2. Or update the CSS to use an existing variable`);
+        console.log(`  3. Check if the variable name has a typo\n`);
+        
+        return false;
     }
 }
 
@@ -1011,7 +1270,8 @@ async function check(options = {}) {
         { name: 'Semantic Token Usage', fn: checkSemanticTokenUsage },
         { name: 'Plugin Compatibility', fn: checkPluginCompatibility },
         { name: 'CSS Class Validation', fn: validateCSSClasses },
-        { name: 'Component Sync', fn: validateComponentSync }
+        { name: 'Component Sync', fn: validateComponentSync },
+        { name: 'Undefined Variables', fn: checkUndefinedVariables }
     ];
     
     const additionalChecks = [

@@ -95,6 +95,10 @@ body {
  ========================= */
  --system-version: "4.0.0";
  --system-updated: "2025-01-11";
+ 
+ /* Base Colors */
+ --black: #000000;
+ --black-rgb: 0, 0, 0;
  --system-stage: "production";
  
  /* =========================
@@ -102,6 +106,23 @@ body {
  ========================= */
  --plugin-width: 340px;
  --plugin-height: 480px;
+ 
+ /* =========================
+ COMPONENT DIMENSIONS
+ ========================= */
+ 
+ /* =========================
+ ICON SIZES (Using Open Props sizing)
+ ========================= */
+ --icon-2xs: var(--size-2);  /* 8px */
+ --icon-xs: var(--size-3);   /* 16px */
+ --icon-sm: var(--size-4);   /* 20px */
+ --icon-md: var(--size-5);   /* 24px */
+ --icon-lg: var(--size-6);   /* 28px */
+ --icon-xl: var(--size-7);   /* 32px */
+ --icon-2xl: var(--size-8);  /* 48px */
+ --icon-3xl: var(--size-10); /* 80px */
+ --icon-xxl: var(--size-9);  /* 64px - for major headers */
  
  /* ╔══════════════════════════════════════════════════════════════════╗
     ║                    CSS CUSTOM PROPERTIES & TOKENS                ║
@@ -160,11 +181,11 @@ body {
 
  /* Warm Scale (For Dark Theme) */
  --gray-warm-0: #f0f0f0;
- --gray-warm-1: #ccc;
+ --gray-warm-1: #cccccc;
  --gray-warm-2: #a0a0a0;
- --gray-warm-3: #999;
- --gray-warm-4: #666;
- --gray-warm-5: #444;
+ --gray-warm-3: #999999;
+ --gray-warm-4: #666666;
+ --gray-warm-5: #444444;
  --gray-warm-6: #3a3a3a;
  --gray-warm-7: #2a2a2a;
  --gray-warm-8: #1e1e1e;
@@ -268,17 +289,6 @@ body {
  ICON DESIGN TOKENS
  ========================= */
 
- /* Icon sizing tokens */
- --icon-2xs: var(--size-2);
- --icon-xs: var(--size-3);
- --icon-sm: var(--size-4);
- --icon-md: var(--size-5);
- --icon-lg: var(--size-6);
- --icon-xl: var(--size-7);
- --icon-xlg: var(--size-8); /* 48px - NEW */
- --icon-xxl: var(--size-9);
- --icon-3xl: var(--size-12);
- --icon-4xl: var(--size-15);
  --icon-5xl: 160px;
  
  /* Custom typography tokens for edge cases */
@@ -329,13 +339,6 @@ body {
  /* Touch target minimums (Apple HIG) */
  --touch-target-min: 44px;
  
- /* Component heights */
- --component-height-sm: 40px;
- --component-height-md: 48px;
- --component-height-lg: 60px;
- --component-height-xl: 80px;
- --component-height-xxl: 120px;
- 
  /* Grid column widths */
  --grid-col-label: 100px;      /* Label column in token grids */
  --grid-col-label-sm: 90px;    /* Smaller screens */
@@ -363,6 +366,26 @@ body {
  --card-min-height-xxl: 400px;
  --card-min-height-tall: 500px;
  --card-min-height-ultra: 520px;
+ 
+ /* Card minimum widths for responsive grids */
+ --card-min-width-xs: 160px;
+ --card-min-width-sm: 220px;
+ --card-min-width-md: 280px;
+ --card-min-width-xl: 340px;
+ --card-min-width-mobile-xs: 140px;
+ 
+ /* Animation durations - semantic aliases to Open Props */
+ --animation-duration-2: 200ms;
+ --animation-duration-3: 300ms;
+ --animation-duration-4: 400ms;
+ --animation-duration-150: 150ms;
+ 
+ /* Font weight aliases */
+ --font-weight-500: var(--font-weight-5);
+ --font-weight-700: var(--font-weight-7);
+ 
+ /* Line height aliases */
+ --line-height-3: var(--font-lineheight-3);
  
  /* Icon dimensions for specific use cases */
  --icon-menu: 24px;
@@ -450,10 +473,20 @@ body {
  TEXT & CONTENT COLORS
  ========================= */
  --color-text-default: var(--gray-warm-0);
+ --color-text-primary: var(--gray-warm-0);
+ --color-text-emphasis: var(--gray-warm-0);
  --color-text-secondary: var(--gray-warm-1);
  --color-text-muted: var(--gray-warm-1);
+--color-text-heading: var(--gray-warm-0);
+--color-text-label: var(--gray-warm-0);
+--color-text-navigation: var(--gray-warm-0);
+--color-text-interactive: #FF1493;
  --color-text-on-brand: var(--brand-text-dark);
  --color-text-error: var(--red-6);
+ --black-rgb: 0, 0, 0;
+ --color-text-muted-rgb: 204, 204, 204;
+ --color-border-hover: var(--gray-warm-2);
+ --brand-gradient-lime: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
  
  /* =========================
  INTERACTIVE & STATUS COLORS
@@ -482,7 +515,7 @@ body {
 
  /* Button tokens */
  --btn-primary-bg: var(--gradient-highlight-90);
- --btn-primary-text: var(--gray-warm-9);
+ --btn-primary-text: var(--color-text-inverse);
  --btn-primary-hover-filter: brightness(1.1);
  --btn-primary-focus-ring: var(--focus-ring);
  --btn-secondary-bg: transparent;
@@ -507,6 +540,14 @@ body {
  --card-bg: var(--surface-2);
  --card-border: var(--color-border-subtle);
  --card-text: var(--color-text-default);
+ 
+ /* Card spacing - semantic aliases to Open Props */
+ --card-padding-sm: var(--size-3);
+ --card-padding-md: var(--size-4);
+ --card-padding-lg: var(--size-6);
+ --card-padding-xl: var(--size-8);
+ --card-gap-standard: var(--size-4);
+ --card-gap-mobile: var(--size-3);
  
  /* Badge tokens */
  --badge-bg: transparent;
@@ -709,6 +750,11 @@ body {
  /* Theme toggle */
  --theme-toggle-bg: var(--gray-warm-8);
  
+ /* Stat number display */
+ --stat-number-display: gradient;
+ --stat-number-gradient: var(--gradient-highlight);
+ --stat-number-color: var(--brand-primary);
+ 
  /* Glass morphism surfaces */
  --surface-glass-dark: rgb(30, 30, 30, 0.6); /* Dark glass with 60% opacity */
  --surface-overlay-heavy: rgb(42, 42, 42, 0.95); /* Heavy overlay 95% opacity */
@@ -724,7 +770,7 @@ body {
  --component-height-md: var(--size-8);
  --component-height-lg: var(--size-9);
  --component-height-xl: var(--size-10);
---component-height-xxl: 140px;
+ --component-height-xxl: 140px;
 
  
  /* =========================
@@ -798,6 +844,74 @@ body {
  ========================= */
  --shadow-brand: 0 4px 15px rgb(var(--brand-primary-rgb), 0.15);
  --shadow-brand-hover: 0 6px 20px rgb(var(--brand-primary-rgb), 0.25);
+
+ /* ==========================================
+    MISSING SEMANTIC TOKENS - ARCHITECTURE FIX
+    ========================================== */
+    
+    /* Text Colors - Semantic Layer */
+    --color-text-primary: var(--gray-warm-0);
+    --color-text-secondary: var(--gray-warm-1);
+    --color-text-muted: var(--gray-warm-2);
+    --color-text-subtle: var(--gray-warm-4);
+    --color-text-inverse: var(--black);
+    
+    /* Surface Colors */
+    --color-surface-primary: var(--gray-warm-8);
+    --color-surface-secondary: var(--gray-warm-7);
+    --color-surface-elevated: var(--gray-warm-6);
+    --color-surface-overlay: var(--gray-warm-8);
+    --color-surface-glass: var(--glass-dark-10);
+    
+    /* Interactive Colors */
+    --color-interactive-primary: var(--brand-primary);
+    --color-interactive-secondary: var(--brand-secondary);
+    --color-interactive-tertiary: var(--gray-warm-6);
+    --color-interactive-muted: var(--gray-warm-4);
+    
+    /* Border Colors */
+    --color-border-default: var(--gray-warm-5);
+    --color-border-subtle: var(--gray-warm-6);
+    --color-border-strong: var(--gray-warm-4);
+    --color-border-interactive: var(--color-interactive-primary);
+    
+    /* Status Colors */
+    --color-status-success: var(--color-green-400);
+    --color-status-warning: var(--color-yellow-400);
+    --color-status-error: var(--red-6);
+    --color-status-info: var(--color-cyan-400);
+    
+    /* Animation & Transition */
+    --duration-100: 100ms;
+    --duration-150: 150ms;
+    --duration-200: 200ms;
+    --duration-300: 300ms;
+    --animation-duration-1: var(--duration-150);
+    --animation-duration-2: var(--duration-200);
+    --animation-duration-3: var(--duration-300);
+    
+    /* Button States */
+    --btn-primary-hover: color-mix(in srgb, var(--color-interactive-primary) 90%, black);
+    --btn-secondary-hover: color-mix(in srgb, var(--color-interactive-secondary) 90%, black);
+    --btn-tertiary-hover: color-mix(in srgb, var(--color-interactive-tertiary) 90%, white);
+    
+    /* Spacing Relative */
+    --size-relative-6: clamp(var(--size-4), 4vw, var(--size-6));
+    
+    /* Glass Text Variants */
+    --glass-text-primary: var(--color-text-primary);
+    --glass-text-muted: var(--color-text-muted);
+    
+    /* Dynamic Animation Properties (for JavaScript) */
+    --color: var(--color-interactive-primary); /* Default color for animations */
+    --delay: 0s; /* Default delay */
+    --blur: 0px; /* Default blur */
+    --x-start: 0px; /* Animation start X */
+    --y-start: 0px; /* Animation start Y */
+    --x-end: 0px; /* Animation end X */
+    --y-end: 0px; /* Animation end Y */
+    --scale: 1; /* Animation scale */
+    --parallax-depth: 0px; /* Parallax transform */
 }
 
 /* ╔══════════════════════════════════════════════════════════════════╗
@@ -806,6 +920,35 @@ body {
    ║  Dark theme is the default (defined in :root above)             ║
    ║  Light theme overrides are defined below                        ║
    ╚══════════════════════════════════════════════════════════════════╝ */
+
+/* Dark Theme Semantic Token Overrides */
+[data-theme="dark"] {
+    /* Text Colors */
+    --color-text-primary: var(--gray-warm-0);
+    --color-text-secondary: var(--gray-warm-1);
+    --color-text-muted: var(--gray-warm-2);
+    --color-text-subtle: var(--gray-warm-4);
+    --color-text-inverse: var(--black);
+    
+    /* Surface Colors */
+    --color-surface-primary: var(--gray-warm-8);
+    --color-surface-secondary: var(--gray-warm-7);
+    --color-surface-elevated: var(--gray-warm-6);
+    --color-surface-overlay: var(--gray-cool-1);
+    --color-surface-glass: var(--glass-dark-10);
+    
+    /* Border Colors */
+    --color-border-default: var(--gray-warm-5);
+    --color-border-subtle: var(--gray-warm-6);
+    --color-border-strong: var(--gray-warm-4);
+    
+    /* Glass Text Variants */
+    --glass-text-primary: var(--color-text-primary);
+    --glass-text-muted: var(--color-text-muted);
+    
+    /* FAQ toggle color */
+    --faq-toggle-color: var(--brand-primary);
+}
 
 [data-theme="light"] {
     /* ╔══════════════════════════════════════════════════════════════════╗
@@ -824,6 +967,39 @@ body {
     /* Additional brand tokens for light mode */
     --brand-primary-dark: #1E1E1E;                      /* Pure black for high contrast */
     --brand-primary-dark-rgb: 30, 30, 30;               /* Black RGB */
+    
+    /* =========================
+       SEMANTIC TOKEN OVERRIDES FOR LIGHT THEME
+       ========================= */
+    
+    /* Text Colors */
+    --color-text-primary: var(--black);
+    --color-text-secondary: var(--gray-cool-5);
+    --color-text-muted: var(--gray-cool-4);
+    --color-text-subtle: var(--gray-cool-3);
+    --color-text-inverse: var(--gray-cool-0);
+    --color-text-emphasis: var(--black);
+    
+    /* Stat number display */
+    --stat-number-display: solid;
+    --stat-number-gradient: none;
+    --stat-number-color: var(--black);
+    
+    /* Surface Colors */
+    --color-surface-primary: var(--gray-cool-0);
+    --color-surface-secondary: var(--gray-cool-1);
+    --color-surface-elevated: var(--gray-cool-0);
+    --color-surface-overlay: var(--gray-warm-8);
+    --color-surface-glass: var(--glass-light-10);
+    
+    /* Border Colors */
+    --color-border-default: var(--gray-cool-2);
+    --color-border-subtle: var(--gray-cool-1);
+    --color-border-strong: var(--gray-cool-3);
+    
+    /* Glass Text Variants */
+    --glass-text-primary: var(--color-text-primary);
+    --glass-text-muted: var(--color-text-muted);
     
     /* =========================
        SURFACE HIERARCHY - COOL GRAY
@@ -847,13 +1023,13 @@ body {
     /* =========================
        TEXT COLORS
        ========================= */
-    --color-text-default: var(--gray-cool-9);
+    --color-text-default: var(--black);
     --color-text-secondary: var(--gray-cool-5);
     --color-text-muted: var(--gray-cool-4);
-    --color-text-heading: var(--gray-cool-9);
-    --color-text-brand: var(--gray-cool-9);
-    --color-text-label: var(--gray-cool-9);
-    --color-text-navigation: var(--gray-cool-9);
+    --color-text-heading: var(--black);
+    --color-text-brand: var(--black);
+    --color-text-label: var(--black);
+    --color-text-navigation: var(--black);
     --color-text-on-brand: var(--brand-primary-dark);   /* Black text on lime backgrounds for WCAG */
     --color-text-error: #DC2626;                        /* Error text */
     --color-text-interactive: #FF1493;                  /* Interactive pink */
@@ -1193,36 +1369,36 @@ body {
         color: var(--brand-secondary); /* Pink, not lime */
     }
     
-    /* Profile Card Fixes */
+    /* REMOVED CONTEXT OVERRIDES - Use component variants instead
     .profile-card .ascii-art,
     .profile-card .ascii-art-mobile {
-        color: var(--brand-secondary); /* Pink in light mode */
-        text-shadow: none; /* Remove glow for readability */
+        color: var(--brand-secondary);
+        text-shadow: none;
     }
     
     .profile-card .code-container {
-        background: var(--white-alpha-05); /* Light glass effect */
+        background: var(--white-alpha-05);
         border-color: var(--color-border-subtle);
     }
     
     .profile-card .string {
-        color: var(--brand-secondary); /* Pink instead of lime */
+        color: var(--brand-secondary);
     }
     
     .profile-card .status-dot {
-        background: var(--brand-secondary); /* Pink status dot */
+        background: var(--brand-secondary);
     }
     
     .profile-card .cursor {
-        background: var(--brand-secondary); /* Pink cursor */
+        background: var(--brand-secondary);
     }
     
-    /* Badge Secondary in Profile Section */
     .profile-card .badge.secondary {
         background: var(--brand-secondary);
         color: white;
         border-color: var(--brand-secondary);
     }
+    */
     
     /* Tech Item Icons */
     .tech-item h3 i,
@@ -1237,9 +1413,11 @@ body {
     }
     
     /* About Modal Feature Icons - Pink in light mode */
+    /* REMOVED CONTEXT OVERRIDE - Use .feature-icon--modal variant instead
     .about-modal-features .feature-icon {
         color: var(--brand-secondary);
     }
+    */
     
     /* Additional component overrides from consolidated sections */
     
@@ -1278,12 +1456,12 @@ body {
     /* Empty states */
     .empty-state {
         background: var(--surface-1);
-        border-color: var(--color-border-subtle);
+        border-color: var(--color-border-strong);
         color: var(--color-text-secondary);
     }
     
     .empty-state-title {
-        color: var(--color-text-emphasis);
+        color: var(--color-text-default);
     }
     
     .empty-state-subtitle {
@@ -1439,16 +1617,18 @@ body {
         opacity: 0.7;
     }
     
-    .stat-number {
-        background: none;
-        -webkit-text-fill-color: unset;
-        background-clip: unset;
-        color: var(--color-text-emphasis);
-    }
     
     /* Override the gradient bar on cards */
     .enhanced-card::before {
         opacity: 0.3;
+    }
+    
+    /* Stat numbers in light mode use solid color */
+    .stat-number {
+        background: none;
+        -webkit-text-fill-color: unset;
+        background-clip: unset;
+        color: var(--stat-number-color);
     }
 }
 
@@ -1544,8 +1724,8 @@ body {
 }
 
 .icon--xlg {
-    width: var(--icon-xlg);
-    height: var(--icon-xlg);
+    width: var(--icon-2xl);
+    height: var(--icon-2xl);
 }
 
 
@@ -1696,9 +1876,6 @@ body {
     }
     
     /* Buttons */
-    .btn {
-        padding: var(--size-1) var(--size-2);
-    }
     
     /* Lists */
     .list-spaced > li {
@@ -1817,7 +1994,7 @@ body {
 
 .text-gradient-brand {
     background: var(--gradient-primary);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
@@ -2075,10 +2252,12 @@ body {
 }
 
 /* Make demo buttons full width */
+/* REMOVED: Override violates single source of truth
 .example-wrapper .btn-secondary {
     width: 100%;
     margin-top: var(--size-4);
 }
+*/
 
 /* Add transition for smooth demo */
 .about-modal-content {
@@ -2114,17 +2293,20 @@ body {
         justify-content: center;
         width: 100%;
         font-family: var(--font-sans);
-        font-weight: 600;
+        font-weight: var(--font-weight-7);
         text-decoration: none;
         line-height: 1;
         white-space: nowrap;
         border-radius: var(--radius-2);
-        border: var(--border-size-1) solid transparent;
+        border: var(--border-size-2) solid transparent;
         cursor: pointer;
         user-select: none;
         transition: var(--transition-fast);
         text-shadow: none;
-        box-shadow: none;
+        box-shadow: var(--shadow-2);
+        padding-inline: var(--size-relative-6);
+        gap: var(--size-2);
+        box-sizing: border-box;
     }
 
     .btn [data-icon] {
@@ -2149,7 +2331,6 @@ body {
     .btn-sm {
         font-size: var(--font-size-0);
         height: var(--component-height-sm);
-        padding: 0 var(--size-3);
         gap: var(--size-1);
     }
 
@@ -2162,7 +2343,6 @@ body {
     .btn-md {
         font-size: var(--font-size-1);
         height: var(--component-height-md);
-        padding: 0 var(--size-4);
         gap: var(--size-2);
     }
 
@@ -2175,7 +2355,6 @@ body {
     .btn-lg {
         font-size: var(--font-size-2);
         height: var(--component-height-lg);
-        padding: 0 var(--size-5);
         gap: var(--size-3);
     }
 
@@ -2334,6 +2513,344 @@ body {
         filter: none !important;
     }
 
+/* ==========================================
+   BUTTON COMPONENT VARIANT SYSTEM
+   Clean Architecture - No Context Overrides
+   ========================================== */
+
+/* Size Variants */
+.btn--xs { 
+    padding: var(--size-1) var(--size-2); 
+    font-size: var(--font-size-0);
+    min-height: var(--size-6);
+}
+
+.btn--sm { 
+    padding: var(--size-2) var(--size-3); 
+    font-size: var(--font-size-0);
+    min-height: var(--size-7);
+}
+
+.btn--md { 
+    padding: var(--size-3) var(--size-4); 
+    font-size: var(--font-size-1);
+    min-height: var(--size-8);
+}
+
+.btn--lg { 
+    padding: var(--size-4) var(--size-5); 
+    font-size: var(--font-size-2);
+    min-height: var(--size-9);
+}
+
+/* Layout Variants */
+.btn--full-width { 
+    width: 100%; 
+}
+
+.btn--auto-width { 
+    width: auto; 
+}
+
+.btn--min-width { 
+    min-width: 120px; 
+}
+
+.btn--no-min-width { 
+    min-width: 0; 
+}
+
+.btn--flex-shrink-0 { 
+    flex-shrink: 0; 
+}
+
+/* Context Variants */
+.btn--demo { 
+    width: 100%; 
+    margin-top: var(--size-4); 
+}
+
+.btn--export { 
+    width: 100%; 
+    min-width: 0; 
+    padding-inline: clamp(var(--size-3), 4vw, var(--size-6));
+}
+
+.btn--footer { 
+    flex-shrink: 0; 
+    margin: 0; 
+}
+
+.btn--example { 
+    margin-top: var(--size-1); 
+    width: 100%; 
+    max-width: 100%; 
+}
+
+/* Spacing Variants */
+.btn--no-margin { 
+    margin: 0; 
+}
+
+.btn--margin-top-1 { 
+    margin-top: var(--size-1); 
+}
+
+.btn--margin-top-4 { 
+    margin-top: var(--size-4); 
+}
+
+/* Special Style Variants */
+.btn--no-borders {
+    border: none;
+}
+
+.btn--shadow-none {
+    box-shadow: none !important;
+}
+
+.btn--bright {
+    filter: brightness(1.1);
+}
+
+.btn--gradient-brand {
+    background: var(--brand-gradient-primary);
+    color: var(--brand-text-dark);
+    border: none;
+}
+
+.btn--gradient-highlight {
+    background: var(--brand-gradient-highlight);
+    color: var(--brand-text-dark);
+    border: none;
+}
+
+/* ==========================================
+   STATUS DOT COMPONENT VARIANT SYSTEM
+   ========================================== */
+
+/* Base component (if not already defined) */
+.status-dot {
+    width: var(--size-2);
+    height: var(--size-2);
+    border-radius: 50%;
+    background: var(--color-status-success);
+    display: inline-block;
+}
+
+.status-dot--profile {
+    background: var(--color-interactive-secondary);
+}
+
+.status-dot--success {
+    background: var(--color-status-success);
+}
+
+.status-dot--warning {
+    background: var(--color-status-warning);
+}
+
+.status-dot--error {
+    background: var(--color-status-error);
+}
+
+.status-dot--info {
+    background: var(--color-status-info);
+}
+
+.status-dot--primary {
+    background: var(--color-interactive-primary);
+}
+
+.status-dot--secondary {
+    background: var(--color-interactive-secondary);
+}
+
+/* ==========================================
+   TYPOGRAPHY COMPONENT VARIANT SYSTEM
+   ========================================== */
+
+/* Code syntax highlighting variants */
+.syntax-comment { 
+    color: var(--color-text-muted); 
+    font-style: italic; 
+}
+
+.syntax-keyword { 
+    color: var(--value-state); 
+}
+
+.syntax-variable { 
+    color: var(--value-color); 
+}
+
+.syntax-string { 
+    color: var(--color-interactive-primary); 
+}
+
+.syntax-string--profile { 
+    color: var(--color-interactive-secondary); 
+}
+
+.syntax-punctuation { 
+    color: var(--color-text-primary); 
+}
+
+.syntax-function { 
+    color: var(--value-number); 
+}
+
+.syntax-number { 
+    color: var(--value-text); 
+}
+
+/* Cursor variants */
+.cursor {
+    background: var(--color-interactive-primary);
+    animation: blink var(--animation-duration-2) infinite;
+}
+
+.cursor--profile {
+    background: var(--color-interactive-secondary);
+}
+
+.cursor--muted {
+    background: var(--color-text-muted);
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ==========================================
+   BADGE COMPONENT VARIANT SYSTEM
+   ========================================== */
+
+.badge--profile-secondary {
+    background: var(--color-interactive-secondary);
+    color: var(--color-text-inverse);
+    border-color: var(--color-interactive-secondary);
+}
+
+.badge--profile-primary {
+    background: var(--color-interactive-primary);
+    color: var(--color-text-inverse);
+    border-color: var(--color-interactive-primary);
+}
+
+/* ==========================================
+   ICON COMPONENT VARIANT SYSTEM
+   ========================================== */
+
+.feature-icon {
+    color: var(--color-text-primary);
+    transition: color var(--animation-duration-1) ease;
+}
+
+.feature-icon--modal {
+    color: var(--color-interactive-secondary);
+}
+
+.feature-icon--primary {
+    color: var(--color-interactive-primary);
+}
+
+.feature-icon--secondary {
+    color: var(--color-interactive-secondary);
+}
+
+.feature-icon--muted {
+    color: var(--color-text-muted);
+}
+
+.feature-icon--subtle {
+    color: var(--color-text-subtle);
+}
+
+/* ==========================================
+   PROGRESS COMPONENT VARIANT SYSTEM
+   ========================================== */
+
+.progress-track {
+    width: 100%;
+    height: var(--size-1);
+    background: var(--color-surface-secondary);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-track--glass {
+    background: var(--color-surface-glass);
+    backdrop-filter: blur(var(--glass-blur-light));
+}
+
+.progress-track--elevated {
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-subtle);
+}
+
+/* ==========================================
+   MISSING UTILITY CLASSES
+   ========================================== */
+
+.regular {
+    font-weight: var(--font-weight-4);
+}
+
+.about-modal-body {
+    padding: var(--size-4);
+    line-height: var(--line-height-3);
+}
+
+.stat-suffix--s::after {
+    content: 's';
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+/* Glass text utility classes */
+.glass-text-primary {
+    color: var(--glass-text-primary);
+}
+
+.glass-text-muted {
+    color: var(--glass-text-muted);
+}
+
+/* Atomic Design System section classes */
+.atoms {
+    color: var(--color-interactive-primary);
+    font-weight: var(--font-weight-6);
+}
+
+.molecules {
+    color: var(--color-interactive-secondary);
+    font-weight: var(--font-weight-6);
+}
+
+.organisms {
+    color: var(--color-status-info);
+    font-weight: var(--font-weight-6);
+}
+
+.templates {
+    color: var(--color-status-warning);
+    font-weight: var(--font-weight-6);
+}
+
+/* Icon code placeholder class */
+.icon-code {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
+    background: var(--color-surface-secondary);
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-1);
+}
 
     /* ╔══════════════════════════════════════════════════════════════════╗
        ║                     GUIDELINE CARDS                             ║
@@ -2866,6 +3383,7 @@ body {
     border: none;
     background-color: transparent;
     border-radius: 0;
+
     /* Restore original padding and margin that might be overridden */
     padding: var(--size-8) var(--size-6) 0;
     margin-top: var(--size-4);
@@ -2911,12 +3429,18 @@ body {
 .stat-number {
  font-size: var(--font-size-6);
  font-weight: var(--font-weight-8);
- background: var(--brand-gradient-primary);
- -webkit-text-fill-color: transparent;
- background-clip: text;
  line-height: 1;
  margin-bottom: var(--size-1);
  display: inline-block;
+ background: var(--stat-number-gradient);
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+}
+
+.stat-number--gradient {
+ background: var(--stat-number-gradient);
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
 }
 
 .stat-suffix {
@@ -3044,9 +3568,7 @@ body {
 }
 
 /* Dark mode: FAQ toggles use brand-primary (lime) */
-[data-theme="dark"] {
-    --faq-toggle-color: var(--brand-primary);
-}
+/* CONSOLIDATED INTO MAIN DARK THEME BLOCK ABOVE */
 
 .tech-info-panel {
  background: var(--color-background-tertiary);
@@ -3335,6 +3857,7 @@ body {
     font-weight: var(--font-weight-6);
     transition: var(--transition-fast);
 }
+
 .profile-card .ascii-art {
  text-shadow: none;
  animation: none;
@@ -3850,7 +4373,6 @@ body {
 
 /* Button below card in example wrapper */
 .example-wrapper > .btn {
- align-self: stretch;
  margin-top: var(--size-1);
  width: 100%;
  max-width: 100%;
@@ -4204,13 +4726,11 @@ body {
  z-index: 1;
  max-width: var(--content-md);
  width: 100%;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
  text-align: center;
+
  /* Remove margin auto - parent flexbox handles centering */
  flex: 1; /* Take available space for proper centering */
+
  /* Add padding to account for mobile header and provide breathing room */
  padding-top: calc(var(--size-10) + var(--size-4)); /* Mobile header height + extra spacing */
  padding-bottom: var(--size-4);
@@ -4382,15 +4902,6 @@ body {
 }
 
 /* Optional: Subtle separator above personal section */
-.hero-bottom::before {
-    content: '';
-    position: absolute;
-    top: calc(var(--size-4) * -1 / 2); /* Position halfway in the gap */
-    width: 60px;
-    height: 1px;
-    background: rgb(var(--color-text-muted-rgb), 0.2);
-    border-radius: 1px;
-}
 
 .hero-bottom p {
  color: var(--color-text-muted); /* Use proper muted text color */
@@ -4463,12 +4974,18 @@ body {
 .stat-number {
  font-size: var(--font-size-8);
  font-weight: var(--font-weight-8);
- background: var(--brand-gradient-primary);
- -webkit-text-fill-color: transparent;
- background-clip: text;
  line-height: 1;
  margin-bottom: var(--size-1);
  display: inline-block;
+ background: var(--stat-number-gradient);
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+}
+
+.stat-number--gradient {
+ background: var(--stat-number-gradient);
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
 }
 
 .stat-suffix {
@@ -4588,15 +5105,25 @@ body {
  .tech-item svg {
   width: var(--icon-md);
   height: var(--icon-md);
+  max-width: var(--icon-md);
+  max-height: var(--icon-md);
  }
 }
 
 
 
+/* Force consistent sizing for all tech logos */
+.tech-item svg[width],
+.tech-item svg[height],
+.tech-item svg[viewBox],
 .tech-item [data-icon],
 .tech-item svg {
  width: var(--icon-lg);
  height: var(--icon-lg);
+ max-width: var(--icon-lg);
+ max-height: var(--icon-lg);
+ min-width: var(--icon-lg);
+ min-height: var(--icon-lg);
  color: var(--color-text-default);
  fill: currentcolor;
  overflow: visible;
@@ -4604,7 +5131,7 @@ body {
 
 /* Monochrome tech items - preserve structure but use single color */
 .tech-item svg {
- overflow: visible !important;
+ overflow: visible;
 }
 
 /* For SVGs that are meant to be filled (like GitHub, Open Props, VS Code, Manus) */
@@ -5213,8 +5740,8 @@ body {
     max-width: 320px;
     margin: 0 auto;
     box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        0 4px 6px -1px rgb(0, 0, 0, 0.1),
+        0 2px 4px -1px rgb(0, 0, 0, 0.06),
         inset 0 0 0 1px var(--gray-7);
 }
 
@@ -5288,7 +5815,7 @@ body {
 }
 
 .current-tech-item span {
-    font-size: 10px;
+    font-size: var(--font-size-0); /* 12px minimum for accessibility */
     font-weight: var(--font-weight-5);
     color: var(--color-text-secondary);
     line-height: 1.2;
@@ -5339,7 +5866,7 @@ body {
     font-weight: var(--font-weight-7);
     font-size: 12px;
     color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgb(0, 0, 0, 0.1);
 }
 
 .indicator-current {
@@ -5391,7 +5918,7 @@ body {
 }
 
 /* Responsive behavior */
-@media (min-width: 768px) {
+@media (width >= 768px) {
     .comparison-layouts {
         flex-direction: row;
         gap: var(--size-6);
@@ -6045,7 +6572,7 @@ select option {
  /* Ensure main content respects safe areas */
  .guide-content,
  .sidebar {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0);
  }
 
  /* Utility class for any fixed positioned elements at the bottom */
@@ -6057,22 +6584,56 @@ select option {
  .progress-overlay,
  .about-modal,
  .menu-overlay {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0);
  }
 
  /* Tooltips and dropdowns near bottom edge */
  .tooltip-bottom,
  .dropdown-bottom {
-  margin-bottom: env(safe-area-inset-bottom, 0px);
+  margin-bottom: env(safe-area-inset-bottom, 0);
  }
 
  /* Ensure any bottom-positioned form elements respect safe areas */
  .form-bottom,
  .action-bar {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0);
  }
 }
 
+
+/* Plugin container padding and spacing */
+.figma-plugin .content-wrapper {
+    padding: var(--size-3);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Main content should grow to push footer down */
+.figma-plugin #main-content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main UI spacing */
+.figma-plugin #main-ui {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+}
+
+/* Footer centered in remaining space */
+.figma-plugin .footer-section {
+    padding: var(--size-4) 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+}
 
 /* Removed .content-wrapper - this class doesn't exist in HTML */
 
@@ -6119,8 +6680,8 @@ select option {
 .forms-example-container .card,
 .variants-grid .card,
 #token-card .card {
-    width: var(--plugin-width);
-    max-width: var(--plugin-width);
+    width: 100%;
+    max-width: min(100%, var(--plugin-width));
 }
 
 /* Card Component Modifier for tighter spacing */
@@ -6136,11 +6697,7 @@ select option {
     margin-bottom: var(--size-3);
 }
 
-#main-ui {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-3); /* Uses your design token for consistent spacing */
-}
+/* Moved to .figma-plugin #main-ui above */
 
 /* Plugin UI Card Constraints */
 #export-card-container .card {
@@ -6939,7 +7496,7 @@ select option {
     left: 50%;
     transform: translateX(-50%);
     background: var(--brand-primary);
-    color: var(--gray-warm-9);
+    color: var(--color-text-primary);
     padding: var(--size-3) var(--size-4);
     border-radius: var(--radius-3);
     font-weight: var(--font-weight-6);
@@ -7450,7 +8007,7 @@ select option {
     font-size: var(--font-size-5);
     font-weight: var(--font-weight-700);
     margin-bottom: 0;
-    color: var(--gray-warm-9);
+    color: var(--color-text-primary);
     background-clip: text;
 }
 
@@ -7768,6 +8325,7 @@ select option {
  text-align: center;
  isolation: isolate; 
  overflow: visible; /* Allow animations to start below viewport */
+
  /* Create proper flex container for true centering */
  flex-direction: column;
 }
@@ -7778,12 +8336,11 @@ select option {
  position: absolute;
  inset: 0;
  z-index: -1;
- min-height: 100vh; /* Ensure pattern fills full viewport height */ 
+ min-height: 130vh; /* Extend pattern further down */ 
  background: var(--hero-bg-pattern);
  pointer-events: none;
- mask-composite: intersect;
  mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%),
-                     linear-gradient(to bottom, black 0%, black 70%, transparent 90%);
+                     linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
  mask-composite: source-in;
 }
 
@@ -8356,6 +8913,7 @@ body {
 /* Token sections inherit light mode styles from category elements */
 
 /* Foundation Token & Component Styles */
+
 /* Desktop: Larger horizontal padding for better content framing */
 @media (width > 768px) {
     .token-category {
@@ -10330,6 +10888,7 @@ body {
         padding: var(--size-4) var(--size-3);
         min-height: 100vh;
         margin-bottom: var(--size-6);
+
         /* Account for mobile header in flexbox layout */
         padding-top: calc(var(--size-10) + var(--size-6)); /* Mobile header height + spacing */
     }
@@ -10393,9 +10952,10 @@ body {
 /* =========================
   RESPONSIVE TITLE ENHANCEMENT
   ========================= */
+
 /* Mobile-first approach - title is always single-line now */
 
-@media (min-width: 400px) and (max-width: 900px) {
+@media (width >= 400px) and (width <= 900px) {
     /* Social links responsive spacing */
     .social-links {
         display: flex;
@@ -10563,6 +11123,7 @@ body {
     .portfolio-hero {
         padding: var(--size-3) var(--size-2);
         min-height: 100vh;
+
         /* Adjust for smaller mobile header spacing */
         padding-top: calc(var(--size-10) + var(--size-5)); /* Mobile header height + spacing */
     }
@@ -10787,11 +11348,12 @@ body {
     gap: var(--size-4);
 }
 
-/* Fix CTA button alignment */
+/* REMOVED CONTEXT OVERRIDE - Use .btn--footer variant instead
 .footer-main-row .btn {
     flex-shrink: 0;
     margin: 0;
 }
+*/
 
 
 .footer-bottom-row {
@@ -11138,7 +11700,7 @@ body {
 }
 
 /* Mobile adjustments for major section headers */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .major-section-header {
         margin-top: var(--size-8);
         margin-bottom: var(--size-6);
@@ -11564,7 +12126,9 @@ body {
     font-weight: var(--font-weight-8);
     line-height: 1;
     margin-bottom: var(--size-2);
-    color: var(--color-text-emphasis); /* Default solid color */
+    background: var(--stat-number-gradient);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stat-suffix {
@@ -11723,11 +12287,6 @@ body {
 }
 
 /* Dark theme stat numbers - use solid color instead of broken gradient */
-[data-theme="dark"] .stat-number {
-    color: var(--brand-primary); /* Use solid lime color */
-    background: none;
-    -webkit-text-fill-color: unset;
-}
 
 /* =================================================================
    ENHANCED THEME TOGGLE COMPONENT
@@ -11858,7 +12417,7 @@ button.theme-toggle {
     right: 3px; /* Start on right for dark mode (moon) */
     width: 32px;
     height: 32px;
-    background: var(--gray-cool-9); /* Dark circle for dark mode */
+    background: var(--color-surface-primary); /* Dark circle for dark mode */
     border-radius: 50%;
     transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 2;
@@ -12340,8 +12899,8 @@ button.theme-toggle {
 
 /* Icon size XXL for better visibility */
 .icon--xxl {
-    width: var(--icon-xlg);    /* 48px for desktop */
-    height: var(--icon-xlg);
+    width: var(--icon-2xl);    /* 48px for desktop */
+    height: var(--icon-2xl);
 }
 
 /* Note: Removed forced thin stroke on xxl icons - let them use default stroke */
@@ -13311,11 +13870,11 @@ button.theme-toggle {
 }
 
 .light-sample {
-    background: var(--gray-cool-9);
+    background: var(--color-surface-primary);
 }
 
 .dark-sample {
-    background: var(--gray-warm-9);
+    background: var(--color-surface-primary);
 }
 
 .sample-label {
@@ -13327,11 +13886,11 @@ button.theme-toggle {
 }
 
 .light-sample .sample-label {
-    color: var(--gray-cool-0);
+    color: var(--color-text-inverse);
 }
 
 .dark-sample .sample-label {
-    color: var(--gray-warm-0);
+    color: var(--color-text-inverse);
 }
 
 .sample-colors {
@@ -13439,13 +13998,13 @@ button.theme-toggle {
 }
 
 .light-theme-preview .comparison-header {
-    background: var(--gray-cool-8);
-    color: var(--gray-cool-0);
+    background: var(--color-surface-secondary);
+    color: var(--color-text-inverse);
 }
 
 .dark-theme-preview .comparison-header {
-    background: var(--gray-warm-8);
-    color: var(--gray-warm-0);
+    background: var(--color-surface-secondary);
+    color: var(--color-text-inverse);
 }
 
 .comparison-content {
@@ -13453,7 +14012,7 @@ button.theme-toggle {
 }
 
 .light-theme-preview .comparison-content {
-    background: var(--gray-cool-9);
+    background: var(--color-surface-primary);
 }
 
 .preview-card {
@@ -13470,11 +14029,11 @@ button.theme-toggle {
 }
 
 .preview-card.light h5 {
-    color: var(--gray-cool-1);
+    color: var(--color-text-secondary);
 }
 
 .preview-card.dark h5 {
-    color: var(--gray-warm-1);
+    color: var(--color-text-secondary);
 }
 
 .surface-grid {
@@ -13666,6 +14225,42 @@ button.theme-toggle {
     justify-content: space-between;
     height: 100%;
 }
+
+/* Responsive export card that looks good at all sizes */
+.card.export-section {
+    width: 100%;
+    min-width: min(280px, 100%);
+    max-width: min(100%, var(--plugin-width));
+}
+
+/* Ensure button stays responsive */
+/* REMOVED: Override violates single source of truth
+.export-section .btn {
+    width: 100%;
+    min-width: 0;
+    padding-inline: clamp(var(--size-3), 4vw, var(--size-6));
+}
+*/
+
+/* Responsive card content */
+/* REMOVED: Override violates single source of truth
+.export-section .card-content {
+    gap: clamp(var(--size-2), 2vw, var(--size-3));
+}
+*/
+
+/* Ensure format select adapts */
+.export-section .format-select-container {
+    width: 100%;
+}
+
+/* Make card actions responsive */
+/* REMOVED: Override violates single source of truth
+.export-section .card-actions {
+    width: 100%;
+    gap: clamp(var(--size-1), 2vw, var(--size-2));
+}
+*/
 
 @media (width <= 850px) {
     .forms-example-container {
@@ -14494,6 +15089,7 @@ button.theme-toggle {
 /* 8. Unified Mobile Padding System */
 @media (width <= 768px) {
     /* Note: Section padding is now handled in the main section definitions above */
+
     /* This provides clean CSS without !important overrides */
     
     /* All headers use unified system with consistent mobile spacing */
@@ -14787,10 +15383,10 @@ input[type="file"]::file-selector-button {
     animation-timing-function: ease-out; /* Smoother in Figma */
 }
 
-/* Ensure proper spacing between cards in plugin context */
-.figma-plugin #main-ui > * + * {
+/* Remove conflicting margin - we use gap instead */
+/* .figma-plugin #main-ui > * + * {
     margin-top: var(--size-3);
-}
+} */
 
 /* Fix icon visibility in Figma context */
 .figma-plugin [data-icon] {
@@ -14985,6 +15581,23 @@ input[type="file"]::file-selector-button {
     display: block;
 }
 
+/* Desktop-specific adjustments for better layout */
+@media (width > 768px) {
+    /* Stack heading above description, make description single line */
+    .flow-item .flow-description {
+        display: inline;
+        white-space: nowrap;
+    }
+    
+    /* Make badges display horizontally with wrap */
+    .code-examples {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--size-1);
+        margin-top: var(--size-2);
+    }
+}
+
 /* Code examples - ensure badges don't stretch */
 .code-examples {
     display: flex;
@@ -15005,8 +15618,7 @@ input[type="file"]::file-selector-button {
     font-size: var(--font-size-3); /* Slightly smaller arrow */
     opacity: 1;
     text-align: center;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15019,7 +15631,7 @@ input[type="file"]::file-selector-button {
 }
 
 /* Mobile Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .flow-row {
         grid-template-columns: 1fr 35px 1fr;
         gap: var(--size-2);

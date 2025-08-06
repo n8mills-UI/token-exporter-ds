@@ -1,10 +1,40 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "no-duplicate-selectors": true,
+    "no-duplicate-selectors": "warning",
+    "no-descending-specificity": null,
+    "selector-max-specificity": null,
+    "selector-id-pattern": null,
+    "declaration-no-important": null,
     "selector-class-pattern": null,
     "custom-property-pattern": null,
     "alpha-value-notation": "number",
-    "color-function-notation": "legacy"
+    "color-function-notation": "legacy",
+    "selector-disallowed-list": null,
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
+      }
+    ],
+    "declaration-block-no-shorthand-property-overrides": true,
+    "value-no-vendor-prefix": true,
+    "property-no-vendor-prefix": true,
+    "selector-no-vendor-prefix": true,
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-values"]
+      }
+    ],
+    "declaration-block-no-duplicate-custom-properties": true,
+    "keyframe-name-pattern": null,
+    "declaration-block-single-line-max-declarations": null,
+    "media-feature-name-value-no-unknown": true,
+    "declaration-property-value-no-unknown": true,
+    "declaration-property-value-keyword-no-deprecated": true,
+    "comment-empty-line-before": null,
+    "color-hex-length": "long"
   }
 }

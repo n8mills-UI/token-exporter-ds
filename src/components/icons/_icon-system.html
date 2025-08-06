@@ -153,6 +153,13 @@ window.renderIcons = function(container) {
         
         if (window.Icons[iconName] && !element.querySelector('svg')) {
             element.innerHTML = window.Icons[iconName];
+            // Add accessibility attributes
+            if (!element.hasAttribute('role')) {
+                element.setAttribute('role', 'img');
+            }
+            if (!element.hasAttribute('aria-label')) {
+                element.setAttribute('aria-label', iconName.replace(/-/g, ' '));
+            }
         }
     });
     
@@ -169,6 +176,13 @@ window.renderIcons = function(container) {
             element.innerHTML = window.Icons[iconName];
             // Add classes for consistent styling
             element.setAttribute('data-icon', element.getAttribute('data-lucide'));
+            // Add accessibility attributes
+            if (!element.hasAttribute('role')) {
+                element.setAttribute('role', 'img');
+            }
+            if (!element.hasAttribute('aria-label')) {
+                element.setAttribute('aria-label', iconName.replace(/-/g, ' '));
+            }
         }
     });
 };

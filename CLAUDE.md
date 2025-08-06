@@ -2,14 +2,38 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚡ PRIORITY ONE: DELEGATE TO SPECIALIZED AGENTS
+
+**CRITICAL RULE: Claude is the ORCHESTRATOR, not the DOER. Your PRIMARY job is to delegate tasks to specialized agents using the Task tool.**
+
+**The agents have their own examples and triggers built-in. They run in separate contexts without consuming main chat tokens.**
+
+**BEFORE doing ANY work yourself, ask:**
+1. Is there an agent that specializes in this?
+2. Would an agent do this better than me?
+3. Should multiple agents collaborate on this?
+
+**If YES to any → USE THE AGENT(S)**
+
+**See section "🤖 MANDATORY Agent Usage Protocol" below for enforcement rules.**
+
 ## 🚀 Quick Start for Claude
 
-When starting a new session, Claude should:
-1. Read this CLAUDE.md file first
-2. Run `npm run check` to understand current state
-3. Check git status to see work in progress
-4. Review recent commits for context
-5. Use appropriate agents for complex tasks
+### MANDATORY SESSION START PROTOCOL
+**⚠️ STOP: Do NOT proceed without completing ALL steps:**
+
+1. ✅ Read this CLAUDE.md file completely
+2. ✅ Run `pwd` to verify working directory
+3. ✅ Run `npm run check` - STOP if any failures
+4. ✅ Run `git status` to check work in progress
+5. ✅ Check if session is continuation (look for context)
+6. ✅ State your understanding of current task
+
+**🛑 BLOCKING RULES:**
+- **NEVER** add comments to CSS (auto-reject if found)
+- **NEVER** add CSS variables without checking existing patterns
+- **ALWAYS** run `npm run check` before AND after changes
+- **ALWAYS** use TodoWrite for multi-step tasks
 
 ## Project Overview
 
@@ -31,21 +55,56 @@ npm run audit      # Comprehensive audit: all checks + reports (~60s)
 npm run format     # Auto-fix CSS formatting issues
 ```
 
-## 🤖 Agent Workflow Triggers
+## 🤖 MANDATORY Agent Delegation Protocol
 
-Claude should proactively use specialized agents when appropriate:
+**YOUR ROLE: You are an ORCHESTRATOR. Delegate work to specialized agents who have deep expertise.**
 
-### Phase-Based Work
-- **Starting new feature**: Use `rapid-prototyper` agent
-- **After code changes**: Use `test-writer-fixer` agent
-- **Design updates**: Use `whimsy-injector` agent after UI changes
-- **Complex tasks**: Use `studio-coach` agent for coordination
+### 🚨 DELEGATION TRIGGERS (Non-Negotiable)
 
-### Automatic Triggers
-- **CSS/UI changes** → Run `npm run check`
-- **JavaScript changes** → Check Figma compatibility
-- **Component updates** → Verify template synchronization
-- **Before commits** → Run quality checks
+**ALWAYS delegate when you hear:**
+- "Build/create/implement" → Agent does the building
+- "Test/fix/debug" → Agent handles testing
+- "Design/UI/UX" → Agent creates interfaces
+- "Optimize/performance" → Agent analyzes speed
+- "Research/analyze" → Agent investigates
+- "Complex/multi-step" → `studio-coach` coordinates multiple agents
+
+### 🛑 BLOCKING RULES:
+
+**You are FORBIDDEN from:**
+1. Writing frontend code → `frontend-developer` agent does this
+2. Creating tests → `test-writer-fixer` agent does this
+3. Designing UI → `ui-designer` agent does this
+4. Analyzing performance → `performance-benchmarker` agent does this
+5. Doing ANY specialized work that matches an agent's expertise
+
+### 📋 DELEGATION DECISION TREE:
+
+```
+User request received
+    ↓
+Does an agent specialize in this?
+    ├─ YES → DELEGATE to that agent
+    └─ NO → Is it complex/multi-step?
+              ├─ YES → `studio-coach` coordinates
+              └─ NO → Only then do it yourself
+```
+
+### 🔄 AUTOMATIC CHAIN REACTIONS:
+
+These MUST happen automatically:
+- Code written → `test-writer-fixer` validates
+- UI changed → `whimsy-injector` adds delight
+- Feature complete → `test-writer-fixer` ensures quality
+- Complex task started → `studio-coach` orchestrates
+
+### 💡 REMEMBER:
+
+- **Agents have their own built-in examples and triggers**
+- **Agents run in separate contexts (no token consumption)**
+- **Multiple agents can work in parallel**
+- **Trust the agents - they're specialists**
+- **Your value is in orchestration, not doing**
 
 ## Critical Figma JavaScript Constraints
 
@@ -81,19 +140,35 @@ obj?.prop                    // → Use: obj && obj.prop
 ## CSS Architecture Rules
 
 ### 1. Two-Layer Token System
-```css
-/* Layer 1: Primitives in :root (raw values allowed) */
-:root {
-    --brand-primary: #D2FF37;      /* ✅ Raw value here */
-    --gradient-primary: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);
-}
 
-/* Layer 2: Components (MUST use tokens) */
-.btn {
-    background: var(--gradient-primary);  /* ✅ Token reference */
-    /* background: linear-gradient(...); */ /* ❌ NEVER raw gradients */
-}
-```
+#### 🎯 STRATEGIC CSS VARIABLE PROTOCOL
+Before adding ANY CSS variable:
+
+1. **CHECK**: Does a similar variable already exist?
+   ```bash
+   grep -n "variable-name" docs/design-system.css
+   ```
+
+2. **DECIDE**: Is this a primitive or alias?
+   - **Primitive** (raw value): Only in `:root`, only if truly new
+   - **Alias** (reference): Points to existing primitive
+
+3. **FOLLOW** the pattern:
+   ```css
+   /* Layer 1: Primitives in :root (raw values allowed) */
+   :root {
+       --brand-primary: #D2FF37;      /* ✅ Raw value here */
+       --gradient-primary: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);
+   }
+
+   /* Layer 2: Components (MUST use tokens) */
+   .btn {
+       background: var(--gradient-primary);  /* ✅ Token reference */
+       /* background: linear-gradient(...); */ /* ❌ NEVER raw gradients */
+   }
+   ```
+
+4. **VERIFY**: Run `npm run check` after adding
 
 ### 2. Single Theme Section Rule
 Each theme must have exactly ONE `[data-theme="X"]` section. Never split theme tokens across multiple selectors.
@@ -105,13 +180,111 @@ Each theme must have exactly ONE `[data-theme="X"]` section. Never split theme t
 - `src/ui.template.html` - Plugin UI template
 - `docs/design-system-guide.template.html` - Documentation template
 - `src/components/_*.html` - Reusable HTML partials
-- `src/shared/data.js` - Shared data for templates
-- `src/shared/templates.js` - Template functions
+- `src/lib/data.js` - Shared data for templates
+- `src/lib/templates.js` - Template functions
 
 **Never Edit (Auto-Generated):**
 - `src/ui.html` - Built plugin UI
 - `docs/design-system-guide.html` - Built documentation
 - `src/components/*` (without underscore) - Generated from templates
+
+## CRITICAL: Single Source of Truth Principle
+
+**One Component = One File = One Source of Truth**
+
+- Each component must exist as exactly ONE file in `src/components/_component-name.html`
+- NEVER create wrapper files that bundle multiple components (violates single source of truth)
+- Both plugin and documentation guide must use the same component file via `@include` directives
+- If you need different layouts, create separate individual components
+
+**Example of CORRECT architecture:**
+```
+src/components/_quick-export-card.html  # One component
+src/components/_filters-card.html       # Another component
+```
+
+**Example of INCORRECT architecture:**
+```
+src/components/_forms-example.html  # Contains both quick-export AND filters
+```
+
+### ⚠️ ZERO TOLERANCE: Component Override Policy
+
+**NEVER override component styles with context-specific selectors!**
+
+Components must render identically regardless of their container. Any CSS that targets `.componentName` with additional specificity is a violation.
+
+**FORBIDDEN patterns:**
+```css
+/* ❌ NEVER DO THIS */
+.export-section .btn { padding: different-value; }
+.plugin-container .card-actions { gap: different-value; }
+.some-context .component { any-override: value; }
+```
+
+**Detection:**
+```bash
+npm run check:overrides  # Detects all component overrides
+```
+
+**If variations are needed:**
+1. Create explicit component variants (e.g., `.btn--large`, `.card--compact`)
+2. Use CSS custom properties that components can inherit
+3. Create separate components for different contexts
+
+### CSS Component Contract
+
+**Every component must:**
+1. **Be self-contained** - Render identically regardless of parent context
+2. **Use semantic tokens only** - Never use primitive values directly
+3. **Define explicit variants** - Use BEM-style modifiers (`.component--variant`)
+4. **Follow single responsibility** - One component, one purpose
+
+**Component Structure:**
+```css
+/* Base component (required) */
+.btn {
+  display: inline-flex;
+  padding: var(--size-2) var(--size-3);
+  color: var(--color-text-primary);
+  background: var(--color-surface-secondary);
+  border: var(--border-size-1) solid var(--color-border-default);
+}
+
+/* Size variants (optional) */
+.btn--xs { padding: var(--size-1) var(--size-2); }
+.btn--sm { padding: var(--size-2) var(--size-3); }
+.btn--lg { padding: var(--size-4) var(--size-5); }
+
+/* Style variants (optional) */
+.btn--primary { background: var(--color-interactive-primary); }
+.btn--secondary { background: var(--color-interactive-secondary); }
+
+/* Layout variants (optional) */
+.btn--full-width { width: 100%; }
+.btn--auto-width { width: auto; }
+
+/* Context variants (when absolutely needed) */
+.btn--demo { width: 100%; margin-top: var(--size-4); }
+```
+
+**Semantic Token Categories:**
+- **Text**: `--color-text-primary`, `--color-text-secondary`, `--color-text-muted`
+- **Surface**: `--color-surface-primary`, `--color-surface-secondary`, `--color-surface-elevated`
+- **Interactive**: `--color-interactive-primary`, `--color-interactive-hover`, `--color-interactive-active`
+- **Border**: `--color-border-default`, `--color-border-subtle`, `--color-border-strong`
+- **Status**: `--color-status-success`, `--color-status-warning`, `--color-status-error`
+
+This principle prevents drift between plugin and documentation guide.
+
+### Legacy Components Exception
+
+The following components are exempt from the override rules due to their complexity:
+- **profile-card** - Complex component with ~40+ nested element overrides
+- **about-modal** - Modal with specific nested styles  
+- **faq-item** - Accordion with state-based styles (.open state)
+
+These components predate the component isolation architecture and would require significant refactoring to comply. New components must follow the isolation principles.
 
 ## Development Workflow
 
@@ -123,11 +296,23 @@ Each theme must have exactly ONE `[data-theme="X"]` section. Never split theme t
 
 ## Code Style Rules
 
+### 🚨 ZERO TOLERANCE: Comment Policy
 **Write clean code without explanatory comments**
-- NO comments explaining what code does
-- NO TODO comments unless requested
-- KEEP section headers, ASCII art, build markers
-- KEEP critical warnings (Figma limitations, security)
+- ❌ **FORBIDDEN**: Comments explaining what code does
+- ❌ **FORBIDDEN**: TODO comments (unless user requests)
+- ✅ **ALLOWED**: Section headers, ASCII art, build markers
+- ✅ **ALLOWED**: Critical warnings (Figma limitations, security)
+
+**Examples of FORBIDDEN comments:**
+```css
+--color-text-primary: var(--gray-warm-0);  /* ❌ Alias for consistency */
+--black-rgb: 0, 0, 0;                       /* ❌ RGB values for rgba() usage */
+```
+
+**If you add forbidden comments:**
+1. User will reject the change
+2. You must remove ALL comments
+3. Time will be wasted
 
 ## Icon System Rules
 

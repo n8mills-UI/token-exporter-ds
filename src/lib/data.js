@@ -51,10 +51,10 @@ const sampleData = {
 
   // Sample stats for stats container
   stats: [
-    { icon: 'package', value: 6, suffix: '', label: 'Export Platforms' },
+    { icon: 'package', value: 7, suffix: '', label: 'Export Platforms' },
     { icon: 'zap', value: 1, suffix: '', label: 'Click Export' },
     { icon: 'shield-check', value: 100, suffix: 'percent', label: 'Style Dictionary Valid' },
-    { icon: 'clock', value: 60, suffix: 's', label: 'Export Time' }
+    { icon: 'zap', value: 10, suffix: 'times', label: 'Faster Export' }
   ],
 
   // Sample export formats for quick export card
@@ -64,7 +64,8 @@ const sampleData = {
     { value: 'android', label: 'Android XML' },
     { value: 'flutter', label: 'Flutter' },
     { value: 'w3c', label: 'JSON (W3C)' },
-    { value: 'tailwind', label: 'Tailwind Config' }
+    { value: 'tailwind', label: 'Tailwind Config' },
+    { value: 'typescript', label: 'TypeScript' }
   ]
 };
 

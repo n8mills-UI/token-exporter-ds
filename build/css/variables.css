@@ -1,0 +1,151 @@
+/**
+ * Do not edit directly
+ * Generated on Sun, 03 Aug 2025 05:48:30 GMT
+ */
+
+:root {
+  --white-alpha-05: rgb(255, 255, 255, 0.05);
+  --white-alpha-50: rgb(255, 255, 255, 0.5);
+  --white-alpha-30: rgb(255, 255, 255, 0.3);
+  --white-alpha-20: rgb(255, 255, 255, 0.2);
+  --white-alpha-10: rgb(255, 255, 255, 0.1);
+  --black-alpha-05: rgb(0, 0, 0, 0.05);
+  --black-alpha-50: rgb(0, 0, 0, 0.5);
+  --black-alpha-30: rgb(0, 0, 0, 0.3);
+  --black-alpha-20: rgb(0, 0, 0, 0.2);
+  --black-alpha-10: rgb(0, 0, 0, 0.1);
+  --surface-overlay-heavy: rgb(42, 42, 42, 0.95);
+  --surface-glass-dark: rgb(30, 30, 30, 0.6);
+  --tech-item-bg: transparent;
+  --token-section-bg: transparent;
+  --hero-bg-pattern: /* Color glows */
+ radial-gradient(circle at 20% 50%, rgb(210, 255, 55, 0.08) 0%, transparent 40%),
+ radial-gradient(circle at 80% 80%, rgb(238, 255, 0, 0.04) 0%, transparent 40%),
+ /* Diagonal line pattern */
+ repeating-linear-gradient(
+ 45deg,
+ transparent,
+ transparent 10px,
+ rgb(210, 255, 55, 0.02) 10px,
+ rgb(210, 255, 55, 0.02) 20px
+ );
+  --section-title-icon-color: currentColor;
+  --moon-icon-color: rgb(0, 0, 0, 0.1);
+  --sun-icon-color: rgb(255, 255, 255, 0.3);
+  --component-height-xxl: 140px;
+  --component-section-bg: transparent;
+  --badge-secondary-bg: transparent;
+  --badge-bg: transparent;
+  --btn-tertiary-hover-bg: transparent;
+  --btn-tertiary-border: transparent;
+  --btn-tertiary-bg: transparent;
+  --btn-secondary-bg: transparent;
+  --btn-primary-hover-filter: brightness(1.1);
+  --brand-secondary: #FF1493;
+  --brand-primary: #D2FF37;
+  --scale-sm: 1.05;
+  --blur-xl: blur(24px);
+  --blur-lg: blur(16px);
+  --blur-md: blur(8px);
+  --blur-sm: blur(4px);
+  --content-prose: 65ch;
+  --content-xl: 1280px;
+  --content-lg: 1024px;
+  --content-md: 768px;
+  --content-sm: 640px;
+  --content-xs: 320px;
+  --icon-svg-toggle-right: url("data:image/svg+xml;
+  --icon-svg-hash: url("data:image/svg+xml;
+  --icon-svg-type: url("data:image/svg+xml;
+  --icon-stroke-heavy: 3;
+  --icon-stroke-bold: 2.5;
+  --icon-stroke-regular: 2;
+  --icon-stroke-thin: 1.5;
+  --icon-stroke-hairline: 1;
+  --icon-5xl: 160px;
+  --glass-blur-max: 20px;
+  --glass-blur-heavy: 16px;
+  --glass-blur-strong: 12px;
+  --glass-blur-medium: 8px;
+  --glass-blur-light: 4px;
+  --glass-blur-subtle: 2px;
+  --glass-light-80: rgba(255, 255, 255, 0.8);
+  --glass-light-60: rgba(255, 255, 255, 0.6);
+  --glass-light-40: rgba(255, 255, 255, 0.4);
+  --glass-light-20: rgba(255, 255, 255, 0.2);
+  --glass-light-10: rgba(255, 255, 255, 0.1);
+  --glass-light-5: rgba(255, 255, 255, 0.05);
+  --glass-light-0: rgba(255, 255, 255, 0);
+  --glass-dark-80: rgba(0, 0, 0, 0.8);
+  --glass-dark-60: rgba(0, 0, 0, 0.6);
+  --glass-dark-40: rgba(0, 0, 0, 0.4);
+  --glass-dark-20: rgba(0, 0, 0, 0.2);
+  --glass-dark-10: rgba(0, 0, 0, 0.1);
+  --glass-dark-5: rgba(0, 0, 0, 0.05);
+  --glass-dark-0: rgba(0, 0, 0, 0);
+  --opacity-backdrop: 0.85;
+  --opacity-overlay-80: 0.8;
+  --opacity-glass-60: 0.6;
+  --opacity-glass-10: 0.1;
+  --opacity-100: 1;
+  --opacity-90: 0.9;
+  --opacity-80: 0.8;
+  --opacity-60: 0.6;
+  --opacity-50: 0.5;
+  --opacity-40: 0.4;
+  --opacity-20: 0.2;
+  --opacity-10: 0.1;
+  --opacity-5: 0.05;
+  --opacity-0: 0;
+  --font-size-0-0-75rem-and-font-size-1-1rem-font-size-responsive-tiny: clamp(0.45rem, 2.2vw, 0.65rem);
+  --font-size-0-5: 0.85rem;
+  --font-mono: 'Monaco', 'Menlo', monospace;
+  --font-sans: 'Inter', -apple-system, blinkmacsystemfont, sans-serif;
+  --red-6: #ff5252;
+  --value-state: #FF74BC;
+  --value-number: #FFB86C;
+  --value-text: #B48CFF;
+  --value-color: #00D1FF;
+  --gray-cool-9: #1A1D23;
+  --gray-cool-8: #171923;
+  --gray-cool-7: #1A202C;
+  --gray-cool-6: #2D3748;
+  --gray-cool-5: #4A5568;
+  --gray-cool-4: #718096;
+  --gray-cool-3: #A0AEC0;
+  --gray-cool-2: #E2E8F0;
+  --gray-cool-1: #F7F8FA;
+  --gray-cool-0: #FFF;
+  --gray-warm-9: #121212;
+  --gray-warm-8: #1e1e1e;
+  --gray-warm-7: #2a2a2a;
+  --gray-warm-6: #3a3a3a;
+  --gray-warm-5: #444;
+  --gray-warm-4: #666;
+  --gray-warm-3: #999;
+  --gray-warm-2: #a0a0a0;
+  --gray-warm-1: #ccc;
+  --gray-warm-0: #f0f0f0;
+  --color-backdrop-rgb: #000000;
+  --color-near-black: #1e1e1e;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-cyan-500: #00d1ff;
+  --color-cyan-400: #00bfff;
+  --color-green-400: #00ff88;
+  --color-pink-500: #ff69b4;
+  --color-pink-400: #ff1493;
+  --color-pink-300: #ffb6c1;
+  --color-yellow-500: #ffd700;
+  --color-yellow-400: #eeff00;
+  --color-yellow-300: #ffff66;
+  --color-lime-600: #99cc00;
+  --color-lime-500: #bfff00;
+  --color-lime-400: #d2ff37;
+  --color-lime-300: #e6ff7a;
+  --plugin-height: 480px;
+  --plugin-width: 340px;
+  --system-stage: "production";
+  --system-updated: "2025-01-11";
+  --system-version: "4.0.0";
+}

@@ -112,7 +112,7 @@ const templates = {
     }).join('');
     
     const filtersButton = config.showFiltersButton ?
-      '<button class="btn btn-secondary btn-sm" id="toggle-advanced-mode" aria-label="Show filters">' +
+      '<button class="btn btn-secondary btn-lg" id="toggle-advanced-mode" aria-label="Show filters">' +
         '<i data-icon="sliders-horizontal"></i>' +
         '<span>Filters</span>' +
       '</button>' : '';
@@ -136,7 +136,7 @@ const templates = {
         '</div>' +
       '</div>' +
       '<div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">' +
-        '<button class="btn btn-primary btn-sm" id="export-btn" aria-label="Export design tokens">' +
+        '<button class="btn btn-primary btn-lg" id="export-btn" aria-label="Export design tokens">' +
           '<i data-icon="rocket"></i>' +
           '<span>Package Tokens</span>' +
         '</button>' +
@@ -274,7 +274,7 @@ const templates = {
       '<div class="empty-state-categories">' +
         categoriesHTML +
       '</div>' +
-      '<a href="' + config.learnMoreUrl + '" class="btn btn-primary btn-gradient-brand btn-no-borders btn-shadow-none btn-bright btn-md btn-inline" target="_blank" rel="noopener noreferrer" aria-label="Learn about Variables in Figma">' +
+      '<a href="' + config.learnMoreUrl + '" class="btn btn-primary btn--gradient-highlight btn--no-borders btn--shadow-none btn--bright btn-md btn-inline" target="_blank" rel="noopener noreferrer" aria-label="Learn about Variables in Figma">' +
         config.learnMoreText + ' <span class="icon" data-icon="external-link"></span>' +
       '</a>' +
     '</div>';

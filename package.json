@@ -11,18 +11,18 @@
     "dev": "node scripts/build.js --watch",
     "build": "node scripts/build.js",
     "check": "node scripts/check.js",
-    "check:critical": "node scripts/critical-elements-check.js",
-    "check:themes": "node scripts/check.js",
     "format": "stylelint docs/design-system.css --fix",
-    "format:check": "stylelint docs/design-system.css",
     "templates:validate": "echo 'Template validation passed'",
     "templates:generate": "echo 'Template generation completed'",
     "audit": "node scripts/audit.js",
+    "test": "jest",
+    "test:validation": "jest tests/validation-*.test.js",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "prepare": "husky",
     "_comment3": "Individual tools (called by audit script):",
     "check:all": "node scripts/check.js --all",
     "tokens:build": "style-dictionary build",
-    "tokens:validate": "node scripts/validate-tokens.js",
     "analyze:css": "wallace docs/design-system.css",
     "stats:css": "cssstats docs/design-system.css > reports/css-stats.json",
     "analyze:specificity": "specificity-graph docs/design-system.css -o reports/specificity.html",
@@ -38,7 +38,23 @@
     "type": "git",
     "url": "git+https://github.com/n8mills-UI/token-exporter-ds.git"
   },
-  "keywords": ["figma", "design-tokens", "design-systems", "css-variables", "swift", "android", "flutter", "tailwind", "w3c-design-tokens", "figma-plugin", "design-to-code", "token-export", "multi-platform", "accessibility", "style-dictionary-alternative"],
+  "keywords": [
+    "figma",
+    "design-tokens",
+    "design-systems",
+    "css-variables",
+    "swift",
+    "android",
+    "flutter",
+    "tailwind",
+    "w3c-design-tokens",
+    "figma-plugin",
+    "design-to-code",
+    "token-export",
+    "multi-platform",
+    "accessibility",
+    "style-dictionary-alternative"
+  ],
   "author": "Nate Mills <contact@natemills.me> (https://natemills.me)",
   "license": "ISC",
   "bugs": {
@@ -47,10 +63,13 @@
   "homepage": "https://github.com/n8mills-UI/token-exporter-ds#readme",
   "devDependencies": {
     "@lhci/cli": "^0.13.0",
+    "@testing-library/jest-dom": "^6.6.4",
     "chokidar": "^3.5.3",
     "cssstats": "^4.0.5",
     "eslint": "^9.31.0",
     "husky": "^9.1.7",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "lint-staged": "^16.1.2",
     "nodemon": "^3.1.10",
     "open-props": "^1.7.16",
@@ -87,7 +106,7 @@
     "src/components/icons/_icon-system.html": [
       "node scripts/check.js"
     ],
-    "src/shared/templates.js": [
+    "src/lib/templates.js": [
       "npm run templates:generate",
       "npm run templates:validate"
     ]
@@ -95,5 +114,26 @@
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    },
+    "testMatch": [
+      "<rootDir>/tests/**/*.test.js"
+    ]
   }
 }
