@@ -974,8 +974,13 @@ async function checkPluginCompatibility() {
         }
         
         // Validate icon system accessibility and consistency
-        if (iconSystem.includes('aria-label') && iconSystem.includes('role="img"')) {
-            console.log(`  ${colors.green}✓${colors.reset} Icon system includes accessibility attributes`);
+        // Check for both static attributes and dynamic setAttribute patterns
+        const hasStaticAccessibility = iconSystem.includes('aria-label') && iconSystem.includes('role="img"');
+        const hasDynamicRole = iconSystem.includes('setAttribute(\'role\'') || iconSystem.includes('setAttribute("role"');
+        const hasDynamicAriaLabel = iconSystem.includes('setAttribute(\'aria-label\'') || iconSystem.includes('setAttribute("aria-label"');
+        
+        if (hasStaticAccessibility || (hasDynamicRole && hasDynamicAriaLabel)) {
+            console.log(`  ${colors.green}✓${colors.reset} Icon system includes accessibility attributes (${hasDynamicRole ? 'dynamic' : 'static'})`);
         } else {
             issues.push('Icon system missing accessibility attributes (aria-label, role)');
         }
