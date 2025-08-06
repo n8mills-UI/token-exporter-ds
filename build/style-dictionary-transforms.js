@@ -155,7 +155,22 @@ const formatGenerators = {
     w3c: function(tokens) {
         const w3cTokens = {};
         Object.entries(tokens).forEach(([name, value]) => {
-            w3cTokens[name] = { value, type: 'other' };
+            // W3C DTCG format requires $value and $type with $ prefix
+            let tokenType = 'other';
+            
+            // Detect token type based on value
+            if (value.startsWith('#') || value.startsWith('rgb')) {
+                tokenType = 'color';
+            } else if (value.endsWith('px') || value.endsWith('rem') || value.endsWith('em')) {
+                tokenType = 'dimension';
+            } else if (!isNaN(parseFloat(value))) {
+                tokenType = 'number';
+            }
+            
+            w3cTokens[name] = { 
+                "$value": value,
+                "$type": tokenType 
+            };
         });
         return JSON.stringify(w3cTokens, null, 2);
     },

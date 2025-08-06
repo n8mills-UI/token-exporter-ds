@@ -386,7 +386,8 @@ async function processTemplates() {
                 template: 'quickExportCard',
                 data: {
                     formats: sampleData.exportFormats,
-                    showFiltersButton: true
+                    showFiltersButton: true,
+                    showDiagnostic: false  // Diagnostic removed after fixing button sizing
                 }
             },
             {
@@ -407,7 +408,7 @@ async function processTemplates() {
                 name: 'empty-state',
                 template: 'emptyState',
                 data: {
-                    title: 'Let\'s build something!',
+                    title: 'Let\'s build!',
                     subtitle: 'Create a variable collection in Figma to get started.'
                 }
             }

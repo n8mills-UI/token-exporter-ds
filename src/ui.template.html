@@ -2,6 +2,7 @@
 <!-- @include src/components/icons/_icon-system.html -->
 <script src="../vendor/jszip.min.js"></script>
 <body class="figma-plugin">
+    
     <main>
         <!-- This is the main content wrapper -->
         <div class="content-wrapper" id="content-wrapper">
@@ -14,12 +15,25 @@
 
                 <!-- Main UI (hidden by default) -->
                 <div id="main-ui" style="display: none;">
+                    <!-- Plugin Header with Theme Toggle -->
+                    <div class="plugin-header">
+                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Switch between light and dark mode">
+                            <span class="theme-toggle-track">
+                                <span class="theme-toggle-thumb">
+                                    <i data-icon="sun" class="theme-icon theme-icon-light"></i>
+                                    <i data-icon="moon" class="theme-icon theme-icon-dark"></i>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <!-- Token Summary Card -->
                     <div class="card token-summary" id="token-summary-card">
                         <!-- Token Summary will be injected here by the script -->
                     </div>
                     
                     <!-- Export Card Container -->
-                    <div id="export-card-container">
+                    <div id="export-card-container" class="export-cards-section">
                         <!-- Quick Export View (Simple Mode) -->
                         <div id="quick-export-view">
                             <!-- @include src/components/_quick-export-card.html -->
@@ -78,6 +92,8 @@
             exportCardContainer: document.getElementById('export-card-container'),
             quickExportView: document.getElementById('quick-export-view'),
             advancedFilterView: document.getElementById('advanced-filter-view'),
+            // Theme toggle
+            themeToggle: document.getElementById('theme-toggle'),
             // Modals and overlays
             aboutModal: document.getElementById('about-modal'),
             progressOverlay: document.getElementById('progress-overlay'),
@@ -93,6 +109,29 @@
                 timeout = setTimeout(() => func.apply(this, args), delay);
             };
         };
+        
+        // --- THEME MANAGEMENT ---
+        function initializeTheme() {
+            // Get stored theme or default to light
+            const storedTheme = localStorage.getItem('token-exporter-theme') || 'light';
+            setTheme(storedTheme);
+        }
+        
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('token-exporter-theme', theme);
+            
+            if (DOMElements.themeToggle) {
+                DOMElements.themeToggle.setAttribute('aria-pressed', theme === 'dark');
+                DOMElements.themeToggle.classList.toggle('dark-mode', theme === 'dark');
+            }
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        }
         
         // --- EASTER EGG: Logo Click Counter ---
         let logoClickCount = 0;
@@ -244,6 +283,18 @@ function updateTokenSummary() {
         const debouncedUpdate = debounce(() => updateUI(), 250);
 
         function attachEventListeners() {
+            // Theme toggle listener
+            if (DOMElements.themeToggle) {
+                DOMElements.themeToggle.addEventListener('click', () => {
+                    toggleTheme();
+                    // Add satisfying click animation
+                    DOMElements.themeToggle.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        DOMElements.themeToggle.style.transform = 'scale(1)';
+                    }, 100);
+                });
+            }
+            
             // Static listeners
             DOMElements.aboutLink.onclick = (e) => {
                 e.preventDefault();
@@ -354,6 +405,16 @@ function updateTokenSummary() {
                     const isExpanded = formatTrigger.getAttribute('aria-expanded') === 'true';
                     formatTrigger.setAttribute('aria-expanded', !isExpanded);
                     formatDropdown.hidden = isExpanded;
+                    
+                    // Add/remove dropdown-expanded class for CSS styling
+                    const exportCard = document.querySelector('.export-section.has-inner-structure');
+                    if (exportCard) {
+                        if (!isExpanded) {
+                            exportCard.classList.add('dropdown-expanded');
+                        } else {
+                            exportCard.classList.remove('dropdown-expanded');
+                        }
+                    }
                 };
                 
                 // Handle checkbox changes
@@ -397,6 +458,12 @@ function updateTokenSummary() {
                     if (!formatTrigger.contains(e.target) && !formatDropdown.contains(e.target)) {
                         formatTrigger.setAttribute('aria-expanded', 'false');
                         formatDropdown.hidden = true;
+                        
+                        // Remove dropdown-expanded class
+                        const exportCard = document.querySelector('.export-section.has-inner-structure');
+                        if (exportCard) {
+                            exportCard.classList.remove('dropdown-expanded');
+                        }
                     }
                 });
             }
@@ -665,6 +732,10 @@ function updateTokenSummary() {
         // --- INITIALIZATION ---
         function initialize() {
             console.log('[DEBUG] Initializing plugin...');
+            
+            // Initialize theme first
+            initializeTheme();
+            
             // Explicitly set the correct initial UI state.
             if (DOMElements.skeletonLoader) {
                 DOMElements.skeletonLoader.style.display = 'block';

@@ -15,4 +15,19 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Quick organization check for staged files
+echo "🧹 Checking file organization..."
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=A)
+if [ -n "$STAGED_FILES" ]; then
+  MISPLACED=$(echo "$STAGED_FILES" | grep -iE '^(analysis|diagnostic|report|audit|research).*\.md$|^.*(mockup|test|demo|temp).*\.html$' || true)
+  if [ -n "$MISPLACED" ]; then
+    echo "❌ Files need organizing:"
+    echo "$MISPLACED" | sed 's/^/  /'
+    echo "  → Analysis docs should be in .dev/analysis/"
+    echo "  → Temp HTML files should be in .dev/temp/"
+    echo "Run: mkdir -p .dev/{analysis,temp} && git add ."
+    exit 1
+  fi
+fi
+
 echo "✅ All pre-commit checks passed!"

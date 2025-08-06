@@ -17,6 +17,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **See section "🤖 MANDATORY Agent Usage Protocol" below for enforcement rules.**
 
+## 📁 File Organization Rules
+
+**STOP: Before creating ANY file, follow these rules:**
+
+### Where Files MUST Go:
+- **Analysis/Research**: → `.dev/analysis/` (e.g., diagnostic reports, analysis docs)
+- **Temporary work**: → `.dev/temp/` (e.g., mockups, experimental configs)
+- **Documentation**: → Only create if user explicitly requests
+- **Root directory**: → ONLY for active, immediately-used config files
+
+### File Creation Protocol:
+1. **BEFORE creating**: Ask yourself - "Does this need to be in root?"
+2. **DEFAULT location**: `.dev/` subdirectories unless actively used
+3. **AFTER session**: Run `git status` and organize any created files
+4. **ALWAYS**: Tell user what files were created and where
+
+### Cleanup Checklist:
+```bash
+# Check for mess before ending session
+git status --short
+ls -la | grep -E "\.md$|\.html$|\.json$" | grep -v package
+```
+
 ## 🚀 Quick Start for Claude
 
 ### MANDATORY SESSION START PROTOCOL

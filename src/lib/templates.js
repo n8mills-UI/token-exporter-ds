@@ -5,11 +5,12 @@
 // to maintain Figma compatibility
 
 const templates = {
-  // Filters Card Template
+  // Advanced Options Card Template (formerly Filters)
   filtersCard: function(options) {
     const defaults = {
       collections: [],
-      showHeader: true
+      showHeader: true,
+      isCollapsed: true
     };
     
     // Merge options with defaults (no spread operator for Figma)
@@ -21,7 +22,7 @@ const templates = {
     const headerHTML = config.showHeader ? 
       '<div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">' +
         '<i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>' +
-        '<h4 class="text-label">Filters</h4>' +
+        '<h4 class="text-label">Advanced Options</h4>' +
       '</div>' : '';
     
     const collectionItemsHTML = config.collections.map(function(collection) {
@@ -112,14 +113,14 @@ const templates = {
     }).join('');
     
     const filtersButton = config.showFiltersButton ?
-      '<button class="btn btn-secondary btn-lg" id="toggle-advanced-mode" aria-label="Show filters">' +
+      '<button class="btn btn-secondary btn-sm" id="toggle-advanced-mode" aria-label="Show advanced options" style="width: 100%;">' +
         '<i data-icon="sliders-horizontal"></i>' +
-        '<span>Filters</span>' +
+        '<span>Advanced Options</span>' +
       '</button>' : '';
     
     return '<div class="card export-section has-inner-structure">' +
       '<div class="card-content">' +
-        '<div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">' +
+        '<div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-2);">' +
           '<i data-icon="file-text" style="width: 1em; height: 1em;"></i>' +
           '<h4 class="text-label">Quick Export</h4>' +
         '</div>' +
@@ -134,13 +135,13 @@ const templates = {
             '</div>' +
           '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="card-actions" style="display: flex; flex-direction: column; gap: var(--size-2);">' +
-        '<button class="btn btn-primary btn-lg" id="export-btn" aria-label="Export design tokens">' +
-          '<i data-icon="rocket"></i>' +
-          '<span>Package Tokens</span>' +
-        '</button>' +
-        filtersButton +
+        '<div style="display: flex; flex-direction: column; gap: var(--size-1); margin-top: var(--size-1);">' +
+          '<button class="btn btn-primary btn-sm" id="export-btn" aria-label="Export design tokens" style="width: 100%;">' +
+            '<i data-icon="rocket"></i>' +
+            '<span>Package Tokens</span>' +
+          '</button>' +
+          filtersButton +
+        '</div>' +
       '</div>' +
     '</div>';
   },
@@ -219,7 +220,7 @@ const templates = {
   // Empty State Template
   emptyState: function(options) {
     const defaults = {
-      title: 'Let\'s build something!',
+      title: 'Let\'s build!',
       subtitle: 'Create a variable collection in Figma to get started.',
       categories: [
         { icon: 'palette', color: 'cyan', label: 'color' },
@@ -244,7 +245,7 @@ const templates = {
     }).join('');
     
     return '<div class="card empty-state" id="empty-state">' +
-      '<div class="flex flex-col items-center gap-2">' +
+      '<div class="flex flex-col items-center gap-1">' +
         '<div class="empty-state-icon">' +
           '<div class="token-exporter-logo large">' +
             '<svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">' +
@@ -266,7 +267,7 @@ const templates = {
             '</svg>' +
           '</div>' +
         '</div>' +
-        '<div class="flex flex-col items-center gap-2">' +
+        '<div class="flex flex-col items-center gap-1">' +
           '<div class="text-heading-lg empty-state-title">' + config.title + '</div>' +
           '<div class="text-body-md empty-state-subtitle">' + config.subtitle + '</div>' +
         '</div>' +
@@ -274,7 +275,7 @@ const templates = {
       '<div class="empty-state-categories">' +
         categoriesHTML +
       '</div>' +
-      '<a href="' + config.learnMoreUrl + '" class="btn btn-primary btn--gradient-highlight btn--no-borders btn--shadow-none btn--bright btn-md btn-inline" target="_blank" rel="noopener noreferrer" aria-label="Learn about Variables in Figma">' +
+      '<a href="' + config.learnMoreUrl + '" class="btn btn-primary btn-sm btn-inline" target="_blank" rel="noopener noreferrer" aria-label="Learn about Variables in Figma">' +
         config.learnMoreText + ' <span class="icon" data-icon="external-link"></span>' +
       '</a>' +
     '</div>';
