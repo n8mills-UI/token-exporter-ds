@@ -53,6 +53,12 @@ npm run build      # Build once for production
 npm run check      # Essential checks: Figma compatibility, JS lint, CSS architecture (~10s)
 npm run audit      # Comprehensive audit: all checks + reports (~60s)
 npm run format     # Auto-fix CSS formatting issues
+
+# Testing
+npm test           # Run Jest tests
+npm test:watch     # Run tests in watch mode
+npm test:coverage  # Run tests with coverage report
+npm run test:validation  # Run validation tests only
 ```
 
 ## 🤖 MANDATORY Agent Delegation Protocol
@@ -116,8 +122,14 @@ obj?.prop                    // → Use: obj && obj.prop
 // ❌ Template literal interpolation  
 `Hello ${name}`             // → Use: 'Hello ' + name
 
+// ❌ Nullish coalescing
+value ?? defaultValue       // → Use: value !== null && value !== undefined ? value : defaultValue
+
 // ❌ Catch without parameter
 } catch {                   // → Use: } catch (error) {
+
+// ❌ Object spread in certain contexts
+{...obj}                    // → Use: Object.assign({}, obj)
 ```
 
 ## Current Design System State
@@ -449,18 +461,29 @@ See `.dev/docs-internal/reports/MASTER_PLAN.md` for the comprehensive project ro
 
 ## Project Structure & Maintenance
 
-### Directory Organization (Updated 2025-08-04)
+### Directory Organization (Updated 2025-08-06)
 **Essential Directories**:
 - `src/` - Core plugin source code
 - `docs/` - Design system documentation  
 - `scripts/` - Build system (referenced in package.json)
 - `vendor/` - Required dependencies (jszip, open-props)
-- `tokens/` - Style Dictionary configuration
+- `style-dictionary/` - Style Dictionary configuration and tokens
+- `tests/` - Jest test suite for validation
 - `build/` - Generated platform outputs
 
 **Archive Strategy**:
 - `.archive/` - Consolidated archive for historical docs
 - Generated files (.lighthouseci/, .snapshots/, reports/) are .gitignored
+
+### Testing Structure
+**Test Files** (`tests/`):
+- `validation-basic.test.js` - Environment setup verification
+- `validation-flow.test.js` - User flow testing
+- `validation-logic.test.js` - Core logic testing
+- `validation-accessibility.test.js` - A11y compliance
+- `validation-performance.test.js` - Performance metrics
+- `validation-edge-cases.test.js` - Edge case handling
+- `figma-compatibility.test.js` - Figma API compatibility
 
 ### Known Issues & Learnings
 
