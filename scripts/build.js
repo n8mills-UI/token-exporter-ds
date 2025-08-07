@@ -4,6 +4,10 @@
  * Master Build Script for Token Exporter
  * Consolidates all build operations into a single tool
  * 
+ * @fileoverview Orchestrates CSS bundling, JavaScript processing, and HTML template compilation
+ * @author Nate Mills <nate@natemills.me>
+ * @version 4.0.0
+ * 
  * Usage:
  *   node scripts/build.js          # Build once
  *   node scripts/build.js --watch  # Watch mode
@@ -19,6 +23,21 @@ import { integrateStyleDictionary, validateStyleDictionaryAvailability } from '.
 const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, '..');
+
+/**
+ * @typedef {Object} BuildConfig
+ * @property {string} cssSource - Path to main CSS file with imports
+ * @property {string} tempCssBundle - Temporary CSS bundle filename
+ * @property {string} tempJsBundle - Temporary JavaScript bundle filename
+ * @property {string} styleTransformsBundle - Style Dictionary transforms bundle filename
+ * @property {Object} templates - Template configuration
+ * @property {Object} templates.ui - UI template paths
+ * @property {string} templates.ui.source - UI template source file
+ * @property {string} templates.ui.output - UI template output file
+ * @property {Object} templates.guide - Guide template paths
+ * @property {string} templates.guide.source - Guide template source file
+ * @property {string} templates.guide.output - Guide template output file
+ */
 
 // Configuration
 const CONFIG = {
@@ -38,6 +57,17 @@ const CONFIG = {
     }
 };
 
+/**
+ * @typedef {Object} ANSIColors
+ * @property {string} reset - Reset all formatting
+ * @property {string} bright - Bright/bold text
+ * @property {string} red - Red text color
+ * @property {string} green - Green text color
+ * @property {string} yellow - Yellow text color
+ * @property {string} blue - Blue text color
+ * @property {string} cyan - Cyan text color
+ */
+
 // ANSI colors for output
 const colors = {
     reset: '\x1b[0m',
@@ -51,6 +81,8 @@ const colors = {
 
 /**
  * Clean up temporary files
+ * Removes all build artifacts and temporary files
+ * @returns {void}
  */
 function cleanup() {
     try {
@@ -78,6 +110,13 @@ process.on('SIGTERM', () => { cleanup(); process.exit(0); });
 
 /**
  * Process CSS imports (both local and remote)
+ * Resolves @import statements and bundles all CSS into a single file
+ * Includes security checks to block external icon libraries
+ * 
+ * @param {string} cssFile - Path to the main CSS file with imports
+ * @param {string} outputBundle - Path where bundled CSS should be written
+ * @returns {Promise<string>} The bundled CSS content
+ * @throws {Error} When external icon libraries are detected
  */
 async function processCssImports(cssFile, outputBundle) {
     const cssContent = fs.readFileSync(cssFile, 'utf8');
@@ -155,6 +194,13 @@ async function processCssImports(cssFile, outputBundle) {
 
 /**
  * Process JavaScript bundles from script tags
+ * Extracts and bundles JavaScript files referenced in HTML templates
+ * Includes security checks to block external icon libraries
+ * 
+ * @param {string} templateFile - Path to the HTML template file
+ * @param {string} outputBundle - Path where bundled JavaScript should be written
+ * @returns {Promise<string>} The bundled JavaScript content
+ * @throws {Error} When external icon libraries are detected
  */
 async function processJavaScriptBundles(templateFile, outputBundle) {
     const templateContent = fs.readFileSync(templateFile, 'utf8');
@@ -211,6 +257,10 @@ async function processJavaScriptBundles(templateFile, outputBundle) {
 
 /**
  * Bundle Style Dictionary transforms for plugin UI
+ * Creates a browser-compatible bundle of Style Dictionary transforms
+ * Provides fallback transforms if Style Dictionary is unavailable
+ * 
+ * @returns {string} The bundled transforms JavaScript content
  */
 function bundleStyleTransforms() {
     try {
@@ -282,10 +332,14 @@ window.styleTransforms = {
 
 /**
  * Test Style Dictionary integration with sample tokens
+ * Validates that Style Dictionary transforms are working correctly
+ * 
+ * @returns {Promise<Object>} Test result object with success/failure status
  */
 async function testStyleDictionaryIntegration() {
     console.log(`  ${colors.cyan}🧪${colors.reset} Testing Style Dictionary integration...`);
     
+    /** @type {Record<string, string>} */
     const sampleTokens = {
         'primary-color': '#3b82f6',
         'secondary-color': '#64748b',
@@ -312,6 +366,11 @@ async function testStyleDictionaryIntegration() {
 
 /**
  * Process HTML template with includes
+ * Recursively processes @include directives in HTML templates
+ * 
+ * @param {string} templateFile - Path to the template file
+ * @param {string} outputFile - Path where processed template should be written
+ * @returns {boolean} Success status of template processing
  */
 function processTemplate(templateFile, outputFile) {
     if (!fs.existsSync(templateFile)) {
@@ -347,7 +406,17 @@ function processTemplate(templateFile, outputFile) {
 }
 
 /**
+ * @typedef {Object} ComponentConfig
+ * @property {string} name - Component name for filename
+ * @property {string} template - Template function name
+ * @property {Object} data - Data to pass to template function
+ */
+
+/**
  * Process template functions to generate static components
+ * Uses the template system to generate static HTML components
+ * 
+ * @returns {Promise<string|null>} Bundled template code for plugin use, or null if templates not found
  */
 async function processTemplates() {
     const templatesPath = path.join(projectRoot, 'src/lib/templates.js');
@@ -365,6 +434,7 @@ async function processTemplates() {
         const { sampleData } = await import(dataPath);
         
         // Generate static components
+        /** @type {ComponentConfig[]} */
         const components = [
             {
                 name: 'filters-card',
@@ -447,6 +517,10 @@ async function processTemplates() {
 
 /**
  * Main build function
+ * Orchestrates the entire build process including CSS bundling, 
+ * JavaScript processing, Style Dictionary integration, and template compilation
+ * 
+ * @returns {Promise<void>}
  */
 async function build() {
     // Always read CLAUDE.md critical sections first!
@@ -592,6 +666,10 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
 
 /**
  * Watch mode
+ * Monitors file changes and triggers rebuilds automatically
+ * Uses nodemon for efficient file watching
+ * 
+ * @returns {Promise<void>}
  */
 async function watch() {
     console.log(`\n${colors.bright}👁️  Watch mode active${colors.reset}`);
