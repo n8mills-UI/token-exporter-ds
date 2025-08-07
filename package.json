@@ -7,37 +7,17 @@
     "doc": "docs"
   },
   "scripts": {
-    "_comment1": "✅ CORE DEVELOPMENT (Essential - Keep All)",
     "start": "npm run dev",
     "dev": "node scripts/build.js --watch",
     "build": "node scripts/build.js",
-    "build:production": "npm run css:bundle && npm run build",
-    
-    "_comment2": "✅ QUALITY ASSURANCE (Essential - Keep All)", 
     "check": "node scripts/check.js",
-    "audit": "node scripts/check.js --comprehensive",
+    "audit": "node scripts/audit.js",
     "format": "stylelint docs/design-system.css --fix",
-    
-    "_comment3": "✅ TESTING (Essential - Keep All)",
     "test": "jest",
-    "test:validation": "jest tests/validation-*.test.js",
-    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    
-    "_comment4": "✅ TWO-REPO WORKFLOW (Simplified - Keep These)",
-    "css:bundle": "node scripts/bundle-css.js bundle",
-    "css:promote": "node scripts/bundle-css.js promote", 
-    "css:restore": "node scripts/bundle-css.js restore",
-    "css:deploy": "node scripts/bundle-css.js full",
-    "showcase:prepare": "npm run css:deploy && npm run build",
-    "publish": "node scripts/publish-showcase.js",
-    "deploy": "npm run build && npm run publish",
-    
-    "_comment5": "✅ GIT HOOKS (Keep)",
-    "prepare": "husky",
-    
-    "_comment6": "✅ UTILITIES (Frequently Used - Keep)",
-    "check:all": "node scripts/check.js --all"
+    "test:coverage": "jest --coverage",
+    "deploy": "npm run build",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -100,17 +80,20 @@
     ],
     "*.template.html": [
       "npm run check",
+      "npm run templates:validate",
       "node scripts/check.js"
     ],
     "src/components/_*.html": [
       "npm run check",
+      "npm run templates:validate",
       "node scripts/check.js"
     ],
     "src/components/icons/_icon-system.html": [
       "node scripts/check.js"
     ],
     "src/lib/templates.js": [
-      "npm run check"
+      "npm run templates:generate",
+      "npm run templates:validate"
     ]
   },
   "engines": {

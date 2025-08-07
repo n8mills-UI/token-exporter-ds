@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter - 3D Showcase</title>
+    
+    <!-- Link to your design system CSS -->
+    <link rel="stylesheet" href="../docs/design-system.css">
+    
+    <!-- Fallback CSS variables -->
+    <style>
+        :root {
+            --color-background-primary: #000000;
+            --color-background-secondary: rgba(255,255,255,0.02);
+            --color-background-tertiary: rgba(255,255,255,0.05);
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #a3a3a3;
+            --color-text-on-brand: #000000;
+            --color-border-default: rgba(255,255,255,0.1);
+            
+            --brand-primary: #D2FF37;
+            --brand-primary-hover: #BFFF00;
+            --brand-secondary: #FF1493;
+            --color-cyan-400: #00D1FF;
+            
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            
+            --size-4: 1rem;
+            --size-6: 1.5rem;
+            --size-8: 2rem;
+            --size-12: 3rem;
+            --size-16: 4rem;
+            --size-20: 5rem;
+            
+            --font-size-2: 1.125rem;
+            --font-size-4: 1.5rem;
+            --font-size-6: 2.25rem;
+            --font-size-8: 3.75rem;
+            --font-size-9: 4.5rem;
+            
+            --font-weight-6: 600;
+            --font-weight-7: 700;
+            --font-weight-8: 800;
+            
+            --radius-3: 0.5rem;
+            --radius-4: 0.75rem;
+            --radius-5: 1rem;
+            
+            --content-xl: 1280px;
+        }
+    </style>
+    
+    <style>
+        /* 3D Showcase Marketing Styles - Apple iPhone Demo Style */
+        
+        body {
+            background: radial-gradient(ellipse at center, rgba(210,255,55,0.02) 0%, var(--color-background-primary) 70%);
+            color: var(--color-text-primary);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            perspective: 2000px;
+        }
+        
+        .marketing-section {
+            padding: var(--size-8) var(--size-4);
+            max-width: var(--content-xl, 1280px);
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Floating particles background */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--brand-primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .particle:nth-child(2) { animation-delay: -2s; left: 10%; top: 10%; }
+        .particle:nth-child(3) { animation-delay: -4s; left: 30%; top: 20%; }
+        .particle:nth-child(4) { animation-delay: -6s; left: 70%; top: 15%; }
+        .particle:nth-child(5) { animation-delay: -8s; left: 90%; top: 30%; }
+        .particle:nth-child(6) { animation-delay: -10s; left: 20%; top: 70%; }
+        .particle:nth-child(7) { animation-delay: -12s; left: 60%; top: 80%; }
+        .particle:nth-child(8) { animation-delay: -14s; left: 85%; top: 70%; }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-30px) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Hero section with 3D elements */
+        .hero-section {
+            text-align: center;
+            padding: var(--size-20) 0;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .hero-title {
+            font-size: var(--font-size-9);
+            font-weight: var(--font-weight-8);
+            margin-bottom: var(--size-6);
+            background: linear-gradient(135deg, var(--brand-primary), var(--color-cyan-400));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: heroGlow 6s ease-in-out infinite alternate;
+            text-shadow: 0 0 40px rgba(210,255,55,0.3);
+        }
+        
+        @keyframes heroGlow {
+            0% {
+                filter: drop-shadow(0 0 20px rgba(210,255,55,0.3));
+            }
+            100% {
+                filter: drop-shadow(0 0 40px rgba(210,255,55,0.6));
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: var(--font-size-4);
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--size-12);
+            line-height: 1.6;
+        }
+        
+        /* 3D Device Showcase */
+        .device-showcase {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: var(--size-8);
+            align-items: center;
+            margin: var(--size-20) 0;
+            transform-style: preserve-3d;
+        }
+        
+        .device {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .device-phone {
+            width: 300px;
+            height: 600px;
+            margin: 0 auto;
+            animation: phoneFloat 8s ease-in-out infinite;
+            transform: rotateY(-15deg) rotateX(5deg);
+        }
+        
+        .device-phone:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+            filter: drop-shadow(0 20px 40px rgba(210,255,55,0.4));
+        }
+        
+        .device-tablet {
+            width: 400px;
+            height: 300px;
+            margin: 0 auto;
+            animation: tabletFloat 10s ease-in-out infinite;
+            transform: rotateY(0deg) rotateX(-10deg);
+        }
+        
+        .device-tablet:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+            filter: drop-shadow(0 25px 50px rgba(0,209,255,0.4));
+        }
+        
+        .device-desktop {
+            width: 350px;
+            height: 280px;
+            margin: 0 auto;
+            animation: desktopFloat 12s ease-in-out infinite;
+            transform: rotateY(15deg) rotateX(5deg);
+        }
+        
+        .device-desktop:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+            filter: drop-shadow(0 20px 40px rgba(255,20,147,0.4));
+        }
+        
+        @keyframes phoneFloat {
+            0%, 100% {
+                transform: rotateY(-15deg) rotateX(5deg) translateY(0px);
+            }
+            50% {
+                transform: rotateY(-15deg) rotateX(5deg) translateY(-15px);
+            }
+        }
+        
+        @keyframes tabletFloat {
+            0%, 100% {
+                transform: rotateY(0deg) rotateX(-10deg) translateY(0px);
+            }
+            50% {
+                transform: rotateY(0deg) rotateX(-10deg) translateY(-20px);
+            }
+        }
+        
+        @keyframes desktopFloat {
+            0%, 100% {
+                transform: rotateY(15deg) rotateX(5deg) translateY(0px);
+            }
+            50% {
+                transform: rotateY(15deg) rotateX(5deg) translateY(-10px);
+            }
+        }
+        
+        /* Device frames with glassmorphism */
+        .device-frame {
+            background: linear-gradient(145deg, 
+                rgba(255,255,255,0.1) 0%, 
+                rgba(255,255,255,0.05) 50%, 
+                rgba(255,255,255,0.02) 100%);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-5);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .device-screen {
+            background: linear-gradient(135deg, #0D0D0D 0%, #1A1A1A 100%);
+            border-radius: calc(var(--radius-5) - 4px);
+            margin: 8px;
+            height: calc(100% - 16px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Mock Figma plugin interface */
+        .figma-ui {
+            padding: var(--size-4);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+        
+        .figma-header {
+            background: linear-gradient(90deg, var(--brand-primary), var(--color-cyan-400));
+            color: black;
+            padding: 8px 12px;
+            border-radius: var(--radius-3);
+            font-weight: var(--font-weight-6);
+            margin-bottom: var(--size-4);
+            animation: uiPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes uiPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .token-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .token-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-3);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: tokenSlideIn 0.6s ease-out forwards;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        
+        .token-item:nth-child(1) { animation-delay: 0.2s; }
+        .token-item:nth-child(2) { animation-delay: 0.4s; }
+        .token-item:nth-child(3) { animation-delay: 0.6s; }
+        .token-item:nth-child(4) { animation-delay: 0.8s; }
+        
+        @keyframes tokenSlideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .token-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .token-name {
+            color: var(--color-text-primary);
+            font-family: var(--font-mono);
+            font-size: 10px;
+        }
+        
+        .token-value {
+            color: var(--brand-primary);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            margin-left: auto;
+        }
+        
+        .export-button {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-hover));
+            color: black;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-3);
+            font-weight: var(--font-weight-6);
+            margin-top: var(--size-4);
+            cursor: pointer;
+            animation: buttonGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes buttonGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(210,255,55,0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(210,255,55,0.6);
+            }
+        }
+        
+        /* Platform indicators floating around devices */
+        .platform-indicator {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--brand-primary);
+            border-radius: var(--radius-3);
+            padding: 6px 12px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--brand-primary);
+            backdrop-filter: blur(10px);
+            animation: platformFloat 6s ease-in-out infinite;
+            white-space: nowrap;
+        }
+        
+        .platform-indicator:nth-child(1) {
+            top: -20px;
+            right: -30px;
+            animation-delay: 0s;
+        }
+        
+        .platform-indicator:nth-child(2) {
+            bottom: -20px;
+            left: -30px;
+            animation-delay: -2s;
+        }
+        
+        .platform-indicator:nth-child(3) {
+            top: 50%;
+            right: -50px;
+            animation-delay: -4s;
+        }
+        
+        @keyframes platformFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+                opacity: 1;
+            }
+        }
+        
+        /* Feature cards with 3D effects */
+        .features-3d {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--size-8);
+            margin: var(--size-20) 0;
+            transform-style: preserve-3d;
+        }
+        
+        .feature-3d {
+            background: linear-gradient(145deg, 
+                rgba(255,255,255,0.08) 0%, 
+                rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-4);
+            padding: var(--size-8);
+            text-align: center;
+            transform: rotateY(0deg) rotateX(5deg);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(210,255,55,0.1), 
+                transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .feature-3d:hover {
+            transform: rotateY(0deg) rotateX(0deg) translateY(-10px) scale(1.02);
+            border-color: var(--brand-primary);
+            box-shadow: 
+                0 25px 50px rgba(210,255,55,0.15),
+                0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .feature-3d:hover::before {
+            left: 100%;
+        }
+        
+        .feature-icon-3d {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--size-4);
+            color: var(--brand-primary);
+            filter: drop-shadow(0 0 10px rgba(210,255,55,0.3));
+            animation: iconFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0px) rotateZ(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotateZ(5deg);
+            }
+        }
+        
+        .feature-title-3d {
+            font-size: var(--font-size-4);
+            font-weight: var(--font-weight-7);
+            margin-bottom: var(--size-4);
+            color: var(--color-text-primary);
+        }
+        
+        .feature-description-3d {
+            font-size: var(--font-size-2);
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Morphing shapes animation */
+        .morphing-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            opacity: 0.05;
+            animation: morph 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .morphing-shape:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .morphing-shape:nth-child(2) {
+            bottom: 20%;
+            right: 5%;
+            animation-delay: -7s;
+        }
+        
+        @keyframes morph {
+            0%, 100% {
+                border-radius: 50% 20% 50% 20%;
+                background: radial-gradient(circle, var(--brand-primary), transparent);
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                border-radius: 20% 50% 20% 50%;
+                background: radial-gradient(circle, var(--color-cyan-400), transparent);
+                transform: rotate(90deg) scale(1.2);
+            }
+            50% {
+                border-radius: 50% 50% 50% 50%;
+                background: radial-gradient(circle, var(--brand-secondary), transparent);
+                transform: rotate(180deg) scale(0.8);
+            }
+            75% {
+                border-radius: 20% 80% 20% 80%;
+                background: radial-gradient(circle, var(--brand-primary), transparent);
+                transform: rotate(270deg) scale(1.1);
+            }
+        }
+        
+        /* Enhanced CTA with 3D effect */
+        .cta-3d {
+            background: linear-gradient(145deg, 
+                rgba(210,255,55,0.05) 0%, 
+                rgba(255,20,147,0.02) 50%,
+                rgba(0,209,255,0.03) 100%);
+            border: 2px solid rgba(210,255,55,0.2);
+            border-radius: var(--radius-5);
+            padding: var(--size-16) var(--size-8);
+            text-align: center;
+            margin-top: var(--size-20);
+            position: relative;
+            transform: rotateX(5deg);
+            transform-style: preserve-3d;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+        
+        .cta-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(210,255,55,0.03) 50%, 
+                transparent 70%);
+            animation: ctaSweep 8s linear infinite;
+        }
+        
+        @keyframes ctaSweep {
+            0% { transform: translateX(-100%) skewX(-20deg); }
+            100% { transform: translateX(300%) skewX(-20deg); }
+        }
+        
+        .cta-title-3d {
+            font-size: var(--font-size-6);
+            font-weight: var(--font-weight-8);
+            margin-bottom: var(--size-6);
+            color: var(--color-text-primary);
+            transform: translateZ(20px);
+        }
+        
+        .cta-description-3d {
+            font-size: var(--font-size-4);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--size-8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            transform: translateZ(10px);
+        }
+        
+        .cta-button-3d {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-hover));
+            color: var(--color-text-on-brand);
+            padding: var(--size-6) var(--size-12);
+            border-radius: var(--radius-4);
+            text-decoration: none;
+            display: inline-block;
+            font-weight: var(--font-weight-7);
+            font-size: var(--font-size-4);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            transform: translateZ(30px);
+            box-shadow: 
+                0 15px 30px rgba(210,255,55,0.3),
+                0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button-3d:hover {
+            transform: translateZ(40px) translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(210,255,55,0.4),
+                0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .device-showcase {
+                grid-template-columns: 1fr;
+                gap: var(--size-12);
+            }
+            
+            .features-3d {
+                grid-template-columns: 1fr;
+                gap: var(--size-6);
+            }
+            
+            .device-phone, .device-tablet, .device-desktop {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: var(--font-size-6);
+            }
+            
+            .hero-subtitle {
+                font-size: var(--font-size-2);
+            }
+            
+            .device-phone {
+                width: 250px;
+                height: 500px;
+            }
+            
+            .device-tablet {
+                width: 350px;
+                height: 250px;
+            }
+            
+            .device-desktop {
+                width: 300px;
+                height: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particles-bg">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <!-- Morphing background shapes -->
+    <div class="morphing-shape"></div>
+    <div class="morphing-shape"></div>
+    
+    <div class="marketing-section">
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Token Exporter</h1>
+            <p class="hero-subtitle">
+                Experience the future of design token management with our revolutionary Figma plugin. 
+                Validated by Style Dictionary, trusted by thousands of teams worldwide.
+            </p>
+        </section>
+        
+        <!-- 3D Device Showcase -->
+        <section class="device-showcase">
+            
+            <!-- iPhone -->
+            <div class="device device-phone">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <div class="figma-ui">
+                            <div class="figma-header">Token Exporter</div>
+                            <div class="token-list">
+                                <div class="token-item">
+                                    <div class="token-color" style="background: #D2FF37;"></div>
+                                    <div class="token-name">primary</div>
+                                    <div class="token-value">#D2FF37</div>
+                                </div>
+                                <div class="token-item">
+                                    <div class="token-color" style="background: #00D1FF;"></div>
+                                    <div class="token-name">accent</div>
+                                    <div class="token-value">#00D1FF</div>
+                                </div>
+                                <div class="token-item">
+                                    <div class="token-color" style="background: #FF1493;"></div>
+                                    <div class="token-name">secondary</div>
+                                    <div class="token-value">#FF1493</div>
+                                </div>
+                                <div class="token-item">
+                                    <div class="token-color" style="background: #FFFFFF;"></div>
+                                    <div class="token-name">text</div>
+                                    <div class="token-value">#FFFFFF</div>
+                                </div>
+                            </div>
+                            <button class="export-button">Export Tokens</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="platform-indicator">iOS Swift</div>
+                <div class="platform-indicator">UIColor.primary</div>
+            </div>
+            
+            <!-- Tablet -->
+            <div class="device device-tablet">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <div class="figma-ui" style="flex-direction: row; gap: 16px;">
+                            <div style="flex: 1;">
+                                <div class="figma-header">Design Tokens</div>
+                                <div class="token-list" style="height: 200px;">
+                                    <div class="token-item">
+                                        <div class="token-color" style="background: #D2FF37;"></div>
+                                        <div class="token-name">color.primary</div>
+                                    </div>
+                                    <div class="token-item">
+                                        <div class="token-color" style="background: #00D1FF;"></div>
+                                        <div class="token-name">color.accent</div>
+                                    </div>
+                                    <div class="token-item">
+                                        <div class="token-color" style="background: linear-gradient(45deg, #D2FF37, #00D1FF);"></div>
+                                        <div class="token-name">gradient.primary</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px; height: 200px; font-family: var(--font-mono); font-size: 10px; color: var(--brand-primary);">
+                                    <div style="margin-bottom: 8px; color: var(--color-text-primary);">CSS Export:</div>
+                                    <div>:root {</div>
+                                    <div>&nbsp;&nbsp;--color-primary: #D2FF37;</div>
+                                    <div>&nbsp;&nbsp;--color-accent: #00D1FF;</div>
+                                    <div>&nbsp;&nbsp;--gradient-primary:</div>
+                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;linear-gradient(45deg,</div>
+                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;#D2FF37, #00D1FF);</div>
+                                    <div>}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="platform-indicator">CSS Variables</div>
+                <div class="platform-indicator">Tailwind CSS</div>
+                <div class="platform-indicator">Web Components</div>
+            </div>
+            
+            <!-- Desktop -->
+            <div class="device device-desktop">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <div class="figma-ui">
+                            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                <div class="figma-header" style="flex: 1;">Token Exporter</div>
+                                <div style="background: rgba(0,209,255,0.2); color: var(--color-cyan-400); padding: 8px 12px; border-radius: 8px; font-size: 10px; font-weight: 600;">✓ Validated</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1;">
+                                <div>
+                                    <div style="color: var(--color-text-primary); margin-bottom: 8px; font-size: 11px;">Tokens (24)</div>
+                                    <div class="token-list" style="height: 150px;">
+                                        <div class="token-item">
+                                            <div class="token-color" style="background: #D2FF37; width: 12px; height: 12px;"></div>
+                                            <div class="token-name" style="font-size: 9px;">primary</div>
+                                        </div>
+                                        <div class="token-item">
+                                            <div class="token-color" style="background: #00D1FF; width: 12px; height: 12px;"></div>
+                                            <div class="token-name" style="font-size: 9px;">accent</div>
+                                        </div>
+                                        <div class="token-item">
+                                            <div style="width: 12px; height: 12px; background: #1A1A1A; border-radius: 2px; border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 8px;">16</div>
+                                            <div class="token-name" style="font-size: 9px;">size.base</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="color: var(--color-text-primary); margin-bottom: 8px; font-size: 11px;">Export Targets</div>
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="background: rgba(210,255,55,0.1); border: 1px solid var(--brand-primary); border-radius: 6px; padding: 6px; font-size: 9px; color: var(--brand-primary);">✓ TypeScript</div>
+                                        <div style="background: rgba(0,209,255,0.1); border: 1px solid var(--color-cyan-400); border-radius: 6px; padding: 6px; font-size: 9px; color: var(--color-cyan-400);">✓ Sass</div>
+                                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; font-size: 9px; color: var(--color-text-secondary);">○ Android</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="export-button" style="font-size: 10px; padding: 8px;">Export All Platforms</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="platform-indicator">TypeScript</div>
+                <div class="platform-indicator">Android XML</div>
+            </div>
+        </section>
+        
+        <!-- 3D Features -->
+        <section class="features-3d">
+            <div class="feature-3d">
+                <svg class="feature-icon-3d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                <h3 class="feature-title-3d">Lightning Fast</h3>
+                <p class="feature-description-3d">Export thousands of tokens in under 2 seconds with GPU-accelerated processing and optimized algorithms.</p>
+            </div>
+            
+            <div class="feature-3d">
+                <svg class="feature-icon-3d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                <h3 class="feature-title-3d">Style Dictionary Valid</h3>
+                <p class="feature-description-3d">Every token is pre-validated against Style Dictionary standards, ensuring perfect compatibility with your build pipeline.</p>
+            </div>
+            
+            <div class="feature-3d">
+                <svg class="feature-icon-3d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                <h3 class="feature-title-3d">Zero Dependencies</h3>
+                <p class="feature-description-3d">Pure Figma plugin with no external requirements. Works offline, no account needed, and respects your privacy.</p>
+            </div>
+        </section>
+        
+        <!-- Enhanced 3D CTA -->
+        <div class="cta-3d">
+            <h2 class="cta-title-3d">Ready to Transform Your Workflow?</h2>
+            <p class="cta-description-3d">
+                Join thousands of teams using Token Exporter to maintain design consistency while shipping at lightning speed.
+            </p>
+            <a href="https://www.figma.com/community/plugin/token-exporter" class="cta-button-3d">
+                Get Token Exporter Free
+            </a>
+        </div>
+        
+    </div>
+</body>
+</html>
