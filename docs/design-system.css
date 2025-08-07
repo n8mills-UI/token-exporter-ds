@@ -6391,7 +6391,7 @@ select option {
 /* Scroll cue styles */
 .scroll-cue-container {
     position: fixed;
-    bottom: 3vh;  /* Lowered for better visibility */
+    bottom: 6vh;  /* Desktop position - moved up higher */
     left: calc(var(--size-sidebar-width) + (100vw - var(--size-sidebar-width)) / 2);
     transform: translateX(-50%);
     display: flex;
@@ -6409,7 +6409,7 @@ select option {
 /* Safe area support for scroll cue container */
 @supports (bottom: env(safe-area-inset-bottom)) {
  .scroll-cue-container {
-  bottom: max(3vh, calc(env(safe-area-inset-bottom, 0px) + 3vh));  /* Desktop safe area - match main rule */
+  bottom: max(6vh, calc(env(safe-area-inset-bottom, 0px) + 6vh));  /* Desktop safe area - match main rule */
  }
 }
 
@@ -6572,16 +6572,7 @@ select option {
     }
 }
 
-/* Tablet-specific scroll cue fix */
-@media (width > 768px) and (width <= 1024px) {
-    .scroll-cue-container {
-        left: 50%;  /* Center on tablet */
-        transform: translateX(-50%);
-        bottom: 2.5vh;  /* Slightly higher than desktop but lower than original */
-    }
-}
-
-/* Mobile scroll cue */
+/* Responsive scroll cue */
 @media (width <= 768px) {
     .scroll-cue-container {
         bottom: 0.25vh;  /* Even lower on mobile - almost touching bottom */
