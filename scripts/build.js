@@ -633,15 +633,13 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     fs.writeFileSync(path.join(projectRoot, CONFIG.templates.ui.output), uiFinal);
     console.log(`  ${colors.green}✓${colors.reset} ${CONFIG.templates.ui.output}`);
     
-    // Assemble Guide HTML (with inlined CSS for standalone functionality)
+    // Assemble Guide HTML (with linked CSS for better web performance)
     const guideContent = fs.readFileSync(guideTemp, 'utf8');
     
-    // Inline the CSS for a fully self-contained file
-    const inlineStyles = `<style>
-${cssBundle}
-    </style>`;
+    // Link to external CSS file to avoid minified Open Props parsing issues
+    const styleLink = '<link rel="stylesheet" href="design-system.css">';
     
-    const guideFinal = guideContent.replace('<!-- {{STYLES}} -->', inlineStyles);
+    const guideFinal = guideContent.replace('<!-- {{STYLES}} -->', styleLink);
     
     fs.writeFileSync(path.join(projectRoot, CONFIG.templates.guide.output), guideFinal);
     console.log(`  ${colors.green}✓${colors.reset} ${CONFIG.templates.guide.output}`);
