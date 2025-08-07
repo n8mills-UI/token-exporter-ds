@@ -25,10 +25,10 @@
     "test:watch": "jest --watch",
     
     "_comment4": "✅ TWO-REPO WORKFLOW (Simplified - Keep These)",
-    "css:bundle": "node scripts/css-bundler.js bundle",
-    "css:promote": "node scripts/css-bundler.js promote", 
-    "css:restore": "node scripts/css-bundler.js restore",
-    "css:deploy": "node scripts/css-bundler.js full",
+    "css:bundle": "node scripts/bundle-css.js bundle",
+    "css:promote": "node scripts/bundle-css.js promote", 
+    "css:restore": "node scripts/bundle-css.js restore",
+    "css:deploy": "node scripts/bundle-css.js full",
     "showcase:prepare": "npm run css:deploy && npm run build",
     "showcase:publish": "node scripts/publish-showcase.js",
     

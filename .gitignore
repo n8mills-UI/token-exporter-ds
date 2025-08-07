@@ -9,11 +9,16 @@ Thumbs.db
 # Node.js dependencies
 node_modules/
 
-# Backup files
+# Backup and temporary files
 *.bak
 *.backup
 *.backup.*
 *.broken
+*.original
+*.cleaned
+*.old
+*-backup.*
+*-original.*
 
 # Sandbox and experimental directories
 _sandbox/
