@@ -1,5 +1,8 @@
 # .gitignore
 
+# Private development files only
+.dev/
+
 # OS specific files
 .DS_Store
 .DS_Store?
