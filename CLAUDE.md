@@ -137,6 +137,26 @@ These MUST happen automatically:
 - **Trust the agents - they're specialists**
 - **Your value is in orchestration, not doing**
 
+## CRITICAL: CSS Build Warning (NEVER BUNDLE FOR DOCS)
+
+**⚠️ PERMANENT FIX - DO NOT REVERT:**
+The `docs/design-system.css` file must NEVER be bundled or have Open Props inlined. 
+
+**Why this breaks:**
+1. Minified Open Props has media queries on single lines with multiple braces
+2. This breaks CSS parsing in browsers (e.g., `@media(...){:where(html){...}}`)
+3. The entire CSS file fails to load when this happens
+
+**The fix (already applied):**
+- Build script NO LONGER copies bundled CSS to docs folder
+- The `docs/design-system.css` remains unbundled for web use
+- Plugin UI can use bundled/inlined CSS (it works in Figma's context)
+
+**If the design-system-guide.html breaks again:**
+1. DO NOT run any CSS bundling for the docs folder
+2. Restore from commit 744ea0b: `git show 744ea0b:docs/design-system.css > docs/design-system.css`
+3. The build.js has been modified to prevent this (lines 647-649)
+
 ## Critical Figma JavaScript Constraints
 
 **NEVER use these features - they cause runtime errors:**

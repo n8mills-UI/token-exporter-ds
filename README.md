@@ -1,7 +1,7 @@
 # Token Exporter 🎨 → 📦
 > **Transform Figma design tokens into production code across 7 platforms. Validated with Style Dictionary, powered by zero dependencies.**
 
-![Token Exporter Hero](https://github.com/user-attachments/assets/8be1f4cd-a3e4-4c75-846b-d9b78e4c1c21)
+![Token Exporter Hero](https://github.com/user-attachments/assets/dc6d145a-77ea-43ca-984a-8bf8a5b3f4b3)
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-natemills.me-D2FF37?style=for-the-badge&logoColor=black)](https://natemills.me)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/millsdesign/)

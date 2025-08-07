@@ -644,13 +644,9 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     fs.writeFileSync(path.join(projectRoot, CONFIG.templates.guide.output), guideFinal);
     console.log(`  ${colors.green}✓${colors.reset} ${CONFIG.templates.guide.output}`);
     
-    // Copy CSS file to docs directory (it should already be there, but ensure it's up to date)
-    const cssSourcePath = path.join(projectRoot, CONFIG.cssSource);
-    const cssDestPath = path.join(projectRoot, 'docs', 'design-system.css');
-    if (cssSourcePath !== cssDestPath) {
-        fs.copyFileSync(cssSourcePath, cssDestPath);
-        console.log(`  ${colors.green}✓${colors.reset} Copied design-system.css`);
-    }
+    // DO NOT copy bundled CSS to docs - it breaks due to minified Open Props
+    // The docs/design-system.css should remain unbundled for web use
+    // console.log(`  ${colors.cyan}ℹ${colors.reset} Keeping existing docs/design-system.css (unbundled)`);
     
     // Cleanup temp files
     fs.unlinkSync(uiTemp);
