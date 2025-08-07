@@ -1,0 +1,75 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/schemas/latest/design-token.schema.json",
+  "$description": "Design Tokens - W3C Standard Format",
+  "$generator": "Token Exporter",
+  "$version": "1.0.0",
+  
+  "color": {
+    "$type": "color",
+    "brand": {
+      "primary": {
+        "$value": "#D2FF37",
+        "$description": "Primary brand color - lime green"
+      },
+      "secondary": {
+        "$value": "#FF37D2",
+        "$description": "Secondary brand color - pink"
+      }
+    },
+    "neutral": {
+      "900": {
+        "$value": "#171717",
+        "$description": "Darkest neutral - near black"
+      }
+    }
+  },
+  
+  "font": {
+    "size": {
+      "$type": "dimension",
+      "base": {
+        "$value": "16px",
+        "$description": "Base font size for body text"
+      },
+      "lg": {
+        "$value": "20px",
+        "$description": "Large font size for headings"
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400,
+        "$description": "Regular font weight"
+      },
+      "bold": {
+        "$value": 700,
+        "$description": "Bold font weight"
+      }
+    }
+  },
+  
+  "spacing": {
+    "$type": "dimension",
+    "sm": {
+      "$value": "8px",
+      "$description": "Small spacing unit"
+    },
+    "md": {
+      "$value": "16px",
+      "$description": "Medium spacing unit"
+    },
+    "lg": {
+      "$value": "24px",
+      "$description": "Large spacing unit"
+    }
+  },
+  
+  "radius": {
+    "$type": "dimension",
+    "md": {
+      "$value": "6px",
+      "$description": "Medium border radius"
+    }
+  }
+}

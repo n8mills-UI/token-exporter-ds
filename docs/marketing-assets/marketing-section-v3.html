@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter - Marketing Section</title>
+    
+    <!-- Link to your design system CSS -->
+    <link rel="stylesheet" href="../docs/design-system.css">
+    
+    <!-- Fallback CSS variables if design-system.css doesn't load -->
+    <style>
+        :root {
+            /* Fallback values matching design system */
+            --color-background-primary: #000000;
+            --color-background-secondary: rgba(255,255,255,0.02);
+            --color-background-tertiary: rgba(255,255,255,0.05);
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #a3a3a3;
+            --color-text-on-brand: #000000;
+            --color-border-default: rgba(255,255,255,0.1);
+            
+            --brand-primary: #D2FF37;
+            --brand-primary-hover: #BFFF00;
+            --brand-secondary: #FF1493;
+            --color-cyan-400: #00D1FF;
+            --color-yellow-400: #FFFF00;
+            
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            
+            --size-1: 0.25rem;
+            --size-2: 0.5rem;
+            --size-3: 0.75rem;
+            --size-4: 1rem;
+            --size-5: 1.25rem;
+            --size-6: 1.5rem;
+            --size-7: 1.75rem;
+            --size-8: 2rem;
+            --size-10: 2.5rem;
+            --size-12: 3rem;
+            
+            --font-size-0: 0.875rem;
+            --font-size-1: 1rem;
+            --font-size-2: 1.125rem;
+            --font-size-3: 1.25rem;
+            --font-size-4: 1.5rem;
+            --font-size-5: 1.875rem;
+            --font-size-6: 2.25rem;
+            --font-size-7: 3rem;
+            --font-size-8: 3.75rem;
+            
+            --font-weight-5: 500;
+            --font-weight-6: 600;
+            --font-weight-7: 700;
+            --font-weight-8: 800;
+            
+            --radius-2: 0.375rem;
+            --radius-3: 0.5rem;
+            --radius-4: 0.75rem;
+            
+            --animation-duration-2: 200ms;
+            --animation-duration-3: 300ms;
+            
+            --icon-xl: 32px;
+            
+            --content-xl: 1280px;
+        }
+    </style>
+    
+    <style>
+        /* Marketing Section Styles - Aligned with Design System Guide */
+        
+        /* Use the same background as design system guide */
+        body {
+            background: var(--color-background-primary, #000000);
+            color: var(--color-text-primary);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Section container matching guide style */
+        .marketing-section {
+            padding: var(--size-8) var(--size-4);
+            max-width: var(--content-xl, 1280px);
+            margin: 0 auto;
+        }
+        
+        /* Section headers - consistent center alignment */
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--size-8);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-7);
+            font-weight: var(--font-weight-7);
+            margin-bottom: var(--size-3);
+            text-align: center;
+            color: var(--color-text-primary);
+            width: 100%;
+            display: block;
+        }
+        
+        .section-subtitle {
+            font-size: var(--font-size-3);
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--size-6);
+            text-align: center;
+            display: block;
+            line-height: 1.6;
+        }
+        
+        /* Fixed gradient animation - ensuring text visibility */
+        .gradient-highlight {
+            font-weight: inherit;
+            display: inline-block;
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: var(--color-text-primary);
+            animation: shimmer 4s linear infinite;
+            /* Fallback for browsers that don't support background-clip: text */
+            background-color: var(--brand-primary);
+        }
+        
+        /* Ensure gradient text has proper fallback */
+        @supports not (background-clip: text) or not (-webkit-background-clip: text) {
+            .gradient-highlight {
+                -webkit-text-fill-color: var(--brand-primary);
+                color: var(--brand-primary);
+                background: none;
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            50% {
+                background-position: 200% center;
+            }
+            100% {
+                background-position: -200% center;
+            }
+        }
+        
+        /* Specific gradients for each highlight - with wider color stops for visibility */
+        .gradient-lime-cyan {
+            background-image: linear-gradient(90deg, 
+                var(--brand-primary) 0%, 
+                var(--brand-primary) 20%,
+                var(--color-cyan-400) 40%, 
+                var(--color-cyan-400) 60%,
+                var(--brand-primary) 80%,
+                var(--brand-primary) 100%);
+        }
+        
+        .gradient-lime-pink {
+            background-image: linear-gradient(90deg, 
+                var(--brand-primary) 0%, 
+                var(--brand-primary) 20%,
+                var(--brand-secondary) 40%, 
+                var(--brand-secondary) 60%,
+                var(--brand-primary) 80%,
+                var(--brand-primary) 100%);
+        }
+        
+        .gradient-style-dictionary {
+            background-image: linear-gradient(90deg, 
+                var(--color-cyan-400) 0%, 
+                var(--color-cyan-400) 20%,
+                var(--brand-primary) 40%, 
+                var(--brand-primary) 60%,
+                var(--color-cyan-400) 80%,
+                var(--color-cyan-400) 100%);
+        }
+        
+        /* Grid layouts - 4 column for features */
+        .grid-4col {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--size-4);
+            margin-bottom: var(--size-8);
+        }
+        
+        /* Cards matching design system guide style - CENTER ALIGNED with premium micro-interactions */
+        .feature-card {
+            background: var(--color-background-secondary, rgba(255,255,255,0.02));
+            border: 1px solid var(--color-border-default, rgba(255,255,255,0.1));
+            border-radius: var(--radius-3);
+            padding: var(--size-6);
+            transition: all var(--animation-duration-3, 300ms) cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(210,255,55,0.03), rgba(0,209,255,0.02));
+            opacity: 0;
+            transition: opacity var(--animation-duration-3, 300ms) ease;
+            pointer-events: none;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--brand-primary);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 4px 20px rgba(210,255,55,0.15),
+                0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .feature-icon {
+            width: var(--icon-xl, 32px);
+            height: var(--icon-xl, 32px);
+            margin: 0 auto var(--size-3);
+            color: var(--brand-primary);
+            display: block;
+            transition: all var(--animation-duration-3, 300ms) cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .feature-title {
+            font-size: var(--font-size-4);
+            font-weight: var(--font-weight-6);
+            color: var(--color-text-primary);
+            margin-bottom: var(--size-2);
+            text-align: center;
+        }
+        
+        .feature-description {
+            font-size: var(--font-size-1);
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        /* Platform logos section with Style Dictionary featured */
+        .platform-showcase {
+            margin-bottom: var(--size-10);
+        }
+        
+        .platform-grid-container {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: var(--size-6);
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .style-dictionary-card {
+            background: linear-gradient(135deg, rgba(210,255,55,0.1), rgba(0,209,255,0.1));
+            border: 2px solid var(--brand-primary);
+            border-radius: var(--radius-4);
+            padding: var(--size-8);
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .style-dictionary-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--size-4);
+            color: var(--brand-primary);
+        }
+        
+        .style-dictionary-title {
+            font-size: var(--font-size-5);
+            font-weight: var(--font-weight-7);
+            color: var(--brand-primary);
+            margin-bottom: var(--size-3);
+        }
+        
+        .style-dictionary-description {
+            font-size: var(--font-size-2);
+            color: var(--color-text-primary);
+            line-height: 1.5;
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--size-3);
+        }
+        
+        .platform-card {
+            background: var(--color-background-secondary, rgba(255,255,255,0.02));
+            border: 1px solid var(--color-border-default, rgba(255,255,255,0.1));
+            border-radius: var(--radius-2);
+            padding: var(--size-4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+            transition: all var(--animation-duration-3, 300ms) cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(210,255,55,0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity var(--animation-duration-3, 300ms) ease;
+            pointer-events: none;
+        }
+        
+        .platform-card:hover {
+            border-color: var(--brand-primary);
+            background: var(--color-background-tertiary, rgba(255,255,255,0.05));
+            transform: translateY(-2px);
+            box-shadow: 
+                0 0 20px rgba(210,255,55,0.15),
+                0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .platform-card:hover::before {
+            opacity: 1;
+        }
+        
+        .platform-card:hover .code-sample {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .code-sample {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--color-background-secondary, rgba(0,0,0,0.95));
+            border: 1px solid var(--brand-primary);
+            border-radius: var(--radius-2);
+            padding: var(--size-2) var(--size-3);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-0);
+            color: var(--brand-primary);
+            white-space: nowrap;
+            opacity: 0;
+            transition: all var(--animation-duration-2, 200ms) ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .platform-logo {
+            width: 32px;
+            height: 32px;
+            margin-bottom: var(--size-2);
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+        
+        .platform-card:hover .platform-logo {
+            opacity: 1;
+            filter: brightness(0) saturate(100%) invert(89%) sepia(61%) saturate(461%) hue-rotate(24deg) brightness(106%) contrast(101%);
+        }
+        
+        .platform-name {
+            font-size: var(--font-size-0);
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+        
+        /* Enhanced CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(210,255,55,0.05), rgba(255,20,147,0.05));
+            border-radius: var(--radius-4);
+            padding: var(--size-12) var(--size-8);
+            text-align: center;
+            margin-top: var(--size-12);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary), var(--color-cyan-400));
+            animation: shimmer 4s linear infinite;
+        }
+        
+        .cta-title {
+            font-size: var(--font-size-6);
+            font-weight: var(--font-weight-7);
+            margin-bottom: var(--size-4);
+            color: var(--color-text-primary);
+        }
+        
+        .cta-description {
+            font-size: var(--font-size-3);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--size-6);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-hover));
+            color: var(--color-text-on-brand, #000000);
+            padding: var(--size-5) var(--size-8);
+            border-radius: var(--radius-3);
+            text-decoration: none;
+            display: inline-block;
+            font-weight: var(--font-weight-6);
+            font-size: var(--font-size-3);
+            transition: all var(--animation-duration-3, 300ms) cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--brand-primary), var(--color-cyan-400), var(--brand-primary));
+            border-radius: var(--radius-3);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity var(--animation-duration-3, 300ms) ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover::after {
+            opacity: 1;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 15px 40px rgba(210,255,55,0.4),
+                0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cta-badges {
+            margin-top: var(--size-4);
+            display: flex;
+            justify-content: center;
+            gap: var(--size-6);
+        }
+        
+        .cta-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--size-2);
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-1);
+        }
+        
+        .cta-badge-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--brand-primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid-4col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-4col {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .section-title {
+                font-size: var(--font-size-5);
+            }
+            
+            .section-subtitle {
+                font-size: var(--font-size-1);
+            }
+            
+            .cta-badges {
+                flex-direction: column;
+                gap: var(--size-3);
+            }
+        }
+        
+        /* Alternate Layout Styles */
+        .alternate-layout {
+            margin-top: var(--size-15);
+        }
+        
+        .layout-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--size-10);
+            align-items: center;
+            margin-bottom: var(--size-12);
+            padding: var(--size-8) 0;
+        }
+        
+        .layout-row-reverse {
+            direction: rtl;
+        }
+        
+        .layout-row-reverse > * {
+            direction: ltr;
+        }
+        
+        .layout-content {
+            padding: var(--size-4);
+        }
+        
+        .layout-title {
+            font-size: var(--font-size-5);
+            font-weight: var(--font-weight-7);
+            color: var(--color-text-primary);
+            margin-bottom: var(--size-4);
+        }
+        
+        .layout-description {
+            font-size: var(--font-size-2);
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+        
+        .layout-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+        
+        /* Speed Demo */
+        .speed-demo {
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-3);
+            padding: var(--size-6);
+            text-align: center;
+            width: 100%;
+        }
+        
+        .speed-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-background-tertiary);
+            border-radius: var(--radius-2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: var(--size-4);
+        }
+        
+        .speed-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--brand-primary), var(--color-cyan-400, #00D1FF));
+            animation: speedProgress 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(210,255,55,0.4);
+        }
+        
+        .speed-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-background-tertiary);
+            border-radius: var(--radius-2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: var(--size-4);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes speedProgress {
+            0% { left: -100%; }
+            50% { left: 0%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(210,255,55,0.2); 
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(210,255,55,0.4), 0 0 30px rgba(0,209,255,0.2); 
+            }
+        }
+        
+        .speed-text {
+            font-family: var(--font-mono);
+            color: var(--brand-primary);
+            font-weight: var(--font-weight-6);
+        }
+        
+        /* Validation Demo */
+        .validation-demo {
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-3);
+            padding: var(--size-6);
+            width: 100%;
+        }
+        
+        .validation-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--size-3);
+            color: var(--brand-primary);
+            font-size: var(--font-size-1);
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: checkmarkAppear 0.6s ease-out forwards;
+        }
+        
+        .validation-check:nth-child(1) { animation-delay: 0.1s; }
+        .validation-check:nth-child(2) { animation-delay: 0.3s; }
+        .validation-check:nth-child(3) { animation-delay: 0.5s; }
+        .validation-check:nth-child(4) { animation-delay: 0.7s; }
+        
+        @keyframes checkmarkAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            60% {
+                transform: translateX(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .validation-check:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Dependency Demo */
+        .dependency-demo {
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-3);
+            padding: var(--size-6);
+            width: 100%;
+        }
+        
+        .dependency-item {
+            padding: var(--size-2) var(--size-3);
+            margin-bottom: var(--size-2);
+            border-radius: var(--radius-2);
+            font-size: var(--font-size-1);
+            text-align: center;
+        }
+        
+        .dependency-item.crossed-out {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text-secondary);
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        
+        .dependency-item.active {
+            background: linear-gradient(90deg, rgba(210,255,55,0.2), rgba(0,209,255,0.1));
+            border: 1px solid var(--brand-primary);
+            color: var(--brand-primary);
+            font-weight: var(--font-weight-6);
+        }
+        
+        /* Responsive for alternate layout */
+        @media (max-width: 768px) {
+            .layout-row {
+                grid-template-columns: 1fr;
+                gap: var(--size-6);
+            }
+            
+            .layout-row-reverse {
+                direction: ltr;
+            }
+            
+            .layout-title {
+                font-size: var(--font-size-4);
+            }
+            
+            .layout-description {
+                font-size: var(--font-size-1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="marketing-section">
+        
+        <!-- Meet Token Exporter - 4 Column Grid -->
+        <section style="margin-bottom: var(--size-10);">
+            <h2 class="section-title">
+                Meet <span class="gradient-highlight gradient-lime-pink">Token Exporter</span>
+            </h2>
+            <p class="section-subtitle">
+                The only Figma plugin that validates your tokens with Style Dictionary before export, 
+                ensuring perfect compatibility with your existing design system infrastructure.
+            </p>
+            <div class="grid-4col">
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Export thousands of tokens in under 2 seconds with optimized performance.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                    </svg>
+                    <h3 class="feature-title">Style Dictionary Valid</h3>
+                    <p class="feature-description">Pre-validated tokens ensure compatibility with your build pipeline.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <h3 class="feature-title">Zero Dependencies</h3>
+                    <p class="feature-description">Pure Figma plugin with no external requirements. Works offline.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6m4.22-13.22l4.24 4.24m-4.24 4.24l4.24 4.24M20 12h-6m-6 0H2m14.22 4.22l-4.24 4.24m-4.24-4.24L3.5 20.5"/>
+                    </svg>
+                    <h3 class="feature-title">Smart Export</h3>
+                    <p class="feature-description">Intelligent filtering and organization matching your token structure.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Works With Everything including Style Dictionary -->
+        <section class="platform-showcase">
+            <h2 class="section-title">
+                Validated by <span class="gradient-highlight gradient-style-dictionary">Style Dictionary</span>
+            </h2>
+            <p class="section-subtitle">
+                Every token is validated against Style Dictionary standards before export, 
+                ensuring seamless integration with your existing design token pipeline.
+            </p>
+            
+            <div class="platform-grid-container">
+                <!-- Style Dictionary Featured Card -->
+                <div class="style-dictionary-card">
+                    <svg class="style-dictionary-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    <h3 class="style-dictionary-title">Style Dictionary</h3>
+                    <p class="style-dictionary-description">
+                        Industry-standard token transformation and validation built right in
+                    </p>
+                </div>
+                
+                <!-- Platform Grid -->
+                <div class="platform-grid">
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/css3.svg" alt="CSS" class="platform-logo">
+                        <div class="platform-name">CSS Variables</div>
+                        <div class="code-sample">--color: #D2FF37;</div>
+                    </div>
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/swift.svg" alt="Swift" class="platform-logo">
+                        <div class="platform-name">iOS / Swift</div>
+                        <div class="code-sample">UIColor.primary</div>
+                    </div>
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/android.svg" alt="Android" class="platform-logo">
+                        <div class="platform-name">Android XML</div>
+                        <div class="code-sample">&lt;color name="primary"&gt;</div>
+                    </div>
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/flutter.svg" alt="Flutter" class="platform-logo">
+                        <div class="platform-name">Flutter / Dart</div>
+                        <div class="code-sample">Color(0xFFD2FF37)</div>
+                    </div>
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/typescript.svg" alt="TypeScript" class="platform-logo">
+                        <div class="platform-name">TypeScript</div>
+                        <div class="code-sample">tokens.primary</div>
+                    </div>
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tailwindcss.svg" alt="Tailwind" class="platform-logo">
+                        <div class="platform-name">Tailwind CSS</div>
+                        <div class="code-sample">theme.colors</div>
+                    </div>
+                    <div class="platform-card">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/sass.svg" alt="Sass" class="platform-logo">
+                        <div class="platform-name">Sass / SCSS</div>
+                        <div class="code-sample">$primary: #D2FF37;</div>
+                    </div>
+                    <div class="platform-card">
+                        <svg class="platform-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="filter: none; color: var(--color-text-secondary);">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        <div class="platform-name">JSON</div>
+                        <div class="code-sample">{"primary": "#D2FF37"}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Enhanced Call to Action -->
+        <div class="cta-section">
+            <h2 class="cta-title">Ready to Ship Faster?</h2>
+            <p class="cta-description">
+                Join thousands of teams using Token Exporter to maintain design consistency 
+                while shipping at startup speed.
+            </p>
+            <a href="https://www.figma.com/community/plugin/token-exporter" class="cta-button">
+                Get Token Exporter Free
+            </a>
+            <div class="cta-badges">
+                <div class="cta-badge">
+                    <svg class="cta-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    <span>Free Forever</span>
+                </div>
+                <div class="cta-badge">
+                    <svg class="cta-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    <span>Style Dictionary Valid</span>
+                </div>
+                <div class="cta-badge">
+                    <svg class="cta-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span>No Account Required</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

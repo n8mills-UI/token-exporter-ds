@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter - Spline Experience</title>
+    
+    <style>
+    :root {
+        /* Brand Colors */
+        --brand-primary: #D2FF37;
+        --brand-secondary: #EEFF00;
+        --brand-accent: #00D1FF;
+        --brand-purple: #8B5CF6;
+        --brand-pink: #FF1493;
+        
+        /* Dark theme optimized */
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #111111;
+        --bg-card: rgba(255, 255, 255, 0.03);
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --text-muted: #666666;
+        
+        /* Gradients */
+        --gradient-brand: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+        --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+        --gradient-accent: linear-gradient(135deg, var(--brand-accent), var(--brand-purple));
+        
+        /* Shadows */
+        --shadow-soft: 0 4px 32px rgba(0, 0, 0, 0.3);
+        --shadow-hard: 0 8px 64px rgba(0, 0, 0, 0.5);
+        --shadow-glow: 0 0 64px rgba(210, 255, 55, 0.3);
+        
+        /* Typography */
+        --font-display: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-mono: "SF Mono", Monaco, "Cascadia Code", monospace;
+        
+        /* Spacing */
+        --space-xs: 0.5rem;
+        --space-sm: 1rem;
+        --space-md: 2rem;
+        --space-lg: 4rem;
+        --space-xl: 8rem;
+        
+        /* Animation */
+        --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        --ease-elastic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-display);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        cursor: none; /* Custom cursor */
+        line-height: 1.6;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        background: var(--brand-primary);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.1s ease;
+        mix-blend-mode: difference;
+        opacity: 0.8;
+    }
+
+    .cursor-follower {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border: 2px solid rgba(210, 255, 55, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transition: all 0.3s ease;
+    }
+
+    /* 3D Scene Container */
+    .scene-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        perspective: 2000px;
+        perspective-origin: 50% 50%;
+        z-index: 1;
+    }
+
+    /* 3D Phone Models */
+    .phone-3d {
+        position: absolute;
+        width: 200px;
+        height: 400px;
+        background: var(--gradient-card);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        transform-style: preserve-3d;
+        animation: float-3d 6s ease-in-out infinite;
+    }
+
+    .phone-3d.phone-1 {
+        top: 10%;
+        left: 10%;
+        transform: rotateX(15deg) rotateY(-20deg) rotateZ(5deg);
+        animation-delay: 0s;
+    }
+
+    .phone-3d.phone-2 {
+        top: 20%;
+        right: 15%;
+        transform: rotateX(-10deg) rotateY(25deg) rotateZ(-8deg);
+        animation-delay: 2s;
+    }
+
+    .phone-3d.phone-3 {
+        bottom: 20%;
+        left: 15%;
+        transform: rotateX(20deg) rotateY(-15deg) rotateZ(10deg);
+        animation-delay: 4s;
+    }
+
+    .phone-screen {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        background: var(--bg-secondary);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .phone-ui {
+        position: absolute;
+        inset: 12px;
+        background: linear-gradient(135deg, 
+            rgba(210, 255, 55, 0.1), 
+            rgba(238, 255, 0, 0.05),
+            rgba(0, 209, 255, 0.1)
+        );
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px;
+    }
+
+    .ui-element {
+        height: 24px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    .ui-element:nth-child(1) { width: 80%; animation-delay: 0s; }
+    .ui-element:nth-child(2) { width: 60%; animation-delay: 0.5s; }
+    .ui-element:nth-child(3) { width: 90%; animation-delay: 1s; }
+    .ui-element:nth-child(4) { width: 70%; animation-delay: 1.5s; }
+
+    /* Main Content */
+    .content-layer {
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+        background: transparent;
+    }
+
+    /* Hero Section */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        background: radial-gradient(ellipse at center, 
+            rgba(210, 255, 55, 0.05) 0%, 
+            transparent 50%
+        );
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: var(--space-md);
+        animation: fade-up 1s ease-out;
+    }
+
+    .hero-logo {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto var(--space-md);
+        background: var(--gradient-brand);
+        border-radius: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 900;
+        color: var(--bg-primary);
+        animation: logo-glow 4s ease-in-out infinite;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-logo:hover {
+        transform: rotateY(180deg) scale(1.1);
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 900;
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.1;
+        margin-bottom: var(--space-sm);
+        letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        color: var(--text-secondary);
+        margin-bottom: var(--space-md);
+        font-weight: 300;
+    }
+
+    .hero-description {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        margin-bottom: var(--space-lg);
+        line-height: 1.8;
+    }
+
+    /* CTA Buttons */
+    .cta-buttons {
+        display: flex;
+        gap: var(--space-sm);
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: var(--space-lg);
+    }
+
+    .btn-3d {
+        padding: 16px 32px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.3s var(--ease-bounce);
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+    }
+
+    .btn-primary {
+        background: var(--gradient-brand);
+        color: var(--bg-primary);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .btn-secondary {
+        background: var(--gradient-card);
+        color: var(--text-primary);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+    }
+
+    .btn-3d:hover {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 16px 64px rgba(210, 255, 55, 0.4);
+    }
+
+    .btn-3d:active {
+        transform: translateY(-4px) scale(1.02);
+    }
+
+    /* Stats Section */
+    .stats-section {
+        padding: var(--space-xl) var(--space-md);
+        text-align: center;
+        background: radial-gradient(ellipse at center, 
+            rgba(0, 209, 255, 0.02) 0%, 
+            transparent 50%
+        );
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-md);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .stat-card {
+        background: var(--gradient-card);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: var(--space-md);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s var(--ease-smooth);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .stat-card:hover::before {
+        left: 100%;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-12px) rotateX(5deg);
+        box-shadow: var(--shadow-hard);
+        border-color: rgba(210, 255, 55, 0.3);
+    }
+
+    .stat-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto var(--space-sm);
+        background: var(--gradient-accent);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        animation: icon-pulse 2s ease-in-out infinite;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 900;
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: var(--space-xs);
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    /* Feature Cards */
+    .features-section {
+        padding: var(--space-xl) var(--space-md);
+        background: radial-gradient(ellipse at center, 
+            rgba(139, 92, 246, 0.02) 0%, 
+            transparent 50%
+        );
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-md);
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: var(--gradient-card);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: var(--space-lg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.5s var(--ease-smooth);
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+    }
+
+    .feature-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(transparent, rgba(210, 255, 55, 0.1), transparent);
+        animation: rotate-border 4s linear infinite;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover::after {
+        opacity: 1;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-16px) rotateX(10deg) rotateY(5deg);
+        box-shadow: var(--shadow-hard);
+    }
+
+    .feature-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient-accent);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: rotateY(360deg);
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--space-xs);
+    }
+
+    .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 1rem;
+    }
+
+    /* Code Block */
+    .code-showcase {
+        padding: var(--space-xl) var(--space-md);
+        text-align: center;
+        background: var(--bg-secondary);
+    }
+
+    .code-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--gradient-card);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: var(--space-lg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .code-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-md);
+    }
+
+    .code-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--brand-primary);
+    }
+
+    .code-dot:nth-child(2) { background: var(--brand-secondary); }
+    .code-dot:nth-child(3) { background: var(--brand-accent); }
+
+    .code-block {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        text-align: left;
+        line-height: 1.6;
+        white-space: pre-code;
+    }
+
+    .code-highlight {
+        color: var(--brand-primary);
+        font-weight: 600;
+    }
+
+    /* Floating Elements */
+    .floating-elements {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .floating-icon {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-accent);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        animation: float-random 8s ease-in-out infinite;
+        opacity: 0.3;
+    }
+
+    .floating-icon:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 30%; right: 10%; animation-delay: 2s; }
+    .floating-icon:nth-child(3) { bottom: 20%; left: 8%; animation-delay: 4s; }
+    .floating-icon:nth-child(4) { bottom: 40%; right: 5%; animation-delay: 6s; }
+
+    /* Animations */
+    @keyframes float-3d {
+        0%, 100% { transform: translateY(0) rotateX(15deg) rotateY(-20deg) rotateZ(5deg); }
+        50% { transform: translateY(-20px) rotateX(20deg) rotateY(-15deg) rotateZ(8deg); }
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    @keyframes logo-glow {
+        0%, 100% { box-shadow: 0 0 64px rgba(210, 255, 55, 0.3); }
+        50% { box-shadow: 0 0 96px rgba(210, 255, 55, 0.6); }
+    }
+
+    @keyframes fade-up {
+        from { 
+            opacity: 0; 
+            transform: translateY(40px);
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes icon-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    @keyframes rotate-border {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes float-random {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-20px) rotate(90deg); }
+        50% { transform: translateY(-10px) rotate(180deg); }
+        75% { transform: translateY(-30px) rotate(270deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .phone-3d {
+            display: none; /* Hide 3D phones on mobile for performance */
+        }
+        
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 4rem);
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-3d {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .feature-card {
+            padding: var(--space-md);
+        }
+    }
+
+    /* Performance optimizations */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* Touch device optimizations */
+    @media (hover: none) and (pointer: coarse) {
+        .cursor, .cursor-follower {
+            display: none;
+        }
+        
+        body {
+            cursor: auto;
+        }
+        
+        .btn-3d:hover {
+            transform: none;
+        }
+        
+        .feature-card:hover {
+            transform: none;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- 3D Scene Container -->
+    <div class="scene-container">
+        <div class="phone-3d phone-1">
+            <div class="phone-screen">
+                <div class="phone-ui">
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phone-3d phone-2">
+            <div class="phone-screen">
+                <div class="phone-ui">
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phone-3d phone-3">
+            <div class="phone-screen">
+                <div class="phone-ui">
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                    <div class="ui-element"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-icon">⚡</div>
+        <div class="floating-icon">🎨</div>
+        <div class="floating-icon">💎</div>
+        <div class="floating-icon">🚀</div>
+    </div>
+    
+    <!-- Content Layer -->
+    <div class="content-layer">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-logo">T</div>
+                <h1 class="hero-title">Token Exporter</h1>
+                <h2 class="hero-subtitle">Design to Code, Effortlessly</h2>
+                <p class="hero-description">
+                    Transform your Figma design tokens into production-ready code across 
+                    7 different platforms with a single click. The future of design systems is here.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="https://www.figma.com/community/plugin/1521741753717588633" class="btn-3d btn-primary" target="_blank">
+                        🔥 Get Plugin
+                    </a>
+                    <a href="https://github.com/n8mills-UI/token-exporter-showcase" class="btn-3d btn-secondary" target="_blank">
+                        ⚡ View Source
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📱</div>
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Export Platforms</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Click Export</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-number">100<span style="font-size: 1.5rem;">%</span></div>
+                    <div class="stat-label">Style Dictionary Valid</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-number">10<span style="font-size: 1.5rem;">×</span></div>
+                    <div class="stat-label">Faster Workflow</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">🎨</div>
+                        <div>
+                            <h3 class="feature-title">Multi-Platform Export</h3>
+                        </div>
+                    </div>
+                    <p class="feature-description">
+                        Export to iOS Swift, Android XML, CSS Variables, SCSS, Tailwind, 
+                        Style Dictionary JSON, and React Native. One source, seven destinations.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <h3 class="feature-title">Instant Validation</h3>
+                        </div>
+                    </div>
+                    <p class="feature-description">
+                        Built-in Style Dictionary validation ensures your tokens are 
+                        production-ready before export. No more broken builds.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">🧠</div>
+                        <div>
+                            <h3 class="feature-title">AI-Powered Intelligence</h3>
+                        </div>
+                    </div>
+                    <p class="feature-description">
+                        Smart alias resolution, automatic naming conventions, and 
+                        intelligent type inference. Built with AI assistance for maximum efficiency.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">💎</div>
+                        <div>
+                            <h3 class="feature-title">Premium Experience</h3>
+                        </div>
+                    </div>
+                    <p class="feature-description">
+                        Clean UI, smooth animations, and thoughtful interactions. 
+                        A plugin that's as beautiful as it is functional.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <h3 class="feature-title">Developer-Friendly</h3>
+                        </div>
+                    </div>
+                    <p class="feature-description">
+                        Copy-paste ready code with proper formatting, comments, 
+                        and platform-specific optimizations. Developers will love you.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">🚀</div>
+                        <div>
+                            <h3 class="feature-title">Production Ready</h3>
+                        </div>
+                    </div>
+                    <p class="feature-description">
+                        Battle-tested with 900+ design tokens, proper error handling, 
+                        and performance optimizations. Ready for enterprise scale.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Code Showcase -->
+        <section class="code-showcase">
+            <div class="code-container">
+                <div class="code-header">
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                </div>
+                <pre class="code-block"><span class="code-highlight">// Generated iOS Swift</span>
+extension UIColor {
+    static let <span class="code-highlight">brandPrimary</span> = UIColor(hex: "#D2FF37")
+    static let <span class="code-highlight">brandSecondary</span> = UIColor(hex: "#EEFF00")
+}
+
+<span class="code-highlight">/* Generated CSS */</span>
+:root {
+    <span class="code-highlight">--brand-primary</span>: #D2FF37;
+    <span class="code-highlight">--brand-secondary</span>: #EEFF00;
+}
+
+<span class="code-highlight">// Generated Style Dictionary</span>
+{
+    "color": {
+        "brand": {
+            "primary": {
+                "<span class="code-highlight">value</span>": "#D2FF37",
+                "<span class="code-highlight">type</span>": "color"
+            }
+        }
+    }
+}</pre>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Enhanced JavaScript -->
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let followerX = 0, followerY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            // Smooth cursor movement
+            cursorX += (mouseX - cursorX) * 0.3;
+            cursorY += (mouseY - cursorY) * 0.3;
+            
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+            cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Interactive elements cursor effects
+        const interactiveElements = document.querySelectorAll('.btn-3d, .stat-card, .feature-card');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform += ' scale(1.5)';
+                cursorFollower.style.transform += ' scale(1.2)';
+                cursorFollower.style.borderColor = '#D2FF37';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = cursor.style.transform.replace(' scale(1.5)', '');
+                cursorFollower.style.transform = cursorFollower.style.transform.replace(' scale(1.2)', '');
+                cursorFollower.style.borderColor = 'rgba(210, 255, 55, 0.3)';
+            });
+        });
+        
+        // 3D Phone Interaction
+        const phones = document.querySelectorAll('.phone-3d');
+        
+        document.addEventListener('mousemove', (e) => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const mouseXPercent = (e.clientX - centerX) / centerX;
+            const mouseYPercent = (e.clientY - centerY) / centerY;
+            
+            phones.forEach((phone, index) => {
+                const intensity = 10 + (index * 5);
+                const rotateX = mouseYPercent * intensity;
+                const rotateY = mouseXPercent * intensity * -1;
+                
+                phone.style.transform += ` rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        });
+        
+        // Scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.stat-card, .feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(60px)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            observer.observe(card);
+        });
+        
+        // Floating elements parallax
+        document.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const floatingIcons = document.querySelectorAll('.floating-icon');
+            
+            floatingIcons.forEach((icon, index) => {
+                const speed = 0.5 + (index * 0.1);
+                icon.style.transform += ` translateY(${scrolled * speed}px)`;
+            });
+        });
+        
+        // Performance monitoring
+        let frameCount = 0;
+        let lastTime = performance.now();
+        
+        function measureFPS() {
+            frameCount++;
+            const currentTime = performance.now();
+            
+            if (currentTime - lastTime >= 1000) {
+                const fps = Math.round(frameCount * 1000 / (currentTime - lastTime));
+                
+                // Reduce animations if FPS drops below 30
+                if (fps < 30) {
+                    document.body.classList.add('performance-mode');
+                    phones.forEach(phone => {
+                        phone.style.animation = 'none';
+                    });
+                }
+                
+                frameCount = 0;
+                lastTime = currentTime;
+            }
+            
+            requestAnimationFrame(measureFPS);
+        }
+        measureFPS();
+        
+        // Smooth scroll to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Copy code functionality
+        const codeBlock = document.querySelector('.code-block');
+        if (codeBlock) {
+            codeBlock.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                
+                // Visual feedback
+                codeBlock.style.background = 'rgba(210, 255, 55, 0.1)';
+                setTimeout(() => {
+                    codeBlock.style.background = '';
+                }, 1000);
+            });
+        }
+        
+        // Loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            console.log('🚀 Spline-inspired experience loaded!');
+            console.log('✨ 3D phones active');
+            console.log('💫 Custom cursor active');
+            console.log('🎭 Smooth animations active');
+            console.log('📱 Touch optimizations active');
+        });
+        
+        // Touch device detection
+        if ('ontouchstart' in window) {
+            document.body.classList.add('touch-device');
+        }
+        
+        // Reduced motion support
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.body.classList.add('reduced-motion');
+        }
+    </script>
+</body>
+</html>
