@@ -852,7 +852,6 @@ function generateFormatContent(designTokens, format) {
         }
         
         if (!hasStyleTransforms) {
-            console.log('Style Dictionary transforms not available, using manual transforms');
             return generateFormatContentManual(designTokens, format);
         }
         
@@ -890,7 +889,6 @@ function generateFormatContent(designTokens, format) {
         }
         
         if (!formatGenerator || typeof formatGenerator !== 'function') {
-            console.log('Format "' + format + '" not supported by Style Dictionary, using manual transforms');
             return generateFormatContentManual(designTokens, format);
         }
         
@@ -900,7 +898,6 @@ function generateFormatContent(designTokens, format) {
             content = formatGenerator(flatTokens);
         } catch (generationError) {
             console.error('Error generating content with Style Dictionary:', generationError);
-            console.log('Falling back to manual transform for format: ' + format);
             return generateFormatContentManual(designTokens, format);
         }
         
@@ -946,7 +943,6 @@ function generateFormatContent(designTokens, format) {
             return generateFormatContentManual(designTokens, format);
         }
         
-        console.log('Successfully generated ' + format + ' format using Style Dictionary');
         return {
             filename: filename,
             content: String(content) // Ensure content is always a string
@@ -969,7 +965,6 @@ function generateFormatContent(designTokens, format) {
         }
         
         console.error('Error in generateFormatContent:', createStructuredError('generateFormatContent', error, errorContext));
-        console.log('Falling back to manual transforms for format: ' + format);
         
         // Always fall back to manual transforms on any error
         try {

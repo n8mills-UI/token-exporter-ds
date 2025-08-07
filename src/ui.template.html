@@ -167,14 +167,11 @@
         }
         const renderIcons = () => {
             try {
-                console.log('[DEBUG] Rendering icons...');
                 // Try both function names for compatibility
                 if (window.renderIcons) {
                     window.renderIcons();
-                    console.log('[DEBUG] Icons rendered using window.renderIcons');
                 } else if (window.renderPluginIcons) {
                     window.renderPluginIcons();
-                    console.log('[DEBUG] Icons rendered using window.renderPluginIcons');
                 } else {
                     console.warn("Icon rendering function not found");
                 }
@@ -194,7 +191,6 @@
 
 
 function updateTokenSummary() {
-    console.log('[DEBUG] Updating token summary...');
     const totalTokens = Object.values(appState.globalTokenCounts).reduce((s, c) => s + c, 0);
     const selectedCount = appState.mode === 'simple' ? totalTokens : appState.collections.reduce((count, col) => {
         if (!appState.selectedCollections.has(col.id)) return count;
@@ -214,12 +210,10 @@ function updateTokenSummary() {
             '</div>';
     }).join('');
 
-    console.log('[DEBUG] Token types HTML includes icons:', tokenTypesHTML.includes('data-icon'));
     DOMElements.tokenSummaryCard.innerHTML = 
         '<div class="text-heading-xl token-count-total">' + selectedCount + '</div>' +
         '<div class="text-label token-label">' + tokenLabelText + '</div>' + 
         '<div class="token-breakdown">' + tokenTypesHTML + '</div>';
-    console.log('[DEBUG] Token summary updated - icons need re-rendering');
 }
 
                 function updateExportAndCollections() {
@@ -731,26 +725,21 @@ function updateTokenSummary() {
 
         // --- INITIALIZATION ---
         function initialize() {
-            console.log('[DEBUG] Initializing plugin...');
-            
             // Initialize theme first
             initializeTheme();
             
             // Explicitly set the correct initial UI state.
             if (DOMElements.skeletonLoader) {
                 DOMElements.skeletonLoader.style.display = 'block';
-                console.log('[DEBUG] Skeleton loader visible');
                 startLoadingMessages(); // Start the delightful messages
             }
             if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
             if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
 
             // Render icons for the skeleton loader.
-            console.log('[DEBUG] Initial icon render for skeleton loader');
             renderIcons(); 
 
             // Immediately ask the main plugin for the variable collections.
-            console.log('[DEBUG] Requesting collections from plugin...');
             parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
 
             // Attach all static event listeners.
@@ -762,18 +751,15 @@ function updateTokenSummary() {
             if (!msg) return;
             switch (msg.type) {
                 case 'all-collections':
-                    console.log('[DEBUG] Received collections:', msg.collections);
                     stopLoadingMessages(); // Stop the delightful messages
                     DOMElements.skeletonLoader.style.display = 'none';
                     appState.collections = msg.collections || [];
                     if (appState.collections.length === 0) {
                         // If no collections, show the empty state and hide the main UI
-                        console.log('[DEBUG] No collections - showing empty state');
                         DOMElements.emptyState.style.display = 'flex';
                         DOMElements.mainUI.style.display = 'none';
                     } else {
                         // If collections exist, show the main UI and hide the empty state
-                        console.log('[DEBUG] Collections found - showing main UI');
                         DOMElements.emptyState.style.display = 'none';
                         DOMElements.mainUI.style.display = 'block';
                         appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
@@ -781,7 +767,6 @@ function updateTokenSummary() {
                         appState.selectedCollections = new Set(appState.collections.map(c => c.id));
                         updateUI();
                     }
-                    console.log('[DEBUG] About to render icons after collections loaded');
                     renderIcons();
                     break;
                 case 'export-progress':

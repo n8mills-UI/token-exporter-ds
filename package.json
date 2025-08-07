@@ -1,8 +1,8 @@
 {
-  "name": "token-exporter-ds",
+  "name": "token-exporter",
   "version": "1.0.0",
   "type": "module",
-  "description": "A zero-config Figma plugin that transforms design variables into production-ready code for 6 platforms: CSS, Swift, Android, Flutter, JSON, and Tailwind. Built by a UI Designer with 20 years of design systems experience.",
+  "description": "Industry-first Figma plugin that transforms design tokens into production code with zero dependencies. Exports to CSS, Swift, Android, Flutter, JSON, TypeScript, and Tailwind.",
   "directories": {
     "doc": "docs"
   },
@@ -55,8 +55,8 @@
     "accessibility",
     "style-dictionary-alternative"
   ],
-  "author": "Nate Mills <contact@natemills.me> (https://natemills.me)",
-  "license": "ISC",
+  "author": "Nate Mills <nate@natemills.me> (https://natemills.me)",
+  "license": "PROPRIETARY",
   "bugs": {
     "url": "https://github.com/n8mills-UI/token-exporter-ds/issues"
   },
