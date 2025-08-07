@@ -154,7 +154,7 @@ async function prepareBuild(config) {
         
         // Step 1: Create CSS bundle
         console.log(`${colors.blue}[1/2]${colors.reset} Creating CSS bundle...`);
-        const { stdout: cssOutput } = await execAsync('node scripts/css-bundler.js full', { 
+        const { stdout: cssOutput } = await execAsync('node scripts/bundle-css.js full', { 
             cwd: config.sourcePath 
         });
         console.log(`${colors.green}✓${colors.reset} CSS bundle created`);

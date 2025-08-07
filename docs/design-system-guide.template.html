@@ -6,7 +6,7 @@
         <title>Token Exporter - Design System Guide</title>
         
         <!-- === YOUR CENTRAL DESIGN SYSTEM STYLESHEET === -->
-        <link rel="stylesheet" href="design-system.css">
+        <!-- {{STYLES}} -->
         
         <!-- Icon System -->
         <!-- @include src/components/icons/_icon-system.html -->
@@ -1677,78 +1677,36 @@
             
             // Initialize performance-optimized vortex animation
             initializeVortexObserver();
-
-            if (window.lucide) {
-                renderAllIcons(); // Use centralized icon rendering
-                // Continue with vortex animation initialization
-            }
+            renderAllIcons(); // Use centralized icon rendering
         });
 
         // --- RENDER ICONS ---
-        let lucideInitialized = false;
-        let iconRenderDebounceTimer = null;
-        
         function renderAllIcons() {
-            // Debounce rapid calls to prevent icon flickering
-            if (iconRenderDebounceTimer) {
-                clearTimeout(iconRenderDebounceTimer);
+            // Use the embedded window.renderIcons function from _icon-system.html
+            if (window.renderIcons) {
+                try {
+                    window.renderIcons();
+                    // Mark all icons as initialized for CSS transitions
+                    setTimeout(() => {
+                        document.querySelectorAll('[data-icon]').forEach(icon => {
+                            if (!icon.classList.contains('icon-initialized')) {
+                                icon.classList.add('icon-initialized');
+                            }
+                        });
+                    }, 50);
+                } catch (error) {
+                    console.error("Icon rendering failed:", error);
+                }
             }
             
-            iconRenderDebounceTimer = setTimeout(() => {
-                // Render Lucide Icons only once to prevent re-initialization
-                if (window.lucide && !lucideInitialized) {
-                    try {
-                        // Configure Lucide with consistent settings
-                        lucide.createIcons({
-                            attrs: {
-                                'width': null,
-                                'height': null,
-                                'class': 'icon-initialized'
-                                // Let CSS control stroke-width
-                            },
-                            nameAttr: 'data-icon' // Ensure we're using data-icon attribute
-                        });
-                        lucideInitialized = true;
-                        
-                        // Mark all icons as initialized to trigger opacity transition
-                        setTimeout(() => {
-                            document.querySelectorAll('[data-icon]').forEach(icon => {
-                                icon.classList.add('icon-initialized');
-                            });
-                        }, 50);
-                    } catch (error) {
-                        console.error("Lucide icon rendering failed:", error);
-                    }
-                } else if (window.lucide && lucideInitialized) {
-                    // For subsequent calls, only process new icons that aren't already initialized
-                    try {
-                        const uninitializedIcons = document.querySelectorAll('[data-icon]:not(.icon-initialized)');
-                        if (uninitializedIcons.length > 0) {
-                            lucide.createIcons({
-                                attrs: {
-                                    'width': null,
-                                    'height': null,
-                                    'class': 'icon-initialized'
-                                    // Let CSS control stroke-width
-                                },
-                                nameAttr: 'data-icon',
-                                nodes: uninitializedIcons // Only process new icons
-                            });
-                        }
-                    } catch (error) {
-                        console.error("Lucide icon update failed:", error);
-                    }
+            // Also render plugin icons if available
+            if (window.renderPluginIcons) {
+                try {
+                    window.renderPluginIcons();
+                } catch (error) {
+                    console.error("Plugin icon rendering failed:", error);
                 }
-                
-                // Render Plugin Icons
-                if (window.renderPluginIcons) {
-                    try {
-                        window.renderPluginIcons();
-                    } catch (error) {
-                        console.error("Plugin icon rendering failed:", error);
-                    }
-                }
-            }, 10); // Small debounce to batch multiple calls
+            }
         }
 
         // --- NAVIGATION & OTHER UI FUNCTIONS (Unchanged from your file) ---
