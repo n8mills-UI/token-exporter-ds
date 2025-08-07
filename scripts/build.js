@@ -18,7 +18,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawn, exec } from 'child_process';
 import { promisify } from 'util';
-import { integrateStyleDictionary, validateStyleDictionaryAvailability } from './style-dictionary-integration.js';
+import { integrateStyleDictionary, validateStyleDictionaryAvailability } from '../src/lib/style-dictionary-integration.js';
 
 const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

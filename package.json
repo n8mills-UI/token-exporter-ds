@@ -30,7 +30,8 @@
     "css:restore": "node scripts/bundle-css.js restore",
     "css:deploy": "node scripts/bundle-css.js full",
     "showcase:prepare": "npm run css:deploy && npm run build",
-    "showcase:publish": "node scripts/publish-showcase.js",
+    "publish": "node scripts/publish-showcase.js",
+    "deploy": "npm run build && npm run publish",
     
     "_comment5": "✅ GIT HOOKS (Keep)",
     "prepare": "husky",

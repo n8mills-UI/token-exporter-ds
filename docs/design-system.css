@@ -65,7 +65,6 @@ TEMPLATES         PAGES / FRAMES             LAYOUT STYLES
                                              arranges organisms and molecules on the
                                              screen.
                                              e.g., .guide-container, .guide-sidebar
-
 */
 
 /* Open Props - Bundled inline for GitHub Pages compatibility */
@@ -13939,9 +13938,6 @@ input[type="file"]::-webkit-file-upload-button,
     animation-timing-function: ease-out; /* Smoother in Figma */
 }
 
-/* Remove conflicting margin - we use gap instead */
-} */
-
 /* Fix icon visibility in Figma context */
 .figma-plugin [data-icon] {
     visibility: visible !important;
@@ -14196,4 +14192,4 @@ input[type="file"]::-webkit-file-upload-button,
     }
 }
 
-\n/* === END MAIN CSS CONTENT === */\n
+/* === END MAIN CSS CONTENT === */
