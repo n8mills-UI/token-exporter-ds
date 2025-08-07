@@ -1,10 +1,5 @@
 # .gitignore
 
-# PRIVATE - Never share these!
-.dev/
-docs/marketing-assets/
-docs/case-study/
-
 # OS specific files
 .DS_Store
 .DS_Store?

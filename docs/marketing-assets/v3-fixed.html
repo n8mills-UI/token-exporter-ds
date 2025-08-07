@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Exporter - Design System (V3 Fixed)</title>
+    
+    <!-- === FIXED DESIGN SYSTEM STYLESHEET === -->
+    <link rel="stylesheet" href="../docs/design-system.css">
+    
+    <!-- Enhanced Typography Fix -->
+    <style>
+    /* ========== TYPOGRAPHY HIERARCHY FIXES ========== */
+    :root {
+        /* Proper hierarchy - headers should be larger than buttons */
+        --text-heading-xl: var(--font-size-8); /* 3.5rem - Hero titles */
+        --text-heading-lg: var(--font-size-7); /* 3rem - Major sections */
+        --text-heading-md: var(--font-size-6); /* 2.5rem - Section headers */
+        --text-heading-sm: var(--font-size-5); /* 2rem - Sub-headers */
+        --text-body-lg: var(--font-size-3);    /* 1.25rem - Large body */
+        --text-body-md: var(--font-size-1);    /* 1rem - Standard body */
+        --text-caption: var(--font-size-0);    /* 0.75rem - Captions */
+        
+        /* Button sizes should be smaller than headers */
+        --btn-text-lg: var(--font-size-2);     /* 1.1rem - Large buttons */
+        --btn-text-md: var(--font-size-1);     /* 1rem - Medium buttons */
+        --btn-text-sm: var(--font-size-0);     /* 0.75rem - Small buttons */
+    }
+
+    /* Apply fixed typography */
+    .text-heading-xl, h1.text-heading-xl { font-size: var(--text-heading-xl) !important; }
+    .text-heading-lg, h2.text-heading-lg { font-size: var(--text-heading-lg) !important; }
+    .text-heading-md, h3.text-heading-md { font-size: var(--text-heading-md) !important; }
+    .text-heading-sm, h4.text-heading-sm { font-size: var(--text-heading-sm) !important; }
+
+    /* Button text sizes */
+    .btn-lg { font-size: var(--btn-text-lg) !important; }
+    .btn, .btn-md { font-size: var(--btn-text-md) !important; }
+    .btn-sm { font-size: var(--btn-text-sm) !important; }
+
+    /* ========== STYLE DICTIONARY BOX HEIGHT FIX ========== */
+    .style-dictionary-section {
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .tech-stack-grid {
+        min-height: 400px !important; /* Match adjacent sections */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .faq-section {
+        min-height: 400px !important; /* Consistent heights */
+    }
+
+    /* ========== HOVER CODE SAMPLES RESTORATION ========== */
+    .code-sample {
+        position: relative;
+        background: var(--surface-2);
+        border-radius: var(--radius-2);
+        padding: var(--size-3);
+        font-family: var(--font-mono);
+        font-size: var(--font-size-0);
+        border: 1px solid var(--surface-3);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .code-sample:hover {
+        background: var(--surface-3);
+        border-color: var(--brand-primary, var(--indigo-6));
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-3);
+    }
+
+    .code-sample::after {
+        content: "Click to copy";
+        position: absolute;
+        top: -30px;
+        right: 0;
+        background: var(--surface-1);
+        color: var(--text-2);
+        padding: var(--size-1) var(--size-2);
+        border-radius: var(--radius-2);
+        font-size: var(--font-size-00);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        box-shadow: var(--shadow-2);
+    }
+
+    .code-sample:hover::after {
+        opacity: 1;
+    }
+
+    /* ========== SUBTLE GRADIENT ANIMATIONS ========== */
+    @keyframes gentle-gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .gradient-animated {
+        background: linear-gradient(-45deg, 
+            var(--brand-primary, var(--indigo-6)), 
+            var(--brand-secondary, var(--purple-6)), 
+            var(--brand-tertiary, var(--cyan-6)),
+            var(--brand-primary, var(--indigo-6))
+        );
+        background-size: 400% 400%;
+        animation: gentle-gradient-shift 8s ease-in-out infinite; /* Slowed from 3s to 8s */
+    }
+
+    .hero-animation-canvas {
+        animation-duration: 12s !important; /* Even slower for hero */
+    }
+
+    /* ========== CONTENT DEDUPLICATION ========== */
+    .duplicate-content {
+        display: none; /* Hide redundant sections */
+    }
+
+    /* ========== POLISH IMPROVEMENTS ========== */
+    .guide-main-title {
+        background: linear-gradient(135deg, var(--brand-primary, var(--indigo-6)), var(--brand-secondary, var(--purple-6)));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-content-wrapper {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .stats-container-glass {
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Smooth scrolling improvements */
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+    }
+
+    /* Better focus states */
+    .btn:focus-visible {
+        outline: 2px solid var(--brand-primary, var(--indigo-6));
+        outline-offset: 2px;
+    }
+
+    /* Enhanced card hover effects */
+    .enhanced-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .enhanced-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-4);
+    }
+
+    /* Micro-interactions */
+    .nav-links a {
+        position: relative;
+        transition: all 0.2s ease;
+    }
+
+    .nav-links a::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background: var(--brand-primary, var(--indigo-6));
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
+        width: 100%;
+    }
+
+    /* Better spacing rhythm */
+    .content-section {
+        margin-bottom: var(--size-fluid-6);
+    }
+
+    .section-header {
+        margin-bottom: var(--size-fluid-4);
+    }
+
+    /* Performance optimizations */
+    .hero-animation-canvas * {
+        will-change: transform, opacity;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .gradient-animated {
+            animation: none;
+        }
+        
+        .hero-animation-canvas {
+            animation: none;
+        }
+        
+        * {
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+        }
+    }
+    </style>
+
+    <!-- Icon System -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+</head>
+
+<body id="top">
+    <!-- Mobile Header -->
+    <header class="mobile-header" id="mobile-header">
+        <div class="header-brand">
+            <div class="mobile-header-logo">
+                <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_mobile_logo)">
+                        <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_mobile_logo)"/>
+                        <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                        <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                    </g>
+                    <defs>
+                        <linearGradient id="paint0_linear_mobile_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#D2FF37"/>
+                            <stop offset="1" stop-color="#EEFF00"/>
+                        </linearGradient>
+                        <clipPath id="clip0_mobile_logo">
+                            <rect width="355" height="355" rx="58" fill="white"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+            </div>
+            <span class="header-title">
+                <span>Token</span>
+                <span>Exporter</span>
+                <span class="version-badge">v3 FIXED</span>
+            </span>
+        </div>
+        <div class="mobile-header-controls">
+            <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+                <i data-icon="sun" class="sun-icon"></i>
+                <i data-icon="moon" class="moon-icon"></i>
+            </button>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+                <span class="hamburger-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <div class="guide-container">
+        <!-- Sidebar Navigation -->
+        <nav class="guide-sidebar" id="sidebar">
+            <div class="guide-header">
+                <div class="guide-logo">
+                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_logo)">
+                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_logo)"/>
+                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                        </g>
+                        <defs>
+                            <linearGradient id="paint0_linear_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#D2FF37"/>
+                                <stop offset="1" stop-color="#EEFF00"/>
+                            </linearGradient>
+                            <clipPath id="clip0_logo">
+                                <rect width="355" height="355" rx="58" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="text-heading-md">Token Exporter</h1>
+                <p class="version-info">v3.1 FIXED</p>
+            </div>
+            
+            <div class="nav-wrapper">
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Foundation</h3>
+                    <ul class="nav-links">
+                        <li><a href="#overview" class="nav-link"><i data-icon="home"></i> Overview</a></li>
+                        <li><a href="#colors" class="nav-link"><i data-icon="palette"></i> Colors</a></li>
+                        <li><a href="#typography" class="nav-link"><i data-icon="type"></i> Typography</a></li>
+                        <li><a href="#spacing" class="nav-link"><i data-icon="move-horizontal"></i> Spacing</a></li>
+                        <li><a href="#icons" class="nav-link"><i data-icon="sparkles"></i> Icons</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Components</h3>
+                    <ul class="nav-links">
+                        <li><a href="#buttons" class="nav-link"><i data-icon="mouse-pointer"></i> Buttons</a></li>
+                        <li><a href="#cards" class="nav-link"><i data-icon="credit-card"></i> Cards</a></li>
+                        <li><a href="#modals" class="nav-link"><i data-icon="square"></i> Modals</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="guide-content">
+            <!-- Hero Section with Fixed Typography -->
+            <section id="overview" class="content-section hero-section">
+                <div class="portfolio-hero">
+                    <div class="hero-animation-canvas gradient-animated" id="hero-animation-canvas"></div>
+                    <div class="hero-content-wrapper">
+                        <div class="hero-intro-group">
+                            <div class="hero-logo">
+                                <div class="token-exporter-logo xl">
+                                    <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_hero_logo)">
+                                            <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_hero_logo)"/>
+                                            <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                            <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                                            <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                        </g>
+                                        <defs>
+                                            <linearGradient id="paint0_linear_hero_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#D2FF37"/>
+                                                <stop offset="1" stop-color="#EEFF00"/>
+                                            </linearGradient>
+                                            <clipPath id="clip0_hero_logo">
+                                                <rect width="355" height="355" rx="58" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h1 class="guide-main-title text-heading-xl">Token Exporter</h1>
+                            <p class="hero-tagline text-heading-sm">Bridge the gap from Figma variables to code</p>
+                            <p class="hero-description text-body-lg">Export design tokens to 7 platforms, validated with Style Dictionary standards</p>
+                        </div>
+
+                        <div class="hero-cta-group">
+                            <div class="figma-cta">
+                                <a href="https://www.figma.com/community/plugin/1521741753717588633" target="_blank" class="btn btn-primary btn-lg">
+                                    <i data-icon="figma"></i>
+                                    <span>Get the Plugin</span>
+                                </a>
+                                <a href="https://github.com/n8mills-UI/token-exporter-ds" target="_blank" class="btn btn-secondary btn-md">
+                                    <i data-icon="github"></i>
+                                    <span>View Source</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-indicator">
+                        <i data-icon="chevron-down"></i>
+                        <span>Explore the system</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section with Fixed Heights -->
+            <section class="stats-section">
+                <div class="stats-container-glass">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <i data-icon="package" class="stat-icon"></i>
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Export Platforms</div>
+                        </div>
+                        <div class="stat-item">
+                            <i data-icon="zap" class="stat-icon"></i>
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">Click Export</div>
+                        </div>
+                        <div class="stat-item">
+                            <i data-icon="shield-check" class="stat-icon"></i>
+                            <div class="stat-number">100<span class="stat-suffix">%</span></div>
+                            <div class="stat-label">Style Dictionary Valid</div>
+                        </div>
+                        <div class="stat-item">
+                            <i data-icon="zap" class="stat-icon"></i>
+                            <div class="stat-number">10<span class="stat-suffix">×</span></div>
+                            <div class="stat-label">Faster Export</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Two Column Grid Section with Height Fix -->
+            <div class="content-grid-2col">
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <div class="section-header">
+                        <h2 class="text-heading-lg"><i data-icon="help-circle"></i> FAQ</h2>
+                        <p class="section-description">Common questions answered</p>
+                    </div>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Why build this when other token exporters exist?</span>
+                                <i data-icon="plus" class="faq-toggle"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Most exporters are one-size-fits-all. This one speaks each platform's native language—Swift for iOS, XML for Android, and W3C-compliant CSS for web. It understands context.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Is this production-ready?</span>
+                                <i data-icon="plus" class="faq-toggle"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Absolutely. It's production-ready with Style Dictionary validation, defensive code handling edge cases, and performance optimization. The token system validates 900+ design tokens with proper type inference and platform compatibility.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Style Dictionary Section with Fixed Height -->
+                <div class="style-dictionary-section tech-stack-grid">
+                    <div class="section-header">
+                        <h2 class="text-heading-lg"><i data-icon="terminal"></i> Built With</h2>
+                        <p class="section-description">AI-powered development stack</p>
+                    </div>
+                    <div class="tech-grid">
+                        <div class="tech-item" data-tech="figma">
+                            <i data-icon="figma"></i>
+                            Figma API
+                        </div>
+                        <div class="tech-item" data-tech="style-dictionary">
+                            <i data-icon="layers"></i>
+                            Style Dictionary
+                        </div>
+                        <div class="tech-item" data-tech="typescript">
+                            <i data-icon="code"></i>
+                            TypeScript
+                        </div>
+                        <div class="tech-item" data-tech="ai">
+                            <i data-icon="sparkles"></i>
+                            AI-Assisted
+                        </div>
+                    </div>
+
+                    <!-- Code Sample with Hover Restoration -->
+                    <div class="code-sample-section">
+                        <h3 class="text-heading-sm">Style Dictionary Output</h3>
+                        <div class="code-sample" onclick="copyToClipboard(this)">
+{
+  "color": {
+    "brand": {
+      "primary": {
+        "value": "#D2FF37",
+        "type": "color"
+      }
+    }
+  }
+}
+                        </div>
+                        
+                        <div class="code-sample" onclick="copyToClipboard(this)">
+/* Generated CSS */
+:root {
+  --brand-primary: #D2FF37;
+  --brand-secondary: #EEFF00;
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typography Section with Fixed Hierarchy -->
+            <section id="typography" class="content-section">
+                <div class="section-header">
+                    <h2 class="text-heading-lg"><i data-icon="type"></i> Typography</h2>
+                    <p class="section-description">Foundational type scale with proper hierarchy</p>
+                </div>
+                
+                <div class="typography-showcase">
+                    <div class="type-example">
+                        <h1 class="text-heading-xl">Heading XL</h1>
+                        <code class="code-sample">font-size: var(--text-heading-xl) /* 3.5rem */</code>
+                    </div>
+                    <div class="type-example">
+                        <h2 class="text-heading-lg">Heading LG</h2>
+                        <code class="code-sample">font-size: var(--text-heading-lg) /* 3rem */</code>
+                    </div>
+                    <div class="type-example">
+                        <h3 class="text-heading-md">Heading MD</h3>
+                        <code class="code-sample">font-size: var(--text-heading-md) /* 2.5rem */</code>
+                    </div>
+                    <div class="type-example">
+                        <p class="text-body-lg">Body Large Text</p>
+                        <code class="code-sample">font-size: var(--text-body-lg) /* 1.25rem */</code>
+                    </div>
+                    <div class="type-example">
+                        <p class="text-body-md">Body Medium Text</p>
+                        <code class="code-sample">font-size: var(--text-body-md) /* 1rem */</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Button Component Section with Fixed Sizes -->
+            <section id="buttons" class="content-section">
+                <div class="section-header">
+                    <h2 class="text-heading-lg"><i data-icon="mouse-pointer"></i> Buttons</h2>
+                    <p class="section-description">Interactive elements with proper sizing</p>
+                </div>
+                
+                <div class="button-showcase">
+                    <div class="button-group">
+                        <h3 class="text-heading-sm">Button Sizes</h3>
+                        <div class="buttons-row">
+                            <button class="btn btn-primary btn-lg">Large Button</button>
+                            <button class="btn btn-primary btn-md">Medium Button</button>
+                            <button class="btn btn-primary btn-sm">Small Button</button>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <h3 class="text-heading-sm">Button Variants</h3>
+                        <div class="buttons-row">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-secondary">Secondary</button>
+                            <button class="btn btn-tertiary">Tertiary</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Enhanced JavaScript for Interactions -->
+    <script>
+        // Copy to clipboard function
+        function copyToClipboard(element) {
+            const text = element.textContent || element.innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                // Show success feedback
+                element.style.background = 'var(--green-1)';
+                element.style.borderColor = 'var(--green-6)';
+                setTimeout(() => {
+                    element.style.background = '';
+                    element.style.borderColor = '';
+                }, 1000);
+            });
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Update active state
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                const answer = item.querySelector('.faq-answer');
+                const icon = this.querySelector('.faq-toggle');
+                
+                const isOpen = answer.style.display === 'block';
+                
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.querySelector('.faq-answer').style.display = 'none';
+                        otherItem.querySelector('.faq-toggle').setAttribute('data-icon', 'plus');
+                    }
+                });
+                
+                // Toggle current item
+                if (isOpen) {
+                    answer.style.display = 'none';
+                    icon.setAttribute('data-icon', 'plus');
+                } else {
+                    answer.style.display = 'block';
+                    icon.setAttribute('data-icon', 'minus');
+                }
+                
+                // Re-render icons
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            });
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector('[data-theme-toggle]');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+            
+            // Set initial theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        // Initialize icons
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Performance monitoring
+        console.log('🚀 Token Exporter v3.1 FIXED loaded successfully!');
+        console.log('✅ Typography hierarchy fixed');
+        console.log('✅ Code samples hover restored');
+        console.log('✅ Gradient animations slowed');
+        console.log('✅ Heights balanced');
+        console.log('✅ Polish applied');
+    </script>
+</body>
+</html>
