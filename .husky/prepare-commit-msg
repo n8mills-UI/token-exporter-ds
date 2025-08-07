@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Fun commit message generator with emojis
+# Only runs for regular commits (not merges, squashes, etc.)
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+
+# Skip if it's a merge/squash/fixup
+if [ "$COMMIT_SOURCE" != "" ]; then
+  exit 0
+fi
+
+# Array of emoji prefixes
+EMOJIS=(
+  "✨" "🎨" "🚀" "🔥" "🐛" "📝" "💄" "🎉" "⚡️" "🔧"
+  "🏗️" "♻️" "🎯" "💡" "🧹" "🌈" "⭐" "🎪" "🎭" "🎪"
+)
+
+# Array of fun short phrases
+PHRASES=(
+  "Ship it"
+  "Make it pop"
+  "Clean sweep"
+  "Polish time"
+  "Quick fix"
+  "Level up"
+  "Smooth moves"
+  "Fresh coat"
+  "Dial it in"
+  "Tidy up"
+  "Jazz it up"
+  "Sparkle mode"
+  "Fine tune"
+  "Round two"
+  "Next wave"
+)
+
+# Get random emoji and phrase
+EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]}
+PHRASE=${PHRASES[$RANDOM % ${#PHRASES[@]}]}
+
+# Get current message if any
+CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# If message is empty or just template, replace with fun message
+if [ -z "$CURRENT_MSG" ] || [ "$CURRENT_MSG" = "" ]; then
+  echo "$EMOJI $PHRASE" > "$COMMIT_MSG_FILE"
+fi

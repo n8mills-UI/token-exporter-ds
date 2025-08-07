@@ -352,6 +352,24 @@ These components predate the component isolation architecture and would require 
 5. **Test**: Browser and Figma
 6. **Deploy**: Push to main branch (GitHub Pages serves from /docs automatically)
 
+## Commit Message Style
+
+**KEEP IT SHORT & FUN:**
+- Use emojis! 🎨 ✨ 🚀 🔥 🐛 💄 ⚡️ 🔧
+- Max 50 characters
+- Be playful, not corporate
+- Examples:
+  - ✨ Make it sparkle
+  - 🎨 Polish the pixels  
+  - 🚀 Ship it
+  - 🔥 Hot fix
+  - 🧹 Spring cleaning
+
+**DON'T:**
+- Write essays in commit messages
+- Use "PERMANENT FIX:" or "CRITICAL:" 
+- Be too serious - this is a fun project!
+
 ## Code Style Rules
 
 ### 🚨 ZERO TOLERANCE: Comment Policy
