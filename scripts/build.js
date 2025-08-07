@@ -637,7 +637,7 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     const guideContent = fs.readFileSync(guideTemp, 'utf8');
     
     // Link to external CSS file to avoid minified Open Props parsing issues
-    const styleLink = '<link rel="stylesheet" href="./design-system.css">';
+    const styleLink = '<link rel="stylesheet" href="design-system.css">';
     
     const guideFinal = guideContent.replace('<!-- {{STYLES}} -->', styleLink);
     

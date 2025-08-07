@@ -71,9 +71,9 @@ TEMPLATES         PAGES / FRAMES             LAYOUT STYLES
 
 
 /* 1. Import Open Props - Our foundation design tokens */
-@import url("../vendor/open-props/open-props.min.css");
-@import url("../vendor/open-props/normalize.min.css");
-@import url("../vendor/open-props/buttons.min.css");
+@import url("vendor/open-props/open-props.min.css");
+@import url("vendor/open-props/normalize.min.css");
+@import url("vendor/open-props/buttons.min.css");
 
 /* 
 ==========================================================================
