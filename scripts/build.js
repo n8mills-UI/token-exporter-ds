@@ -644,9 +644,10 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     fs.writeFileSync(path.join(projectRoot, CONFIG.templates.guide.output), guideFinal);
     console.log(`  ${colors.green}✓${colors.reset} ${CONFIG.templates.guide.output}`);
     
-    // Copy the bundled CSS back to docs for GitHub Pages
-    fs.copyFileSync(path.join(projectRoot, CONFIG.tempCssBundle), path.join(projectRoot, CONFIG.cssSource));
-    console.log(`  ${colors.green}✓${colors.reset} Updated docs/design-system.css with bundled version`);
+    // DO NOT COPY BUNDLED CSS - it breaks with minified Open Props!
+    // The docs/design-system.css from commit 744ea0b works perfectly
+    // fs.copyFileSync(path.join(projectRoot, CONFIG.tempCssBundle), path.join(projectRoot, CONFIG.cssSource));
+    console.log(`  ${colors.cyan}ℹ${colors.reset} Keeping existing docs/design-system.css (not bundling)`);
     
     // Cleanup temp files
     fs.unlinkSync(uiTemp);
