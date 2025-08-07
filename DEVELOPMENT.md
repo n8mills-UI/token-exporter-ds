@@ -1,10 +1,10 @@
 # Token Exporter - Private Implementation
 
-> ⚠️ **PRIVATE REPOSITORY** - Proprietary implementation details. For public showcase, see: [token-exporter-showcase](https://github.com/n8mills-UI/token-exporter-showcase)
+> ⚠️ **PUBLIC REPOSITORY** - Now open source! View the live demo at: [https://n8mills-ui.github.io/token-exporter-ds/](https://n8mills-ui.github.io/token-exporter-ds/)
 
 ## 🔒 Repository Status
 
-This is the private implementation repository for Token Exporter, an industry-first Figma plugin that transforms design tokens into production code with zero dependencies.
+This is the public repository for Token Exporter, an industry-first Figma plugin that transforms design tokens into production code with zero dependencies.
 
 **Status**: Ready for Polish & Publish Phase  
 **Architecture**: Innovative CSP-compliant build system  
@@ -117,4 +117,4 @@ Email: nate@natemills.me
 
 ---
 
-*For public documentation and case studies, visit the [showcase repository](https://github.com/n8mills-UI/token-exporter-showcase)*
+*View the live design system guide at: [https://n8mills-ui.github.io/token-exporter-ds/](https://n8mills-ui.github.io/token-exporter-ds/)*

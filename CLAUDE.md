@@ -62,6 +62,8 @@ ls -la | grep -E "\.md$|\.html$|\.json$" | grep -v package
 
 **Token Exporter** is a Figma plugin that transforms design variables into production-ready code across multiple platforms. Built with vanilla JavaScript, it features a sophisticated build system that handles Figma's strict CSP requirements by inlining all external assets.
 
+**Repository Structure**: This is now a single, public repository where GitHub Pages serves the design system documentation directly from the `/docs` folder. The repository is self-contained with both plugin source and documentation.
+
 **Portfolio Context**: This is a portfolio piece for natemills.me - professional tool with purposeful delight (Apple/Wealthsimple aesthetic, not gaming themed).
 
 ## Essential Commands
@@ -325,9 +327,10 @@ These components predate the component isolation architecture and would require 
 
 1. **Check current state**: `git status` and `npm run check`
 2. **Make changes** to source files
-3. **Build**: `npm run build` 
+3. **Build**: `npm run build` (updates both plugin and docs)
 4. **Validate**: `npm run check`
 5. **Test**: Browser and Figma
+6. **Deploy**: Push to main branch (GitHub Pages serves from /docs automatically)
 
 ## Code Style Rules
 
