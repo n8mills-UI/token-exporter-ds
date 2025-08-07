@@ -55,19 +55,24 @@ npm run check      # Run quality checks
 
 ## 🔧 Commands Reference
 
+### Core Scripts (Just 4!)
+- **build.js** - Main build system with CSP workarounds
+- **bundle-css.js** - Inlines Open Props for GitHub Pages
+- **check.js** - Quality checks (includes audit via --comprehensive)
+- **publish-showcase.js** - Deploy to public portfolio repo
+
 ### Essential Commands
 ```bash
 npm run check      # Run quality checks (~10s)
-npm run audit      # Comprehensive audit (~60s)
+npm run audit      # Comprehensive audit (check --comprehensive)
 npm test           # Run test suite
-npm run format     # Auto-fix CSS formatting
+npm run build      # Production build
 ```
 
-### Build Commands
+### Deployment
 ```bash
-npm run build      # Production build
-npm run dev        # Development with watch
-npm start          # Alias for npm run dev
+npm run css:bundle        # Bundle CSS with Open Props
+npm run showcase:publish  # Deploy to showcase repo
 ```
 
 ## 🎯 Current Phase: Polish & Publish (7 Days)

@@ -12,7 +12,7 @@
  * 5. Validates the showcase setup
  * 
  * @author Nate Mills <nate@natemills.me>
- * @version 4.0.0
+ * @version 4.1.0 - FIXED: No longer overwrites showcase README.md
  * 
  * Usage:
  *   node scripts/publish-showcase.js [--dry-run] [--showcase-path=/path/to/repo]
@@ -66,8 +66,8 @@ function parseArgs() {
             'src/ui.html',
             'src/code.js',
             'manifest.json',
-            'package.json',
-            'README.md'
+            'package.json'
+            // README.md REMOVED - showcase has its own README
         ],
         dirsToRemove: [
             'vendor',
@@ -105,7 +105,7 @@ function parseArgs() {
  * @returns {boolean} True if configuration is valid
  */
 function validateConfig(config) {
-    console.log(`\\n${colors.bright}🔍 Validating configuration...${colors.reset}`);
+    console.log(`\n${colors.bright}🔍 Validating configuration...${colors.reset}`);
     
     if (!fs.existsSync(config.sourcePath)) {
         console.error(`${colors.red}✗${colors.reset} Source path not found: ${config.sourcePath}`);
@@ -144,7 +144,7 @@ function validateConfig(config) {
  * @returns {Promise<void>}
  */
 async function prepareBuild(config) {
-    console.log(`\\n${colors.bright}🔧 Preparing build...${colors.reset}`);
+    console.log(`\n${colors.bright}🔧 Preparing build...${colors.reset}`);
     
     try {
         if (config.dryRun) {
@@ -178,7 +178,7 @@ async function prepareBuild(config) {
  * @returns {Promise<void>}
  */
 async function copyFiles(config) {
-    console.log(`\\n${colors.bright}📁 Copying files to showcase repository...${colors.reset}`);
+    console.log(`\n${colors.bright}📁 Copying files to showcase repository...${colors.reset}`);
     
     let copiedCount = 0;
     let skippedCount = 0;
@@ -219,11 +219,12 @@ async function copyFiles(config) {
         }
     }
     
-    console.log(`\\n${colors.cyan}📊 Copy Summary:${colors.reset}`);
+    console.log(`\n${colors.cyan}📊 Copy Summary:${colors.reset}`);
     console.log(`  Files copied: ${colors.green}${copiedCount}${colors.reset}`);
     if (skippedCount > 0) {
         console.log(`  Files skipped: ${colors.yellow}${skippedCount}${colors.reset}`);
     }
+    console.log(`  ${colors.cyan}ℹ${colors.reset} README.md preserved in showcase (not overwritten)`);
 }
 
 /**
@@ -232,7 +233,7 @@ async function copyFiles(config) {
  * @returns {Promise<void>}
  */
 async function cleanupObsolete(config) {
-    console.log(`\\n${colors.bright}🧹 Cleaning up obsolete directories...${colors.reset}`);
+    console.log(`\n${colors.bright}🧹 Cleaning up obsolete directories...${colors.reset}`);
     
     let removedCount = 0;
     
@@ -262,9 +263,9 @@ async function cleanupObsolete(config) {
     }
     
     if (removedCount > 0) {
-        console.log(`\\n${colors.green}✓${colors.reset} Cleaned up ${removedCount} obsolete directories`);
+        console.log(`\n${colors.green}✓${colors.reset} Cleaned up ${removedCount} obsolete directories`);
     } else {
-        console.log(`\\n${colors.cyan}ℹ${colors.reset} No cleanup needed - showcase repository is clean`);
+        console.log(`\n${colors.cyan}ℹ${colors.reset} No cleanup needed - showcase repository is clean`);
     }
 }
 
@@ -274,7 +275,7 @@ async function cleanupObsolete(config) {
  * @returns {Promise<boolean>} True if validation passes
  */
 async function validateShowcase(config) {
-    console.log(`\\n${colors.bright}✅ Validating showcase repository...${colors.reset}`);
+    console.log(`\n${colors.bright}✅ Validating showcase repository...${colors.reset}`);
     
     const requiredFiles = [
         'docs/design-system.css',
@@ -338,8 +339,8 @@ async function checkGitStatus(config) {
         });
         
         if (stdout.trim()) {
-            console.log(`\\n${colors.cyan}📋 Git Status (showcase repository):${colors.reset}`);
-            const lines = stdout.trim().split('\\n');
+            console.log(`\n${colors.cyan}📋 Git Status (showcase repository):${colors.reset}`);
+            const lines = stdout.trim().split('\n');
             lines.forEach(line => {
                 const status = line.substring(0, 2);
                 const file = line.substring(3);
@@ -350,16 +351,16 @@ async function checkGitStatus(config) {
                 console.log(`  ${statusColor}${status}${colors.reset} ${file}`);
             });
             
-            console.log(`\\n${colors.magenta}💡 Next steps:${colors.reset}`);
+            console.log(`\n${colors.magenta}💡 Next steps:${colors.reset}`);
             console.log(`   cd ${config.showcasePath}`);
             console.log(`   git add .`);
             console.log(`   git commit -m "Update from token-exporter-ds"`);
             console.log(`   git push origin main`);
         } else {
-            console.log(`\\n${colors.green}✓${colors.reset} Showcase repository is up to date`);
+            console.log(`\n${colors.green}✓${colors.reset} Showcase repository is up to date`);
         }
     } catch (error) {
-        console.log(`\\n${colors.yellow}⚠${colors.reset} Could not check git status: ${error.message}`);
+        console.log(`\n${colors.yellow}⚠${colors.reset} Could not check git status: ${error.message}`);
     }
 }
 
@@ -368,7 +369,7 @@ async function checkGitStatus(config) {
  * @returns {Promise<void>}
  */
 async function publishShowcase() {
-    console.log(`\\n${colors.bright}${colors.magenta}🚀 Token Exporter Showcase Publisher${colors.reset}`);
+    console.log(`\n${colors.bright}${colors.magenta}🚀 Token Exporter Showcase Publisher${colors.reset}`);
     console.log(`${colors.cyan}${'═'.repeat(50)}${colors.reset}`);
     
     const config = parseArgs();
@@ -398,45 +399,46 @@ async function publishShowcase() {
         
         const elapsed = Date.now() - startTime;
         
-        console.log(`\\n${colors.bright}${colors.green}✨ Showcase Publication Complete!${colors.reset}`);
+        console.log(`\n${colors.bright}${colors.green}✨ Showcase Publication Complete!${colors.reset}`);
         console.log(`${colors.cyan}${'═'.repeat(50)}${colors.reset}`);
         console.log(`   Duration: ${elapsed}ms`);
         console.log(`   Target: ${config.showcasePath}`);
         
         if (config.dryRun) {
-            console.log(`\\n${colors.yellow}🔍 Dry run completed - no files were actually modified${colors.reset}`);
+            console.log(`\n${colors.yellow}🔍 Dry run completed - no files were actually modified${colors.reset}`);
         } else if (isValid) {
-            console.log(`\\n${colors.green}🎯 Showcase repository is ready for deployment!${colors.reset}`);
+            console.log(`\n${colors.green}🎯 Showcase repository is ready for deployment!${colors.reset}`);
         } else {
-            console.log(`\\n${colors.yellow}⚠ Showcase repository has validation issues${colors.reset}`);
+            console.log(`\n${colors.yellow}⚠ Showcase repository has validation issues${colors.reset}`);
             process.exit(1);
         }
         
     } catch (error) {
-        console.error(`\\n${colors.red}💥 Publication failed:${colors.reset}`, error.message);
-        console.error(`\\nStack trace:`, error.stack);
+        console.error(`\n${colors.red}💥 Publication failed:${colors.reset}`, error.message);
+        console.error(`\nStack trace:`, error.stack);
         process.exit(1);
     }
 }
 
 // Help text
 function showHelp() {
-    console.log(`\\n${colors.bright}Token Exporter Showcase Publisher${colors.reset}`);
-    console.log(`\\nUsage: node scripts/publish-showcase.js [options]`);
-    console.log(`\\nOptions:`);
+    console.log(`\n${colors.bright}Token Exporter Showcase Publisher${colors.reset}`);
+    console.log(`\nUsage: node scripts/publish-showcase.js [options]`);
+    console.log(`\nOptions:`);
     console.log(`  ${colors.cyan}--dry-run${colors.reset}                    Preview what would be done`);
     console.log(`  ${colors.cyan}--showcase-path=PATH${colors.reset}         Specify showcase repository path`);
-    console.log(`\\nExamples:`);
+    console.log(`\nExamples:`);
     console.log(`  npm run showcase:publish`);
     console.log(`  node scripts/publish-showcase.js --dry-run`);
     console.log(`  node scripts/publish-showcase.js --showcase-path=../token-exporter-showcase`);
-    console.log(`\\nWhat this script does:`);
+    console.log(`\nWhat this script does:`);
     console.log(`  1. Creates self-contained CSS bundle (resolves @import statements)`);
     console.log(`  2. Builds the Figma plugin with bundled assets`);
     console.log(`  3. Copies all necessary files to showcase repository`);
-    console.log(`  4. Removes obsolete directories (vendor, node_modules)`);
-    console.log(`  5. Validates the showcase setup`);
-    console.log(`  6. Shows git status and next steps`);
+    console.log(`  4. Preserves showcase README.md (does NOT overwrite)`);
+    console.log(`  5. Removes obsolete directories (vendor, node_modules)`);
+    console.log(`  6. Validates the showcase setup`);
+    console.log(`  7. Shows git status and next steps`);
 }
 
 // Command line interface

@@ -17,6 +17,56 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **See section "🤖 MANDATORY Agent Usage Protocol" below for enforcement rules.**
 
+## 🔄 TWO-REPO ARCHITECTURE (CRITICAL UNDERSTANDING)
+
+**UPDATED 2025-08-07: Clean Two-Repo Workflow**
+
+### **Repository Roles:**
+- **token-exporter-ds** (Private): Source of truth, development, implementation
+- **token-exporter-showcase** (Public): Portfolio display, has its own README
+
+### **NEVER TOUCH THESE REPOS DIRECTLY:**
+```bash
+# ❌ WRONG - Direct editing
+cd ../token-exporter-showcase
+git add . && git commit -m "manual update"
+
+# ✅ RIGHT - Use the workflow
+npm run showcase:publish
+```
+
+### **Clean Workflow Commands:**
+```bash
+# 🎯 SIMPLE 3-STEP PROCESS:
+
+# 1. Work in private repo (where you are now)
+npm run dev              # Development
+npm run build            # Production build
+npm run check            # Quality checks
+
+# 2. Prepare for showcase  
+npm run showcase:prepare # Bundles CSS + builds plugin
+
+# 3. Publish to showcase
+npm run showcase:publish # Copies to showcase (PRESERVES showcase README)
+```
+
+### **Key Rules:**
+1. **Never manually copy files between repos**
+2. **Never edit showcase repo directly** 
+3. **showcase:publish does NOT overwrite README.md** (FIXED 2025-08-07)
+4. **All development happens in token-exporter-ds**
+5. **Showcase repo is display-only (except for its own README)**
+
+### **What Goes Where:**
+| File | Private (token-exporter-ds) | Public (token-exporter-showcase) |
+|------|----------------------------|----------------------------------|
+| README.md | Implementation details | Portfolio marketing |
+| Source code | ✅ Edit here | ← Copied via script |
+| Documentation | ✅ Edit here | ← Copied via script |
+| Build files | ✅ Edit here | ← Copied via script |
+| Git history | Full development | Clean showcase commits |
+
 ## 📁 File Organization Rules
 
 **STOP: Before creating ANY file, follow these rules:**
@@ -62,6 +112,18 @@ ls -la | grep -E "\.md$|\.html$|\.json$" | grep -v package
 
 **Token Exporter** is a Figma plugin that transforms design variables into production-ready code across multiple platforms. Built with vanilla JavaScript, it features a sophisticated build system that handles Figma's strict CSP requirements by inlining all external assets.
 
+## 🚨 TWO-REPOSITORY STRUCTURE
+
+**CRITICAL: We have TWO separate repositories:**
+1. **Private Repo** (`token-exporter-ds`) - Source of truth, all development happens here
+2. **Public Repo** (`token-exporter-showcase`) - Portfolio showcase, NEVER edit directly
+
+**RULES:**
+- **NEVER copy README.md** from private to public (they're different!)
+- **NEVER copy package.json** to showcase (not needed)
+- **Public repo files to copy:** Only `docs/`, `src/ui.html`, `src/code.js`, `manifest.json`
+- **Design System Guide URL:** https://n8mills-ui.github.io/token-exporter-showcase/docs/design-system-guide.html
+
 **Portfolio Context**: This is a portfolio piece for natemills.me - professional tool with purposeful delight (Apple/Wealthsimple aesthetic, not gaming themed).
 
 ## Essential Commands
@@ -72,16 +134,20 @@ npm start          # Start development with watch mode
 npm run dev        # Same as npm start - rebuilds on changes
 npm run build      # Build once for production
 
-# Quality Checks
+# Quality Checks  
 npm run check      # Essential checks: Figma compatibility, JS lint, CSS architecture (~10s)
-npm run audit      # Comprehensive audit: all checks + reports (~60s)
+npm run audit      # Same as check with --comprehensive flag (~60s)
 npm run format     # Auto-fix CSS formatting issues
 
 # Testing
 npm test           # Run Jest tests
 npm test:watch     # Run tests in watch mode
 npm test:coverage  # Run tests with coverage report
-npm run test:validation  # Run validation tests only
+npm test:validation  # Run validation tests only
+
+# Two-Repo Workflow (SIMPLIFIED 2025-08-07)
+npm run showcase:prepare  # Bundle CSS + build for showcase
+npm run showcase:publish  # Copy to showcase (preserves README)
 ```
 
 ## 🤖 MANDATORY Agent Delegation Protocol
@@ -484,7 +550,7 @@ See `.dev/docs-internal/reports/MASTER_PLAN.md` for the comprehensive project ro
 
 ## Project Structure & Maintenance
 
-### Directory Organization (Updated 2025-08-06)
+### Directory Organization (Updated 2025-08-07)
 **Essential Directories**:
 - `src/` - Core plugin source code
 - `docs/` - Design system documentation  
@@ -497,6 +563,11 @@ See `.dev/docs-internal/reports/MASTER_PLAN.md` for the comprehensive project ro
 **Archive Strategy**:
 - `.archive/` - Consolidated archive for historical docs
 - Generated files (.lighthouseci/, .snapshots/, reports/) are .gitignored
+
+**Cleanup Files to Remove (2025-08-07)**:
+- `docs/design-system.original.css` - 445KB backup file (remove after verification)
+- Any other `*.original.*` backup files
+- Empty directories in `.dev/temp/`
 
 ### Testing Structure
 **Test Files** (`tests/`):
@@ -530,6 +601,12 @@ See `.dev/docs-internal/reports/MASTER_PLAN.md` for the comprehensive project ro
 - All 8 quality checks now run concurrently using Promise.all()
 - Audit.js already uses parallel execution for comprehensive testing
 - Build.js and other scripts could benefit from similar optimization
+
+#### Two-Repo Workflow (2025-08-07)
+- **README overwrite issue FIXED** - publish-showcase.js no longer copies README.md
+- **Scripts simplified** - Reduced from 44+ to 20 essential scripts
+- **Clear workflow** - 3-step process: develop → prepare → publish
+- **No manual repo editing** - All cross-repo work automated
 
 ---
 

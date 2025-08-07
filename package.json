@@ -7,41 +7,36 @@
     "doc": "docs"
   },
   "scripts": {
+    "_comment1": "✅ CORE DEVELOPMENT (Essential - Keep All)",
     "start": "npm run dev",
     "dev": "node scripts/build.js --watch",
     "build": "node scripts/build.js",
     "build:production": "npm run css:bundle && npm run build",
+    
+    "_comment2": "✅ QUALITY ASSURANCE (Essential - Keep All)", 
     "check": "node scripts/check.js",
+    "audit": "node scripts/check.js --comprehensive",
     "format": "stylelint docs/design-system.css --fix",
-    "templates:validate": "echo 'Template validation passed'",
-    "templates:generate": "echo 'Template generation completed'",
-    "audit": "node scripts/audit.js",
+    
+    "_comment3": "✅ TESTING (Essential - Keep All)",
     "test": "jest",
     "test:validation": "jest tests/validation-*.test.js",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "prepare": "husky",
-    "_comment1": "CSS bundling commands for GitHub Pages deployment:",
+    
+    "_comment4": "✅ TWO-REPO WORKFLOW (Simplified - Keep These)",
     "css:bundle": "node scripts/css-bundler.js bundle",
     "css:promote": "node scripts/css-bundler.js promote", 
     "css:restore": "node scripts/css-bundler.js restore",
     "css:deploy": "node scripts/css-bundler.js full",
-    "_comment2": "Showcase repository commands:",
     "showcase:prepare": "npm run css:deploy && npm run build",
     "showcase:publish": "node scripts/publish-showcase.js",
-    "_comment3": "Individual tools (called by audit script):",
-    "check:all": "node scripts/check.js --all",
-    "tokens:build": "style-dictionary build",
-    "analyze:css": "wallace docs/design-system.css",
-    "stats:css": "cssstats docs/design-system.css > reports/css-stats.json",
-    "analyze:specificity": "specificity-graph docs/design-system.css -o reports/specificity.html",
-    "lint:a11y": "pa11y docs/design-system-guide.html",
-    "ci:install": "npm ci --prefer-offline --no-audit",
-    "ci:build": "npm run build && npm run check",
-    "ci:test": "npm run check:all && npm run lint:a11y",
-    "deploy:staging": "echo 'Staging deployment triggered'",
-    "deploy:production": "echo 'Production deployment triggered'",
-    "health:check": "curl -sSf https://token-exporter.design > /dev/null && echo 'Site is healthy'"
+    
+    "_comment5": "✅ GIT HOOKS (Keep)",
+    "prepare": "husky",
+    
+    "_comment6": "✅ UTILITIES (Frequently Used - Keep)",
+    "check:all": "node scripts/check.js --all"
   },
   "repository": {
     "type": "git",
@@ -104,20 +99,17 @@
     ],
     "*.template.html": [
       "npm run check",
-      "npm run templates:validate",
       "node scripts/check.js"
     ],
     "src/components/_*.html": [
       "npm run check",
-      "npm run templates:validate",
       "node scripts/check.js"
     ],
     "src/components/icons/_icon-system.html": [
       "node scripts/check.js"
     ],
     "src/lib/templates.js": [
-      "npm run templates:generate",
-      "npm run templates:validate"
+      "npm run check"
     ]
   },
   "engines": {
