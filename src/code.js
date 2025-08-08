@@ -350,9 +350,11 @@ function sanitizeName(name, platform = 'css') {
  * @returns {Array} Processed collection results
  */
 async function processCollectionsInParallel(collections, variablesByCollection) {
+    console.log('⚡ processCollectionsInParallel starting with', collections.length, 'collections');
     // Process collections in parallel for better performance
     const collectionPromises = collections.map(async (collection, collectionIndex) => {
         try {
+            console.log('🏭 Processing collection', collectionIndex + 1, ':', collection.name);
             const variablesInCollection = variablesByCollection.get(collection.id) || [];
             const counts = { color: 0, text: 0, states: 0, number: 0 };
             
@@ -395,6 +397,7 @@ async function processCollectionsInParallel(collections, variablesByCollection) 
             }
 
             const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
+            console.log('✅ Completed collection', collection.name, '- variables:', totalVariables);
             
             return { 
                 id: collection.id, 
@@ -404,7 +407,8 @@ async function processCollectionsInParallel(collections, variablesByCollection) 
             };
             
         } catch (error) {
-            console.error('Error processing collection ' + collection.name + ':', 
+            console.error('❌ Error processing collection ' + collection.name + ':', error);
+            console.error('Error details:', 
                 createStructuredError('processCollection', error, { collectionId: collection.id }));
             return {
                 id: collection.id,
@@ -417,7 +421,10 @@ async function processCollectionsInParallel(collections, variablesByCollection) 
     });
     
     // Execute all collection processing in parallel
-    return await Promise.all(collectionPromises);
+    console.log('🚀 Starting Promise.all for', collectionPromises.length, 'collections');
+    const results = await Promise.all(collectionPromises);
+    console.log('✅ processCollectionsInParallel completed, returning', results.length, 'results');
+    return results;
 }
 
 /**
@@ -489,6 +496,7 @@ async function processCollectionsSequentially(collections, variablesByCollection
  */
 async function getCollectionsForUI() {
     try {
+        console.log('🚀 Starting getCollectionsForUI...');
         checkMemoryUsage();
         
         // Fetch collections with better error handling
@@ -496,6 +504,7 @@ async function getCollectionsForUI() {
             figma.variables.getLocalVariableCollectionsAsync(),
             new Promise(resolve => setTimeout(resolve, 300)) // Minimum delay to prevent flashing
         ]);
+        console.log('📊 Collections fetch result:', collectionsResult[0].status);
         
         if (collectionsResult[0].status === 'rejected') {
             const reasonObj = collectionsResult[0].reason;
@@ -506,8 +515,10 @@ async function getCollectionsForUI() {
         }
         
         const collections = collectionsResult[0].value;
+        console.log('📁 Found collections:', collections.length);
 
         if (!collections.length) {
+             console.log('❌ No collections found, sending empty result');
              figma.ui.postMessage({ type: 'all-collections', collections: [] });
              return;
         }
@@ -515,7 +526,9 @@ async function getCollectionsForUI() {
         let allVariables;
         try {
             allVariables = await figma.variables.getLocalVariablesAsync();
+            console.log('🎯 Found variables:', allVariables.length);
         } catch (error) {
+            console.error('❌ Failed to fetch variables:', error);
             throw new NetworkError('Failed to fetch variables from Figma', {
                 originalError: error.message
             });
@@ -538,104 +551,107 @@ async function getCollectionsForUI() {
             variablesById.set(variable.id, variable);
         }
         
-        // Process collections in chunks to avoid blocking
+        // SIMPLIFIED ROBUST PROCESSING: Bypass complex chunking for debugging
+        console.log('🚀 SIMPLIFIED: Processing all', collections.length, 'collections sequentially for reliability...');
+        
         const results = [];
         const totalVariables = allVariables.length;
-        const isLargeDataset = totalVariables > 1000; // Threshold for lazy loading
         
-        for (let i = 0; i < collections.length; i += CHUNK_SIZE) {
-            const chunk = collections.slice(i, i + CHUNK_SIZE);
+        // Process each collection individually to ensure reliability
+        for (let i = 0; i < collections.length; i++) {
+            const collection = collections[i];
+            console.log('💾 Processing collection', i + 1, '/', collections.length, ':', collection.name);
             
-            // Use parallel processing for better performance, fallback to sequential if needed
-            let chunkResults;
             try {
-                chunkResults = await processCollectionsInParallel(chunk, variablesByCollection);
-            } catch (parallelError) {
-                console.warn('Parallel processing failed, falling back to sequential:', parallelError.message);
-                chunkResults = isLargeDataset 
-                    ? await processCollectionsSequentially(chunk, variablesByCollection)
-                    : await Promise.all(chunk.map(async (collection) => {
-                try {
-                    const variablesInCollection = variablesByCollection.get(collection.id) || [];
-                    const counts = { color: 0, text: 0, states: 0, number: 0 };
-                    
-                    // Process in batches to avoid blocking for large collections
-                    for (let j = 0; j < variablesInCollection.length; j += BATCH_SIZE) {
-                        const batch = variablesInCollection.slice(j, j + BATCH_SIZE);
-                        
-                        for (const v of batch) {
-                            switch (v.resolvedType) {
-                                case 'COLOR': counts.color++; break;
-                                case 'STRING': counts.text++; break;
-                                case 'BOOLEAN': counts.states++; break;
-                                case 'FLOAT': counts.number++; break;
-                            }
-                        }
-                        
-                        // Check memory every 10 operations instead of every operation
-                        if (j % (BATCH_SIZE * 10) === 0 && j > 0) {
-                            await new Promise(resolve => setTimeout(resolve, 0));
-                            checkMemoryUsage();
-                        }
-                    }
-
-                    const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
-                    
-                    return { 
-                        id: collection.id, 
-                        name: collection.name, 
-                        counts: counts,
-                        totalVariables: totalVariables
-                    };
-                } catch (error) {
-                    console.error('Error processing collection ' + collection.name + ':', 
-                        createStructuredError('processCollection', error, { collectionId: collection.id }));
-                    return {
-                        id: collection.id,
-                        name: collection.name,
-                        counts: { color: 0, text: 0, states: 0, number: 0 },
-                        totalVariables: 0,
-                        error: true
-                    };
-                }
-            }));
-            }
-            
-            // Handle both parallel and fallback results
-            if (Array.isArray(chunkResults)) {
-                results.push(...chunkResults);
-            } else {
-                // This shouldn't happen with the new parallel processing, but keep for safety
-                results.push(chunkResults);
-            }
-            
-            // Update progress for very large datasets
-            if (collections.length > 20 || isLargeDataset) {
-                const progress = Math.round((i + chunk.length) / collections.length * 100);
-                figma.notify('Processing collections: ' + progress + '%', { timeout: 500 });
+                const variablesInCollection = variablesByCollection.get(collection.id) || [];
+                const counts = { color: 0, text: 0, states: 0, number: 0 };
                 
-                // Optimized memory check - every 10 operations instead of every operation
-                if (isLargeDataset && i % (CHUNK_SIZE * 10) === 0) {
-                    checkMemoryUsage();
+                // Count variables by type
+                for (const variable of variablesInCollection) {
+                    switch (variable.resolvedType) {
+                        case 'COLOR': counts.color++; break;
+                        case 'STRING': counts.text++; break;
+                        case 'BOOLEAN': counts.states++; break;
+                        case 'FLOAT': counts.number++; break;
+                    }
                 }
+                
+                const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
+                console.log('✅ Collection', collection.name, '- Variables:', totalVariables, 'Counts:', counts);
+                
+                results.push({
+                    id: collection.id,
+                    name: collection.name,
+                    counts: counts,
+                    totalVariables: totalVariables
+                });
+                
+                // Show progress for large datasets
+                if (collections.length > 10) {
+                    const progress = Math.round((i + 1) / collections.length * 100);
+                    console.log('📊 Progress:', progress + '%');
+                    if (i % 5 === 0 || i === collections.length - 1) {
+                        figma.notify('Processing: ' + progress + '% (' + (i + 1) + '/' + collections.length + ')', { timeout: 1000 });
+                    }
+                }
+                
+                // Yield control every few collections
+                if (i % 5 === 0 && i > 0) {
+                    await new Promise(resolve => setTimeout(resolve, 0));
+                }
+                
+            } catch (error) {
+                console.error('❌ Error processing collection', collection.name + ':', error);
+                // Add failed collection with zero counts
+                results.push({
+                    id: collection.id,
+                    name: collection.name,
+                    counts: { color: 0, text: 0, states: 0, number: 0 },
+                    totalVariables: 0,
+                    error: true
+                });
             }
         }
         
+        console.log('🏁 SIMPLIFIED processing complete. Total results:', results.length);
+        
         // Calculate global totals
+        // Calculate global totals
+        console.log('🧮 Calculating global totals from', results.length, 'collections...');
         globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
-        results.forEach(collection => {
-            Object.entries(collection.counts).forEach(([type, count]) => {
-                globalTokenCounts[type] += count;
-            });
+        results.forEach((collection, idx) => {
+            if (collection.counts) {
+                Object.entries(collection.counts).forEach(([type, count]) => {
+                    if (typeof count === 'number') {
+                        globalTokenCounts[type] += count;
+                    }
+                });
+            }
         });
+        console.log('📊 Final global counts:', globalTokenCounts);
+        console.log('💾 Valid collections:', results.filter(r => !r.error).length, '/', results.length);
 
-        figma.ui.postMessage({ 
-            type: 'all-collections', 
-            collections: results,
-            globalCounts: globalTokenCounts
-        });
+        // CRITICAL: Always send response, even if empty
+        if (results.length === 0) {
+            console.log('⚠️ No collections processed, sending empty results');
+            figma.ui.postMessage({ type: 'all-collections', collections: [] });
+        } else {
+            console.log('📤 Sending results to UI:', results.length, 'collections');
+            console.log('🔢 Global counts:', globalTokenCounts);
+            
+            figma.ui.postMessage({ 
+                type: 'all-collections', 
+                collections: results,
+                globalCounts: globalTokenCounts
+            });
+            
+            console.log('✅ Message sent successfully to UI');
+        }
 
     } catch (error) {
+        console.error('💥 CRITICAL ERROR in getCollectionsForUI:', error);
+        console.error('Error stack:', error.stack);
+        
         let userMessage;
         let structuredError;
         
@@ -653,6 +669,7 @@ async function getCollectionsForUI() {
         console.error('Error fetching collections:', structuredError);
             
         figma.notify(userMessage, { error: true, timeout: 5000 });
+        console.log('📤 Sending empty result due to error');
         figma.ui.postMessage({ type: 'all-collections', collections: [] });
     }
 }
@@ -1359,9 +1376,12 @@ function generateFormatContentManual(designTokens, format) {
 // --- MESSAGE HANDLING ---
 figma.ui.onmessage = async (msg) => {
     try {
+        console.log('📨 Received message:', msg.type);
         switch (msg.type) {
             case 'get-collections':
+                console.log('🚀 Processing get-collections request...');
                 await getCollectionsForUI();
+                console.log('✅ get-collections request completed');
                 break;
             case 'export-tokens': {
                 const { collectionIds, formats, activeTokenTypes } = msg;

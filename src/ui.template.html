@@ -83,22 +83,43 @@
             globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 },
         };
 
+        // Initialize DOMElements object (will be populated when DOM is ready)
         const DOMElements = {
-            skeletonLoader: document.getElementById('skeleton-loader'),
-            emptyState: document.getElementById('empty-state'),
-            mainUI: document.getElementById('main-ui'),
-            tokenSummaryCard: document.getElementById('token-summary-card'),
+            skeletonLoader: null,
+            emptyState: null,
+            mainUI: null,
+            tokenSummaryCard: null,
             // New stateful elements
-            exportCardContainer: document.getElementById('export-card-container'),
-            quickExportView: document.getElementById('quick-export-view'),
-            advancedFilterView: document.getElementById('advanced-filter-view'),
+            exportCardContainer: null,
+            quickExportView: null,
+            advancedFilterView: null,
             // Theme toggle
-            themeToggle: document.getElementById('theme-toggle'),
+            themeToggle: null,
             // Modals and overlays
-            aboutModal: document.getElementById('about-modal'),
-            progressOverlay: document.getElementById('progress-overlay'),
-            aboutLink: document.getElementById('about-link'),
+            aboutModal: null,
+            progressOverlay: null,
+            aboutLink: null,
         };
+        
+        // Function to populate DOM elements when ready
+        function populateDOMElements() {
+            const elements = {
+                skeletonLoader: document.getElementById('skeleton-loader'),
+                emptyState: document.getElementById('empty-state'),
+                mainUI: document.getElementById('main-ui'),
+                tokenSummaryCard: document.getElementById('token-summary-card'),
+                exportCardContainer: document.getElementById('export-card-container'),
+                quickExportView: document.getElementById('quick-export-view'),
+                advancedFilterView: document.getElementById('advanced-filter-view'),
+                themeToggle: document.getElementById('theme-toggle'),
+                aboutModal: document.getElementById('about-modal'),
+                progressOverlay: document.getElementById('progress-overlay'),
+                aboutLink: document.getElementById('about-link'),
+            };
+            
+            Object.assign(DOMElements, elements);
+            return elements;
+        }
 
         // --- UTILITIES ---
         const openUrl = (url) => parent.postMessage({ pluginMessage: { type: 'open-url', url } }, '*');
@@ -717,21 +738,51 @@ function updateTokenSummary() {
         }
         
         function stopLoadingMessages() {
-            if (loadingMessageInterval) {
-                clearInterval(loadingMessageInterval);
-                loadingMessageInterval = null;
+            try {
+                if (loadingMessageInterval) {
+                    clearInterval(loadingMessageInterval);
+                    loadingMessageInterval = null;
+                    console.log('✅ Loading messages interval cleared');
+                } else {
+                    console.log('ℹ️ No loading message interval to clear');
+                }
+            } catch (error) {
+                console.error('❌ Error stopping loading messages:', error);
             }
         }
 
         // --- INITIALIZATION ---
         function initialize() {
+            console.log('🚀 UI Initialize starting...');
+            
+            // Populate DOM elements first
+            populateDOMElements();
+            
             // Initialize theme first
             initializeTheme();
+            
+            // Debug DOM elements initialization
+            console.log('🔍 DOM Elements check:', {
+                skeletonLoader: !!DOMElements.skeletonLoader,
+                emptyState: !!DOMElements.emptyState,
+                mainUI: !!DOMElements.mainUI
+            });
             
             // Explicitly set the correct initial UI state.
             if (DOMElements.skeletonLoader) {
                 DOMElements.skeletonLoader.style.display = 'block';
                 startLoadingMessages(); // Start the delightful messages
+                console.log('✅ Skeleton loader shown and messages started');
+            } else {
+                console.error('❌ Skeleton loader element not found!');
+                // Try to find it directly as fallback
+                const fallbackLoader = document.getElementById('skeleton-loader');
+                if (fallbackLoader) {
+                    console.log('ℹ️ Found skeleton loader via fallback method');
+                    DOMElements.skeletonLoader = fallbackLoader;
+                    fallbackLoader.style.display = 'block';
+                    startLoadingMessages();
+                }
             }
             if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
             if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
@@ -740,34 +791,129 @@ function updateTokenSummary() {
             renderIcons(); 
 
             // Immediately ask the main plugin for the variable collections.
-            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+            console.log('📤 Requesting collections from main plugin...');
+            
+            // Send a test message first to verify communication
+            console.log('🧪 Testing message communication...');
+            try {
+                parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                console.log('✅ get-collections message sent successfully');
+            } catch (error) {
+                console.error('❌ Error sending get-collections message:', error);
+            }
 
             // Attach all static event listeners.
             attachEventListeners();
+            
+            // Set up a timeout to detect if no collections message is received
+            const messageTimeout = setTimeout(() => {
+                console.warn('⚠️ No collections message received after 5 seconds');
+                console.log('🔍 Current UI state:', {
+                    skeletonVisible: DOMElements.skeletonLoader?.style.display !== 'none',
+                    emptyStateVisible: DOMElements.emptyState?.style.display !== 'none',
+                    mainUIVisible: DOMElements.mainUI?.style.display !== 'none'
+                });
+                
+                // Force fallback to empty state if no response
+                if (DOMElements.skeletonLoader) {
+                    DOMElements.skeletonLoader.style.display = 'none';
+                }
+                if (DOMElements.emptyState) {
+                    DOMElements.emptyState.style.display = 'flex';
+                }
+                stopLoadingMessages();
+            }, 5000);
+            
+            // Store timeout ID so we can clear it when message is received
+            window.collectionsTimeout = messageTimeout;
+            
+            console.log('✅ UI Initialize completed');
         }
 
         window.onmessage = (event) => {
+            console.log('📨 UI received message:', event.data);
             const msg = event.data.pluginMessage;
-            if (!msg) return;
+            if (!msg) {
+                console.warn('⚠️ Message received but no pluginMessage found');
+                return;
+            }
+            
+            console.log('📋 Processing message type:', msg.type);
+            
             switch (msg.type) {
                 case 'all-collections':
-                    stopLoadingMessages(); // Stop the delightful messages
-                    DOMElements.skeletonLoader.style.display = 'none';
-                    appState.collections = msg.collections || [];
-                    if (appState.collections.length === 0) {
-                        // If no collections, show the empty state and hide the main UI
-                        DOMElements.emptyState.style.display = 'flex';
-                        DOMElements.mainUI.style.display = 'none';
-                    } else {
-                        // If collections exist, show the main UI and hide the empty state
-                        DOMElements.emptyState.style.display = 'none';
-                        DOMElements.mainUI.style.display = 'block';
-                        appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
-                        appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
-                        appState.selectedCollections = new Set(appState.collections.map(c => c.id));
-                        updateUI();
+                    console.log('🔄 Processing all-collections message with', msg.collections?.length || 0, 'collections');
+                    
+                    // Clear the message timeout since we received the response
+                    if (window.collectionsTimeout) {
+                        clearTimeout(window.collectionsTimeout);
+                        window.collectionsTimeout = null;
+                        console.log('✅ Collections timeout cleared');
                     }
-                    renderIcons();
+                    
+                    try {
+                        // Stop loading messages safely
+                        stopLoadingMessages();
+                        console.log('✅ Loading messages stopped');
+                        
+                        // Hide skeleton loader safely
+                        if (DOMElements.skeletonLoader) {
+                            DOMElements.skeletonLoader.style.display = 'none';
+                            console.log('✅ Skeleton loader hidden');
+                        } else {
+                            console.error('❌ Skeleton loader element not found when trying to hide');
+                        }
+                        
+                        // Process collections
+                        appState.collections = msg.collections || [];
+                        console.log('📊 Collections processed:', appState.collections.length);
+                        
+                        if (appState.collections.length === 0) {
+                            // If no collections, show the empty state and hide the main UI
+                            if (DOMElements.emptyState) {
+                                DOMElements.emptyState.style.display = 'flex';
+                                console.log('✅ Empty state shown');
+                            }
+                            if (DOMElements.mainUI) {
+                                DOMElements.mainUI.style.display = 'none';
+                                console.log('✅ Main UI hidden');
+                            }
+                        } else {
+                            // If collections exist, show the main UI and hide the empty state
+                            if (DOMElements.emptyState) {
+                                DOMElements.emptyState.style.display = 'none';
+                                console.log('✅ Empty state hidden');
+                            }
+                            if (DOMElements.mainUI) {
+                                DOMElements.mainUI.style.display = 'block';
+                                console.log('✅ Main UI shown');
+                            }
+                            
+                            appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
+                            appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
+                            appState.selectedCollections = new Set(appState.collections.map(c => c.id));
+                            
+                            console.log('🔄 Updating UI...');
+                            updateUI();
+                            console.log('✅ UI updated');
+                        }
+                        
+                        renderIcons();
+                        console.log('✅ Icons rendered');
+                        console.log('🎉 all-collections message processed successfully');
+                        
+                    } catch (error) {
+                        console.error('💥 Error processing all-collections message:', error);
+                        console.error('Error stack:', error.stack);
+                        
+                        // Fallback: at least hide the skeleton loader
+                        if (DOMElements.skeletonLoader) {
+                            DOMElements.skeletonLoader.style.display = 'none';
+                        }
+                        if (DOMElements.emptyState) {
+                            DOMElements.emptyState.style.display = 'flex';
+                        }
+                    }
                     break;
                 case 'export-progress':
                     // Don't update if we're already animating smoothly
@@ -798,6 +944,59 @@ function updateTokenSummary() {
             resizeObserver.observe(contentWrapper);
         }
 
-        document.addEventListener('DOMContentLoaded', initialize);
+        // Enhanced initialization with debugging
+        function safeInitialize() {
+            console.log('🔄 DOM ready, starting initialization...');
+            
+            // Verify all critical elements exist
+            const criticalElements = {
+                'skeleton-loader': document.getElementById('skeleton-loader'),
+                'empty-state': document.getElementById('empty-state'),
+                'main-ui': document.getElementById('main-ui'),
+                'content-wrapper': document.getElementById('content-wrapper')
+            };
+            
+            let missingElements = [];
+            Object.entries(criticalElements).forEach(([name, element]) => {
+                if (!element) {
+                    missingElements.push(name);
+                }
+            });
+            
+            if (missingElements.length > 0) {
+                console.error('❌ Critical DOM elements missing:', missingElements);
+            } else {
+                console.log('✅ All critical DOM elements found');
+            }
+            
+            // Update DOMElements object with verified elements
+            Object.assign(DOMElements, criticalElements);
+            
+            // Verify message handler is working
+            console.log('🔍 Testing message handler setup...');
+            if (typeof window.onmessage === 'function') {
+                console.log('✅ Message handler is attached');
+            } else {
+                console.error('❌ Message handler not attached properly!');
+            }
+            
+            initialize();
+        }
+        
+        // Multiple initialization strategies for robustness
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', safeInitialize);
+        } else {
+            // DOM is already ready
+            safeInitialize();
+        }
+        
+        // Fallback initialization after a short delay
+        setTimeout(() => {
+            if (!DOMElements.skeletonLoader) {
+                console.warn('⚠️ Fallback initialization triggered');
+                safeInitialize();
+            }
+        }, 100);
     </script>
 </body>
