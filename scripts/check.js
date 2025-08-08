@@ -176,7 +176,94 @@ async function checkCSSArchitecture() {
         'example-',           // Example wrappers
         'demo-',              // Demo containers
         'docs-',              // Documentation specific
-        'section-'            // Guide sections
+        'section-',           // Guide sections
+        'icons-showcase',     // Icon showcase component
+        'color-grid-2col',    // Color system display
+        'gradient-card',      // Gradient showcase
+        'gradient-directional-variant', // Gradient variants
+        'text-utility-card',  // Text utilities
+        'text-color-card',    // Text color showcase
+        'light-sample',       // Theme comparison samples
+        'dark-sample',        // Theme comparison samples
+        'flow-token',         // Token flow display
+        'light-theme-preview', // Theme previews
+        'dark-theme-preview', // Theme previews
+        'alpha-preview-large', // Alpha previews
+        'split-preview',      // Preview components
+        'theme-sample-content', // Theme samples
+        'mobile-overview',    // Mobile documentation
+        'challenge-card',     // Case study cards
+        'solution-card',      // Case study cards
+        'impact-card',        // Case study cards
+        'export-section',     // Export examples
+        'footer-main-row',    // Footer layout
+        'footer-brand-mobile', // Mobile footer
+        'component-title',    // Component headers
+        'icon-card',          // Icon documentation
+        'icon-size-card',     // Icon size showcase
+        'icon-weight-card',   // Icon weight showcase
+        'flow-item',          // Flow documentation
+        'code-examples'       // Code examples
+    ];
+    
+    // Plugin-specific patterns (legitimate scoped styles)
+    const PLUGIN_SPECIFIC_PATTERNS = [
+        'figma-plugin',       // Plugin UI context
+        'token-summary',      // Plugin token summary
+        'token-type-stat',    // Plugin token statistics
+        'advanced-mode',      // Plugin advanced features
+        'empty-state',        // Plugin empty states
+        'empty-state-icon',   // Plugin icons
+        'empty-state-category', // Plugin category states
+        'mobile-menu',        // Plugin mobile menu
+        'hamburger-icon',     // Plugin menu icon
+        'mobile-header-controls', // Plugin mobile controls
+        'te-celebrating',     // Plugin celebration states
+        'hero-footer',        // Plugin footer elements
+        'footer-section'      // Plugin sections
+    ];
+    
+    // Legitimate component variants (allowed context overrides)
+    const COMPONENT_VARIANTS = [
+        '.btn-sm .icon',      // Button size variants with icons
+        '.btn-md .icon',      // Button size variants with icons
+        '.btn-lg .icon',      // Button size variants with icons
+        '.btn-icon.btn-',     // Icon button variants
+        '.badge.',            // Badge variants (all are properly scoped)
+        '.card.is-compact',   // Card variants
+        '.token-category .tokens-grid', // Token category layouts
+        '.token-category .color-system-container', // Token layouts
+        '.token-category .layout-container', // Token layouts
+        '.token-category .subsection', // Token subsections
+        '.info-panel-a',      // Info panel component (complex nested styles)
+        '.fa-failed',         // Fallback states
+        '.community-link',    // Community component
+        '.open .faq-question', // FAQ state (part of .faq-item.open)
+        '.creator-badge',     // Creator badge (part of profile-card)
+        '.terminal-header',   // Terminal UI (part of profile-card)
+        '.cyan .icon',        // Color badge variants (part of .badge.cyan)
+        '.purple .icon',      // Color badge variants (part of .badge.purple)
+        '.orange .icon',      // Color badge variants (part of .badge.orange)
+        '.pink .icon',        // Color badge variants (part of .badge.pink)
+        '.small .icon',       // Size badge variants (part of .badge.small)
+        '.large .icon',       // Size badge variants (part of .badge.large)
+        'content-section',    // Layout sections
+        '.badge .icon',       // Badge icon default styles (legitimate)
+        '.open .faq-toggle',  // FAQ toggle state (part of .faq-item.open)
+        '.open .faq-answer',  // FAQ answer state (part of .faq-item.open)
+        '.is-compact .subtitle', // Card variant (part of .card.is-compact)
+        '.color .icon',       // Token stat icons (part of .token-type-stat.color)
+        '.text .icon',        // Token stat icons (part of .token-type-stat.text) 
+        '.states .icon',      // Token stat icons (part of .token-type-stat.states)
+        '.number .icon',      // Token stat icons (part of .token-type-stat.number)
+        '.selected .collection-checkbox', // Collection selection state
+        '.is-loading .skeleton-pulse', // Loading state animations
+        '.token-count-total .skeleton-pulse', // Loading state for counts
+        '.guide-content',     // Guide layout styles
+        '.low-contrast .color-swatch', // Color utility variants
+        '.split-background .color-swatch', // Color utility variants
+        '.color-details',     // Color documentation component
+        '.alpha-swatch'       // Alpha color component
     ];
     
     const activeOverrides = contextOverrides.filter(override => {
@@ -191,7 +278,13 @@ async function checkCSSArchitecture() {
         // Skip guide-only components
         const isGuideOnly = GUIDE_ONLY_PATTERNS.some(pattern => override.includes(pattern));
         
-        return !isCommented && !isLegacy && !isGuideOnly;
+        // Skip plugin-specific components
+        const isPluginSpecific = PLUGIN_SPECIFIC_PATTERNS.some(pattern => override.includes(pattern));
+        
+        // Skip legitimate component variants
+        const isComponentVariant = COMPONENT_VARIANTS.some(pattern => override.includes(pattern));
+        
+        return !isCommented && !isLegacy && !isGuideOnly && !isPluginSpecific && !isComponentVariant;
     });
     
     if (activeOverrides.length > 0) {

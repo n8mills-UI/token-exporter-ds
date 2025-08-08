@@ -227,6 +227,9 @@ describe('Validation Logic Unit Tests', () => {
                     return elementMap[id] || null;
                 })
             };
+            
+            // Store reference to spy for later verification
+            global.getElementByIdSpy = global.document.getElementById;
         });
         
         test('should display validation results for success state', () => {
@@ -263,10 +266,20 @@ describe('Validation Logic Unit Tests', () => {
             
             displayValidationResults(successResults, jest.fn(), jest.fn());
             
-            expect(mockElements.validationLoading.style.display).toBe('none');
-            expect(mockElements.validationResults.style.display).toBe('block');
-            expect(mockElements.validationSuccess.style.display).toBe('block');
-            expect(mockElements.validationSuccess.querySelector).toHaveBeenCalledWith('.validation-status-message');
+            // Check that the function properly called getElementById to get the elements
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-loading');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-results');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-success');
+            
+            // Verify the returned elements had their display styles changed
+            const loadingElement = global.document.getElementById('validation-loading');
+            const resultsElement = global.document.getElementById('validation-results');
+            const successElement = global.document.getElementById('validation-success');
+            
+            expect(loadingElement.style.display).toBe('none');
+            expect(resultsElement.style.display).toBe('block');
+            expect(successElement.style.display).toBe('block');
+            expect(successElement.querySelector).toHaveBeenCalledWith('.validation-status-message');
         });
         
         test('should display validation results for warning state', () => {
@@ -303,10 +316,20 @@ describe('Validation Logic Unit Tests', () => {
             
             displayValidationResults(warningResults, jest.fn(), jest.fn());
             
-            expect(mockElements.validationLoading.style.display).toBe('none');
-            expect(mockElements.validationResults.style.display).toBe('block');
-            expect(mockElements.validationWarnings.style.display).toBe('block');
-            expect(mockElements.validationWarnings.querySelector).toHaveBeenCalledWith('.validation-status-message');
+            // Check that the function properly called getElementById to get the elements
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-loading');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-results');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-warnings');
+            
+            // Verify the returned elements had their display styles changed
+            const loadingElement = global.document.getElementById('validation-loading');
+            const resultsElement = global.document.getElementById('validation-results');
+            const warningsElement = global.document.getElementById('validation-warnings');
+            
+            expect(loadingElement.style.display).toBe('none');
+            expect(resultsElement.style.display).toBe('block');
+            expect(warningsElement.style.display).toBe('block');
+            expect(warningsElement.querySelector).toHaveBeenCalledWith('.validation-status-message');
         });
         
         test('should display validation results for error state', () => {
@@ -344,10 +367,20 @@ describe('Validation Logic Unit Tests', () => {
             
             displayValidationResults(errorResults, jest.fn(), jest.fn());
             
-            expect(mockElements.validationLoading.style.display).toBe('none');
-            expect(mockElements.validationResults.style.display).toBe('block');
-            expect(mockElements.validationErrors.style.display).toBe('block');
-            expect(mockElements.validationErrors.querySelector).toHaveBeenCalledWith('.validation-status-message');
+            // Check that the function properly called getElementById to get the elements
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-loading');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-results');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-errors');
+            
+            // Verify the returned elements had their display styles changed
+            const loadingElement = global.document.getElementById('validation-loading');
+            const resultsElement = global.document.getElementById('validation-results');
+            const errorsElement = global.document.getElementById('validation-errors');
+            
+            expect(loadingElement.style.display).toBe('none');
+            expect(resultsElement.style.display).toBe('block');
+            expect(errorsElement.style.display).toBe('block');
+            expect(errorsElement.querySelector).toHaveBeenCalledWith('.validation-status-message');
         });
         
         test('should reset modal state correctly', () => {
@@ -372,11 +405,25 @@ describe('Validation Logic Unit Tests', () => {
             
             resetValidationModalState();
             
-            expect(mockElements.validationLoading.style.display).toBe('block');
-            expect(mockElements.validationResults.style.display).toBe('none');
-            expect(mockElements.validationSuccess.style.display).toBe('none');
-            expect(mockElements.validationWarnings.style.display).toBe('none');
-            expect(mockElements.validationErrors.style.display).toBe('none');
+            // Verify that the reset function called getElementById for all elements
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-loading');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-results');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-success');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-warnings');
+            expect(global.getElementByIdSpy).toHaveBeenCalledWith('validation-errors');
+            
+            // Check the elements returned by getElementById have the correct styles
+            const loadingElement = global.document.getElementById('validation-loading');
+            const resultsElement = global.document.getElementById('validation-results');
+            const successElement = global.document.getElementById('validation-success');
+            const warningsElement = global.document.getElementById('validation-warnings');
+            const errorsElement = global.document.getElementById('validation-errors');
+            
+            expect(loadingElement.style.display).toBe('block');
+            expect(resultsElement.style.display).toBe('none');
+            expect(successElement.style.display).toBe('none');
+            expect(warningsElement.style.display).toBe('none');
+            expect(errorsElement.style.display).toBe('none');
         });
     });
     

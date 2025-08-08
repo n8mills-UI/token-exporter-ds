@@ -307,8 +307,18 @@ describe('Validation Edge Cases Tests', () => {
                         
                         // Basic color validation
                         const isValidHex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(colorValue);
-                        const isValidRgb = /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/.test(colorValue);
-                        const isValidHsl = /^hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)$/.test(colorValue);
+                        let isValidRgb = false;
+                        let isValidHsl = false;
+                        
+                        // More thorough RGB validation
+                        const rgbMatch = colorValue.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/);
+                        if (rgbMatch) {
+                            const [, r, g, b] = rgbMatch;
+                            isValidRgb = parseInt(r) <= 255 && parseInt(g) <= 255 && parseInt(b) <= 255;
+                        }
+                        
+                        // Basic HSL pattern check
+                        isValidHsl = /^hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)$/.test(colorValue);
                         
                         if (!isValidHex && !isValidRgb && !isValidHsl) {
                             issues.push('Invalid color format in token "' + token.name + '": ' + colorValue);
@@ -418,15 +428,15 @@ describe('Validation Edge Cases Tests', () => {
                         return;
                     }
                     
-                    // Check for invalid characters
-                    if (!/^[a-zA-Z_$][a-zA-Z0-9_$-]*$/.test(name)) {
-                        issues.push('Token name "' + name + '" contains invalid characters');
+                    // Check for names starting with numbers
+                    if (/^[0-9]/.test(name)) {
+                        issues.push('Token name "' + name + '" cannot start with a number');
                         return;
                     }
                     
-                    // Check for names that start with numbers
-                    if (/^[0-9]/.test(name)) {
-                        issues.push('Token name "' + name + '" cannot start with a number');
+                    // Check for invalid characters
+                    if (!/^[a-zA-Z_$][a-zA-Z0-9_$-]*$/.test(name)) {
+                        issues.push('Token name "' + name + '" contains invalid characters');
                         return;
                     }
                     
@@ -596,6 +606,14 @@ describe('Validation Edge Cases Tests', () => {
         test('should handle rapid modal open/close cycles', () => {
             let modalState = 'closed';
             let animationInProgress = false;
+            const activeTimeouts = [];
+            
+            // Create a controlled setTimeout that doesn't execute callbacks immediately
+            const controlledSetTimeout = (fn, delay) => {
+                const timeoutId = activeTimeouts.length;
+                activeTimeouts.push({ fn, delay, id: timeoutId });
+                return timeoutId;
+            };
             
             const toggleModal = (action) => {
                 if (animationInProgress) {
@@ -603,8 +621,9 @@ describe('Validation Edge Cases Tests', () => {
                 }
                 
                 if (action === 'open' && modalState === 'closed') {
+                    modalState = 'opening';
                     animationInProgress = true;
-                    setTimeout(() => {
+                    controlledSetTimeout(() => {
                         modalState = 'open';
                         animationInProgress = false;
                     }, 400); // Animation duration
@@ -612,8 +631,9 @@ describe('Validation Edge Cases Tests', () => {
                 }
                 
                 if (action === 'close' && modalState === 'open') {
+                    modalState = 'closing';
                     animationInProgress = true;
-                    setTimeout(() => {
+                    controlledSetTimeout(() => {
                         modalState = 'closed';
                         animationInProgress = false;
                     }, 300); // Close animation duration
@@ -624,11 +644,11 @@ describe('Validation Edge Cases Tests', () => {
             };
             
             const open1 = toggleModal('open');
-            const close1 = toggleModal('close'); // Should fail - animation in progress
+            const close1 = toggleModal('close'); // Should fail - animation in progress  
             const open2 = toggleModal('open');  // Should fail - animation in progress
             
             expect(open1.success).toBe(true);
-            expect(close1.success).toBe(false);
+            expect(close1.success).toBe(false); // Should fail because animation is in progress
             expect(close1.reason).toBe('animation-in-progress');
             expect(open2.success).toBe(false);
             expect(open2.reason).toBe('animation-in-progress');

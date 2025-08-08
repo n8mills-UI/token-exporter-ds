@@ -4508,11 +4508,11 @@ body {
     text-align: center;
 }
 
-.icon-category-item .icon {
+.icon-category-item__icon {
     margin-bottom: var(--size-1);
 }
 
-.icon-category-item code {
+.icon-category-item__code {
     font-size: var(--font-size-0);
     color: var(--color-text-muted);
 }

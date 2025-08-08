@@ -49,6 +49,12 @@ describe('Validation Accessibility Tests', () => {
             }
         };
         
+        // Set up the querySelector mock for the modal after mockElements is created
+        mockElements.validationModal.querySelector.mockImplementation((selector) => {
+            if (selector.includes('validation-modal-close')) return mockElements.validationCloseBtn;
+            return null;
+        });
+        
         global.document = {
             getElementById: jest.fn((id) => {
                 const elementMap = {
