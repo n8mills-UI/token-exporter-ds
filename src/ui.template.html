@@ -131,16 +131,39 @@
             };
         };
         
+        // Safe localStorage wrapper for data: URLs (Figma plugin context)
+        function safeLocalStorage() {
+            try {
+                if (window.localStorage && window.localStorage.setItem) {
+                    // Test if localStorage actually works
+                    window.localStorage.setItem('__test__', 'test');
+                    window.localStorage.removeItem('__test__');
+                    return window.localStorage;
+                }
+            } catch (e) {
+                console.warn('localStorage not available, using fallback');
+            }
+            // Return a fake localStorage that doesn't crash
+            return {
+                getItem: () => null,
+                setItem: () => {},
+                removeItem: () => {},
+                clear: () => {}
+            };
+        }
+        
         // --- THEME MANAGEMENT ---
         function initializeTheme() {
             // Get stored theme or default to light
-            const storedTheme = localStorage.getItem('token-exporter-theme') || 'light';
+            const storage = safeLocalStorage();
+            const storedTheme = storage.getItem('token-exporter-theme') || 'light';
             setTheme(storedTheme);
         }
         
         function setTheme(theme) {
             document.body.setAttribute('data-theme', theme);
-            localStorage.setItem('token-exporter-theme', theme);
+            const storage = safeLocalStorage();
+            storage.setItem('token-exporter-theme', theme);
             
             if (DOMElements.themeToggle) {
                 DOMElements.themeToggle.setAttribute('aria-pressed', theme === 'dark');
@@ -800,6 +823,13 @@ function updateTokenSummary() {
                 console.log('✅ get-collections message sent successfully');
             } catch (error) {
                 console.error('❌ Error sending get-collections message:', error);
+                // Try alternative message format as fallback
+                try {
+                    parent.postMessage({ type: 'get-collections' }, '*');
+                    console.log('✅ Fallback message format sent');
+                } catch (fallbackError) {
+                    console.error('❌ Fallback message also failed:', fallbackError);
+                }
             }
 
             // Attach all static event listeners.
@@ -832,9 +862,21 @@ function updateTokenSummary() {
 
         window.onmessage = (event) => {
             console.log('📨 UI received message:', event.data);
-            const msg = event.data.pluginMessage;
-            if (!msg) {
-                console.warn('⚠️ Message received but no pluginMessage found');
+            
+            // Handle different message structures from Figma
+            let msg = null;
+            if (event.data && event.data.pluginMessage) {
+                msg = event.data.pluginMessage;
+            } else if (event.data && event.data.type) {
+                // Direct message format
+                msg = event.data;
+            } else {
+                console.warn('⚠️ Message received but no valid message structure found:', event.data);
+                return;
+            }
+            
+            if (!msg || !msg.type) {
+                console.warn('⚠️ Message missing type property:', msg);
                 return;
             }
             
@@ -940,8 +982,15 @@ function updateTokenSummary() {
 
         // Observe the main content wrapper for size changes
         const contentWrapper = document.getElementById('content-wrapper');
-        if (contentWrapper) {
-            resizeObserver.observe(contentWrapper);
+        if (contentWrapper && contentWrapper instanceof Node) {
+            try {
+                resizeObserver.observe(contentWrapper);
+                console.log('✅ ResizeObserver attached to content wrapper');
+            } catch (error) {
+                console.warn('⚠️ Failed to attach ResizeObserver:', error);
+            }
+        } else {
+            console.warn('⚠️ Content wrapper element not found or not a valid Node');
         }
 
         // Enhanced initialization with debugging

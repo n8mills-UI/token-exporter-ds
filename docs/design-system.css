@@ -9303,16 +9303,57 @@ body {
  font-family: var(--font-mono);
  color: var(--color-text-default);
  margin-bottom: var(--size-2);
- font-size: var(--font-size-1);
+ font-size: clamp(0.75rem, 2.5vw, var(--font-size-1)); /* Responsive sizing */
  font-weight: var(--font-weight-6);
+ word-break: break-word; /* Allow breaking long token names */
+ line-height: 1.2;
+}
+
+/* Responsive adjustments for token names */
+@media (width <= 768px) {
+ .token-name {
+  font-size: 0.8rem; /* Slightly smaller on mobile */
+ }
 }
 
 .token-value {
  font-family: var(--font-mono);
  color: var(--color-text-muted);
  margin-bottom: var(--size-3);
- font-size: var(--font-size-0);
- word-break: break-all;
+ font-size: clamp(0.65rem, 2vw, var(--font-size-0)); /* Responsive sizing */
+ line-height: 1.2;
+ word-break: break-word; /* Better than break-all for readability */
+ hyphens: auto;
+ min-height: 1.5em; /* Prevent collapse */
+}
+
+/* Prevent text wrapping on narrow grids */
+@media (width <= 1024px) {
+ .token-value {
+  font-size: 0.7rem; /* Slightly smaller on tablets */
+ }
+}
+
+@media (width <= 768px) {
+ .token-value {
+  font-size: 0.75rem; /* Comfortable size on mobile */
+ }
+}
+
+/* For 3-column grids specifically (glow, shadows) */
+.shadow-grid .token-value,
+.glow-grid .token-value {
+ white-space: nowrap; /* Prevent wrapping in 3-col layouts */
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+/* Allow wrapping only in single column */
+@media (width <= 768px) {
+ .shadow-grid .token-value,
+ .glow-grid .token-value {
+  white-space: normal; /* Allow wrap in single column */
+ }
 }
 
 .token-preview {
@@ -13515,11 +13556,7 @@ button.theme-toggle {
     color: var(--color-text-muted);
 }
 
-.token-value {
-    font-size: var(--font-size-2);
-    font-weight: var(--font-weight-6);
-    color: var(--color-text-default);
-}
+/* Removed duplicate .token-value definition */
 
 .token-description {
     font-size: var(--font-size-1);
