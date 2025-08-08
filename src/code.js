@@ -7,7 +7,7 @@ figma.showUI(__html__,{title: "Token Exporter", width: 340, height: 480 });
 let globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
 
 // --- CONSTANTS ---
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 500;
 const CHUNK_SIZE = 10;
 const MEMORY_WARNING_THRESHOLD = 100; // MB
 const MAX_EXPORT_SIZE = 50 * 1024 * 1024; // 50MB
@@ -344,6 +344,83 @@ function sanitizeName(name, platform = 'css') {
 // --- HELPER FUNCTIONS FOR PERFORMANCE ---
 
 /**
+ * Processes collections with parallel execution for better performance
+ * @param {Array} collections - Collections to process
+ * @param {Map} variablesByCollection - Variables grouped by collection
+ * @returns {Array} Processed collection results
+ */
+async function processCollectionsInParallel(collections, variablesByCollection) {
+    // Process collections in parallel for better performance
+    const collectionPromises = collections.map(async (collection, collectionIndex) => {
+        try {
+            const variablesInCollection = variablesByCollection.get(collection.id) || [];
+            const counts = { color: 0, text: 0, states: 0, number: 0 };
+            
+            // Process variables in batches with parallel processing
+            const batchPromises = [];
+            for (let j = 0; j < variablesInCollection.length; j += BATCH_SIZE) {
+                const batch = variablesInCollection.slice(j, j + BATCH_SIZE);
+                
+                // Process each batch in parallel
+                const batchPromise = Promise.resolve().then(() => {
+                    const batchCounts = { color: 0, text: 0, states: 0, number: 0 };
+                    
+                    for (const v of batch) {
+                        switch (v.resolvedType) {
+                            case 'COLOR': batchCounts.color++; break;
+                            case 'STRING': batchCounts.text++; break;
+                            case 'BOOLEAN': batchCounts.states++; break;
+                            case 'FLOAT': batchCounts.number++; break;
+                        }
+                    }
+                    
+                    return batchCounts;
+                });
+                
+                batchPromises.push(batchPromise);
+            }
+            
+            // Wait for all batches to complete and aggregate results
+            const batchResults = await Promise.all(batchPromises);
+            batchResults.forEach(batchCounts => {
+                counts.color += batchCounts.color;
+                counts.text += batchCounts.text;
+                counts.states += batchCounts.states;
+                counts.number += batchCounts.number;
+            });
+            
+            // Check memory every 10 operations instead of every operation
+            if (collectionIndex % 10 === 0) {
+                checkMemoryUsage();
+            }
+
+            const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
+            
+            return { 
+                id: collection.id, 
+                name: collection.name, 
+                counts: counts,
+                totalVariables: totalVariables
+            };
+            
+        } catch (error) {
+            console.error('Error processing collection ' + collection.name + ':', 
+                createStructuredError('processCollection', error, { collectionId: collection.id }));
+            return {
+                id: collection.id,
+                name: collection.name,
+                counts: { color: 0, text: 0, states: 0, number: 0 },
+                totalVariables: 0,
+                error: true
+            };
+        }
+    });
+    
+    // Execute all collection processing in parallel
+    return await Promise.all(collectionPromises);
+}
+
+/**
  * Processes collections sequentially for better memory management with large datasets
  * @param {Array} collections - Collections to process
  * @param {Map} variablesByCollection - Variables grouped by collection
@@ -469,10 +546,15 @@ async function getCollectionsForUI() {
         for (let i = 0; i < collections.length; i += CHUNK_SIZE) {
             const chunk = collections.slice(i, i + CHUNK_SIZE);
             
-            // For large datasets, process collections sequentially to manage memory
-            const chunkResults = isLargeDataset 
-                ? await processCollectionsSequentially(chunk, variablesByCollection)
-                : await Promise.all(chunk.map(async (collection) => {
+            // Use parallel processing for better performance, fallback to sequential if needed
+            let chunkResults;
+            try {
+                chunkResults = await processCollectionsInParallel(chunk, variablesByCollection);
+            } catch (parallelError) {
+                console.warn('Parallel processing failed, falling back to sequential:', parallelError.message);
+                chunkResults = isLargeDataset 
+                    ? await processCollectionsSequentially(chunk, variablesByCollection)
+                    : await Promise.all(chunk.map(async (collection) => {
                 try {
                     const variablesInCollection = variablesByCollection.get(collection.id) || [];
                     const counts = { color: 0, text: 0, states: 0, number: 0 };
@@ -490,9 +572,10 @@ async function getCollectionsForUI() {
                             }
                         }
                         
-                        // Yield to prevent blocking
-                        if (j % 1000 === 0 && j > 0) {
+                        // Check memory every 10 operations instead of every operation
+                        if (j % (BATCH_SIZE * 10) === 0 && j > 0) {
                             await new Promise(resolve => setTimeout(resolve, 0));
+                            checkMemoryUsage();
                         }
                     }
 
@@ -516,16 +599,23 @@ async function getCollectionsForUI() {
                     };
                 }
             }));
+            }
             
-            results.push(...(Array.isArray(chunkResults) ? chunkResults : [chunkResults]));
+            // Handle both parallel and fallback results
+            if (Array.isArray(chunkResults)) {
+                results.push(...chunkResults);
+            } else {
+                // This shouldn't happen with the new parallel processing, but keep for safety
+                results.push(chunkResults);
+            }
             
             // Update progress for very large datasets
             if (collections.length > 20 || isLargeDataset) {
                 const progress = Math.round((i + chunk.length) / collections.length * 100);
                 figma.notify('Processing collections: ' + progress + '%', { timeout: 500 });
                 
-                // Additional memory check for large datasets
-                if (isLargeDataset) {
+                // Optimized memory check - every 10 operations instead of every operation
+                if (isLargeDataset && i % (CHUNK_SIZE * 10) === 0) {
                     checkMemoryUsage();
                 }
             }
@@ -1338,3 +1428,19 @@ figma.ui.onmessage = async (msg) => {
         figma.notify('An unexpected error occurred. Please try again.', { error: true });
     }
 };
+
+// Export functions for testing (Node.js environment)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        ValidationError,
+        NetworkError,
+        ProcessingError,
+        MemoryError,
+        validateExportInputs,
+        sanitizeName,
+        generateNamingVariants,
+        generateFormatContentManual,
+        checkMemoryUsage,
+        createStructuredError
+    };
+}
