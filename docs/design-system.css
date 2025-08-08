@@ -865,6 +865,7 @@ body {
     
     /* Interactive Colors */
     --color-interactive-primary: var(--brand-primary);
+    --color-interactive-primary-hover: color-mix(in srgb, var(--brand-primary) 90%, black);
     --color-interactive-secondary: var(--brand-secondary);
     --color-interactive-tertiary: var(--gray-warm-6);
     --color-interactive-muted: var(--gray-warm-4);
@@ -6717,6 +6718,7 @@ select option {
     flex-direction: column;
     min-height: 100vh;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* Main content should grow to push footer down */
@@ -9791,7 +9793,8 @@ body {
 }
 
 /* Animation classes for demos */
-.demo-ease-1 { transition-timing-function: var(--ease-1); }
+/* Motion Demo Classes */
+.demo-ease-linear { transition-timing-function: linear; }
 .demo-ease-3 { transition-timing-function: var(--ease-3); }
 .demo-ease-spring-3 { transition-timing-function: var(--ease-spring-3); }
 .demo-duration-1 { transition-duration: var(--animation-duration-1); }
@@ -10088,12 +10091,238 @@ body {
     }
 }
 
+/* Enhanced Motion Demo Components */
+
+/* Motion Track for Easing Demos */
+.motion-track {
+    width: 100%;
+    height: 48px;
+    background: var(--motion-track-bg);
+    border: var(--border-size-1) solid var(--motion-demo-border);
+    border-radius: var(--radius-2);
+    position: relative;
+    overflow: hidden;
+}
+
+.motion-ball {
+    width: var(--size-4);
+    height: var(--size-4);
+    background: var(--brand-gradient-primary);
+    border-radius: var(--radius-round);
+    position: absolute;
+    left: var(--size-2);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 1.2s;
+}
+
+.motion-ball.animate {
+    transform: translateY(-50%) translateX(200px);
+}
+
+/* Duration Bar Demos */
+.duration-bar {
+    width: 0;
+    height: var(--size-4);
+    background: var(--brand-gradient-primary);
+    border-radius: var(--radius-1);
+    margin: var(--size-6) 0;
+    transition: width;
+}
+
+.duration-bar.animate {
+    width: 100%;
+}
+
+/* Play Button Styling */
+.motion-play-btn {
+    background: var(--motion-btn-bg);
+    border: var(--border-size-1) solid var(--motion-demo-border);
+    border-radius: var(--radius-2);
+    padding: var(--size-2) var(--size-4);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-5);
+    color: var(--color-text-default);
+    cursor: pointer;
+    transition: all var(--animation-duration-2) var(--ease-3);
+    margin-top: var(--size-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+}
+
+.motion-play-btn:hover {
+    background: var(--motion-btn-hover-bg);
+    border-color: var(--brand-primary);
+    color: var(--color-text-default);
+}
+
+.motion-play-btn:active {
+    transform: scale(0.95);
+}
+
+/* Token Display */
+.motion-token {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-00);
+    color: var(--color-text-subtle);
+    background: var(--surface-3);
+    border: var(--border-size-1) solid var(--color-border-subtle);
+    border-radius: var(--radius-1);
+    padding: var(--size-1) var(--size-2);
+    margin-top: var(--size-2);
+    display: inline-block;
+}
+
+/* Real-World Example Demos */
+.demo-btn-hover {
+    background: var(--color-interactive-primary);
+    border: none;
+    border-radius: var(--radius-2);
+    padding: var(--size-3) var(--size-5);
+    color: white;
+    font-weight: var(--font-weight-5);
+    cursor: pointer;
+    transition: all var(--animation-duration-2) var(--ease-3);
+    margin: var(--size-4) 0;
+}
+
+.demo-btn-hover:hover {
+    background: var(--color-interactive-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-3);
+}
+
+.demo-card-lift {
+    background: var(--surface-2);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-3);
+    padding: var(--size-4) var(--size-5);
+    text-align: center;
+    font-weight: var(--font-weight-5);
+    cursor: pointer;
+    transition: all var(--animation-duration-3) var(--ease-3);
+    margin: var(--size-4) 0;
+}
+
+.demo-card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-4);
+    border-color: var(--color-border-strong);
+}
+
+.demo-logo-float {
+    font-size: var(--font-size-6);
+    text-align: center;
+    margin: var(--size-6) 0;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.demo-content-fade {
+    background: var(--surface-2);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    padding: var(--size-4);
+    text-align: center;
+    font-weight: var(--font-weight-5);
+    margin: var(--size-4) 0;
+    transition: opacity var(--animation-duration-4) var(--ease-3);
+}
+
+.demo-content-fade.fade-out {
+    opacity: 0.2;
+}
+
+/* Motion Demo Layout Improvements */
+.motion-demo-box {
+    height: 120px;
+    background: var(--surface-1);
+    border: var(--border-size-1) solid var(--color-border-subtle);
+    border-radius: var(--radius-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: var(--size-3) 0;
+    padding: var(--size-3);
+}
+
+.motion-demo-card {
+    background: var(--motion-demo-bg);
+    border: var(--border-size-1) solid var(--motion-demo-border);
+    border-radius: var(--radius-3);
+    padding: var(--size-5);
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.motion-demo-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-2);
+}
+
+.motion-demo-card h4 {
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-2);
+    color: var(--color-text-default);
+}
+
+.motion-demo-card p {
+    font-size: var(--font-size-0);
+    color: var(--color-text-subtle);
+    margin-bottom: var(--size-4);
+    line-height: var(--font-lineheight-3);
+}
+
+/* Motion Demo Grid Layout */
+.motion-demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--size-4);
+    margin-bottom: var(--size-6);
+}
+
+.motion-demo-category {
+    margin-bottom: var(--size-8);
+}
+
+.motion-demo-category h3 {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-6);
+    margin-bottom: var(--size-4);
+    color: var(--color-text-default);
+    padding-bottom: var(--size-2);
+    border-bottom: var(--border-size-1) solid var(--color-border-subtle);
+}
+
 /* Responsive design for motion demos */
 @media (width <= 768px) {
- .motion-demos-container {
-     grid-template-columns: 1fr;
-     gap: var(--size-8);
- }
+    .motion-demos-container {
+        grid-template-columns: 1fr;
+        gap: var(--size-8);
+    }
+    
+    .motion-demo-grid {
+        grid-template-columns: 1fr;
+        gap: var(--size-4);
+    }
+    
+    .motion-ball.animate {
+        transform: translateY(-50%) translateX(150px);
+    }
+    
+    .motion-play-btn {
+        padding: var(--size-3) var(--size-4);
+        font-size: var(--font-size-0);
+    }
 }
 
 /* Token copy button styles removed - tokens are display only */

@@ -68,7 +68,7 @@
         </div>
     </main>
 
-    <!-- @include src/components/_about-modal.html -->
+    <!-- About modal removed - footer now links directly to natemills.me -->
     
     <div class="progress-overlay" id="progress-overlay" style="display: none;"></div>
 
@@ -95,10 +95,8 @@
             advancedFilterView: null,
             // Theme toggle
             themeToggle: null,
-            // Modals and overlays
-            aboutModal: null,
+            // Progress overlay
             progressOverlay: null,
-            aboutLink: null,
         };
         
         // Function to populate DOM elements when ready
@@ -112,9 +110,7 @@
                 quickExportView: document.getElementById('quick-export-view'),
                 advancedFilterView: document.getElementById('advanced-filter-view'),
                 themeToggle: document.getElementById('theme-toggle'),
-                aboutModal: document.getElementById('about-modal'),
                 progressOverlay: document.getElementById('progress-overlay'),
-                aboutLink: document.getElementById('about-link'),
             };
             
             Object.assign(DOMElements, elements);
@@ -333,23 +329,7 @@ function updateTokenSummary() {
                 });
             }
             
-            // Static listeners
-            DOMElements.aboutLink.onclick = (e) => {
-                e.preventDefault();
-                DOMElements.aboutModal.classList.add('show');
-                renderIcons();
-            };
-            DOMElements.aboutModal.onclick = (e) => {
-                if (e.target.closest('[data-close-modal]') || e.target.closest('.about-modal-backdrop') || e.target === DOMElements.aboutModal) {
-                    DOMElements.aboutModal.classList.remove('show');
-                }
-            };
-            DOMElements.aboutModal.querySelectorAll('.about-link').forEach(link => {
-                link.onclick = (e) => {
-                    e.preventDefault();
-                    openUrl(link.dataset.url);
-                };
-            });
+            // Footer link - opens directly to natemills.me (handled by browser)
             // Note: emptyStateAction is now inside a partial, but this should still work
             // as long as the script runs after the DOM is populated.
             const emptyStateAction = document.querySelector('.empty-state-action');
@@ -610,6 +590,7 @@ function updateTokenSummary() {
             const container = document.getElementById('pluginProgressLoader');
             if (!container) {
                 updateTokenSummary();
+                renderIcons();
                 if (fileData && fileData.length > 0) triggerSave(fileData);
                 return;
             }
@@ -630,6 +611,7 @@ function updateTokenSummary() {
 
             setTimeout(() => {
                 updateTokenSummary();
+                renderIcons();
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
@@ -655,7 +637,10 @@ function updateTokenSummary() {
                 '</div>';
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');
-            if (closeBtn) closeBtn.onclick = updateTokenSummary;
+            if (closeBtn) closeBtn.onclick = function() {
+                updateTokenSummary();
+                renderIcons();
+            };
         }
 
         async function triggerSave(data) {

@@ -654,11 +654,130 @@
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
-                        <div class="tokens-grid animation-grid">
-                            <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--animation-duration-2</div><div class="token-value">150ms</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard duration</div></div></div></div>
+                        <div class="category-header">
+                            <h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2>
+                            <p class="section-description">Interactive motion system showcasing easing curves, durations, and real-world animations.</p>
+                        </div>
+                        
+                        <!-- Easing Playground -->
+                        <div class="motion-demo-category">
+                            <h3>Easing Curves</h3>
+                            <div class="motion-demo-grid">
+                                <div class="motion-demo-card">
+                                    <h4>Linear</h4>
+                                    <p>Consistent speed throughout</p>
+                                    <div class="motion-demo-box">
+                                        <div class="motion-track">
+                                            <div class="motion-ball demo-ease-linear" data-easing="linear"></div>
+                                        </div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-ease-linear">Play</button>
+                                    <div class="motion-token">ease: linear</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Smooth</h4>
+                                    <p>Natural acceleration and deceleration</p>
+                                    <div class="motion-demo-box">
+                                        <div class="motion-track">
+                                            <div class="motion-ball demo-ease-3" data-easing="ease-3"></div>
+                                        </div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-ease-3">Play</button>
+                                    <div class="motion-token">--ease-3</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Spring</h4>
+                                    <p>Bouncy, playful motion</p>
+                                    <div class="motion-demo-box">
+                                        <div class="motion-track">
+                                            <div class="motion-ball demo-ease-spring-3" data-easing="ease-spring-3"></div>
+                                        </div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-ease-spring-3">Play</button>
+                                    <div class="motion-token">--ease-spring-3</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Duration Comparison -->
+                        <div class="motion-demo-category">
+                            <h3>Duration Scale</h3>
+                            <div class="motion-demo-grid">
+                                <div class="motion-demo-card">
+                                    <h4>Fast</h4>
+                                    <p>Quick interactions and feedback</p>
+                                    <div class="motion-demo-box">
+                                        <div class="duration-bar demo-duration-1"></div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-duration-1">Play</button>
+                                    <div class="motion-token">150ms</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Medium</h4>
+                                    <p>Standard interface animations</p>
+                                    <div class="motion-demo-box">
+                                        <div class="duration-bar demo-duration-2"></div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-duration-2">Play</button>
+                                    <div class="motion-token">200ms</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Slow</h4>
+                                    <p>Emphasized state changes</p>
+                                    <div class="motion-demo-box">
+                                        <div class="duration-bar demo-duration-3"></div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-duration-3">Play</button>
+                                    <div class="motion-token">300ms</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Live Examples -->
+                        <div class="motion-demo-category">
+                            <h3>Real-World Examples</h3>
+                            <div class="motion-demo-grid">
+                                <div class="motion-demo-card">
+                                    <h4>Button Hover</h4>
+                                    <p>Interactive button with smooth transitions</p>
+                                    <div class="motion-demo-box">
+                                        <button class="demo-btn-hover">Hover Me</button>
+                                    </div>
+                                    <div class="motion-token">hover: 200ms ease-3</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Card Lift</h4>
+                                    <p>Elevation change on interaction</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-card-lift">Interactive Card</div>
+                                    </div>
+                                    <div class="motion-token">transform: 300ms ease-3</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Logo Float</h4>
+                                    <p>Subtle continuous animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-logo-float">💫</div>
+                                    </div>
+                                    <div class="motion-token">animation: 3s ease-in-out infinite</div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <h4>Content Fade</h4>
+                                    <p>Smooth content transitions</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-content-fade">Smooth Transition</div>
+                                    </div>
+                                    <button class="motion-play-btn" data-target=".demo-content-fade">Toggle</button>
+                                    <div class="motion-token">opacity: 400ms ease-3</div>
+                                </div>
+                            </div>
                         </div>
                         
                     </div>
@@ -3365,6 +3484,96 @@ function playMotionDemo(demoType) {
         element.classList.remove('animate-' + demoType);
     }, animationDuration[demoType] || 1000);
 }
+
+// Motion Demo Interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle play buttons for motion demos
+    const playButtons = document.querySelectorAll('.motion-play-btn');
+    
+    playButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetSelector = this.getAttribute('data-target');
+            if (!targetSelector) return;
+            
+            const targetElement = document.querySelector(targetSelector);
+            if (!targetElement) return;
+            
+            // Remove existing animation class first
+            targetElement.classList.remove('animate');
+            
+            // Force reflow to restart animation
+            targetElement.offsetHeight;
+            
+            // Add animation class
+            targetElement.classList.add('animate');
+            
+            // Update button text temporarily
+            const originalText = this.textContent;
+            this.textContent = 'Playing...';
+            this.disabled = true;
+            
+            // Reset button after animation
+            setTimeout(() => {
+                this.textContent = originalText;
+                this.disabled = false;
+                targetElement.classList.remove('animate');
+            }, 1500);
+        });
+    });
+    
+    // Handle content fade toggle
+    const fadeToggleButtons = document.querySelectorAll('[data-target=".demo-content-fade"]');
+    
+    fadeToggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetElement = document.querySelector('.demo-content-fade');
+            if (!targetElement) return;
+            
+            const isFaded = targetElement.classList.contains('fade-out');
+            
+            if (isFaded) {
+                targetElement.classList.remove('fade-out');
+                this.textContent = 'Fade Out';
+            } else {
+                targetElement.classList.add('fade-out');
+                this.textContent = 'Fade In';
+            }
+        });
+    });
+    
+    // Auto-play motion demos on scroll (optional enhancement)
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.6
+    };
+    
+    const motionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const card = entry.target;
+                const playButton = card.querySelector('.motion-play-btn');
+                
+                // Auto-trigger demonstration after a delay
+                setTimeout(() => {
+                    if (playButton && playButton.getAttribute('data-target')) {
+                        playButton.click();
+                    }
+                }, 800);
+                
+                // Only observe once per card
+                motionObserver.unobserve(card);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe motion demo cards for auto-play
+    const motionCards = document.querySelectorAll('.motion-demo-card');
+    motionCards.forEach(card => {
+        motionObserver.observe(card);
+    });
+});
+
 </script>
 
     </body>
