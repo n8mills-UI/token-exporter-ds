@@ -9256,25 +9256,19 @@ body {
 
 .spacing-grid {
  display: grid;
- grid-template-columns: repeat(6, 1fr); /* 6 columns for 6 spacing items */
+ grid-template-columns: repeat(6, 1fr); /* 6 columns for desktop */
  gap: var(--size-4);
 }
 
-@media (width <= 1024px) {
+@media (width <= 1200px) {
  .spacing-grid {
-  grid-template-columns: repeat(3, 1fr); /* 3x2 grid on tablet */
+  grid-template-columns: repeat(3, 1fr); /* 3x2 grid on smaller desktop/tablet */
  }
 }
 
-@media (width <= 768px) {
+@media (width <= 640px) {
  .spacing-grid {
   grid-template-columns: repeat(2, 1fr); /* 2x3 grid on mobile */
- }
-}
-
-@media (width <= 480px) {
- .spacing-grid {
-  grid-template-columns: 1fr; /* Single column on small mobile */
  }
 }
 
@@ -9346,6 +9340,29 @@ body {
  white-space: nowrap; /* Prevent wrapping in 3-col layouts */
  overflow: hidden;
  text-overflow: ellipsis;
+}
+
+/* For spacing grid - handle rem • px format */
+.spacing-grid .token-value {
+ white-space: nowrap; /* Prevent wrapping of "0.25rem • 4px" format */
+ overflow: hidden;
+ text-overflow: ellipsis;
+ font-size: 0.7rem; /* Readable size that fits well */
+}
+
+/* Adjust for 3-column layout */
+@media (width <= 1200px) {
+ .spacing-grid .token-value {
+  font-size: 0.75rem; /* Slightly larger in 3-col */
+ }
+}
+
+/* Allow wrapping in 2-column layout if needed */
+@media (width <= 640px) {
+ .spacing-grid .token-value {
+  font-size: 0.8rem; /* Comfortable size for 2-col */
+  white-space: nowrap; /* Still prevent wrap in 2-col */
+ }
 }
 
 /* Allow wrapping only in single column */
