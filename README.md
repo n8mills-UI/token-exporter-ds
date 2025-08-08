@@ -1,13 +1,13 @@
 # Token Exporter 🎨 → 📦
 > **Transform Figma design tokens into production code across 7 platforms. Validated with Style Dictionary, powered by zero dependencies.**
 
-![Token Exporter Hero](https://github.com/user-attachments/assets/dc6d145a-77ea-43ca-984a-8bf8a5b3f4b3)
+![Token Exporter Hero](https://github.com/user-attachments/assets/6a94f30e-2a07-405c-abbb-5c0d80041e28)
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-natemills.me-D2FF37?style=for-the-badge&logoColor=black)](https://natemills.me)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/millsdesign/)
 
 [![Figma Plugin](https://img.shields.io/badge/Figma_Plugin-View_Plugin-FF37D2?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/community/plugin/1521741753717588633/token-exporter)
-[![View Live Design System](https://img.shields.io/badge/🎨_Live_Design_System-View_Demo-D2FF37?style=for-the-badge)](https://n8mills-ui.github.io/token-exporter-ds/)
+[![View Live Design System](https://img.shields.io/badge/🎨_Live_Design_System-View_Demo-D2FF37?style=for-the-badge)](https://tokens.natemills.me/design-system-guide.html)
 
 [![Built with TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 ![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-success?style=for-the-badge)
