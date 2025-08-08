@@ -1009,17 +1009,6 @@ observer.observe(document.body, {
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="motion-demo-card">
-                                    <div class="motion-card-header">
-                                        <h4>Content Fade</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-content-fade"><i data-icon="play"></i></button>
-                                    </div>
-                                    <p>Smooth opacity transitions for content changes</p>
-                                    <div class="motion-demo-box">
-                                        <div class="demo-content-fade">Smooth Transition</div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         
@@ -3986,7 +3975,7 @@ function playMotionDemo(demoType) {
 // Motion Demo Interactions
 document.addEventListener('DOMContentLoaded', function() {
     // Handle play buttons for motion demos
-    const playButtons = document.querySelectorAll('.motion-play-btn');
+    const playButtons = document.querySelectorAll('.motion-play-btn-header');
     
     playButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -4016,26 +4005,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.disabled = false;
                 targetElement.classList.remove('animate');
             }, 1500);
-        });
-    });
-    
-    // Handle content fade toggle
-    const fadeToggleButtons = document.querySelectorAll('[data-target=".demo-content-fade"]');
-    
-    fadeToggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetElement = document.querySelector('.demo-content-fade');
-            if (!targetElement) return;
-            
-            const isFaded = targetElement.classList.contains('fade-out');
-            
-            if (isFaded) {
-                targetElement.classList.remove('fade-out');
-                this.textContent = 'Fade Out';
-            } else {
-                targetElement.classList.add('fade-out');
-                this.textContent = 'Fade In';
-            }
         });
     });
     
