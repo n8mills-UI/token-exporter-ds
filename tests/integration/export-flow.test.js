@@ -174,15 +174,19 @@ describe('Export Flow Integration Tests', () => {
             const sanitizeName = (name, platform = 'css') => {
                 if (!name || typeof name !== 'string') return '';
                 
-                let cleaned = name.trim().toLowerCase();
+                let cleaned = name.trim();
                 
                 const transformations = {
-                    css: (str) => str.replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, ''),
+                    css: (str) => str.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, ''),
                     swift: (str) => {
-                        let cleaned = str.charAt(0).toUpperCase() + str.slice(1);
-                        return cleaned.replace(/[^a-zA-Z0-9]/g, '').replace(/^\d/, '_');
+                        // For Swift, we want PascalCase
+                        let result = str.replace(/[^a-zA-Z0-9]/g, ' ')
+                            .split(' ')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                            .join('');
+                        return result.replace(/^\d/, '_$&');
                     },
-                    android: (str) => str.replace(/[^a-z0-9_]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, ''),
+                    android: (str) => str.toLowerCase().replace(/[^a-z0-9_]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, ''),
                 };
                 
                 const transform = transformations[platform] || transformations.css;
@@ -196,7 +200,7 @@ describe('Export Flow Integration Tests', () => {
                     kebab: path.map(p => sanitizeName(p, 'css')).join('-'),
                     camel: path.map((p, i) => {
                         const sanitized = sanitizeName(p, 'swift');
-                        if (i === 0) return sanitized;
+                        if (i === 0) return sanitized.toLowerCase();
                         return sanitized.charAt(0).toUpperCase() + sanitized.slice(1);
                     }).join('')
                 };
