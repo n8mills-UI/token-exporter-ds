@@ -91,7 +91,7 @@ First plugin to successfully implement **component sharing across Figma's Conten
 Achieved **100% self-containment** by eliminating all external dependencies while maintaining full TypeScript support and modern JavaScript features.
 
 ### 🚀 **Optimized Token Processing**
-Custom algorithms that process **complex nested token hierarchies 10x faster** than traditional approaches through parallel processing and smart caching.
+Custom algorithms that process **complex nested token hierarchies dramatically faster** than traditional approaches through parallel processing and smart caching.
 
 ### 🎯 **Universal Format Generation**
 **Single source of truth** architecture that generates platform-specific code while maintaining semantic consistency across all export formats.
