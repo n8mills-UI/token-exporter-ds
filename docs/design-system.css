@@ -9821,10 +9821,8 @@ body {
 }
 
 /* Animation classes for demos */
-/* Motion Demo Classes */
-.demo-ease-linear { transition-timing-function: linear; }
-.demo-ease-3 { transition-timing-function: var(--ease-3); }
-.demo-ease-spring-3 { transition-timing-function: var(--ease-spring-3); }
+/* Motion Demo Classes - Easing functions now applied directly to motion-ball */
+/* Duration classes for other demos */
 .demo-duration-1 { transition-duration: var(--animation-duration-1); }
 .demo-duration-2 { transition-duration: var(--animation-duration-2); }
 .demo-duration-3 { transition-duration: var(--animation-duration-3); }
@@ -9944,6 +9942,11 @@ body {
 /* Interactive Motion Demos */
 .motion-demo-category {
     margin-bottom: var(--size-8);
+}
+
+/* Remove margin from last category (Real World Examples) */
+.motion-demo-category:last-child {
+    margin-bottom: 0;
 }
 
 .motion-demo-category h3 {
@@ -10195,7 +10198,20 @@ body {
     left: var(--size-2);
     top: 50%;
     transform: translateY(-50%);
-    transition: transform 1.2s;
+    transition: transform 1.2s ease; /* Default easing */
+}
+
+/* Apply specific easing functions */
+.motion-ball.demo-ease-linear {
+    transition: transform 1.2s linear;
+}
+
+.motion-ball.demo-ease-3 {
+    transition: transform 1.2s var(--ease-3);
+}
+
+.motion-ball.demo-ease-spring-3 {
+    transition: transform 1.2s var(--ease-spring-3);
 }
 
 .motion-ball.animate {
