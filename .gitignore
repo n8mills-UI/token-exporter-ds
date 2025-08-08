@@ -41,7 +41,6 @@ temp_css_bundle.css
 *.temp
 
 # Private testing environment - completely excluded
-tests/
 
 # Generated reports and analysis files
 *-report.json
