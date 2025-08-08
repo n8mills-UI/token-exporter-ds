@@ -656,7 +656,7 @@
                     <div class="token-category">
                         <div class="category-header">
                             <h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2>
-                            <p class="section-description">Interactive motion system showcasing easing curves, durations, and real-world animations.</p>
+                            <p class="section-description">Smooth animations bring interfaces to life. Our motion system balances performance with personality.</p>
                         </div>
                         
                         <!-- Easing Playground -->
@@ -664,118 +664,113 @@
                             <h3>Easing Curves</h3>
                             <div class="motion-demo-grid">
                                 <div class="motion-demo-card">
-                                    <h4>Linear</h4>
-                                    <p>Consistent speed throughout</p>
+                                    <div class="motion-card-header">
+                                        <h4>Linear</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-linear"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Constant speed from start to finish</p>
                                     <div class="motion-demo-box">
                                         <div class="motion-track">
                                             <div class="motion-ball demo-ease-linear" data-easing="linear"></div>
                                         </div>
+                                        <div class="motion-curve-linear"></div>
                                     </div>
-                                    <button class="motion-play-btn" data-target=".demo-ease-linear">Play</button>
-                                    <div class="motion-token">ease: linear</div>
                                 </div>
                                 
                                 <div class="motion-demo-card">
-                                    <h4>Smooth</h4>
+                                    <div class="motion-card-header">
+                                        <h4>Smooth</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-3"><i data-icon="play"></i></button>
+                                    </div>
                                     <p>Natural acceleration and deceleration</p>
                                     <div class="motion-demo-box">
                                         <div class="motion-track">
                                             <div class="motion-ball demo-ease-3" data-easing="ease-3"></div>
                                         </div>
+                                        <div class="motion-curve-smooth"></div>
                                     </div>
-                                    <button class="motion-play-btn" data-target=".demo-ease-3">Play</button>
-                                    <div class="motion-token">--ease-3</div>
                                 </div>
                                 
                                 <div class="motion-demo-card">
-                                    <h4>Spring</h4>
-                                    <p>Bouncy, playful motion</p>
+                                    <div class="motion-card-header">
+                                        <h4>Spring</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-spring-3"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Playful bounce with a bit of overshoot</p>
                                     <div class="motion-demo-box">
                                         <div class="motion-track">
                                             <div class="motion-ball demo-ease-spring-3" data-easing="ease-spring-3"></div>
                                         </div>
+                                        <div class="motion-curve-spring"></div>
                                     </div>
-                                    <button class="motion-play-btn" data-target=".demo-ease-spring-3">Play</button>
-                                    <div class="motion-token">--ease-spring-3</div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Duration Comparison -->
-                        <div class="motion-demo-category">
-                            <h3>Duration Scale</h3>
-                            <div class="motion-demo-grid">
-                                <div class="motion-demo-card">
-                                    <h4>Fast</h4>
-                                    <p>Quick interactions and feedback</p>
-                                    <div class="motion-demo-box">
-                                        <div class="duration-bar demo-duration-1"></div>
-                                    </div>
-                                    <button class="motion-play-btn" data-target=".demo-duration-1">Play</button>
-                                    <div class="motion-token">150ms</div>
-                                </div>
-                                
-                                <div class="motion-demo-card">
-                                    <h4>Medium</h4>
-                                    <p>Standard interface animations</p>
-                                    <div class="motion-demo-box">
-                                        <div class="duration-bar demo-duration-2"></div>
-                                    </div>
-                                    <button class="motion-play-btn" data-target=".demo-duration-2">Play</button>
-                                    <div class="motion-token">200ms</div>
-                                </div>
-                                
-                                <div class="motion-demo-card">
-                                    <h4>Slow</h4>
-                                    <p>Emphasized state changes</p>
-                                    <div class="motion-demo-box">
-                                        <div class="duration-bar demo-duration-3"></div>
-                                    </div>
-                                    <button class="motion-play-btn" data-target=".demo-duration-3">Play</button>
-                                    <div class="motion-token">300ms</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Live Examples -->
+                        <!-- Real World Examples -->
                         <div class="motion-demo-category">
                             <h3>Real-World Examples</h3>
                             <div class="motion-demo-grid">
                                 <div class="motion-demo-card">
-                                    <h4>Button Hover</h4>
-                                    <p>Interactive button with smooth transitions</p>
-                                    <div class="motion-demo-box">
-                                        <button class="demo-btn-hover">Hover Me</button>
+                                    <div class="motion-card-header">
+                                        <h4>Button Hover</h4>
+                                        <div class="motion-play-btn-header motion-play-btn-auto" data-target=".demo-btn-hover">Auto</div>
                                     </div>
-                                    <div class="motion-token">hover: 200ms ease-3</div>
+                                    <p>Smooth transitions on hover using 200ms timing</p>
+                                    <div class="motion-demo-box">
+                                        <button class="btn btn-primary btn-sm demo-btn-hover">Hover Me</button>
+                                    </div>
                                 </div>
                                 
                                 <div class="motion-demo-card">
-                                    <h4>Card Lift</h4>
-                                    <p>Elevation change on interaction</p>
+                                    <div class="motion-card-header">
+                                        <h4>Card Lift</h4>
+                                        <div class="motion-play-btn-header motion-play-btn-auto" data-target=".demo-card-lift">Auto</div>
+                                    </div>
+                                    <p>Elevation changes create depth and hierarchy</p>
                                     <div class="motion-demo-box">
                                         <div class="demo-card-lift">Interactive Card</div>
                                     </div>
-                                    <div class="motion-token">transform: 300ms ease-3</div>
                                 </div>
                                 
                                 <div class="motion-demo-card">
-                                    <h4>Logo Float</h4>
-                                    <p>Subtle continuous animation</p>
-                                    <div class="motion-demo-box">
-                                        <div class="demo-logo-float">💫</div>
+                                    <div class="motion-card-header">
+                                        <h4>Logo Float</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-logo-float"><i data-icon="play"></i></button>
                                     </div>
-                                    <div class="motion-token">animation: 3s ease-in-out infinite</div>
+                                    <p>Gentle continuous motion for brand elements</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-logo-float">
+                                            <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg" class="motion-logo">
+                                                <g clip-path="url(#clip0_motion_logo)">
+                                                    <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_motion_logo)"/>
+                                                    <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                                    <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                                                    <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                                </g>
+                                                <defs>
+                                                    <linearGradient id="paint0_linear_motion_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                                        <stop stop-color="#D2FF37"/>
+                                                        <stop offset="1" stop-color="#EEFF00"/>
+                                                    </linearGradient>
+                                                    <clipPath id="clip0_motion_logo">
+                                                        <rect width="355" height="355" rx="58" fill="white"/>
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
                                 
                                 <div class="motion-demo-card">
-                                    <h4>Content Fade</h4>
-                                    <p>Smooth content transitions</p>
+                                    <div class="motion-card-header">
+                                        <h4>Content Fade</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-content-fade"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Smooth opacity transitions for content changes</p>
                                     <div class="motion-demo-box">
                                         <div class="demo-content-fade">Smooth Transition</div>
                                     </div>
-                                    <button class="motion-play-btn" data-target=".demo-content-fade">Toggle</button>
-                                    <div class="motion-token">opacity: 400ms ease-3</div>
                                 </div>
                             </div>
                         </div>
