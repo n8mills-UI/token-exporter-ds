@@ -491,186 +491,112 @@ async function processCollectionsSequentially(collections, variablesByCollection
 // --- CORE LOGIC ---
 
 /**
+ * HOTFIX: Dead simple collection processing - bypasses all complex logic
  * Fetches all local variable collections and massages the data for the UI.
- * Enhanced with better error handling and performance monitoring.
  */
 async function getCollectionsForUI() {
+    console.log('🚨 HOTFIX: Starting getCollectionsForUI...');
+    
     try {
-        console.log('🚀 Starting getCollectionsForUI...');
-        checkMemoryUsage();
+        // Step 1: Get collections
+        console.log('📁 Getting collections...');
+        const collections = await figma.variables.getLocalVariableCollectionsAsync();
+        console.log('✅ Got', collections.length, 'collections');
         
-        // Fetch collections with better error handling
-        const collectionsResult = await Promise.allSettled([
-            figma.variables.getLocalVariableCollectionsAsync(),
-            new Promise(resolve => setTimeout(resolve, 300)) // Minimum delay to prevent flashing
-        ]);
-        console.log('📊 Collections fetch result:', collectionsResult[0].status);
+        // Step 2: Get all variables
+        console.log('🔢 Getting variables...');
+        const variables = await figma.variables.getLocalVariablesAsync();
+        console.log('✅ Got', variables.length, 'variables');
         
-        if (collectionsResult[0].status === 'rejected') {
-            const reasonObj = collectionsResult[0].reason;
-            const reason = (reasonObj && reasonObj.message) 
-                ? reasonObj.message 
-                : 'Unknown error';
-            throw new NetworkError('Failed to fetch variable collections', { reason });
-        }
-        
-        const collections = collectionsResult[0].value;
-        console.log('📁 Found collections:', collections.length);
-
-        if (!collections.length) {
-             console.log('❌ No collections found, sending empty result');
-             figma.ui.postMessage({ type: 'all-collections', collections: [] });
-             return;
-        }
-
-        let allVariables;
-        try {
-            allVariables = await figma.variables.getLocalVariablesAsync();
-            console.log('🎯 Found variables:', allVariables.length);
-        } catch (error) {
-            console.error('❌ Failed to fetch variables:', error);
-            throw new NetworkError('Failed to fetch variables from Figma', {
-                originalError: error.message
-            });
-        }
-        
-        // Create optimized Map for better performance with large datasets
-        const variablesByCollection = new Map();
-        const variablesById = new Map();
-        
-        for (const variable of allVariables) {
-            const collectionId = variable.variableCollectionId;
-            
-            // Build collection map
-            if (!variablesByCollection.has(collectionId)) {
-                variablesByCollection.set(collectionId, []);
-            }
-            variablesByCollection.get(collectionId).push(variable);
-            
-            // Build ID lookup map for faster alias resolution
-            variablesById.set(variable.id, variable);
-        }
-        
-        // SIMPLIFIED ROBUST PROCESSING: Bypass complex chunking for debugging
-        console.log('🚀 SIMPLIFIED: Processing all', collections.length, 'collections sequentially for reliability...');
-        
+        // Step 3: Simple processing - NO CHUNKING, NO PARALLELIZATION
+        console.log('⚙️ Processing collections (simple mode)...');
         const results = [];
-        const totalVariables = allVariables.length;
         
-        // Process each collection individually to ensure reliability
         for (let i = 0; i < collections.length; i++) {
             const collection = collections[i];
-            console.log('💾 Processing collection', i + 1, '/', collections.length, ':', collection.name);
+            console.log('Processing collection', (i + 1) + '/' + collections.length + ':', collection.name);
             
-            try {
-                const variablesInCollection = variablesByCollection.get(collection.id) || [];
-                const counts = { color: 0, text: 0, states: 0, number: 0 };
-                
-                // Count variables by type
-                for (const variable of variablesInCollection) {
-                    switch (variable.resolvedType) {
-                        case 'COLOR': counts.color++; break;
-                        case 'STRING': counts.text++; break;
-                        case 'BOOLEAN': counts.states++; break;
-                        case 'FLOAT': counts.number++; break;
-                    }
-                }
-                
-                const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
-                console.log('✅ Collection', collection.name, '- Variables:', totalVariables, 'Counts:', counts);
-                
-                results.push({
-                    id: collection.id,
-                    name: collection.name,
-                    counts: counts,
-                    totalVariables: totalVariables
-                });
-                
-                // Show progress for large datasets
-                if (collections.length > 10) {
-                    const progress = Math.round((i + 1) / collections.length * 100);
-                    console.log('📊 Progress:', progress + '%');
-                    if (i % 5 === 0 || i === collections.length - 1) {
-                        figma.notify('Processing: ' + progress + '% (' + (i + 1) + '/' + collections.length + ')', { timeout: 1000 });
-                    }
-                }
-                
-                // Yield control every few collections
-                if (i % 5 === 0 && i > 0) {
-                    await new Promise(resolve => setTimeout(resolve, 0));
-                }
-                
-            } catch (error) {
-                console.error('❌ Error processing collection', collection.name + ':', error);
-                // Add failed collection with zero counts
-                results.push({
-                    id: collection.id,
-                    name: collection.name,
-                    counts: { color: 0, text: 0, states: 0, number: 0 },
-                    totalVariables: 0,
-                    error: true
-                });
-            }
-        }
-        
-        console.log('🏁 SIMPLIFIED processing complete. Total results:', results.length);
-        
-        // Calculate global totals
-        // Calculate global totals
-        console.log('🧮 Calculating global totals from', results.length, 'collections...');
-        globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
-        results.forEach((collection, idx) => {
-            if (collection.counts) {
-                Object.entries(collection.counts).forEach(([type, count]) => {
-                    if (typeof count === 'number') {
-                        globalTokenCounts[type] += count;
-                    }
-                });
-            }
-        });
-        console.log('📊 Final global counts:', globalTokenCounts);
-        console.log('💾 Valid collections:', results.filter(r => !r.error).length, '/', results.length);
-
-        // CRITICAL: Always send response, even if empty
-        if (results.length === 0) {
-            console.log('⚠️ No collections processed, sending empty results');
-            figma.ui.postMessage({ type: 'all-collections', collections: [] });
-        } else {
-            console.log('📤 Sending results to UI:', results.length, 'collections');
-            console.log('🔢 Global counts:', globalTokenCounts);
-            
-            figma.ui.postMessage({ 
-                type: 'all-collections', 
-                collections: results,
-                globalCounts: globalTokenCounts
+            // Count variables in this collection
+            const varsInCollection = variables.filter(function(v) {
+                return v.variableCollectionId === collection.id;
             });
+            console.log('  - Found', varsInCollection.length, 'variables');
             
-            console.log('✅ Message sent successfully to UI');
+            // Count by type (simple counting)
+            let colorCount = 0;
+            let numberCount = 0;
+            let stringCount = 0;
+            let booleanCount = 0;
+            
+            for (const variable of varsInCollection) {
+                switch (variable.resolvedType) {
+                    case 'COLOR':
+                        colorCount++;
+                        break;
+                    case 'FLOAT':
+                        numberCount++;
+                        break;
+                    case 'STRING':
+                        stringCount++;
+                        break;
+                    case 'BOOLEAN':
+                        booleanCount++;
+                        break;
+                }
+            }
+            
+            // Create simple result object
+            const result = {
+                id: collection.id,
+                name: collection.name,
+                counts: {
+                    color: colorCount,
+                    text: stringCount,
+                    states: booleanCount,
+                    number: numberCount
+                },
+                totalVariables: varsInCollection.length
+            };
+            
+            results.push(result);
+            console.log('  ✅ Processed:', result.name, '(' + result.totalVariables + ' variables)');
         }
-
+        
+        // Calculate global totals
+        console.log('🧮 Calculating global totals...');
+        globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
+        for (const collection of results) {
+            globalTokenCounts.color += collection.counts.color;
+            globalTokenCounts.text += collection.counts.text;
+            globalTokenCounts.states += collection.counts.states;
+            globalTokenCounts.number += collection.counts.number;
+        }
+        console.log('📊 Final global counts:', globalTokenCounts);
+        
+        // Step 4: ALWAYS send message to UI
+        console.log('📤 Sending message to UI...');
+        figma.ui.postMessage({ 
+            type: 'all-collections', 
+            collections: results,
+            globalCounts: globalTokenCounts
+        });
+        console.log('✅ HOTFIX: Successfully sent collections to UI');
+        
+        return results;
+        
     } catch (error) {
-        console.error('💥 CRITICAL ERROR in getCollectionsForUI:', error);
-        console.error('Error stack:', error.stack);
+        console.error('🚨 HOTFIX ERROR:', error);
+        console.error('Stack trace:', error.stack);
         
-        let userMessage;
-        let structuredError;
+        // Send empty collections so UI at least responds
+        console.log('📤 Sending empty collections as fallback...');
+        figma.ui.postMessage({ 
+            type: 'all-collections', 
+            collections: [] 
+        });
+        console.log('✅ Sent fallback message to UI');
         
-        if (error instanceof NetworkError) {
-            userMessage = 'Network connection failed. Please check your internet connection.';
-            structuredError = error;
-        } else if (error instanceof MemoryError) {
-            userMessage = 'Memory limit exceeded. Try processing fewer collections. (' + error.context.used + 'MB used)';
-            structuredError = error;
-        } else {
-            structuredError = createStructuredError('getCollectionsForUI', error);
-            userMessage = 'Unable to load variable collections. Please try refreshing the plugin.';
-        }
-        
-        console.error('Error fetching collections:', structuredError);
-            
-        figma.notify(userMessage, { error: true, timeout: 5000 });
-        console.log('📤 Sending empty result due to error');
-        figma.ui.postMessage({ type: 'all-collections', collections: [] });
+        return [];
     }
 }
 

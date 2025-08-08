@@ -5109,19 +5109,21 @@ body {
  margin-bottom: var(--size-3);
 }
 
-@media (width <= 900px) {
+/* Keep 4-column grid on tablets when stacked vertically */
+@media (width <= 900px) and (width > 480px) {
  .tech-grid {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* Maintain 4x2 grid on tablets */
  }
 }
 
-@media (width <= 768px) {
+/* Switch to 2-column grid only on small mobile */
+@media (width <= 480px) {
  .tech-grid {
-  grid-template-columns: repeat(4, 1fr); /* 4x2 grid on mobile */
+  grid-template-columns: repeat(2, 1fr); /* 2x4 grid on small mobile */
   gap: var(--size-2); /* Tighter gap for mobile */
  }
  
- /* Adjust tech item sizing for 4-column layout */
+ /* Adjust tech item sizing for 2-column layout */
  .tech-item {
   padding: var(--size-2);
   font-size: var(--font-size-0);  /* Better readability on mobile */
@@ -6238,6 +6240,88 @@ body {
 .liquid-wave {
  contain: layout style paint;
  will-change: opacity, transform;
+}
+
+/* ==========================================================================
+ SMART GRID UTILITY CLASSES
+ Responsive grids that prevent orphans
+ ========================================================================== */
+
+.smart-grid-3 {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: var(--size-4);
+}
+
+.smart-grid-4 {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: var(--size-4);
+}
+
+.smart-grid-5 {
+ display: grid;
+ grid-template-columns: repeat(5, 1fr);
+ gap: var(--size-4);
+}
+
+.smart-grid-6 {
+ display: grid;
+ grid-template-columns: repeat(6, 1fr);
+ gap: var(--size-4);
+}
+
+.smart-grid-8 {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr); /* 4x2 for 8 items */
+ gap: var(--size-4);
+}
+
+/* Tablet breakpoints - prevent orphans */
+@media (width <= 1024px) {
+ .smart-grid-5 {
+  grid-template-columns: repeat(3, 1fr); /* 3+2 layout */
+ }
+ 
+ .smart-grid-6 {
+  grid-template-columns: repeat(3, 1fr); /* 3x2 layout */
+ }
+ 
+ .smart-grid-8 {
+  grid-template-columns: repeat(4, 1fr); /* Keep 4x2 */
+ }
+}
+
+@media (width <= 768px) {
+ .smart-grid-3 {
+  grid-template-columns: 1fr; /* Single column for 3 items */
+ }
+ 
+ .smart-grid-4 {
+  grid-template-columns: repeat(2, 1fr); /* 2x2 layout */
+ }
+ 
+ .smart-grid-5 {
+  grid-template-columns: repeat(2, 1fr); /* 2+2+1 layout */
+ }
+ 
+ .smart-grid-6 {
+  grid-template-columns: repeat(2, 1fr); /* 2x3 layout */
+ }
+ 
+ .smart-grid-8 {
+  grid-template-columns: repeat(2, 1fr); /* 2x4 layout */
+ }
+}
+
+@media (width <= 480px) {
+ .smart-grid-3,
+ .smart-grid-4,
+ .smart-grid-5,
+ .smart-grid-6,
+ .smart-grid-8 {
+  grid-template-columns: 1fr; /* Single column on mobile */
+ }
 }
 
 /* ==========================================================================
@@ -9095,8 +9179,20 @@ body {
  }
 }
 
-.color-grid, .shadow-grid {
+.color-grid {
  grid-template-columns: repeat(auto-fit, minmax(var(--size-sidebar-width), 1fr));
+}
+
+.shadow-grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr); /* 3 columns for 3 shadow items - no orphans */
+ gap: var(--size-4);
+}
+
+@media (width <= 768px) {
+ .shadow-grid {
+  grid-template-columns: 1fr; /* Single column on mobile */
+ }
 }
 
 .radius-grid {
@@ -9159,7 +9255,27 @@ body {
 }
 
 .spacing-grid {
- grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
+ display: grid;
+ grid-template-columns: repeat(6, 1fr); /* 6 columns for 6 spacing items */
+ gap: var(--size-4);
+}
+
+@media (width <= 1024px) {
+ .spacing-grid {
+  grid-template-columns: repeat(3, 1fr); /* 3x2 grid on tablet */
+ }
+}
+
+@media (width <= 768px) {
+ .spacing-grid {
+  grid-template-columns: repeat(2, 1fr); /* 2x3 grid on mobile */
+ }
+}
+
+@media (width <= 480px) {
+ .spacing-grid {
+  grid-template-columns: 1fr; /* Single column on small mobile */
+ }
 }
 
 .font-grid {
@@ -10842,7 +10958,6 @@ body {
     .variants-grid,
     .export-flow-grid,
     .color-grid,
-    .shadow-grid,
     .radius-grid,
     .tokens-grid {
         grid-template-columns: 1fr;
@@ -10852,9 +10967,6 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-mobile-xs), 1fr));
     }
 
-    .spacing-grid {
-        grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-xs), 1fr));
-    }
 
     /* About Section */
     .about-section {
@@ -14527,7 +14639,7 @@ button.theme-toggle {
 
 .glow-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for 3 items - no orphans */
     gap: var(--size-4);
 }
 
@@ -14863,7 +14975,7 @@ button.theme-toggle {
     }
     
     .glow-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column on mobile */
     }
 }
 
