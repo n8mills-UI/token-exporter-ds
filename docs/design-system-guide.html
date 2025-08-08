@@ -966,7 +966,7 @@ observer.observe(document.body, {
                                     </div>
                                     <p>Smooth transitions on hover using 200ms timing</p>
                                     <div class="motion-demo-box">
-                                        <button class="btn btn-primary btn-sm demo-btn-hover">Hover Me</button>
+                                        <button class="btn btn-primary btn-sm">Hover Me</button>
                                     </div>
                                 </div>
                                 
@@ -984,7 +984,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Logo Float</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-logo-float" aria-label="Play logo float animation"><i data-icon="play"></i></button>
+                                        <span class="motion-play-btn-auto" title="Automatic continuous animation">Auto</span>
                                     </div>
                                     <p>Gentle continuous motion for brand elements</p>
                                     <div class="motion-demo-box">
@@ -3994,14 +3994,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add animation class
             targetElement.classList.add('animate');
             
-            // Update button text temporarily
-            const originalText = this.textContent;
-            this.textContent = 'Playing...';
+            // Update button state temporarily
+            const icon = this.querySelector('i');
+            const originalIcon = icon ? icon.getAttribute('data-icon') : null;
+            if (icon) {
+                icon.setAttribute('data-icon', 'loader');
+            }
             this.disabled = true;
             
             // Reset button after animation
             setTimeout(() => {
-                this.textContent = originalText;
+                if (icon && originalIcon) {
+                    icon.setAttribute('data-icon', originalIcon);
+                    renderAllIcons(); // Re-render the icon
+                }
                 this.disabled = false;
                 targetElement.classList.remove('animate');
             }, 1500);

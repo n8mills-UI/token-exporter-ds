@@ -9997,11 +9997,11 @@ body {
 .motion-curve-smooth,
 .motion-curve-spring {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    height: 40px;
-    opacity: 0.15;
+    bottom: 4px;
+    left: 4px;
+    right: 4px;
+    height: 30px;
+    opacity: 0.2;
     pointer-events: none;
 }
 
@@ -10010,11 +10010,11 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: calc(100% - 8px);
     height: 2px;
-    background: linear-gradient(to right, var(--brand-primary) 0%, var(--brand-primary) 100%);
-    transform: rotate(-10deg);
-    transform-origin: left center;
+    background: var(--brand-primary);
+    transform: rotate(-8deg);
+    transform-origin: left bottom;
 }
 
 .motion-curve-smooth::after {
@@ -10022,9 +10022,9 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: calc(100% - 8px);
     height: 100%;
-    background: radial-gradient(ellipse at bottom left, var(--brand-primary) 0%, transparent 70%);
+    background: radial-gradient(ellipse at bottom left, var(--brand-primary) 0%, transparent 60%);
     border-radius: 0 100% 0 0;
 }
 
@@ -10033,17 +10033,17 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: calc(100% - 8px);
     height: 100%;
     background: repeating-linear-gradient(
         -45deg,
         transparent,
-        transparent 10px,
-        var(--brand-primary) 10px,
-        var(--brand-primary) 12px
+        transparent 8px,
+        var(--brand-primary) 8px,
+        var(--brand-primary) 10px
     );
-    mask: radial-gradient(ellipse at bottom left, black 0%, transparent 80%);
-    -webkit-mask: radial-gradient(ellipse at bottom left, black 0%, transparent 80%);
+    mask: radial-gradient(ellipse at bottom left, black 0%, transparent 70%);
+    -webkit-mask: radial-gradient(ellipse at bottom left, black 0%, transparent 70%);
 }
 
 .motion-element {
@@ -10258,21 +10258,8 @@ body {
 
 /* Real-World Example Demos */
 .demo-btn-hover {
-    background: var(--color-interactive-primary);
-    border: none;
-    border-radius: var(--radius-2);
-    padding: var(--size-3) var(--size-5);
-    color: white;
-    font-weight: var(--font-weight-5);
-    cursor: pointer;
     transition: all var(--animation-duration-2) var(--ease-3);
     margin: var(--size-4) 0;
-}
-
-.demo-btn-hover:hover {
-    background: var(--color-interactive-primary-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-3);
 }
 
 .demo-card-lift {
@@ -10298,9 +10285,6 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-}
-
-.demo-logo-float.animate {
     animation: logoFloat 3s ease-in-out infinite;
 }
 
@@ -13203,6 +13187,13 @@ button.theme-toggle {
     color: var(--color-text-default);
 }
 
+.theme-toggle-compact .theme-icon svg {
+    width: 10px;
+    height: 10px;
+    stroke: currentColor;
+    fill: none;
+}
+
 .theme-toggle-compact .theme-icon-light {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(0deg);
@@ -13224,6 +13215,24 @@ button.theme-toggle {
 }
 
 .theme-toggle-compact:hover .theme-icon {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.theme-toggle-compact:hover .theme-icon-light {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
+}
+
+.theme-toggle-compact:hover .theme-icon-dark {
+    transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
+}
+
+[data-theme="dark"] .theme-toggle-compact:hover .theme-icon-light {
+    transform: translate(-50%, -50%) scale(1.1) rotate(-90deg);
+}
+
+[data-theme="dark"] .theme-toggle-compact:hover .theme-icon-dark {
+    opacity: 1;
     transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
 }
 
