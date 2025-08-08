@@ -19,6 +19,7 @@
 
 <br>
 
+
 ## 🚀 Why Token Exporter?
 
 Design systems are only as strong as their implementation. **Token Exporter** eliminates the friction between design decisions and production code, enabling teams to ship consistent, scalable interfaces faster than ever before.
@@ -219,8 +220,18 @@ This project represents **cutting-edge plugin development** within Figma's const
 
 <div align="center">
 
-**Token Exporter** - *Transforming design tokens into production code, one export at a time.*
+<br>
+
+---
+
+<br>
 
 Made with ❤️ for the design and development community
+
+<br>
+
+---
+
+<br>
 
 </div>

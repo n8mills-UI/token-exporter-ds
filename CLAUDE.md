@@ -2,18 +2,35 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## ⚡ PRIORITY ONE: DELEGATE TO SPECIALIZED AGENTS
+## 🚨 CRITICAL TOP 10 RULES (Read First!)
 
-**CRITICAL RULE: Claude is the ORCHESTRATOR, not the DOER. Your PRIMARY job is to delegate tasks to specialized agents using the Task tool.**
+1. **CSS Comments = Auto-Reject**: ZERO comments in CSS files
+2. **Figma JS Constraints**: No optional chaining (?.), template literals, or modern JS
+3. **Never Bundle docs/design-system.css**: It breaks everything
+4. **Files go in .dev/**: Never create files in root unless absolutely necessary  
+5. **Run `npm run check`**: Before AND after changes
+6. **Component Isolation**: Never override components with context selectors
+7. **Delegate Specialized Work**: Use agents for complex features, not simple edits
+8. **Icon System**: Only use built-in icons, never external libraries
+9. **Use TodoWrite**: For any multi-step task
+10. **4 Core Gradients Only**: Primary, Secondary, Accent, Highlight (all 90deg)
 
-**The agents have their own examples and triggers built-in. They run in separate contexts without consuming main chat tokens.**
+## ⚡ PRIORITY ONE: DELEGATE SPECIALIZED WORK TO AGENTS
 
-**BEFORE doing ANY work yourself, ask:**
-1. Is there an agent that specializes in this?
-2. Would an agent do this better than me?
-3. Should multiple agents collaborate on this?
+**CRITICAL RULE: For SPECIALIZED work (building features, writing tests, designing UI), delegate to expert agents using the Task tool.**
 
-**If YES to any → USE THE AGENT(S)**
+**You CAN and SHOULD do basic tasks yourself:**
+- Reading files, searching code
+- Simple edits and bug fixes
+- Running commands, checking status
+- Answering questions about the codebase
+
+**MUST delegate to agents for:**
+- Building new features → `rapid-prototyper`
+- Writing/fixing tests → `test-writer-fixer`
+- UI/frontend work → `frontend-developer`
+- Design work → `ui-designer`
+- Complex multi-step tasks → `studio-coach`
 
 **See section "🤖 MANDATORY Agent Usage Protocol" below for enforcement rules.**
 
@@ -43,11 +60,11 @@ ls -la | grep -E "\.md$|\.html$|\.json$" | grep -v package
 ## 🚀 Quick Start for Claude
 
 ### MANDATORY SESSION START PROTOCOL
-**⚠️ STOP: Do NOT proceed without completing ALL steps:**
+**Complete these steps at session start:**
 
 1. ✅ Read this CLAUDE.md file completely
 2. ✅ Run `pwd` to verify working directory
-3. ✅ Run `npm run check` - STOP if any failures
+3. ✅ Run `npm run check` - NOTE any failures (don't stop, user may need help fixing them)
 4. ✅ Run `git status` to check work in progress
 5. ✅ Check if session is continuation (look for context)
 6. ✅ State your understanding of current task
@@ -100,14 +117,21 @@ npm run test:validation  # Run validation tests only
 - "Research/analyze" → Agent investigates
 - "Complex/multi-step" → `studio-coach` coordinates multiple agents
 
-### 🛑 BLOCKING RULES:
+### 🛑 WHEN TO DELEGATE:
 
-**You are FORBIDDEN from:**
-1. Writing frontend code → `frontend-developer` agent does this
-2. Creating tests → `test-writer-fixer` agent does this
-3. Designing UI → `ui-designer` agent does this
-4. Analyzing performance → `performance-benchmarker` agent does this
-5. Doing ANY specialized work that matches an agent's expertise
+**MUST use agents for these specialized tasks:**
+1. Building new features → `frontend-developer` or `rapid-prototyper`
+2. Writing comprehensive tests → `test-writer-fixer`
+3. Designing new UI → `ui-designer`
+4. Performance optimization → `performance-benchmarker`
+5. Complex multi-file changes → `studio-coach` to coordinate
+
+**You CAN handle directly:**
+- Quick bug fixes
+- Simple edits
+- File searches and reading
+- Running commands
+- Answering questions
 
 ### 📋 DELEGATION DECISION TREE:
 
@@ -212,16 +236,15 @@ Before adding ANY CSS variable:
 
 3. **FOLLOW** the pattern:
    ```css
-   /* Layer 1: Primitives in :root (raw values allowed) */
+   /* Layer 1: Primitives in :root */
    :root {
-       --brand-primary: #D2FF37;      /* ✅ Raw value here */
+       --brand-primary: #D2FF37;
        --gradient-primary: linear-gradient(90deg, var(--brand-primary) 0%, var(--color-cyan-500) 100%);
    }
 
-   /* Layer 2: Components (MUST use tokens) */
+   /* Layer 2: Components */
    .btn {
-       background: var(--gradient-primary);  /* ✅ Token reference */
-       /* background: linear-gradient(...); */ /* ❌ NEVER raw gradients */
+       background: var(--gradient-primary);
    }
    ```
 
@@ -280,9 +303,7 @@ Components must render identically regardless of their container. Any CSS that t
 ```
 
 **Detection:**
-```bash
-npm run check:overrides  # Detects all component overrides
-```
+The `npm run check` command will detect component overrides in the CSS Architecture check.
 
 **If variations are needed:**
 1. Create explicit component variants (e.g., `.btn--large`, `.card--compact`)
@@ -381,8 +402,8 @@ These components predate the component isolation architecture and would require 
 
 **Examples of FORBIDDEN comments:**
 ```css
---color-text-primary: var(--gray-warm-0);  /* ❌ Alias for consistency */
---black-rgb: 0, 0, 0;                       /* ❌ RGB values for rgba() usage */
+--color-text-primary: var(--gray-warm-0);  /* ❌ NO! */
+--black-rgb: 0, 0, 0;                       /* ❌ NO! */
 ```
 
 **If you add forbidden comments:**
@@ -513,7 +534,7 @@ For complex tasks, use these specialized agents:
 - See `.dev/agents/README.md` for agent protocols
 
 ### Critical Elements Protection
-Run `npm run check:critical` to validate:
+The `npm run check` command validates:
 - Icon visibility and rendering
 - Theme switching functionality
 - Dangerous CSS selectors that could affect plugin UI
