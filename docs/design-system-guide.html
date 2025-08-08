@@ -132,7 +132,9 @@ window.Icons = {
     "alert-triangle": "<svg viewBox=\"0 0 24 24\"><path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" />\n  <path d=\"M12 9v4\" />\n  <path d=\"M12 17h.01\" /></svg>",
     "circle-check-big": "<svg viewBox=\"0 0 24 24\"><path d=\"M21.801 10A10 10 0 1 1 17 3.335\" />\n  <path d=\"m9 11 3 3L22 4\" /></svg>",
     "pointer": "<svg viewBox=\"0 0 24 24\"><path d=\"M22 14a8 8 0 0 1-8 8\" />\n  <path d=\"M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" />\n  <path d=\"M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1\" />\n  <path d=\"M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10\" />\n  <path d=\"M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" /></svg>",
-    "square-terminal": "<svg viewBox=\"0 0 24 24\"><path d=\"m7 11 2-2-2-2\" />\n  <path d=\"M11 13h4\" />\n  <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" /></svg>"
+    "square-terminal": "<svg viewBox=\"0 0 24 24\"><path d=\"m7 11 2-2-2-2\" />\n  <path d=\"M11 13h4\" />\n  <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" /></svg>",
+    "sun": "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"4\" />\n  <path d=\"M12 2v2\" />\n  <path d=\"M12 20v2\" />\n  <path d=\"m4.93 4.93 1.41 1.41\" />\n  <path d=\"m17.66 17.66 1.41 1.41\" />\n  <path d=\"M2 12h2\" />\n  <path d=\"M20 12h2\" />\n  <path d=\"m6.34 17.66-1.41 1.41\" />\n  <path d=\"m19.07 4.93-1.41 1.41\" /></svg>",
+    "moon": "<svg viewBox=\"0 0 24 24\"><path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" /></svg>"
 };
 
 // Icon name compatibility map (old Lucide names -> new names)
@@ -912,7 +914,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Linear</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-ease-linear"><i data-icon="play"></i></button>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-linear" aria-label="Play linear easing demo"><i data-icon="play"></i></button>
                                     </div>
                                     <p>Constant speed from start to finish</p>
                                     <div class="motion-demo-box">
@@ -926,7 +928,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Smooth</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-ease-3"><i data-icon="play"></i></button>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-3" aria-label="Play smooth easing demo"><i data-icon="play"></i></button>
                                     </div>
                                     <p>Natural acceleration and deceleration</p>
                                     <div class="motion-demo-box">
@@ -940,7 +942,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Spring</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-ease-spring-3"><i data-icon="play"></i></button>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-spring-3" aria-label="Play spring easing demo"><i data-icon="play"></i></button>
                                     </div>
                                     <p>Playful bounce with a bit of overshoot</p>
                                     <div class="motion-demo-box">
@@ -960,7 +962,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Button Hover</h4>
-                                        <div class="motion-play-btn-header motion-play-btn-auto" data-target=".demo-btn-hover">Auto</div>
+                                        <span class="motion-play-btn-auto" title="Hover interaction - plays on hover">Hover</span>
                                     </div>
                                     <p>Smooth transitions on hover using 200ms timing</p>
                                     <div class="motion-demo-box">
@@ -971,7 +973,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Card Lift</h4>
-                                        <div class="motion-play-btn-header motion-play-btn-auto" data-target=".demo-card-lift">Auto</div>
+                                        <span class="motion-play-btn-auto" title="Hover interaction - plays on hover">Hover</span>
                                     </div>
                                     <p>Elevation changes create depth and hierarchy</p>
                                     <div class="motion-demo-box">
@@ -982,7 +984,7 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Logo Float</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-logo-float"><i data-icon="play"></i></button>
+                                        <button class="motion-play-btn-header" data-target=".demo-logo-float" aria-label="Play logo float animation"><i data-icon="play"></i></button>
                                     </div>
                                     <p>Gentle continuous motion for brand elements</p>
                                     <div class="motion-demo-box">

@@ -855,10 +855,12 @@ body {
     --color-text-muted: var(--gray-warm-2);
     --color-text-subtle: var(--gray-warm-4);
     --color-text-inverse: var(--black);
+    --color-text-on-primary: var(--black);
     
     /* Surface Colors */
     --color-surface-primary: var(--gray-warm-8);
     --color-surface-secondary: var(--gray-warm-7);
+    --color-surface-tertiary: var(--gray-warm-6);
     --color-surface-elevated: var(--gray-warm-6);
     --color-surface-overlay: var(--gray-warm-8);
     --color-surface-glass: var(--glass-dark-10);
@@ -866,6 +868,7 @@ body {
     /* Interactive Colors */
     --color-interactive-primary: var(--brand-primary);
     --color-interactive-primary-hover: color-mix(in srgb, var(--brand-primary) 90%, black);
+    --color-interactive-hover: color-mix(in srgb, var(--brand-primary) 90%, black);
     --color-interactive-secondary: var(--brand-secondary);
     --color-interactive-tertiary: var(--gray-warm-6);
     --color-interactive-muted: var(--gray-warm-4);
@@ -980,6 +983,7 @@ body {
     --color-text-subtle: var(--gray-cool-3);
     --color-text-inverse: var(--gray-cool-0);
     --color-text-emphasis: var(--black);
+    --color-text-on-primary: var(--gray-cool-0);
     
     /* Stat number display */
     --stat-number-display: solid;
@@ -6752,6 +6756,7 @@ select option {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: var(--size-2);
     margin-top: auto;
 }
 
@@ -9701,6 +9706,13 @@ body {
     color: var(--color-text-default);
 }
 
+/* Enhanced text contrast for glass panels */
+.glass-preview-panel span {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4),
+                 0 0 8px rgba(0, 0, 0, 0.2);
+    font-weight: var(--font-weight-6);
+}
+
 /* Glow effect preview styles */
 .glow-preview {
     width: var(--component-height-lg);
@@ -10326,6 +10338,13 @@ body {
     justify-content: center;
     margin: var(--size-3) 0;
     padding: var(--size-3);
+    transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+/* Subtle hover state for demo boxes */
+.motion-demo-box:hover {
+    border-color: var(--color-border-default);
+    box-shadow: inset 0 0 0 1px var(--brand-primary-alpha-10);
 }
 
 .motion-demo-card {
@@ -10358,16 +10377,25 @@ body {
 
 .motion-play-btn-header {
     background: var(--color-interactive-primary);
-    color: var(--color-text-on-primary);
+    color: var(--btn-primary-text);
     border: none;
     border-radius: var(--radius-2);
-    padding: var(--size-1) var(--size-2);
+    padding: var(--size-2) var(--size-3);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: var(--size-1);
     font-size: var(--font-size-0);
+    min-height: 32px;
     transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+/* Ensure 44px touch target on mobile */
+@media (width <= 768px) {
+    .motion-play-btn-header {
+        min-height: 44px;
+        padding: var(--size-3) var(--size-4);
+    }
 }
 
 .motion-play-btn-header:hover {
@@ -10381,11 +10409,14 @@ body {
 }
 
 .motion-play-btn-auto {
-    background: transparent;
+    background: var(--surface-3);
     color: var(--color-text-muted);
     font-size: var(--font-size-00);
-    padding: var(--size-1);
-    pointer-events: none;
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: var(--font-weight-5);
 }
 
 .motion-demo-card p {
@@ -12603,6 +12634,25 @@ body {
         transform: none !important;
     }
     
+    /* Motion demo specific reduced motion */
+    .motion-ball,
+    .demo-btn-hover,
+    .demo-card-lift,
+    .demo-logo-float {
+        animation: none !important;
+        transition: opacity 0.2s !important;
+    }
+    
+    /* Show final state instead of animation */
+    .motion-ball.animate {
+        transform: translateY(-50%) translateX(200px);
+    }
+    
+    /* Indicate reduced motion mode */
+    .motion-play-btn-header {
+        opacity: 0.7;
+    }
+    
     /* Keep shimmer effect but make it static */
     .te-shimmer-overlay {
         animation: none !important;
@@ -13103,8 +13153,8 @@ button.theme-toggle {
    ================================================================= */
 
 .theme-toggle-compact {
-    width: 28px;
-    height: 28px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--color-surface-secondary);
     border: var(--border-size-1) solid var(--color-border-default);
@@ -13137,8 +13187,8 @@ button.theme-toggle {
 
 .theme-toggle-compact .theme-icon {
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
