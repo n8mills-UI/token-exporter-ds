@@ -20,9 +20,48 @@ import { spawn, exec } from 'child_process';
 import { promisify } from 'util';
 import { integrateStyleDictionary, validateStyleDictionaryAvailability } from '../src/lib/style-dictionary-integration.js';
 
+// File cache for avoiding redundant reads
+const fileCache = new Map();
+const fileMtimes = new Map();
+
 const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, '..');
+
+/**
+ * Cached file reader that checks modification time before reading
+ * @param {string} filePath - Path to the file to read
+ * @returns {string} File contents
+ */
+function readFileWithCache(filePath) {
+    try {
+        const stats = fs.statSync(filePath);
+        const mtime = stats.mtime.getTime();
+        const cachedMtime = fileMtimes.get(filePath);
+        
+        // Return cached content if file hasn't changed
+        if (cachedMtime === mtime && fileCache.has(filePath)) {
+            return fileCache.get(filePath);
+        }
+        
+        // Read and cache the file
+        const content = fs.readFileSync(filePath, 'utf8');
+        fileCache.set(filePath, content);
+        fileMtimes.set(filePath, mtime);
+        return content;
+    } catch (error) {
+        // File doesn't exist or can't be read, return empty
+        return '';
+    }
+}
+
+/**
+ * Clear file cache (for cleanup)
+ */
+function clearFileCache() {
+    fileCache.clear();
+    fileMtimes.clear();
+}
 
 /**
  * @typedef {Object} BuildConfig
@@ -98,6 +137,9 @@ function cleanup() {
         tempFiles.forEach(f => {
             if (fs.existsSync(f)) fs.unlinkSync(f);
         });
+        
+        // Clear file cache
+        clearFileCache();
     } catch (error) {
         console.error('Cleanup error:', error.message);
     }
@@ -119,7 +161,7 @@ process.on('SIGTERM', () => { cleanup(); process.exit(0); });
  * @throws {Error} When external icon libraries are detected
  */
 async function processCssImports(cssFile, outputBundle) {
-    const cssContent = fs.readFileSync(cssFile, 'utf8');
+    const cssContent = readFileWithCache(cssFile);
     let bundledCss = '';
     
     // Extract non-import content
@@ -154,7 +196,7 @@ async function processCssImports(cssFile, outputBundle) {
                 
             if (fs.existsSync(localPath)) {
                 console.log(`  ${colors.cyan}↓${colors.reset} Reading local: ${path.basename(localPath)}`);
-                bundledCss += fs.readFileSync(localPath, 'utf8') + '\n';
+                bundledCss += readFileWithCache(localPath) + '\n';
             } else {
                 console.error(`  ${colors.red}✗${colors.reset} File not found: ${localPath}`);
             }
@@ -203,7 +245,7 @@ async function processCssImports(cssFile, outputBundle) {
  * @throws {Error} When external icon libraries are detected
  */
 async function processJavaScriptBundles(templateFile, outputBundle) {
-    const templateContent = fs.readFileSync(templateFile, 'utf8');
+    const templateContent = readFileWithCache(templateFile);
     let bundledJs = '';
     
     // Find all script tags (both external and local)
@@ -241,7 +283,7 @@ async function processJavaScriptBundles(templateFile, outputBundle) {
             console.log(`  ${colors.cyan}↓${colors.reset} Reading local: ${path.basename(src)}`);
             try {
                 if (fs.existsSync(scriptPath)) {
-                    bundledJs += fs.readFileSync(scriptPath, 'utf8') + '\n';
+                    bundledJs += readFileWithCache(scriptPath) + '\n';
                 } else {
                     console.error(`  ${colors.red}✗${colors.reset} File not found: ${scriptPath}`);
                 }
@@ -300,7 +342,7 @@ window.styleTransforms = {
         }
         
         console.log(`  ${colors.cyan}↓${colors.reset} Bundling Style Dictionary transforms...`);
-        const transformsContent = fs.readFileSync(transformsPath, 'utf8');
+        const transformsContent = readFileWithCache(transformsPath);
         
         // Ensure the transforms are available as window.styleTransforms
         let bundledContent = transformsContent;
@@ -378,7 +420,7 @@ function processTemplate(templateFile, outputFile) {
         return false;
     }
     
-    let content = fs.readFileSync(templateFile, 'utf8');
+    let content = readFileWithCache(templateFile);
     let hasIncludes = true;
     let depth = 0;
     const maxDepth = 10;
@@ -393,7 +435,7 @@ function processTemplate(templateFile, outputFile) {
             const fullPath = path.join(projectRoot, includePath);
             
             if (fs.existsSync(fullPath)) {
-                return fs.readFileSync(fullPath, 'utf8');
+                return readFileWithCache(fullPath);
             } else {
                 console.error(`  ${colors.red}✗${colors.reset} Include not found: ${includePath}`);
                 return match;
@@ -498,8 +540,8 @@ async function processTemplates() {
         });
         
         // Bundle templates for plugin use
-        const templateCode = fs.readFileSync(templatesPath, 'utf8');
-        const dataCode = fs.readFileSync(dataPath, 'utf8');
+        const templateCode = readFileWithCache(templatesPath);
+        const dataCode = readFileWithCache(dataPath);
         
         // Transform to Figma-compatible JavaScript
         const transformedCode = (dataCode + '\n\n' + templateCode)
@@ -516,7 +558,30 @@ async function processTemplates() {
 }
 
 /**
- * Main build function
+ * @typedef {Object} BuildStep
+ * @property {string} name - Step name
+ * @property {Function} fn - Step function
+ * @property {Object} timing - Timing information
+ * @property {number} timing.start - Start time
+ * @property {number} timing.end - End time
+ * @property {number} timing.duration - Duration in milliseconds
+ */
+
+/**
+ * Log step timing information
+ * @param {string} stepName - Name of the build step
+ * @param {number} duration - Duration in milliseconds
+ * @param {Object} metadata - Additional metadata to log
+ */
+function logStepTiming(stepName, duration, metadata = {}) {
+    const metaStr = Object.keys(metadata).length > 0 
+        ? ` (${Object.entries(metadata).map(([k, v]) => `${k}: ${v}`).join(', ')})`
+        : '';
+    console.log(`  ${colors.green}✓${colors.reset} ${stepName} ${colors.gray}(${duration}ms)${colors.reset}${metaStr}`);
+}
+
+/**
+ * Main build function with parallel execution and performance timing
  * Orchestrates the entire build process including CSS bundling, 
  * JavaScript processing, Style Dictionary integration, and template compilation
  * 
@@ -526,7 +591,7 @@ async function build() {
     // Always read CLAUDE.md critical sections first!
     const claudeMdPath = path.join(projectRoot, 'CLAUDE.md');
     try {
-        const content = fs.readFileSync(claudeMdPath, 'utf8');
+        const content = readFileWithCache(claudeMdPath);
         const criticalSections = content.match(/## CRITICAL:.*?(?=##|$)/gs);
         
         if (criticalSections) {
@@ -541,75 +606,152 @@ async function build() {
         console.log(`${colors.yellow}⚠️  Could not read CLAUDE.md${colors.reset}`);
     }
     
-    console.log(`\n${colors.bright}🚀 Building Token Exporter...${colors.reset}\n`);
+    console.log(`\n${colors.bright}🚀 Building Token Exporter...${colors.reset}`);
+    console.log(`${colors.cyan}⚡ Using parallel execution for optimal performance${colors.reset}\n`);
     
-    const startTime = Date.now();
+    const buildStartTime = Date.now();
+    const stepTimings = new Map();
     
-    // Step 1: Process template functions (if available)
-    console.log(`${colors.blue}[1/5]${colors.reset} Processing template functions...`);
-    const templateBundle = await processTemplates();
-    if (templateBundle) {
-        console.log(`  ${colors.green}✓${colors.reset} Templates processed\n`);
+    // Phase 1: Parallel processing of independent assets
+    console.log(`${colors.blue}[Phase 1]${colors.reset} Processing independent assets in parallel...`);
+    
+    const phase1Tasks = [
+        {
+            name: 'Template Functions',
+            fn: async () => {
+                const start = Date.now();
+                const result = await processTemplates();
+                const duration = Date.now() - start;
+                stepTimings.set('templates', { duration, result });
+                return result;
+            }
+        },
+        {
+            name: 'CSS Bundling',
+            fn: async () => {
+                const start = Date.now();
+                const cssBundle = await processCssImports(
+                    path.join(projectRoot, CONFIG.cssSource),
+                    path.join(projectRoot, CONFIG.tempCssBundle)
+                );
+                const duration = Date.now() - start;
+                const size = Math.round(cssBundle.length / 1024);
+                stepTimings.set('css', { duration, result: cssBundle, size });
+                return cssBundle;
+            }
+        },
+        {
+            name: 'JavaScript Bundling',
+            fn: async () => {
+                const start = Date.now();
+                const jsBundle = await processJavaScriptBundles(
+                    path.join(projectRoot, CONFIG.templates.ui.source),
+                    path.join(projectRoot, CONFIG.tempJsBundle)
+                );
+                const duration = Date.now() - start;
+                const size = Math.round(jsBundle.length / 1024);
+                stepTimings.set('js', { duration, result: jsBundle, size });
+                return jsBundle;
+            }
+        },
+        {
+            name: 'Style Dictionary Transforms',
+            fn: async () => {
+                const start = Date.now();
+                const styleTransforms = bundleStyleTransforms();
+                const duration = Date.now() - start;
+                const size = Math.round(styleTransforms.length / 1024);
+                stepTimings.set('transforms', { duration, result: styleTransforms, size });
+                return styleTransforms;
+            }
+        }
+    ];
+
+    // Execute Phase 1 tasks in parallel
+    const [templateBundle, cssBundle, jsBundle, styleTransforms] = await Promise.all(
+        phase1Tasks.map(task => task.fn())
+    );
+
+    // Log Phase 1 results
+    const templatesData = stepTimings.get('templates');
+    const cssData = stepTimings.get('css');
+    const jsData = stepTimings.get('js');
+    const transformsData = stepTimings.get('transforms');
+
+    if (templatesData.result) {
+        logStepTiming('Template functions processed', templatesData.duration);
     } else {
-        console.log(`  ${colors.yellow}⚠${colors.reset} No templates to process\n`);
+        console.log(`  ${colors.yellow}⚠${colors.reset} No templates to process`);
     }
     
-    // Step 2: Bundle CSS
-    console.log(`${colors.blue}[2/5]${colors.reset} Bundling CSS...`);
-    let cssBundle;
-    
-    // Process CSS with imports
-    cssBundle = await processCssImports(
-        path.join(projectRoot, CONFIG.cssSource),
-        path.join(projectRoot, CONFIG.tempCssBundle)
-    );
-    
-    const cssSize = Math.round(cssBundle.length / 1024);
-    console.log(`  ${colors.green}✓${colors.reset} CSS bundled (${cssSize}KB)\n`);
-    
-    // Step 3: Bundle JavaScript
-    console.log(`${colors.blue}[3/6]${colors.reset} Bundling JavaScript...`);
-    const jsBundle = await processJavaScriptBundles(
-        path.join(projectRoot, CONFIG.templates.ui.source),
-        path.join(projectRoot, CONFIG.tempJsBundle)
-    );
-    const jsSize = Math.round(jsBundle.length / 1024);
-    console.log(`  ${colors.green}✓${colors.reset} JavaScript bundled (${jsSize}KB)\n`);
-    
-    // Step 4: Bundle Style Dictionary transforms
-    console.log(`${colors.blue}[4/6]${colors.reset} Bundling Style Dictionary transforms...`);
-    const styleTransforms = bundleStyleTransforms();
-    const transformsSize = Math.round(styleTransforms.length / 1024);
-    console.log(`  ${colors.green}✓${colors.reset} Style transforms bundled (${transformsSize}KB)`);
-    
-    // Test Style Dictionary integration
+    logStepTiming('CSS bundled', cssData.duration, { size: `${cssData.size}KB` });
+    logStepTiming('JavaScript bundled', jsData.duration, { size: `${jsData.size}KB` });
+    logStepTiming('Style transforms bundled', transformsData.duration, { size: `${transformsData.size}KB` });
+
+    // Test Style Dictionary integration (quick validation)
+    const testStart = Date.now();
     await testStyleDictionaryIntegration();
+    const testDuration = Date.now() - testStart;
+    stepTimings.set('integration-test', { duration: testDuration });
+    console.log(`  ${colors.green}✓${colors.reset} Style Dictionary integration tested ${colors.gray}(${testDuration}ms)${colors.reset}`);
+
     console.log();
     
-    // Step 5: Process templates
-    console.log(`${colors.blue}[5/6]${colors.reset} Processing templates...`);
-    
-    // Process UI template
-    const uiTemp = path.join(projectRoot, CONFIG.templates.ui.output + '.temp');
-    processTemplate(
-        path.join(projectRoot, CONFIG.templates.ui.source),
-        uiTemp
+    // Phase 2: Template processing (can be parallelized)
+    console.log(`${colors.blue}[Phase 2]${colors.reset} Processing HTML templates in parallel...`);
+
+    const phase2Tasks = [
+        {
+            name: 'UI Template',
+            fn: async () => {
+                const start = Date.now();
+                const uiTemp = path.join(projectRoot, CONFIG.templates.ui.output + '.temp');
+                const success = processTemplate(
+                    path.join(projectRoot, CONFIG.templates.ui.source),
+                    uiTemp
+                );
+                const duration = Date.now() - start;
+                stepTimings.set('ui-template', { duration, tempPath: uiTemp, success });
+                return { tempPath: uiTemp, success };
+            }
+        },
+        {
+            name: 'Guide Template',
+            fn: async () => {
+                const start = Date.now();
+                const guideTemp = path.join(projectRoot, CONFIG.templates.guide.output + '.temp');
+                const success = processTemplate(
+                    path.join(projectRoot, CONFIG.templates.guide.source),
+                    guideTemp
+                );
+                const duration = Date.now() - start;
+                stepTimings.set('guide-template', { duration, tempPath: guideTemp, success });
+                return { tempPath: guideTemp, success };
+            }
+        }
+    ];
+
+    // Execute Phase 2 tasks in parallel
+    const [uiResult, guideResult] = await Promise.all(
+        phase2Tasks.map(task => task.fn())
     );
-    console.log(`  ${colors.green}✓${colors.reset} UI template processed`);
+
+    const uiTemplateData = stepTimings.get('ui-template');
+    const guideTemplateData = stepTimings.get('guide-template');
+
+    logStepTiming('UI template processed', uiTemplateData.duration);
+    logStepTiming('Guide template processed', guideTemplateData.duration);
+
+    console.log();
     
-    // Process Guide template
-    const guideTemp = path.join(projectRoot, CONFIG.templates.guide.output + '.temp');
-    processTemplate(
-        path.join(projectRoot, CONFIG.templates.guide.source),
-        guideTemp
-    );
-    console.log(`  ${colors.green}✓${colors.reset} Guide template processed\n`);
-    
-    // Step 6: Final assembly
-    console.log(`${colors.blue}[6/6]${colors.reset} Assembling final files...`);
-    
+    // Phase 3: Final assembly (sequential due to dependencies)
+    console.log(`${colors.blue}[Phase 3]${colors.reset} Final assembly...`);
+
+    const assemblyStart = Date.now();
+
     // Assemble UI HTML (with inlined CSS for Figma plugin)
-    const uiTempContent = fs.readFileSync(uiTemp, 'utf8');
+    const uiAssemblyStart = Date.now();
+    const uiTempContent = readFileWithCache(uiResult.tempPath);
     const uiFinal = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -631,10 +773,11 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
 </html>`;
     
     fs.writeFileSync(path.join(projectRoot, CONFIG.templates.ui.output), uiFinal);
-    console.log(`  ${colors.green}✓${colors.reset} ${CONFIG.templates.ui.output}`);
+    const uiAssemblyDuration = Date.now() - uiAssemblyStart;
     
     // Assemble Guide HTML (with linked CSS for better web performance)
-    const guideContent = fs.readFileSync(guideTemp, 'utf8');
+    const guideAssemblyStart = Date.now();
+    const guideContent = readFileWithCache(guideResult.tempPath);
     
     // Link to external CSS file to avoid minified Open Props parsing issues
     const styleLink = '<link rel="stylesheet" href="design-system.css">';
@@ -642,7 +785,12 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     const guideFinal = guideContent.replace('<!-- {{STYLES}} -->', styleLink);
     
     fs.writeFileSync(path.join(projectRoot, CONFIG.templates.guide.output), guideFinal);
-    console.log(`  ${colors.green}✓${colors.reset} ${CONFIG.templates.guide.output}`);
+    const guideAssemblyDuration = Date.now() - guideAssemblyStart;
+    
+    const assemblyDuration = Date.now() - assemblyStart;
+
+    logStepTiming(CONFIG.templates.ui.output, uiAssemblyDuration);
+    logStepTiming(CONFIG.templates.guide.output, guideAssemblyDuration);
     
     // DO NOT COPY BUNDLED CSS - it breaks with minified Open Props!
     // The docs/design-system.css from commit 744ea0b works perfectly
@@ -650,14 +798,23 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     console.log(`  ${colors.cyan}ℹ${colors.reset} Keeping existing docs/design-system.css (not bundling)`);
     
     // Cleanup temp files
-    fs.unlinkSync(uiTemp);
-    fs.unlinkSync(guideTemp);
-    
-    // Additional cleanup for new temp files
+    const cleanupStart = Date.now();
+    fs.unlinkSync(uiResult.tempPath);
+    fs.unlinkSync(guideResult.tempPath);
     cleanup();
+    const cleanupDuration = Date.now() - cleanupStart;
+    stepTimings.set('cleanup', { duration: cleanupDuration });
     
-    const elapsed = Date.now() - startTime;
-    console.log(`\n${colors.bright}${colors.green}✨ Build complete in ${elapsed}ms${colors.reset}\n`);
+    const totalDuration = Date.now() - buildStartTime;
+    
+    // Performance summary
+    console.log(`\n${colors.bright}${colors.green}✨ Build complete!${colors.reset}`);
+    console.log(`${colors.cyan}⚡ Performance Summary:${colors.reset}`);
+    console.log(`  • Phase 1 (parallel): ${Math.max(cssData.duration, jsData.duration, transformsData.duration, templatesData.duration)}ms`);
+    console.log(`  • Phase 2 (parallel): ${Math.max(uiTemplateData.duration, guideTemplateData.duration)}ms`);
+    console.log(`  • Phase 3 (assembly): ${assemblyDuration}ms`);
+    console.log(`  • Cleanup: ${cleanupDuration}ms`);
+    console.log(`  ${colors.bright}• Total: ${totalDuration}ms${colors.reset}\n`);
 }
 
 /**

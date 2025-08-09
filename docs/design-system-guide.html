@@ -1006,6 +1006,67 @@ observer.observe(document.body, {
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Vortex Animation</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-vortex-mini" aria-label="Play vortex animation demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Mini version of the te-vortex swirl animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-vortex-mini">
+                                            <div class="te-icon-cell" style="--delay: 0s; --x-start: -20px; --y-start: -20px; --scale: 0.8; --blur: 2px; --color: var(--brand-primary);">
+                                                <i data-icon="palette"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.2s; --x-start: 20px; --y-start: -15px; --scale: 0.6; --blur: 1px; --color: var(--value-color);">
+                                                <i data-icon="type"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.4s; --x-start: -15px; --y-start: 20px; --scale: 0.7; --blur: 1.5px; --color: var(--value-number);">
+                                                <i data-icon="hash"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Progress Flow</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-progress-flow" aria-label="Play progress flow demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Progress bar with percentage and status animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-progress-flow">
+                                            <div class="te-glass-status">
+                                                <p class="te-progress-percent">0%</p>
+                                                <div class="te-progress-track">
+                                                    <div class="te-progress-fill"></div>
+                                                </div>
+                                                <p class="te-status-label">Ready to export</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Floating Icons</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-floating-icons" aria-label="Play floating icons demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Mini version of the hero section floating animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-floating-icons">
+                                            <div class="icon-float rise" style="--animation-duration: 6s; --animation-delay: 0s; --animation-start-bottom: 30px; --animation-opacity-visible: 0.7; left: 20%; color: var(--value-color);">
+                                                <i data-icon="palette"></i>
+                                            </div>
+                                            <div class="icon-float bubble" style="--animation-duration: 8s; --animation-delay: 1s; --animation-start-bottom: 25px; --animation-opacity-visible: 0.6; left: 60%; color: var(--value-text);">
+                                                <i data-icon="type"></i>
+                                            </div>
+                                            <div class="icon-float parallax" style="--animation-duration: 7s; --animation-delay: 2s; --animation-start-bottom: 35px; --animation-opacity-visible: 0.8; left: 80%; color: var(--brand-primary);">
+                                                <i data-icon="layers"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -3969,6 +4030,55 @@ function playMotionDemo(demoType) {
     }, animationDuration[demoType] || 1000);
 }
 
+// Custom motion demo functions
+function playVortexDemo(container) {
+    const iconCells = container.querySelectorAll('.te-icon-cell');
+    iconCells.forEach((cell, index) => {
+        cell.style.animation = 'none';
+        cell.offsetHeight; // Force reflow
+        cell.style.animation = 'te-vortex-swirl 3s ease-in-out';
+        cell.style.animationDelay = (index * 0.2) + 's';
+    });
+}
+
+function playProgressDemo(container) {
+    const progressFill = container.querySelector('.te-progress-fill');
+    const progressPercent = container.querySelector('.te-progress-percent');
+    const statusLabel = container.querySelector('.te-status-label');
+    
+    // Reset
+    progressFill.style.width = '0%';
+    progressPercent.textContent = '0%';
+    statusLabel.textContent = 'Initializing...';
+    
+    // Animate progress
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 15 + 5;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            statusLabel.textContent = 'Complete!';
+        } else {
+            const messages = ['Processing tokens...', 'Generating styles...', 'Optimizing output...', 'Almost done...'];
+            statusLabel.textContent = messages[Math.floor(progress / 25)];
+        }
+        progressFill.style.width = progress + '%';
+        progressPercent.textContent = Math.round(progress) + '%';
+    }, 150);
+}
+
+function playFloatingIconsDemo(container) {
+    const floatingIcons = container.querySelectorAll('.icon-float');
+    floatingIcons.forEach(icon => {
+        icon.style.animation = 'none';
+        icon.offsetHeight; // Force reflow
+        icon.style.animation = icon.classList.contains('rise') ? 'gentleRise 6s linear infinite' :
+                               icon.classList.contains('bubble') ? 'bubblingUp 8s linear infinite' :
+                               'parallaxAscent 7s linear infinite';
+    });
+}
+
 // Motion Demo Interactions
 document.addEventListener('DOMContentLoaded', function() {
     // Handle play buttons for motion demos
@@ -3988,8 +4098,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Force reflow to restart animation
             targetElement.offsetHeight;
             
-            // Add animation class
-            targetElement.classList.add('animate');
+            // Add animation class or handle special demos
+            if (targetSelector === '.demo-vortex-mini') {
+                playVortexDemo(targetElement);
+            } else if (targetSelector === '.demo-progress-flow') {
+                playProgressDemo(targetElement);
+            } else if (targetSelector === '.demo-floating-icons') {
+                playFloatingIconsDemo(targetElement);
+            } else {
+                targetElement.classList.add('animate');
+            }
             
             // Update button state temporarily
             const icon = this.querySelector('i');
