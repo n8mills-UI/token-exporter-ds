@@ -311,6 +311,9 @@ function updateTokenSummary() {
         function attachEventListeners() {
             // Theme toggle listener
             if (DOMElements.themeToggle) {
+                // Render icons in the theme toggle
+                renderIcons(DOMElements.themeToggle);
+                
                 DOMElements.themeToggle.addEventListener('click', () => {
                     toggleTheme();
                     // Add satisfying click animation

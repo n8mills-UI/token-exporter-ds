@@ -695,6 +695,54 @@ observer.observe(document.body, {
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview font-sans">The quick brown fox jumps over the lazy dog.</div></div></div>
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-mono</div><div class="token-value">'Monaco', 'Menlo', monospace</div><div class="text-preview font-mono">const greeting = "Hello, World!";</div></div></div>
             </div>
+            
+            <!-- Font Weight Scale -->
+            <div class="category-header mt-6">
+                <h3 class="section-title-secondary">Font Weights</h3>
+                <p class="section-description">Available font weight tokens for establishing typographic hierarchy and emphasis.</p>
+            </div>
+            <div class="tokens-grid weight-grid">
+                <div class="example-container">
+                    <div class="flex flex-col gap-2">
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-1);" class="text-body-lg">100 - Thin</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-1)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-2);" class="text-body-lg">200 - Extra Light</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-2)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-3);" class="text-body-lg">300 - Light</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-3)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-4);" class="text-body-lg">400 - Regular</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-4)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-5);" class="text-body-lg">500 - Medium</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-5)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-6);" class="text-body-lg">600 - Semi Bold</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-6)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-7);" class="text-body-lg">700 - Bold</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-7)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-8);" class="text-body-lg">800 - Extra Bold</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-8)</code>
+                        </div>
+                        <div class="weight-item">
+                            <div style="font-weight: var(--font-weight-9);" class="text-body-lg">900 - Black</div>
+                            <code class="text-color-muted text-size-0">var(--font-weight-9)</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -908,8 +956,8 @@ observer.observe(document.body, {
                         </div>
                         
                         <!-- Easing Playground -->
-                        <div class="motion-demo-category">
-                            <h3>Easing Curves</h3>
+                        <div class="effects-subsection">
+                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Easing Curves</h3>
                             <div class="motion-demo-grid">
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
@@ -953,8 +1001,8 @@ observer.observe(document.body, {
                         </div>
                         
                         <!-- Real World Examples -->
-                        <div class="motion-demo-category">
-                            <h3>Real-World Examples</h3>
+                        <div class="effects-subsection">
+                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Real-World Examples</h3>
                             <div class="motion-demo-grid">
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
@@ -1010,19 +1058,25 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Vortex Animation</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-vortex-mini" aria-label="Play vortex animation demo"><i data-icon="play"></i></button>
+                                        <span class="motion-play-btn-auto" title="Automatic continuous animation">Auto</span>
                                     </div>
                                     <p>Mini version of the te-vortex swirl animation</p>
                                     <div class="motion-demo-box">
                                         <div class="demo-vortex-mini">
-                                            <div class="te-icon-cell" style="--delay: 0s; --x-start: -20px; --y-start: -20px; --scale: 0.8; --blur: 2px; --color: var(--brand-primary);">
+                                            <div class="te-icon-cell" style="--delay: 0s; --x-start: -50px; --y-start: -50px; --x-end: 60px; --y-end: 40px; color: var(--value-color);">
                                                 <i data-icon="palette"></i>
                                             </div>
-                                            <div class="te-icon-cell" style="--delay: 0.2s; --x-start: 20px; --y-start: -15px; --scale: 0.6; --blur: 1px; --color: var(--value-color);">
+                                            <div class="te-icon-cell" style="--delay: 0.2s; --x-start: 50px; --y-start: -40px; --x-end: -70px; --y-end: -30px; color: var(--value-text);">
                                                 <i data-icon="type"></i>
                                             </div>
-                                            <div class="te-icon-cell" style="--delay: 0.4s; --x-start: -15px; --y-start: 20px; --scale: 0.7; --blur: 1.5px; --color: var(--value-number);">
+                                            <div class="te-icon-cell" style="--delay: 0.4s; --x-start: -40px; --y-start: 50px; --x-end: 40px; --y-end: -60px; color: var(--value-number);">
                                                 <i data-icon="hash"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.6s; --x-start: 45px; --y-start: 45px; --x-end: -50px; --y-end: 50px; color: var(--value-state);">
+                                                <i data-icon="toggle-right"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.8s; --x-start: 0px; --y-start: 50px; --x-end: 80px; --y-end: -40px; color: var(--brand-primary);">
+                                                <i data-icon="layers"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -1050,18 +1104,24 @@ observer.observe(document.body, {
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
                                         <h4>Floating Icons</h4>
-                                        <button class="motion-play-btn-header" data-target=".demo-floating-icons" aria-label="Play floating icons demo"><i data-icon="play"></i></button>
+                                        <span class="motion-play-btn-auto" title="Automatic continuous animation">Auto</span>
                                     </div>
                                     <p>Mini version of the hero section floating animation</p>
                                     <div class="motion-demo-box">
                                         <div class="demo-floating-icons">
-                                            <div class="icon-float rise" style="--animation-duration: 6s; --animation-delay: 0s; --animation-start-bottom: 30px; --animation-opacity-visible: 0.7; left: 20%; color: var(--value-color);">
+                                            <div class="icon-float rise" style="left: 15%; color: var(--value-color); animation-delay: 0s;">
                                                 <i data-icon="palette"></i>
                                             </div>
-                                            <div class="icon-float bubble" style="--animation-duration: 8s; --animation-delay: 1s; --animation-start-bottom: 25px; --animation-opacity-visible: 0.6; left: 60%; color: var(--value-text);">
+                                            <div class="icon-float bubble" style="left: 30%; color: var(--value-text); animation-delay: 0.8s;">
                                                 <i data-icon="type"></i>
                                             </div>
-                                            <div class="icon-float parallax" style="--animation-duration: 7s; --animation-delay: 2s; --animation-start-bottom: 35px; --animation-opacity-visible: 0.8; left: 80%; color: var(--brand-primary);">
+                                            <div class="icon-float parallax" style="left: 50%; color: var(--value-number); animation-delay: 1.6s;">
+                                                <i data-icon="hash"></i>
+                                            </div>
+                                            <div class="icon-float rise" style="left: 70%; color: var(--value-state); animation-delay: 2.4s;">
+                                                <i data-icon="toggle-right"></i>
+                                            </div>
+                                            <div class="icon-float bubble" style="left: 85%; color: var(--brand-primary); animation-delay: 3.2s;">
                                                 <i data-icon="layers"></i>
                                             </div>
                                         </div>
@@ -4033,11 +4093,12 @@ function playMotionDemo(demoType) {
 // Custom motion demo functions
 function playVortexDemo(container) {
     const iconCells = container.querySelectorAll('.te-icon-cell');
-    iconCells.forEach((cell, index) => {
+    iconCells.forEach((cell) => {
+        const delay = cell.style.getPropertyValue('--delay') || '0s';
         cell.style.animation = 'none';
         cell.offsetHeight; // Force reflow
-        cell.style.animation = 'te-vortex-swirl 3s ease-in-out';
-        cell.style.animationDelay = (index * 0.2) + 's';
+        cell.style.animation = `te-vortex-swirl 2.5s ease-in-out`;
+        cell.style.animationDelay = delay;
     });
 }
 
@@ -4046,10 +4107,17 @@ function playProgressDemo(container) {
     const progressPercent = container.querySelector('.te-progress-percent');
     const statusLabel = container.querySelector('.te-status-label');
     
-    // Reset
+    // Always reset to 0 first
+    progressFill.style.transition = 'none';
     progressFill.style.width = '0%';
     progressPercent.textContent = '0%';
-    statusLabel.textContent = 'Initializing...';
+    statusLabel.textContent = 'Ready to export';
+    
+    // Force reflow
+    progressFill.offsetHeight;
+    
+    // Re-enable transition
+    progressFill.style.transition = 'width 0.3s ease-out';
     
     // Animate progress
     let progress = 0;
@@ -4070,12 +4138,12 @@ function playProgressDemo(container) {
 
 function playFloatingIconsDemo(container) {
     const floatingIcons = container.querySelectorAll('.icon-float');
-    floatingIcons.forEach(icon => {
+    floatingIcons.forEach((icon, index) => {
+        const delay = parseFloat(icon.style.animationDelay) || (index * 0.8);
         icon.style.animation = 'none';
         icon.offsetHeight; // Force reflow
-        icon.style.animation = icon.classList.contains('rise') ? 'gentleRise 6s linear infinite' :
-                               icon.classList.contains('bubble') ? 'bubblingUp 8s linear infinite' :
-                               'parallaxAscent 7s linear infinite';
+        icon.style.animation = `float-up-demo 3s linear infinite`;
+        icon.style.animationDelay = `${delay}s`;
     });
 }
 

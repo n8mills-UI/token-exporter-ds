@@ -460,6 +460,7 @@ body {
  --color-background-primary: var(--gray-warm-8);
  --color-background-secondary: var(--gray-warm-7);
  --color-background-tertiary: var(--gray-warm-6);
+ --color-background-elevated: var(--gray-warm-6);
  --color-background-disabled: var(--gray-warm-7);
  --color-background-code: var(--gray-warm-8);
  --color-background-default: var(--gray-warm-8); /* Same as primary */
@@ -1020,6 +1021,7 @@ body {
     --color-background-primary: var(--gray-cool-0);
     --color-background-secondary: var(--gray-cool-1);
     --color-background-tertiary: var(--gray-cool-2);
+    --color-background-elevated: var(--gray-cool-2);
     --color-background-disabled: var(--gray-cool-2);
     --color-background-code: var(--gray-cool-1);
     --color-background-default: var(--gray-cool-0);
@@ -2052,6 +2054,7 @@ body {
  .mb-3 { margin-bottom: var(--size-3); }
  .mb-4 { margin-bottom: var(--size-4); }
  .mb-6 { margin-bottom: var(--size-6); }
+ .mt-6 { margin-top: var(--size-6); }
  .mb-8 { margin-bottom: var(--size-8); }
 
  .mt-4 { margin-top: var(--size-4); }
@@ -2315,7 +2318,7 @@ body {
         justify-content: center;
         width: 100%;
         font-family: var(--font-sans);
-        font-weight: var(--font-weight-7);
+        font-weight: var(--font-weight-6);
         text-decoration: none;
         line-height: 1;
         white-space: nowrap;
@@ -3413,8 +3416,8 @@ body {
    ========================================================================== */
 
 .theme-toggle-btn {
-    width: 24px;
-    height: 24px;
+    width: 24px !important;
+    height: 24px !important;
     border-radius: 50%;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.8);
@@ -3443,11 +3446,16 @@ body {
 }
 
 .theme-toggle-btn .theme-icon {
-    position: absolute;
-    width: 14px;
-    height: 14px;
+    position: absolute !important;
+    width: 14px !important;
+    height: 14px !important;
     transition: opacity 0.2s ease, transform 0.2s ease;
     color: rgba(255, 255, 255, 0.9);
+    top: 50%;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .theme-toggle-btn .theme-icon svg {
@@ -3456,24 +3464,24 @@ body {
     stroke-width: 2;
 }
 
-.theme-icon-light {
+.theme-toggle-btn .theme-icon-light {
     opacity: 1;
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
 }
 
-.theme-icon-dark {
+.theme-toggle-btn .theme-icon-dark {
     opacity: 0;
-    transform: rotate(-90deg);
+    transform: translate(-50%, -50%) rotate(-90deg);
 }
 
-[data-theme="dark"] .theme-icon-light {
+[data-theme="dark"] .theme-toggle-btn .theme-icon-light {
     opacity: 0;
-    transform: rotate(90deg);
+    transform: translate(-50%, -50%) rotate(90deg);
 }
 
-[data-theme="dark"] .theme-icon-dark {
+[data-theme="dark"] .theme-toggle-btn .theme-icon-dark {
     opacity: 1;
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
 }
 
 /* Light theme styles */
@@ -3500,6 +3508,120 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: var(--size-2);
+}
+
+/* ==========================================================================
+   THEME TOGGLE SWITCH - Gradient Track Style
+   ========================================================================== */
+
+.theme-toggle-switch {
+    position: relative;
+    width: 40px !important;
+    height: 20px !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+.theme-toggle-switch .toggle-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 40px !important;
+    height: 20px !important;
+    background: var(--gradient-highlight);
+    border-radius: 20px;
+    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] .theme-toggle-switch .toggle-track {
+    background: var(--gray-warm-7);
+}
+
+.theme-toggle-switch .toggle-thumb {
+    position: absolute;
+    top: 2px !important;
+    left: 2px !important;
+    right: auto !important;
+    width: 16px !important;
+    height: 16px !important;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .theme-toggle-switch .toggle-thumb {
+    transform: translateX(20px);
+    background: var(--gray-warm-2);
+}
+
+.theme-toggle-switch .toggle-icon {
+    position: absolute;
+    width: 10px !important;
+    height: 10px !important;
+    transition: opacity 0.2s ease;
+    color: var(--gray-warm-9);
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-switch .toggle-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 2.5;
+}
+
+.theme-toggle-switch .toggle-icon-light {
+    opacity: 1;
+}
+
+.theme-toggle-switch .toggle-icon-dark {
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle-switch .toggle-icon-light {
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle-switch .toggle-icon-dark {
+    opacity: 1;
+    color: var(--gray-warm-9);
+}
+
+/* Hover states */
+.theme-toggle-switch:hover .toggle-track {
+    opacity: 0.9;
+}
+
+.theme-toggle-switch:hover .toggle-thumb {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Active state */
+.theme-toggle-switch:active .toggle-thumb {
+    width: 18px;
+}
+
+[data-theme="dark"] .theme-toggle-switch:active .toggle-thumb {
+    transform: translateX(18px);
+}
+
+/* Focus state for accessibility */
+.theme-toggle-switch:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
 }
 
 /* ==========================================================================
@@ -4217,7 +4339,6 @@ body {
 
 .effects-subsection {
     margin-bottom: var(--size-6);
-    padding: var(--size-4);
 }
 
 /* @docs-only-end */
@@ -6498,6 +6619,33 @@ select option {
  line-height: var(--font-lineheight-3);
 }
 
+/* Font weight scale display */
+.weight-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--size-2) var(--size-3);
+    background: var(--color-background-secondary);
+    border: var(--border-size-1) solid var(--color-border-default);
+    border-radius: var(--radius-2);
+    transition: var(--transition-fast);
+}
+
+.weight-grid {
+    display: grid;
+    gap: var(--size-2);
+}
+
+.weight-item:hover {
+    background: var(--color-background-elevated);
+    border-color: var(--brand-primary);
+}
+
+.weight-item .text-body-lg {
+    font-size: var(--font-size-2);
+    line-height: 1.2;
+}
+
 .text-body-md { 
  font-size: var(--font-size-1);
  font-weight: var(--font-weight-4); 
@@ -7667,31 +7815,31 @@ select option {
  0% {
  transform: translate(var(--x-start), var(--y-start)) scale(0) rotate(0deg);
  opacity: 0;
- filter: blur(4px);
  }
 
- 25% {
- transform: translate(calc(var(--x-start) * 0.5), calc(var(--y-start) * 0.5)) scale(0.6) rotate(90deg);
- opacity: 0.4;
- filter: blur(2px);
+ 20% {
+ transform: translate(calc(var(--x-start) * 0.6), calc(var(--y-start) * 0.4)) scale(0.8) rotate(90deg);
+ opacity: 0.8;
  }
 
- 50% {
- transform: translate(0, 0) scale(var(--scale, 1)) rotate(180deg);
+ 40% {
+ transform: translate(calc(var(--y-start) * -0.3), calc(var(--x-start) * 0.3)) scale(1) rotate(180deg);
  opacity: 1;
- filter: blur(0);
  }
 
- 75% {
- transform: translate(calc(var(--x-end) * 0.5), calc(var(--y-end) * 0.5)) scale(0.6) rotate(270deg);
- opacity: 0.4;
- filter: blur(2px);
+ 60% {
+ transform: translate(calc(var(--x-start) * -0.4), calc(var(--y-start) * -0.4)) scale(1) rotate(270deg);
+ opacity: 0.9;
+ }
+
+ 80% {
+ transform: translate(calc(var(--y-start) * 0.6), calc(var(--x-start) * -0.6)) scale(0.7) rotate(360deg);
+ opacity: 0.5;
  }
 
  100% {
- transform: translate(var(--x-end), var(--y-end)) scale(0) rotate(360deg);
+ transform: translate(calc(var(--x-start) * -1.5), calc(var(--y-start) * 1.5)) scale(0) rotate(450deg);
  opacity: 0;
- filter: blur(4px);
  }
 }
 
@@ -10039,26 +10187,7 @@ body {
 }
 
 /* Interactive Motion Demos */
-.motion-demo-category {
-    margin-bottom: var(--size-8);
-}
-
-/* Remove margin from last category (Real World Examples) */
-.motion-demo-category:last-child {
-    margin-bottom: 0;
-}
-
-.motion-demo-category h3 {
-    font-size: var(--font-size-3);
-    font-weight: var(--font-weight-6);
-    margin-bottom: var(--size-4);
-    color: var(--color-text-default);
-    padding-bottom: var(--size-2);
-    border-bottom: var(--border-size-1) solid var(--color-border-subtle);
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-}
+/* Motion sections now use effects-subsection for consistency with Effects section */
 
 .motion-demo-grid {
     display: grid;
@@ -10070,7 +10199,7 @@ body {
     background: var(--color-background-secondary);
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-3);
-    padding: var(--size-5);
+    padding: var(--size-4) var(--size-4) var(--size-3);
 }
 
 .motion-demo-card h4 {
@@ -10086,8 +10215,14 @@ body {
     margin-bottom: var(--size-4);
 }
 
+/* Increased margin for Vortex and Floating Icons descriptions */
+.motion-demo-card:has(.demo-vortex-mini) p,
+.motion-demo-card:has(.demo-floating-icons) p {
+    margin-bottom: 28px;
+}
+
 .motion-demo-box {
-    height: 120px;
+    height: 140px;
     background: var(--color-background-primary);
     border: var(--border-size-1) solid var(--color-border-subtle);
     border-radius: var(--radius-2);
@@ -10096,7 +10231,14 @@ body {
     justify-content: center;
     position: relative;
     overflow: hidden;
-    margin-bottom: var(--size-3);
+    padding: var(--size-4);
+}
+
+/* Remove padding for specific demos that need full width */
+.motion-demo-card:has(.demo-vortex-mini) .motion-demo-box,
+.motion-demo-card:has(.demo-progress-flow) .motion-demo-box,
+.motion-demo-card:has(.demo-floating-icons) .motion-demo-box {
+    padding: 0;
 }
 
 /* Easing Curve Visualizations */
@@ -10404,6 +10546,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     height: 100%;
     animation: logoFloat 3s ease-in-out infinite;
 }
@@ -10433,23 +10576,34 @@ body {
     overflow: hidden;
 }
 
-.demo-vortex-mini .te-icon-cell {
-    position: absolute;
-    width: 20px;
-    height: 20px;
+/* Vortex demo container */
+.demo-vortex-mini {
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: te-vortex-swirl 3s infinite ease-in-out;
-    animation-delay: var(--delay);
-    opacity: 0;
-    filter: blur(var(--blur));
+}
+
+.demo-vortex-mini .te-icon-cell {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
     will-change: transform, opacity;
+    --scale: 1.2;
+    --blur: 8px;
+    animation: te-vortex-swirl 3s ease-in-out infinite;
+    animation-delay: var(--delay);
 }
 
 .demo-vortex-mini .te-icon-cell i {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 }
 
 .demo-progress-flow {
@@ -10457,7 +10611,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: var(--size-2);
+    width: 100%;
 }
 
 .demo-progress-flow .te-glass-status {
@@ -10501,34 +10655,65 @@ body {
 
 .demo-progress-flow .te-status-label {
     font-size: var(--font-size-00);
-    color: var(--color-text-subtle);
+    color: white;
     margin: 0;
     text-align: center;
 }
 
 .demo-floating-icons {
     position: relative;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .demo-floating-icons .icon-float {
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    font-size: 20px;
     will-change: transform, opacity;
 }
 
+/* Simple floating animation for demo */
+@keyframes float-up-demo {
+    0% {
+        transform: translateY(60px);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.8;
+    }
+    85% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-60px);
+        opacity: 0;
+    }
+}
+
+.demo-floating-icons .icon-float.rise {
+    animation: float-up-demo 3s linear infinite;
+}
+
+.demo-floating-icons .icon-float.bubble {
+    animation: float-up-demo 3.5s linear infinite;
+}
+
+.demo-floating-icons .icon-float.parallax {
+    animation: float-up-demo 4s linear infinite;
+}
+
 .demo-floating-icons .icon-float i {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 }
 
 .demo-content-fade {
@@ -10547,18 +10732,7 @@ body {
 }
 
 /* Motion Demo Layout Improvements */
-.motion-demo-box {
-    height: 120px;
-    background: var(--surface-1);
-    border: var(--border-size-1) solid var(--color-border-subtle);
-    border-radius: var(--radius-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: var(--size-3) 0;
-    padding: var(--size-3);
-    transition: all var(--animation-duration-2) var(--ease-3);
-}
+/* Duplicate removed - see definition above */
 
 /* Subtle hover state for demo boxes */
 .motion-demo-box:hover {
@@ -10570,7 +10744,7 @@ body {
     background: var(--motion-demo-bg);
     border: var(--border-size-1) solid var(--motion-demo-border);
     border-radius: var(--radius-3);
-    padding: var(--size-5);
+    padding: var(--size-4) var(--size-4) var(--size-3);
     transition: all var(--animation-duration-2) var(--ease-3);
 }
 
@@ -10607,6 +10781,18 @@ body {
     font-size: var(--font-size-0);
     min-height: 32px;
     transition: all var(--animation-duration-2) var(--ease-3);
+}
+
+.motion-play-btn-auto {
+    background: var(--color-background-tertiary);
+    border: var(--border-size-1) solid var(--color-border-subtle);
+    color: var(--color-text-subtle);
+    padding: var(--size-1) var(--size-2);
+    font-size: var(--font-size-00);
+    border-radius: var(--radius-2);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-5);
+    letter-spacing: 0.05em;
 }
 
 /* Ensure 44px touch target on mobile */
