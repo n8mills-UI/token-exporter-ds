@@ -953,6 +953,11 @@ body {
     --color-surface-overlay: var(--gray-cool-1);
     --color-surface-glass: var(--glass-dark-10);
     
+    /* Additional brand tokens for dark mode */
+    --brand-primary-dark: var(--gray-warm-8);           /* Dark background equivalent */
+    --brand-primary-dark-rgb: 30, 30, 30;               /* Dark RGB */
+    --color-text-emphasis: var(--gray-warm-0);          /* High emphasis text color */
+    
     /* Border Colors */
     --color-border-default: var(--gray-warm-5);
     --color-border-subtle: var(--gray-warm-6);
@@ -964,6 +969,11 @@ body {
     
     /* FAQ toggle color */
     --faq-toggle-color: var(--brand-primary);
+    
+    /* Table semantic tokens for dark theme */
+    --table-code-bg: var(--surface-3);
+    --table-code-color: var(--color-text-primary);
+    --table-border-color: var(--color-border-strong);
 }
 
 [data-theme="light"] {
@@ -983,6 +993,7 @@ body {
     /* Additional brand tokens for light mode */
     --brand-primary-dark: #1E1E1E;                      /* Pure black for high contrast */
     --brand-primary-dark-rgb: 30, 30, 30;               /* Black RGB */
+    --color-text-emphasis: var(--black);                /* High emphasis text color */
     
     /* =========================
        SEMANTIC TOKEN OVERRIDES FOR LIGHT THEME
@@ -1456,12 +1467,10 @@ body {
         border-color: var(--color-border-default);
     }
     
-    /* Code blocks */
-    .table code,
-    code {
-        background: var(--surface-2);
-        color: var(--color-text-primary);
-    }
+    /* Table semantic tokens for light theme */
+    --table-code-bg: var(--surface-2);
+    --table-code-color: var(--color-text-primary);
+    --table-border-color: var(--color-border-subtle);
     
     /* Mobile menu */
     .mobile-menu {
@@ -1572,11 +1581,7 @@ body {
         background: var(--color-background-tertiary);
     }
     
-    /* Table borders */
-    .table th,
-    .table td {
-        border-bottom-color: var(--color-border-subtle);
-    }
+    /* Table semantic tokens already defined above */
     
     /* Icon grid items */
     .icon-grid-item {
@@ -1693,6 +1698,23 @@ body {
    ║                      BASE COMPONENT STYLES                       ║
    ║                Icons, Buttons, Cards, Forms, etc.                ║
    ╚══════════════════════════════════════════════════════════════════╝ */
+
+/* =========================
+   TABLE COMPONENTS - Using semantic tokens
+   ========================= */
+
+/* Table code blocks use semantic tokens that adapt to themes */
+.table code,
+code {
+    background: var(--table-code-bg);
+    color: var(--table-code-color);
+}
+
+/* Table borders use semantic tokens that adapt to themes */
+.table th,
+.table td {
+    border-bottom-color: var(--table-border-color);
+}
 
 /* =========================
  ICON BASE CLASSES (RESPONSIVE & ACCESSIBLE)
@@ -2622,6 +2644,13 @@ body {
     flex-shrink: 0; 
 }
 
+/* Responsive Variants */
+@media (max-width: 768px) {
+    .btn--mobile-full-width {
+        width: 100%;
+    }
+}
+
 /* Context Variants */
 .btn--demo { 
     width: 100%; 
@@ -3067,10 +3096,6 @@ body {
         flex-direction: column;
         align-items: stretch;
     }
-    
-    .button-showcase .btn {
-        width: 100%;
-    }
 }
 
 /* Badge showcase - using flex for inline display */
@@ -3444,96 +3469,6 @@ body {
     }
 }
 
-/* ==========================================================================
-   THEME TOGGLE - NEW 24px CIRCULAR BUTTON
-   ========================================================================== */
-
-.theme-toggle-btn {
-    width: 24px !important;
-    height: 24px !important;
-    border-radius: 50%;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: all 0.2s ease;
-    padding: 0;
-    flex-shrink: 0;
-}
-
-.theme-toggle-btn:hover {
-    background: rgba(255, 255, 255, 1);
-    transform: scale(1.1);
-    border-color: rgba(255, 255, 255, 1);
-}
-
-.theme-toggle-btn:hover .theme-icon {
-    color: var(--color-surface-sunken);
-}
-
-.theme-toggle-btn:active {
-    transform: scale(0.95);
-}
-
-.theme-toggle-btn .theme-icon {
-    position: absolute !important;
-    width: 14px !important;
-    height: 14px !important;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    color: rgba(255, 255, 255, 0.9);
-    top: 50%;
-    left: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.theme-toggle-btn .theme-icon svg {
-    width: 100%;
-    height: 100%;
-    stroke-width: 2;
-}
-
-.theme-toggle-btn .theme-icon-light {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(0deg);
-}
-
-.theme-toggle-btn .theme-icon-dark {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(-90deg);
-}
-
-[data-theme="dark"] .theme-toggle-btn .theme-icon-light {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(90deg);
-}
-
-[data-theme="dark"] .theme-toggle-btn .theme-icon-dark {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(0deg);
-}
-
-/* Light theme styles */
-[data-theme="light"] .theme-toggle-btn {
-    border-color: var(--color-border-subtle);
-}
-
-[data-theme="light"] .theme-toggle-btn:hover {
-    background: var(--color-surface-primary);
-    border-color: var(--color-surface-primary);
-}
-
-[data-theme="light"] .theme-toggle-btn:hover .theme-icon {
-    color: var(--color-text-primary);
-}
-
-[data-theme="light"] .theme-toggle-btn .theme-icon {
-    color: var(--color-surface-primary);
-}
 
 /* Footer positioning */
 .footer-section {
@@ -3561,7 +3496,7 @@ body {
     display: inline-block;
 }
 
-.theme-toggle-switch .toggle-track {
+.theme-toggle-switch__track {
     position: absolute;
     top: 0;
     left: 0;
@@ -3574,11 +3509,11 @@ body {
     transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="dark"] .theme-toggle-switch .toggle-track {
+[data-theme="dark"] .theme-toggle-switch__track {
     background: var(--color-surface-secondary);
 }
 
-.theme-toggle-switch .toggle-thumb {
+.theme-toggle-switch__thumb {
     position: absolute;
     top: 2px !important;
     left: 2px !important;
@@ -3594,12 +3529,12 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
-[data-theme="dark"] .theme-toggle-switch .toggle-thumb {
+[data-theme="dark"] .theme-toggle-switch__thumb {
     transform: translateX(20px);
     background: var(--color-text-muted);
 }
 
-.theme-toggle-switch .toggle-icon {
+.theme-toggle-switch__icon {
     position: absolute;
     width: 10px !important;
     height: 10px !important;
@@ -3610,44 +3545,44 @@ body {
     justify-content: center;
 }
 
-.theme-toggle-switch .toggle-icon svg {
+.theme-toggle-switch__icon svg {
     width: 100%;
     height: 100%;
     stroke-width: 2.5;
 }
 
-.theme-toggle-switch .toggle-icon-light {
+.theme-toggle-switch__icon--light {
     opacity: 1;
 }
 
-.theme-toggle-switch .toggle-icon-dark {
+.theme-toggle-switch__icon--dark {
     opacity: 0;
 }
 
-[data-theme="dark"] .theme-toggle-switch .toggle-icon-light {
+[data-theme="dark"] .theme-toggle-switch__icon--light {
     opacity: 0;
 }
 
-[data-theme="dark"] .theme-toggle-switch .toggle-icon-dark {
+[data-theme="dark"] .theme-toggle-switch__icon--dark {
     opacity: 1;
     color: var(--color-surface-sunken);
 }
 
 /* Hover states */
-.theme-toggle-switch:hover .toggle-track {
+.theme-toggle-switch:hover .theme-toggle-switch__track {
     opacity: 0.9;
 }
 
-.theme-toggle-switch:hover .toggle-thumb {
+.theme-toggle-switch:hover .theme-toggle-switch__thumb {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Active state */
-.theme-toggle-switch:active .toggle-thumb {
+.theme-toggle-switch:active .theme-toggle-switch__thumb {
     width: 18px;
 }
 
-[data-theme="dark"] .theme-toggle-switch:active .toggle-thumb {
+[data-theme="dark"] .theme-toggle-switch:active .theme-toggle-switch__thumb {
     transform: translateX(18px);
 }
 
