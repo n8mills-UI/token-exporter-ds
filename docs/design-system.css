@@ -872,6 +872,7 @@ body {
     --color-surface-secondary: var(--gray-warm-7);
     --color-surface-tertiary: var(--gray-warm-6);
     --color-surface-elevated: var(--gray-warm-6);
+    --color-surface-sunken: var(--gray-warm-9);
     --color-surface-overlay: var(--gray-warm-8);
     --color-surface-glass: var(--glass-dark-10);
     
@@ -948,6 +949,7 @@ body {
     --color-surface-primary: var(--gray-warm-8);
     --color-surface-secondary: var(--gray-warm-7);
     --color-surface-elevated: var(--gray-warm-6);
+    --color-surface-sunken: var(--gray-warm-9);
     --color-surface-overlay: var(--gray-cool-1);
     --color-surface-glass: var(--glass-dark-10);
     
@@ -1004,6 +1006,7 @@ body {
     --color-surface-primary: var(--gray-cool-0);
     --color-surface-secondary: var(--gray-cool-1);
     --color-surface-elevated: var(--gray-cool-0);
+    --color-surface-sunken: var(--gray-cool-2);
     --color-surface-overlay: var(--gray-warm-8);
     --color-surface-glass: var(--glass-light-10);
     
@@ -3468,7 +3471,7 @@ body {
 }
 
 .theme-toggle-btn:hover .theme-icon {
-    color: var(--gray-warm-9);
+    color: var(--color-surface-sunken);
 }
 
 .theme-toggle-btn:active {
@@ -3516,20 +3519,20 @@ body {
 
 /* Light theme styles */
 [data-theme="light"] .theme-toggle-btn {
-    border-color: var(--gray-warm-6);
+    border-color: var(--color-border-subtle);
 }
 
 [data-theme="light"] .theme-toggle-btn:hover {
-    background: var(--gray-warm-8);
-    border-color: var(--gray-warm-8);
+    background: var(--color-surface-primary);
+    border-color: var(--color-surface-primary);
 }
 
 [data-theme="light"] .theme-toggle-btn:hover .theme-icon {
-    color: var(--gray-warm-0);
+    color: var(--color-text-primary);
 }
 
 [data-theme="light"] .theme-toggle-btn .theme-icon {
-    color: var(--gray-warm-8);
+    color: var(--color-surface-primary);
 }
 
 /* Footer positioning */
@@ -3572,7 +3575,7 @@ body {
 }
 
 [data-theme="dark"] .theme-toggle-switch .toggle-track {
-    background: var(--gray-warm-7);
+    background: var(--color-surface-secondary);
 }
 
 .theme-toggle-switch .toggle-thumb {
@@ -3593,7 +3596,7 @@ body {
 
 [data-theme="dark"] .theme-toggle-switch .toggle-thumb {
     transform: translateX(20px);
-    background: var(--gray-warm-2);
+    background: var(--color-text-muted);
 }
 
 .theme-toggle-switch .toggle-icon {
@@ -3601,7 +3604,7 @@ body {
     width: 10px !important;
     height: 10px !important;
     transition: opacity 0.2s ease;
-    color: var(--gray-warm-9);
+    color: var(--color-surface-sunken);
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
@@ -3627,7 +3630,7 @@ body {
 
 [data-theme="dark"] .theme-toggle-switch .toggle-icon-dark {
     opacity: 1;
-    color: var(--gray-warm-9);
+    color: var(--color-surface-sunken);
 }
 
 /* Hover states */
