@@ -78,8 +78,15 @@ async function checkFigmaCompatibility() {
     const jsContent = fs.readFileSync(path.join(projectRoot, CONFIG.jsFile), 'utf8');
     const issues = [];
     
-    // Check for optional chaining
-    const optionalChaining = jsContent.match(/[^\/\/\s]\?\./g);
+    // Remove comments and strings to avoid false positives
+    const cleanContent = jsContent
+        .replace(/\/\*[\s\S]*?\*\//g, '')  // Remove block comments
+        .replace(/\/\/.*$/gm, '')           // Remove line comments
+        .replace(/'([^'\\]|\\.)*'/g, '')    // Remove single-quoted strings
+        .replace(/"([^"\\]|\\.)*"/g, '');  // Remove double-quoted strings
+    
+    // Check for optional chaining - improved to avoid false positives
+    const optionalChaining = cleanContent.match(/[^\/\/\s]\?\./g);
     if (optionalChaining) {
         issues.push({
             type: 'error',
@@ -89,8 +96,19 @@ async function checkFigmaCompatibility() {
         });
     }
     
+    // Check for nullish coalescing operator (??)
+    const nullishCoalescing = cleanContent.match(/[a-zA-Z0-9_$)\]]\s*\?\?\s*[a-zA-Z0-9_$"'\(]/g);
+    if (nullishCoalescing) {
+        issues.push({
+            type: 'error',
+            pattern: 'Nullish coalescing (??)',
+            count: nullishCoalescing.length,
+            fix: 'Use: value !== null && value !== undefined ? value : defaultValue'
+        });
+    }
+    
     // Check for catch without parameter
-    const catchWithoutParam = jsContent.match(/}\s*catch\s*{/g);
+    const catchWithoutParam = cleanContent.match(/}\s*catch\s*{/g);
     if (catchWithoutParam) {
         issues.push({
             type: 'error',
@@ -101,7 +119,7 @@ async function checkFigmaCompatibility() {
     }
     
     // Check for template literals with interpolation
-    const templateLiterals = jsContent.match(/`[^`]*\$\{[^}]+\}[^`]*`/g);
+    const templateLiterals = cleanContent.match(/`[^`]*\$\{[^}]+\}[^`]*`/g);
     if (templateLiterals) {
         issues.push({
             type: 'error',
@@ -109,6 +127,27 @@ async function checkFigmaCompatibility() {
             count: templateLiterals.length,
             fix: 'Use string concatenation'
         });
+    }
+    
+    // Check for object spread in problematic contexts - improved detection
+    const objectSpread = cleanContent.match(/\{\s*\.\.\.\w+/g);
+    if (objectSpread) {
+        // Filter out spread in function parameters and array destructuring
+        const problematicSpread = objectSpread.filter(match => {
+            const beforeMatch = cleanContent.substring(0, cleanContent.indexOf(match));
+            const lastLine = beforeMatch.split('\n').pop();
+            // Allow spread in function parameters and array contexts
+            return !lastLine.includes('function') && !lastLine.includes('=>') && !lastLine.includes('[');
+        });
+        
+        if (problematicSpread.length > 0) {
+            issues.push({
+                type: 'error',
+                pattern: 'Object spread ({...obj})',
+                count: problematicSpread.length,
+                fix: 'Use: Object.assign({}, obj)'
+            });
+        }
     }
     
     if (issues.length === 0) {
@@ -1349,18 +1388,167 @@ async function validateComponentSync() {
 }
 
 /**
+ * Validate CSS integrity (prevent bundled/minified content)
+ */
+async function validateCSSIntegrity() {
+    console.log(`\n${colors.blue}🛡️  CSS Integrity Check${colors.reset}`);
+    
+    try {
+        const cssPath = path.join(CONFIG.projectRoot, CONFIG.cssFile);
+        const cssContent = await fs.promises.readFile(cssPath, 'utf8');
+        const fileStats = await fs.promises.stat(cssPath);
+        
+        const issues = [];
+        
+        // Check 1: File size validation (bundled files are much larger)
+        const fileSizeKB = Math.round(fileStats.size / 1024);
+        const EXPECTED_MAX_SIZE_KB = 500; // Reasonable max for unbundled CSS
+        
+        if (fileSizeKB > EXPECTED_MAX_SIZE_KB) {
+            issues.push({
+                type: 'warning',
+                message: `File size (${fileSizeKB}KB) exceeds expected maximum (${EXPECTED_MAX_SIZE_KB}KB)`,
+                detail: 'May indicate bundled/inlined content'
+            });
+        }
+        
+        // Check 2: Detect minified Open Props signatures
+        const problematicPatterns = [
+            {
+                pattern: /@media[^{]*\{:where\(html\)\{/g,
+                type: 'error',
+                message: 'Minified media query with :where(html) detected',
+                detail: 'This pattern breaks CSS parsing in browsers'
+            },
+            {
+                pattern: /@media[^{]*\{[^}]*\{[^}]*\}[^}]*\}/g,
+                type: 'warning', 
+                message: 'Single-line media query with nested braces detected',
+                detail: 'May indicate minified Open Props content'
+            },
+            {
+                pattern: /--[a-z-]+:[^;]+;--[a-z-]+:[^;]+;--[a-z-]+:[^;]+/g,
+                type: 'warning',
+                message: 'Multiple CSS variables on single line detected',
+                detail: 'May indicate minified content'
+            }
+        ];
+        
+        problematicPatterns.forEach(({ pattern, type, message, detail }) => {
+            const matches = cssContent.match(pattern);
+            if (matches) {
+                issues.push({
+                    type,
+                    message: `${message} (${matches.length} occurrence${matches.length > 1 ? 's' : ''})`,
+                    detail,
+                    examples: matches.slice(0, 2).map(m => m.substring(0, 80) + (m.length > 80 ? '...' : ''))
+                });
+            }
+        });
+        
+        // Check 3: Validate proper import structure
+        const hasOpenPropsImports = cssContent.includes('@import url("vendor/open-props/');
+        const hasInlinedOpenProps = cssContent.includes('/* Open Props') || 
+                                   cssContent.includes('--size-000:') ||
+                                   cssContent.includes('--size-00:');
+        
+        if (!hasOpenPropsImports && hasInlinedOpenProps) {
+            issues.push({
+                type: 'error',
+                message: 'Open Props appears to be inlined instead of imported',
+                detail: 'Use @import statements to keep CSS unbundled for web compatibility'
+            });
+        } else if (hasOpenPropsImports) {
+            console.log(`  ${colors.green}✓${colors.reset} Open Props properly imported via @import statements`);
+        }
+        
+        // Check 4: Line density analysis (minified files have very long lines)
+        const lines = cssContent.split('\n');
+        const longLines = lines.filter(line => line.length > 200);
+        const avgLineLength = lines.reduce((sum, line) => sum + line.length, 0) / lines.length;
+        
+        if (longLines.length > 10 || avgLineLength > 80) {
+            issues.push({
+                type: 'warning',
+                message: `High line density detected (${longLines.length} lines >200 chars, avg: ${Math.round(avgLineLength)} chars)`,
+                detail: 'May indicate minified content'
+            });
+        }
+        
+        // Results summary
+        console.log(`  • File size: ${fileSizeKB}KB`);
+        console.log(`  • Total lines: ${lines.length}`);
+        console.log(`  • Average line length: ${Math.round(avgLineLength)} chars`);
+        console.log(`  • Lines >200 chars: ${longLines.length}`);
+        
+        const errors = issues.filter(i => i.type === 'error');
+        const warnings = issues.filter(i => i.type === 'warning');
+        
+        if (errors.length > 0) {
+            console.log(`  ${colors.red}✗ ${errors.length} critical integrity issues:${colors.reset}`);
+            errors.forEach(issue => {
+                console.log(`    • ${issue.message}`);
+                console.log(`      ${colors.gray}${issue.detail}${colors.reset}`);
+                if (issue.examples) {
+                    issue.examples.forEach(example => {
+                        console.log(`      ${colors.yellow}Example: ${example}${colors.reset}`);
+                    });
+                }
+            });
+            
+            console.log(`\n  ${colors.bright}CRITICAL: Bundled CSS detected!${colors.reset}`);
+            console.log(`  ${colors.red}This will break the documentation website.${colors.reset}`);
+            console.log(`  ${colors.bright}To fix:${colors.reset}`);
+            console.log(`    1. Restore unbundled CSS: git show 744ea0b:docs/design-system.css > docs/design-system.css`);
+            console.log(`    2. Verify build.js excludes docs CSS bundling (lines 647-649)`);
+            console.log(`    3. Never run CSS bundling on the docs folder\n`);
+        }
+        
+        if (warnings.length > 0) {
+            console.log(`  ${colors.yellow}⚠ ${warnings.length} warnings:${colors.reset}`);
+            warnings.forEach(issue => {
+                console.log(`    • ${issue.message}`);
+                console.log(`      ${colors.gray}${issue.detail}${colors.reset}`);
+            });
+        }
+        
+        if (errors.length === 0 && warnings.length === 0) {
+            console.log(`  ${colors.green}✓${colors.reset} CSS integrity validated - file is properly unbundled`);
+            return true;
+        }
+        
+        return errors.length === 0; // Only fail on errors, not warnings
+        
+    } catch (error) {
+        console.log(`  ${colors.red}✗${colors.reset} Error validating CSS integrity:`, error.message);
+        return false;
+    }
+}
+
+/**
  * Main check function
  */
 async function check(options = {}) {
     const isFullMode = options.all || false;
+    const isEssentialOnly = options.essential || false;
     
-    console.log(`\n${colors.bright}🔍 Running ${isFullMode ? 'Full' : 'Essential'} Quality Checks${colors.reset}`);
+    // Determine mode
+    const mode = isEssentialOnly ? 'Essential (3 checks)' : isFullMode ? 'Full' : 'Standard';
+    
+    console.log(`\n${colors.bright}🔍 Running ${mode} Quality Checks${colors.reset}`);
     console.log(`${colors.gray}${'─'.repeat(50)}${colors.reset}`);
     
     const startTime = Date.now();
     
-    // Define all checks
-    const essentialChecks = [
+    // Define essential checks (for watch mode - only the critical ones)
+    const watchModeEssentialChecks = [
+        { name: 'Figma Compatibility', fn: checkFigmaCompatibility },
+        { name: 'CSS Integrity', fn: validateCSSIntegrity },
+        { name: 'Component Sync', fn: validateComponentSync }
+    ];
+    
+    // Define standard checks (normal run)
+    const standardChecks = [
         { name: 'Figma Compatibility', fn: checkFigmaCompatibility },
         { name: 'JavaScript Linting', fn: lintJavaScript },
         { name: 'CSS Architecture', fn: checkCSSArchitecture },
@@ -1369,7 +1557,8 @@ async function check(options = {}) {
         { name: 'Plugin Compatibility', fn: checkPluginCompatibility },
         { name: 'CSS Class Validation', fn: validateCSSClasses },
         { name: 'Component Sync', fn: validateComponentSync },
-        { name: 'Undefined Variables', fn: checkUndefinedVariables }
+        { name: 'Undefined Variables', fn: checkUndefinedVariables },
+        { name: 'CSS Integrity', fn: validateCSSIntegrity }
     ];
     
     const additionalChecks = [
@@ -1379,9 +1568,11 @@ async function check(options = {}) {
     ];
     
     // Combine checks based on mode
-    const checksToRun = isFullMode 
-        ? [...essentialChecks, ...additionalChecks]
-        : essentialChecks;
+    const checksToRun = isEssentialOnly 
+        ? watchModeEssentialChecks  // Only 3 critical checks for watch mode
+        : isFullMode 
+            ? [...standardChecks, ...additionalChecks]  // All checks
+            : standardChecks;  // Normal 10 checks
     
     // Show parallel execution notice
     console.log(`${colors.cyan}⚡ Running ${checksToRun.length} checks in parallel...${colors.reset}\n`);
@@ -1429,7 +1620,8 @@ async function check(options = {}) {
 // Parse arguments
 const args = process.argv.slice(2);
 const options = {
-    all: args.includes('--all') || args.includes('-a')
+    all: args.includes('--all') || args.includes('-a'),
+    essential: args.includes('--essential') || args.includes('-e')
 };
 
 // Run checks

@@ -657,91 +657,98 @@ observer.observe(document.body, {
                     Foundational type scale and font definitions - the typographic building blocks that establish hierarchy and readability.
                 </p>
             </div>
-            <div class="tokens-grid text-grid">
-                <div class="example-container">
-                    <div class="flex flex-col gap-3">
-                        <div>
-                            <div class="text-heading-xl">Heading XL</div>
-                            <code class="text-color-muted text-size-0">.text-heading-xl • var(--font-size-8)</code>
-                        </div>
-                        <div>
-                            <div class="text-heading-lg">Heading LG</div>
-                            <code class="text-color-muted text-size-0">.text-heading-lg • var(--font-size-6)</code>
-                        </div>
-                        <div>
-                            <div class="text-heading-md">Heading MD</div>
-                            <code class="text-color-muted text-size-0">.text-heading-md • var(--font-size-4)</code>
-                        </div>
-                        <div>
-                            <div class="text-body-lg">Body Large</div>
-                            <code class="text-color-muted text-size-0">.text-body-lg • var(--font-size-2)</code>
-                        </div>
-                        <div>
-                            <div class="text-body-md">Body Medium</div>
-                            <code class="text-color-muted text-size-0">.text-body-md • var(--font-size-1)</code>
-                        </div>
-                        <div>
-                            <div class="text-label">LABEL TEXT</div>
-                            <code class="text-color-muted text-size-0">.text-label • var(--font-size-0)</code>
-                        </div>
-                        <div>
-                            <div class="text-caption">Caption Text</div>
-                            <code class="text-color-muted text-size-0">.text-caption • var(--font-size-00)</code>
+            <!-- Type Scale and Font Weights in 2-column grid -->
+            <div class="typography-main-grid">
+                <!-- Type Scale Column -->
+                <div class="typography-column">
+                    <h3 class="section-title-secondary">Type Scale</h3>
+                    <div class="example-container">
+                        <div class="type-scale-list">
+                            <div>
+                                <div class="text-heading-xl">Heading XL</div>
+                                <code class="text-color-muted text-size-0">.text-heading-xl • var(--font-size-8)</code>
+                            </div>
+                            <div>
+                                <div class="text-heading-lg">Heading LG</div>
+                                <code class="text-color-muted text-size-0">.text-heading-lg • var(--font-size-6)</code>
+                            </div>
+                            <div>
+                                <div class="text-heading-md">Heading MD</div>
+                                <code class="text-color-muted text-size-0">.text-heading-md • var(--font-size-4)</code>
+                            </div>
+                            <div>
+                                <div class="text-body-lg">Body Large</div>
+                                <code class="text-color-muted text-size-0">.text-body-lg • var(--font-size-2)</code>
+                            </div>
+                            <div>
+                                <div class="text-body-md">Body Medium</div>
+                                <code class="text-color-muted text-size-0">.text-body-md • var(--font-size-1)</code>
+                            </div>
+                            <div>
+                                <div class="text-label">LABEL TEXT</div>
+                                <code class="text-color-muted text-size-0">.text-label • var(--font-size-0)</code>
+                            </div>
+                            <div>
+                                <div class="text-caption">Caption Text</div>
+                                <code class="text-color-muted text-size-0">.text-caption • var(--font-size-00)</code>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Font Weights Column -->
+                <div class="typography-column">
+                    <h3 class="section-title-secondary">Font Weights</h3>
+                    <div class="example-container">
+                        <div class="tokens-grid weight-grid">
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-1);" class="weight-label">100 - Thin</div>
+                                <code class="weight-token">--font-weight-1</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-2);" class="weight-label">200 - Extra Light</div>
+                                <code class="weight-token">--font-weight-2</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-3);" class="weight-label">300 - Light</div>
+                                <code class="weight-token">--font-weight-3</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-4);" class="weight-label">400 - Regular</div>
+                                <code class="weight-token">--font-weight-4</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-5);" class="weight-label">500 - Medium</div>
+                                <code class="weight-token">--font-weight-5</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-6);" class="weight-label">600 - Semi Bold</div>
+                                <code class="weight-token">--font-weight-6</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-7);" class="weight-label">700 - Bold</div>
+                                <code class="weight-token">--font-weight-7</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-8);" class="weight-label">800 - Extra Bold</div>
+                                <code class="weight-token">--font-weight-8</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-9);" class="weight-label">900 - Black</div>
+                                <code class="weight-token">--font-weight-9</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Font Families at the bottom -->
+            <div class="category-header mt-6">
+                <h3 class="section-title-secondary">Font Families</h3>
             </div>
             <div class="tokens-grid font-grid">
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview font-sans">The quick brown fox jumps over the lazy dog.</div></div></div>
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-mono</div><div class="token-value">'Monaco', 'Menlo', monospace</div><div class="text-preview font-mono">const greeting = "Hello, World!";</div></div></div>
-            </div>
-            
-            <!-- Font Weight Scale -->
-            <div class="category-header mt-6">
-                <h3 class="section-title-secondary">Font Weights</h3>
-                <p class="section-description">Available font weight tokens for establishing typographic hierarchy and emphasis.</p>
-            </div>
-            <div class="tokens-grid weight-grid">
-                <div class="example-container">
-                    <div class="flex flex-col gap-2">
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-1);" class="text-body-lg">100 - Thin</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-1)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-2);" class="text-body-lg">200 - Extra Light</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-2)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-3);" class="text-body-lg">300 - Light</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-3)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-4);" class="text-body-lg">400 - Regular</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-4)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-5);" class="text-body-lg">500 - Medium</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-5)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-6);" class="text-body-lg">600 - Semi Bold</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-6)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-7);" class="text-body-lg">700 - Bold</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-7)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-8);" class="text-body-lg">800 - Extra Bold</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-8)</code>
-                        </div>
-                        <div class="weight-item">
-                            <div style="font-weight: var(--font-weight-9);" class="text-body-lg">900 - Black</div>
-                            <code class="text-color-muted text-size-0">var(--font-weight-9)</code>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -771,7 +778,9 @@ observer.observe(document.body, {
                         
                         <!-- Elevation Shadows -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Elevation Shadows</h3>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Elevation Shadows</h3>
+                            </div>
                             <div class="tokens-grid shadow-grid" style="margin-bottom: var(--size-6);">
                                 <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div></div>
                                 <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div></div>
@@ -781,8 +790,9 @@ observer.observe(document.body, {
                         
                         <!-- Glass Effects -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Glass Effects</h3>
-                            <p class="section-description" style="margin-bottom: var(--size-3);">Combine background opacity with backdrop blur for modern glass morphism effects. Each level pairs specific opacity with blur intensity.</p>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Glass Effects</h3>
+                            </div>
                             <div class="tokens-grid glass-grid" style="margin-bottom: var(--size-6);">
                                 <div class="token-item">
                                     <div class="token-info">
@@ -792,7 +802,6 @@ observer.observe(document.body, {
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-zero); backdrop-filter: blur(var(--glass-blur-light)); -webkit-backdrop-filter: blur(var(--glass-blur-light));">
-                                                    <span>Zero</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -806,7 +815,6 @@ observer.observe(document.body, {
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-subtle); backdrop-filter: blur(var(--glass-blur-medium)); -webkit-backdrop-filter: blur(var(--glass-blur-medium));">
-                                                    <span>Subtle</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -820,7 +828,6 @@ observer.observe(document.body, {
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-medium); backdrop-filter: blur(var(--glass-blur-strong)); -webkit-backdrop-filter: blur(var(--glass-blur-strong));">
-                                                    <span>Medium</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -834,7 +841,6 @@ observer.observe(document.body, {
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-strong); backdrop-filter: blur(var(--glass-blur-heavy)); -webkit-backdrop-filter: blur(var(--glass-blur-heavy));">
-                                                    <span>Strong</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -845,7 +851,9 @@ observer.observe(document.body, {
                         
                         <!-- Glow Effects -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Glow Effects</h3>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Glow Effects</h3>
+                            </div>
                             <div class="tokens-grid glow-grid">
                                 <div class="token-item">
                                     <div class="token-info">
@@ -853,7 +861,6 @@ observer.observe(document.body, {
                                         <div class="token-value">Brand color glow</div>
                                         <div class="token-preview">
                                             <div class="glow-preview" style="box-shadow: var(--shadow-brand);">
-                                                <i data-icon="star" style="color: var(--brand-primary);"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -864,7 +871,6 @@ observer.observe(document.body, {
                                         <div class="token-value">Stronger brand glow</div>
                                         <div class="token-preview">
                                             <div class="glow-preview" style="box-shadow: var(--shadow-brand-hover);">
-                                                <i data-icon="zap" style="color: var(--brand-primary);"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -875,7 +881,6 @@ observer.observe(document.body, {
                                         <div class="token-value">Focus state glow</div>
                                         <div class="token-preview">
                                             <div class="glow-preview" style="box-shadow: var(--focus-ring);">
-                                                <i data-icon="target" style="color: var(--brand-primary);"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -957,7 +962,9 @@ observer.observe(document.body, {
                         
                         <!-- Easing Playground -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Easing Curves</h3>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Easing Curves</h3>
+                            </div>
                             <div class="motion-demo-grid">
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
@@ -1002,7 +1009,9 @@ observer.observe(document.body, {
                         
                         <!-- Real World Examples -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Real-World Examples</h3>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Real-World Examples</h3>
+                            </div>
                             <div class="motion-demo-grid">
                                 <div class="motion-demo-card">
                                     <div class="motion-card-header">
@@ -1567,16 +1576,19 @@ observer.observe(document.body, {
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             <!-- BUTTON VARIANTS SHOWCASE    -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <h3 class="example-subheader">Button Variants</h3>
-            <p class="section-description section-spacing-sm">Four core button types serve different hierarchical needs. Each variant is fully interactive with hover, active, and disabled states.</p>
+            <div class="category-header">
+                <h3 class="section-title-secondary">Button Variants</h3>
+            </div>
 
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Primary</div>
-                    <div class="button-showcase">
+                    <div class="example-container">
+                        <div class="button-showcase">
                         <button class="btn btn-primary btn-sm"><i data-icon="package"></i> Small Button</button>
                         <button class="btn btn-primary btn-md"><i data-icon="package"></i> Medium Button</button>
                         <button class="btn btn-primary btn-lg"><i data-icon="package"></i> Large Button</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1584,10 +1596,12 @@ observer.observe(document.body, {
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Secondary</div>
-                    <div class="button-showcase">
+                    <div class="example-container">
+                        <div class="button-showcase">
                         <button class="btn btn-secondary btn-sm"><i data-icon="sliders-horizontal"></i> Small Button</button>
                         <button class="btn btn-secondary btn-md"><i data-icon="sliders-horizontal"></i> Medium Button</button>
                         <button class="btn btn-secondary btn-lg"><i data-icon="sliders-horizontal"></i> Large Button</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1595,10 +1609,12 @@ observer.observe(document.body, {
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Tertiary</div>
-                    <div class="button-showcase">
+                    <div class="example-container">
+                        <div class="button-showcase">
                         <button class="btn btn-tertiary btn-sm">Learn More <i data-icon="arrow-right"></i></button>
                         <button class="btn btn-tertiary btn-md">Learn More <i data-icon="arrow-right"></i></button>
                         <button class="btn btn-tertiary btn-lg">Learn More <i data-icon="arrow-right"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1606,10 +1622,12 @@ observer.observe(document.body, {
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Icon-Only</div>
-                    <div class="icon-only-showcase">
+                    <div class="example-container">
+                        <div class="icon-only-showcase">
                         <button class="btn btn-icon btn-sm" aria-label="Small Icon Button"><i data-icon="github"></i></button>
                         <button class="btn btn-icon btn-md" aria-label="Medium Icon Button"><i data-icon="github"></i></button>
                         <button class="btn btn-icon btn-lg" aria-label="Large Icon Button"><i data-icon="github"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1617,8 +1635,9 @@ observer.observe(document.body, {
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             <!-- USAGE GUIDELINES            -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <h3 class="example-subheader section-spacing-lg">Usage Guidelines</h3>
-            <p class="section-description section-spacing-sm">Best practices for implementing buttons to ensure a consistent and intuitive user experience, presented using the system's `.compact-card` component.</p>
+            <div class="category-header">
+                <h3 class="section-title-secondary">Usage Guidelines</h3>
+            </div>
             
             <div class="compact-cards">
                 <div class="compact-card">
@@ -1664,8 +1683,9 @@ observer.observe(document.body, {
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             <!-- STATE COMPARISON MATRIX     -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <h3 class="example-subheader" style="margin-top: var(--size-8);">State Reference</h3>
-            <p class="section-description" style="margin-bottom: var(--size-4);">Interactive states provide visual feedback. Test all states during implementation.</p>
+            <div class="category-header">
+                <h3 class="section-title-secondary">State Reference</h3>
+            </div>
 
             <div class="subsection">
                 <div class="state-comparison-container">

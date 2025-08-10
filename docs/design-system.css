@@ -763,6 +763,15 @@ body {
  /* Pattern colors */
  --color-pattern-default: var(--color-border-default); /* For decorative patterns */
  
+ /* Spacing visualization - light squares in dark mode */
+ --spacing-bar-bg: var(--gray-warm-3);
+ --spacing-bar-border: var(--gray-warm-3);
+ --spacing-bar-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+ 
+ /* Radius preview */
+ --radius-preview-bg: linear-gradient(135deg, var(--gray-warm-7) 0%, var(--gray-warm-8) 100%);
+ --radius-preview-border: var(--gray-warm-6);
+ 
  /* =========================
  COMPONENT SIZES
  ========================= */
@@ -1006,6 +1015,15 @@ body {
     /* Glass Text Variants */
     --glass-text-primary: var(--color-text-primary);
     --glass-text-muted: var(--color-text-muted);
+    
+    /* Spacing visualization - dark squares in light mode */
+    --spacing-bar-bg: var(--gray-cool-8);
+    --spacing-bar-border: var(--gray-cool-8);
+    --spacing-bar-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    
+    /* Radius preview */
+    --radius-preview-bg: linear-gradient(135deg, var(--gray-cool-2) 0%, var(--gray-cool-3) 100%);
+    --radius-preview-border: var(--gray-cool-4);
     
     /* =========================
        SURFACE HIERARCHY - COOL GRAY
@@ -3029,15 +3047,27 @@ body {
     color: var(--color-text-default);
 }
 
-/* Button showcase - using grid for consistent sizing */
+/* Button showcase - using flex for horizontal layout */
 .button-showcase {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: var(--card-gap-standard);
+    gap: var(--size-3);
     padding: var(--size-3);
     background: var(--color-background-primary);
     border-radius: var(--radius-2);
+}
+
+/* Mobile: Stack buttons vertically */
+@media (max-width: 768px) {
+    .button-showcase {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .button-showcase .btn {
+        width: 100%;
+    }
 }
 
 /* Badge showcase - using flex for inline display */
@@ -6620,26 +6650,49 @@ select option {
 }
 
 /* Font weight scale display */
+.weight-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    width: 100%;
+}
+
 .weight-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--size-2) var(--size-3);
+    padding: var(--size-3) var(--size-4);
     background: var(--color-background-secondary);
     border: var(--border-size-1) solid var(--color-border-default);
     border-radius: var(--radius-2);
     transition: var(--transition-fast);
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.weight-grid {
-    display: grid;
-    gap: var(--size-2);
+.weight-label {
+    font-size: var(--font-size-1);
+    color: var(--color-text-default);
 }
 
-.weight-item:hover {
-    background: var(--color-background-elevated);
-    border-color: var(--brand-primary);
+.weight-token {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-0);
+    color: var(--color-text-muted);
 }
+
+/* Mobile adjustments for font weight tokens */
+@media (width <= 768px) {
+    .weight-label {
+        font-size: var(--font-size-1);
+    }
+    
+    .weight-token {
+        font-size: var(--font-size-0);
+    }
+}
+
+/* Remove hover effect from weight items - not interactive */
 
 .weight-item .text-body-lg {
     font-size: var(--font-size-2);
@@ -9465,8 +9518,31 @@ body {
  }
 }
 
-.radius-grid {
- grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-sm), 1fr));
+.tokens-grid.radius-grid {
+ grid-template-columns: repeat(4, 1fr);
+ gap: var(--size-4);
+}
+
+/* Tablet - 2 columns */
+@media (width <= 1024px) {
+ .tokens-grid.radius-grid {
+  grid-template-columns: repeat(2, 1fr);
+ }
+}
+
+/* Mobile - still 2 columns for 2x2 layout */
+@media (width <= 768px) {
+ .tokens-grid.radius-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--size-3);
+ }
+}
+
+@media (width <= 640px) {
+ .tokens-grid.radius-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--size-3);
+ }
 }
 
 .gray-scale-grid {
@@ -9489,6 +9565,72 @@ body {
     border-radius: var(--radius-2);
     padding: var(--size-4);
     text-align: left;
+    margin-bottom: var(--size-4);
+}
+
+/* Typography main grid - 2 columns on desktop */
+.typography-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--size-6);
+    margin-bottom: var(--size-8);
+}
+
+.typography-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.typography-column .section-title-secondary {
+    margin-bottom: var(--size-4);
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-6);
+    color: var(--color-text-primary);
+    text-align: left;
+    padding-bottom: var(--size-3);
+    border-bottom: var(--border-size-1) solid var(--token-section-border);
+    width: 100%;
+    display: block;
+}
+
+/* Left-align type scale and font weights content */
+.typography-column .example-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Type scale list container */
+.type-scale-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-5);
+}
+
+/* Each type scale entry */
+.type-scale-list > div {
+    padding-bottom: var(--size-4);
+    border-bottom: var(--border-size-1) solid var(--color-border-subtle);
+}
+
+.type-scale-list > div:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Responsive - stack on tablet and below */
+@media (width <= 1024px) {
+    .typography-main-grid {
+        grid-template-columns: 1fr;
+        gap: var(--size-6);
+    }
+}
+
+.type-scale-item:last-child {
+    margin-bottom: 0;
 }
 
 .type-scale-info {
@@ -9848,17 +9990,28 @@ body {
 }
 
 .spacing-preview {
- background: var(--color-background-tertiary);
+ background: transparent;
  border-radius: var(--radius-2);
  padding: var(--size-2);
- border: var(--border-size-1) solid var(--color-border-default);
+ border: none;
  position: relative;
 }
 
 .spacing-bar {
- background: var(--brand-primary);
+ background: var(--spacing-bar-bg);
+ border: var(--border-size-1) solid var(--spacing-bar-border);
  border-radius: var(--radius-1);
- border: none;
+ box-shadow: var(--spacing-bar-shadow);
+ transition: transform 0.2s ease;
+}
+
+/* Remove border-radius for size-1 (4px) to prevent circular appearance */
+.spacing-bar.w-1.h-1 {
+ border-radius: 0;
+}
+
+.spacing-preview:hover .spacing-bar {
+ transform: scale(1.05);
 }
 
 /* Spacing Example Cards */
@@ -9929,6 +10082,12 @@ body {
  justify-content: center;
 }
 
+/* Light mode - white background with gray-1 outline for shadows */
+[data-theme="light"] .shadow-preview {
+    background: white;
+    border: var(--border-size-1) solid var(--gray-cool-1);
+}
+
 /* Glass effect preview styles */
 .glass-preview-container {
     width: 100%;
@@ -9969,19 +10128,21 @@ body {
 
 /* Glow effect preview styles */
 .glow-preview {
-    width: var(--component-height-lg);
-    height: var(--component-height-lg);
-    background: var(--surface-2);
+    width: 100%;
+    height: 80px;
+    background: var(--color-background-elevated);
     border-radius: var(--radius-3);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    position: relative;
+    margin-bottom: var(--size-2);
 }
 
-.glow-preview i {
-    width: var(--size-5);
-    height: var(--size-5);
+/* Light mode - white background with grey outline */
+[data-theme="light"] .glow-preview {
+    background: white;
+    border: var(--border-size-1) solid var(--gray-cool-1);
 }
 
 .border-preview {
@@ -9993,14 +10154,27 @@ body {
  display: flex;
 }
 
+/* Light mode - use pink brand-secondary */
+[data-theme="light"] .border-preview {
+ border-color: var(--brand-secondary);
+}
+
 .radius-preview {
  width: 100%;
  height: 80px;
- background: var(--surface-3);
+ background: var(--gradient-secondary);
  border: none;
  display: flex;
  align-items: center;
  justify-content: center;
+ position: relative;
+ overflow: hidden;
+ transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.radius-preview:hover {
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-2);
 }
 
 /* Motion Demo Styles */
@@ -10121,7 +10295,7 @@ body {
  height: 48px;
  background: var(--color-background-secondary);
  border: var(--border-size-1) solid var(--color-border-default);
- border-radius: var(--radius-2);
+ border-radius: 24px; /* Fully rounded - half of height */
  position: relative;
  overflow: hidden;
  padding: var(--size-2);
@@ -10160,10 +10334,10 @@ body {
 
 /* Update motion demo ball for new layout */
 .motion-demo-track .motion-demo-ball {
- width: var(--size-4);
- height: var(--size-4);
+ width: var(--size-6);
+ height: var(--size-6);
  background: var(--brand-gradient-primary);
- border-radius: var(--radius-round);
+ border-radius: 50%;
  position: absolute;
  top: 50%;
  left: var(--size-2);
@@ -10430,38 +10604,40 @@ body {
     height: 48px;
     background: var(--motion-track-bg);
     border: var(--border-size-1) solid var(--motion-demo-border);
-    border-radius: var(--radius-2);
+    border-radius: 24px; /* Fully rounded - half of height */
     position: relative;
     overflow: hidden;
 }
 
 .motion-ball {
-    width: var(--size-4);
-    height: var(--size-4);
+    width: var(--size-6);
+    height: var(--size-6);
     background: var(--brand-gradient-primary);
-    border-radius: var(--radius-round);
+    border-radius: 50%;
     position: absolute;
     left: var(--size-2);
     top: 50%;
     transform: translateY(-50%);
-    transition: transform 1.2s ease; /* Default easing */
+    transition: left 1.2s ease, transform 0s; /* Animate left position instead */
 }
 
-/* Apply specific easing functions */
+/* Apply specific easing functions to left position */
 .motion-ball.demo-ease-linear {
-    transition: transform 1.2s linear;
+    transition: left 1.2s linear;
 }
 
 .motion-ball.demo-ease-3 {
-    transition: transform 1.2s var(--ease-3);
+    transition: left 1.2s var(--ease-3);
 }
 
 .motion-ball.demo-ease-spring-3 {
-    transition: transform 1.2s var(--ease-spring-3);
+    transition: left 1.2s var(--ease-spring-3);
 }
 
+/* Responsive animation - ball moves to end of container */
 .motion-ball.animate {
-    transform: translateY(-50%) translateX(200px);
+    left: calc(100% - var(--size-6) - var(--size-2));
+    transform: translateY(-50%);
 }
 
 /* Duration Bar Demos */
@@ -10639,10 +10815,10 @@ body {
 .demo-progress-flow .te-progress-track {
     width: 120px;
     height: 8px;
-    background: var(--surface-overlay-heavy);
+    background: var(--color-background-tertiary);
     border-radius: var(--radius-round);
     overflow: hidden;
-    box-shadow: inset 0 var(--border-size-1) var(--size-1) rgb(0, 0, 0, 0.2);
+    box-shadow: inset 0 var(--border-size-1) var(--size-1) rgba(0, 0, 0, 0.1);
 }
 
 .demo-progress-flow .te-progress-fill {
@@ -10655,7 +10831,7 @@ body {
 
 .demo-progress-flow .te-status-label {
     font-size: var(--font-size-00);
-    color: white;
+    color: var(--color-text-muted);
     margin: 0;
     text-align: center;
 }
@@ -10853,7 +11029,9 @@ body {
     }
     
     .motion-ball.animate {
-        transform: translateY(-50%) translateX(150px);
+        /* Responsive positioning on mobile */
+        left: calc(100% - var(--size-6) - var(--size-2));
+        transform: translateY(-50%);
     }
     
     .motion-play-btn {
@@ -10865,15 +11043,21 @@ body {
 /* Token copy button styles removed - tokens are display only */
 
 /* Responsive Border Grid */
-.border-grid {
+.tokens-grid.border-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--size-4);
 }
 
+@media (width <= 1024px) {
+    .tokens-grid.border-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (width <= 768px) {
-    .border-grid {
-        grid-template-columns: 1fr;
+    .tokens-grid.border-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -11782,13 +11966,19 @@ body {
     .variants-grid,
     .export-flow-grid,
     .color-grid,
-    .radius-grid,
     .tokens-grid {
         grid-template-columns: 1fr;
     }
+    
+    /* Radius grid maintains 2 columns on mobile - handled by its own media query */
 
     .gray-scale-grid {
         grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width-mobile-xs), 1fr));
+    }
+    
+    /* Spacing grid maintains 2 columns on mobile for better visibility */
+    .spacing-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
 
@@ -12649,8 +12839,8 @@ body {
 .section-header,
 .category-header,
 .component-header {
-    padding: 0 0 var(--size-4) 0;
-    margin-bottom: var(--size-6);
+    padding: 0 0 var(--size-2) 0;
+    margin-bottom: var(--size-3);
     background: transparent;
     border-bottom: var(--border-size-1) solid var(--token-section-border);
     text-align: left;
@@ -13048,7 +13238,8 @@ body {
     
     /* Show final state instead of animation */
     .motion-ball.animate {
-        transform: translateY(-50%) translateX(200px);
+        left: calc(100% - var(--size-6) - var(--size-2));
+        transform: translateY(-50%);
     }
     
     /* Indicate reduced motion mode */

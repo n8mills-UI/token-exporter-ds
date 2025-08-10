@@ -20,6 +20,11 @@ import { spawn, exec } from 'child_process';
 import { promisify } from 'util';
 import { integrateStyleDictionary, validateStyleDictionaryAvailability } from '../src/lib/style-dictionary-integration.js';
 
+// Global watch state
+let isCheckRunning = false;
+let lastCheckTime = 0;
+const CHECK_DEBOUNCE_MS = 1000;
+
 // File cache for avoiding redundant reads
 const fileCache = new Map();
 const fileMtimes = new Map();
@@ -799,8 +804,12 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
     
     // Cleanup temp files
     const cleanupStart = Date.now();
-    fs.unlinkSync(uiResult.tempPath);
-    fs.unlinkSync(guideResult.tempPath);
+    try {
+        if (fs.existsSync(uiResult.tempPath)) fs.unlinkSync(uiResult.tempPath);
+        if (fs.existsSync(guideResult.tempPath)) fs.unlinkSync(guideResult.tempPath);
+    } catch (error) {
+        console.warn(`${colors.yellow}⚠ Temp file cleanup warning: ${error.message}${colors.reset}`);
+    }
     cleanup();
     const cleanupDuration = Date.now() - cleanupStart;
     stepTimings.set('cleanup', { duration: cleanupDuration });
@@ -818,45 +827,294 @@ ${uiTempContent.replace(/<script\s+src="[^"]+"><\/script>/g, '')}
 }
 
 /**
- * Watch mode
- * Monitors file changes and triggers rebuilds automatically
- * Uses nodemon for efficient file watching
+ * Log message to console (notifications disabled for better flow)
+ * @param {string} title - Message title
+ * @param {string} message - Message content
+ * @param {string} [subtitle] - Optional subtitle
+ */
+function sendNotification(title, message, subtitle = '') {
+    // Desktop notifications disabled - too disruptive for design work
+    // Silent operation - messages logged to console only when needed
+    return;
+}
+
+/**
+ * Run quality checks with notifications
+ * @param {string} changedFile - The file that triggered the check
+ * @returns {Promise<boolean>} Success status
+ */
+async function runQualityChecks(changedFile = '') {
+    // Debounce checks to avoid spam
+    const now = Date.now();
+    if (now - lastCheckTime < CHECK_DEBOUNCE_MS) {
+        return true;
+    }
+    
+    if (isCheckRunning) {
+        console.log(`${colors.yellow}⏳ Quality check already running, skipping...${colors.reset}`);
+        return true;
+    }
+    
+    isCheckRunning = true;
+    lastCheckTime = now;
+    
+    // Run quality checks silently unless there are issues
+    
+    try {
+        const checkResult = await new Promise((resolve, reject) => {
+            // Add timeout for quality checks
+            const CHECK_TIMEOUT = 30000; // 30 seconds max
+            let timedOut = false;
+            
+            // Run only essential checks in watch mode (3 checks instead of 10)
+            const checkProcess = spawn('node', ['--max-old-space-size=512', 'scripts/check.js', '--essential'], {
+                cwd: projectRoot,
+                stdio: 'pipe',
+                env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=512' }
+            });
+            
+            // Set timeout
+            const timeoutId = setTimeout(() => {
+                timedOut = true;
+                checkProcess.kill('SIGTERM');
+                reject(new Error('Quality check timed out after 30 seconds'));
+            }, CHECK_TIMEOUT);
+            
+            let stdout = '';
+            let stderr = '';
+            
+            checkProcess.stdout.on('data', (data) => {
+                const output = data.toString();
+                stdout += output;
+                // Stream output to console in real-time
+                process.stdout.write(output);
+            });
+            
+            checkProcess.stderr.on('data', (data) => {
+                stderr += data.toString();
+            });
+            
+            checkProcess.on('close', (code) => {
+                clearTimeout(timeoutId);
+                if (!timedOut) {
+                    resolve({ code, stdout, stderr });
+                }
+            });
+            
+            checkProcess.on('error', (error) => {
+                clearTimeout(timeoutId);
+                reject(error);
+            });
+        });
+        
+        const success = checkResult.code === 0;
+        const summary = extractCheckSummary(checkResult.stdout);
+        
+        if (success) {
+            console.log(`${colors.green}✅ Quality checks passed (${summary.time}ms)${colors.reset}`);
+        } else {
+            console.log(`${colors.red}❌ ${summary.failed} checks failed - see output above${colors.reset}`);
+        }
+        
+        return success;
+        
+    } catch (error) {
+        console.error(`${colors.red}Error running quality checks: ${error.message}${colors.reset}`);
+        return false;
+    } finally {
+        isCheckRunning = false;
+    }
+}
+
+/**
+ * Extract summary information from check script output
+ * @param {string} output - Raw output from check.js
+ * @returns {Object} Parsed summary
+ */
+function extractCheckSummary(output) {
+    const summary = { passed: 0, failed: 0, time: 0 };
+    
+    // Extract results line: "Results: X passed, Y failed" (accounting for ANSI color codes)
+    const resultsMatch = output.match(/Results: .*?(\d+) passed.*?, .*?(\d+) failed/);
+    if (resultsMatch) {
+        summary.passed = parseInt(resultsMatch[1]);
+        summary.failed = parseInt(resultsMatch[2]);
+    }
+    
+    // Extract time: "Time: XXXms"
+    const timeMatch = output.match(/Time: (\d+)ms/);
+    if (timeMatch) {
+        summary.time = parseInt(timeMatch[1]);
+    }
+    
+    return summary;
+}
+
+/**
+ * Check if a file change should trigger quality checks
+ * @param {string} filePath - Changed file path
+ * @returns {boolean} Whether to run checks
+ */
+function shouldRunChecks(filePath) {
+    const relevantExtensions = ['.css', '.js', '.html'];
+    const relevantPaths = [
+        'docs/design-system.css',
+        'src/code.js',
+        'src/ui.template.html',
+        'docs/design-system-guide.template.html',
+        'src/components/'
+    ];
+    
+    // Check extension
+    const hasRelevantExtension = relevantExtensions.some(ext => filePath.endsWith(ext));
+    if (!hasRelevantExtension) return false;
+    
+    // Check path
+    const isRelevantPath = relevantPaths.some(path => {
+        return filePath.includes(path) || filePath.startsWith(path);
+    });
+    
+    return isRelevantPath;
+}
+
+/**
+ * Watch mode with integrated quality checks
+ * Monitors file changes and triggers rebuilds + quality checks automatically
+ * Uses fs.watch for efficient file watching with quality check integration
  * 
  * @returns {Promise<void>}
  */
 async function watch() {
-    console.log(`\n${colors.bright}👁️  Watch mode active${colors.reset}`);
-    console.log(`${colors.cyan}Watching for changes...${colors.reset}\n`);
+    console.log(`\n${colors.bright}👁️  Watch mode active with quality checks${colors.reset}`);
+    console.log(`${colors.cyan}Watching for changes and running quality checks...${colors.reset}\n`);
     
-    // Initial build
+    // Initial build and quality check
     await build();
+    await runQualityChecks('initial build');
     
     const watchPaths = [
         'src/ui.template.html',
-        'docs/design-system-guide.template.html',
+        'docs/design-system-guide.template.html', 
+        'docs/design-system.css',
+        'src/code.js',
         'src/components'
     ];
     
-    // Watch CSS file
-    watchPaths.push('docs/design-system.css');
+    // Debounce mechanism to prevent rapid rebuilds
+    const pendingChanges = new Set();
+    let debounceTimer = null;
+    let isProcessing = false;
+    const DEBOUNCE_DELAY = 300; // 300ms delay to batch changes
+    const MIN_REBUILD_INTERVAL = 1000; // Minimum 1 second between rebuilds
+    let lastBuildTime = 0;
     
-    // Use nodemon for watching
-    const nodemon = spawn('npx', [
-        'nodemon',
-        '--watch', watchPaths.join(' --watch '),
-        '--ext', 'html,css',
-        '--ignore', 'src/ui.html',
-        '--ignore', 'docs/design-system-guide.html',
-        '--exec', 'node scripts/build.js'
-    ], {
-        cwd: projectRoot,
-        stdio: 'inherit',
-        shell: true
+    // Process pending changes with debouncing
+    async function processPendingChanges() {
+        if (isProcessing || pendingChanges.size === 0) return;
+        
+        // Enforce minimum rebuild interval
+        const timeSinceLastBuild = Date.now() - lastBuildTime;
+        if (timeSinceLastBuild < MIN_REBUILD_INTERVAL) {
+            setTimeout(processPendingChanges, MIN_REBUILD_INTERVAL - timeSinceLastBuild);
+            return;
+        }
+        
+        isProcessing = true;
+        const changedFiles = Array.from(pendingChanges);
+        pendingChanges.clear();
+        
+        try {
+            console.log(`\n${colors.cyan}📦 Processing ${changedFiles.length} file change(s)...${colors.reset}`);
+            changedFiles.forEach(file => {
+                console.log(`  - ${path.relative(projectRoot, file)}`);
+            });
+            
+            // Rebuild once for all changes
+            await build();
+            lastBuildTime = Date.now();
+            
+            // Run quality checks if any relevant files changed
+            const relevantChanges = changedFiles.filter(shouldRunChecks);
+            if (relevantChanges.length > 0) {
+                await runQualityChecks(`${relevantChanges.length} file(s)`);
+            }
+        } catch (error) {
+            console.error(`${colors.red}Error processing changes:${colors.reset}`, error);
+        } finally {
+            isProcessing = false;
+            
+            // Process any new changes that accumulated during processing
+            if (pendingChanges.size > 0) {
+                setTimeout(processPendingChanges, DEBOUNCE_DELAY);
+            }
+        }
+    }
+    
+    // Handle file change with debouncing
+    function handleFileChange(filePath) {
+        // Skip if this is a generated file
+        const relativePath = path.relative(projectRoot, filePath);
+        if (relativePath.includes('src/ui.html') || 
+            relativePath.includes('docs/design-system-guide.html') ||
+            relativePath.includes('src/components/') && !relativePath.includes('_')) {
+            return; // Skip generated files to prevent loops
+        }
+        
+        pendingChanges.add(filePath);
+        
+        // Clear existing timer
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+        
+        // Set new timer
+        debounceTimer = setTimeout(processPendingChanges, DEBOUNCE_DELAY);
+    }
+    
+    // Set up file watchers
+    const watchers = [];
+    
+    watchPaths.forEach(watchPath => {
+        const fullPath = path.join(projectRoot, watchPath);
+        
+        if (fs.existsSync(fullPath)) {
+            const stats = fs.statSync(fullPath);
+            
+            if (stats.isDirectory()) {
+                // Watch directory
+                const watcher = fs.watch(fullPath, { recursive: true }, (eventType, filename) => {
+                    if (filename && (filename.endsWith('.html') || filename.endsWith('.css') || filename.endsWith('.js'))) {
+                        const changedFile = path.join(fullPath, filename);
+                        console.log(`\n${colors.cyan}📝 File changed: ${path.relative(projectRoot, changedFile)}${colors.reset}`);
+                        handleFileChange(changedFile);
+                    }
+                });
+                watchers.push(watcher);
+            } else {
+                // Watch file
+                const watcher = fs.watch(fullPath, (eventType, filename) => {
+                    console.log(`\n${colors.cyan}📝 File changed: ${path.relative(projectRoot, fullPath)}${colors.reset}`);
+                    handleFileChange(fullPath);
+                });
+                watchers.push(watcher);
+            }
+        } else {
+            console.log(`${colors.yellow}⚠️  Watch path not found: ${watchPath}${colors.reset}`);
+        }
     });
     
-    nodemon.on('error', (error) => {
-        console.error(`${colors.red}Watch error: ${error.message}${colors.reset}`);
+    console.log(`${colors.green}✅ Watching ${watchers.length} paths for changes...${colors.reset}`);
+    console.log(`${colors.gray}Press Ctrl+C to stop watching${colors.reset}\n`);
+    
+    // Handle graceful shutdown
+    process.on('SIGINT', () => {
+        console.log(`\n${colors.yellow}🛑 Stopping watch mode...${colors.reset}`);
+        watchers.forEach(watcher => watcher.close());
+        process.exit(0);
     });
+    
+    // Keep the process alive
+    process.stdin.resume();
 }
 
 // Parse command line arguments
