@@ -974,6 +974,8 @@ body {
     --table-code-bg: var(--surface-3);
     --table-code-color: var(--color-text-primary);
     --table-border-color: var(--color-border-strong);
+    --table-header-color: var(--brand-primary);
+    --table-header-icon-color: var(--brand-primary);
 }
 
 [data-theme="light"] {
@@ -1386,8 +1388,13 @@ body {
     --glass-panel-medium: var(--glass-light-20);   /* 20% opacity, 8px blur */
     --glass-panel-strong: var(--glass-light-40);   /* 40% opacity, 12px blur */
     
-    /* Component-specific overrides for light theme */
+    /* Table semantic tokens for light theme */
+    --table-header-color: var(--color-text-primary);
+    --table-header-icon-color: var(--color-text-primary);
+}
     
+/* Component-specific overrides for light theme */
+[data-theme="light"] {
     /* Theme toggle icon */
     .sun-container svg {
         stroke: black;
@@ -6632,7 +6639,7 @@ select option {
 
 /* Remove hover effect from weight items - not interactive */
 
-.weight-item .text-body-lg {
+.text-body-lg--weight {
     font-size: var(--font-size-2);
     line-height: 1.2;
 }
@@ -9686,40 +9693,40 @@ body {
 
 /* For 3-column grids specifically (glow, shadows) */
 .shadow-grid .token-value,
-.glow-grid .token-value {
- white-space: nowrap; /* Prevent wrapping in 3-col layouts */
+.token-value--glow {
+ white-space: nowrap;
  overflow: hidden;
  text-overflow: ellipsis;
 }
 
 /* For spacing grid - handle rem • px format */
-.spacing-grid .token-value {
- white-space: nowrap; /* Prevent wrapping of "0.25rem • 4px" format */
+.token-value--spacing {
+ white-space: nowrap;
  overflow: hidden;
  text-overflow: ellipsis;
- font-size: 0.7rem; /* Readable size that fits well */
+ font-size: 0.7rem;
 }
 
 /* Adjust for 3-column layout */
 @media (width <= 1200px) {
- .spacing-grid .token-value {
-  font-size: 0.75rem; /* Slightly larger in 3-col */
+ .token-value--spacing {
+  font-size: 0.75rem;
  }
 }
 
 /* Allow wrapping in 2-column layout if needed */
 @media (width <= 640px) {
- .spacing-grid .token-value {
-  font-size: 0.8rem; /* Comfortable size for 2-col */
-  white-space: nowrap; /* Still prevent wrap in 2-col */
+ .token-value--spacing {
+  font-size: 0.8rem;
+  white-space: nowrap;
  }
 }
 
 /* Allow wrapping only in single column */
 @media (width <= 768px) {
  .shadow-grid .token-value,
- .glow-grid .token-value {
-  white-space: normal; /* Allow wrap in single column */
+ .token-value--glow {
+  white-space: normal;
  }
 }
 
@@ -9832,13 +9839,13 @@ body {
 }
 
 /* Dark mode table headers - use brand colors */
-[data-theme="dark"] .table thead th {
-    color: var(--brand-primary); /* Lime color for headers */
+.table thead th {
+    color: var(--table-header-color);
 }
 
-[data-theme="dark"] .table thead th [data-icon] {
-    color: var(--brand-primary); /* Lime icons to match */
-    stroke-width: var(--icon-stroke-thin); /* Thinner stroke for icons */
+.table thead th [data-icon] {
+    color: var(--table-header-icon-color);
+    stroke-width: var(--icon-stroke-thin);
 }
 
 .table tbody tr:hover {
@@ -13717,7 +13724,7 @@ button.theme-toggle {
     box-shadow: var(--focus-ring);
 }
 
-.theme-toggle-compact .theme-icon {
+.theme-icon--compact {
     position: absolute;
     width: 10px;
     height: 10px;
@@ -13728,51 +13735,51 @@ button.theme-toggle {
     color: var(--color-text-default);
 }
 
-.theme-toggle-compact .theme-icon svg {
+.theme-icon--compact svg {
     width: 10px;
     height: 10px;
     stroke: currentColor;
     fill: none;
 }
 
-.theme-toggle-compact .theme-icon-light {
+.theme-icon-light--compact {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
 
-.theme-toggle-compact .theme-icon-dark {
+.theme-icon-dark--compact {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8) rotate(90deg);
 }
 
-[data-theme="dark"] .theme-toggle-compact .theme-icon-light {
+[data-theme="dark"] .theme-icon-light--compact {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8) rotate(-90deg);
 }
 
-[data-theme="dark"] .theme-toggle-compact .theme-icon-dark {
+[data-theme="dark"] .theme-icon-dark--compact {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
 
-.theme-toggle-compact:hover .theme-icon {
+.theme-toggle-compact:hover .theme-icon--compact {
     transform: translate(-50%, -50%) scale(1.1);
 }
 
-.theme-toggle-compact:hover .theme-icon-light {
+.theme-toggle-compact:hover .theme-icon-light--compact {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
 }
 
-.theme-toggle-compact:hover .theme-icon-dark {
+.theme-toggle-compact:hover .theme-icon-dark--compact {
     transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
 }
 
-[data-theme="dark"] .theme-toggle-compact:hover .theme-icon-light {
+[data-theme="dark"] .theme-toggle-compact:hover .theme-icon-light--compact {
     transform: translate(-50%, -50%) scale(1.1) rotate(-90deg);
 }
 
-[data-theme="dark"] .theme-toggle-compact:hover .theme-icon-dark {
+[data-theme="dark"] .theme-toggle-compact:hover .theme-icon-dark--compact {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
 }
@@ -13808,8 +13815,8 @@ button.theme-toggle {
     outline: none;
     box-shadow: var(--focus-ring);
 }
-.theme-toggle-circle .sun-container,
-.theme-toggle-circle .moon-container {
+.sun-container--circle,
+.moon-container--circle {
     position: absolute;
     width: 16px;
     height: 16px;
@@ -13819,26 +13826,26 @@ button.theme-toggle {
     transition: all 200ms cubic-bezier(0.25, 0.8, 0.25, 1);
     color: var(--color-text-default);
 }
-.theme-toggle-circle .sun-container svg,
-.theme-toggle-circle .moon-container svg {
+.sun-container--circle svg,
+.moon-container--circle svg {
     width: 16px;
     height: 16px;
     stroke: currentColor;
     fill: none;
 }
-.theme-toggle-circle .sun-container {
+.sun-container--circle {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
-.theme-toggle-circle .moon-container {
+.moon-container--circle {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8) rotate(90deg);
 }
-[data-theme="dark"] .theme-toggle-circle .sun-container {
+[data-theme="dark"] .sun-container--circle {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8) rotate(-90deg);
 }
-[data-theme="dark"] .theme-toggle-circle .moon-container {
+[data-theme="dark"] .moon-container--circle {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
@@ -17124,11 +17131,11 @@ input[type="file"]::file-selector-button {
 }
 
 /* Click feedback animations */
-.theme-toggle.clicked .theme-toggle-thumb {
+.theme-toggle-thumb--clicked {
     animation: thumb-pop 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-[data-theme="dark"] .theme-toggle.clicked .theme-toggle-thumb {
+[data-theme="dark"] .theme-toggle-thumb--clicked {
     animation: thumb-pop-dark 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -17149,7 +17156,7 @@ input[type="file"]::file-selector-button {
     animation: rainbow-toggle-dance 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.theme-toggle.rainbow-party .theme-toggle-thumb {
+.theme-toggle-thumb--rainbow-party {
     animation: rainbow-toggle-dance 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) reverse;
 }
 
