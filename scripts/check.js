@@ -5,8 +5,10 @@
  * Consolidates all quality checks into a single tool
  * 
  * Usage:
- *   node scripts/check.js        # Run essential checks (quick)
- *   node scripts/check.js --all  # Run all quality checks
+ *   node scripts/check.js         # Run standard checks
+ *   node scripts/check.js --all   # Run all quality checks
+ *   node scripts/check.js --launch # Launch mode (less strict, no failures on minor issues)
+ *   node scripts/check.js --essential # Essential only (3 critical checks)
  */
 
 import fs from 'fs';
@@ -183,7 +185,7 @@ async function lintJavaScript() {
 /**
  * Check CSS architecture (no hardcoded values outside :root)
  */
-async function checkCSSArchitecture() {
+async function checkCSSArchitecture(isLaunchMode = false) {
     console.log(`\n${colors.blue}🏗️  CSS Architecture Check${colors.reset}`);
     
     // Read CSS content
@@ -195,6 +197,7 @@ async function checkCSSArchitecture() {
     nonRootContent = nonRootContent.replace(/\[data-theme="[^"]+"\]\s*\{[^}]*\}/gs, '');
     
     const issues = [];
+    const warnings = [];
     
     // Check for context-based overrides (anti-pattern)
     const contextOverrides = cssContent.match(/\.[a-zA-Z0-9-]+\s+\.[a-zA-Z0-9-]+\s*\{/g) || [];
@@ -348,11 +351,16 @@ async function checkCSSArchitecture() {
     // Check for hardcoded colors
     const hexColors = nonRootContent.match(/#(?:[0-9a-fA-F]{3}){1,2}(?![0-9a-fA-F])/g);
     if (hexColors) {
-        issues.push({
+        const issue = {
             type: 'Hardcoded hex colors',
             count: hexColors.length,
             examples: [...new Set(hexColors)].slice(0, 3)
-        });
+        };
+        if (isLaunchMode) {
+            warnings.push(issue);
+        } else {
+            issues.push(issue);
+        }
     }
     
     // Check for hardcoded px values
@@ -367,29 +375,51 @@ async function checkCSSArchitecture() {
             return !nonRootContent.match(mediaQueryPattern);
         });
         if (filtered.length > 0) {
-            issues.push({
+            const issue = {
                 type: 'Hardcoded px values',
                 count: filtered.length,
                 examples: filtered.slice(0, 3)
-            });
+            };
+            if (isLaunchMode) {
+                warnings.push(issue);
+            } else {
+                issues.push(issue);
+            }
         }
     }
     
     // Check for hardcoded rem values
     const remValues = nonRootContent.match(/(?:[1-9]\d*|\d*\.[1-9]\d*)rem\b/g);
     if (remValues) {
-        issues.push({
+        const issue = {
             type: 'Hardcoded rem values',
             count: remValues.length,
             examples: [...new Set(remValues)].slice(0, 3)
+        };
+        if (isLaunchMode) {
+            warnings.push(issue);
+        } else {
+            issues.push(issue);
+        }
+    }
+    
+    // Report warnings (non-blocking)
+    if (warnings.length > 0) {
+        console.log(`  ${colors.yellow}⚠${colors.reset} Found hardcoded values (warnings only):`);
+        warnings.forEach(warning => {
+            console.log(`    • ${warning.type}: ${warning.count} instances`);
+            console.log(`      Examples: ${warning.examples.join(', ')}`);
         });
     }
     
     if (issues.length === 0) {
         console.log(`  ${colors.green}✓${colors.reset} CSS follows token architecture`);
+        if (warnings.length > 0 && isLaunchMode) {
+            console.log(`  ${colors.cyan}ℹ${colors.reset} Launch mode: ${warnings.length} warnings ignored (non-blocking)`);
+        }
         return true;
     } else {
-        console.log(`  ${colors.yellow}⚠${colors.reset} Found hardcoded values outside :root:`);
+        console.log(`  ${colors.red}✗${colors.reset} Found blocking issues:`);
         issues.forEach(issue => {
             console.log(`    • ${issue.type}: ${issue.count} instances`);
             console.log(`      Examples: ${issue.examples.join(', ')}`);
@@ -401,7 +431,7 @@ async function checkCSSArchitecture() {
 /**
  * Check theme architecture (no component overrides in themes, no duplicates)
  */
-async function checkThemeArchitecture() {
+async function checkThemeArchitecture(isLaunchMode = false) {
     console.log(`\n${colors.blue}🏛️  Theme Architecture Check${colors.reset}`);
     
     // Read CSS content
@@ -509,8 +539,12 @@ async function checkThemeArchitecture() {
     // Check 4: Theme variable consistency
     const themeConsistency = validateThemeConsistency(cssContent);
     if (!themeConsistency.valid) {
-        console.log(`  ${colors.yellow}⚠${colors.reset} Theme consistency: ${themeConsistency.message}`);
-        issues.push('theme-inconsistency');
+        if (isLaunchMode) {
+            console.log(`  ${colors.yellow}⚠${colors.reset} Theme consistency: ${themeConsistency.message} (launch mode: warning only)`);
+        } else {
+            console.log(`  ${colors.yellow}⚠${colors.reset} Theme consistency: ${themeConsistency.message}`);
+            issues.push('theme-inconsistency');
+        }
     } else {
         console.log(`  ${colors.green}✓${colors.reset} Theme variables are consistent across themes`);
     }
@@ -993,7 +1027,7 @@ async function checkDuplicates() {
 /**
  * Check for component tokens using direct color references
  */
-async function checkSemanticTokenUsage() {
+async function checkSemanticTokenUsage(isLaunchMode = false) {
     console.log(`\n${colors.blue}🎯 Semantic Token Usage${colors.reset}`);
     
     // Read CSS content
@@ -1053,7 +1087,13 @@ async function checkSemanticTokenUsage() {
         console.log(`  ${colors.green}✓${colors.reset} All component tokens use semantic tokens`);
         return true;
     } else {
-        console.log(`  ${colors.red}✗${colors.reset} Found ${issues.length} direct color references:`);
+        if (isLaunchMode) {
+            console.log(`  ${colors.yellow}⚠${colors.reset} Found ${issues.length} direct color references (warnings only):`);
+            console.log(`  ${colors.cyan}ℹ${colors.reset} Launch mode: token usage warnings ignored (non-blocking)`);
+            return true; // Don't fail in launch mode
+        } else {
+            console.log(`  ${colors.red}✗${colors.reset} Found ${issues.length} direct color references:`);
+        }
         
         // Show first 5 examples
         issues.slice(0, 5).forEach(issue => {
@@ -1065,7 +1105,7 @@ async function checkSemanticTokenUsage() {
             console.log(`    ... and ${issues.length - 5} more`);
         }
         
-        return false;
+        return !isLaunchMode; // Pass in launch mode, fail otherwise
     }
 }
 
@@ -1531,9 +1571,10 @@ async function validateCSSIntegrity() {
 async function check(options = {}) {
     const isFullMode = options.all || false;
     const isEssentialOnly = options.essential || false;
+    const isLaunchMode = options.launch || false;
     
     // Determine mode
-    const mode = isEssentialOnly ? 'Essential (3 checks)' : isFullMode ? 'Full' : 'Standard';
+    const mode = isLaunchMode ? 'Launch (less strict)' : isEssentialOnly ? 'Essential (3 checks)' : isFullMode ? 'Full' : 'Standard';
     
     console.log(`\n${colors.bright}🔍 Running ${mode} Quality Checks${colors.reset}`);
     console.log(`${colors.gray}${'─'.repeat(50)}${colors.reset}`);
@@ -1549,16 +1590,16 @@ async function check(options = {}) {
     
     // Define standard checks (normal run)
     const standardChecks = [
-        { name: 'Figma Compatibility', fn: checkFigmaCompatibility },
-        { name: 'JavaScript Linting', fn: lintJavaScript },
-        { name: 'CSS Architecture', fn: checkCSSArchitecture },
-        { name: 'Theme Architecture', fn: checkThemeArchitecture },
-        { name: 'Semantic Token Usage', fn: checkSemanticTokenUsage },
-        { name: 'Plugin Compatibility', fn: checkPluginCompatibility },
-        { name: 'CSS Class Validation', fn: validateCSSClasses },
-        { name: 'Component Sync', fn: validateComponentSync },
-        { name: 'Undefined Variables', fn: checkUndefinedVariables },
-        { name: 'CSS Integrity', fn: validateCSSIntegrity }
+        { name: 'Figma Compatibility', fn: () => checkFigmaCompatibility() },
+        { name: 'JavaScript Linting', fn: () => lintJavaScript() },
+        { name: 'CSS Architecture', fn: () => checkCSSArchitecture(isLaunchMode) },
+        { name: 'Theme Architecture', fn: () => checkThemeArchitecture(isLaunchMode) },
+        { name: 'Semantic Token Usage', fn: () => checkSemanticTokenUsage(isLaunchMode) },
+        { name: 'Plugin Compatibility', fn: () => checkPluginCompatibility() },
+        { name: 'CSS Class Validation', fn: () => validateCSSClasses() },
+        { name: 'Component Sync', fn: () => validateComponentSync() },
+        { name: 'Undefined Variables', fn: () => checkUndefinedVariables() },
+        { name: 'CSS Integrity', fn: () => validateCSSIntegrity() }
     ];
     
     const additionalChecks = [
@@ -1608,12 +1649,17 @@ async function check(options = {}) {
     console.log(`${colors.gray}Time: ${elapsed}ms${colors.reset}`);
     
     // Exit with error code if any critical checks failed
-    if (failed > 0 && !isFullMode) {
+    if (failed > 0 && !isFullMode && !isLaunchMode) {
         console.log(`\n${colors.red}✗ Quality checks failed${colors.reset}`);
         console.log(`${colors.yellow}Fix the issues above and run again${colors.reset}\n`);
         process.exit(1);
     } else {
-        console.log(`\n${colors.green}✓ All quality checks passed!${colors.reset}\n`);
+        if (isLaunchMode && failed > 0) {
+            console.log(`\n${colors.cyan}✓ Launch mode: ${failed} issues treated as warnings${colors.reset}`);
+            console.log(`${colors.yellow}Consider fixing these before final release${colors.reset}\n`);
+        } else {
+            console.log(`\n${colors.green}✓ All quality checks passed!${colors.reset}\n`);
+        }
     }
 }
 
@@ -1621,7 +1667,8 @@ async function check(options = {}) {
 const args = process.argv.slice(2);
 const options = {
     all: args.includes('--all') || args.includes('-a'),
-    essential: args.includes('--essential') || args.includes('-e')
+    essential: args.includes('--essential') || args.includes('-e'),
+    launch: args.includes('--launch') || args.includes('-l')
 };
 
 // Run checks

@@ -1391,10 +1391,7 @@ body {
     /* Table semantic tokens for light theme */
     --table-header-color: var(--color-text-primary);
     --table-header-icon-color: var(--color-text-primary);
-}
     
-/* Component-specific overrides for light theme */
-[data-theme="light"] {
     /* Theme toggle icon */
     .sun-container svg {
         stroke: black;
@@ -1588,8 +1585,6 @@ body {
         background: var(--color-background-tertiary);
     }
     
-    /* Table semantic tokens already defined above */
-    
     /* Icon grid items */
     .icon-grid-item {
         background: var(--surface-1);
@@ -1656,7 +1651,6 @@ body {
         color: var(--color-text-muted);
         opacity: 0.7;
     }
-    
     
     /* Override the gradient bar on cards */
     .enhanced-card::before {

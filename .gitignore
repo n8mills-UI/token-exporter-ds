@@ -62,6 +62,9 @@ dist/
 # build/ - Keep this for plugin outputs
 build/current-tokens.json
 
+# Test coverage reports (auto-generated)
+coverage/
+
 # Generated reports from audit script
 reports/
 *.backup
