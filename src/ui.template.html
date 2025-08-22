@@ -10,16 +10,21 @@
             <!-- This container will be populated by the script -->
             <div id="main-content-container">
                 
-                <!-- @include src/components/_skeleton-loader.html -->
-                <!-- @include src/components/_empty-state.html -->
+                <!-- Skeleton Loader (hidden by default) -->
+                <div id="skeleton-loader-wrapper" style="display: none;">
+                    <!-- @include src/components/_skeleton-loader.html -->
+                </div>
+                
+                <!-- Empty State (hidden by default) -->
+                <div id="empty-state-wrapper" style="display: none;">
+                    <!-- @include src/components/_empty-state.html -->
+                </div>
 
                 <!-- Main UI (hidden by default) -->
                 <div id="main-ui" style="display: none;">
                     
                     <!-- Token Summary Card -->
-                    <div class="card token-summary" id="token-summary-card">
-                        <!-- Token Summary will be injected here by the script -->
-                    </div>
+                    <!-- @include src/components/_token-summary.html -->
                     
                     <!-- Export Card Container -->
                     <div id="export-card-container" class="export-cards-section">
@@ -30,23 +35,7 @@
                         
                         <!-- Advanced Filter View (Advanced Mode) -->
                         <div id="advanced-filter-view" class="state-hidden">
-                            <div class="card filter-section is-compact">
-                                <div class="card-content">
-                                    <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-                                        <i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>
-                                        <h4 class="text-label">Filters</h4>
-                                    </div>
-                                    <div class="collection-list" id="collection-list">
-                                        <!-- Dynamic collection items will be injected here -->
-                                    </div>
-                                </div>
-                                <div class="card-actions" style="margin-top: var(--size-3);">
-                                    <button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">
-                                        <i data-icon="arrow-left"></i>
-                                        <span>Back to Quick Export</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <!-- @include src/components/_filters-card.html -->
                         </div>
                     </div>
 
@@ -59,7 +48,7 @@
 
     <!-- About modal removed - footer now links directly to natemills.me -->
     
-    <div class="progress-overlay" id="progress-overlay" style="display: none;"></div>
+    <!-- @include src/components/_progress-overlay.html -->
 
     <script>
         // --- STATE & CONFIG ---
@@ -91,8 +80,8 @@
         // Function to populate DOM elements when ready
         function populateDOMElements() {
             const elements = {
-                skeletonLoader: document.getElementById('skeleton-loader'),
-                emptyState: document.getElementById('empty-state'),
+                skeletonLoader: document.getElementById('skeleton-loader-wrapper'),
+                emptyState: document.getElementById('empty-state-wrapper'),
                 mainUI: document.getElementById('main-ui'),
                 tokenSummaryCard: document.getElementById('token-summary-card'),
                 exportCardContainer: document.getElementById('export-card-container'),
@@ -779,7 +768,7 @@ function updateTokenSummary() {
             } else {
                 console.error('❌ Skeleton loader element not found!');
                 // Try to find it directly as fallback
-                const fallbackLoader = document.getElementById('skeleton-loader');
+                const fallbackLoader = document.getElementById('skeleton-loader-wrapper');
                 if (fallbackLoader) {
                     console.log('ℹ️ Found skeleton loader via fallback method');
                     DOMElements.skeletonLoader = fallbackLoader;
@@ -979,8 +968,8 @@ function updateTokenSummary() {
             
             // Verify all critical elements exist
             const criticalElements = {
-                'skeleton-loader': document.getElementById('skeleton-loader'),
-                'empty-state': document.getElementById('empty-state'),
+                'skeleton-loader': document.getElementById('skeleton-loader-wrapper'),
+                'empty-state': document.getElementById('empty-state-wrapper'),
                 'main-ui': document.getElementById('main-ui'),
                 'content-wrapper': document.getElementById('content-wrapper')
             };
