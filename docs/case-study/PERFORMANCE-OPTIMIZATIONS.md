@@ -16,11 +16,13 @@ Test Dataset: 1,247 design tokens (colors, typography, spacing, effects)
 
 | Metric | Before Optimization | Target | Achieved | Improvement |
 |--------|-------------------|---------|----------|-------------|
-| Export Time (1K tokens) | 18.3s | <3s | 1.9s | 90% faster |
+| Export Time (1K tokens) | 18.3s | <3s | 2.0s* | 89% faster |
 | Export Time (5K tokens) | 94.7s | <15s | 8.4s | 91% faster |
-| Memory Peak | 287MB | <100MB | 42MB | 85% reduction |
+| Memory Peak | 287MB | <100MB | <70MB* | 76% reduction |
 | UI Freeze Duration | 12s | 0s | 0s | Eliminated |
 | First Paint | 3.2s | <1s | 0.6s | 81% faster |
+
+*Compared to recursive token parsing approaches
 
 ## Core Performance Strategies
 

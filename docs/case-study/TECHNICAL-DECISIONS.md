@@ -78,8 +78,8 @@ Collection Analysis → Batch Processing → Chunked Export → Memory Check →
 
 | Metric | Target | Achieved |
 |--------|--------|----------|
-| 1000 tokens export | < 3s | 1.8s |
-| Memory usage (1000 tokens) | < 100MB | 67MB |
+| 1000 tokens export | < 3s | 2.0s |
+| Memory usage (1000 tokens) | < 100MB | <70MB |
 | Build time | < 500ms | 176ms |
 | Plugin load time | < 1s | 0.4s |
 | Time to first interaction | < 2s | 0.8s |

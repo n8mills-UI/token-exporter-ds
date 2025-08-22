@@ -1,8 +1,14 @@
 # Solving Figma's CSP Constraints: An Innovation Story
 
-## The Problem
+This document outlines our innovative approach to building robust Figma plugins despite the platform's strict **Content Security Policy (CSP)**. By shifting from a runtime-dependent model to a build-time-centric one, we've created a solution that is faster, more reliable, and developer-friendly.
 
-Figma's Content Security Policy (CSP) is notoriously strict:
+-----
+
+## The Challenge: A Strictly-Defined Sandbox
+
+Figma's CSP is notably strict, limiting a plugin's ability to fetch external resources at runtime. This constraint invalidates many standard web development practices and tools.
+
+### Figma's CSP Directives
 
 ```
 Content-Security-Policy: 
@@ -13,33 +19,24 @@ Content-Security-Policy:
   connect-src 'self';
 ```
 
-This means:
-- ❌ No external CDNs
-- ❌ No dynamic script loading
-- ❌ No external stylesheets
-- ❌ No runtime module imports
-- ❌ Must work completely offline
+### The Implications
 
-## The Industry Challenge
+  * ❌  No external **CDNs** or library imports.
+  * ❌  No dynamic **script loading** or module imports.
+  * ❌  No external **stylesheets** or icon libraries.
+  * ❌  Must function completely **offline**.
 
-Most modern web development relies on:
-- NPM packages from CDNs
-- Dynamic imports for code splitting
-- External icon libraries
-- Runtime CSS injection
-- Module federation
+This environment is incompatible with modern development patterns like NPM packages from CDNs, code-splitting with dynamic imports, and module federation.
 
-**None of these work in Figma plugins.**
+-----
 
 ## Our Innovation: Build-Time Inlining
 
-Instead of fighting CSP at runtime, we moved the entire problem to build time.
+Our core insight was to stop fighting the CSP at runtime and move the entire problem to the build phase. We asked: "What if we could have all the benefits of external resources without actually loading them externally?"
 
-### The Key Insight
+### Solution Architecture
 
-> "What if we could have all the benefits of external resources without actually loading them externally?"
-
-### The Solution Architecture
+The solution transforms external dependencies into a single, self-contained HTML file.
 
 ```mermaid
 graph LR
@@ -52,149 +49,101 @@ graph LR
     style C fill:#37FFD2
 ```
 
-### Implementation Details
 
-#### 1. Template Processing System
+-----
 
-```javascript
-// At build time, we process @include directives
-// @include src/components/_button.html
-// Becomes the actual HTML content inline
-```
+## Implementation Details
 
-#### 2. Dependency Inlining
+### 1\. Template & Dependency Inlining
 
-```javascript
-// Instead of: <script src="https://cdn.../library.js">
-// We do: Read library.js at build time → Inline into HTML
-```
+Our build script processes a template HTML file, resolving placeholders and dependencies before packaging the final code.
 
-#### 3. Icon System Innovation
+  * **Template Processing:** We use a simple `@include` directive to inline partials at build time. For example, `@include src/components/_button.html` is replaced with the actual HTML content.
+  * **Dependency Management:** Instead of `<script src="https://cdn.../library.js">`, the build script reads the library's content from `node_modules` and injects it directly into the HTML file within `<script>` tags.
 
-Traditional approach:
-```html
-<!-- Doesn't work in Figma -->
-<link rel="stylesheet" href="https://cdn.../icons.css">
-<i class="icon-rocket"></i>
-```
+### 2\. A CSP-Compliant Icon System
 
-Our approach:
-```html
-<!-- All SVG definitions inlined at build time -->
-<div id="icon-definitions" style="display:none">
-  <svg id="icon-rocket">...</svg>
-</div>
-<!-- Runtime reference to inlined icon -->
-<i data-icon="rocket"></i>
-```
+We moved away from traditional CSS-based icon libraries and created an SVG-based system that works entirely offline.
 
-#### 4. Shared Component System
+| Traditional Approach (Fails)                               | Our Innovative Approach (Works)                          |
+| ---------------------------------------------------------- | -------------------------------------------------------- |
+| `&lt;link rel="stylesheet" href="..."&gt;`                  | **Build-time:** All SVGs are inlined in a hidden `&lt;div&gt;`. |
+| `&lt;i class="icon-rocket"&gt;&lt;/i&gt;`                            | `&lt;svg&gt;&lt;use href="#icon-rocket"&gt;&lt;/use&gt;&lt;/svg&gt;` |
+| `href` is a runtime reference to an inlined SVG definition. | The system is fully self-contained.                      |
 
-The real innovation: One component definition serves both:
-- The Figma plugin UI
-- The documentation website
+### 3\. Shared Component System
+
+A key feature is a shared component definition that serves both the Figma plugin and our documentation website.
 
 ```javascript
 // src/lib/templates.js
 const templates = {
   button: function(options) {
-    // Returns HTML string
-    // Works in both environments
-    // Figma-compatible JavaScript
+    // This function returns an HTML string.
+    // It is written in Figma-compatible JavaScript (ES5)
+    // and works in both the plugin UI and the documentation site.
   }
 }
 ```
 
-## The Results
+-----
 
-### Performance Impact
-- **3x faster load time**: No network requests
-- **100% offline capable**: Everything is local
-- **Zero dependency conflicts**: No version mismatches
+## The Results: A Better Solution
 
-### Developer Experience
-- **Write once, use everywhere**: Shared components
-- **Full IDE support**: Standard HTML/CSS/JS
-- **Easy debugging**: All code is visible
+This approach yields significant benefits in performance, developer experience, and reliability.
 
-### Reliability
-- **100% CSP compliant**: No security warnings
-- **No external dependencies**: Can't break from CDN issues
-- **Predictable behavior**: Same code every time
+### **Performance Impact**
 
-## Industry Impact
+  * **3x faster load time**: Zero network requests.
+  * **100% offline capable**: All resources are local.
+  * **Zero dependency conflicts**: No version mismatches.
 
-This solution is being adopted by other Figma plugin developers because:
+### **Developer Experience**
 
-1. **It just works**: No CSP violations ever
-2. **It's maintainable**: Standard web technologies
-3. **It's secure**: No external code execution
-4. **It's fast**: Everything is pre-optimized
+  * **Write once, use everywhere**: Shared component library.
+  * **Full IDE support**: Standard HTML, CSS, and JavaScript.
+  * **Easy debugging**: All code is available in one file.
 
-## Technical Deep Dive
+### **System Reliability**
 
-### Build Script Magic
+  * **100% CSP compliant**: No security warnings.
+  * **Zero external dependencies**: Immune to CDN outages.
+  * **Predictable behavior**: The same code runs every time.
 
-The build script (`scripts/build.js`) performs several transformations:
+-----
 
-1. **Reads all external dependencies**
-   ```javascript
-   const jszip = fs.readFileSync('node_modules/jszip/dist/jszip.min.js');
-   ```
+## Technical Deep Dive: The Build Script
 
-2. **Processes template includes**
-   ```javascript
-   html = html.replace(/@include (.*)/g, (match, file) => {
-     return fs.readFileSync(file, 'utf8');
-   });
-   ```
+The build script (`scripts/build.js`) is the heart of this system. It orchestrates the entire process:
 
-3. **Inlines everything into final HTML**
-   ```javascript
-   const finalHTML = `
-     <style>${allCSS}</style>
-     <script>${allJS}</script>
-     ${processedHTML}
-   `;
-   ```
+1.  **Reads all dependencies**: Loads files from `node_modules`.
 
-### The Figma Compatibility Layer
+    ```javascript
+    const jszip = fs.readFileSync('node_modules/jszip/dist/jszip.min.js');
+    ```
 
-We also solved Figma's ES5 requirement:
+2.  **Processes template includes**: Replaces all `@include` directives.
 
-```javascript
-// Modern JavaScript (doesn't work)
-const value = obj?.prop ?? 'default';
-`Hello ${name}`;
+    ```javascript
+    html = html.replace(/@include (.*)/g, (match, file) => {
+      return fs.readFileSync(file, 'utf8');
+    });
+    ```
 
-// Our approach (works everywhere)
-const value = obj && obj.prop || 'default';
-'Hello ' + name;
-```
+3.  **Inlines everything**: Assembles the final, single HTML file.
 
-## Lessons Learned
+    ```javascript
+    const finalHTML = `
+      <style>${allCSS}</style>
+      <script>${allJS}</script>
+      ${processedHTML}
+    `;
+    ```
 
-1. **Constraints breed creativity**: CSP forced us to innovate
-2. **Build-time > Runtime**: Move complexity where you have control
-3. **Simplicity wins**: Less moving parts = more reliability
+4.  **Handles ES5 compatibility**: The script also ensures that the final JavaScript is compatible with older engines.
 
-## Open Questions Solved
+-----
 
-### Q: How do you update dependencies?
-**A:** Update in package.json, rebuild. The build script handles everything.
+## Conclusion: Embrace Limitations
 
-### Q: What about code splitting?
-**A:** Not needed. The entire plugin is <500KB.
-
-### Q: How do you handle different environments?
-**A:** The same build works everywhere. No environment-specific code.
-
-## Conclusion
-
-By reimagining how web applications can be built within constraints, we've created a solution that's not just a workaround—it's actually better than the traditional approach for this use case.
-
-The Token Exporter's CSP solution proves that innovation often comes from embracing limitations rather than fighting them.
-
----
-
-*Want to discuss this approach? Contact: nate@natemills.me*
+By embracing Figma's constraints rather than fighting them, we developed a solution that is not just a workaround, but a superior, more robust architecture for this specific use case. The result is a system that is performant, secure, and maintainable, proving that constraints can indeed breed innovation.

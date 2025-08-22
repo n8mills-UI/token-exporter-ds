@@ -11,7 +11,7 @@
     "dev": "node scripts/build.js --watch",
     "build": "node scripts/build.js",
     "check": "node scripts/check.js",
-    "audit": "node scripts/audit.js",
+    "check:launch": "node scripts/check.js --launch",
     "format": "stylelint docs/design-system.css --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -73,27 +73,22 @@
   "lint-staged": {
     "docs/design-system.css": [
       "npm run format",
-      "npm run check"
+      "npm run check:launch"
     ],
     "src/code.js": [
-      "npm run check"
+      "npm run check:launch"
     ],
     "*.template.html": [
-      "npm run check",
-      "npm run templates:validate",
-      "node scripts/check.js"
+      "npm run check:launch"
     ],
     "src/components/_*.html": [
-      "npm run check",
-      "npm run templates:validate",
-      "node scripts/check.js"
+      "npm run check:launch"
     ],
     "src/components/icons/_icon-system.html": [
-      "node scripts/check.js"
+      "node scripts/check.js --launch"
     ],
     "src/lib/templates.js": [
-      "npm run templates:generate",
-      "npm run templates:validate"
+      "npm run check:launch"
     ]
   },
   "engines": {

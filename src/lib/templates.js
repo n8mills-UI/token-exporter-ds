@@ -5,12 +5,14 @@
 // to maintain Figma compatibility
 
 const templates = {
-  // Advanced Options Card Template (formerly Filters)
+  // Advanced Filter Card Template (supports both static and dynamic modes)
   filtersCard: function(options) {
     const defaults = {
       collections: [],
       showHeader: true,
-      isCollapsed: true
+      isCollapsed: true,
+      isDynamic: false,  // NEW: when true, creates empty structure for JS injection
+      showBackButton: false  // NEW: for advanced mode with back navigation
     };
     
     // Merge options with defaults (no spread operator for Figma)
@@ -19,39 +21,122 @@ const templates = {
       config[key] = options && options[key] !== undefined ? options[key] : defaults[key];
     }
     
+    // Header with correct title for dynamic mode
+    const headerText = config.isDynamic ? 'Filters' : 'Advanced Options';
     const headerHTML = config.showHeader ? 
       '<div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">' +
         '<i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>' +
-        '<h4 class="text-label">Advanced Options</h4>' +
+        '<h4 class="text-label">' + headerText + '</h4>' +
       '</div>' : '';
     
-    const collectionItemsHTML = config.collections.map(function(collection) {
-      const isSelected = collection.selected ? 'selected' : '';
-      
-      const badgesHTML = collection.badges.map(function(badge) {
-        return '<span class="badge small ' + badge.color + '">' +
-          '<span class="icon" data-icon="' + badge.icon + '"></span> ' + badge.count +
-        '</span>';
+    // For dynamic mode, create empty collection-list with ID for JS injection
+    let collectionListHTML = '';
+    if (config.isDynamic) {
+      collectionListHTML = '<div class="collection-list" id="collection-list">' +
+        '<!-- Dynamic collection items will be injected here -->' +
+      '</div>';
+    } else {
+      // Static mode: render collections directly
+      const collectionItemsHTML = config.collections.map(function(collection) {
+        const isSelected = collection.selected ? 'selected' : '';
+        
+        const badgesHTML = collection.badges.map(function(badge) {
+          return '<span class="badge small ' + badge.color + '">' +
+            '<span class="icon" data-icon="' + badge.icon + '"></span> ' + badge.count +
+          '</span>';
+        }).join('');
+        
+        return '<div class="collection-item ' + isSelected + '">' +
+          '<div class="collection-checkbox"></div>' +
+          '<div class="collection-info">' +
+            '<div class="text-body-lg collection-name">' + collection.name + '</div>' +
+            '<div class="collection-pills">' + badgesHTML + '</div>' +
+          '</div>' +
+          '<div class="text-caption collection-count">' + collection.total + ' tokens</div>' +
+        '</div>';
       }).join('');
       
-      return '<div class="collection-item ' + isSelected + '">' +
-        '<div class="collection-checkbox"></div>' +
-        '<div class="collection-info">' +
-          '<div class="text-body-lg collection-name">' + collection.name + '</div>' +
-          '<div class="collection-pills">' + badgesHTML + '</div>' +
-        '</div>' +
-        '<div class="text-caption collection-count">' + collection.total + ' tokens</div>' +
-      '</div>';
-    }).join('');
+      collectionListHTML = '<div class="collection-list">' + collectionItemsHTML + '</div>';
+    }
+    
+    // Back button for dynamic mode
+    const backButtonHTML = config.showBackButton ? 
+      '<div class="card-actions" style="margin-top: var(--size-3);">' +
+        '<button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">' +
+          '<i data-icon="arrow-left"></i>' +
+          '<span>Back to Quick Export</span>' +
+        '</button>' +
+      '</div>' : '';
     
     return '<div class="card filter-section is-compact">' +
       '<div class="card-content">' +
         headerHTML +
-        '<div class="collection-list">' +
-          collectionItemsHTML +
-        '</div>' +
+        collectionListHTML +
       '</div>' +
+      backButtonHTML +
     '</div>';
+  },
+
+  // Token Summary Card Template
+  tokenSummaryCard: function(options) {
+    const defaults = {
+      isDynamic: false,  // When true, creates placeholder for JS injection
+      selectedCount: 0,
+      tokenLabel: 'Tokens Found',
+      tokenTypes: [
+        { type: 'color', icon: 'palette', count: 0, active: true },
+        { type: 'text', icon: 'type', count: 0, active: true },
+        { type: 'number', icon: 'hash', count: 0, active: true },
+        { type: 'states', icon: 'toggle-right', count: 0, active: true }
+      ]
+    };
+    
+    const config = {};
+    for (const key in defaults) {
+      config[key] = options && options[key] !== undefined ? options[key] : defaults[key];
+    }
+    
+    if (config.isDynamic) {
+      // Create empty placeholder for dynamic content injection
+      return '<div class="card token-summary" id="token-summary-card">' +
+        '<!-- Token Summary will be injected here by the script -->' +
+      '</div>';
+    }
+    
+    // Static mode: render full token summary
+    const tokenTypesHTML = config.tokenTypes.map(function(tokenType) {
+      const activeClass = tokenType.active ? 'active' : '';
+      const disabledClass = tokenType.count === 0 ? 'disabled' : '';
+      
+      return '<div class="token-type-stat ' + tokenType.type + ' ' + activeClass + ' ' + disabledClass + '" data-type="' + tokenType.type + '">' +
+        '<i class="icon" data-icon="' + tokenType.icon + '"></i>' +
+        '<div class="count">' + tokenType.count + '</div>' +
+        '<div class="text-label label" style="color: var(--color-text-muted);">' + tokenType.type + '</div>' +
+      '</div>';
+    }).join('');
+
+    return '<div class="card token-summary" id="token-summary-card">' +
+      '<div class="text-heading-xl token-count-total">' + config.selectedCount + '</div>' +
+      '<div class="text-label token-label">' + config.tokenLabel + '</div>' + 
+      '<div class="token-breakdown">' + tokenTypesHTML + '</div>' +
+    '</div>';
+  },
+
+  // Progress Overlay Template
+  progressOverlay: function(options) {
+    const defaults = {
+      id: 'progress-overlay',
+      isVisible: false
+    };
+    
+    const config = {};
+    for (const key in defaults) {
+      config[key] = options && options[key] !== undefined ? options[key] : defaults[key];
+    }
+    
+    const displayStyle = config.isVisible ? 'display: block;' : 'display: none;';
+    
+    return '<div class="progress-overlay" id="' + config.id + '" style="' + displayStyle + '"></div>';
   },
 
   // Progress Animation Template

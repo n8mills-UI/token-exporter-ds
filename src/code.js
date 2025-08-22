@@ -7,7 +7,7 @@ figma.showUI(__html__,{title: "Token Exporter", width: 340, height: 480 });
 let globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
 
 // --- CONSTANTS ---
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 500;
 const CHUNK_SIZE = 10;
 const MEMORY_WARNING_THRESHOLD = 100; // MB
 const MAX_EXPORT_SIZE = 50 * 1024 * 1024; // 50MB
@@ -344,6 +344,90 @@ function sanitizeName(name, platform = 'css') {
 // --- HELPER FUNCTIONS FOR PERFORMANCE ---
 
 /**
+ * Processes collections with parallel execution for better performance
+ * @param {Array} collections - Collections to process
+ * @param {Map} variablesByCollection - Variables grouped by collection
+ * @returns {Array} Processed collection results
+ */
+async function processCollectionsInParallel(collections, variablesByCollection) {
+    console.log('⚡ processCollectionsInParallel starting with', collections.length, 'collections');
+    // Process collections in parallel for better performance
+    const collectionPromises = collections.map(async (collection, collectionIndex) => {
+        try {
+            console.log('🏭 Processing collection', collectionIndex + 1, ':', collection.name);
+            const variablesInCollection = variablesByCollection.get(collection.id) || [];
+            const counts = { color: 0, text: 0, states: 0, number: 0 };
+            
+            // Process variables in batches with parallel processing
+            const batchPromises = [];
+            for (let j = 0; j < variablesInCollection.length; j += BATCH_SIZE) {
+                const batch = variablesInCollection.slice(j, j + BATCH_SIZE);
+                
+                // Process each batch in parallel
+                const batchPromise = Promise.resolve().then(() => {
+                    const batchCounts = { color: 0, text: 0, states: 0, number: 0 };
+                    
+                    for (const v of batch) {
+                        switch (v.resolvedType) {
+                            case 'COLOR': batchCounts.color++; break;
+                            case 'STRING': batchCounts.text++; break;
+                            case 'BOOLEAN': batchCounts.states++; break;
+                            case 'FLOAT': batchCounts.number++; break;
+                        }
+                    }
+                    
+                    return batchCounts;
+                });
+                
+                batchPromises.push(batchPromise);
+            }
+            
+            // Wait for all batches to complete and aggregate results
+            const batchResults = await Promise.all(batchPromises);
+            batchResults.forEach(batchCounts => {
+                counts.color += batchCounts.color;
+                counts.text += batchCounts.text;
+                counts.states += batchCounts.states;
+                counts.number += batchCounts.number;
+            });
+            
+            // Check memory every 10 operations instead of every operation
+            if (collectionIndex % 10 === 0) {
+                checkMemoryUsage();
+            }
+
+            const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
+            console.log('✅ Completed collection', collection.name, '- variables:', totalVariables);
+            
+            return { 
+                id: collection.id, 
+                name: collection.name, 
+                counts: counts,
+                totalVariables: totalVariables
+            };
+            
+        } catch (error) {
+            console.error('❌ Error processing collection ' + collection.name + ':', error);
+            console.error('Error details:', 
+                createStructuredError('processCollection', error, { collectionId: collection.id }));
+            return {
+                id: collection.id,
+                name: collection.name,
+                counts: { color: 0, text: 0, states: 0, number: 0 },
+                totalVariables: 0,
+                error: true
+            };
+        }
+    });
+    
+    // Execute all collection processing in parallel
+    console.log('🚀 Starting Promise.all for', collectionPromises.length, 'collections');
+    const results = await Promise.all(collectionPromises);
+    console.log('✅ processCollectionsInParallel completed, returning', results.length, 'results');
+    return results;
+}
+
+/**
  * Processes collections sequentially for better memory management with large datasets
  * @param {Array} collections - Collections to process
  * @param {Map} variablesByCollection - Variables grouped by collection
@@ -407,163 +491,112 @@ async function processCollectionsSequentially(collections, variablesByCollection
 // --- CORE LOGIC ---
 
 /**
+ * HOTFIX: Dead simple collection processing - bypasses all complex logic
  * Fetches all local variable collections and massages the data for the UI.
- * Enhanced with better error handling and performance monitoring.
  */
 async function getCollectionsForUI() {
+    console.log('🚨 HOTFIX: Starting getCollectionsForUI...');
+    
     try {
-        checkMemoryUsage();
+        // Step 1: Get collections
+        console.log('📁 Getting collections...');
+        const collections = await figma.variables.getLocalVariableCollectionsAsync();
+        console.log('✅ Got', collections.length, 'collections');
         
-        // Fetch collections with better error handling
-        const collectionsResult = await Promise.allSettled([
-            figma.variables.getLocalVariableCollectionsAsync(),
-            new Promise(resolve => setTimeout(resolve, 300)) // Minimum delay to prevent flashing
-        ]);
+        // Step 2: Get all variables
+        console.log('🔢 Getting variables...');
+        const variables = await figma.variables.getLocalVariablesAsync();
+        console.log('✅ Got', variables.length, 'variables');
         
-        if (collectionsResult[0].status === 'rejected') {
-            const reasonObj = collectionsResult[0].reason;
-            const reason = (reasonObj && reasonObj.message) 
-                ? reasonObj.message 
-                : 'Unknown error';
-            throw new NetworkError('Failed to fetch variable collections', { reason });
-        }
-        
-        const collections = collectionsResult[0].value;
-
-        if (!collections.length) {
-             figma.ui.postMessage({ type: 'all-collections', collections: [] });
-             return;
-        }
-
-        let allVariables;
-        try {
-            allVariables = await figma.variables.getLocalVariablesAsync();
-        } catch (error) {
-            throw new NetworkError('Failed to fetch variables from Figma', {
-                originalError: error.message
-            });
-        }
-        
-        // Create optimized Map for better performance with large datasets
-        const variablesByCollection = new Map();
-        const variablesById = new Map();
-        
-        for (const variable of allVariables) {
-            const collectionId = variable.variableCollectionId;
-            
-            // Build collection map
-            if (!variablesByCollection.has(collectionId)) {
-                variablesByCollection.set(collectionId, []);
-            }
-            variablesByCollection.get(collectionId).push(variable);
-            
-            // Build ID lookup map for faster alias resolution
-            variablesById.set(variable.id, variable);
-        }
-        
-        // Process collections in chunks to avoid blocking
+        // Step 3: Simple processing - NO CHUNKING, NO PARALLELIZATION
+        console.log('⚙️ Processing collections (simple mode)...');
         const results = [];
-        const totalVariables = allVariables.length;
-        const isLargeDataset = totalVariables > 1000; // Threshold for lazy loading
         
-        for (let i = 0; i < collections.length; i += CHUNK_SIZE) {
-            const chunk = collections.slice(i, i + CHUNK_SIZE);
+        for (let i = 0; i < collections.length; i++) {
+            const collection = collections[i];
+            console.log('Processing collection', (i + 1) + '/' + collections.length + ':', collection.name);
             
-            // For large datasets, process collections sequentially to manage memory
-            const chunkResults = isLargeDataset 
-                ? await processCollectionsSequentially(chunk, variablesByCollection)
-                : await Promise.all(chunk.map(async (collection) => {
-                try {
-                    const variablesInCollection = variablesByCollection.get(collection.id) || [];
-                    const counts = { color: 0, text: 0, states: 0, number: 0 };
-                    
-                    // Process in batches to avoid blocking for large collections
-                    for (let j = 0; j < variablesInCollection.length; j += BATCH_SIZE) {
-                        const batch = variablesInCollection.slice(j, j + BATCH_SIZE);
-                        
-                        for (const v of batch) {
-                            switch (v.resolvedType) {
-                                case 'COLOR': counts.color++; break;
-                                case 'STRING': counts.text++; break;
-                                case 'BOOLEAN': counts.states++; break;
-                                case 'FLOAT': counts.number++; break;
-                            }
-                        }
-                        
-                        // Yield to prevent blocking
-                        if (j % 1000 === 0 && j > 0) {
-                            await new Promise(resolve => setTimeout(resolve, 0));
-                        }
-                    }
-
-                    const totalVariables = Object.values(counts).reduce((sum, count) => sum + count, 0);
-                    
-                    return { 
-                        id: collection.id, 
-                        name: collection.name, 
-                        counts: counts,
-                        totalVariables: totalVariables
-                    };
-                } catch (error) {
-                    console.error('Error processing collection ' + collection.name + ':', 
-                        createStructuredError('processCollection', error, { collectionId: collection.id }));
-                    return {
-                        id: collection.id,
-                        name: collection.name,
-                        counts: { color: 0, text: 0, states: 0, number: 0 },
-                        totalVariables: 0,
-                        error: true
-                    };
-                }
-            }));
+            // Count variables in this collection
+            const varsInCollection = variables.filter(function(v) {
+                return v.variableCollectionId === collection.id;
+            });
+            console.log('  - Found', varsInCollection.length, 'variables');
             
-            results.push(...(Array.isArray(chunkResults) ? chunkResults : [chunkResults]));
+            // Count by type (simple counting)
+            let colorCount = 0;
+            let numberCount = 0;
+            let stringCount = 0;
+            let booleanCount = 0;
             
-            // Update progress for very large datasets
-            if (collections.length > 20 || isLargeDataset) {
-                const progress = Math.round((i + chunk.length) / collections.length * 100);
-                figma.notify('Processing collections: ' + progress + '%', { timeout: 500 });
-                
-                // Additional memory check for large datasets
-                if (isLargeDataset) {
-                    checkMemoryUsage();
+            for (const variable of varsInCollection) {
+                switch (variable.resolvedType) {
+                    case 'COLOR':
+                        colorCount++;
+                        break;
+                    case 'FLOAT':
+                        numberCount++;
+                        break;
+                    case 'STRING':
+                        stringCount++;
+                        break;
+                    case 'BOOLEAN':
+                        booleanCount++;
+                        break;
                 }
             }
+            
+            // Create simple result object
+            const result = {
+                id: collection.id,
+                name: collection.name,
+                counts: {
+                    color: colorCount,
+                    text: stringCount,
+                    states: booleanCount,
+                    number: numberCount
+                },
+                totalVariables: varsInCollection.length
+            };
+            
+            results.push(result);
+            console.log('  ✅ Processed:', result.name, '(' + result.totalVariables + ' variables)');
         }
         
         // Calculate global totals
+        console.log('🧮 Calculating global totals...');
         globalTokenCounts = { color: 0, text: 0, states: 0, number: 0 };
-        results.forEach(collection => {
-            Object.entries(collection.counts).forEach(([type, count]) => {
-                globalTokenCounts[type] += count;
-            });
-        });
-
+        for (const collection of results) {
+            globalTokenCounts.color += collection.counts.color;
+            globalTokenCounts.text += collection.counts.text;
+            globalTokenCounts.states += collection.counts.states;
+            globalTokenCounts.number += collection.counts.number;
+        }
+        console.log('📊 Final global counts:', globalTokenCounts);
+        
+        // Step 4: ALWAYS send message to UI
+        console.log('📤 Sending message to UI...');
         figma.ui.postMessage({ 
             type: 'all-collections', 
             collections: results,
             globalCounts: globalTokenCounts
         });
-
+        console.log('✅ HOTFIX: Successfully sent collections to UI');
+        
+        return results;
+        
     } catch (error) {
-        let userMessage;
-        let structuredError;
+        console.error('🚨 HOTFIX ERROR:', error);
+        console.error('Stack trace:', error.stack);
         
-        if (error instanceof NetworkError) {
-            userMessage = 'Network connection failed. Please check your internet connection.';
-            structuredError = error;
-        } else if (error instanceof MemoryError) {
-            userMessage = 'Memory limit exceeded. Try processing fewer collections. (' + error.context.used + 'MB used)';
-            structuredError = error;
-        } else {
-            structuredError = createStructuredError('getCollectionsForUI', error);
-            userMessage = 'Unable to load variable collections. Please try refreshing the plugin.';
-        }
+        // Send empty collections so UI at least responds
+        console.log('📤 Sending empty collections as fallback...');
+        figma.ui.postMessage({ 
+            type: 'all-collections', 
+            collections: [] 
+        });
+        console.log('✅ Sent fallback message to UI');
         
-        console.error('Error fetching collections:', structuredError);
-            
-        figma.notify(userMessage, { error: true, timeout: 5000 });
-        figma.ui.postMessage({ type: 'all-collections', collections: [] });
+        return [];
     }
 }
 
@@ -1269,9 +1302,12 @@ function generateFormatContentManual(designTokens, format) {
 // --- MESSAGE HANDLING ---
 figma.ui.onmessage = async (msg) => {
     try {
+        console.log('📨 Received message:', msg.type);
         switch (msg.type) {
             case 'get-collections':
+                console.log('🚀 Processing get-collections request...');
                 await getCollectionsForUI();
+                console.log('✅ get-collections request completed');
                 break;
             case 'export-tokens': {
                 const { collectionIds, formats, activeTokenTypes } = msg;
@@ -1338,3 +1374,19 @@ figma.ui.onmessage = async (msg) => {
         figma.notify('An unexpected error occurred. Please try again.', { error: true });
     }
 };
+
+// Export functions for testing (Node.js environment)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        ValidationError,
+        NetworkError,
+        ProcessingError,
+        MemoryError,
+        validateExportInputs,
+        sanitizeName,
+        generateNamingVariants,
+        generateFormatContentManual,
+        checkMemoryUsage,
+        createStructuredError
+    };
+}

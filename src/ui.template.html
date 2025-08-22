@@ -10,27 +10,21 @@
             <!-- This container will be populated by the script -->
             <div id="main-content-container">
                 
-                <!-- @include src/components/_skeleton-loader.html -->
-                <!-- @include src/components/_empty-state.html -->
+                <!-- Skeleton Loader (hidden by default) -->
+                <div id="skeleton-loader-wrapper" style="display: none;">
+                    <!-- @include src/components/_skeleton-loader.html -->
+                </div>
+                
+                <!-- Empty State (hidden by default) -->
+                <div id="empty-state-wrapper" style="display: none;">
+                    <!-- @include src/components/_empty-state.html -->
+                </div>
 
                 <!-- Main UI (hidden by default) -->
                 <div id="main-ui" style="display: none;">
-                    <!-- Plugin Header with Theme Toggle -->
-                    <div class="plugin-header">
-                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Switch between light and dark mode">
-                            <span class="theme-toggle-track">
-                                <span class="theme-toggle-thumb">
-                                    <i data-icon="sun" class="theme-icon theme-icon-light"></i>
-                                    <i data-icon="moon" class="theme-icon theme-icon-dark"></i>
-                                </span>
-                            </span>
-                        </button>
-                    </div>
                     
                     <!-- Token Summary Card -->
-                    <div class="card token-summary" id="token-summary-card">
-                        <!-- Token Summary will be injected here by the script -->
-                    </div>
+                    <!-- @include src/components/_token-summary.html -->
                     
                     <!-- Export Card Container -->
                     <div id="export-card-container" class="export-cards-section">
@@ -41,23 +35,7 @@
                         
                         <!-- Advanced Filter View (Advanced Mode) -->
                         <div id="advanced-filter-view" class="state-hidden">
-                            <div class="card filter-section is-compact">
-                                <div class="card-content">
-                                    <div style="display: flex; align-items: center; gap: var(--size-2); margin-bottom: var(--size-3);">
-                                        <i data-icon="sliders-horizontal" style="width: 1em; height: 1em;"></i>
-                                        <h4 class="text-label">Filters</h4>
-                                    </div>
-                                    <div class="collection-list" id="collection-list">
-                                        <!-- Dynamic collection items will be injected here -->
-                                    </div>
-                                </div>
-                                <div class="card-actions" style="margin-top: var(--size-3);">
-                                    <button class="btn btn-secondary btn-sm" id="toggle-simple-mode" aria-label="Return to quick export mode">
-                                        <i data-icon="arrow-left"></i>
-                                        <span>Back to Quick Export</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <!-- @include src/components/_filters-card.html -->
                         </div>
                     </div>
 
@@ -68,9 +46,9 @@
         </div>
     </main>
 
-    <!-- @include src/components/_about-modal.html -->
+    <!-- About modal removed - footer now links directly to natemills.me -->
     
-    <div class="progress-overlay" id="progress-overlay" style="display: none;"></div>
+    <!-- @include src/components/_progress-overlay.html -->
 
     <script>
         // --- STATE & CONFIG ---
@@ -83,22 +61,39 @@
             globalTokenCounts: { color: 0, text: 0, states: 0, number: 0 },
         };
 
+        // Initialize DOMElements object (will be populated when DOM is ready)
         const DOMElements = {
-            skeletonLoader: document.getElementById('skeleton-loader'),
-            emptyState: document.getElementById('empty-state'),
-            mainUI: document.getElementById('main-ui'),
-            tokenSummaryCard: document.getElementById('token-summary-card'),
+            skeletonLoader: null,
+            emptyState: null,
+            mainUI: null,
+            tokenSummaryCard: null,
             // New stateful elements
-            exportCardContainer: document.getElementById('export-card-container'),
-            quickExportView: document.getElementById('quick-export-view'),
-            advancedFilterView: document.getElementById('advanced-filter-view'),
+            exportCardContainer: null,
+            quickExportView: null,
+            advancedFilterView: null,
             // Theme toggle
-            themeToggle: document.getElementById('theme-toggle'),
-            // Modals and overlays
-            aboutModal: document.getElementById('about-modal'),
-            progressOverlay: document.getElementById('progress-overlay'),
-            aboutLink: document.getElementById('about-link'),
+            themeToggle: null,
+            // Progress overlay
+            progressOverlay: null,
         };
+        
+        // Function to populate DOM elements when ready
+        function populateDOMElements() {
+            const elements = {
+                skeletonLoader: document.getElementById('skeleton-loader-wrapper'),
+                emptyState: document.getElementById('empty-state-wrapper'),
+                mainUI: document.getElementById('main-ui'),
+                tokenSummaryCard: document.getElementById('token-summary-card'),
+                exportCardContainer: document.getElementById('export-card-container'),
+                quickExportView: document.getElementById('quick-export-view'),
+                advancedFilterView: document.getElementById('advanced-filter-view'),
+                themeToggle: document.getElementById('theme-toggle'),
+                progressOverlay: document.getElementById('progress-overlay'),
+            };
+            
+            Object.assign(DOMElements, elements);
+            return elements;
+        }
 
         // --- UTILITIES ---
         const openUrl = (url) => parent.postMessage({ pluginMessage: { type: 'open-url', url } }, '*');
@@ -110,21 +105,47 @@
             };
         };
         
+        // Safe localStorage wrapper for data: URLs (Figma plugin context)
+        function safeLocalStorage() {
+            try {
+                if (window.localStorage && window.localStorage.setItem) {
+                    // Test if localStorage actually works
+                    window.localStorage.setItem('__test__', 'test');
+                    window.localStorage.removeItem('__test__');
+                    return window.localStorage;
+                }
+            } catch (e) {
+                console.warn('localStorage not available, using fallback');
+            }
+            // Return a fake localStorage that doesn't crash
+            return {
+                getItem: () => null,
+                setItem: () => {},
+                removeItem: () => {},
+                clear: () => {}
+            };
+        }
+        
         // --- THEME MANAGEMENT ---
         function initializeTheme() {
             // Get stored theme or default to light
-            const storedTheme = localStorage.getItem('token-exporter-theme') || 'light';
+            const storage = safeLocalStorage();
+            const storedTheme = storage.getItem('token-exporter-theme') || 'light';
             setTheme(storedTheme);
         }
         
         function setTheme(theme) {
             document.body.setAttribute('data-theme', theme);
-            localStorage.setItem('token-exporter-theme', theme);
+            const storage = safeLocalStorage();
+            storage.setItem('token-exporter-theme', theme);
             
             if (DOMElements.themeToggle) {
                 DOMElements.themeToggle.setAttribute('aria-pressed', theme === 'dark');
                 DOMElements.themeToggle.classList.toggle('dark-mode', theme === 'dark');
             }
+            
+            // Ensure icons re-render after theme change
+            renderIcons();
         }
         
         function toggleTheme() {
@@ -279,6 +300,9 @@ function updateTokenSummary() {
         function attachEventListeners() {
             // Theme toggle listener
             if (DOMElements.themeToggle) {
+                // Render icons in the theme toggle
+                renderIcons(DOMElements.themeToggle);
+                
                 DOMElements.themeToggle.addEventListener('click', () => {
                     toggleTheme();
                     // Add satisfying click animation
@@ -289,23 +313,7 @@ function updateTokenSummary() {
                 });
             }
             
-            // Static listeners
-            DOMElements.aboutLink.onclick = (e) => {
-                e.preventDefault();
-                DOMElements.aboutModal.classList.add('show');
-                renderIcons();
-            };
-            DOMElements.aboutModal.onclick = (e) => {
-                if (e.target.closest('[data-close-modal]') || e.target.closest('.about-modal-backdrop') || e.target === DOMElements.aboutModal) {
-                    DOMElements.aboutModal.classList.remove('show');
-                }
-            };
-            DOMElements.aboutModal.querySelectorAll('.about-link').forEach(link => {
-                link.onclick = (e) => {
-                    e.preventDefault();
-                    openUrl(link.dataset.url);
-                };
-            });
+            // Footer link - opens directly to natemills.me (handled by browser)
             // Note: emptyStateAction is now inside a partial, but this should still work
             // as long as the script runs after the DOM is populated.
             const emptyStateAction = document.querySelector('.empty-state-action');
@@ -566,6 +574,7 @@ function updateTokenSummary() {
             const container = document.getElementById('pluginProgressLoader');
             if (!container) {
                 updateTokenSummary();
+                renderIcons();
                 if (fileData && fileData.length > 0) triggerSave(fileData);
                 return;
             }
@@ -586,6 +595,7 @@ function updateTokenSummary() {
 
             setTimeout(() => {
                 updateTokenSummary();
+                renderIcons();
                 if (fileData && fileData.length > 0) {
                     triggerSave(fileData);
                 }
@@ -611,7 +621,10 @@ function updateTokenSummary() {
                 '</div>';
             renderIcons();
             const closeBtn = document.getElementById('close-error-btn');
-            if (closeBtn) closeBtn.onclick = updateTokenSummary;
+            if (closeBtn) closeBtn.onclick = function() {
+                updateTokenSummary();
+                renderIcons();
+            };
         }
 
         async function triggerSave(data) {
@@ -717,21 +730,51 @@ function updateTokenSummary() {
         }
         
         function stopLoadingMessages() {
-            if (loadingMessageInterval) {
-                clearInterval(loadingMessageInterval);
-                loadingMessageInterval = null;
+            try {
+                if (loadingMessageInterval) {
+                    clearInterval(loadingMessageInterval);
+                    loadingMessageInterval = null;
+                    console.log('✅ Loading messages interval cleared');
+                } else {
+                    console.log('ℹ️ No loading message interval to clear');
+                }
+            } catch (error) {
+                console.error('❌ Error stopping loading messages:', error);
             }
         }
 
         // --- INITIALIZATION ---
         function initialize() {
+            console.log('🚀 UI Initialize starting...');
+            
+            // Populate DOM elements first
+            populateDOMElements();
+            
             // Initialize theme first
             initializeTheme();
+            
+            // Debug DOM elements initialization
+            console.log('🔍 DOM Elements check:', {
+                skeletonLoader: !!DOMElements.skeletonLoader,
+                emptyState: !!DOMElements.emptyState,
+                mainUI: !!DOMElements.mainUI
+            });
             
             // Explicitly set the correct initial UI state.
             if (DOMElements.skeletonLoader) {
                 DOMElements.skeletonLoader.style.display = 'block';
                 startLoadingMessages(); // Start the delightful messages
+                console.log('✅ Skeleton loader shown and messages started');
+            } else {
+                console.error('❌ Skeleton loader element not found!');
+                // Try to find it directly as fallback
+                const fallbackLoader = document.getElementById('skeleton-loader-wrapper');
+                if (fallbackLoader) {
+                    console.log('ℹ️ Found skeleton loader via fallback method');
+                    DOMElements.skeletonLoader = fallbackLoader;
+                    fallbackLoader.style.display = 'block';
+                    startLoadingMessages();
+                }
             }
             if (DOMElements.emptyState) DOMElements.emptyState.style.display = 'none';
             if (DOMElements.mainUI) DOMElements.mainUI.style.display = 'none';
@@ -740,34 +783,148 @@ function updateTokenSummary() {
             renderIcons(); 
 
             // Immediately ask the main plugin for the variable collections.
-            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+            console.log('📤 Requesting collections from main plugin...');
+            
+            // Send a test message first to verify communication
+            console.log('🧪 Testing message communication...');
+            try {
+                parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                console.log('✅ get-collections message sent successfully');
+            } catch (error) {
+                console.error('❌ Error sending get-collections message:', error);
+                // Try alternative message format as fallback
+                try {
+                    parent.postMessage({ type: 'get-collections' }, '*');
+                    console.log('✅ Fallback message format sent');
+                } catch (fallbackError) {
+                    console.error('❌ Fallback message also failed:', fallbackError);
+                }
+            }
 
             // Attach all static event listeners.
             attachEventListeners();
+            
+            // Set up a timeout to detect if no collections message is received
+            const messageTimeout = setTimeout(() => {
+                console.warn('⚠️ No collections message received after 5 seconds');
+                console.log('🔍 Current UI state:', {
+                    skeletonVisible: DOMElements.skeletonLoader?.style.display !== 'none',
+                    emptyStateVisible: DOMElements.emptyState?.style.display !== 'none',
+                    mainUIVisible: DOMElements.mainUI?.style.display !== 'none'
+                });
+                
+                // Force fallback to empty state if no response
+                if (DOMElements.skeletonLoader) {
+                    DOMElements.skeletonLoader.style.display = 'none';
+                }
+                if (DOMElements.emptyState) {
+                    DOMElements.emptyState.style.display = 'flex';
+                }
+                stopLoadingMessages();
+            }, 5000);
+            
+            // Store timeout ID so we can clear it when message is received
+            window.collectionsTimeout = messageTimeout;
+            
+            console.log('✅ UI Initialize completed');
         }
 
         window.onmessage = (event) => {
-            const msg = event.data.pluginMessage;
-            if (!msg) return;
+            console.log('📨 UI received message:', event.data);
+            
+            // Handle different message structures from Figma
+            let msg = null;
+            if (event.data && event.data.pluginMessage) {
+                msg = event.data.pluginMessage;
+            } else if (event.data && event.data.type) {
+                // Direct message format
+                msg = event.data;
+            } else {
+                console.warn('⚠️ Message received but no valid message structure found:', event.data);
+                return;
+            }
+            
+            if (!msg || !msg.type) {
+                console.warn('⚠️ Message missing type property:', msg);
+                return;
+            }
+            
+            console.log('📋 Processing message type:', msg.type);
+            
             switch (msg.type) {
                 case 'all-collections':
-                    stopLoadingMessages(); // Stop the delightful messages
-                    DOMElements.skeletonLoader.style.display = 'none';
-                    appState.collections = msg.collections || [];
-                    if (appState.collections.length === 0) {
-                        // If no collections, show the empty state and hide the main UI
-                        DOMElements.emptyState.style.display = 'flex';
-                        DOMElements.mainUI.style.display = 'none';
-                    } else {
-                        // If collections exist, show the main UI and hide the empty state
-                        DOMElements.emptyState.style.display = 'none';
-                        DOMElements.mainUI.style.display = 'block';
-                        appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
-                        appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
-                        appState.selectedCollections = new Set(appState.collections.map(c => c.id));
-                        updateUI();
+                    console.log('🔄 Processing all-collections message with', msg.collections?.length || 0, 'collections');
+                    
+                    // Clear the message timeout since we received the response
+                    if (window.collectionsTimeout) {
+                        clearTimeout(window.collectionsTimeout);
+                        window.collectionsTimeout = null;
+                        console.log('✅ Collections timeout cleared');
                     }
-                    renderIcons();
+                    
+                    try {
+                        // Stop loading messages safely
+                        stopLoadingMessages();
+                        console.log('✅ Loading messages stopped');
+                        
+                        // Hide skeleton loader safely
+                        if (DOMElements.skeletonLoader) {
+                            DOMElements.skeletonLoader.style.display = 'none';
+                            console.log('✅ Skeleton loader hidden');
+                        } else {
+                            console.error('❌ Skeleton loader element not found when trying to hide');
+                        }
+                        
+                        // Process collections
+                        appState.collections = msg.collections || [];
+                        console.log('📊 Collections processed:', appState.collections.length);
+                        
+                        if (appState.collections.length === 0) {
+                            // If no collections, show the empty state and hide the main UI
+                            if (DOMElements.emptyState) {
+                                DOMElements.emptyState.style.display = 'flex';
+                                console.log('✅ Empty state shown');
+                            }
+                            if (DOMElements.mainUI) {
+                                DOMElements.mainUI.style.display = 'none';
+                                console.log('✅ Main UI hidden');
+                            }
+                        } else {
+                            // If collections exist, show the main UI and hide the empty state
+                            if (DOMElements.emptyState) {
+                                DOMElements.emptyState.style.display = 'none';
+                                console.log('✅ Empty state hidden');
+                            }
+                            if (DOMElements.mainUI) {
+                                DOMElements.mainUI.style.display = 'block';
+                                console.log('✅ Main UI shown');
+                            }
+                            
+                            appState.globalTokenCounts = msg.globalCounts || { color: 0, text: 0, states: 0, number: 0 };
+                            appState.selectedTokenTypes = new Set(Object.keys(appState.globalTokenCounts).filter(k => appState.globalTokenCounts[k] > 0));
+                            appState.selectedCollections = new Set(appState.collections.map(c => c.id));
+                            
+                            console.log('🔄 Updating UI...');
+                            updateUI();
+                            console.log('✅ UI updated');
+                        }
+                        
+                        renderIcons();
+                        console.log('✅ Icons rendered');
+                        console.log('🎉 all-collections message processed successfully');
+                        
+                    } catch (error) {
+                        console.error('💥 Error processing all-collections message:', error);
+                        console.error('Error stack:', error.stack);
+                        
+                        // Fallback: at least hide the skeleton loader
+                        if (DOMElements.skeletonLoader) {
+                            DOMElements.skeletonLoader.style.display = 'none';
+                        }
+                        if (DOMElements.emptyState) {
+                            DOMElements.emptyState.style.display = 'flex';
+                        }
+                    }
                     break;
                 case 'export-progress':
                     // Don't update if we're already animating smoothly
@@ -794,10 +951,70 @@ function updateTokenSummary() {
 
         // Observe the main content wrapper for size changes
         const contentWrapper = document.getElementById('content-wrapper');
-        if (contentWrapper) {
-            resizeObserver.observe(contentWrapper);
+        if (contentWrapper && contentWrapper instanceof Node) {
+            try {
+                resizeObserver.observe(contentWrapper);
+                console.log('✅ ResizeObserver attached to content wrapper');
+            } catch (error) {
+                console.warn('⚠️ Failed to attach ResizeObserver:', error);
+            }
+        } else {
+            console.warn('⚠️ Content wrapper element not found or not a valid Node');
         }
 
-        document.addEventListener('DOMContentLoaded', initialize);
+        // Enhanced initialization with debugging
+        function safeInitialize() {
+            console.log('🔄 DOM ready, starting initialization...');
+            
+            // Verify all critical elements exist
+            const criticalElements = {
+                'skeleton-loader': document.getElementById('skeleton-loader-wrapper'),
+                'empty-state': document.getElementById('empty-state-wrapper'),
+                'main-ui': document.getElementById('main-ui'),
+                'content-wrapper': document.getElementById('content-wrapper')
+            };
+            
+            let missingElements = [];
+            Object.entries(criticalElements).forEach(([name, element]) => {
+                if (!element) {
+                    missingElements.push(name);
+                }
+            });
+            
+            if (missingElements.length > 0) {
+                console.error('❌ Critical DOM elements missing:', missingElements);
+            } else {
+                console.log('✅ All critical DOM elements found');
+            }
+            
+            // Update DOMElements object with verified elements
+            Object.assign(DOMElements, criticalElements);
+            
+            // Verify message handler is working
+            console.log('🔍 Testing message handler setup...');
+            if (typeof window.onmessage === 'function') {
+                console.log('✅ Message handler is attached');
+            } else {
+                console.error('❌ Message handler not attached properly!');
+            }
+            
+            initialize();
+        }
+        
+        // Multiple initialization strategies for robustness
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', safeInitialize);
+        } else {
+            // DOM is already ready
+            safeInitialize();
+        }
+        
+        // Fallback initialization after a short delay
+        setTimeout(() => {
+            if (!DOMElements.skeletonLoader) {
+                console.warn('⚠️ Fallback initialization triggered');
+                safeInitialize();
+            }
+        }, 100);
     </script>
 </body>

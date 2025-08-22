@@ -409,39 +409,94 @@
                     Foundational type scale and font definitions - the typographic building blocks that establish hierarchy and readability.
                 </p>
             </div>
-            <div class="tokens-grid text-grid">
-                <div class="example-container">
-                    <div class="flex flex-col gap-3">
-                        <div>
-                            <div class="text-heading-xl">Heading XL</div>
-                            <code class="text-color-muted text-size-0">.text-heading-xl • var(--font-size-8)</code>
-                        </div>
-                        <div>
-                            <div class="text-heading-lg">Heading LG</div>
-                            <code class="text-color-muted text-size-0">.text-heading-lg • var(--font-size-6)</code>
-                        </div>
-                        <div>
-                            <div class="text-heading-md">Heading MD</div>
-                            <code class="text-color-muted text-size-0">.text-heading-md • var(--font-size-4)</code>
-                        </div>
-                        <div>
-                            <div class="text-body-lg">Body Large</div>
-                            <code class="text-color-muted text-size-0">.text-body-lg • var(--font-size-2)</code>
-                        </div>
-                        <div>
-                            <div class="text-body-md">Body Medium</div>
-                            <code class="text-color-muted text-size-0">.text-body-md • var(--font-size-1)</code>
-                        </div>
-                        <div>
-                            <div class="text-label">LABEL TEXT</div>
-                            <code class="text-color-muted text-size-0">.text-label • var(--font-size-0)</code>
-                        </div>
-                        <div>
-                            <div class="text-caption">Caption Text</div>
-                            <code class="text-color-muted text-size-0">.text-caption • var(--font-size-00)</code>
+            <!-- Type Scale and Font Weights in 2-column grid -->
+            <div class="typography-main-grid">
+                <!-- Type Scale Column -->
+                <div class="typography-column">
+                    <h3 class="section-title-secondary">Type Scale</h3>
+                    <div class="example-container">
+                        <div class="type-scale-list">
+                            <div>
+                                <div class="text-heading-xl">Heading XL</div>
+                                <code class="text-color-muted text-size-0">.text-heading-xl • var(--font-size-8)</code>
+                            </div>
+                            <div>
+                                <div class="text-heading-lg">Heading LG</div>
+                                <code class="text-color-muted text-size-0">.text-heading-lg • var(--font-size-6)</code>
+                            </div>
+                            <div>
+                                <div class="text-heading-md">Heading MD</div>
+                                <code class="text-color-muted text-size-0">.text-heading-md • var(--font-size-4)</code>
+                            </div>
+                            <div>
+                                <div class="text-body-lg">Body Large</div>
+                                <code class="text-color-muted text-size-0">.text-body-lg • var(--font-size-2)</code>
+                            </div>
+                            <div>
+                                <div class="text-body-md">Body Medium</div>
+                                <code class="text-color-muted text-size-0">.text-body-md • var(--font-size-1)</code>
+                            </div>
+                            <div>
+                                <div class="text-label">LABEL TEXT</div>
+                                <code class="text-color-muted text-size-0">.text-label • var(--font-size-0)</code>
+                            </div>
+                            <div>
+                                <div class="text-caption">Caption Text</div>
+                                <code class="text-color-muted text-size-0">.text-caption • var(--font-size-00)</code>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Font Weights Column -->
+                <div class="typography-column">
+                    <h3 class="section-title-secondary">Font Weights</h3>
+                    <div class="example-container">
+                        <div class="tokens-grid weight-grid">
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-1);" class="weight-label">100 - Thin</div>
+                                <code class="weight-token">--font-weight-1</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-2);" class="weight-label">200 - Extra Light</div>
+                                <code class="weight-token">--font-weight-2</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-3);" class="weight-label">300 - Light</div>
+                                <code class="weight-token">--font-weight-3</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-4);" class="weight-label">400 - Regular</div>
+                                <code class="weight-token">--font-weight-4</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-5);" class="weight-label">500 - Medium</div>
+                                <code class="weight-token">--font-weight-5</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-6);" class="weight-label">600 - Semi Bold</div>
+                                <code class="weight-token">--font-weight-6</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-7);" class="weight-label">700 - Bold</div>
+                                <code class="weight-token">--font-weight-7</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-8);" class="weight-label">800 - Extra Bold</div>
+                                <code class="weight-token">--font-weight-8</code>
+                            </div>
+                            <div class="weight-item">
+                                <div style="font-weight: var(--font-weight-9);" class="weight-label">900 - Black</div>
+                                <code class="weight-token">--font-weight-9</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Font Families at the bottom -->
+            <div class="category-header mt-6">
+                <h3 class="section-title-secondary">Font Families</h3>
             </div>
             <div class="tokens-grid font-grid">
                 <div class="token-item"><div class="token-info"><div class="token-name">--font-sans</div><div class="token-value">'Inter', -apple-system, ...</div><div class="text-preview font-sans">The quick brown fox jumps over the lazy dog.</div></div></div>
@@ -455,12 +510,12 @@
                     <div class="token-category">
                         <div class="category-header"><h2 class="section-title-primary"><i data-icon="move"></i>Spacing</h2><p class="section-description">Raw spacing values that serve as the foundation for all margin, padding, and gap measurements.</p></div>
                         <div class="tokens-grid spacing-grid">
-                            <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--size-3</div><div class="token-value">0.75rem • 12px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-3 h-3"></div></div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--size-4</div><div class="token-value">1rem • 16px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-4 h-4"></div></div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--size-6</div><div class="token-value">1.5rem • 24px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-6 h-6"></div></div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--size-8</div><div class="token-value">2rem • 32px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-8 h-8"></div></div></div></div></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--size-1</div><div class="token-value token-value--spacing">0.25rem • 4px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-1 h-1"></div></div></div></div></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--size-2</div><div class="token-value token-value--spacing">0.5rem • 8px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-2 h-2"></div></div></div></div></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--size-3</div><div class="token-value token-value--spacing">0.75rem • 12px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-3 h-3"></div></div></div></div></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--size-4</div><div class="token-value token-value--spacing">1rem • 16px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-4 h-4"></div></div></div></div></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--size-6</div><div class="token-value token-value--spacing">1.5rem • 24px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-6 h-6"></div></div></div></div></div>
+                            <div class="token-item"><div class="token-info"><div class="token-name">--size-8</div><div class="token-value token-value--spacing">2rem • 32px</div><div class="token-preview"><div class="spacing-preview"><div class="spacing-bar w-8 h-8"></div></div></div></div></div>
                         </div>
                     </div>
                 </section>
@@ -475,7 +530,9 @@
                         
                         <!-- Elevation Shadows -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Elevation Shadows</h3>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Elevation Shadows</h3>
+                            </div>
                             <div class="tokens-grid shadow-grid" style="margin-bottom: var(--size-6);">
                                 <div class="token-item"><div class="token-info"><div class="token-name">--shadow-2</div><div class="token-value">Subtle elevation</div><div class="token-preview"><div class="shadow-preview shadow-2"></div></div></div></div>
                                 <div class="token-item"><div class="token-info"><div class="token-name">--shadow-3</div><div class="token-value">Medium elevation</div><div class="token-preview"><div class="shadow-preview shadow-3"></div></div></div></div>
@@ -485,8 +542,9 @@
                         
                         <!-- Glass Effects -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Glass Effects</h3>
-                            <p class="section-description" style="margin-bottom: var(--size-3);">Combine background opacity with backdrop blur for modern glass morphism effects. Each level pairs specific opacity with blur intensity.</p>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Glass Effects</h3>
+                            </div>
                             <div class="tokens-grid glass-grid" style="margin-bottom: var(--size-6);">
                                 <div class="token-item">
                                     <div class="token-info">
@@ -496,7 +554,6 @@
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-zero); backdrop-filter: blur(var(--glass-blur-light)); -webkit-backdrop-filter: blur(var(--glass-blur-light));">
-                                                    <span>Zero</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -510,7 +567,6 @@
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-subtle); backdrop-filter: blur(var(--glass-blur-medium)); -webkit-backdrop-filter: blur(var(--glass-blur-medium));">
-                                                    <span>Subtle</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -524,7 +580,6 @@
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-medium); backdrop-filter: blur(var(--glass-blur-strong)); -webkit-backdrop-filter: blur(var(--glass-blur-strong));">
-                                                    <span>Medium</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -538,7 +593,6 @@
                                             <div class="glass-preview-container">
                                                 <div class="glass-preview-bg"></div>
                                                 <div class="glass-preview-panel" style="background: var(--glass-panel-strong); backdrop-filter: blur(var(--glass-blur-heavy)); -webkit-backdrop-filter: blur(var(--glass-blur-heavy));">
-                                                    <span>Strong</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -549,15 +603,16 @@
                         
                         <!-- Glow Effects -->
                         <div class="effects-subsection">
-                            <h3 class="text-label" style="margin-bottom: var(--size-3);">Glow Effects</h3>
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Glow Effects</h3>
+                            </div>
                             <div class="tokens-grid glow-grid">
                                 <div class="token-item">
                                     <div class="token-info">
                                         <div class="token-name">--shadow-brand</div>
-                                        <div class="token-value">Brand color glow</div>
+                                        <div class="token-value token-value--glow">Brand color glow</div>
                                         <div class="token-preview">
                                             <div class="glow-preview" style="box-shadow: var(--shadow-brand);">
-                                                <i data-icon="star" style="color: var(--brand-primary);"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -565,10 +620,9 @@
                                 <div class="token-item">
                                     <div class="token-info">
                                         <div class="token-name">--shadow-brand-hover</div>
-                                        <div class="token-value">Stronger brand glow</div>
+                                        <div class="token-value token-value--glow">Stronger brand glow</div>
                                         <div class="token-preview">
                                             <div class="glow-preview" style="box-shadow: var(--shadow-brand-hover);">
-                                                <i data-icon="zap" style="color: var(--brand-primary);"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -579,7 +633,6 @@
                                         <div class="token-value">Focus state glow</div>
                                         <div class="token-preview">
                                             <div class="glow-preview" style="box-shadow: var(--focus-ring);">
-                                                <i data-icon="target" style="color: var(--brand-primary);"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -654,11 +707,188 @@
                 <!-- Motion Section -->
                 <section id="animations" class="content-section">
                     <div class="token-category">
-                        <div class="category-header"><h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2><p class="section-description">Raw timing and easing values that power smooth, consistent motion throughout the interface.</p></div>
-                        <div class="tokens-grid animation-grid">
-                            <div class="token-item"><div class="token-info"><div class="token-name">--ease-3</div><div class="token-value">cubic-bezier(.25, 0, .3, 1)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard easing curve</div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--ease-spring-3</div><div class="token-value">cubic-bezier(.5, -1, .1, 1.8)</div><div class="text-preview"><div style="color: var(--color-text-muted);">Playful spring easing</div></div></div></div>
-                            <div class="token-item"><div class="token-info"><div class="token-name">--animation-duration-2</div><div class="token-value">150ms</div><div class="text-preview"><div style="color: var(--color-text-muted);">Standard duration</div></div></div></div>
+                        <div class="category-header">
+                            <h2 class="section-title-primary"><i data-icon="play"></i>Motion</h2>
+                            <p class="section-description">Smooth animations bring interfaces to life. Our motion system balances performance with personality.</p>
+                        </div>
+                        
+                        <!-- Easing Playground -->
+                        <div class="effects-subsection">
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Easing Curves</h3>
+                            </div>
+                            <div class="motion-demo-grid">
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Linear</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-linear" aria-label="Play linear easing demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Constant speed from start to finish</p>
+                                    <div class="motion-demo-box">
+                                        <div class="motion-track">
+                                            <div class="motion-ball demo-ease-linear" data-easing="linear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Smooth</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-3" aria-label="Play smooth easing demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Natural acceleration and deceleration</p>
+                                    <div class="motion-demo-box">
+                                        <div class="motion-track">
+                                            <div class="motion-ball demo-ease-3" data-easing="ease-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Spring</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-ease-spring-3" aria-label="Play spring easing demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Playful bounce with a bit of overshoot</p>
+                                    <div class="motion-demo-box">
+                                        <div class="motion-track">
+                                            <div class="motion-ball demo-ease-spring-3" data-easing="ease-spring-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Real World Examples -->
+                        <div class="effects-subsection">
+                            <div class="category-header">
+                                <h3 class="section-title-secondary">Real-World Examples</h3>
+                            </div>
+                            <div class="motion-demo-grid">
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Button Hover</h4>
+                                        <span class="motion-play-btn-auto" title="Hover interaction - plays on hover">Hover</span>
+                                    </div>
+                                    <p>Smooth transitions on hover using 200ms timing</p>
+                                    <div class="motion-demo-box">
+                                        <button class="btn btn-primary btn-sm">Hover Me</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Card Lift</h4>
+                                        <span class="motion-play-btn-auto" title="Hover interaction - plays on hover">Hover</span>
+                                    </div>
+                                    <p>Elevation changes create depth and hierarchy</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-card-lift">Interactive Card</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Logo Float</h4>
+                                        <span class="motion-play-btn-auto" title="Automatic continuous animation">Auto</span>
+                                    </div>
+                                    <p>Gentle continuous motion for brand elements</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-logo-float">
+                                            <svg viewBox="0 0 355 355" fill="none" xmlns="http://www.w3.org/2000/svg" class="motion-logo">
+                                                <g clip-path="url(#clip0_motion_logo)">
+                                                    <path d="M0 0H355V355H0V0Z" fill="url(#paint0_linear_motion_logo)"/>
+                                                    <circle cx="133.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                                    <path d="M178 88.4824C210.612 104.817 233 138.543 233 177.5C233 216.456 210.611 250.182 178 266.517C145.389 250.182 123 216.456 123 177.5C123 138.543 145.388 104.817 178 88.4824Z" fill="black"/>
+                                                    <circle cx="222.5" cy="177.5" r="99.5" fill="black" fill-opacity="0.42"/>
+                                                </g>
+                                                <defs>
+                                                    <linearGradient id="paint0_linear_motion_logo" x1="177.5" y1="0" x2="177.5" y2="355" gradientUnits="userSpaceOnUse">
+                                                        <stop stop-color="#D2FF37"/>
+                                                        <stop offset="1" stop-color="#EEFF00"/>
+                                                    </linearGradient>
+                                                    <clipPath id="clip0_motion_logo">
+                                                        <rect width="355" height="355" rx="58" fill="white"/>
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Vortex Animation</h4>
+                                        <span class="motion-play-btn-auto" title="Automatic continuous animation">Auto</span>
+                                    </div>
+                                    <p>Mini version of the te-vortex swirl animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-vortex-mini">
+                                            <div class="te-icon-cell" style="--delay: 0s; --x-start: -50px; --y-start: -50px; --x-end: 60px; --y-end: 40px; color: var(--value-color);">
+                                                <i data-icon="palette"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.2s; --x-start: 50px; --y-start: -40px; --x-end: -70px; --y-end: -30px; color: var(--value-text);">
+                                                <i data-icon="type"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.4s; --x-start: -40px; --y-start: 50px; --x-end: 40px; --y-end: -60px; color: var(--value-number);">
+                                                <i data-icon="hash"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.6s; --x-start: 45px; --y-start: 45px; --x-end: -50px; --y-end: 50px; color: var(--value-state);">
+                                                <i data-icon="toggle-right"></i>
+                                            </div>
+                                            <div class="te-icon-cell" style="--delay: 0.8s; --x-start: 0px; --y-start: 50px; --x-end: 80px; --y-end: -40px; color: var(--brand-primary);">
+                                                <i data-icon="layers"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Progress Flow</h4>
+                                        <button class="motion-play-btn-header" data-target=".demo-progress-flow" aria-label="Play progress flow demo"><i data-icon="play"></i></button>
+                                    </div>
+                                    <p>Progress bar with percentage and status animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-progress-flow">
+                                            <div class="te-glass-status">
+                                                <p class="te-progress-percent">0%</p>
+                                                <div class="te-progress-track">
+                                                    <div class="te-progress-fill"></div>
+                                                </div>
+                                                <p class="te-status-label">Ready to export</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="motion-demo-card">
+                                    <div class="motion-card-header">
+                                        <h4>Floating Icons</h4>
+                                        <span class="motion-play-btn-auto" title="Automatic continuous animation">Auto</span>
+                                    </div>
+                                    <p>Mini version of the hero section floating animation</p>
+                                    <div class="motion-demo-box">
+                                        <div class="demo-floating-icons">
+                                            <div class="icon-float rise" style="left: 15%; color: var(--value-color); animation-delay: 0s;">
+                                                <i data-icon="palette"></i>
+                                            </div>
+                                            <div class="icon-float bubble" style="left: 30%; color: var(--value-text); animation-delay: 0.8s;">
+                                                <i data-icon="type"></i>
+                                            </div>
+                                            <div class="icon-float parallax" style="left: 50%; color: var(--value-number); animation-delay: 1.6s;">
+                                                <i data-icon="hash"></i>
+                                            </div>
+                                            <div class="icon-float rise" style="left: 70%; color: var(--value-state); animation-delay: 2.4s;">
+                                                <i data-icon="toggle-right"></i>
+                                            </div>
+                                            <div class="icon-float bubble" style="left: 85%; color: var(--brand-primary); animation-delay: 3.2s;">
+                                                <i data-icon="layers"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                     </div>
@@ -1036,16 +1266,19 @@
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             <!-- BUTTON VARIANTS SHOWCASE    -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <h3 class="example-subheader">Button Variants</h3>
-            <p class="section-description section-spacing-sm">Four core button types serve different hierarchical needs. Each variant is fully interactive with hover, active, and disabled states.</p>
+            <div class="category-header">
+                <h3 class="section-title-secondary">Button Variants</h3>
+            </div>
 
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Primary</div>
-                    <div class="button-showcase">
-                        <button class="btn btn-primary btn-sm"><i data-icon="package"></i> Small Button</button>
-                        <button class="btn btn-primary btn-md"><i data-icon="package"></i> Medium Button</button>
-                        <button class="btn btn-primary btn-lg"><i data-icon="package"></i> Large Button</button>
+                    <div class="example-container">
+                        <div class="button-showcase">
+                        <button class="btn btn-primary btn-sm btn--mobile-full-width"><i data-icon="package"></i> Small Button</button>
+                        <button class="btn btn-primary btn-md btn--mobile-full-width"><i data-icon="package"></i> Medium Button</button>
+                        <button class="btn btn-primary btn-lg btn--mobile-full-width"><i data-icon="package"></i> Large Button</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1053,10 +1286,12 @@
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Secondary</div>
-                    <div class="button-showcase">
-                        <button class="btn btn-secondary btn-sm"><i data-icon="sliders-horizontal"></i> Small Button</button>
-                        <button class="btn btn-secondary btn-md"><i data-icon="sliders-horizontal"></i> Medium Button</button>
-                        <button class="btn btn-secondary btn-lg"><i data-icon="sliders-horizontal"></i> Large Button</button>
+                    <div class="example-container">
+                        <div class="button-showcase">
+                        <button class="btn btn-secondary btn-sm btn--mobile-full-width"><i data-icon="sliders-horizontal"></i> Small Button</button>
+                        <button class="btn btn-secondary btn-md btn--mobile-full-width"><i data-icon="sliders-horizontal"></i> Medium Button</button>
+                        <button class="btn btn-secondary btn-lg btn--mobile-full-width"><i data-icon="sliders-horizontal"></i> Large Button</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1064,10 +1299,12 @@
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Tertiary</div>
-                    <div class="button-showcase">
-                        <button class="btn btn-tertiary btn-sm">Learn More <i data-icon="arrow-right"></i></button>
-                        <button class="btn btn-tertiary btn-md">Learn More <i data-icon="arrow-right"></i></button>
-                        <button class="btn btn-tertiary btn-lg">Learn More <i data-icon="arrow-right"></i></button>
+                    <div class="example-container">
+                        <div class="button-showcase">
+                        <button class="btn btn-tertiary btn-sm btn--mobile-full-width">Learn More <i data-icon="arrow-right"></i></button>
+                        <button class="btn btn-tertiary btn-md btn--mobile-full-width">Learn More <i data-icon="arrow-right"></i></button>
+                        <button class="btn btn-tertiary btn-lg btn--mobile-full-width">Learn More <i data-icon="arrow-right"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1075,10 +1312,12 @@
             <div class="subsection">
                 <div class="example-wrapper">
                     <div class="example-label">Icon-Only</div>
-                    <div class="icon-only-showcase">
+                    <div class="example-container">
+                        <div class="icon-only-showcase">
                         <button class="btn btn-icon btn-sm" aria-label="Small Icon Button"><i data-icon="github"></i></button>
                         <button class="btn btn-icon btn-md" aria-label="Medium Icon Button"><i data-icon="github"></i></button>
                         <button class="btn btn-icon btn-lg" aria-label="Large Icon Button"><i data-icon="github"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1086,8 +1325,9 @@
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             <!-- USAGE GUIDELINES            -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <h3 class="example-subheader section-spacing-lg">Usage Guidelines</h3>
-            <p class="section-description section-spacing-sm">Best practices for implementing buttons to ensure a consistent and intuitive user experience, presented using the system's `.compact-card` component.</p>
+            <div class="category-header">
+                <h3 class="section-title-secondary">Usage Guidelines</h3>
+            </div>
             
             <div class="compact-cards">
                 <div class="compact-card">
@@ -1133,8 +1373,9 @@
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             <!-- STATE COMPARISON MATRIX     -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <h3 class="example-subheader" style="margin-top: var(--size-8);">State Reference</h3>
-            <p class="section-description" style="margin-bottom: var(--size-4);">Interactive states provide visual feedback. Test all states during implementation.</p>
+            <div class="category-header">
+                <h3 class="section-title-secondary">State Reference</h3>
+            </div>
 
             <div class="subsection">
                 <div class="state-comparison-container">
@@ -3365,6 +3606,147 @@ function playMotionDemo(demoType) {
         element.classList.remove('animate-' + demoType);
     }, animationDuration[demoType] || 1000);
 }
+
+// Custom motion demo functions
+function playVortexDemo(container) {
+    const iconCells = container.querySelectorAll('.te-icon-cell');
+    iconCells.forEach((cell) => {
+        const delay = cell.style.getPropertyValue('--delay') || '0s';
+        cell.style.animation = 'none';
+        cell.offsetHeight; // Force reflow
+        cell.style.animation = `te-vortex-swirl 2.5s ease-in-out`;
+        cell.style.animationDelay = delay;
+    });
+}
+
+function playProgressDemo(container) {
+    const progressFill = container.querySelector('.te-progress-fill');
+    const progressPercent = container.querySelector('.te-progress-percent');
+    const statusLabel = container.querySelector('.te-status-label');
+    
+    // Always reset to 0 first
+    progressFill.style.transition = 'none';
+    progressFill.style.width = '0%';
+    progressPercent.textContent = '0%';
+    statusLabel.textContent = 'Ready to export';
+    
+    // Force reflow
+    progressFill.offsetHeight;
+    
+    // Re-enable transition
+    progressFill.style.transition = 'width 0.3s ease-out';
+    
+    // Animate progress
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 15 + 5;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            statusLabel.textContent = 'Complete!';
+        } else {
+            const messages = ['Processing tokens...', 'Generating styles...', 'Optimizing output...', 'Almost done...'];
+            statusLabel.textContent = messages[Math.floor(progress / 25)];
+        }
+        progressFill.style.width = progress + '%';
+        progressPercent.textContent = Math.round(progress) + '%';
+    }, 150);
+}
+
+function playFloatingIconsDemo(container) {
+    const floatingIcons = container.querySelectorAll('.icon-float');
+    floatingIcons.forEach((icon, index) => {
+        const delay = parseFloat(icon.style.animationDelay) || (index * 0.8);
+        icon.style.animation = 'none';
+        icon.offsetHeight; // Force reflow
+        icon.style.animation = `float-up-demo 3s linear infinite`;
+        icon.style.animationDelay = `${delay}s`;
+    });
+}
+
+// Motion Demo Interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle play buttons for motion demos
+    const playButtons = document.querySelectorAll('.motion-play-btn-header');
+    
+    playButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetSelector = this.getAttribute('data-target');
+            if (!targetSelector) return;
+            
+            const targetElement = document.querySelector(targetSelector);
+            if (!targetElement) return;
+            
+            // Remove existing animation class first
+            targetElement.classList.remove('animate');
+            
+            // Force reflow to restart animation
+            targetElement.offsetHeight;
+            
+            // Add animation class or handle special demos
+            if (targetSelector === '.demo-vortex-mini') {
+                playVortexDemo(targetElement);
+            } else if (targetSelector === '.demo-progress-flow') {
+                playProgressDemo(targetElement);
+            } else if (targetSelector === '.demo-floating-icons') {
+                playFloatingIconsDemo(targetElement);
+            } else {
+                targetElement.classList.add('animate');
+            }
+            
+            // Update button state temporarily
+            const icon = this.querySelector('i');
+            const originalIcon = icon ? icon.getAttribute('data-icon') : null;
+            if (icon) {
+                icon.setAttribute('data-icon', 'loader');
+            }
+            this.disabled = true;
+            
+            // Reset button after animation
+            setTimeout(() => {
+                if (icon && originalIcon) {
+                    icon.setAttribute('data-icon', originalIcon);
+                    renderAllIcons(); // Re-render the icon
+                }
+                this.disabled = false;
+                targetElement.classList.remove('animate');
+            }, 1500);
+        });
+    });
+    
+    // Auto-play motion demos on scroll (optional enhancement)
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.6
+    };
+    
+    const motionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const card = entry.target;
+                const playButton = card.querySelector('.motion-play-btn');
+                
+                // Auto-trigger demonstration after a delay
+                setTimeout(() => {
+                    if (playButton && playButton.getAttribute('data-target')) {
+                        playButton.click();
+                    }
+                }, 800);
+                
+                // Only observe once per card
+                motionObserver.unobserve(card);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe motion demo cards for auto-play
+    const motionCards = document.querySelectorAll('.motion-demo-card');
+    motionCards.forEach(card => {
+        motionObserver.observe(card);
+    });
+});
+
 </script>
 
     </body>
